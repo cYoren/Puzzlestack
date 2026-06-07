@@ -1,0 +1,37 @@
+name: puzzle-games
+base: core22
+adopt-info: puzzle
+summary: A professional suite of minimalist puzzle games
+description: |
+  A professional suite of minimalist puzzle games.
+
+confinement: strict
+grade: stable
+
+apps:
+  puzzle-games:
+    command: puzzle
+    extensions: [gnome]
+    desktop: snap/gui/com.sidhant.puzzle.desktop
+    plugs:
+      - home
+
+parts:
+  puzzle:
+    source: .
+    plugin: flutter
+    override-pull: |
+      snapcraftctl pull
+      snapcraftctl set-version $(grep 'version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
+    flutter-target: lib/main.dart
+    flutter-channel: stable
+    build-packages:
+      - libgtk-3-dev
+      - liblzma-dev
+      - pkg-config
+      - default-jdk
+  metadata:
+    plugin: dump
+    source: snap/local
+    organize:
+      com.sidhant.puzzle.metainfo.xml: usr/share/metainfo/com.sidhant.puzzle.metainfo.xml
