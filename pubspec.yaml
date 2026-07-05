@@ -49,12 +49,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   build_runner: ^2.4.9
   riverpod_generator: ^2.4.0
   freezed: ^2.5.2
   hive_generator: ^2.0.1
   json_serializable: ^6.8.0
   msix: ^3.16.1
+  flutter_launcher_icons: ^0.14.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -108,3 +111,23 @@ msix_config:
   logo_path: windows\runner\resources\app_icon.ico
   executable_name: bin\puzzle.exe
   install_certificate: false
+
+# App icon generation (PuzzleBox logo).
+# 1. Save the 1024x1024 logo to assets/icon/puzzlebox_icon.png
+# 2. Run: dart run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/icon/puzzlebox_icon.png"
+  android: true
+  adaptive_icon_background: "#0A0A0A"
+  adaptive_icon_foreground: "assets/icon/puzzlebox_icon.png"
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+    background_color: "#0A0A0A"
+    theme_color: "#0A0A0A"
+  windows:
+    generate: true
+    icon_size: 256
+  macos:
+    generate: true

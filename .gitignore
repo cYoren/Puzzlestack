@@ -44,5 +44,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Generated store screenshots (artifacts, not source)
+/screenshots/
+/_frame_preview.png
+
 
 
