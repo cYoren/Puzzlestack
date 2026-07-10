@@ -107,7 +107,7 @@ flutter:
 msix_config:
   display_name: PuzzleBox
   publisher_display_name: Sidhant
-  identity_name: com.sidhant.puzzle
+  identity_name: com.medhub.puzzlebox
   logo_path: windows\runner\resources\app_icon.ico
   executable_name: bin\puzzle.exe
   install_certificate: false

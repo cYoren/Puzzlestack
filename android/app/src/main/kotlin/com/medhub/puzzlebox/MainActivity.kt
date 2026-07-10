@@ -1,4 +1,4 @@
-package com.sidhant.puzzle
+package com.medhub.puzzlebox
 
 import io.flutter.embedding.android.FlutterActivity
 
