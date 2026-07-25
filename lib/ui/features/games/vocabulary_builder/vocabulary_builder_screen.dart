@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'vocabulary_builder_provider.dart';
 import 'vocabulary_builder_engine.dart';
-import '../../../../providers/game_providers.dart';
 import '../../../../providers/user_providers.dart';
 import '../../../../utils/design_system.dart';
 import '../../../../utils/haptic_feedback.dart';

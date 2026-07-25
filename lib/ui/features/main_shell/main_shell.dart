@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
-import '../../../widgets/tangible.dart';
 import '../home/discovery_home_screen.dart';
 import '../stats/stats_screen.dart';
 import '../settings/settings_screen.dart';

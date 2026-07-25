@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../providers/user_providers.dart';
 import '../../../../utils/design_system.dart';
 import '../../../../utils/haptic_feedback.dart';
 import '../../../../widgets/game_completion_dialog.dart';
