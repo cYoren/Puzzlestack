@@ -1,5 +1,3 @@
-import 'dart:math';
-
 class MemoryPalaceEngine {
   static const List<String> wordPool = [
     'Apple', 'Banana', 'Cat', 'Dog', 'Elephant', 'Frog', 'Guitar', 'Hat', 'Ice', 'Jacket',
@@ -10,7 +8,6 @@ class MemoryPalaceEngine {
   ];
 
   static Map<int, String> generateLevel(int wordCount) {
-    final random = Random();
     List<String> selectedWords = List.from(wordPool)..shuffle();
     selectedWords = selectedWords.take(wordCount).toList();
 
