@@ -1,18 +1,15 @@
 name: Store Screenshots
 
 # Captures the curated hero screenshots on an Android emulator and uploads
-# them (raw + store-framed) as build artifacts.
-# Run manually from the Actions tab, or on demand by pushing to main.
+# them (raw + store-framed) as build artifacts. Manual-only because this is an
+# expensive artifact operation, not a development quality gate.
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "integration_test/**"
-      - "test_driver/**"
-      - "tool/frame_screenshots.py"
-      - ".github/workflows/screenshots.yml"
+
+concurrency:
+  group: puzzlebox-screenshots-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   screenshots:
