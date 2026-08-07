@@ -121,7 +121,7 @@ flutter_launcher_icons:
   android: true
   adaptive_icon_background: "#0A0A0A"
   adaptive_icon_foreground: "assets/icon/mindstack_icon.png"
-  ios: false
+  ios: true
   remove_alpha_ios: true
   web:
     generate: true
@@ -131,4 +131,4 @@ flutter_launcher_icons:
     generate: true
     icon_size: 256
   macos:
-    generate: false
+    generate: true
