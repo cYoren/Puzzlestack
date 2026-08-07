@@ -35,11 +35,11 @@ jobs:
       - name: Generate code
         run: dart run build_runner build --delete-conflicting-outputs
 
-      # Errors and warnings fail the build. Infos do not: the tree currently
-      # carries pre-existing style infos, and gating on them would make CI red
-      # on arrival without catching real regressions.
+      # The tree is at zero analyzer findings, so this gates on everything
+      # including infos. If a generator starts emitting new lints, exclude the
+      # generated path in analysis_options.yaml rather than weakening this.
       - name: Analyze
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze
 
       - name: Test
         run: flutter test
