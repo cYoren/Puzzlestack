@@ -40,6 +40,12 @@ flutter run                                                 # or: flutter run -d
 
 The internal Dart package name stays `puzzle` (it is referenced by ~126 files and is invisible to users); the user-facing branding is Mindstack.
 
+## Releasing
+
+See [RELEASE.md](RELEASE.md) for build and signing, the Play Data Safety
+answers, and the store listing assets. [PRIVACY.md](PRIVACY.md) is the privacy
+policy; [SCREENSHOTS.md](SCREENSHOTS.md) covers regenerating store screenshots.
+
 ## License
 
 GPL-3.0. See [LICENSE](LICENSE).
