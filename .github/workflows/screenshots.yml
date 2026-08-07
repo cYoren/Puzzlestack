@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: puzzlebox-screenshots-${{ github.ref }}
+  group: mindstack-screenshots-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:

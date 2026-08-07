@@ -35,9 +35,8 @@ python3 tool/frame_screenshots.py
 ## Run it in CI
 
 `.github/workflows/screenshots.yml` boots an Android emulator, captures, frames,
-and uploads everything as the `mindstack-screenshots` artifact. Trigger it from
-the **Actions** tab (Run workflow), or it runs automatically when the screenshot
-harness changes on `main`.
+and uploads everything as the `mindstack-screenshots` artifact. It is
+manual-only: trigger it from the **Actions** tab (Run workflow).
 
 ## Customizing
 
