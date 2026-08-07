@@ -26,12 +26,13 @@ class DesignSystem {
   static const double radiusXL = 32.0;
   static const double radiusFull = 999.0;
 
-  // --- Universal Minimalist Colors (Shared) ---
-  static const Color primary = Color(0xFF6366F1); // Indigo
-  static const Color primaryShadow = Color(0xFF4F46E5);
-  static const Color accentBerry = Color(0xFFEC4899); 
+  // --- Mindstack Brand Colors ---
+  // Deep indigo + amber, matching the app icon's cascading-card mark.
+  static const Color primary = Color(0xFF4338CA); // Indigo 700
+  static const Color primaryShadow = Color(0xFF3730A3); // Indigo 800
+  static const Color accentBerry = Color(0xFFD97706); // Amber 600 (brand accent, was pink)
   static const Color accentEmerald = Color(0xFF10B981);
-  static const Color accentAmber = Color(0xFFF59E0B);
+  static const Color accentAmber = Color(0xFFD97706);
   static const Color accentTeal = Color(0xFF0D9488);
   static const Color success = Color(0xFF10B981);
   static const Color error = Color(0xFFEF4444);

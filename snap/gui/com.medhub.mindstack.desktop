@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Mindstack
+Comment=161 minimalist brain puzzles, one swipe away
+Exec=mindstack
+Icon=${SNAP}/meta/gui/com.medhub.mindstack.png
+Type=Application
+Categories=Game;LogicGame;
+Keywords=puzzle;game;logic;minimalist;brain;
+Terminal=false
+StartupNotify=true

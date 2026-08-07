@@ -1,4 +1,4 @@
-// Automated store screenshots for PuzzleBox.
+// Automated store screenshots for Mindstack.
 //
 // Captures the discovery home plus a curated "hero set" of games, one PNG each.
 // Raw PNGs are written by test_driver/integration_test.dart into screenshots/raw/.
@@ -77,7 +77,7 @@ void main() {
     } catch (_) {}
   });
 
-  testWidgets('capture PuzzleBox store screenshots', (tester) async {
+  testWidgets('capture Mindstack store screenshots', (tester) async {
     final repo = UserRepository();
     await repo.init();
 

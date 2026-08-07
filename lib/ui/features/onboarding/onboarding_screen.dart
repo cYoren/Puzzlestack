@@ -232,7 +232,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> with Single
             icon: Icons.code_rounded,
             iconColor: DesignSystem.success,
             title: 'OPEN SOURCE & CLEAN',
-            subtitle: 'No data collection. No telemetry. Fully transparent software, owned by the community.',
+            subtitle: 'No data collection. No telemetry. Fully transparent, source-available software.',
           ),
         ],
       ),

@@ -9,7 +9,7 @@ class AppLocalizationsTe extends AppLocalizations {
   AppLocalizationsTe([String locale = 'te']) : super(locale);
 
   @override
-  String get appTitle => 'పజిల్ హబ్';
+  String get appTitle => 'Mindstack';
 
   @override
   String get home => 'హోమ్';

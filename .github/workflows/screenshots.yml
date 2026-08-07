@@ -65,7 +65,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: puzzlebox-screenshots
+          name: mindstack-screenshots
           path: |
             screenshots/raw/**
             screenshots/store/**

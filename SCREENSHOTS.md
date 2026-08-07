@@ -1,6 +1,6 @@
 # Automated store screenshots
 
-PuzzleBox captures store screenshots with a Flutter `integration_test` and
+Mindstack captures store screenshots with a Flutter `integration_test` and
 frames them into store-sized images with a small Python script. Nothing is
 hand-cropped.
 
@@ -35,7 +35,7 @@ python3 tool/frame_screenshots.py
 ## Run it in CI
 
 `.github/workflows/screenshots.yml` boots an Android emulator, captures, frames,
-and uploads everything as the `puzzlebox-screenshots` artifact. Trigger it from
+and uploads everything as the `mindstack-screenshots` artifact. Trigger it from
 the **Actions** tab (Run workflow), or it runs automatically when the screenshot
 harness changes on `main`.
 

@@ -72,17 +72,8 @@ class SettingsScreen extends ConsumerWidget {
                         l10n.starOnGithub,
                         Icons.star_rounded,
                         () =>
-                            _launchUrl('https://github.com/sidhant947/Puzzle'),
+                            _launchUrl('https://github.com/cYoren/Mindstack'),
                         iconColor: Colors.amber,
-                      ),
-                      const SizedBox(height: DesignSystem.spaceSM),
-                      _buildSettingsItem(
-                        context,
-                        l10n.sponsorOnGithub,
-                        Icons.favorite_rounded,
-                        () => _launchUrl(
-                            'https://github.com/sponsors/sidhant947'),
-                        iconColor: Colors.pink,
                       ),
                       const SizedBox(height: DesignSystem.spaceSM),
                       _buildSettingsItem(
@@ -90,7 +81,7 @@ class SettingsScreen extends ConsumerWidget {
                         'Leave a Review',
                         Icons.rate_review_rounded,
                         () => _launchUrl(
-                            'https://play.google.com/store/apps/details?id=com.sidhant.puzzle'),
+                            'https://play.google.com/store/apps/details?id=com.medhub.mindstack'),
                         iconColor: Colors.teal,
                       ),
                       const SizedBox(height: DesignSystem.spaceSM),
@@ -99,7 +90,7 @@ class SettingsScreen extends ConsumerWidget {
                         'Report an Error',
                         Icons.bug_report_rounded,
                         () => _launchUrl(
-                            'https://github.com/sidhant947/Puzzle/issues'),
+                            'https://github.com/cYoren/Mindstack/issues'),
                         iconColor: Colors.redAccent,
                       ),
                       const SizedBox(height: DesignSystem.spaceXL),
@@ -110,16 +101,16 @@ class SettingsScreen extends ConsumerWidget {
                         context,
                         l10n.privacyPolicy,
                         Icons.privacy_tip_rounded,
-                        () => _launchUrl(
-                            'https://sites.google.com/view/puzzlebysidhant/home'),
+                        // TODO: point at Mindstack's own hosted privacy policy once published.
+                        () => _launchUrl('https://github.com/cYoren/Mindstack'),
                       ),
                       const SizedBox(height: DesignSystem.spaceSM),
                       _buildSettingsItem(
                         context,
                         l10n.termsOfService,
                         Icons.description_rounded,
-                        () => _launchUrl(
-                            'https://sites.google.com/view/puzzlebysidhant/home'),
+                        // TODO: point at Mindstack's own hosted terms of service once published.
+                        () => _launchUrl('https://github.com/cYoren/Mindstack'),
                       ),
                       const SizedBox(height: DesignSystem.spaceSM),
                       _buildSettingsItem(

@@ -1,18 +1,19 @@
-name: puzzle-games
+name: mindstack
 base: core22
 adopt-info: puzzle
-summary: A professional suite of minimalist puzzle games
+summary: 161 minimalist brain puzzles, one swipe away
 description: |
-  A professional suite of minimalist puzzle games.
+  Mindstack is a vertical-feed suite of 161 minimalist brain puzzles spanning
+  logic, math, memory, spatial, attention and word games.
 
 confinement: strict
 grade: stable
 
 apps:
-  puzzle-games:
+  mindstack:
     command: puzzle
     extensions: [gnome]
-    desktop: snap/gui/com.sidhant.puzzle.desktop
+    desktop: snap/gui/com.medhub.mindstack.desktop
     plugs:
       - home
 
@@ -34,4 +35,4 @@ parts:
     plugin: dump
     source: snap/local
     organize:
-      com.sidhant.puzzle.metainfo.xml: usr/share/metainfo/com.sidhant.puzzle.metainfo.xml
+      com.medhub.mindstack.metainfo.xml: usr/share/metainfo/com.medhub.mindstack.metainfo.xml

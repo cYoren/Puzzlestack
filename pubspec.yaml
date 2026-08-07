@@ -1,5 +1,5 @@
 name: puzzle
-description: "PuzzleBox: a vertical-feed suite of 161 minimalist brain puzzles."
+description: "Mindstack: a vertical-feed suite of 161 minimalist brain puzzles."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -106,21 +106,21 @@ flutter:
           weight: 700
 
 msix_config:
-  display_name: PuzzleBox
-  publisher_display_name: Sidhant
-  identity_name: com.medhub.puzzlebox
+  display_name: Mindstack
+  publisher_display_name: Mindstack
+  identity_name: com.medhub.mindstack
   logo_path: windows\runner\resources\app_icon.ico
   executable_name: bin\puzzle.exe
   install_certificate: false
 
-# App icon generation (PuzzleBox logo).
-# 1. Save the 1024x1024 logo to assets/icon/puzzlebox_icon.png
+# App icon generation (Mindstack logo).
+# 1. Save the 1024x1024 logo to assets/icon/mindstack_icon.png
 # 2. Run: dart run flutter_launcher_icons
 flutter_launcher_icons:
-  image_path: "assets/icon/puzzlebox_icon.png"
+  image_path: "assets/icon/mindstack_icon.png"
   android: true
   adaptive_icon_background: "#0A0A0A"
-  adaptive_icon_foreground: "assets/icon/puzzlebox_icon.png"
+  adaptive_icon_foreground: "assets/icon/mindstack_icon.png"
   ios: false
   remove_alpha_ios: true
   web:

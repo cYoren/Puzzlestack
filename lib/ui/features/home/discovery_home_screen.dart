@@ -7,7 +7,7 @@ import '../shuffle/shuffle_feed_screen.dart';
 import 'category_room_screen.dart';
 import 'game_search_delegate.dart';
 
-/// The PuzzleBox home: a calm discovery surface instead of a flat list of 161
+/// The Mindstack home: a calm discovery surface instead of a flat list of 161
 /// games. Funnels people into the Shuffle feed, surfaces a Daily Pick and a
 /// Quick Play row, and tucks the full catalog into six category rooms.
 class DiscoveryHomeScreen extends StatelessWidget {
@@ -101,7 +101,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'PuzzleBox',
+                  'Mindstack',
                   style: TextStyle(
                     fontFamily: 'Bebas Neue',
                     fontSize: DesignSystem.fontSize3XL,
