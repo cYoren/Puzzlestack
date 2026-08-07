@@ -203,7 +203,7 @@ class CrosswordCellWidget extends ConsumerWidget {
   }
 }
 
-extension CrosswordScreenControls on _CrosswordScreenState {
+extension _CrosswordScreenControls on _CrosswordScreenState {
 
 
   Widget _buildCurrentClue(CrosswordState state) {

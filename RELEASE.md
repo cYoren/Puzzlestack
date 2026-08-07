@@ -32,6 +32,21 @@ Locally, `flutter build appbundle --release` works but falls back to the debug
 signing key when `android/key.properties` is absent, so local artifacts are not
 uploadable. That is fine for verifying the release compile path.
 
+### Verified builds
+
+Confirmed building from a clean tree on macOS (August 2026):
+
+| Platform | Command | Result |
+| --- | --- | --- |
+| Android (AAB) | `flutter build appbundle --release` | 49.1 MB bundle; ~20 MB per-device after Play splits it |
+| Android (APK) | `flutter build apk --debug` | package id `com.medhub.mindstack` |
+| iOS | `flutter build ios --simulator --debug` | builds as `com.medhub.mindstack` |
+| macOS | `flutter build macos --release` | `Mindstack.app` |
+| Web | `flutter build web --release` | title, manifest and favicon all branded |
+
+Windows and Linux have platform directories and workflows but were not built
+here — they need their own hosts.
+
 ## Play Console: Data Safety answers
 
 Verified against the source, not assumed:
