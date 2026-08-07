@@ -29,7 +29,7 @@ void main() async {
       size: Size(1280, 720),
       minimumSize: Size(800, 600),
       center: true,
-      title: "PuzzleBox",
+      title: "Mindstack",
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
@@ -93,7 +93,7 @@ class MyApp extends ConsumerWidget {
     }
 
     return MaterialApp(
-      title: 'PuzzleBox',
+      title: 'Mindstack',
       debugShowCheckedModeBanner: false,
       theme: DesignSystem.lightTheme,
       darkTheme: DesignSystem.darkTheme,

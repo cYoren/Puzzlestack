@@ -32,19 +32,19 @@ jobs:
       - name: Upload MSIX Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: puzzle-games-windows-msix
+          name: mindstack-windows-msix
           path: build/windows/x64/runner/release/*.msix
 
       - name: Create Portable Zip
         run: |
-          powershell Compress-Archive -Path build/windows/x64/runner/release/* -DestinationPath build/windows/x64/runner/release/puzzle-games-windows-portable.zip
+          powershell Compress-Archive -Path build/windows/x64/runner/release/* -DestinationPath build/windows/x64/runner/release/mindstack-windows-portable.zip
         shell: pwsh
 
       - name: Upload Windows Portable Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: puzzle-games-windows-portable
-          path: build/windows/x64/runner/release/puzzle-games-windows-portable.zip
+          name: mindstack-windows-portable
+          path: build/windows/x64/runner/release/mindstack-windows-portable.zip
 
       - name: Build Installer (Inno Setup)
         run: |
@@ -56,5 +56,5 @@ jobs:
       - name: Upload Windows Installer Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: puzzle-games-windows-setup
+          name: mindstack-windows-setup
           path: build/windows/x64/runner/release/installer/*.exe

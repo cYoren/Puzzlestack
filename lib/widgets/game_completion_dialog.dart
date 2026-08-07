@@ -329,7 +329,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> wit
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
-                        onTap: () => _launchUrl('https://play.google.com/store/apps/details?id=com.sidhant.puzzle'),
+                        onTap: () => _launchUrl('https://play.google.com/store/apps/details?id=com.medhub.mindstack'),
                         borderRadius: BorderRadius.circular(DesignSystem.radiusXS),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -361,7 +361,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> wit
                         color: colorScheme.outline.withValues(alpha: 0.5),
                       ),
                       InkWell(
-                        onTap: () => _launchUrl('https://github.com/sidhant947/Puzzle/issues'),
+                        onTap: () => _launchUrl('https://github.com/cYoren/Mindstack/issues'),
                         borderRadius: BorderRadius.circular(DesignSystem.radiusXS),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

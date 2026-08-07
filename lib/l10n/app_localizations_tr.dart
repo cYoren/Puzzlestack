@@ -9,7 +9,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appTitle => 'Puzzle Hub';
+  String get appTitle => 'Mindstack';
 
   @override
   String get home => 'Ana Sayfa';

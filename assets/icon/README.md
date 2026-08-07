@@ -1,10 +1,11 @@
 # App icon
 
-`puzzlebox_icon.png` here is a **placeholder** generated to match the PuzzleBox
-logo (dark rounded square, four interlocking pieces in blue/green/amber/orange).
+`mindstack_icon.png` is the Mindstack mark: three cascading rounded cards
+(indigo → indigo → amber) on the brand's near-black background, referencing
+both the "stack" in the name and the app's Shuffle feed.
 
-Before deploying to stores, replace it with the final 1024×1024 export of the
-real logo (same filename), then regenerate every platform's icons:
+To update it, replace the 1024×1024 PNG here (same filename), then regenerate
+every platform's icons:
 
 ```bash
 dart run flutter_launcher_icons
