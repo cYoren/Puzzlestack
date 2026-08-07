@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Capture + frame PuzzleBox store screenshots locally.
+# Capture + frame Mindstack store screenshots locally.
 #
 # Usage:
 #   tool/screenshots.sh                 # uses the first available device
