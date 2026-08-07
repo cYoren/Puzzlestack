@@ -1,5 +1,9 @@
 // Automated store screenshots for Mindstack.
 //
+// The MainShell context is intentionally held across await points; see the
+// comment at its declaration for why re-resolving it does not work here.
+// ignore_for_file: use_build_context_synchronously
+//
 // Captures the discovery home plus a curated "hero set" of games, one PNG each.
 // Raw PNGs are written by test_driver/integration_test.dart into screenshots/raw/.
 // Run via tool/screenshots.sh (or the GitHub Actions workflow), then frame them
@@ -99,13 +103,19 @@ void main() {
     await _shoot(binding, tester, '00_home');
 
     // 2. Each hero game, pushed programmatically off the home navigator.
+    //
+    // This context is deliberately resolved once and reused. Do not "fix" it
+    // by re-resolving inside the loop: once a game route is pushed, MainShell
+    // is offstage, and find.byType skips offstage widgets, so the lookup
+    // throws "Bad state: No element". MainShell is never disposed during the
+    // test, so the element stays valid and the async-gap lint below is a false
+    // positive here.
     final BuildContext context = tester.element(find.byType(MainShell));
     var index = 1;
     for (final id in kHeroGameIds) {
       final game = GameCatalog.find(id);
       if (game == null) continue;
 
-      // ignore: use_build_context_synchronously
       Navigator.of(context).push(
         CustomPageRoute(page: game.buildScreen(context)),
       );
@@ -114,7 +124,6 @@ void main() {
       final label = index.toString().padLeft(2, '0');
       await _shoot(binding, tester, '${label}_$id');
 
-      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       await _settle(tester);
       index++;

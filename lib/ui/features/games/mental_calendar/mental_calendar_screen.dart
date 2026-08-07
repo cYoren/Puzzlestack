@@ -144,6 +144,9 @@ class MentalCalendarScreen extends ConsumerWidget {
       if (score >= 7) {
         ref.read(gameStreakNotifierProvider.notifier).completeGame('mental_calendar');
       }
+      // The microtask can run after the screen is popped; showing a dialog
+      // with a dead context would throw.
+      if (!context.mounted) return;
       showDialog(
         context: context,
         barrierDismissible: false,
