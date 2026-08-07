@@ -30,7 +30,7 @@ PRESETS = {
 # Brand
 BG_TOP = (18, 19, 22)
 BG_BOTTOM = (10, 10, 12)
-ACCENT = (99, 102, 241)  # indigo, matches DesignSystem.primary
+ACCENT = (67, 56, 202)  # indigo, matches DesignSystem.primary
 CAPTION_COLOR = (245, 247, 250)
 
 # Per-screenshot captions (by raw filename stem, ignoring the NN_ prefix).

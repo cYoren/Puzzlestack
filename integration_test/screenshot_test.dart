@@ -50,15 +50,21 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
+bool _surfaceConverted = false;
+
 Future<void> _shoot(
   IntegrationTestWidgetsFlutterBinding binding,
   WidgetTester tester,
   String name,
 ) async {
-  // Android needs the surface converted to an image before each capture.
-  if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+  // Android must render into an image surface to be capturable, but the
+  // conversion is one-way and asserts if repeated, so do it once per run.
+  if (!kIsWeb &&
+      defaultTargetPlatform == TargetPlatform.android &&
+      !_surfaceConverted) {
     await binding.convertFlutterSurfaceToImage();
     await tester.pump();
+    _surfaceConverted = true;
   }
   await binding.takeScreenshot(name);
 }
