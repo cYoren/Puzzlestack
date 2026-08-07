@@ -111,3 +111,9 @@ Then copy the ones you want from `screenshots/store/play_phone/` into
   not affect Google Play.
 - **First Play release.** `applicationId` changed during the rebrand, so this
   is a new listing rather than an update to any previous one.
+- **Flutter SDK skew.** CI runs Flutter stable, which is ahead of the SDK this
+  project builds against, and reports one deprecation:
+  `cacheExtent` → `scrollCacheExtent` in
+  `lib/ui/features/home/home_screen.dart`. The replacement does not exist in
+  the older stable, so fix it as part of a deliberate SDK upgrade rather than
+  on its own. It is an info, not a warning, and does not fail CI.
