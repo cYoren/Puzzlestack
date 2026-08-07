@@ -43,3 +43,7 @@ The internal Dart package name stays `puzzle` (it is referenced by ~126 files an
 ## License
 
 GPL-3.0. See [LICENSE](LICENSE).
+
+Mindstack is a modified derivative of [Puzzle](https://github.com/sidhant947/Puzzle)
+by Sidhant Khatkar, also GPL-3.0. See [NOTICE](NOTICE) for the attribution and
+the list of modifications.
