@@ -44,8 +44,16 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Generated store screenshots (artifacts, not source)
-/screenshots/
+# Store screenshots.
+# The composed final sets ARE tracked — they are the images that ship to the App Store and
+# Google Play, and a future agent must be able to find them without re-running a capture.
+# Raw captures and the framed intermediates are regenerable build artifacts and stay ignored.
+# See screenshots/README.md for which paths are canonical.
+/screenshots/*
+!/screenshots/README.md
+!/screenshots/aso-refresh/
+/screenshots/aso-refresh/*
+!/screenshots/aso-refresh/final/
 /_frame_preview.png
 
 

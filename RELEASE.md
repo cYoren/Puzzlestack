@@ -96,7 +96,7 @@ Regenerate screenshots after any UI change:
 tool/screenshots.sh emulator-5554
 ```
 
-Then copy the ones you want from `screenshots/store/play_phone/` into
+Then copy the ones you want from `screenshots/aso-refresh/final/android/phone/` into
 `phoneScreenshots/`, numbered `1.png`–`8.png` (Play accepts at most 8).
 
 ## Still open
