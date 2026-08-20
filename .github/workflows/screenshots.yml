@@ -59,7 +59,7 @@ jobs:
               --driver=test_driver/integration_test.dart \
               --target=integration_test/screenshot_test.dart \
               -d emulator-5554
-            python3 tool/frame_screenshots.py
+            python3 tool/compose_house_style.py
 
       - name: Upload screenshots
         if: always()
@@ -68,5 +68,5 @@ jobs:
           name: mindstack-screenshots
           path: |
             screenshots/raw/**
-            screenshots/store/**
+            screenshots/aso-refresh/final/**
           if-no-files-found: warn
