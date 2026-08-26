@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../data/models/user_data.dart';
 import '../data/models/game_streak.dart';
 import '../data/repositories/user_repository.dart';
+import '../core/review_prompt_service.dart';
 
 part 'user_providers.g.dart';
 
@@ -264,6 +265,22 @@ class GameStreakNotifier extends _$GameStreakNotifier {
 
     // Check for super streak
     await ref.read(userDataNotifierProvider.notifier).updateSuperStreak(state);
+
+    // Ask for a review only after XP, the streak and the super streak are all
+    // persisted, so a prompt can never sit in front of a save. A headline
+    // streak is the proudest moment here and is worth an ask on its own; an
+    // ordinary solve has to stack up with others first. The early return above
+    // means a second solve on the same day never reaches this.
+    const streakMilestones = {7, 30, 100};
+    final hitMilestone = streakMilestones.contains(newStreakCount);
+    unawaited(
+      ReviewPromptService.record(
+        hitMilestone ? ReviewMoment.peak : ReviewMoment.routine,
+        // Streaks are per game, so day 7 of each game counts once.
+        dedupeKey:
+            hitMilestone ? 'streak-$gameId-$newStreakCount' : null,
+      ),
+    );
 
     return true;
   }
