@@ -110,11 +110,4 @@ class SudokuEngine {
     }
     return true;
   }
-
-  static bool isCorrectWrapper(Map<String, dynamic> params) {
-    final engine = SudokuEngine();
-    final board = params['board'] as List<List<int>>;
-    final solvedBoard = params['solvedBoard'] as List<List<int>>;
-    return engine.isCorrect(board, solvedBoard);
-  }
 }

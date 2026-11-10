@@ -6,7 +6,7 @@ part of 'water_sort_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$waterSortNotifierHash() => r'8c0e84426e9aa7317df1ec068148ac25f3c99d2d';
+String _$waterSortNotifierHash() => r'2c0499ffc7d96e55bf3dcda1a277eeeb4fd30464';
 
 /// See also [WaterSortNotifier].
 @ProviderFor(WaterSortNotifier)

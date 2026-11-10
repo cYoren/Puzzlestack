@@ -1,20 +1,20 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter/material.dart';
+import '../../../core/board/puzzle_board.dart';
 import 'water_sort_engine.dart';
-import '../../../../providers/user_providers.dart';
 
 part 'water_sort_provider.g.dart';
 
-class WaterSortState {
-  final List<List<Color>> tubes;
-  final int? selectedTubeIndex;
-  final bool isSolved;
-
-  WaterSortState({
+class WaterSortState extends PuzzleState {
+  const WaterSortState({
     required this.tubes,
     this.selectedTubeIndex,
     this.isSolved = false,
   });
+
+  final List<List<Color>> tubes;
+  final int? selectedTubeIndex;
+  final bool isSolved;
 
   WaterSortState copyWith({
     List<List<Color>>? tubes,
@@ -24,7 +24,8 @@ class WaterSortState {
   }) {
     return WaterSortState(
       tubes: tubes ?? this.tubes,
-      selectedTubeIndex: clearSelection ? null : (selectedTubeIndex ?? this.selectedTubeIndex),
+      selectedTubeIndex:
+          clearSelection ? null : (selectedTubeIndex ?? this.selectedTubeIndex),
       isSolved: isSolved ?? this.isSolved,
     );
   }
@@ -39,37 +40,11 @@ class WaterSortNotifier extends _$WaterSortNotifier {
     return WaterSortState(tubes: _engine.generateLevel());
   }
 
-  void selectTube(int index) {
+  /// The only way this state changes. The board owns the rules; this is a store.
+  void applyMove(PuzzleMove<WaterSortState> move) {
     if (state.isSolved) return;
-
-    if (state.selectedTubeIndex == null) {
-      if (state.tubes[index].isNotEmpty) {
-        state = state.copyWith(selectedTubeIndex: index);
-      }
-    } else if (state.selectedTubeIndex == index) {
-      state = state.copyWith(clearSelection: true);
-    } else {
-      final fromIndex = state.selectedTubeIndex!;
-      final toIndex = index;
-      
-      final tubes = [for (var t in state.tubes) [...t]];
-      if (_engine.canPour(tubes[fromIndex], tubes[toIndex])) {
-        _engine.pour(tubes[fromIndex], tubes[toIndex]);
-        final isSolved = _engine.isSolved(tubes);
-        
-        state = state.copyWith(
-          tubes: tubes,
-          clearSelection: true,
-          isSolved: isSolved,
-        );
-
-        if (isSolved) {
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('water_sort', xpAmount: 30);
-        }
-      } else {
-        state = state.copyWith(clearSelection: true);
-      }
-    }
+    final next = move.apply(state);
+    state = next.copyWith(isSolved: _engine.isSolved(next.tubes));
   }
 
   void reset() {

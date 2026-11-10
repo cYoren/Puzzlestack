@@ -135,6 +135,15 @@ tactile feel without writing gesture code, and a port becomes generator + rules 
 five motion moves and five verbs are the only ones in the codebase, and a tap-only player can
 finish all three.
 
+**Landed.** `lib/ui/core/board/` (contract, engine, motion, verbs) plus `sudoku_board.dart`,
+`slitherlink_board.dart` and `water_sort_board.dart`. The three screens lost 780 lines between
+them and gained 196: the boards own rules, geometry and paint, the engine owns touch. `flutter
+analyze` is clean and 38 tests cover the contract, the drag engine and each board's rules.
+
+One deliberate call: the Sudoku digit pad is **part of the board**, not chrome beside it, so
+picking a digit is a board tap and carrying a digit onto a cell is a declared move. That is
+what keeps the puzzle free of gestures rather than merely almost free.
+
 ---
 
 ## Phase 2 — Pull the 44 upstream games

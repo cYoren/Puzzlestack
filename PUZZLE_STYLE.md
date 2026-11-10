@@ -42,6 +42,42 @@ abstract class PuzzleBoard<S extends PuzzleState> {
 
 A puzzle that draws its own chrome, or wires its own `GestureDetector`, does not pass.
 
+### What landed (Phase 1)
+
+`lib/ui/core/board/` is the whole interaction layer. Four files, no puzzle-specific
+code in any of them:
+
+| File | What it owns |
+| --- | --- |
+| `puzzle_board.dart` | `PuzzleBoard`, `PuzzleMove`, `ElementRef`, `PuzzleCanvas`, `PuzzlePalette`, `BoardHighlight` |
+| `puzzle_board_view.dart` | the drag engine: hit test, lift, follow, drop zones, snap, recoil, win cascade |
+| `board_motion.dart` | the five moves and their springs, in one place |
+| `board_verb.dart` | the five verbs, mapped to `HapticFeedbackUtil` |
+
+Three details that make a port short:
+
+**Geometry is normalised.** `boundsOf()` returns a `Rect` in 0..1 across the board box, and
+`PuzzleCanvas` converts to pixels. A board never learns its own size, so the same code paints
+at 320dp and on a tablet, and `hitTest` works without a layout pass.
+
+**A move carries its own transition.** `PuzzleMove.apply` is `S Function(S)`, so the notifier
+that stores state never learns a puzzle's rules:
+
+```dart
+void applyMove(PuzzleMove<SudokuState> move) {
+  final next = move.apply(state);
+  state = next.copyWith(isSolved: _isSolved(next));
+}
+```
+
+**`paintElement` is required.** The engine draws the floating copy during a drag and the pop
+during the win cascade by calling it, so a board never duplicates its drawing code and never
+needs to know it is being animated.
+
+A move with a `target` is draggable; a move without one resolves on tap. That single rule is
+why the same engine gives Sudoku a digit you can carry onto a cell, Slitherlink a line you
+draw from dot to dot, and Water Sort a tube you pour into another.
+
 ## 2. Dragging is declared, not coded
 
 The interaction layer follows **Declarative Dragging** (Horowitz, Blinn & Heer, UIST 2026,
@@ -126,6 +162,10 @@ Five moves. Nothing longer than 300ms. Nothing loops. **Heavy lift, fast land.**
 The asymmetry is the point: 200ms up, 160ms down. The lift is where the object gains
 weight and the possible worlds appear; the landing is where it commits. Equal durations
 read as a toggle, not as a grab.
+
+The win cascade keeps its 45ms stagger only while it fits: `BoardMotion.staggerFor(count)`
+compresses it so a full 81-cell board still finishes inside 500ms instead of taking four
+seconds.
 
 Motion is feedback, not decoration. If a cell moves, the player learned something.
 
