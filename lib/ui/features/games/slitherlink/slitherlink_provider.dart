@@ -1,21 +1,21 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../core/board/puzzle_board.dart';
 import 'slitherlink_engine.dart';
-import '../../../../providers/user_providers.dart';
 
 part 'slitherlink_provider.g.dart';
 
-class SlitherlinkState {
-  final SlitherlinkLevel level;
-  final List<List<bool>> currentHEdges;
-  final List<List<bool>> currentVEdges;
-  final bool isSolved;
-
-  SlitherlinkState({
+class SlitherlinkState extends PuzzleState {
+  const SlitherlinkState({
     required this.level,
     required this.currentHEdges,
     required this.currentVEdges,
     this.isSolved = false,
   });
+
+  final SlitherlinkLevel level;
+  final List<List<bool>> currentHEdges;
+  final List<List<bool>> currentVEdges;
+  final bool isSolved;
 
   SlitherlinkState copyWith({
     SlitherlinkLevel? level,
@@ -46,32 +46,17 @@ class SlitherlinkNotifier extends _$SlitherlinkNotifier {
     );
   }
 
-  void toggleHEdge(int r, int c) {
+  /// The only way this state changes. The board owns the rules; this is a store.
+  void applyMove(PuzzleMove<SlitherlinkState> move) {
     if (state.isSolved) return;
-
-    final newHEdges = [for (var row in state.currentHEdges) [...row]];
-    newHEdges[r][c] = !newHEdges[r][c];
-
-    final isSolved = _checkSolved(newHEdges, state.currentVEdges);
-    state = state.copyWith(currentHEdges: newHEdges, isSolved: isSolved);
-
-    if (isSolved) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('slitherlink', xpAmount: 25);
-    }
-  }
-
-  void toggleVEdge(int r, int c) {
-    if (state.isSolved) return;
-
-    final newVEdges = [for (var row in state.currentVEdges) [...row]];
-    newVEdges[r][c] = !newVEdges[r][c];
-
-    final isSolved = _checkSolved(state.currentHEdges, newVEdges);
-    state = state.copyWith(currentVEdges: newVEdges, isSolved: isSolved);
-
-    if (isSolved) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('slitherlink', xpAmount: 25);
-    }
+    final next = move.apply(state);
+    state = next.copyWith(
+      isSolved: _engine.isSolved(
+        next.level,
+        next.currentHEdges,
+        next.currentVEdges,
+      ),
+    );
   }
 
   void reset() {
@@ -91,28 +76,5 @@ class SlitherlinkNotifier extends _$SlitherlinkNotifier {
       currentVEdges: List.generate(level.size, (_) => List.filled(level.size + 1, false)),
       isSolved: false,
     );
-  }
-
-  bool _checkSolved(List<List<bool>> hEdges, List<List<bool>> vEdges) {
-    final level = state.level;
-    final size = level.size;
-
-    // 1. Check all clue constraints
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        final clue = level.clues[r][c];
-        if (clue != null) {
-          int count = 0;
-          if (hEdges[r][c]) count++;       // Top
-          if (hEdges[r + 1][c]) count++;   // Bottom
-          if (vEdges[r][c]) count++;       // Left
-          if (vEdges[r][c + 1]) count++;   // Right
-          if (count != clue) return false;
-        }
-      }
-    }
-
-    // 2. Check if the edges form a single closed loop
-    return _engine.isValidSingleLoop(size, hEdges, vEdges);
   }
 }

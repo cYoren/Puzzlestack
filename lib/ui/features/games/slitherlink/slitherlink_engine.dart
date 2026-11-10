@@ -123,6 +123,29 @@ class SlitherlinkEngine {
     }
   }
 
+  /// The whole win condition: every clue satisfied, and the drawn edges form
+  /// exactly one closed loop.
+  bool isSolved(
+    SlitherlinkLevel level,
+    List<List<bool>> hEdges,
+    List<List<bool>> vEdges,
+  ) {
+    final size = level.size;
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        final clue = level.clues[r][c];
+        if (clue == null) continue;
+        var count = 0;
+        if (hEdges[r][c]) count++;
+        if (hEdges[r + 1][c]) count++;
+        if (vEdges[r][c]) count++;
+        if (vEdges[r][c + 1]) count++;
+        if (count != clue) return false;
+      }
+    }
+    return isValidSingleLoop(size, hEdges, vEdges);
+  }
+
   bool isValidSingleLoop(int size, List<List<bool>> hEdges, List<List<bool>> vEdges) {
     // Calculate degree for each vertex (dots)
     // Vertices are from (0,0) to (size, size)
