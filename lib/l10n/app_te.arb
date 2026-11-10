@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "పెగ్స్",
+  "pegsSubtitle": "ఒక పెగ్‌ను దాని పక్కదానిపై దూకించి తీసేయండి. ఒకటి మాత్రమే మిగలండి.",
+  "pegsCongrats": "ఒక పెగ్ మిగిలింది. శుభ్రమైన బోర్డు.",
+  "twiddleTitle": "ట్విడిల్",
+  "twiddleSubtitle": "సంఖ్యలు వరుసగా వచ్చేవరకు బ్లాక్‌లను తిప్పండి.",
+  "twiddleCongrats": "ప్రతి సంఖ్య తన స్థానంలో.",
+  "difficultyEasy": "సులభం",
+  "difficultyMedium": "మధ్యస్థం",
+  "difficultyHard": "కష్టం"
 }

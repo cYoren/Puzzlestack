@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "페그",
+  "pegsSubtitle": "페그를 이웃 위로 뛰어넘어 없애세요. 하나만 남기면 됩니다.",
+  "pegsCongrats": "페그 하나만 남았습니다. 깔끔한 판입니다.",
+  "twiddleTitle": "트위들",
+  "twiddleSubtitle": "숫자가 순서대로 놓일 때까지 블록을 돌리세요.",
+  "twiddleCongrats": "모든 숫자가 제자리에.",
+  "difficultyEasy": "쉬움",
+  "difficultyMedium": "보통",
+  "difficultyHard": "어려움"
 }

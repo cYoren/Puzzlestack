@@ -5971,4 +5971,32 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => 'หมุด';
+
+  @override
+  String get pegsSubtitle =>
+      'กระโดดหมุดข้ามหมุดข้างเคียงเพื่อกิน ให้เหลือเพียงหมุดเดียว';
+
+  @override
+  String get pegsCongrats => 'เหลือหมุดเดียว กระดานสะอาดหมดจด';
+
+  @override
+  String get twiddleTitle => 'หมุนบล็อก';
+
+  @override
+  String get twiddleSubtitle => 'หมุนบล็อกจนตัวเลขเรียงตามลำดับ';
+
+  @override
+  String get twiddleCongrats => 'ทุกตัวเลขอยู่ถูกที่';
+
+  @override
+  String get difficultyEasy => 'ง่าย';
+
+  @override
+  String get difficultyMedium => 'ปานกลาง';
+
+  @override
+  String get difficultyHard => 'ยาก';
 }

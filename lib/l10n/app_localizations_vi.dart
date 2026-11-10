@@ -6069,4 +6069,33 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => 'Pegs';
+
+  @override
+  String get pegsSubtitle =>
+      'Nhảy một quân qua quân bên cạnh để ăn. Chỉ để lại một quân.';
+
+  @override
+  String get pegsCongrats => 'Còn lại một quân. Bàn cờ sạch sẽ.';
+
+  @override
+  String get twiddleTitle => 'Twiddle';
+
+  @override
+  String get twiddleSubtitle =>
+      'Xoay các khối cho đến khi các số theo đúng thứ tự.';
+
+  @override
+  String get twiddleCongrats => 'Mọi con số đều đúng chỗ.';
+
+  @override
+  String get difficultyEasy => 'DỄ';
+
+  @override
+  String get difficultyMedium => 'VỪA';
+
+  @override
+  String get difficultyHard => 'KHÓ';
 }

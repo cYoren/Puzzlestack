@@ -10658,6 +10658,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exceptional visuospatial working memory manipulation and reverse sequencing!'**
   String get corsiBackwardSpanWinMessage;
+
+  /// No description provided for @pegsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pegs'**
+  String get pegsTitle;
+
+  /// No description provided for @pegsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump a peg over its neighbour to capture it. Leave one standing.'**
+  String get pegsSubtitle;
+
+  /// No description provided for @pegsCongrats.
+  ///
+  /// In en, this message translates to:
+  /// **'One peg left. That is a clean board.'**
+  String get pegsCongrats;
+
+  /// No description provided for @twiddleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Twiddle'**
+  String get twiddleTitle;
+
+  /// No description provided for @twiddleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn blocks until the numbers run in order.'**
+  String get twiddleSubtitle;
+
+  /// No description provided for @twiddleCongrats.
+  ///
+  /// In en, this message translates to:
+  /// **'Every number in its place.'**
+  String get twiddleCongrats;
+
+  /// No description provided for @difficultyEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'EASY'**
+  String get difficultyEasy;
+
+  /// No description provided for @difficultyMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'MEDIUM'**
+  String get difficultyMedium;
+
+  /// No description provided for @difficultyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'HARD'**
+  String get difficultyHard;
 }
 
 class _AppLocalizationsDelegate

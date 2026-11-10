@@ -6048,4 +6048,32 @@ class AppLocalizationsMr extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => 'पेग्स';
+
+  @override
+  String get pegsSubtitle =>
+      'एक पेग त्याच्या शेजाऱ्यावरून उडी मारून काढा. फक्त एक ठेवा.';
+
+  @override
+  String get pegsCongrats => 'एक पेग शिल्लक. स्वच्छ बोर्ड.';
+
+  @override
+  String get twiddleTitle => 'ट्विडल';
+
+  @override
+  String get twiddleSubtitle => 'संख्या क्रमाने येईपर्यंत ब्लॉक फिरवा.';
+
+  @override
+  String get twiddleCongrats => 'प्रत्येक संख्या आपल्या जागी.';
+
+  @override
+  String get difficultyEasy => 'सोपे';
+
+  @override
+  String get difficultyMedium => 'मध्यम';
+
+  @override
+  String get difficultyHard => 'कठीण';
 }

@@ -6046,4 +6046,32 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => 'Pegs';
+
+  @override
+  String get pegsSubtitle =>
+      'Jump a peg over its neighbour to capture it. Leave one standing.';
+
+  @override
+  String get pegsCongrats => 'One peg left. That is a clean board.';
+
+  @override
+  String get twiddleTitle => 'Twiddle';
+
+  @override
+  String get twiddleSubtitle => 'Turn blocks until the numbers run in order.';
+
+  @override
+  String get twiddleCongrats => 'Every number in its place.';
+
+  @override
+  String get difficultyEasy => 'EASY';
+
+  @override
+  String get difficultyMedium => 'MEDIUM';
+
+  @override
+  String get difficultyHard => 'HARD';
 }

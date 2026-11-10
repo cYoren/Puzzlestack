@@ -5760,4 +5760,31 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => '페그';
+
+  @override
+  String get pegsSubtitle => '페그를 이웃 위로 뛰어넘어 없애세요. 하나만 남기면 됩니다.';
+
+  @override
+  String get pegsCongrats => '페그 하나만 남았습니다. 깔끔한 판입니다.';
+
+  @override
+  String get twiddleTitle => '트위들';
+
+  @override
+  String get twiddleSubtitle => '숫자가 순서대로 놓일 때까지 블록을 돌리세요.';
+
+  @override
+  String get twiddleCongrats => '모든 숫자가 제자리에.';
+
+  @override
+  String get difficultyEasy => '쉬움';
+
+  @override
+  String get difficultyMedium => '보통';
+
+  @override
+  String get difficultyHard => '어려움';
 }

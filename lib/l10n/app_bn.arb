@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "পেগ",
+  "pegsSubtitle": "একটি পেগকে তার প্রতিবেশীর উপর দিয়ে লাফ দিয়ে সরিয়ে নিন। একটি রেখে দিন।",
+  "pegsCongrats": "একটি পেগ বাকি। পরিষ্কার বোর্ড।",
+  "twiddleTitle": "টুইডল",
+  "twiddleSubtitle": "সংখ্যাগুলো ক্রমে না আসা পর্যন্ত ব্লক ঘোরান।",
+  "twiddleCongrats": "প্রতিটি সংখ্যা নিজের জায়গায়।",
+  "difficultyEasy": "সহজ",
+  "difficultyMedium": "মাঝারি",
+  "difficultyHard": "কঠিন"
 }

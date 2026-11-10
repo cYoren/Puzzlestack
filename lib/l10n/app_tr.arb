@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "Pegs",
+  "pegsSubtitle": "Bir pulu komşusunun üzerinden atlatıp alın. Tek pul kalsın.",
+  "pegsCongrats": "Tek pul kaldı. Tertemiz bir tahta.",
+  "twiddleTitle": "Twiddle",
+  "twiddleSubtitle": "Sayılar sıraya gelene kadar blokları döndür.",
+  "twiddleCongrats": "Her sayı yerinde.",
+  "difficultyEasy": "KOLAY",
+  "difficultyMedium": "ORTA",
+  "difficultyHard": "ZOR"
 }

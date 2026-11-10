@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "Pegs",
+  "pegsSubtitle": "Nhảy một quân qua quân bên cạnh để ăn. Chỉ để lại một quân.",
+  "pegsCongrats": "Còn lại một quân. Bàn cờ sạch sẽ.",
+  "twiddleTitle": "Twiddle",
+  "twiddleSubtitle": "Xoay các khối cho đến khi các số theo đúng thứ tự.",
+  "twiddleCongrats": "Mọi con số đều đúng chỗ.",
+  "difficultyEasy": "DỄ",
+  "difficultyMedium": "VỪA",
+  "difficultyHard": "KHÓ"
 }

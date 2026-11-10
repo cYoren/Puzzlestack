@@ -5079,4 +5079,38 @@ const Map<String, GameGuide> gameGuides = {
       "If you're stuck on a word, switch to the intersecting words to get more letters.",
     ],
   ),
+  "pegs": GameGuide(
+    title: "Pegs",
+    category: "LOGIC",
+    objective: "Clear the board until a single peg is left. Every jump captures the peg it hops over.",
+    controls: "Drag a peg onto the square it should land on. Or tap a peg to pick it up and tap the landing square. The hint button shows one jump.",
+    walkthrough: [
+      "Step 1: Look for a peg with an empty square exactly two cells away and a peg between them. That is a jump.",
+      "Step 2: Drag that peg onto the empty square. The peg it jumped over is removed.",
+      "Step 3: Keep jumping toward the edges. A peg stranded in a corner with no partner can never be captured.",
+      "Step 4: Finish when one peg remains.",
+    ],
+    strategies: [
+      "Work from the outside in. The middle of the board is where you want your last peg, not where you want to start clearing.",
+      "Before a jump, check whether it leaves a peg isolated with no neighbour to jump over. That peg is dead weight you can never remove.",
+      "If two jumps look equally good, take the one that keeps the remaining pegs close together.",
+    ],
+  ),
+  "twiddle": GameGuide(
+    title: "Twiddle",
+    category: "LOGIC",
+    objective: "Turn blocks of tiles until the numbers run in order from the top left.",
+    controls: "Drag a tile onto the square the turn would move it to. Or tap a tile to turn the block around it clockwise. The hint button outlines a block worth turning.",
+    walkthrough: [
+      "Step 1: Find the tile numbered 1 and turn the block that contains it until it sits in the top left corner.",
+      "Step 2: Do the same for 2, then 3, working along the top row without disturbing what you have already placed.",
+      "Step 3: Move down a row at a time. Tiles already in place are tinted, so you can see your progress.",
+      "Step 4: Finish when every number is in its home square.",
+    ],
+    strategies: [
+      "Solve the top row first, then the left column, then the remaining block. Each step shrinks the area you still have to turn.",
+      "A quarter turn moves four tiles at once, so prefer turns that fix two numbers rather than one.",
+      "If a turn breaks a tile you already placed, undo it: every turn has an exact opposite.",
+    ],
+  ),
 };

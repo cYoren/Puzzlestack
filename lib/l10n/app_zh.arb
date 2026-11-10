@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "孔明棋",
+  "pegsSubtitle": "跳过相邻的棋子把它吃掉，最后只留一枚。",
+  "pegsCongrats": "只剩一枚，棋盘清得干净。",
+  "twiddleTitle": "旋转方块",
+  "twiddleSubtitle": "转动方块，让数字按顺序排好。",
+  "twiddleCongrats": "每个数字都归位了。",
+  "difficultyEasy": "简单",
+  "difficultyMedium": "中等",
+  "difficultyHard": "困难"
 }
