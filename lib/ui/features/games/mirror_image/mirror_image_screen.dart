@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import '../../../core/juice/game_scaffold.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../../utils/design_system.dart';
@@ -51,7 +53,7 @@ class MirrorImageScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Text('MIRROR IMAGE', style: TextStyle(color: DesignSystem.primary, fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.w900)),
+            Text(AppLocalizations.of(context)!.mirrorImageText, style: TextStyle(color: DesignSystem.primary, fontSize: 14, letterSpacing: 2, fontWeight: FontWeight.w900)),
             const SizedBox(height: 8),
             Text(l10n.mirrorImageHowToPlay, textAlign: TextAlign.center, style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7), fontSize: 12, fontWeight: FontWeight.w500, height: 1.5)),
           ],
@@ -139,8 +141,8 @@ class MirrorImageScreen extends ConsumerWidget {
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: 'MIRROR MASTER!',
-        message: 'You perfectly identified the reflection.',
+        title: L10nGameHelpers.getGameTitle(context, 'mirror_image'),
+        message: AppLocalizations.of(context)!.mirrorImageMessage,
         onHome: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();

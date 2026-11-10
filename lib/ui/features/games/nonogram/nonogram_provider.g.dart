@@ -6,7 +6,7 @@ part of 'nonogram_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$nonogramNotifierHash() => r'8c36f9444270a05f6450c8c84d615bc589b51740';
+String _$nonogramNotifierHash() => r'0d7a90e2048cc85859aa5d84dcedc1137aea9b9d';
 
 /// See also [NonogramNotifier].
 @ProviderFor(NonogramNotifier)

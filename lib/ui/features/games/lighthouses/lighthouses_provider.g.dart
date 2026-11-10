@@ -7,7 +7,7 @@ part of 'lighthouses_provider.dart';
 // **************************************************************************
 
 String _$lighthousesNotifierHash() =>
-    r'17c21d5c981164b08925646e2a502db066c84de3';
+    r'b7ac4801ed255f83644cd6b1c54323213f647837';
 
 /// See also [LighthousesNotifier].
 @ProviderFor(LighthousesNotifier)

@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -33,7 +35,7 @@ class _SymbolicFlankerScreenState extends ConsumerState<SymbolicFlankerScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.timeUp.toUpperCase(),
-        message: 'You got ${state.score} correct out of ${state.totalTrials}!',
+        message: AppLocalizations.of(context)!.symbolicFlankerMessage((state.score).toString(), (state.totalTrials).toString()),
         isVictory: state.score > 20,
         onHome: () {
           Navigator.of(context).pop();
@@ -65,13 +67,13 @@ class _SymbolicFlankerScreenState extends ConsumerState<SymbolicFlankerScreen> {
 
     if (state.isLoading) {
       return GameScaffold(
-        title: 'Symbolic Flanker',
+        title: L10nGameHelpers.getGameTitle(context, 'symbolic_flanker'),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return GameScaffold(
-      title: 'Symbolic Flanker',
+      title: L10nGameHelpers.getGameTitle(context, 'symbolic_flanker'),
       subtitle: l10n.symbolicFlankerSubtitle,
       body: Column(
         children: [

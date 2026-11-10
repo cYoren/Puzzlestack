@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../data/game_catalog.dart';
+import '../../../data/game_categories.dart';
+import '../../../data/game_metadata.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/navigation_utils.dart';
 import '../shuffle/shuffle_feed_screen.dart';
@@ -11,17 +12,17 @@ class CategoryRoomScreen extends StatelessWidget {
 
   const CategoryRoomScreen({super.key, required this.categoryId});
 
-  void _openGame(BuildContext context, GameInfo game) {
+  void _openGame(BuildContext context, GameMetadata game) {
     Navigator.push(
       context,
-      CustomPageRoute(page: game.buildScreen(context)),
+      CustomPageRoute(page: game.builder(context)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final cat = GameCatalog.categoryInfo(categoryId);
-    final games = GameCatalog.inCategory(categoryId);
+    final cat = GameCategories.info(categoryId);
+    final games = GameCategories.inCategory(categoryId);
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -140,7 +141,7 @@ class CategoryRoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _gameTile(BuildContext context, GameInfo game) {
+  Widget _gameTile(BuildContext context, GameMetadata game) {
     return GestureDetector(
       onTap: () => _openGame(context, game),
       child: Container(
@@ -156,7 +157,7 @@ class CategoryRoomScreen extends StatelessWidget {
           children: [
             Icon(game.icon, color: game.color, size: 30),
             Text(
-              game.title,
+              game.titleGetter(context),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

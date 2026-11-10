@@ -1,15 +1,21 @@
 {
   "@@locale": "ru",
   "appTitle": "Puzzlestack",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
   "home": "Главная",
   "settings": "Настройки",
   "playAgain": "Играть снова",
+  "playNext": "Играть дальше",
   "seeCompleted": "Просмотр пазла",
   "finish": "Завершить",
   "congrats": "Поздравляем",
   "perfectGradient": "Идеальный градиент!",
   "wellDone": "Отлично!",
   "timeUp": "Время вышло!",
+  "victory": "Победа!",
+  "gameWin": "ОТЛИЧНО!",
   "completed": "Завершено!",
   "score": "Счет",
   "timeLeft": "Время",
@@ -36,6 +42,8 @@
   "moves": "Ходы",
   "trialMode": "Режим испытаний",
   "trialModeDescription": "Решите 20 задач вместо таймера на 60 сек",
+  "keepScreenAwake": "Не выключать экран",
+  "keepScreenAwakeDescription": "Предотвращает отключение экрана во время игры",
   "appearance": "Внешний вид",
   "language": "Язык",
   "gameplay": "Геймплей",
@@ -65,12 +73,84 @@
   "termsOfService": "Условия использования",
   "licenses": "Лицензии",
   "findWordSubtitle": "У вас есть {maxTries} попыток, чтобы найти слово из {wordLength} букв.",
+  "@findWordSubtitle": {
+    "placeholders": {
+      "maxTries": {
+        "type": "int"
+      },
+      "wordLength": {
+        "type": "int"
+      }
+    }
+  },
   "wordFoundMessage": "Слово найдено: {word}",
+  "@wordFoundMessage": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
   "gameOverMessage": "Загаданное слово: {word}",
+  "@gameOverMessage": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
   "gameOver": "Игра окончена",
   "crosswordTitle": "Кроссворд",
   "crosswordSubtitle": "Заполните сетку словами, основываясь на подсказках.",
   "wordSearchTitle": "Поиск слов",
+  "radicalRootsTitle": "Радикальные корни",
+  "radicalRootsSubtitle": "Найдите квадратный или кубический корень из заданного числа. При необходимости округлите до ближайшего целого числа.",
+  "radicalRootsGoalReached": "Цель достигнута!",
+  "radicalRootsTimeUp": "Время вышло!",
+  "radicalRootsScoreMessage": "Вы правильно вычислили {score} корней!",
+  "@radicalRootsScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "radicalRootsTryAgainMessage": "Продолжайте практиковаться! Вы вычислили {score} корней.",
+  "@radicalRootsTryAgainMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "radicalRootsStart": "Начать вычисления",
+  "radicalRootsDescription": "У вас есть 60 секунд, чтобы решить как можно больше задач.",
+  "radicalRootsBest": "Рекорд",
+  "radicalRootsSeconds": "60 СЕКУНД",
+  "romanArithmeticTitle": "Римская арифметика",
+  "romanArithmeticSubtitle": "Решайте задачи на сложение и вычитание, используя римские цифры.",
+  "romanArithmeticGoalReached": "Уровень Центуриона!",
+  "romanArithmeticTimeUp": "Время вышло!",
+  "romanArithmeticScoreMessage": "Вы решили {score} римских задач!",
+  "@romanArithmeticScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "romanArithmeticTryAgainMessage": "Veni, Vidi, Vici! Вы решили {score} задач.",
+  "@romanArithmeticTryAgainMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "romanArithmeticStart": "Начать квест",
+  "romanArithmeticDescription": "Конвертируйте и решайте. У вас есть 60 секунд.",
+  "romanArithmeticBest": "Рекорд",
+  "romanArithmeticSeconds": "60 СЕКУНД",
   "wordSearchSubtitle": "Найдите все скрытые слова в сетке. Выделяйте их перетаскиванием.",
   "missingVowelsTitle": "Пропущенные гласные",
   "missingVowelsSubtitle": "Угадайте слово, в котором скрыты все гласные.",
@@ -96,6 +176,41 @@
   "nonogramTitle": "Нонограмма",
   "nonogramSubtitle": "Раскройте скрытое изображение, используя логику.",
   "nonogramWin": "Картинка открыта!",
+  "magnetsTitle": "МАГНИТЫ",
+  "magnetsSubtitle": "Разместите магниты в сетке в соответствии с количеством полюсов.",
+  "magnetsHowToPlay": "Заполните контейнеры размером с домино магнитами «+» и «-» или оставьте их пустыми. Подсказки в строках и столбцах указывают общее количество каждого полюса в этой линии. Одинаковые полюса не могут быть соседними по горизонтали или вертикали.",
+  "magnetsWinTitle": "ПОЛЯРНОСТЬ СБАЛАНСИРОВАНА!",
+  "magnetsWinMessage": "Все магниты идеально расположены!",
+  "lighthousesTitle": "МАЯКИ",
+  "lighthousesSubtitle": "Разместите корабли на основе подсказок маяков.",
+  "lighthousesHowToPlay": "Разместите корабли размером 1x1 в сетке. Маяки показывают общее количество кораблей, видимых по горизонтали и вертикали. Корабли не могут касаться маяков или друг друга, даже по диагонали.",
+  "lighthousesWinTitle": "МОРЕ В БЕЗОПАСНОСТИ!",
+  "lighthousesWinMessage": "Все маяки идеально направляют корабли!",
+  "dominosaTitle": "ДОМИНОЗА",
+  "dominosaSubtitle": "Найдите все скрытые костяшки домино в сетке.",
+  "dominosaHowToPlay": "Расположите полный набор костяшек домино на сетке с числами так, чтобы каждая пара соседних чисел была закрыта ровно одной костяшкой. Каждая пара чисел встречается в наборе только один раз.",
+  "dominosaWinTitle": "МАСТЕР ДОМИНО!",
+  "dominosaWinMessage": "Все костяшки домино найдены и размещены!",
+  "skyscrapersTitle": "НЕБОСКРЕБЫ",
+  "skyscrapersSubtitle": "Заполните сетку высотами зданий.",
+  "skyscrapersHowToPlay": "Заполните сетку высотами (1-N) так, чтобы в каждой строке и каждом столбце каждая высота встречалась ровно один раз. Подсказки по краям показывают, сколько зданий видно с этого направления, при этом более высокие здания закрывают более низкие.",
+  "skyscrapersWinTitle": "СКАЙЛАЙН ВОССТАНОВЛЕН!",
+  "skyscrapersWinMessage": "Все здания идеально расположены!",
+  "nurikabeTitle": "НУРИКАБЕ",
+  "nurikabeSubtitle": "Сформируйте связанное море и разделите острова.",
+  "nurikabeHowToPlay": "Закрасьте клетки, чтобы сформировать единое связанное «море» (без блоков 2x2). Незакрашенные клетки образуют «острова», каждый из которых содержит ровно одно число, представляющее его общую площадь.",
+  "nurikabeWinTitle": "МОРЕ ТЕЧЕТ!",
+  "nurikabeWinMessage": "Острова разделены, море соединено!",
+  "fillominoTitle": "ФИЛЛОМИНО",
+  "fillominoSubtitle": "Разделите сетку на полимино заданных размеров.",
+  "fillominoHowToPlay": "Разделите сетку на полимино так, чтобы каждое полимино размера N содержало число N во всех своих клетках. Полимино одного размера не могут примыкать друг к другу по горизонтали или вертикали.",
+  "fillominoWinTitle": "СЕТКА РАЗДЕЛЕНА!",
+  "fillominoWinMessage": "Идеально выложено плиткой с помощью логики!",
+  "hitoriTitle": "ХИТОРИ",
+  "hitoriSubtitle": "Закрасьте повторяющиеся числа в каждой строке и столбце.",
+  "hitoriHowToPlay": "Закрасьте клетки так, чтобы ни одно число не появлялось более одного раза в любой строке или столбце. Закрашенные клетки не могут быть соседними (по горизонтали или вертикали), а все незакрашенные клетки должны образовывать единую связанную группу.",
+  "hitoriWinTitle": "МАСТЕР ХИТОРИ!",
+  "hitoriWinMessage": "Вы успешно устранили все дубликаты!",
   "pathFinderTitle": "Поиск пути",
   "pathFinderSubtitle": "Найдите скрытый путь от S до E.",
   "pathFinderWin": "Путь найден!",
@@ -112,12 +227,26 @@
   "arithmeticChainWinMessage": "Ваш устный счет впечатляет!",
   "arithmeticChainLoseTitle": "ПОПРОБУЙТЕ СНОВА",
   "arithmeticChainLoseMessage": "Правильный ответ был {answer}.",
+  "@arithmeticChainLoseMessage": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
   "arithmeticChainStart": "СТАРТ",
   "arithmeticChainNext": "ДАЛЕЕ",
   "attentionalBlinkTitle": "Пропуск внимания",
   "attentionalBlinkSubtitleWatch": "СЛЕДИТЕ ЗА ЧИСЛАМИ",
   "attentionalBlinkSubtitleInput": "ВВЕДИТЕ ДВА ЧИСЛА, КОТОРЫЕ ВЫ ВИДЕЛИ",
   "attentionalBlinkScoreMessage": "Вы нашли {score} целей!",
+  "@attentionalBlinkScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "balanceScaleTitle": "ВЕСЫ",
   "balanceScaleSubtitle": "Вычислите вес последнего предмета на основе чаш весов.",
   "balanceScaleWinTitle": "РАВНОВЕСИЕ!",
@@ -137,6 +266,16 @@
   "boxCompletionTitle": "Сборка куба",
   "boxCompletionSubtitle": "Какой куб получится из развертки?",
   "boxCompletionScoreMessage": "Правильно: {score} из {totalTrials}!",
+  "@boxCompletionScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "totalTrials": {
+        "type": "int"
+      }
+    }
+  },
   "boxCompletionOptions": "ВАРИАНТЫ",
   "bridgesTitle": "МОСТЫ",
   "bridgesSubtitle": "Соедините острова мостами. Каждому острову нужно определенное количество мостов. Мосты не могут пересекаться.",
@@ -147,7 +286,21 @@
   "calculationSprintGoalReached": "ЦЕЛЬ ДОСТИГНУТА!",
   "calculationSprintTimeUp": "ВРЕМЯ ВЫШЛО",
   "calculationSprintScoreMessage": "Отличная скорость! Вы набрали {score} очков.",
+  "@calculationSprintScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "calculationSprintTryAgainMessage": "Вы набрали {score} очков. Попробуйте побить свой рекорд!",
+  "@calculationSprintTryAgainMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "calculationSprintBest": "РЕКОРД",
   "calculationSprintSeconds": "60 СЕКУНД",
   "calculationSprintDescription": "Решайте примеры быстро.\nОшибка отнимает 3 секунды!",
@@ -158,20 +311,82 @@
   "categoryFluencyTimeUp": "ВРЕМЯ ВЫШЛО!",
   "categoryFluencyWinMessage": "У вас богатый словарный запас!",
   "categoryFluencyFoundMessage": "Вы нашли {count} слов.",
+  "@categoryFluencyFoundMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "categoryFluencyCategoryLabel": "Категория:",
   "categoryFluencyEnterItem": "Введите предмет...",
   "categoryFluencyWordCount": "{entered} / {target} слов",
+  "@categoryFluencyWordCount": {
+    "placeholders": {
+      "entered": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "changeBlindnessTitle": "Слепота к изменениям",
   "changeBlindnessSubtitle": "НАЙДИТЕ ИЗМЕНЯЮЩИЙСЯ ПРЕДМЕТ",
   "changeBlindnessScore": "СЧЕТ: {score}",
+  "@changeBlindnessScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "changeBlindnessFoundMessage": "Вы нашли {score} изменений!",
+  "@changeBlindnessFoundMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "choiceRtTitle": "Время реакции",
   "choiceRtSubtitle": "Нажимайте на активный квадрат как можно быстрее",
   "choiceRtAvgMessage": "Среднее время реакции: {avg} мс",
+  "@choiceRtAvgMessage": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
   "choiceRtTimeRemaining": "Осталось времени: {time} с",
+  "@choiceRtTimeRemaining": {
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  },
   "choiceRtTaps": "Нажатий: {count}",
+  "@choiceRtTaps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "colorFloodTitle": "Цветовой поток",
   "colorFloodSubtitle": "Ходы: {moves} / {maxMoves}",
+  "@colorFloodSubtitle": {
+    "placeholders": {
+      "moves": {
+        "type": "int"
+      },
+      "maxMoves": {
+        "type": "int"
+      }
+    }
+  },
   "colorFloodSuccess": "УСПЕХ!",
   "colorFloodDryLand": "ПОПРОБУЙТЕ СНОВА...",
   "colorFloodWinMessage": "Вы заполнили всю сетку цветом!",
@@ -183,11 +398,28 @@
   "colorMatchCheck": "ПРОВЕРИТЬ",
   "colorMatchResult": "РЕЗУЛЬТАТ",
   "colorMatchAccuracy": "Точность: {accuracy}%",
+  "@colorMatchAccuracy": {
+    "placeholders": {
+      "accuracy": {
+        "type": "String"
+      }
+    }
+  },
   "corsiBlocksTitle": "БЛОКИ КОРСИ",
   "corsiBlocksSubtitle": "Следите за блоками и нажимайте на них в том же порядке.",
   "corsiBlocksWinTitle": "МАСТЕР ПАМЯТИ!",
   "corsiBlocksLoseTitle": "ОШИБКА",
   "corsiBlocksMessage": "Вы запомнили {score} последовательностей! Объем вашей памяти составил {span}.",
+  "@corsiBlocksMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "span": {
+        "type": "int"
+      }
+    }
+  },
   "corsiBlocksWatch": "ЗАПОМНИТЕ УЗОР",
   "corsiBlocksRepeat": "ПОВТОРИТЕ УЗОР",
   "corsiBlocksExcellent": "ОТЛИЧНО!",
@@ -209,16 +441,58 @@
   "digitSpanReverseWinMessage": "Ваша рабочая память впечатляет!",
   "digitSpanReverseLoseTitle": "ПОПРОБУЙТЕ СНОВА",
   "digitSpanReverseLoseMessage": "Правильная обратная последовательность была {sequence}.",
+  "@digitSpanReverseLoseMessage": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
   "dividedAttentionTitle": "Разделение внимания",
   "dividedAttentionSubtitle": "Налево для ЗВЕЗДЫ ⭐ | Направо для КРАСНОГО 🔴",
   "dividedAttentionGameOverTitle": "ФОКУС ПОТЕРЯН",
   "dividedAttentionGameOverMessage": "Многозадачность — это сложно! Ваш счет {score}.",
+  "@dividedAttentionGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "dividedAttentionScore": "СЧЕТ: {score}",
+  "@dividedAttentionScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackTitle": "Двойной N-назад",
   "doubleNBackSubtitle": "Сопоставьте стимулы на {n} шага назад",
+  "@doubleNBackSubtitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackGameOverTitle": "ИГРА ОКОНЧЕНА",
   "doubleNBackGameOverMessage": "Вы набрали {score} очков в Двойном N-назад!",
+  "@doubleNBackGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackScore": "Счет: {score}",
+  "@doubleNBackScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackPositionMatch": "СОВПАДЕНИЕ ПОЗИЦИИ",
   "doubleNBackLetterMatch": "СОВПАДЕНИЕ БУКВЫ",
   "faceNameAssociationTitle": "Лицо-Имя",
@@ -228,10 +502,27 @@
   "faceNameAssociationGameOver": "ИГРА ОКОНЧЕНА",
   "faceNameAssociationWinMessage": "У вас отличная память на лица и имена!",
   "faceNameAssociationLoseMessage": "Правильно {correct} из {total}.",
+  "@faceNameAssociationLoseMessage": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "faceNameAssociationStartTest": "НАЧАТЬ ТЕСТ",
   "flankerTestWinTitle": "ЛАЗЕРНЫЙ ФОКУС!",
   "flankerTestLoseTitle": "ОТВЛЕЧЕН",
   "flankerTestScoreMessage": "Вы правильно ответили {score} раз!",
+  "@flankerTestScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "flankerTestTitle": "ТЕСТ ФЛАНКЕРА",
   "flankerTestSubtitle": "Укажите направление центральной стрелки, игнорируя боковые стрелки.",
   "flankerTestLeft": "ЛЕВО",
@@ -240,6 +531,13 @@
   "fractionMatchSubtitle": "Сопоставьте картинку с дробью",
   "fractionMatchLoseTitle": "НЕВЕРНО",
   "fractionMatchLoseMessage": "Правильный ответ был {correctAnswer}.",
+  "@fractionMatchLoseMessage": {
+    "placeholders": {
+      "correctAnswer": {
+        "type": "String"
+      }
+    }
+  },
   "goNoGoTitle": "Да / Нет",
   "goNoGoSubtitle": "Нажимай на зеленый, ИГНОРИРУЙ красный!",
   "goNoGoLoseTitle": "ОСТАНОВКА",
@@ -251,22 +549,58 @@
   "groceryListWinTitle": "ГУРУ ПОКУПОК!",
   "groceryListLoseTitle": "ЧТО-ТО ЗАБЫЛИ?",
   "groceryListScoreMessage": "Вы набрали {score} очков в Списке покупок!",
+  "@groceryListScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "groceryListReady": "Я ГОТОВ",
   "groceryListWhereBelong": "КУДА ЭТО ОТНОСИТСЯ?",
   "hueSortTitle": "ОТТЕНКИ",
   "hueSortSubtitle": "Меняйте плитки, чтобы создать плавный переход цветов. Точки обозначают неподвижные плитки.",
   "hueSortWinTitle": "ИДЕАЛЬНЫЙ ГРАДИЕНТ!",
   "hueSortWinMessage": "Вы идеально отсортировали цветовой спектр!",
+  "hueSortWrongTiles": "Плитки в неправильном положении: {count}",
+  "@hueSortWrongTiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "kenkenTitle": "Кен-Кен",
   "kenkenWinTitle": "ГЕНИЙ!",
   "kenkenLoseTitle": "ИГРА ОКОНЧЕНА",
   "kenkenWinMessage": "Вы решили Кен-Кен!",
   "kenkenLoseMessage": "Проверьте правила строк/столбцов и блоков.",
   "kenkenSubtitle": "Заполните 1-{size} без повторов в рядах/колонках",
+  "@kenkenSubtitle": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
   "letterCancellationTitle": "Вычеркивание букв",
   "letterCancellationTitleFull": "Тест на вычеркивание букв",
   "letterCancellationScoreMessage": "Вы нашли {score} букв!",
+  "@letterCancellationScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "letterCancellationSubtitle": "Найдите все буквы \"{target}\"",
+  "@letterCancellationSubtitle": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
   "letterCancellationFound": "НАЙДЕНО",
   "letterCancellationTime": "ВРЕМЯ",
   "lightsOutTitle": "ВЫКЛЮЧИ СВЕТ",
@@ -305,6 +639,13 @@
   "sternbergTaskMemorize": "Запомните буквы",
   "sternbergTaskWasLetterSet": "Была ли эта буква в списке?",
   "sternbergTaskScore": "Ваш счет: {score}",
+  "@sternbergTaskScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "verbalAnalogiesTitle": "Словесные аналогии",
   "verbalAnalogiesSubtitle": "Завершите аналогию",
   "typingSpeedTitle": "Скорость печати",
@@ -330,6 +671,13 @@
   "pixelMimicTitle": "Пиксельная мимика",
   "targetNumberTitle": "Цель 24",
   "targetNumberSubtitle": "Используйте все 4 числа, чтобы получить {target}",
+  "@targetNumberSubtitle": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "mirrorTracingTitle": "Зеркальное рисование",
   "mirrorTracingSubtitle": "Обведите звезду! Управление ЗЕРКАЛЬНОЕ.",
   "wordSurgeTitle": "Всплеск слов",
@@ -339,6 +687,13 @@
   "perspectiveTakingChoosePerspective": "ВЫБЕРИТЕ ПЕРСПЕКТИВУ",
   "perspectiveTakingCongrats": "У вас отличный глазомер.",
   "perspectiveTakingSubtitle": "Какой вид соответствует направлению {targetDirName}?",
+  "@perspectiveTakingSubtitle": {
+    "placeholders": {
+      "targetDirName": {
+        "type": "String"
+      }
+    }
+  },
   "paperFoldingTitle": "Складывание бумаги",
   "paperFoldingSubtitle": "Как это будет выглядеть в развернутом виде?",
   "waterSortTitle": "Сортировка воды",
@@ -374,6 +729,13 @@
   "operationSpanRecallPhase": "Вспомните буквы по порядку",
   "operationSpanRoundComplete": "Раунд завершен!",
   "operationSpanScore": "Ваш счет: {score}",
+  "@operationSpanScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "slidePuzzleTitle": "Пятнашки",
   "slidePuzzleNewGame": "НОВАЯ ИГРА",
   "slidePuzzleInstructions": "Упорядочите плитки, сдвигая их.",
@@ -390,6 +752,13 @@
   "quickMathTitle": "Быстрая математика",
   "magicSquaresTitle": "Магический квадрат",
   "magicSquaresSubtitle": "Сумма в рядах, столбцах и диагоналях должна быть {targetSum}",
+  "@magicSquaresSubtitle": {
+    "placeholders": {
+      "targetSum": {
+        "type": "int"
+      }
+    }
+  },
   "objectShuffleTitle": "Перемешивание объектов",
   "pipesTitle": "Трубы",
   "pipesSubtitle": "Соедините точки одного цвета трубами.",
@@ -398,6 +767,12 @@
   "einsteinRiddleTitle": "ЗАГАДКА ЭЙНШТЕЙНА",
   "einsteinRiddleSubtitle": "Используйте подсказки, чтобы узнать атрибуты домов.",
   "einsteinRiddleHowToPlay": "У каждого дома свои атрибуты (цвет, жилец и т.д.). Разгадайте их все.",
+  "einsteinRiddleColor": "Цвет",
+  "einsteinRiddleNationality": "Национальность",
+  "einsteinRiddleDrink": "Напиток",
+  "einsteinRiddlePet": "Питомец",
+  "einsteinRiddleSmoke": "Сигареты",
+  "einsteinRiddleHouse": "Дом",
   "mirrorImageTitle": "Зеркало",
   "mirrorImageSubtitle": "Найдите правильное отражение.",
   "mirrorImageHowToPlay": "Выберите верное зеркальное отражение фигуры.",
@@ -419,6 +794,8 @@
   "vocabularyBuilderTitle": "Словарный запас",
   "vocabularyBuilderSubtitle": "Синонимы и антонимы на время.",
   "vocabularyBuilderHowToPlay": "Выбирайте верные слова согласно заданному отношению.",
+  "correct": "ВЕРНО",
+  "incorrect": "НЕВЕРНО",
   "grammarPoliceTitle": "Грамотей",
   "grammarPoliceSubtitle": "Определите, является ли предложение грамматически правильным или содержит ошибки.",
   "grammarPoliceHowToPlay": "В центре экрана появится предложение. Решите, является ли оно грамматически правильным или содержит ошибку. Нажмите «ВЕРНО», если все в порядке, или «НЕВЕРНО», если вы заметили ошибку. Не потеряйте все свои жизни!",
@@ -426,33 +803,6 @@
   "reverseStroopSubtitle": "Вариант теста Струпа с переключением фокуса.",
   "reverseStroopHowToPlay": "Следите за правилом: ТЕКСТ или ЦВЕТ.",
   "game2048Instruction": "СМАХНИТЕ ДЛЯ СЛИЯНИЯ",
-  "radicalRootsTitle": "Радикальные корни",
-  "radicalRootsSubtitle": "Найдите квадратный или кубический корень из заданного числа. При необходимости округлите до ближайшего целого числа.",
-  "radicalRootsGoalReached": "Цель достигнута!",
-  "radicalRootsTimeUp": "Время вышло!",
-  "radicalRootsScoreMessage": "Вы правильно вычислили {score} корней!",
-  "radicalRootsTryAgainMessage": "Продолжайте практиковаться! Вы вычислили {score} корней.",
-  "radicalRootsStart": "Начать вычисления",
-  "radicalRootsDescription": "У вас есть 60 секунд, чтобы решить как можно больше задач.",
-  "radicalRootsBest": "Рекорд",
-  "radicalRootsSeconds": "60 СЕКУНД",
-  "romanArithmeticTitle": "Римская арифметика",
-  "romanArithmeticSubtitle": "Решайте задачи на сложение и вычитание, используя римские цифры.",
-  "romanArithmeticGoalReached": "Уровень Центуриона!",
-  "romanArithmeticTimeUp": "Время вышло!",
-  "romanArithmeticScoreMessage": "Вы решили {score} римских задач!",
-  "romanArithmeticTryAgainMessage": "Veni, Vidi, Vici! Вы решили {score} задач.",
-  "romanArithmeticStart": "Начать квест",
-  "romanArithmeticDescription": "Конвертируйте и решайте. У вас есть 60 секунд.",
-  "romanArithmeticBest": "Рекорд",
-  "romanArithmeticSeconds": "60 СЕКУНД",
-  "hueSortWrongTiles": "Плитки в неправильном положении: {count}",
-  "einsteinRiddleColor": "Цвет",
-  "einsteinRiddleNationality": "Национальность",
-  "einsteinRiddleDrink": "Напиток",
-  "einsteinRiddlePet": "Питомец",
-  "einsteinRiddleSmoke": "Сигареты",
-  "einsteinRiddleHouse": "Дом",
   "fibonacciMergeTitle": "Слияние Фибоначчи",
   "fibonacciMergeSubtitle": "Объединяйте последовательные числа Фибоначчи (1, 1, 2, 3, 5, 8, 13...).",
   "sequenceSleuthTitle": "Детектив последовательностей",
@@ -490,6 +840,13 @@
   "blockCount3DNotQuite": "Не совсем так! Попробуйте повращать и посчитать снова.",
   "blockCount3DExcellent": "ОТЛИЧНО",
   "blockCount3DWinMessage": "Вы правильно определили все {count} блоков!",
+  "@blockCount3DWinMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "blockCount3DHowToPlayDescription": "1. Проведите пальцем по 3D-области просмотра, чтобы повернуть стопку блоков.\n\n2. Посчитайте все блоки в стопке.\n\n3. Помните: блок в воздухе должен иметь под собой опорные блоки (скрытые блоки!).\n\n4. Введите свой ответ в поле ввода и нажмите \"ОТПРАВИТЬ ОТВЕТ\", чтобы проверить.",
   "alphabetSudokuTitle": "АЛФАВИТНОЕ СУДОКУ",
   "alphabetSudokuSubtitle": "Заполните сетку так, чтобы в каждой строке, столбце и блоке были буквы A-I.",
@@ -499,6 +856,13 @@
   "classicMazeSubtitle": "ИССЛЕДУЙТЕ И РЕШАЙТЕ • НОВЫЙ ЛАБИРИНТ В КАЖДОЙ ИГРЕ",
   "classicMazeWinTitle": "ЛАБИРИНТ ПРОЙДЕН",
   "classicMazeWinMessage": "Невероятная навигация! Вы прошли лабиринт за {count} ходов.",
+  "@classicMazeWinMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "classicMazeMoves": "ХОДЫ: ",
   "classicMazeHowToPlayDescription": "1. Проведите светящийся желтый шарик (игрок) к зеленому порталу (выход) в правом нижнем углу.\n\n2. Используйте свайпы в любом месте лабиринта, клавиши со стрелками на физической клавиатуре или кнопки со стрелками внизу для перемещения.\n\n3. Фиолетовый след показывает пройденный вами путь. Возвращайтесь по своему следу, чтобы динамически стирать его!\n\n4. Переключайте уровень сложности в верхней панели действий, чтобы бросить себе вызов в более крупных лабиринтах!",
   "conjunctionSearchTitle": "Поиск по признакам",
@@ -529,52 +893,2229 @@
   "cubeNetFoldFailed": "ОШИБКА (НАЖМИТЕ СБРОС)",
   "faceTraitAssociationMemorize": "ЗАПОМНИТЕ ВСЕХ 4 ЧЕЛОВЕК",
   "faceTraitAssociationPersonOf": "ЧЕЛОВЕК {current} ИЗ {total}",
+  "@faceTraitAssociationPersonOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "faceTraitAssociationWhatOccupation": "КАКАЯ У НИХ ПРОФЕССИЯ?",
   "faceTraitAssociationWhatHobby": "КАКОЕ У НИХ ХОББИ?",
   "faceTraitAssociationWinTitle": "МАСТЕР ПАМЯТИ!",
   "faceTraitAssociationLoseTitle": "ИГРА ОКОНЧЕНА",
   "faceTraitAssociationScoreMessage": "Правильно {correct} из {total}.",
+  "@faceTraitAssociationScoreMessage": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "topologyTitle": "ТОПОЛОГИЯ",
   "topologySubtitle": "Эквивалентны ли эти фигуры топологически? (Можно ли одну деформировать в другую без разрезания или склеивания?)",
   "topologyWinTitle": "ГЕНИЙ ГЕОМЕТРИИ!",
   "topologyWinMessage": "Вы правильно определили 10 топологических пар!",
   "topologyScore": "СЧЕТ: ",
-  "playNext": "Играть дальше",
-  "correct": "ВЕРНО",
-  "incorrect": "НЕВЕРНО",
-  "magnetsTitle": "МАГНИТЫ",
-  "magnetsSubtitle": "Разместите магниты в сетке в соответствии с количеством полюсов.",
-  "magnetsHowToPlay": "Заполните контейнеры размером с домино магнитами «+» и «-» или оставьте их пустыми. Подсказки в строках и столбцах указывают общее количество каждого полюса в этой линии. Одинаковые полюса не могут быть соседними по горизонтали или вертикали.",
-  "magnetsWinTitle": "ПОЛЯРНОСТЬ СБАЛАНСИРОВАНА!",
-  "magnetsWinMessage": "Все магниты идеально расположены!",
-  "lighthousesTitle": "МАЯКИ",
-  "lighthousesSubtitle": "Разместите корабли на основе подсказок маяков.",
-  "lighthousesHowToPlay": "Разместите корабли размером 1x1 в сетке. Маяки показывают общее количество кораблей, видимых по горизонтали и вертикали. Корабли не могут касаться маяков или друг друга, даже по диагонали.",
-  "lighthousesWinTitle": "МОРЕ В БЕЗОПАСНОСТИ!",
-  "lighthousesWinMessage": "Все маяки идеально направляют корабли!",
-  "dominosaTitle": "ДОМИНОЗА",
-  "dominosaSubtitle": "Найдите все скрытые костяшки домино в сетке.",
-  "dominosaHowToPlay": "Расположите полный набор костяшек домино на сетке с числами так, чтобы каждая пара соседних чисел была закрыта ровно одной костяшкой. Каждая пара чисел встречается в наборе только один раз.",
-  "dominosaWinTitle": "МАСТЕР ДОМИНО!",
-  "dominosaWinMessage": "Все костяшки домино найдены и размещены!",
-  "skyscrapersTitle": "НЕБОСКРЕБЫ",
-  "skyscrapersSubtitle": "Заполните сетку высотами зданий.",
-  "skyscrapersHowToPlay": "Заполните сетку высотами (1-N) так, чтобы в каждой строке и каждом столбце каждая высота встречалась ровно один раз. Подсказки по краям показывают, сколько зданий видно с этого направления, при этом более высокие здания закрывают более низкие.",
-  "skyscrapersWinTitle": "СКАЙЛАЙН ВОССТАНОВЛЕН!",
-  "skyscrapersWinMessage": "Все здания идеально расположены!",
-  "nurikabeTitle": "НУРИКАБЕ",
-  "nurikabeSubtitle": "Сформируйте связанное море и разделите острова.",
-  "nurikabeHowToPlay": "Закрасьте клетки, чтобы сформировать единое связанное «море» (без блоков 2x2). Незакрашенные клетки образуют «острова», каждый из которых содержит ровно одно число, представляющее его общую площадь.",
-  "nurikabeWinTitle": "МОРЕ ТЕЧЕТ!",
-  "nurikabeWinMessage": "Острова разделены, море соединено!",
-  "fillominoTitle": "ФИЛЛОМИНО",
-  "fillominoSubtitle": "Разделите сетку на полимино заданных размеров.",
-  "fillominoHowToPlay": "Разделите сетку на полимино так, чтобы каждое полимино размера N содержало число N во всех своих клетках. Полимино одного размера не могут примыкать друг к другу по горизонтали или вертикали.",
-  "fillominoWinTitle": "СЕТКА РАЗДЕЛЕНА!",
-  "fillominoWinMessage": "Идеально выложено плиткой с помощью логики!",
-  "hitoriTitle": "ХИТОРИ",
-  "hitoriSubtitle": "Закрасьте повторяющиеся числа в каждой строке и столбце.",
-  "hitoriHowToPlay": "Закрасьте клетки так, чтобы ни одно число не появлялось более одного раза в любой строке или столбце. Закрашенные клетки не могут быть соседними (по горизонтали или вертикали), а все незакрашенные клетки должны образовывать единую связанную группу.",
-  "hitoriWinTitle": "МАСТЕР ХИТОРИ!",
-  "hitoriWinMessage": "Вы успешно устранили все дубликаты!"
+  "semanticDistanceTitle": "Семантическая дистанция",
+  "semanticDistanceSubtitle": "Измерьте концептуальное расстояние между словами",
+  "oxymoronHuntTitle": "Охота за оксюморонами",
+  "oxymoronHuntSubtitle": "Найдите пары противоречивых слов в сетке",
+  "portmanteauSplitTitle": "Слова-гибриды",
+  "portmanteauSplitSubtitle": "Определите исходные слова для слова-гибрида",
+  "chainReactionTitle": "Цепная реакция",
+  "chainReactionSubtitle": "Соединяйте слова, используя перекрывающиеся буквы",
+  "rhymeMasterTitle": "Мастер рифмы",
+  "rhymeMasterSubtitle": "Найдите слова, которые рифмуются с заданным",
+  "definitionDashTitle": "Спринт определений",
+  "definitionDashSubtitle": "Подберите правильное слово к его определению",
+  "syllableStackTitle": "Башня из слогов",
+  "syllableStackSubtitle": "Складывайте слоги, чтобы составлять целые слова",
+  "sentenceUnscrambleTitle": "Расшифровка предложений",
+  "sentenceUnscrambleSubtitle": "Расставьте слова по порядку, чтобы получилось предложение",
+  "grammarSortTitle": "Сортировка грамматики",
+  "grammarSortSubtitle": "Распределите слова по частям речи",
+  "vowelReconstructTitle": "Восстановление гласных",
+  "vowelReconstructSubtitle": "Вставьте пропущенные гласные в предложении",
+  "consonantReconstructTitle": "Восстановление согласных",
+  "consonantReconstructSubtitle": "Вставьте пропущенные согласные в предложении",
+  "homophoneHuntTitle": "Охота за омофонами",
+  "silentLetterSearchTitle": "Поиск непроизносимых букв",
+  "silentLetterSearchSubtitle": "Найдите непроизносимые буквы в словах",
+  "palindromeBuilderTitle": "Создатель палиндромов",
+  "palindromeBuilderSubtitle": "Создайте палиндром, добавив минимальное количество букв",
+  "phoneticGuessTitle": "Фонетическая угадайка",
+  "phoneticGuessSubtitle": "Угадайте слово по его фонетической транскрипции",
+  "spoonerismSolverTitle": "Решатель спунеризмов",
+  "spoonerismSolverSubtitle": "Определите правильный спунеризм для фразы",
+  "etymonOddballTitle": "Этимологический лишний",
+  "etymonOddballSubtitle": "Найдите слово с другим корнем",
+  "etymologyOriginTitle": "Происхождение слов",
+  "etymologyOriginSubtitle": "Угадайте язык происхождения заимствованного слова",
+  "affixFactoryTitle": "Фабрика аффиксов",
+  "affixFactorySubtitle": "Создавайте слова с помощью приставок и суффиксов",
+  "cognateCatchTitle": "Ловушка когнатов",
+  "cognateCatchSubtitle": "Отличите настоящие когнаты от ложных друзей переводчика",
+  "compoundConnectTitle": "Соединение сложных слов",
+  "compoundConnectSubtitle": "Объедините два слова в одно сложное слово",
+  "pangramSprintTitle": "Спринт панграмм",
+  "pangramSprintSubtitle": "Составьте предложение, используя все буквы алфавита",
+  "anagramDefinitionTitle": "Анаграмма-определение",
+  "anagramDefinitionSubtitle": "Решите анаграмму на основе ее определения",
+  "letterBridgeTitle": "Буквенный мост",
+  "letterBridgeSubtitle": "Найдите букву, которая соединяет два слова",
+  "letterFrequencyScanTitle": "Сканирование частоты букв",
+  "letterFrequencyScanSubtitle": "Посчитайте, сколько раз буква встречается в тексте",
+  "oneLetterShiftTitle": "Сдвиг на одну букву",
+  "oneLetterShiftSubtitle": "Превратите одно слово в другое, изменив одну букву",
+  "vocabularyBuilderMessage": "Отличная работа! Ваш словарный запас впечатляет. Счет: {arg0}",
+  "@vocabularyBuilderMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "symmetryMessage": "Вы идеально зеркально отразили узор с хирургической точностью.",
+  "temporalOrderMessage": "Невероятно! Ваша память на временные последовательности работает безупречно.",
+  "temporalOrderMessage1": "Неверная последовательность. Практика ведет к совершенству!",
+  "wordSearchMessage": "Все слова найдены благодаря вашей зоркости.",
+  "colorMatchMessage": "Ваша точность: {arg0}%",
+  "@colorMatchMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "semanticLinkMessage": "Вы набрали {arg0} очков!",
+  "@semanticLinkMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "reflexTapMessage": "Вы нажали на {arg0} целей!",
+  "@reflexTapMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "angleFinderMessage": "Ваша геометрическая интуиция безупречна!",
+  "angleFinderMessage1": "Правильный ответ: {arg0}°",
+  "@angleFinderMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "angleFinderText": "{arg0}°",
+  "@angleFinderText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "visualStatisticalLearningMessage": "Вы нашли {arg0} верных паттернов!",
+  "@visualStatisticalLearningMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "nonogramText": "Ошибка: {arg0}",
+  "@nonogramText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "mentalCalendarMessage": "Вы ответили правильно на {arg0} из 10!",
+  "@mentalCalendarMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "orbitTapMessage": "Вы успешно нажали {arg0} раз!",
+  "@orbitTapMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "schulteTableMessage": "Вы заполнили таблицу за {arg0}.\nПродолжайте практиковаться, чтобы расширить периферическое зрение!",
+  "@schulteTableMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "schulteTableText": "НАЧАТЬ ТЕСТ",
+  "relationalMemoryMessage": "Потрясающая точность пространственной реляционной памяти!",
+  "sudokuText": "Ошибка: {arg0}",
+  "@sudokuText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sdmtMessage": "Вы сопоставили {arg0} символов! Этот тест измеряет скорость сканирования и визуальное внимание.",
+  "@sdmtMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "futoshikiMessage": "Невероятно! Вы решили латинский квадрат Футошики.",
+  "letterFrequencyScanMessage": "Вы правильно насчитали {arg0} вхождений «{arg1}».",
+  "@letterFrequencyScanMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "letterFrequencyScanText": "Неверно. Количество было {arg0}.",
+  "@letterFrequencyScanText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "memoryMatrixMessage": "Впечатляюще! Ваша рабочая память очень острая. Дневная цель достигнута!",
+  "memoryMatrixMessage1": "Сосредоточьтесь и попробуйте еще раз, чтобы улучшить свой показатель памяти.",
+  "contextCluesMessage": "Исключительно! Ваш словарный запас и контекстный анализ на высшем уровне.",
+  "contextCluesMessage1": "Выбрано неверное слово! Тренируйте вербально-контекстное мышление и попробуйте снова.",
+  "oneLetterShiftMessage": "Вы правильно превратили {arg0} в {arg1}.",
+  "@oneLetterShiftMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "mentalAbacusMessage": "Ваш ментальный счет на высшем уровне.",
+  "fractionMatcherMessage": "Вы набрали {arg0} очков, сопоставляя представления!",
+  "@fractionMatcherMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spellingSprintMessage": "Вы правильно написали все 10 слов!",
+  "spellingSprintMessage1": "Вы правильно написали {arg0} слов.",
+  "@spellingSprintMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "stopSignalMessage": "Вы дали {arg0} правильных ответов! Этот тест измеряет вашу способность подавлять запланированное действие.",
+  "@stopSignalMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "grammarPoliceMessage": "Игра окончена! Вы поддерживали порядок в мире грамматики. Счет: {arg0}",
+  "@grammarPoliceMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "consonantReconstructMessage": "Ваш результат реконструкции: {arg0}!",
+  "@consonantReconstructMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "rhymeMasterMessage": "Вы нашли {arg0} из {arg1} рифм!",
+  "@rhymeMasterMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "vigilanceTaskMessage": "Попадания: {arg0}, Промахи: {arg1}\nЛожные срабатывания: {arg2}",
+  "@vigilanceTaskMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "silhouetteMatchOrthoMessage": "У вас безупречные навыки ортогонального выравнивания!",
+  "silhouetteMatchOrthoText": "ПОНЯТНО",
+  "silhouetteMatchOrthoText1": "Неверная перспективная проекция! Нажмите «Сброс», чтобы попробовать снова.",
+  "fibonacciMergeMessage": "{arg0}: {arg1}",
+  "@fibonacciMergeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "factorFinderMessage": "Вы набрали {arg0} очков, найдя все множители!",
+  "@factorFinderMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "logicalSyllogismsMessage": "Вы правильно решили {arg0} силлогизмов!",
+  "@logicalSyllogismsMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "rotatingMazeMessage": "Вы успешно прошли кинетический вращающийся лабиринт!",
+  "rotatingMazeText": "ПОНЯТНО",
+  "rotatingMazeText1": "🌀 Лабиринт повернут на 90°! Сетка сместилась!",
+  "mathPathMessage": "Вы нашли путь, сумма которого равна цели!",
+  "bridgesMessage": "Вы успешно соединили все острова!",
+  "compoundConnectMessage": "Составное слово: {arg0}{arg1}.",
+  "@compoundConnectMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "pangramSprintMessage": "Вы составили предложение, используя все буквы алфавита.",
+  "mirrorImageMessage": "Вы идеально определили отражение.",
+  "mirrorImageText": "ЗЕРКАЛЬНОЕ ОТРАЖЕНИЕ",
+  "reverseStroopMessage": "Вы набрали {arg0} очков! Следите за инструкциями.",
+  "@reverseStroopMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "verbalAnalogiesMessage": "У вас острый ум для поиска взаимосвязей.",
+  "corsiBlocksMessage1": "Вы запомнили {arg1} последовательностей! Объем вашей пространственной памяти достиг {arg0}.",
+  "@corsiBlocksMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "wordLadderMessage": "Вы успешно соединили {arg0} и {arg1} за {arg2} шагов.",
+  "@wordLadderMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "d2AttentionMessage": "Невероятное избирательное сканирование! Итоговый счет: {arg0}.",
+  "@d2AttentionMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "d2AttentionText": "КАК ИГРАТЬ",
+  "d2AttentionText1": "ПОНЯТНО",
+  "tangleFixMessage": "Все линии четкие и плавные.",
+  "distractorMatrixMessage": "Невероятно! Вы вспомнили паттерны, несмотря на когнитивные математические отвлекающие факторы!",
+  "distractorMatrixMessage1": "Отвлекающие факторы сбили вас! Тренируйте рабочую память.",
+  "sentenceUnscrambleMessage": "Вы расшифровали на {arg0} очков!",
+  "@sentenceUnscrambleMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "kakuroMessage": "Невероятно! Вы идеально подобрали все сегменты суммы.",
+  "symbolicFlankerMessage": "Вы правильно ответили в {arg0} случаях из {arg1}!",
+  "@symbolicFlankerMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "stroopTestMessage": "Вы набрали {arg0} правильно! Сосредоточьтесь на цвете шрифта, а не на слове.",
+  "@stroopTestMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wisconsinCardSortingMessage": "Вы правильно рассортировали {arg0} карт!",
+  "@wisconsinCardSortingMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "nBackMessage": "Вы достигли {arg0} совпадений в тесте 2-назад! Рабочая память жизненно важна для многозадачности.",
+  "@nBackMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "rhythmMasterMessage": "У вас {arg0} точных попаданий и {arg1} очков!",
+  "@rhythmMasterMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "groceryListMessage": "Вы набрали {arg0} очков в «Списке покупок»!",
+  "@groceryListMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "groceryListText": "Я",
+  "mirrorTracingMessage": "Ваш мозг успешно перестроил координацию.",
+  "moduloClockMessage": "Отличная координация модульной ментальной арифметики! Счет: {arg0}",
+  "@moduloClockMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "moduloClockMessage1": "Вы нашли {arg0} из {arg1} решений модульных часов. Счет: {arg2}",
+  "@moduloClockMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "crownMessage": "Все короны успешно расставлены с идеальной логикой.",
+  "dualCodingMessage": "Фантастическое выполнение двойной задачи! Ваш показатель рабочей памяти: {arg0}",
+  "@dualCodingMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "inequalityDashMessage": "Вы набрали {arg0} очков, сопоставляя неравенства!",
+  "@inequalityDashMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceMonitoringMessage": "Ваш результат: {arg0} из {arg1}!",
+  "@sourceMonitoringMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceMonitoringText": "НАЧАТЬ ВСПОМИНАТЬ",
+  "memoryPalaceText": "ДОСТУПНЫЕ СЛОВА",
+  "target10Message": "Вы набрали {arg0} очков, составляя числа до 10!",
+  "@target10Message": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "paperFoldingMessage": "Вы видите закономерности в своем воображении.",
+  "topologyText": "{arg0}{arg1} / 10",
+  "@topologyText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "waterSortMessage": "Вы идеально рассортировали все цвета!",
+  "anagramDefinitionMessage": "Это слово действительно было «{arg0}».",
+  "@anagramDefinitionMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "game2048Message": "{arg0}: {arg1}\n{arg2}",
+  "@game2048Message": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "game2048Message1": "{arg0}: {arg1}",
+  "@game2048Message1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "numericalEstimationMessage": "Вы сделали {arg0} правильных оценок.",
+  "@numericalEstimationMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "grammarSortMessage": "Вы правильно рассортировали {arg0} слов!",
+  "@grammarSortMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "vowelReconstructMessage": "Вы восстановили на {arg0} очков!",
+  "@vowelReconstructMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spatialConflictMessage": "Вы набрали {arg0} очков с {arg1} ошибками!",
+  "@spatialConflictMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "spatialConflictText": "КАК ИГРАТЬ",
+  "spatialConflictText1": "ПОНЯТНО",
+  "tracePathMessage": "Ваша точность составила {arg0}%!",
+  "@tracePathMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleSwitcherMessage": "Вы правильно ответили в {arg0} случаях из {arg1}!",
+  "@ruleSwitcherMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "collatzMessage": "Вы сделали {arg0} шагов. Минимально возможное — {arg1}.",
+  "@collatzMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "collatzText": "/ 2",
+  "collatzText1": "+ 1",
+  "collatzText2": "3n + 1",
+  "divisibilityDashMessage": "Вы решили {arg0} чисел!",
+  "@divisibilityDashMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "switchTaskMessage": "Вы правильно ответили {arg0} раз! Быстрое переключение — ключ к ментальной гибкости.",
+  "@switchTaskMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sequenceSleuthMessage": "Вы решили {arg0} последовательностей!",
+  "@sequenceSleuthMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "changeBlindnessMessage": "Вы нашли {arg0} изменений!",
+  "@changeBlindnessMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "mentalRotationMessage": "Вы правильно повернули {arg0} фигур!",
+  "@mentalRotationMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wordMastermindMessage": "Вы разгадали код!\nЗагаданное слово: {arg0}",
+  "@wordMastermindMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wordMastermindMessage1": "Скрытое слово было: {arg0}",
+  "@wordMastermindMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wordMastermindText": "{arg0}",
+  "@wordMastermindText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "simonSequenceMessage": "Вы запомнили все 10 плиток!",
+  "simonSequenceMessage1": "Попробуйте еще раз, чтобы освоить последовательность.",
+  "oxymoronHuntMessage": "Вы нашли {arg0} оксюморонов!",
+  "@oxymoronHuntMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spotlightTrackMessage": "Невероятное пространственное отслеживание! Вы набрали {arg0} очков.",
+  "@spotlightTrackMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spotlightTrackText": "КАК ИГРАТЬ",
+  "spotlightTrackText1": "ПОНЯТНО",
+  "spotlightTrackText2": "НАЧАТЬ РАУНД",
+  "vennNumbersMessage": "Вы распределили по категориям {arg0} чисел!",
+  "@vennNumbersMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "vennNumbersText": "НИ ТО, НИ ДРУГОЕ",
+  "vennNumbersText1": "ОБА",
+  "silhouetteMatchMessage": "Ваш мозг отлично справляется с переводом из 3D в 2D.",
+  "sumSnakeMessage": "Цель {arg0} достигнута с идеальной точностью!",
+  "@sumSnakeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sumSnakeText": "ОЧИСТИТЬ ПУТЬ",
+  "percentagePeakMessage": "Вы решили {arg0} задач на проценты!",
+  "@percentagePeakMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "trailMakingMessage": "Вы прошли {arg0} маршрутов! Этот тест измеряет скорость визуального поиска и ментальную гибкость.",
+  "@trailMakingMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "matrixReasoningMessage": "Вы правильно заполнили {arg0} матриц!",
+  "@matrixReasoningMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "tentsAndTreesMessage": "Вы успешно расставили все палатки.",
+  "klotskiMessage": "Потрясающее скольжение! Вы освободили блок героя за {arg0} ходов.",
+  "@klotskiMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sumPyramidMessage": "Вы успешно решили {arg0} числовых пирамид!",
+  "@sumPyramidMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "simonCommandMessage": "Отличная избирательная реакция и концентрация! Итоговый счет: {arg0}",
+  "@simonCommandMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "simonCommandMessage1": "Вы набрали {arg0}, но не успели найти {arg1} совпадений вовремя.",
+  "@simonCommandMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "syllableStackMessage": "Вы набрали {arg0} очков!",
+  "@syllableStackMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "slitherlinkMessage": "Здорово! Вы успешно завершили головоломку с замкнутой петлей.",
+  "quickMathMessage": "Вы решили {arg0} задач!",
+  "@quickMathMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "commonDenominatorMessage": "Вы решили {arg0} задач на НОД/НОК!",
+  "@commonDenominatorMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "chainReactionMessage": "Ваш итоговый счет: {arg0}. Вы построили цепочку из {arg1} слов.",
+  "@chainReactionMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "chainReactionText": "{arg0}",
+  "@chainReactionText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "associativePairsMessage": "Блестяще! Вы безупречно сопоставили визуальные черты.",
+  "associativePairsMessage1": "Неправильное сопоставление! Улучшите ассоциативную память и попробуйте еще раз.",
+  "portmanteauSplitMessage": "Вы разделили {arg0} слов-портмоне!",
+  "@portmanteauSplitMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "magicSquaresText": "ОЧИСТИТЬ",
+  "alphabetSudokuText": "Ошибка: {arg0}",
+  "@alphabetSudokuText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "pipesMessage": "Вы соединили все трубы и заполнили сетку.",
+  "dualMirrorMessage": "Вы довели обе иконки до своих целей!",
+  "binaryCodeMessage": "Потрясающий быстрый перевод в десятичную систему! Итоговый счет: {arg0}",
+  "@binaryCodeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "binaryCodeMessage1": "Вы правильно перевели {arg0} двоичных чисел. Счет: {arg1}",
+  "@binaryCodeMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "oddOneOutMessage": "Вы нашли 50 лишних элементов! Итоговый счет: {arg0}",
+  "@oddOneOutMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "oddOneOutMessage1": "Ваш счет: {arg0}",
+  "@oddOneOutMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "letterBridgeMessage": "Вы нашли связующую букву: {arg0}",
+  "@letterBridgeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "imReady": "Я ГОТОВ",
+  "soptTitle": "Самостоятельное наведение",
+  "soptSubtitle": "Каждый раз нажимайте на другую карту. Позиции перетасовываются!",
+  "soptWinTitle": "Мастер последовательности!",
+  "soptGameOverMessage": "Вы набрали {score} очков, успешно отслеживая перетасованные карты!",
+  "soptChooseNovel": "Нажмите на новую карту",
+  "soptGreatJob": "Отличная работа!",
+  "soptAlreadyTapped": "Уже постучал!",
+  "soptGrid": "Сетка",
+  "contRecogTitle": "Непрерывное признание",
+  "contRecogSubtitle": "Видели ли вы эту карточку раньше на этом сеансе?",
+  "contRecogWinTitle": "Признанный гений!",
+  "contRecogGameOverMessage": "Вы набрали {score} правильных распознаваний!",
+  "contRecogCorrect": "Правильный!",
+  "contRecogWrong": "Неправильный!",
+  "contRecogOldOrNew": "Это старое или новое?",
+  "contRecogNew": "Новый",
+  "contRecogOld": "Старый",
+  "contRecogSeenPool": "Виден бассейн",
+  "dnmsTitle": "Несовпадающая память",
+  "dnmsSubtitle": "Коснитесь карты, которой не было в запомненном образце.",
+  "dnmsWinTitle": "Несоответствующий эксперт!",
+  "dnmsGameOverMessage": "Вы набрали {score} правильных ответов в разделе «Отложенное несовпадение»!",
+  "dnmsChooseNovel": "Нажмите на новую карту",
+  "dnmsMemorizeSample": "Запомни эту карту",
+  "dnmsWaitForIt": "Подожди...",
+  "dnmsExcellent": "Отличный!",
+  "dnmsSampleTapped": "Это был образец!",
+  "dnmsCards": "Карты",
+  "symSpanTitle": "Симметрия",
+  "symSpanSubtitle": "Вспомните структуру клеток, определяя вертикальную симметрию.",
+  "symSpanWinTitle": "Мастер симметрии!",
+  "symSpanGameOverMessage": "Вы набрали {score} баллов, вспомнив макеты и определив симметрию!",
+  "symSpanMemorizeRed": "Запомните расположение эритроцитов",
+  "symSpanIsSymmetric": "Симметричен ли узор?",
+  "symSpanRecallSequence": "Вспомните последовательность действий в правильном порядке.",
+  "symSpanGreatJob": "Отличная работа!",
+  "symSpanTryAgain": "Попробуйте еще раз!",
+  "symSpanLength": "Длина",
+  "readingSpanTitle": "Продолжительность чтения",
+  "readingSpanSubtitle": "Проверьте предложения, запоминая последовательность букв.",
+  "readingSpanWinTitle": "Эксперт по чтению!",
+  "readingSpanGameOverMessage": "Вы набрали {score} очков в испытании на запоминание «Объем чтения»!",
+  "readingSpanTrueFalse": "Верно или ложно это утверждение?",
+  "readingSpanMemorizeLetter": "Запомни это письмо",
+  "readingSpanRecallLetters": "Вспоминайте буквы по порядку.",
+  "readingSpanGreatJob": "Отличная работа!",
+  "readingSpanTryAgain": "Попробуйте еще раз!",
+  "readingSpanYourSequence": "Ваша последовательность: {sequence}",
+  "readingSpanLength": "Длина",
+  "readingSpanSentence1": "Солнце восходит на востоке.",
+  "readingSpanSentence2": "Лед кипит.",
+  "readingSpanSentence3": "Рыбы могут дышать под водой.",
+  "readingSpanSentence4": "У собак есть крылья и они умеют летать.",
+  "readingSpanSentence5": "Вода замерзает при температуре 0 градусов Цельсия.",
+  "readingSpanSentence6": "Кошки лают, как маленькие собаки.",
+  "readingSpanSentence7": "Летом деревья имеют зеленые листья.",
+  "readingSpanSentence8": "Дождь падает вверх от земли.",
+  "readingSpanSentence9": "Треугольник имеет четыре равные стороны.",
+  "readingSpanSentence10": "Яблоки – это разновидность сладких фруктов.",
+  "readingSpanSentence11": "Луна сделана из сыра чеддер.",
+  "readingSpanSentence12": "У автомобилей есть колеса, которые они могут катить.",
+  "readingSpanSentence13": "Огонь очень холодный.",
+  "readingSpanSentence14": "Бумага изготавливается из обработанной древесины.",
+  "readingSpanSentence15": "У птиц есть перья, которые помогают им летать.",
+  "readingSpanSentence16": "Бананы растут на соснах.",
+  "readingSpanSentence17": "Слон меньше муравья.",
+  "readingSpanSentence18": "Книги содержат печатные страницы текста.",
+  "countingSpanTitle": "Подсчет интервала",
+  "countingSpanSubtitle": "Считайте только синие круги. Затем вспомните последовательность отсчетов.",
+  "countingSpanWinTitle": "Считаем гения!",
+  "countingSpanGameOverMessage": "Вы набрали {score} очков в испытании на память «Счетный интервал»!",
+  "countingSpanCountCircles": "Считай только синие круги",
+  "countingSpanRecallCounts": "Напоминание считается в правильном порядке",
+  "countingSpanGreatJob": "Отличная работа!",
+  "countingSpanTryAgain": "Попробуйте еще раз!",
+  "countingSpanYourSequence": "Ваша последовательность: {sequence}",
+  "countingSpanLength": "Длина",
+  "objDispTitle": "Смещение объекта",
+  "objDispSubtitle": "Запомните макет. Найдите и коснитесь одного объекта, который меняет положение.",
+  "objDispWinTitle": "Пространственный гений!",
+  "objDispGameOverMessage": "Вы правильно определили {score} смещенных объектов!",
+  "objDispMemorizeAll": "Запомните все места размещения",
+  "objDispWaitingShift": "Ждем смены макета...",
+  "objDispTapMoved": "Коснитесь объекта, который переместился",
+  "objDispExcellent": "Отличный!",
+  "objDispWrongObject": "Неправильный объект!",
+  "objDispItems": "Предметы",
+  "mandalaTitle": "Мандала Напоминание",
+  "mandalaSubtitle": "Запомните цветовую конфигурацию. Выбирайте цвета и перекрашивайте плитки.",
+  "mandalaWinTitle": "Художник мандалы!",
+  "mandalaGameOverMessage": "Вы набрали {score} баллов, воссоздав цветные геометрические макеты!",
+  "mandalaMemorizeColors": "Запомните цвета плитки",
+  "mandalaPaintCells": "Раскрасьте ячейки в соответствии с оригиналом",
+  "mandalaExcellent": "Отличный!",
+  "mandalaIncorrectMatch": "Неверное совпадение!",
+  "mandalaSubmitRepaint": "Отправить перекраску",
+  "mandalaTiles": "Плитка",
+  "runningSpanTitle": "Беговой интервал",
+  "runningSpanSubtitle": "Следите за буквами. Когда они остановятся, введите последние N букв по порядку.",
+  "runningSpanWinTitle": "Буферный мастер!",
+  "runningSpanGameOverMessage": "Вы набрали {score} очков в тесте «Быстрая память»!",
+  "runningSpanPrepareRecall": "Приготовьтесь вспомнить последние {count} буквы.",
+  "runningSpanWatchCarefully": "Смотрите внимательно...",
+  "runningSpanEnterLast": "Введите последние {count} буквы",
+  "runningSpanGreatJob": "Отличная работа!",
+  "runningSpanIncorrectBuffer": "Неправильный буфер!",
+  "runningSpanRecallLast": "Вспомнить последнее {count}",
+  "runningSpanStopsRandomly": "Поток останавливается случайным образом!",
+  "runningSpanEntered": "Введено: {sequence}",
+  "runningSpanNItems": "N-предметов",
+  "spatialCabinetTitle": "Пространственные шкафы",
+  "spatialCabinetSubtitle": "Запомните, в каком ящике шкафа какой предмет находится.",
+  "spatialCabinetWinTitle": "Кабинетный эксперт!",
+  "spatialCabinetGameOverMessage": "Вы набрали {score} очков в пространственной памяти кабинета!",
+  "spatialCabinetMemorize": "Запомните расположение предметов",
+  "spatialCabinetWhereIs": "Где {itemName} ?",
+  "spatialCabinetCorrect": "Правильный!",
+  "spatialCabinetWrongDrawer": "Неправильный ящик!",
+  "spatialCabinetItems": "Предметы",
+  "cabinetItemKey": "Ключ",
+  "cabinetItemApple": "Яблоко",
+  "cabinetItemDiamond": "Алмаз",
+  "cabinetItemBook": "Книга",
+  "cabinetItemUmbrella": "Зонтик",
+  "cabinetItemCoffee": "Кофе",
+  "cabinetItemLock": "Замок",
+  "cabinetItemPet": "Домашний питомец",
+  "cabinetItemCar": "Машина",
+  "@soptGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@contRecogGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@dnmsGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@symSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@readingSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@readingSpanYourSequence": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
+  "@countingSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@countingSpanYourSequence": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
+  "@objDispGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@mandalaGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanPrepareRecall": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanEnterLast": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanRecallLast": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanEntered": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
+  "@spatialCabinetGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@spatialCabinetWhereIs": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "gamesTitleLabel": "ИГРЫ",
+  "yourFavorites": "ВАШИ ЛЮБИМЫЕ",
+  "readyForWorkout": "ГОТОВЫ К ЕЖЕДНЕВНОЙ ТРЕНИРОВКЕ?",
+  "greatStartKeepGoing": "ОТЛИЧНОЕ НАЧАЛО! ПРОДОЛЖАЙТЕ В ТОМ ЖЕ ДУХЕ.",
+  "onFireToday": "ВЫ СЕГОДНЯ В УДАРЕ!",
+  "incredibleSolvingToday": "НЕВЕРОЯТНЫЕ РЕШЕНИЯ СЕГОДНЯ!",
+  "newGameLabel": "НОВАЯ",
+  "slitherlinkTitle": "Слизерлинк",
+  "slitherlinkSubtitle": "ОКОЛЬЦУЙТЕ СЕТКУ ИЗ ШТИФТОВ, ИСПОЛЬЗУЯ ЧИСЛОВЫЕ ПОДСКАЗКИ.",
+  "futoshikiTitle": "Футошики",
+  "futoshikiSubtitle": "ЗАПОЛНЯЙТЕ СЕТКИ, ИСПОЛЬЗУЯ ПОДСКАЗКИ \"БОЛЬШЕ ЧЕМ\".",
+  "kakuroTitle": "Какуро",
+  "kakuroSubtitle": "РЕШАЙТЕ КРОССВОРДЫ С ЧИСЛАМИ И СУММАМИ.",
+  "inequalityDashTitle": "Спринт Неравенств",
+  "inequalityDashSubtitle": "РЕШАЙТЕ НЕРАВЕНСТВА ПОД ДАВЛЕНИЕМ ВРЕМЕНИ.",
+  "factorFinderTitle": "Поиск Множителей",
+  "factorFinderSubtitle": "ОПРЕДЕЛИТЕ ВСЕ МНОЖИТЕЛИ ЦЕЛЕВЫХ ЧИСЕЛ.",
+  "collatzTitle": "Путь Коллатца",
+  "collatzSubtitle": "ПЕРЕМЕЩАЙТЕСЬ ПО ПОСЛЕДОВАТЕЛЬНОСТИ 3N+1.",
+  "sumPyramidTitle": "Пирамида Сумм",
+  "sumPyramidSubtitle": "ЗАПОЛНЯЙТЕ ЯЧЕЙКИ ПИРАМИДЫ МАТЕМАТИЧЕСКИМИ ПОДСКАЗКАМИ О СУММАХ.",
+  "target10Title": "Цель 10",
+  "target10Subtitle": "КОМБИНИРУЙТЕ ПЛИТКИ С ЧИСЛАМИ, ЧТОБЫ ПОЛУЧИТЬ ДЕСЯТЬ СУММ. ",
+  "fractionMatcherTitle": "Сопоставление Дробей",
+  "fractionMatcherSubtitle": "СОПОСТАВЛЯЙТЕ ЭКВИВАЛЕНТНЫЕ ДРОБИ ВИЗУАЛЬНО.",
+  "dualCodingTitle": "Двойное Кодирование",
+  "dualCodingSubtitle": "СОПОСТАВЛЯЙТЕ БУКВЫ И СИМВОЛЫ ОДНОВРЕМЕННО.",
+  "distractorMatrixTitle": "Матрица Дистракторов",
+  "distractorMatrixSubtitle": "НАХОДИТЕ ЦЕЛЕВЫЕ ФИГУРЫ СРЕДИ ДИСТРАКТОРОВ.",
+  "temporalOrderTitle": "Временной Порядок",
+  "temporalOrderSubtitle": "ВСПОМНИТЕ ХРОНОЛОГИЧЕСКУЮ ПОСЛЕДОВАТЕЛЬНОСТЬ.",
+  "associativePairsTitle": "Ассоциативные Пары",
+  "associativePairsSubtitle": "СОЕДИНЯЙТЕ И СОПОСТАВЛЯЙТЕ СООТВЕТСТВУЮЩИЕ СИМВОЛЫ.",
+  "blockCount3dTitle": "Подсчет Блоков 3D",
+  "blockCount3dSubtitle": "СЧИТАЙТЕ БЛОКИ В ТРЕХМЕРНОМ ПРОСТРАНСТВЕ.",
+  "rotatingMazeTitle": "Вращающийся Лабиринт",
+  "rotatingMazeSubtitle": "ВРАЩАЙТЕ ЛАБИРИНТЫ, ЧТОБЫ ПРОВЕСТИ ШАРИКИ К ВЫХОДУ.",
+  "silhouetteMatchOrthoTitle": "Сопоставление Силуэтов (Орто)",
+  "silhouetteMatchOrthoSubtitle": "СОПОСТАВЛЯЙТЕ 3D-ОБЪЕКТЫ С ОРТОГОНАЛЬНЫМИ ТЕНЯМИ.",
+  "spatialConflictTitle": "Пространственный Конфликт",
+  "spatialConflictSubtitle": "РЕШАЙТЕ РАСХОЖДЕНИЯ МЕЖДУ ТЕКСТОМ И НАПРАВЛЕНИЕМ.",
+  "spotlightTrackTitle": "Слежение Прожектором",
+  "spotlightTrackSubtitle": "ОТСЛЕЖИВАЙТЕ МИГАЮЩИЕ ПРЕДМЕТЫ В ДВИЖУЩИХСЯ ТЕНЯХ.",
+  "d2AttentionTitle": "Внимание d2",
+  "d2AttentionSubtitle": "НАЖИМАЙТЕ НА ЦЕЛЕВЫЕ СИМВОЛЫ В СООТВЕТСТВИИ СО СТРОГИМИ КРИТЕРИЯМИ.",
+  "dualMirrorTitle": "Двойная Зеркальная Навигация",
+  "dualMirrorSubtitle": "ПЕРЕМЕЩАЙТЕСЬ ПО ДВУМ ЛАБИРИНТАМ ОДНОВРЕМЕННО.",
+  "contextCluesTitle": "Контекстные Подсказки",
+  "contextCluesSubtitle": "УГАДЫВАЙТЕ СКРЫТЫЕ СЛОВА ПО КОНТЕКСТНЫМ ПОДСКАЗКАМ.",
+  "digitSpanReverseSubtitle": "ВСПОМНИТЕ ЦИФРЫ ЧИСЕЛ В ОБРАТНОМ ПОРЯДКЕ.",
+  "faceNameAssociationSubtitle": "ВСПОМНИТЕ ИМЕНА ДЛЯ РАЗЛИЧНЫХ ПРЕДСТАВЛЕННЫХ ЛИЦ.",
+  "staircaseMemorySubtitle": "ЗАПОМИНАЙТЕ БЛОКИ В СТУПЕНЧАТОЙ ПОСЛЕДОВАТЕЛЬНОСТИ.",
+  "choiceReactionTimeSubtitle": "БЫСТРО НАЖИМАЙТЕ НА ОПРЕДЕЛЕННЫЕ КНОПКИ, СООТВЕТСТВУЮЩИЕ ПОДСКАЗКАМ.",
+  "attentionalBlinkSubtitle": "УЛАВЛИВАЙТЕ БЫСТРЫЕ ЦЕЛИ, МЕЛЬКАЮЩИЕ В ПОТОКАХ.",
+  "visualStatisticalLearningSubtitle": "ИЗУЧАЙТЕ ВРЕМЕННЫЕ ПАТТЕРНЫ ФИГУР ВИЗУАЛЬНО.",
+  "sternbergTaskSubtitle": "ВСПОМНИТЕ, БЫЛ ЛИ СИМВОЛ В НАБОРЕ ПАМЯТИ.",
+  "operationSpanSubtitle": "РЕШАЙТЕ ЗАДАЧИ И ВСПОМИНАЙТЕ АЛФАВИТНЫЕ СТРОКИ.",
+  "continuousRecognitionTitle": "Непрерывное Распознавание",
+  "continuousRecognitionSubtitle": "ОПРЕДЕЛИТЕ, ЯВЛЯЕТСЯ ЛИ ПРЕДСТАВЛЕННАЯ КАРТОЧКА СТАРОЙ ИЛИ НОВОЙ.",
+  "symmetrySpanTitle": "Объем Симметрии",
+  "symmetrySpanSubtitle": "ВСПОМНИТЕ КООРДИНАТЫ ЯЧЕЕК ПРИ ПРИНЯТИИ РЕШЕНИЙ О ВЕРТИКАЛЬНОЙ СИММЕТРИИ.",
+  "objectDisplacementTitle": "Смещение Объекта",
+  "objectDisplacementSubtitle": "ИЗУЧИТЕ РАСПОЛОЖЕНИЕ И НАЖМИТЕ НА ЕДИНСТВЕННЫЙ ПРЕДМЕТ, КОТОРЫЙ ПЕРЕМЕСТИЛСЯ.",
+  "mandalaRecallTitle": "Воспроизведение Мандалы",
+  "mandalaRecallSubtitle": "ЗАПОМИНАЙТЕ ЦВЕТНЫЕ ПЛИТКИ И ПЕРЕКРАШИВАЙТЕ МАНДАЛЫ С ПАЛИТРЫ.",
+  "runningMemorySpanTitle": "Текущий Объем Памяти",
+  "runningMemorySpanSubtitle": "СЛЕДИТЕ ЗА ТЕКУЩИМИ БУКВАМИ И ВСПОМИНАЙТЕ ПОСЛЕДНИЕ N ЭЛЕМЕНТОВ.",
+  "spatialCabinetMemoryTitle": "Пространственные Шкафы",
+  "spatialCabinetMemorySubtitle": "ЗАПОМИНАЙТЕ И НАХОДИТЕ ПРЕДМЕТЫ ЗА ДВЕРЦАМИ ШКАФОВ.",
+  "pathRecallSubtitle": "ЗАПОМИНАЙТЕ И ПОВТОРЯЙТЕ ВЫБОР ПУТИ.",
+  "objectShuffleSubtitle": "ОТСЛЕЖИВАЙТЕ ПРЕДМЕТЫ, ПЕРЕМЕШАННЫЕ ПОД ГЛУБОКИМИ ЧАШКАМИ.",
+  "groceryListSubtitle": "ЗАПОМИНАЙТЕ И ОТМЕЧАЙТЕ ПУНКТЫ В СПИСКЕ.",
+  "quickMathSubtitle": "РЕШАЙТЕ АРИФМЕТИЧЕСКИЕ ЗАДАЧИ НА МАКСИМАЛЬНОЙ СКОРОСТИ.",
+  "mathGuessTitle": "Математическая Угадайка",
+  "mathGuessSubtitle": "УГАДАЙТЕ СКРЫТОЕ ЧИСЛО ЗА 15 ПОПЫТОК.",
+  "reflexTapSubtitle": "НАЖИМАЙТЕ НА СТИМУЛЫ ТАК БЫСТРО, КАК ТОЛЬКО ВОЗМОЖНО.",
+  "pixelMimicSubtitle": "КОПИРУЙТЕ ДИЗАЙНЕРСКИЕ ПАТТЕРНЫ НА ПИКСЕЛЬНЫХ СЕТКАХ.",
+  "simonSequenceSubtitle": "ПОВТОРЯЙТЕ ПОСЛЕДОВАТЕЛЬНОСТИ ФИГУР ПО ПАМЯТИ.",
+  "slidePuzzleSubtitle": "ПЕРЕСТАВЛЯЙТЕ КВАДРАТНЫЕ ПЛИТКИ СКОЛЬЗЯЩЕЙ СЕТКИ.",
+  "findWordTitle": "Поиск Слова",
+  "schulteTableSubtitle": "НАЖИМАЙТЕ НА ЧИСЛА ОТ ОДНОГО ДО ДВАДЦАТИ ПЯТИ.",
+  "simonCommandTitle": "Команда Саймона",
+  "simonCommandSubtitle": "БЫСТРО ВЫПОЛНЯЙТЕ ГОЛОСОВЫЕ ИНСТРУКЦИИ.",
+  "binaryCodeTitle": "Бинарная Скорость",
+  "binaryCodeSubtitle": "ПЕРЕВОДИТЕ БИНАРНЫЕ КОДЫ В ДЕСЯТИЧНЫЕ.",
+  "moduloClockTitle": "Часы Модуло",
+  "moduloClockSubtitle": "ВЫЧИСЛЯЙТЕ МАТЕМАТИЧЕСКИЕ УРАВНЕНИЯ, ИСПОЛЬЗУЯ ЧАСЫ.",
+  "chimpTestTitle": "Тест Шимпанзе",
+  "chimpTestSubtitle": "НАЖИМАЙТЕ НА СЛУЧАЙНЫЕ ЧИСЛА В ПОРЯДКЕ ВОЗРАСТАНИЯ.",
+  "relationalMemoryTitle": "Реляционная Память",
+  "relationalMemorySubtitle": "ВСПОМНИТЕ ТОЧНОЕ РАСПОЛОЖЕНИЕ ЭЛЕМЕНТОВ СЕТКИ.",
+  "factBinderTitle": "Связыватель Фактов",
+  "factBinderSubtitle": "СОЕДИНЯЙТЕ СИМВОЛЫ И ВСПОМИНАЙТЕ УТВЕРЖДЕНИЯ.",
+  "sourceMonitoringTitle": "Мониторинг Источника",
+  "sourceMonitoringSubtitle": "ЗАПОМИНАЙТЕ КОНТЕКСТ.",
+  "klotskiTitle": "Побег Клотски",
+  "klotskiSubtitle": "ПЕРЕДВИГАЙТЕ БЛОКИ, ЧТОБЫ ДОБРАТЬСЯ ДО ВЫХОДОВ.",
+  "homophoneHuntSubtitle": "Выберите правильное написание омофона",
+  "compassMazeCongrats": "Экспертная навигация! Вы нашли выход, несмотря на меняющиеся направления.",
+  "compassMazeMessage": "Навигация по лабиринту с помощью компаса.",
+  "compassMazeSubtitle": "Пройдите лабиринт, в котором направления движения меняются в зависимости от ориентации вашего компаса.",
+  "compassMazeTitle": "Лабиринт с компасом",
+  "complexFoldingNetsCongrats": "Продвинутая логика складывания! Вы успешно визуализировали 3D-форму.",
+  "complexFoldingNetsSubtitle": "Определите, какая сложная 3D-фигура получится при складывании нестандартной 2D-развертки.",
+  "complexFoldingNetsTitle": "Развертки",
+  "crossSectionSliceCongrats": "Невероятная 3D-визуализация! Вы видели эту фигуру насквозь.",
+  "crossSectionSliceSubtitle": "Выберите правильное 2D-сечение 3D-объекта под определенным углом.",
+  "crossSectionSliceTitle": "Поперечное сечение",
+  "interlockPuzzleCongrats": "Логическая деконструкция! Вы идеально разгадали головоломку.",
+  "interlockPuzzleSubtitle": "Разберите или соберите сложные переплетающиеся блоки в правильной последовательности.",
+  "interlockPuzzleTitle": "Головоломка с зацеплением",
+  "laserLinkCongrats": "Прецизионное отражение! Вы успешно запитали всю сетку.",
+  "laserLinkSubtitle": "Вращайте зеркала, чтобы отражать лазеры и запитать все цели.",
+  "laserLinkTitle": "Лазерная связь",
+  "negativeSpaceDetectionCongrats": "Острое восприятие! Вы овладели искусством видеть то, чего нет.",
+  "negativeSpaceDetectionMessage": "Найдите скрытый объект в пространстве.",
+  "negativeSpaceDetectionSubtitle": "Определите форму, образованную пустым пространством между объектами.",
+  "negativeSpaceDetectionTitle": "Отрицательное пространство",
+  "pathIntersectCongrats": "Синхронная навигация! Вы безупречно достигли всех целей.",
+  "pathIntersectSubtitle": "Двигайтесь по нескольким путям одновременно, чтобы достичь соответствующих целей без столкновений.",
+  "pathIntersectTitle": "Пересечение путей",
+  "shadowPivotCongrats": "Динамическое пространственное мышление! Вы покорили свет и тень.",
+  "shadowPivotSubtitle": "Предскажите тень, отбрасываемую 3D-объектом при его вращении вокруг разных осей.",
+  "shadowPivotTitle": "Поворот тени",
+  "shapeEllipse": "ЭЛЛИПС",
+  "shapeRectangle": "ПРЯМОУГОЛЬНИК",
+  "shapeTrapezoid": "ТРАПЕЦИЯ",
+  "errorSomethingWrong": "Something went wrong",
+  "errorUnexpected": "An unexpected error occurred",
+  "errorTryAgain": "Try Again",
+  "leaveReview": "Leave Review",
+  "reportError": "Report Error",
+  "statsTitle": "Stats",
+  "statsAchievements": "Achievements",
+  "statsWeeklyActivity": "Weekly Activity",
+  "statsDayStreak": "{days} Day Streak",
+  "@statsDayStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "statsTotalXp": "Total XP",
+  "statsSolved": "Solved",
+  "statsLevel": "Level {level}",
+  "@statsLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "statsMaintainStreak": "Maintain your streak!",
+  "statsPercentToLevel": "{percent}% to Level {level}",
+  "@statsPercentToLevel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "statsCognitiveProfile": "Cognitive Profile",
+  "statsLocked": "Locked",
+  "achievementSeeker": "Seeker",
+  "achievementSeekerDesc": "Earn 100 XP",
+  "achievementApprentice": "Apprentice",
+  "achievementApprenticeDesc": "Earn 1,000 XP",
+  "achievementStrategist": "Strategist",
+  "achievementStrategistDesc": "Earn 5,000 XP",
+  "achievementElite": "Elite",
+  "achievementEliteDesc": "Earn 10,000 XP",
+  "achievementVeteran": "Veteran",
+  "achievementVeteranDesc": "Earn 25,000 XP",
+  "achievementMaster": "Master",
+  "achievementMasterDesc": "Earn 50,000 XP",
+  "achievementGrandmaster": "Grandmaster",
+  "achievementGrandmasterDesc": "Earn 100,000 XP",
+  "achievementLegend": "Legend",
+  "achievementLegendDesc": "Earn 250,000 XP",
+  "achievementMythic": "Mythic",
+  "achievementMythicDesc": "Earn 500,000 XP",
+  "achievementEternal": "Eternal",
+  "achievementEternalDesc": "Earn 1,000,000 XP",
+  "winFoundIt": "Found It!",
+  "winExcellentTracking": "Excellent tracking speed!",
+  "loseMissedIt": "Missed It!",
+  "loseKeepEyes": "Keep your eyes on the target.",
+  "winDecodedCorrectly": "Decoded Correctly!",
+  "winDecodedMessage": "Your brain successfully read the jumbled text!",
+  "loseTryAgainDecryption": "Try again to break the encryption.",
+  "winTargetReached": "Target Reached!",
+  "winExcellentCalculations": "Excellent calculations!",
+  "winCodeBroken": "Code Broken!",
+  "winDecodedPerfectly": "You decoded the message perfectly.",
+  "loseEncrypted": "Encrypted",
+  "winAmazing": "Amazing!",
+  "winReachedTarget": "You reached the target number!",
+  "loseTryAgainSolution": "Try again to find the solution.",
+  "winExcellent": "Excellent!",
+  "winLevelUp": "Level Up!",
+  "winPerfect": "Perfect!",
+  "winFloodSuccess": "Flood Success!",
+  "loseDryLand": "Dry Land...",
+  "winRoundComplete": "Round Complete",
+  "winStayVigilant": "Stay Vigilant!",
+  "loseKeepWatch": "Keep Watch!",
+  "winFocusMaster": "Focus Master!",
+  "loseConcentrationBroken": "Concentration Broken",
+  "winSpeedDemon": "Speed Demon!",
+  "loseSlowSteady": "Slow & Steady",
+  "loseTimeExpired": "Time Expired",
+  "winSharpEyes": "Sharp Eyes!",
+  "loseLostTrack": "Lost Track",
+  "winOrbitMaster": "Orbit Master!",
+  "loseOutOfSync": "Out of Sync",
+  "winSharpReflexes": "Sharp Reflexes!",
+  "loseOutOfTime": "Out of Time",
+  "winSurgeComplete": "Surge Complete!",
+  "loseTimeExpiredExcl": "Time Expired!",
+  "winMathGenius": "Math Genius!",
+  "loseTimeUp": "Time Up",
+  "winPlanningMaster": "Planning Master!",
+  "loseOutOfMoves": "Out of Moves",
+  "winTotalControl": "Total Control!",
+  "loseInhibitionFail": "Inhibition Fail",
+  "winMimicMaster": "Mimic Master!",
+  "losePatternMismatch": "Pattern Mismatch",
+  "winMemoryMaster": "Memory Master!",
+  "loseFadingEcho": "Fading Echo",
+  "winNeuroMaster": "Neuro-Master!",
+  "loseBrainFog": "Brain Fog",
+  "winBrainWizard": "Brain Wizard!",
+  "winSpatialMaster": "Spatial Master!",
+  "loseLostInSpace": "Lost in Space",
+  "winSequenceMaster": "Sequence Master!",
+  "winCountingGenius": "Counting Genius!",
+  "winNonMatchingExpert": "Non-Matching Expert!",
+  "winSymmetryMaster": "Symmetry Master!",
+  "winCabinetExpert": "Cabinet Expert!",
+  "winSpatialGenius": "Spatial Genius!",
+  "winReadingExpert": "Reading Expert!",
+  "winRecognitionGenius": "Recognition Genius!",
+  "winMandalaArtist": "Mandala Artist!",
+  "winTrackerPro": "Tracker Pro!",
+  "loseLostTrail": "Lost Trail",
+  "winLogicMaster": "Logic Master!",
+  "loseWrongAnswer": "Wrong Answer",
+  "winPathfinder": "Pathfinder!",
+  "loseLostYourWay": "Lost Your Way",
+  "winMentalGymnast": "Mental Gymnast!",
+  "loseWiresCrossed": "Wires Crossed",
+  "winCorrect": "Correct!",
+  "loseWrong": "Wrong",
+  "winRhythmGod": "Rhythm God!",
+  "loseOffBeat": "Off Beat",
+  "winSteadyHands": "Steady Hands!",
+  "loseShakyLine": "Shaky Line",
+  "winEquationSolved": "Equation Solved!",
+  "winMasterHunter": "Master Hunter!",
+  "loseHuntEnded": "Hunt Ended",
+  "winFluencyExpert": "Fluency Expert!",
+  "loseTimeUpExcl": "Time Up!",
+  "winSharpEye": "Sharp Eye!",
+  "loseMismatched": "Mismatched",
+  "winFibonacciMaster": "Fibonacci Master!",
+  "winMathWizard": "Math Wizard!",
+  "winPercentagePro": "Percentage Pro!",
+  "winSleuthMaster": "Sleuth Master!",
+  "winDivisibilityWhiz": "Divisibility Whiz!",
+  "winVennMaster": "Venn Master!",
+  "winChimpTestAced": "Chimp Test Aced",
+  "loseTestFailed": "Test Failed",
+  "winChimpMessage": "Sensational working memory span! You equal chimpanzee levels of cognitive recall.",
+  "loseChimpMessage": "You lost all lives. Keep training to scale up your memory grid capacity!",
+  "winPerfectRecall": "Perfect Recall!",
+  "winRememberedAll": "You remembered all details correctly!",
+  "loseSomeDetailsWrong": "Some details were remembered incorrectly.",
+  "winShikakuSolved": "You successfully solved the Shikaku puzzle.",
+  "snackbarIncorrectSum": "Incorrect sum! Try another one.",
+  "snackbarCorrectMatch": "Correct match!",
+  "snackbarWrongMatch": "Wrong match! Study a new shape.",
+  "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
+  "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
+  "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
+  "@snackbarWordMustContainCentral": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarWordAlreadyFound": "Word already found!",
+  "snackbarNotAValidWord": "Not a valid word!",
+  "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
+  "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
+  "@snackbarIncorrectCorrectAnswer": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarCorrect": "Correct!",
+  "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
+  "snackbarAllCorrect": "All associations correct!",
+  "snackbarIncorrectStudyAgain": "Incorrect translations! Study the association key again.",
+  "snackbarIncorrectArithmetic": "Incorrect arithmetic! Try again.",
+  "snackbarCorrectRecall": "Correct recall!",
+  "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
+  "snackbarPieceDoesNotFit": "Piece does not fit there!",
+  "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
+  "@snackbarInvalidStep": {
+    "placeholders": {
+      "mod": {
+        "type": "int"
+      },
+      "modulus": {
+        "type": "int"
+      },
+      "remainder": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
+  "@snackbarIncorrectGroup": {
+    "placeholders": {
+      "tries": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
+  "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
+  "@snackbarIncorrectDestination": {
+    "placeholders": {
+      "x": {
+        "type": "int"
+      },
+      "y": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
+  "@snackbarIncorrectCorrectCount": {
+    "placeholders": {
+      "suit": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
+  "snackbarSequenceMatched": "Sequence matched! Increasing length...",
+  "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
+  "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
+  "@snackbarIncorrectCorrectValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
+  "@snackbarIncorrectSlices": {
+    "placeholders": {
+      "selected": {
+        "type": "int"
+      },
+      "required": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
+  "snackbarCorrectOrder": "Correct chronological order!",
+  "snackbarIncorrectOrder": "Incorrect order! Study again.",
+  "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
+  "@snackbarIncorrectMissingValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
+  "@snackbarIncorrectLetterDigit": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      },
+      "digit": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
+  "@snackbarIncorrectCorrectPoint": {
+    "placeholders": {
+      "x": {
+        "type": "int"
+      },
+      "y": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarReachedExit": "Reached the exit! Generating next maze...",
+  "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
+  "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
+  "@snackbarIncorrectCorrectStack": {
+    "placeholders": {
+      "stack": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
+  "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
+  "@snackbarScaleNotBalanced": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
+  "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
+  "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
+  "@snackbarIncorrectCorrectForm": {
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
+  "@snackbarIncorrectInequality": {
+    "placeholders": {
+      "left": {
+        "type": "String"
+      },
+      "leftVal": {
+        "type": "int"
+      },
+      "correct": {
+        "type": "String"
+      },
+      "right": {
+        "type": "String"
+      },
+      "rightVal": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
+  "@snackbarIncorrectBaseConversion": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
+  "snackbarAlignedCorrectly": "Aligned and correctly identified!",
+  "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
+  "btnShuffleCups": "Shuffle Cups",
+  "btnSubmitGroup": "Submit Group",
+  "btnYes": "Yes",
+  "btnNo": "No",
+  "btnGotIt": "Got It",
+  "btnSubmit": "Submit",
+  "btnShowHint": "Show Hint",
+  "btnSubmitAlignment": "Submit Alignment",
+  "btnSubmitLocation": "Submit Location",
+  "btnStartDealing": "Start Dealing",
+  "btnImReady": "I'm Ready",
+  "btnStartGame": "Start Game",
+  "btnSubmitStack": "Submit Stack",
+  "btnImReadyToAnswer": "I'm Ready to Answer",
+  "btnNoMatch": "No Match",
+  "btnMatch": "Match",
+  "btnGuess": "Guess",
+  "btnPlayNow": "Play Now",
+  "btnClear": "Clear",
+  "phaseWatchCarefully": "Watch carefully...",
+  "phaseTapCupWithBall": "Tap the cup with the ball!",
+  "phaseTrackTheBall": "Track the ball",
+  "phaseFindTheBall": "Find the ball under the yellow cup!",
+  "phaseBallUnderCup": "The ball is under the highlighted cup. Remember it!",
+  "phaseWrongCup": "Wrong cup! The ball was under the highlighted cup.",
+  "phaseDecodeTheSentence": "Decode the sentence",
+  "phaseFindTheTarget": "Find the target",
+  "phaseTargetNumber": "Target Number",
+  "phaseSelectNumberToBegin": "Select a number to begin",
+  "phaseMemorizeDetails": "Memorize the details",
+  "phaseReadAndMemorize": "Read and Memorize Details:",
+  "phaseSolveTheGrid": "Solve the grid",
+  "phaseDirectionsList": "Directions List:",
+  "phaseYourStack": "Your Stack",
+  "phaseEmpty": "Empty",
+  "phaseTapToAdd": "Tap to Add",
+  "phaseCalculationLabel": "Calculation:",
+  "phaseTimeLeft": "Time: {time}s",
+  "@phaseTimeLeft": {
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  },
+  "phaseRemember2Back": "Remember 2 steps back",
+  "phaseMatch": "Match",
+  "hintTypeRhymingWord": "Type a rhyming word...",
+  "hintStartTyping": "Start typing...",
+  "hintTypeHeardWord": "Type the heard word",
+  "hintTypeGuess": "Type your guess...",
+  "hintTypeAnswerHere": "Type answer here",
+  "hintEnterNextWord": "Enter next word...",
+  "howToPlayTitle": "How to Play",
+  "howToPlayStep1": "1. A secret number is chosen between 1 and 10,000.",
+  "howToPlayStep2": "2. Type your guess on the number pad and submit it.",
+  "howToPlayStep3": "3. If wrong, you will get feedback on whether the secret is higher or lower.",
+  "howToPlayStep4": "4. You have exactly 15 attempts to find the secret number.",
+  "noGuessesYet": "No Guesses Yet",
+  "chancesLeft": "Chances Left",
+  "guessesMade": "Guesses Made",
+  "feedbackFindNumber": "Find the number between 1 and 10,000!",
+  "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
+  "feedbackCorrectExcl": "Correct! The number was {number}.",
+  "@feedbackCorrectExcl": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "feedbackCorrectEmoji": "Correct!",
+  "feedbackTooLow": "Too Low",
+  "feedbackTooHigh": "Too High",
+  "feedbackGameOver": "Game Over! The number was {number}.",
+  "@feedbackGameOver": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "feedbackGuessResult": "{guess} is {result}!",
+  "@feedbackGuessResult": {
+    "placeholders": {
+      "guess": {
+        "type": "int"
+      },
+      "result": {
+        "type": "String"
+      }
+    }
+  },
+  "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
+  "@feedbackWinMessage": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "guesses": {
+        "type": "int"
+      }
+    }
+  },
+  "feedbackLoseMessage": "Out of guesses! The number was {number}.",
+  "@feedbackLoseMessage": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "statTime": "Time",
+  "statScore": "Score",
+  "statGrid": "Grid",
+  "statMatches": "Matches",
+  "statLives": "Lives",
+  "statBeats": "Beats",
+  "statPerfect": "Perfect",
+  "statSeenPool": "Seen Pool",
+  "statCards": "Cards",
+  "statSpan": "Span",
+  "statLength": "Length",
+  "statItems": "Items",
+  "statProgress": "Progress",
+  "statTrials": "Trials",
+  "statTrails": "Trails",
+  "statMoves": "Moves",
+  "statFocalSearch": "Focal search on oscillations",
+  "phaseMemorizeSequence": "Memorize the sequence order",
+  "phaseDetermineOrder": "Determine which item came first/last",
+  "phaseCorrectOrder": "Correct order!",
+  "phaseWrongTimeline": "Wrong timeline!",
+  "phaseWatchPattern": "Watch the pattern",
+  "phaseRepeatPattern": "Repeat the pattern",
+  "phaseExcellent": "Excellent!",
+  "phaseTryAgain": "Try again!",
+  "phaseChooseWordFit": "Choose the word that fits",
+  "phaseExcellentContextual": "Excellent contextual match!",
+  "phaseIncorrectMatch": "Incorrect match",
+  "phaseMemorizePattern": "Memorize the pattern",
+  "phaseSelectTiles": "Select the tiles",
+  "phaseWrongTile": "Wrong tile",
+  "phaseMemorizeRedCell": "Memorize red cell location",
+  "phaseIsSymmetrical": "Is the pattern symmetrical?",
+  "phaseRecallSequence": "Recall sequence in correct order",
+  "phaseGreatJob": "Great job!",
+  "phaseChooseNovelCard": "Choose a novel card",
+  "phaseAlreadyTapped": "Already tapped!",
+  "phaseCountBlueCircles": "Count only blue circles",
+  "phaseRecallCountsOrder": "Recall counts in correct order",
+  "phaseChooseNovel": "Choose the novel card",
+  "phaseMemorizeCard": "Memorize this card",
+  "phaseWaitForIt": "Wait for it...",
+  "phaseThatWasSample": "That was the sample!",
+  "phaseSolveDistractor": "Solve the distractor question!",
+  "phaseSelectMemorized": "Select the memorized cells",
+  "phasePerfectRecall": "Perfect recall!",
+  "phaseWrongExcl": "Wrong!",
+  "phaseMemorizePlacements": "Memorize all placements",
+  "phaseWaitingForShift": "Waiting for layout shift...",
+  "phaseTapMovedObject": "Tap the object that moved",
+  "phaseWrongObject": "Wrong object!",
+  "phaseStudyColorShape": "Study the color-shape connections",
+  "phaseTapMatchingTrait": "Tap the matching trait",
+  "phaseGreatRecall": "Great recall!",
+  "phaseWrongLink": "Wrong link!",
+  "phaseTrueOrFalse": "Is this statement true or false?",
+  "phaseMemorizeLetter": "Memorize this letter",
+  "phaseRecallLettersSequence": "Recall letters in sequence",
+  "phaseMemorizeTileColors": "Memorize tile colors",
+  "phasePaintCells": "Paint cells to match original",
+  "phaseIncorrectMatchExcl": "Incorrect match!",
+  "phaseKeepYourEyes": "Keep your eyes on it!",
+  "phaseWhereIsTarget": "Where is the target object?",
+  "phaseTrackStar": "Track Star",
+  "dialogIncorrectSequenceStudy": "Incorrect sequence! Study the story again.",
+  "dialogStoryReconstruct": "Reconstruct the story by tapping sentences in order",
+  "dialogMemorizeOrder": "Memorize the chronological order of events",
+  "dialogMemorizeWordPairs": "Memorize these word pairs",
+  "dialogWhichWordPaired": "Which word was paired with the target?",
+  "dialogWatchSequence": "Watch the sequence path",
+  "dialogRepeatPath": "Repeat the path sequence",
+  "dialogShapeShifterTap": "Tap shapes that match the active target",
+  "dialogFocusTunnelTap": "Tap incoming shapes ONLY if they match the symbol seen 2 steps ago (2-Back).",
+  "dialogSequenceStackBuild": "Mentally track stack operations, then rebuild the final stack from bottom to top.",
+  "dialogFactorTreeComplete": "Complete the factor tree by tapping nodes and matching factors!",
+  "dialogBinaryScaleBalance": "Balance the scale by selecting powers of two (binary weights) that sum to the target.",
+  "dialogMatrixMultiplierSelect": "Select one row and one column that multiply to the target",
+  "dialogOddEvenFlashTap": "Tap the card when the active rule is satisfied",
+  "dialogBaseConversionConvert": "Convert the value from the source base to the destination base.",
+  "dialogGhostTapSync": "Synchronize with the rhythm, then tap when the invisible pulse would reach peak size.",
+  "dialogFrequencyTapIdentify": "Identify which pulsing light matches the requested target frequency.",
+  "dialogLetterGridSwap": "Swap adjacent letters to form the target words in rows.",
+  "dialogGraphCoordinatePlot": "Plot the coordinates on the Cartesian plane satisfying the equation.",
+  "dialogDigitSwapEquation": "Swap one digit from the top equation with one from the bottom equation to make both correct.",
+  "dialogAreaPerimeterAdjust": "Adjust the rectangle dimensions to match the target area and perimeter.",
+  "dialogCrackCipher": "Crack character-digit substitution cipher math problems.",
+  "dialogPeripheralFocus": "Solve math center equations, tap side panels when they flash",
+  "dialogGokigenSatisfy": "Satisfy vertex clues and avoid closed loops",
+  "dialogPercentageCalculate": "Calculate discount percentages and final checkout totals.",
+  "dialogBinomialMatch": "Match quadratic formulas with factored binomial values.",
+  "dialogNumberBondsCalculate": "Calculate the missing value in the number bond hierarchy.",
+  "correctLowercase": "correct",
+  "incorrectLowercase": "incorrect",
+  "notAValidWord": "Not a valid word",
+  "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
+  "correctExclEmoji": "Correct!",
+  "wrongExcl": "Wrong!",
+  "abstractPatternRecallSubtitle": "Реконструируйте многослойные красочные фигуры на основе изучения памяти.",
+  "abstractPatternRecallTitle": "Наложение узоров",
+  "actionSequenceRecallSubtitle": "Повторите последовательность анимаций жестов персонажей по порядку.",
+  "actionSequenceRecallTitle": "Отзыв действий",
+  "affixBuilderSubtitle": "Комбинируйте префиксы/суффиксы, чтобы создать целевые словари.",
+  "affixBuilderTitle": "Конструктор аффиксов",
+  "algebraicBalanceSubtitle": "Решите уравнения, чтобы найти целевую сумму.",
+  "algebraicBalanceTitle": "Алгебраический баланс",
+  "areaPerimeterMatchSubtitle": "Нарисуйте прямоугольники, соответствующие значениям целевой площади и периметра.",
+  "areaPerimeterMatchTitle": "Площадь и периметр",
+  "attentionalRsvpSubtitle": "Определите цифры, появляющиеся в быстром мигании серийных букв.",
+  "attentionalRsvpTitle": "Внимание, ответьте на приглашение",
+  "auditoryNBackSubtitle": "Совпадение произнесенных букв, услышанных N, отходит от памяти.",
+  "auditoryNBackTitle": "Слуховой N-Back",
+  "baseConversionRunSubtitle": "Преобразование значений между двоичными, десятичными, шестнадцатеричными и восьмеричными.",
+  "baseConversionRunTitle": "Базовая конверсия",
+  "binaryScaleBalanceSubtitle": "Сбалансируйте десятичный вес, используя блоки степени двойки.",
+  "binaryScaleBalanceTitle": "Баланс двоичной шкалы",
+  "binomialMatchSubtitle": "Сопоставьте квадратичные формулы с факторизованными биномиальными значениями.",
+  "binomialMatchTitle": "Биномиальное совпадение",
+  "blinkDetectorSubtitle": "Коснитесь грани сетки, которая быстро мигнет дважды.",
+  "blinkDetectorTitle": "Детектор моргания",
+  "blockStackingPhysicsSubtitle": "Складывайте панели блоков неправильной формы, уравновешивая гравитационный вес.",
+  "blockStackingPhysicsTitle": "Укладка блоков",
+  "boggleWordSearchSubtitle": "Прослеживайте соседние соединенные пути, чтобы найти скрытые слова.",
+  "boggleWordSearchTitle": "Боггл Коннект",
+  "cardCountingMemorySubtitle": "Определите карты, которые уже раздавались в ходе непрерывных раздач.",
+  "cardCountingMemoryTitle": "Счетчик карт",
+  "chalkAndTalkSubtitle": "Введите слова, которые слышите в аудио, игнорируя визуальные отвлекающие факторы.",
+  "chalkAndTalkTitle": "Мел и разговор",
+  "codedCrosswordsCodeSubtitle": "Решите кроссворды в сетке, сопоставляя цифровые коды.",
+  "codedCrosswordsCodeTitle": "Кодовые слова Кроссворд",
+  "colorMazeNavSubtitle": "Перемещайтесь по плиткам лабиринта, соответствующим цветам динамических разрешений.",
+  "colorMazeNavTitle": "Цветной лабиринт Навигация",
+  "colorWordMatchUpSubtitle": "Определите, совпадают ли два цветных слова, основываясь на изменяющихся правилах.",
+  "colorWordMatchUpTitle": "Согласование цветов",
+  "corralLoopSubtitle": "Нарисуйте один цикл, включающий числа, соответствующие видимости.",
+  "corralLoopTitle": "Загонная петля",
+  "countdownMathSubtitle": "ОБЪЕДИНЯЙТЕ СЛУЧАЙНЫЕ ЦИФРЫ, ЧТОБЫ РАССЧИТАТЬ ТРЕХЗНАЧНУЮ ЦЕЛЬ.",
+  "countdownMathTitle": "Математический обратный отсчет",
+  "crossSectionMatch3DSubtitle": "Определите геометрию двумерных срезов, вырезанных из трехмерных фигур.",
+  "crossSectionMatch3DTitle": "3D-сечение",
+  "cryptoArithmeticSubtitle": "Взломать математические задачи шифра замены символов и цифр.",
+  "cryptoArithmeticTitle": "Крипто-арифметика",
+  "decipherCrypticCluesSubtitle": "Решайте головоломки с игрой слов и расшифровывайте орфографические загадки.",
+  "decipherCrypticCluesTitle": "Загадочный расшифровщик",
+  "delayedMatchSampleSubtitle": "Сопоставьте целевой символ после решения математических отвлекающих факторов.",
+  "delayedMatchSampleTitle": "Отложенный матч",
+  "digitSwapEqSubtitle": "Поменяйте местами отдельные цифры в уравнениях, чтобы исправить оба.",
+  "digitSwapEqTitle": "Уравнения замены цифр",
+  "directionsRecallSubtitle": "Перемещайтесь по сетке карт, сопоставляя направления пути из памяти.",
+  "directionsRecallTitle": "Напоминание о маршруте",
+  "doubleTroubleSubtitle": "Играйте в две отдельные простые игры одновременно на разделенном экране.",
+  "doubleTroubleTitle": "Двойная проблема",
+  "dualTaskMemorySubtitle": "Запоминайте наборы слов, решая быстрые арифметические задачи.",
+  "dualTaskMemoryTitle": "Двойная память",
+  "dynamicSalienceSubtitle": "Найдите фигуру, движущуюся с несколько иной динамикой.",
+  "dynamicSalienceTitle": "Динамическая значимость",
+  "eventTimelineMemorySubtitle": "Расположите карточки исторических/вымышленных событий в хронологическом порядке.",
+  "eventTimelineMemoryTitle": "Хронология событий",
+  "featureMatrixRecallSubtitle": "Ответьте на запросы об атрибутах цвета и формы ячейки.",
+  "featureMatrixRecallTitle": "Матрица функций",
+  "focusTunnelSubtitle": "Найдите соответствующие символы на движущихся стенах туннеля.",
+  "focusTunnelTitle": "Фокус-туннель",
+  "fractionalPizzaSubtitle": "Разделите кусочки пиццы так, чтобы они соответствовали целевым долям суммы.",
+  "fractionalPizzaTitle": "Дробная пицца",
+  "frequencyTapSubtitle": "Нажмите кнопку, соответствующую целевой частоте светового импульса.",
+  "frequencyTapTitle": "Отвод частоты",
+  "galaxiesSymSubtitle": "Разделите сетку на вращательно-симметричные формы галактик.",
+  "galaxiesSymTitle": "Симметрия галактик",
+  "gearRotationSubtitle": "Предскажите направление вращения последней шестерни.",
+  "gearRotationTitle": "Вращение шестерни",
+  "ghostTapSubtitle": "Нажмите, когда невидимый пульс достигнет максимальной высоты.",
+  "ghostTapTitle": "Призрачный кран",
+  "gokigenNanameSubtitle": "Проведите диагонали, чтобы соединить точки без петель.",
+  "gokigenNanameTitle": "Гокиген Нанаме",
+  "gokigenVariantSubtitle": "Нарисуйте диагонали без петель, соответствующие количеству вершин.",
+  "gokigenVariantTitle": "Вариант Гокигена",
+  "graphCoordinatePlotSubtitle": "Постройте координаты сетки, соответствующие линейным/квадратичным кривым.",
+  "graphCoordinatePlotTitle": "Графический плоттер",
+  "gridDisplacementSubtitle": "Определите смещенные значки, сравнивая макет с оригиналом.",
+  "gridDisplacementTitle": "Смещение сетки",
+  "gridFitTetrisSubtitle": "Располагайте статические блоки неправильной формы так, чтобы они соответствовали границам контейнера.",
+  "gridFitTetrisTitle": "Решатель подгонки сетки",
+  "gridGazeSubtitle": "Определите, какая ячейка сетки мигала с разной продолжительностью.",
+  "gridGazeTitle": "Сетка взгляда",
+  "gridSumLineSubtitle": "Нарисуйте путь, значения которого точно соответствуют цели.",
+  "gridSumLineTitle": "Линия суммы сетки",
+  "heyawakeSubtitle": "Комнаты с затененной сеткой без соседних черных ячеек.",
+  "heyawakeTitle": "Heyawake",
+  "idiomUnscrambleSubtitle": "Расположите массивы зашифрованных слов так, чтобы они соответствовали значениям идиом.",
+  "idiomUnscrambleTitle": "Идиома Расшифровка",
+  "inequalityBalanceOpsSubtitle": "Поместите символы неравенства между сложными математическими терминами.",
+  "inequalityBalanceOpsTitle": "Баланс неравенства",
+  "islandNurikabeSubtitle": "Формируйте острова, соответствующие числовым ограничениям размера.",
+  "islandNurikabeTitle": "Остров Нурикабе",
+  "isometricProjectionSubtitle": "Сопоставьте 3D-фигуры блоков с ортогональными 2D-видами сверху/спереди.",
+  "isometricProjectionTitle": "Изометрический проектор",
+  "kakurasuSumsSubtitle": "Заштрихуйте ячейки, чтобы они соответствовали взвешенным суммам индексов строк/столбцов.",
+  "kakurasuSumsTitle": "Суммы Какурасу",
+  "layeredSilhouetteBlendSubtitle": "Сложите цветные слои так, чтобы они соответствовали целевым полупрозрачным формам.",
+  "layeredSilhouetteBlendTitle": "Силуэтная смесь",
+  "letterBalanceScaleSubtitle": "Назовите слова, буквы которых обозначают балансировочные гири.",
+  "letterBalanceScaleTitle": "Шкала баланса слов",
+  "letterGridSwapperSubtitle": "Поменяйте местами соседние плитки с буквами, чтобы заполнить слова строки и столбца.",
+  "letterGridSwapperTitle": "Переключатель букв",
+  "letterPyramidsSubtitle": "Стройте башни из слов, добавляя отдельные буквы-анаграммы на каждый уровень.",
+  "letterPyramidsTitle": "Буквенные пирамиды",
+  "litsTetrisSubtitle": "Размещайте тетромино в комнатах, где нет соседних дубликатов.",
+  "litsTetrisTitle": "ЛИЦ Тетромино",
+  "masyuSubtitle": "Нарисуйте одну петлю, соответствующую правилам круга Масью.",
+  "masyuTitle": "Масю Петля",
+  "mathMazeSubtitle": "Проследите путь, который дает целевую сумму.",
+  "mathMazeTitle": "Математический лабиринт",
+  "matrixMultiplierMatchSubtitle": "Умножьте значения строк и столбцов, чтобы они соответствовали целевому скалярному произведению.",
+  "matrixMultiplierMatchTitle": "Сопоставитель матриц",
+  "matrixMultiplierSubtitle": "Выберите строку и столбец для умножения до целевого значения.",
+  "matrixMultiplierTitle": "Матричный множитель",
+  "mazeNav3DSubtitle": "Перемещайтесь по маршрутам трехмерного изометрического лабиринта от первого лица.",
+  "mazeNav3DTitle": "3D-навигация по лабиринту",
+  "mirrorMazeSubtitle": "Перенаправьте лазерный луч с помощью диагональных зеркал.",
+  "mirrorMazeTitle": "Зеркальный лабиринт",
+  "moduloPathSubtitle": "Обход ячеек сетки, соответствующих значениям остатка по модулю.",
+  "moduloPathTitle": "Путь по модулю",
+  "multiTrackCounterSubtitle": "Нажмите, когда любой счетчик увеличится до целевого множителя.",
+  "multiTrackCounterTitle": "Многодорожечный счетчик",
+  "narrativeRecallSubtitle": "ПРОЧИТАЙТЕ ИСТОРИЮ И ВСПОМНИТЕ КОНКРЕТНЫЕ КОЛИЧЕСТВЕННЫЕ И ФАКТИЧЕСКИЕ ПОДРОБНОСТИ.",
+  "narrativeRecallTitle": "Повествовательное воспоминание",
+  "networkFlowSphericalSubtitle": "Соедините потоки сетки при переносе цилиндрических координат.",
+  "networkFlowSphericalTitle": "Сетевой поток",
+  "norinoriSubtitle": "Заштрихуйте ровно две соединенные клетки в каждой комнате.",
+  "norinoriTitle": "Норинори",
+  "numberBondsSubtitle": "Свяжите значения узлов, чтобы они равнялись сумме целевого соединения.",
+  "numberBondsTitle": "Числовые облигации",
+  "oddEvenFlashSubtitle": "Быстро сопоставьте четность чисел с правилом цвета.",
+  "oddEvenFlashTitle": "Нечетно-четная вспышка",
+  "origamiUnfoldSubtitle": "Определите схемы дырокола после разгибания сложенных листов.",
+  "origamiUnfoldTitle": "Оригами Развернуть",
+  "patternSequenceDrawSubtitle": "Повторите последовательность анимированных путей на сетке.",
+  "patternSequenceDrawTitle": "Вызов шаблонов",
+  "percentageShoppingSubtitle": "Рассчитайте процент скидки и окончательную сумму заказа.",
+  "percentageShoppingTitle": "Процент покупок",
+  "peripheralFocusSubtitle": "Реагируйте на мигающие боковые панели во время решения математических задач.",
+  "peripheralFocusTitle": "Периферийный фокус",
+  "perspectiveShiftViewSubtitle": "Вращайте кластеры блоков, пока они не начнут писать буквы/слова.",
+  "perspectiveShiftViewTitle": "Сдвиг перспективы",
+  "polyominoPackingSubtitle": "Упакуйте случайные кусочки блоков полимино в целевые области.",
+  "polyominoPackingTitle": "Полимино Упаковка",
+  "portmanteauFactorySubtitle": "Объединяйте смысловые компоненты, образуя сложные слова.",
+  "portmanteauFactoryTitle": "Фабрика Портманто",
+  "primeFactorTreesSubtitle": "Разложите составные числа на пары простых листьев.",
+  "primeFactorTreesTitle": "Деревья простых факторов",
+  "rippleEffectSubtitle": "Заполните номера в комнатах, соблюдая ограничения по расстоянию.",
+  "rippleEffectTitle": "Волновой эффект",
+  "rollingBlockBloxSubtitle": "Катите кусочки блока так, чтобы они вертикально приземлялись в целевые пазы.",
+  "rollingBlockBloxTitle": "Роллинг Блок",
+  "roomInspectorSubtitle": "Определите модификации мебели, сделанные, когда экран был пуст.",
+  "roomInspectorTitle": "Инспектор помещений",
+  "ropeTangleSolverSubtitle": "Перетащите узлы, чтобы разметить плоские графики с пересечением нулевых линий.",
+  "ropeTangleSolverTitle": "Распутыватель веревок",
+  "semanticAssociationSubtitle": "Найдите слово, соединяющее все три подсказки.",
+  "semanticAssociationTitle": "Слово ассоциации",
+  "semanticCategoryRecallSubtitle": "Определите изучаемые слова, соответствующие заданным целям категории.",
+  "semanticCategoryRecallTitle": "Отзыв категории",
+  "sequenceStackSubtitle": "Реконструируйте добавление и удаление стопки пластин по порядку.",
+  "sequenceStackTitle": "Стек последовательностей",
+  "shakashakaSubtitle": "Поместите треугольные плитки, чтобы сформировать прямоугольные белые области.",
+  "shakashakaTitle": "Шакашака Ректс",
+  "shapeShifterPeripheralSubtitle": "Отслеживайте изменения периферийной формы, сопоставляя центральные значения.",
+  "shapeShifterPeripheralTitle": "Периферийные формы",
+  "shapeShifterSubtitle": "Коснитесь целевой комбинации формы и цвета.",
+  "shapeShifterTitle": "Изменитель формы",
+  "sheepAndWolvesSubtitle": "Нарисуйте петлю, отделяющую овец от волков.",
+  "sheepAndWolvesTitle": "Овцы и волки",
+  "shellGameSubtitle": "ОТСЛЕЖИВАЙТЕ СКРЫТЫЙ ШАР, ПОКА ПЕРАСАЮЩИЕ ЧАШКИ МЕНЯЮТСЯ МЕСТАМИ.",
+  "shellGameTitle": "Игра в ракушки",
+  "shikakuSubtitle": "РАЗДЕЛИТЕ СЕТКУ НА КВАДРАТЫ И ПРЯМОУГОЛЬНИКИ, СООТВЕТСТВУЮЩИЕ ЦИФРАМ.",
+  "shikakuTitle": "Шикаку",
+  "signalAndNoiseSubtitle": "Найдите целевые буквенно-цифровые символы, скрытые в статическом шуме.",
+  "signalAndNoiseTitle": "Сигнал и шум",
+  "soundAlikeHomophonesSubtitle": "Определите правильное написание омофонов в предложениях.",
+  "soundAlikeHomophonesTitle": "Омофонные совпадения",
+  "soundSequenceMatchSubtitle": "Повторяйте последовательности нот, сыгранных на виртуальной клавиатуре.",
+  "soundSequenceMatchTitle": "Соответствие звуковой последовательности",
+  "soundWaveMatchSubtitle": "Нажмите, когда частота зрительных волн совпадет с изменением высоты звука.",
+  "soundWaveMatchTitle": "Звуковая волна",
+  "spatialGridMemory3DSubtitle": "Вспомните мигающие блоки во вращающейся сетке трехмерного куба.",
+  "spatialGridMemory3DTitle": "3D-пространственная память",
+  "spatialGridRotationSubtitle": "Сопоставление 3D-блоков, повернутых по координатам оси.",
+  "spatialGridRotationTitle": "Вращение пространственной сетки",
+  "storyBuilderSubtitle": "Восстановите хронологическую последовательность рассказа.",
+  "storyBuilderTitle": "Создатель историй",
+  "stostoneSubtitle": "Заштрихуйте ячейки, которые опускаются вниз, чтобы идеально заполнить нижние строки.",
+  "stostoneTitle": "Стостоун Гравитация",
+  "suguruTectonicSubtitle": "Заполните блоки комнат номерами от 1 до K, чтобы не было равных соседей.",
+  "suguruTectonicTitle": "Сугуру Грид",
+  "symbolDigitAssocSubtitle": "Решите листы перевода символов, соответствующие цифровым клавишам.",
+  "symbolDigitAssocTitle": "Символ-цифра",
+  "symmetryPaintSubtitle": "Нарисуйте сегменты зеркального отображения, отражающиеся поперек осей симметрии.",
+  "symmetryPaintTitle": "Симметричная краска",
+  "syncRhythmSubtitle": "Нажмите, когда визуальное движение метронома соответствует синкопированному ритму.",
+  "syncRhythmTitle": "Синхронизировать ритм",
+  "synonymMatchSubtitle": "Сопоставьте целевые падающие слова с синонимами или антонимами.",
+  "synonymMatchTitle": "Синоним совпадение",
+  "tangramPolygonSubtitle": "Расположите многоугольники, чтобы заполнить контуры силуэта.",
+  "tangramPolygonTitle": "Танграм Фит",
+  "tangramSubtitle": "Расположите фигуры так, чтобы заполнить целевой силуэт.",
+  "tangramTitle": "Танграм-головоломка",
+  "tapaWallSubtitle": "Заштрихуйте ячейки, чтобы сформировать непрерывный узор черной стены.",
+  "tapaWallTitle": "Тапа Стена",
+  "targetPursuerSubtitle": "Отслеживайте несколько перекрывающихся кругов и выберите исходную цель.",
+  "targetPursuerTitle": "Преследователь цели",
+  "tennerGridSubtitle": "Заполните строки цифрами 0–9, соответствующими итоговым значениям столбцов.",
+  "tennerGridTitle": "Теннер Грид",
+  "triangularBridgesSubtitle": "Соедините острова в трех направлениях, отвечая требованиям.",
+  "triangularBridgesTitle": "Треугольные мосты",
+  "tripletsLogicSubtitle": "Заполните сетку тремя фигурами, избегая фигур «три в ряд».",
+  "tripletsLogicTitle": "Тройняшки трио",
+  "typingRhythmSpeedSubtitle": "Введите словари, соответствующие ритму метронома.",
+  "typingRhythmSpeedTitle": "Ввод потока",
+  "typoglycemiaDecoderSubtitle": "БЫСТРО РАЗБИРАЙТЕ И ПРОЧИТАЙТЕ ПЕРЕМЕШАННЫЕ ПРЕДЛОЖЕНИЯ.",
+  "typoglycemiaDecoderTitle": "Декодер типогликемии",
+  "unitConverterProSubtitle": "Отвечайте на быстрые преобразования единиц измерения в рамках ограничений по времени.",
+  "unitConverterProTitle": "Конвертер единиц измерения",
+  "vectorGridAlignmentSubtitle": "Масштабируйте и вращайте фигуры в соответствии с целями шаблона тени.",
+  "vectorGridAlignmentTitle": "Векторное выравнивание",
+  "vektorVectorSubtitle": "Масштабируйте векторы, чтобы их сумма попала в цель.",
+  "vektorVectorTitle": "вектор вектор",
+  "voiceToFaceMatchSubtitle": "Выберите правильное лицо, связанное с голосовым клипом.",
+  "voiceToFaceMatchTitle": "Матч голоса и лица",
+  "vowelDropSubtitle": "Расставьте гласные в координатных сетках, завершая слова.",
+  "vowelDropTitle": "Падение гласных",
+  "wireLoopGameSubtitle": "Перетащите металлические кольца по проволочным шлицам без контакта.",
+  "wireLoopGameTitle": "Проволочная петля",
+  "wordAssociationRecallSubtitle": "Вспомните по памяти парные словесные ассоциации.",
+  "wordAssociationRecallTitle": "Словесная ассоциация",
+  "wordChainShiritoriSubtitle": "Свяжите циклы слов, начинающиеся с предыдущих буквенных выходов.",
+  "wordChainShiritoriTitle": "Цепочка слов",
+  "wordGridConnectionSubtitle": "Сгруппируйте 16 слов в четыре категории по четыре.",
+  "wordGridConnectionTitle": "Словесные связи",
+  "wordGridSudokuSubtitle": "Мозаичные буквы в строках сетки образуют слова.",
+  "wordGridSudokuTitle": "Слово судоку",
+  "wordSnakeTrailSubtitle": "Проследите змееподобные следы букв, составляя тематические слова.",
+  "wordSnakeTrailTitle": "Слово Змея",
+  "wordWheelPangramSubtitle": "Составьте слова, содержащие центральные целевые буквы, из колес.",
+  "wordWheelPangramTitle": "Словесные анаграммы",
+  "wordWheelSubtitle": "Составляйте слова, используя буквы на круге, включая центральную букву.",
+  "wordWheelTitle": "Слово Колесо",
+  "yajilinSubtitle": "Расположите черные клетки и нарисуйте одну петлю, соответствующую подсказкам.",
+  "yajilinTitle": "Yajilin",
+  "btnMatchColor": "СОВПАДЕНИЕ ЦВЕТА",
+  "btnMatchWord": "СОВПАДЕНИЕ СЛОВА",
+  "favoriteGame": "Избранное",
+  "gameHidden": "Игра скрыта",
+  "hiddenGames": "СКРЫТЫЕ ИГРЫ",
+  "hideGame": "Скрыть",
+  "noHiddenGames": "Нет скрытых игр",
+  "orbitTapTapToHit": "Нажмите, когда шар входит в ворота",
+  "showHiddenGames": "Показать скрытые игры ({count})",
+  "@showHiddenGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "undo": "Отмена",
+  "unfavoriteGame": "Удалить из избранного",
+  "unhideGame": "Показать",
+  "kurodokoTitle": "Kurodoko",
+  "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
+  "kurodokoWinTitle": "WHERE IS BLACK SOLVED!",
+  "kurodokoWinMessage": "You mastered the visibility paths and isolated all black cells!",
+  "subitizingRushTitle": "Subitize Rush",
+  "subitizingRushSubtitle": "Instantly identify the quantity of flashed dots without counting.",
+  "subitizingRushWinTitle": "RAPID VISION!",
+  "subitizingRushWinMessage": "Your instant visual numerosity estimation is outstanding!",
+  "tapaTitle": "Tapa",
+  "tapaSubtitle": "Shade cells to form a continuous wall without 2x2 blocks.",
+  "tapaWinTitle": "TAPA WALL COMPLETED!",
+  "tapaWinMessage": "All numbered cell constraints perfectly satisfied!",
+  "exponentTowerTitle": "Exponent Tower",
+  "exponentTowerSubtitle": "Order dynamic power expressions from smallest to largest.",
+  "exponentTowerWinTitle": "TOWER STACKED!",
+  "exponentTowerWinMessage": "All power magnitudes calculated with perfect precision!",
+  "posnerSpatialCueingTitle": "Spatial Cue",
+  "posnerSpatialCueingSubtitle": "React swiftly to directional target appearances following spatial cues.",
+  "posnerSpatialCueingWinTitle": "ALERT VISION!",
+  "posnerSpatialCueingWinMessage": "Fast visual orienting and stimulus detection recorded!",
+  "gearTrainDirectionTitle": "Gear Train",
+  "gearTrainDirectionSubtitle": "Deduce the rotation direction of the target gear in the mechanical train.",
+  "gearTrainDirectionWinTitle": "MECHANISM SOLVED!",
+  "gearTrainDirectionWinMessage": "Kinematic gear rotational transmissions accurately traced!",
+  "continuousPairedAssociateTitle": "Pair Associate",
+  "continuousPairedAssociateSubtitle": "Memorize symbol pairs and recall the matching partner.",
+  "continuousPairedAssociateWinTitle": "PAIRS LINKED!",
+  "continuousPairedAssociateWinMessage": "Strong associative memory pathways established!",
+  "heyawakeWinTitle": "ROOMS BALANCED!",
+  "heyawakeWinMessage": "All room division rules and white path connections satisfied!",
+  "setTheoryVennTitle": "Venn Sets",
+  "setTheoryVennSubtitle": "Select the corresponding regions of the Venn diagram for the set formula.",
+  "setTheoryVennWinTitle": "SET LOGIC MASTER!",
+  "setTheoryVennWinMessage": "All set operations, unions, and intersections deduced flawlessly!",
+  "navonHierarchicalTitle": "Navon Global",
+  "navonHierarchicalSubtitle": "Identify either the large global letter or small local letters under prompt rules.",
+  "navonHierarchicalWinTitle": "FOCUS SHARPENED!",
+  "navonHierarchicalWinMessage": "Outstanding selective attention and global-local perception!",
+  "masyuWinTitle": "MASYU LOOP SOLVED!",
+  "masyuWinMessage": "All pearl turning and straight passage rules strictly satisfied!",
+  "primeGapHuntTitle": "Prime Gap",
+  "primeGapHuntSubtitle": "Calculate the arithmetic difference between consecutive prime numbers.",
+  "primeGapHuntWinTitle": "GAP CALCULATED!",
+  "primeGapHuntWinMessage": "Mastery of prime distribution and mental subtraction displayed!",
+  "yajilinWinTitle": "YAJILIN SOLVED!",
+  "yajilinWinMessage": "All arrow clue raycasts and orthogonal black cell separations satisfied!",
+  "algebraicInequalitySolverTitle": "Inequality",
+  "algebraicInequalitySolverSubtitle": "Solve linear single-variable algebraic inequalities swiftly.",
+  "algebraicInequalitySolverWinTitle": "ALGEBRA EXPERT!",
+  "algebraicInequalitySolverWinMessage": "Fast inequality reduction and algebraic balance achieved!",
+  "attentionalBlinkProbeTitle": "Blink Probe",
+  "attentionalBlinkProbeSubtitle": "Detect second target stimuli presented rapidly after primary targets.",
+  "attentionalBlinkProbeWinTitle": "TEMPORAL FOCUS!",
+  "attentionalBlinkProbeWinMessage": "Exceptional temporal visual processing across the blink refractory window!",
+  "modularClockArithmeticTitle": "Clock Modulo",
+  "modularClockArithmeticSubtitle": "Calculate cyclical clock time arithmetic under modulo 12 algebra.",
+  "modularClockArithmeticWinTitle": "CLOCKWORK PRECISION!",
+  "modularClockArithmeticWinMessage": "All modular hour shifts calculated with ease!",
+  "temporalOrderJudgmentTitle": "Time Order",
+  "temporalOrderJudgmentSubtitle": "Discriminate which of two millisecond-separated stimulus circles flashed first.",
+  "temporalOrderJudgmentWinTitle": "ULTRA-FAST PERCEPTION!",
+  "temporalOrderJudgmentWinMessage": "High-resolution temporal distinction demonstrated!",
+  "polyominoTilingTitle": "Polyomino",
+  "polyominoTilingSubtitle": "Rotate and assemble tetromino geometric shapes to tile the grid without gaps.",
+  "polyominoTilingWinTitle": "GRID TILED!",
+  "polyominoTilingWinMessage": "Seamless geometric spatial arrangement completed!",
+  "pythagoreanTripleBuilderTitle": "Pythagoras",
+  "pythagoreanTripleBuilderSubtitle": "Find the missing hypotenuse or leg value in integer Pythagorean triangles.",
+  "pythagoreanTripleBuilderWinTitle": "GEOMETRY MASTER!",
+  "pythagoreanTripleBuilderWinMessage": "All right-triangle integer triples rapidly solved!",
+  "visualSearchConjunctionTitle": "Conj. Search",
+  "visualSearchConjunctionSubtitle": "Quickly locate target shapes combining multiple feature dimensions (color and form).",
+  "visualSearchConjunctionWinTitle": "CONJUNCTION FOCUS!",
+  "visualSearchConjunctionWinMessage": "Flawless multi-feature parallel and serial visual search!",
+  "wireframe3DRotationTitle": "Wireframe 3D",
+  "wireframe3DRotationSubtitle": "Identify the correctly rotated 3D geometric wireframe following angular transformation.",
+  "wireframe3DRotationWinTitle": "3D ROTATION MASTER!",
+  "wireframe3DRotationWinMessage": "Precise 3D mental rotation and spatial orientation demonstrated!",
+  "wordPairAssociateMemoryTitle": "Word Pairs",
+  "wordPairAssociateMemorySubtitle": "Memorize associated word connections and select the target paired with the cue.",
+  "wordPairAssociateMemoryWinTitle": "ASSOCIATION MASTER!",
+  "wordPairAssociateMemoryWinMessage": "Strong episodic associative memory retention achieved!",
+  "binaryMatrixRankTitle": "Matrix Rank",
+  "binaryMatrixRankSubtitle": "Determine the linear algebraic rank of the 3x3 binary matrix over Galois field GF(2).",
+  "binaryMatrixRankWinTitle": "RANK COMPUTED!",
+  "binaryMatrixRankWinMessage": "Exact linear independence and matrix rank determined!",
+  "visualCrowdingAcuityTitle": "Visual Crowd",
+  "visualCrowdingAcuitySubtitle": "Identify the opening direction of the center Landolt ring amid flanking distractors.",
+  "visualCrowdingAcuityWinTitle": "SHARP PERCEPTION!",
+  "visualCrowdingAcuityWinMessage": "Excellent foveal spatial resolution under visual crowding conditions!",
+  "probeDigitSpanTitle": "Digit Probe",
+  "probeDigitSpanSubtitle": "Observe a fast serial sequence of numbers and recall the item following the probe digit.",
+  "probeDigitSpanWinTitle": "SERIAL PROBE MASTER!",
+  "probeDigitSpanWinMessage": "Flawless short-term serial position memory retrieval!",
+  "abReversalOddballTitle": "A-B Reversal",
+  "abReversalOddballSubtitle": "Respond to target stimuli and dynamically switch response criteria upon rule reversal.",
+  "abReversalOddballWinTitle": "FLEXIBILITY MASTER!",
+  "abReversalOddballWinMessage": "Exceptional cognitive switching and perceptual flexibility demonstrated!",
+  "conundrumAnagramTitle": "Conundrum",
+  "conundrumAnagramSubtitle": "Unscramble all 9 letters to discover the hidden full dictionary word.",
+  "conundrumAnagramWinTitle": "CONUNDRUM CRACKED!",
+  "conundrumAnagramWinMessage": "All 9-letter anagram conundrums successfully unscrambled!",
+  "vectorDotProductTitle": "Dot Product",
+  "vectorDotProductSubtitle": "Calculate the algebraic inner product u • v = (u_x * v_x) + (u_y * v_y).",
+  "vectorDotProductWinTitle": "INNER PRODUCT COMPUTED!",
+  "vectorDotProductWinMessage": "Exact geometric and algebraic vector projections achieved!",
+  "stroopNumberSizeTitle": "Size Stroop",
+  "stroopNumberSizeSubtitle": "Compare either numerical magnitude or physical font size under Stroop interference.",
+  "stroopNumberSizeWinTitle": "INHIBITION EXPERT!",
+  "stroopNumberSizeWinMessage": "Flawless perceptual conflict resolution under size-congruity Stroop!",
+  "wordLadderStepTitle": "Word Ladder",
+  "wordLadderStepSubtitle": "Complete the single-letter transformation sequence between source and destination words.",
+  "wordLadderStepWinTitle": "LADDER CLIMBED!",
+  "wordLadderStepWinMessage": "All single-letter step transformations completed!",
+  "corsiBackwardSpanTitle": "Corsi Backward",
+  "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
+  "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
 }

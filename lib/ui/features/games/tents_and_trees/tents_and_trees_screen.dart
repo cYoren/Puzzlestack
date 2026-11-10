@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'tents_and_trees_engine.dart';
@@ -244,8 +246,8 @@ class TentsAndTreesScreen extends ConsumerWidget {
           ref.read(tentsAndTreesNotifierProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
-        title: 'WELL DONE',
-        message: 'You have successfully placed all the tents.',
+        title: L10nGameHelpers.getGameTitle(context, 'tents_and_trees'),
+        message: AppLocalizations.of(context)!.tentsAndTreesMessage,
       ),
     );
   }

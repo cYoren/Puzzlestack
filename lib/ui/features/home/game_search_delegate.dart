@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import '../../../data/game_catalog.dart';
+import '../../../data/game_categories.dart';
+import '../../../data/game_metadata.dart';
+import '../../../data/game_registry.dart';
 import '../../../utils/design_system.dart';
 
-/// Search across all 161 games by title or category. Returns the chosen game
+/// Search across the whole registry by title or category. Returns the chosen game
 /// through [onSelected]; the caller handles navigation.
 class GameSearchDelegate extends SearchDelegate<void> {
-  final void Function(GameInfo game) onSelected;
+  final void Function(GameMetadata game) onSelected;
 
   GameSearchDelegate({required this.onSelected})
-      : super(searchFieldLabel: 'Search 161 puzzles');
+      : super(searchFieldLabel: 'Search ${allGamesMetadata.length} puzzles');
 
-  List<GameInfo> _results() {
+  List<GameMetadata> _results(BuildContext context) {
     final q = query.trim().toLowerCase();
-    if (q.isEmpty) return GameCatalog.all;
-    return GameCatalog.all.where((g) {
-      return g.title.toLowerCase().contains(q) ||
+    if (q.isEmpty) return allGamesMetadata;
+    return allGamesMetadata.where((g) {
+      return g.titleGetter(context).toLowerCase().contains(q) ||
           g.category.toLowerCase().contains(q);
     }).toList(growable: false);
   }
@@ -41,7 +43,7 @@ class GameSearchDelegate extends SearchDelegate<void> {
   Widget buildSuggestions(BuildContext context) => _list(context);
 
   Widget _list(BuildContext context) {
-    final results = _results();
+    final results = _results(context);
     if (results.isEmpty) {
       return Center(
         child: Text(
@@ -56,7 +58,7 @@ class GameSearchDelegate extends SearchDelegate<void> {
       itemCount: results.length,
       itemBuilder: (context, i) {
         final g = results[i];
-        final cat = GameCatalog.categoryInfo(g.category);
+        final cat = GameCategories.info(g.category);
         return ListTile(
           leading: Container(
             width: 44,
@@ -68,7 +70,7 @@ class GameSearchDelegate extends SearchDelegate<void> {
             child: Icon(g.icon, color: g.color, size: 22),
           ),
           title: Text(
-            g.title,
+            g.titleGetter(context),
             style: const TextStyle(fontWeight: FontWeight.w700),
           ),
           subtitle: Text(cat.label),

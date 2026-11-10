@@ -1,3 +1,6 @@
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+import 'package:puzzle/l10n/app_localizations.dart';
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,25 +111,28 @@ class _ChimpTestScreenState extends ConsumerState<ChimpTestScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
-        title: isVictory ? "CHIMP TEST ACED" : "TEST FAILED",
-        message: isVictory 
-            ? "Sensational working memory span! You equal chimpanzee levels of cognitive recall."
-            : "You lost all lives. Keep training to scale up your memory grid capacity!",
-        isVictory: isVictory,
-        onHome: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
-        onPlayAgain: () {
-          Navigator.pop(context);
-          setState(() {
-            _round = 1;
-            _lives = 3;
-          });
-          _startRound();
-        },
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return GameCompletionDialog(
+          title: isVictory ? l10n.chimpTestTitle.toUpperCase() : l10n.gameOver,
+          message: isVictory 
+              ? "Sensational working memory span! You equal chimpanzee levels of cognitive recall."
+              : "You lost all lives. Keep training to scale up your memory grid capacity!",
+          isVictory: isVictory,
+          onHome: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          onPlayAgain: () {
+            Navigator.pop(context);
+            setState(() {
+              _round = 1;
+              _lives = 3;
+            });
+            _startRound();
+          },
+        );
+      },
     );
   }
 
@@ -136,8 +142,8 @@ class _ChimpTestScreenState extends ConsumerState<ChimpTestScreen> {
     final colorScheme = theme.colorScheme;
 
     return GameScaffold(
-      title: "CHIMP TEST",
-      subtitle: "MEMORIZE THE NUMBERS. TAPPING '1' COVERS THE TILES. SELECT IN ASCENDING ORDER.",
+      title: L10nGameHelpers.getGameTitle(context, 'chimp_test'),
+      subtitle: L10nGameHelpers.getGameSubtitle(context, 'chimp_test'),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final boardSize = min(constraints.maxWidth, constraints.maxHeight) * 0.85;

@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -29,27 +31,29 @@ class _VisualSearchScreenState extends ConsumerState<VisualSearchScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
-        title: isVictory ? 'AMAZING!' : 'GAME OVER',
-        message: isVictory 
-            ? 'Your visual acuity is top-notch!' 
-            : 'Focus and try again.',
-        isVictory: isVictory,
-        onHome: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        },
-        onPlayAgain: () {
-          Navigator.of(context).pop();
-          ref.read(visualSearchNotifierProvider.notifier).resetGame();
-        },
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return GameCompletionDialog(
+          title: isVictory ? l10n.visualSearchTitle.toUpperCase() : l10n.gameOver,
+          message: isVictory 
+              ? 'Your visual acuity is top-notch!' 
+              : 'Focus and try again.',
+          isVictory: isVictory,
+          onHome: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
+          onPlayAgain: () {
+            Navigator.of(context).pop();
+            ref.read(visualSearchNotifierProvider.notifier).resetGame();
+          },
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
     final state = ref.watch(visualSearchNotifierProvider);
     final notifier = ref.read(visualSearchNotifierProvider.notifier);
@@ -71,14 +75,14 @@ class _VisualSearchScreenState extends ConsumerState<VisualSearchScreen> {
 
     if (state.isLoading) {
       return GameScaffold(
-        title: l10n.visualSearchTitle.toUpperCase(),
+        title: L10nGameHelpers.getGameTitle(context, 'visual_search'),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return GameScaffold(
-      title: 'Visual Search',
-      subtitle: l10n.visualSearchSubtitle,
+      title: L10nGameHelpers.getGameTitle(context, 'visual_search'),
+      subtitle: L10nGameHelpers.getGameSubtitle(context, 'visual_search'),
       body: Column(
         children: [
           Padding(

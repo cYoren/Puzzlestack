@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/juice/game_scaffold.dart';
@@ -32,7 +34,7 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.wisconsinCardSortingTitle.toUpperCase(),
-        message: 'You correctly sorted ${state.score} cards!',
+        message: AppLocalizations.of(context)!.wisconsinCardSortingMessage((state.score).toString()),
         onHome: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
@@ -58,7 +60,7 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
     });
 
     return GameScaffold(
-      title: 'Card Sorting',
+      title: L10nGameHelpers.getGameTitle(context, 'wisconsin_card_sorting'),
       subtitle: l10n.wisconsinCardSortingSubtitle,
       actions: [
         TangibleContainer(
@@ -99,7 +101,7 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
-                            color: state.lastFeedback == 'CORRECT' ? DesignSystem.success : DesignSystem.error,
+                            color: state.lastFeedback == AppLocalizations.of(context)!.correct ? DesignSystem.success : DesignSystem.error,
                           ),
                         ),
                     ],

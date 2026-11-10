@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -33,7 +35,7 @@ class _RuleSwitcherScreenState extends ConsumerState<RuleSwitcherScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: state.isTrialMode ? 'COMPLETED!' : 'TIME\'S UP!',
-        message: 'You scored ${state.score} correct out of ${state.totalTrials}!',
+        message: AppLocalizations.of(context)!.ruleSwitcherMessage((state.score).toString(), (state.totalTrials).toString()),
         isVictory: state.isTrialMode ? state.score >= 8 : state.score > 15,
         onHome: () {
           Navigator.of(context).pop();
@@ -70,7 +72,7 @@ class _RuleSwitcherScreenState extends ConsumerState<RuleSwitcherScreen> {
     }
 
     return GameScaffold(
-      title: 'Rule Switcher',
+      title: L10nGameHelpers.getGameTitle(context, 'rule_switcher'),
       subtitle: l10n.ruleSwitcherSubtitle,
       body: Column(
         children: [

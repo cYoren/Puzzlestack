@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -26,14 +28,15 @@ class _WordSurgeScreenState extends ConsumerState<WordSurgeScreen> {
   }
 
   void _showCompletionDialog(bool isVictory) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: isVictory ? 'SURGE COMPLETE!' : 'TIME EXPIRED!',
+        title: isVictory ? l10n.winSurgeComplete : l10n.loseTimeExpiredExcl,
         message: isVictory 
-            ? 'Your linguistic reflexes are incredible.' 
-            : 'You scored ${ref.read(wordSurgeNotifierProvider).score} points.',
+            ? l10n.winFluencyExpert 
+            : l10n.loseTimeExpiredExcl,
         isVictory: isVictory,
         onHome: () {
           Navigator.of(context).pop();
@@ -75,7 +78,7 @@ class _WordSurgeScreenState extends ConsumerState<WordSurgeScreen> {
     }
 
     return GameScaffold(
-      title: 'Word Surge',
+      title: L10nGameHelpers.getGameTitle(context, 'word_surge'),
       subtitle: l10n.wordSurgeSubtitle,
       body: Padding(
         padding: const EdgeInsets.all(DesignSystem.spaceLG),

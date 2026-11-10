@@ -6,7 +6,7 @@ part of 'magnets_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$magnetsNotifierHash() => r'45f80673af1b4181858eb80138aba12f56d0a9a5';
+String _$magnetsNotifierHash() => r'0c1a8ff21350a56a07392fa738981abaedafb9da';
 
 /// See also [MagnetsNotifier].
 @ProviderFor(MagnetsNotifier)

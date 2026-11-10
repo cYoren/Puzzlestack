@@ -7,7 +7,7 @@ part of 'change_blindness_provider.dart';
 // **************************************************************************
 
 String _$changeBlindnessNotifierHash() =>
-    r'be95c0f1d94308e7f865ec59042fcfa91247d770';
+    r'80c1843219692cba5e1bc7aba99932ef5c889458';
 
 /// See also [ChangeBlindnessNotifier].
 @ProviderFor(ChangeBlindnessNotifier)

@@ -144,7 +144,6 @@ class _BlockCount3DScreenState extends ConsumerState<BlockCount3DScreen> {
           ? const Center(child: CircularProgressIndicator())
           : LayoutBuilder(
               builder: (context, constraints) {
-                
                 return Column(
                   children: [
                     // 3D Viewport

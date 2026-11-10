@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -25,7 +27,7 @@ class MemoryMatrixScreen extends ConsumerWidget {
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
             title: l10n.memoryMatrixTitle.toUpperCase(),
-            message: 'Impressive! Your working memory is sharp. Daily goal complete!',
+            message: AppLocalizations.of(context)!.memoryMatrixMessage,
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -43,8 +45,8 @@ class MemoryMatrixScreen extends ConsumerWidget {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'GAME OVER',
-            message: 'Focus and try again to improve your memory score.',
+            title: L10nGameHelpers.getGameTitle(context, 'memory_matrix'),
+            message: AppLocalizations.of(context)!.memoryMatrixMessage1,
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -62,7 +64,7 @@ class MemoryMatrixScreen extends ConsumerWidget {
     });
 
     return GameScaffold(
-      title: 'MEMORY MATRIX',
+      title: L10nGameHelpers.getGameTitle(context, 'memory_matrix'),
       subtitle: l10n.memoryMatrixSubtitle,
       actions: [
         TangibleButton(
@@ -221,7 +223,7 @@ class MemoryMatrixScreen extends ConsumerWidget {
         color = DesignSystem.accentEmerald;
         break;
       case MemoryMatrixStatus.failure:
-        text = 'WRONG TILE';
+        text = AppLocalizations.of(context)!.phaseWrongTile;
         color = DesignSystem.error;
         break;
     }

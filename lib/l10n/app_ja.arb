@@ -1,15 +1,21 @@
 {
   "@@locale": "ja",
   "appTitle": "Puzzlestack",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
   "home": "ホーム",
   "settings": "設定",
   "playAgain": "もう一度プレイ",
+  "playNext": "次を再生",
   "seeCompleted": "パズルを確認",
   "finish": "終了",
   "congrats": "おめでとう",
   "perfectGradient": "完璧なグラデーション！",
   "wellDone": "よくできました",
   "timeUp": "タイムアップ！",
+  "victory": "勝利！",
+  "gameWin": "よくできました！",
   "completed": "完了！",
   "score": "スコア",
   "timeLeft": "残り時間",
@@ -36,6 +42,8 @@
   "moves": "手数",
   "trialMode": "試行モード",
   "trialModeDescription": "60秒タイマーの代わりに20個解いて終了",
+  "keepScreenAwake": "画面を常時点灯",
+  "keepScreenAwakeDescription": "プレイ中に画面が消灯するのを防ぎます",
   "appearance": "外観",
   "language": "言語",
   "gameplay": "ゲームプレイ",
@@ -65,12 +73,84 @@
   "termsOfService": "利用規約",
   "licenses": "ライセンス",
   "findWordSubtitle": "{wordLength}文字の隠された単語を見つけるまで、あと{maxTries}回試行できます。",
+  "@findWordSubtitle": {
+    "placeholders": {
+      "maxTries": {
+        "type": "int"
+      },
+      "wordLength": {
+        "type": "int"
+      }
+    }
+  },
   "wordFoundMessage": "単語が見つかりました：{word}",
+  "@wordFoundMessage": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
   "gameOverMessage": "正解は：{word}",
+  "@gameOverMessage": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
   "gameOver": "ゲームオーバー",
   "crosswordTitle": "クロスワード",
   "crosswordSubtitle": "ヒントを頼りに、グリッドを正しい単語で埋めましょう。",
   "wordSearchTitle": "単語探し",
+  "radicalRootsTitle": "ルート計算",
+  "radicalRootsSubtitle": "指定された数字の平方根または立方根を見つけてください。必要に応じて、最も近い整数に四捨五入してください。",
+  "radicalRootsGoalReached": "ゴール達成！",
+  "radicalRootsTimeUp": "タイムアップ！",
+  "radicalRootsScoreMessage": "{score}個のルートを正しく計算しました！",
+  "@radicalRootsScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "radicalRootsTryAgainMessage": "練習を続けましょう！{score}個のルートを計算しました。",
+  "@radicalRootsTryAgainMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "radicalRootsStart": "計算開始",
+  "radicalRootsDescription": "60秒以内にできるだけ多く解いてください。",
+  "radicalRootsBest": "ベスト",
+  "radicalRootsSeconds": "60秒",
+  "romanArithmeticTitle": "ローマ数字計算",
+  "romanArithmeticSubtitle": "ローマ数字を使って足し算と引き算を解いてください。",
+  "romanArithmeticGoalReached": "百人隊長レベル！",
+  "romanArithmeticTimeUp": "タイムアップ！",
+  "romanArithmeticScoreMessage": "ローマ数字の問題を{score}問解きました！",
+  "@romanArithmeticScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "romanArithmeticTryAgainMessage": "来た、見た、勝った！{score}問解きました。",
+  "@romanArithmeticTryAgainMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "romanArithmeticStart": "クエスト開始",
+  "romanArithmeticDescription": "変換して解いてください。制限時間は60秒です。",
+  "romanArithmeticBest": "ベスト",
+  "romanArithmeticSeconds": "60秒",
   "wordSearchSubtitle": "グリッド内の隠された単語をすべて見つけます。ドラッグして選択してください。",
   "missingVowelsTitle": "消えた母音",
   "missingVowelsSubtitle": "母音が隠された単語を特定します。",
@@ -96,6 +176,41 @@
   "nonogramTitle": "ノノグラム",
   "nonogramSubtitle": "論理的なヒントを使って隠された画像を表示させます。",
   "nonogramWin": "画像が表示されました！",
+  "magnetsTitle": "マグネット",
+  "magnetsSubtitle": "磁極数に基づいてグリッドにマグネットを配置します。",
+  "magnetsHowToPlay": "ドミノサイズの容器に「+」と「-」のマグネットを入れるか、空のままにします。行と列のヒントは、そのライン内の各磁極の総数を指定します。同じ磁極は直交して隣接させることはできません。",
+  "magnetsWinTitle": "極性のバランス！",
+  "magnetsWinMessage": "すべてのマグネットが完璧に配置されました！",
+  "lighthousesTitle": "灯台",
+  "lighthousesSubtitle": "灯台のヒントに基づいて船を配置します。",
+  "lighthousesHowToPlay": "グリッドに1x1の船を配置します。灯台は、水平および垂直に見える船の総数を示します。船は灯台や他の船に（斜めであっても）接触させることはできません。",
+  "lighthousesWinTitle": "海の安全！",
+  "lighthousesWinMessage": "すべての灯台が船を完璧に誘導しています！",
+  "dominosaTitle": "ドミノサ",
+  "dominosaSubtitle": "グリッドに隠されたすべてのドミノを見つけます。",
+  "dominosaHowToPlay": "数字のグリッド上にドミノの完全なセットを配置し、隣接する数字のすべてのペアがちょうど1つのドミノで覆われるようにします。各数字のペアはセットに1回だけ存在します。",
+  "dominosaWinTitle": "ドミノマスター！",
+  "dominosaWinMessage": "すべてのドミノが見つかり、配置されました！",
+  "skyscrapersTitle": "ビルディング",
+  "skyscrapersSubtitle": "グリッドを建物の高さで埋めます。",
+  "skyscrapersHowToPlay": "各行と列に各高さがちょうど1回ずつ含まれるように、グリッドを高さ（1-N）で埋めます。端のヒントは、その方向から見える建物の数を示し、高い建物は低い建物を遮ります。",
+  "skyscrapersWinTitle": "スカイライン復元！",
+  "skyscrapersWinMessage": "すべての建物が完璧に配置されました！",
+  "nurikabeTitle": "ぬりかべ",
+  "nurikabeSubtitle": "つながった海と離れた島を作ります。",
+  "nurikabeHowToPlay": "セルを塗りつぶして、1つのつながった「海」を作ります（2x2のブロックは不可）。塗りつぶされていないセルは「島」を形成し、各島にはその総面積を表す数字がちょうど1つ含まれます。",
+  "nurikabeWinTitle": "海の流れ！",
+  "nurikabeWinMessage": "島が分離され、海がつながりました！",
+  "fillominoTitle": "フィルオミノ",
+  "fillominoSubtitle": "グリッドを指定されたサイズのポリオミノに分割します。",
+  "fillominoHowToPlay": "グリッドをポリオミノに分割し、サイズNの各ポリオミノのすべてのセルに数字Nが含まれるようにします。同じサイズのポリオミノは直交して隣接させることはできません。",
+  "fillominoWinTitle": "グリッド分割！",
+  "fillominoWinMessage": "ロジックで完璧にタイル状に並べられました！",
+  "hitoriTitle": "ひとりにしてくれ",
+  "hitoriSubtitle": "各行と列の重複する数字を塗りつぶします。",
+  "hitoriHowToPlay": "どの行や列にも同じ数字が2回以上現れないようにセルを塗りつぶします。塗りつぶされたセルは（直交して）隣接できず、塗りつぶされていないすべてのセルは1つのつながったグループを形成する必要があります。",
+  "hitoriWinTitle": "ひとりにしてくれマスター！",
+  "hitoriWinMessage": "すべてを正常に解決しました！",
   "pathFinderTitle": "パスファインダー",
   "pathFinderSubtitle": "SからEまでの隠された道を見つけます。",
   "pathFinderWin": "パスをマスターしました！",
@@ -112,12 +227,26 @@
   "arithmeticChainWinMessage": "あなたの暗算能力は鋭いです！",
   "arithmeticChainLoseTitle": "もう一度",
   "arithmeticChainLoseMessage": "正解は {answer} でした。",
+  "@arithmeticChainLoseMessage": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
   "arithmeticChainStart": "スタート",
   "arithmeticChainNext": "次へ",
   "attentionalBlinkTitle": "注意のまばたき",
   "attentionalBlinkSubtitleWatch": "数字に注目してください",
   "attentionalBlinkSubtitleInput": "見えた2つの数字を入力してください",
   "attentionalBlinkScoreMessage": "{score}個のターゲットをスコアしました！",
+  "@attentionalBlinkScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "balanceScaleTitle": "天秤ばかり",
   "balanceScaleSubtitle": "天秤を頼りに最後のアイテムの重さを推測します。",
   "balanceScaleWinTitle": "均衡！",
@@ -137,6 +266,16 @@
   "boxCompletionTitle": "立方体展開図",
   "boxCompletionSubtitle": "どの立方体が形成されますか？",
   "boxCompletionScoreMessage": "{totalTrials}回中{score}回正解しました！",
+  "@boxCompletionScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "totalTrials": {
+        "type": "int"
+      }
+    }
+  },
   "boxCompletionOptions": "オプション",
   "bridgesTitle": "橋",
   "bridgesSubtitle": "島を橋でつなぎます。各島には特定の数の橋が必要です。橋は交差できません。",
@@ -147,7 +286,21 @@
   "calculationSprintGoalReached": "目標達成！",
   "calculationSprintTimeUp": "タイムアップ",
   "calculationSprintScoreMessage": "素晴らしい計算速度です！{score}ポイント獲得しました。",
+  "@calculationSprintScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "calculationSprintTryAgainMessage": "{score}ポイントでした。自己ベスト更新を目指しましょう！",
+  "@calculationSprintTryAgainMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "calculationSprintBest": "ベスト",
   "calculationSprintSeconds": "60秒",
   "calculationSprintDescription": "式を素早く解いてください。\n間違えると3秒減点されます！",
@@ -158,20 +311,82 @@
   "categoryFluencyTimeUp": "タイムアップ！",
   "categoryFluencyWinMessage": "豊富な語彙力をお持ちですね！",
   "categoryFluencyFoundMessage": "{count}個の単語を見つけました。",
+  "@categoryFluencyFoundMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "categoryFluencyCategoryLabel": "カテゴリ：",
   "categoryFluencyEnterItem": "アイテムを入力...",
   "categoryFluencyWordCount": "{entered} / {target} 単語",
+  "@categoryFluencyWordCount": {
+    "placeholders": {
+      "entered": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "changeBlindnessTitle": "変化の見落とし",
   "changeBlindnessSubtitle": "変化している箇所を見つけてください",
   "changeBlindnessScore": "スコア: {score}",
+  "@changeBlindnessScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "changeBlindnessFoundMessage": "{score}箇所の変化を見つけました！",
+  "@changeBlindnessFoundMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "choiceRtTitle": "選択反応時間",
   "choiceRtSubtitle": "アクティブな四角をできるだけ早くタップしてください",
   "choiceRtAvgMessage": "平均反応時間: {avg}ms",
+  "@choiceRtAvgMessage": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
   "choiceRtTimeRemaining": "残り時間: {time}秒",
+  "@choiceRtTimeRemaining": {
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  },
   "choiceRtTaps": "タップ数: {count}",
+  "@choiceRtTaps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "colorFloodTitle": "カラーフラッド",
   "colorFloodSubtitle": "手数: {moves} / {maxMoves}",
+  "@colorFloodSubtitle": {
+    "placeholders": {
+      "moves": {
+        "type": "int"
+      },
+      "maxMoves": {
+        "type": "int"
+      }
+    }
+  },
   "colorFloodSuccess": "フラッド成功！",
   "colorFloodDryLand": "失敗...",
   "colorFloodWinMessage": "グリッド全体を色で埋め尽くしました！",
@@ -183,11 +398,28 @@
   "colorMatchCheck": "チェック",
   "colorMatchResult": "結果",
   "colorMatchAccuracy": "精度: {accuracy}%",
+  "@colorMatchAccuracy": {
+    "placeholders": {
+      "accuracy": {
+        "type": "String"
+      }
+    }
+  },
   "corsiBlocksTitle": "コルシブロック",
   "corsiBlocksSubtitle": "ブロックが光る順番を覚え、同じ順番でタップしてください。",
   "corsiBlocksWinTitle": "空間マスター！",
   "corsiBlocksLoseTitle": "スペースロスト",
   "corsiBlocksMessage": "{score}個のシーケンスを覚えました！空間記憶スパンは{span}に達しました。",
+  "@corsiBlocksMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "span": {
+        "type": "int"
+      }
+    }
+  },
   "corsiBlocksWatch": "パターンを覚える",
   "corsiBlocksRepeat": "パターンを繰り返す",
   "corsiBlocksExcellent": "素晴らしい！",
@@ -209,16 +441,58 @@
   "digitSpanReverseWinMessage": "素晴らしいワーキングメモリです！",
   "digitSpanReverseLoseTitle": "もう一度",
   "digitSpanReverseLoseMessage": "正しい逆順は {sequence} でした。",
+  "@digitSpanReverseLoseMessage": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
   "dividedAttentionTitle": "分割注意",
   "dividedAttentionSubtitle": "星 ⭐ は左をタップ | 赤 🔴 は右をタップ",
   "dividedAttentionGameOverTitle": "集中力切れ",
   "dividedAttentionGameOverMessage": "マルチタスクは難しいですね！スコアは{score}でした。",
+  "@dividedAttentionGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "dividedAttentionScore": "スコア: {score}",
+  "@dividedAttentionScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackTitle": "二重 N-Back",
   "doubleNBackSubtitle": "{n}ステップ前の刺激と一致させます",
+  "@doubleNBackSubtitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackGameOverTitle": "ゲームオーバー",
   "doubleNBackGameOverMessage": "二重 N-Back で{score}ポイント獲得しました！",
+  "@doubleNBackGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackScore": "スコア: {score}",
+  "@doubleNBackScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "doubleNBackPositionMatch": "位置一致",
   "doubleNBackLetterMatch": "文字一致",
   "faceNameAssociationTitle": "顔と名前の関連付け",
@@ -228,10 +502,27 @@
   "faceNameAssociationGameOver": "ゲームオーバー",
   "faceNameAssociationWinMessage": "顔と名前を覚える素晴らしい記憶力です！",
   "faceNameAssociationLoseMessage": "{total}問中{correct}問正解しました。",
+  "@faceNameAssociationLoseMessage": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "faceNameAssociationStartTest": "テスト開始",
   "flankerTestWinTitle": "レーザーフォーカス！",
   "flankerTestLoseTitle": "注意散漫",
   "flankerTestScoreMessage": "{score}問正解しました！",
+  "@flankerTestScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "flankerTestTitle": "フランカーテスト",
   "flankerTestSubtitle": "両端の矢印は無視して、中央の矢印の方向を指してください。",
   "flankerTestLeft": "左",
@@ -240,6 +531,13 @@
   "fractionMatchSubtitle": "図形に対応する分数を選んでください",
   "fractionMatchLoseTitle": "不一致",
   "fractionMatchLoseMessage": "正解は {correctAnswer} でした。",
+  "@fractionMatchLoseMessage": {
+    "placeholders": {
+      "correctAnswer": {
+        "type": "String"
+      }
+    }
+  },
   "goNoGoTitle": "ゴー/ノーゴー",
   "goNoGoSubtitle": "緑ならタップ、赤なら無視！",
   "goNoGoLoseTitle": "反応停止",
@@ -251,22 +549,58 @@
   "groceryListWinTitle": "買い物名人！",
   "groceryListLoseTitle": "忘れ物ですか？",
   "groceryListScoreMessage": "買い物リストで{score}ポイント獲得しました！",
+  "@groceryListScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "groceryListReady": "準備完了",
   "groceryListWhereBelong": "これはどこに属しますか？",
   "hueSortTitle": "色相ソート",
   "hueSortSubtitle": "タイルを入れ替えて、角の色を滑らかをつなげます。ドットは固定タイルです。",
   "hueSortWinTitle": "完璧なグラデーション！",
   "hueSortWinMessage": "カラースペクトルを完璧に並べ替えました！",
+  "hueSortWrongTiles": "間違った位置にあるタイル: {count}",
+  "@hueSortWrongTiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "kenkenTitle": "賢賢",
   "kenkenWinTitle": "天才！",
   "kenkenLoseTitle": "ゲームオーバー",
   "kenkenWinMessage": "賢賢パズルを解きました！",
   "kenkenLoseMessage": "行・列とケージのルールを確認してください。",
   "kenkenSubtitle": "行・列で重複しないように1-{size}を埋めます",
+  "@kenkenSubtitle": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
   "letterCancellationTitle": "文字抹消",
   "letterCancellationTitleFull": "文字抹消テスト",
   "letterCancellationScoreMessage": "{score}個の文字を見つけました！",
+  "@letterCancellationScoreMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "letterCancellationSubtitle": "「{target}」の文字をすべて見つけてください",
+  "@letterCancellationSubtitle": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
   "letterCancellationFound": "発見",
   "letterCancellationTime": "時間",
   "lightsOutTitle": "ライツアウト",
@@ -305,7 +639,14 @@
   "sternbergTaskMemorize": "文字を覚える",
   "sternbergTaskWasLetterSet": "この文字はセットに含まれていましたか？",
   "sternbergTaskScore": "スターンバーグタスクで{score}ポイント獲得しました！",
-  "verbalAnalogiesTitle": "類推マスター！",
+  "@sternbergTaskScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "verbalAnalogiesTitle": "言語類推",
   "verbalAnalogiesSubtitle": "関係性を完成させてください",
   "typingSpeedTitle": "タイピング速度",
   "typingSpeedSubtitle": "表示されたフレーズをできるだけ早く正確に入力してください！",
@@ -330,6 +671,13 @@
   "pixelMimicTitle": "ピクセルミミック",
   "targetNumberTitle": "ターゲット24",
   "targetNumberSubtitle": "4つの数字すべてを使って{target}にしてください",
+  "@targetNumberSubtitle": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "mirrorTracingTitle": "ミラートレーシング",
   "mirrorTracingSubtitle": "星をなぞってください！操作は反転しています。",
   "wordSurgeTitle": "ワードサージ",
@@ -339,6 +687,13 @@
   "perspectiveTakingChoosePerspective": "視点を選択",
   "perspectiveTakingCongrats": "空間的な関係を把握する鋭い目をお持ちですね。",
   "perspectiveTakingSubtitle": "{targetDirName}からの視界はどれですか？",
+  "@perspectiveTakingSubtitle": {
+    "placeholders": {
+      "targetDirName": {
+        "type": "String"
+      }
+    }
+  },
   "paperFoldingTitle": "ペーパーフォールディング",
   "paperFoldingSubtitle": "広げたとき、どのような形になりますか？",
   "waterSortTitle": "ウォーターソート",
@@ -374,6 +729,13 @@
   "operationSpanRecallPhase": "順番通りに文字を思い出してください",
   "operationSpanRoundComplete": "ラウンド終了！",
   "operationSpanScore": "オペレーションスパンで{score}ポイント獲得しました！",
+  "@operationSpanScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "slidePuzzleTitle": "スライドパズル",
   "slidePuzzleNewGame": "ニューゲーム",
   "slidePuzzleInstructions": "タイルを空いたスペースにスライドさせて、数字順に並べ替えてください。",
@@ -390,6 +752,13 @@
   "quickMathTitle": "クイックマス",
   "magicSquaresTitle": "魔法陣",
   "magicSquaresSubtitle": "すべての行、列、対角線の合計が{targetSum}になるようにしてください",
+  "@magicSquaresSubtitle": {
+    "placeholders": {
+      "targetSum": {
+        "type": "int"
+      }
+    }
+  },
   "objectShuffleTitle": "オブジェクトシャッフル",
   "pipesTitle": "パイプ",
   "pipesSubtitle": "同じ色のドットをパイプでつなぎます。",
@@ -425,12 +794,14 @@
   "vocabularyBuilderTitle": "語彙ビルダー",
   "vocabularyBuilderSubtitle": "制限時間内に類義語や対義語を一致させます。",
   "vocabularyBuilderHowToPlay": "ターゲットの単語と関係性（類義語または対義語）が表示されます。選択肢の中からその関係に一致する正しい単語を選んでください。急いでください、時間は刻々と過ぎています！",
+  "correct": "正解",
+  "incorrect": "不正解",
   "grammarPoliceTitle": "グラマーポリス",
   "grammarPoliceSubtitle": "文章が文法的に正しいか、誤りがあるかを確認します。",
   "grammarPoliceHowToPlay": "画面の中央に文章が表示されます。それが文法的に正しいか、誤りがあるかを判断してください。問題なければ「正解」を、間違いを見つけたら「不正解」をタップしてください。すべてのライフを失わないように！",
   "reverseStroopTitle": "逆ストループ",
   "reverseStroopSubtitle": "焦点が切り替わるストループテストのバリエーションです。",
-  "reverseStroopHowToPlay": "指示に注意してください！「文字」と表示されたら単语の意味を一致させます。「色」と表示されたらインクの色を一致させます。集中力を試すため、ルールは頻繁に切り替わります。",
+  "reverseStroopHowToPlay": "指示に注意してください！「文字」と表示されたら単語の意味を一致させます。「色」と表示されたらインクの色を一致させます。集中力を試すため、ルールは頻繁に切り替わります。",
   "game2048Instruction": "任意の方向にスワイプして合体",
   "fibonacciMergeTitle": "フィボナッチ・マージ",
   "fibonacciMergeSubtitle": "連続するフィボナッチ数（1, 1, 2, 3, 5, 8, 13...）を合体させます。",
@@ -469,6 +840,13 @@
   "blockCount3DNotQuite": "惜しい！回転させて、もう一度数えてみましょう。",
   "blockCount3DExcellent": "素晴らしい！",
   "blockCount3DWinMessage": "{count}個のブロックをすべて正しく特定しました！",
+  "@blockCount3DWinMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "blockCount3DHowToPlayDescription": "1. 3Dビューポート上で指をドラッグして、ブロックの山を回転させます。\n\n2. 山の中にあるすべてのブロックを数えます。\n\n3. 覚えておいてください：空中に浮いているブロックの下には、必ず支えとなるブロックがあります（隠れたブロック！）。\n\n4. 入力欄に答えを入力し、「回答を送信」をタップして確認してください。",
   "alphabetSudokuTitle": "アルファベット数独",
   "alphabetSudokuSubtitle": "すべての行、列、ブロックにA-Iの文字が入るようにグリッドを埋めます。",
@@ -478,6 +856,13 @@
   "classicMazeSubtitle": "探索して解決 • 毎回新しい迷路",
   "classicMazeWinTitle": "迷路クリア",
   "classicMazeWinMessage": "信じられないナビゲーションです！{count}手で迷路を解きました。",
+  "@classicMazeWinMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "classicMazeMoves": "手数： ",
   "classicMazeHowToPlayDescription": "1. 光る黄色い玉（プレイヤー）を右下の緑のポータル（出口）まで導いてください。\n\n2. 迷路のどこかをスワイプするか、キーボードの矢印キー、または下のボタンで移動します。\n\n3. 紫色の跡は探索した道を示します。戻ると跡が消えます！\n\n4. 上のアクションバーで難易度を切り替えて、より大きな迷路に挑戦しましょう。",
   "conjunctionSearchTitle": "結合探索",
@@ -508,73 +893,2229 @@
   "cubeNetFoldFailed": "失敗（リセットをタップ）",
   "faceTraitAssociationMemorize": "4人全員を覚える",
   "faceTraitAssociationPersonOf": "{current}人目 / 全{total}人",
+  "@faceTraitAssociationPersonOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "faceTraitAssociationWhatOccupation": "彼らの職業は何ですか？",
   "faceTraitAssociationWhatHobby": "彼らの趣味は何ですか？",
   "faceTraitAssociationWinTitle": "記憶マスター！",
   "faceTraitAssociationLoseTitle": "ゲームオーバー",
   "faceTraitAssociationScoreMessage": "{total}問中{correct}問正解しました。",
-  "topologyTitle": "トポロジー",
+  "@faceTraitAssociationScoreMessage": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "topologyTitle": "TOPOLOGY",
   "topologySubtitle": "これらの図形はトポロジー的に同等ですか？（切ったり貼ったりせずに、一方を変形させて他方にできますか？）",
-  "topologyWinTitle": "幾何学の天才！",
+  "topologyWinTitle": "GEOMETRY GENIUS!",
   "topologyWinMessage": "10個のトポロジー的なペアを正しく特定しました！",
-  "topologyScore": "スコア： ",
-  "hueSortWrongTiles": "間違った位置にあるタイル: {count}",
-  "radicalRootsTitle": "ルート計算",
-  "radicalRootsSubtitle": "指定された数字の平方根または立方根を見つけてください。必要に応じて、最も近い整数に四捨五入してください。",
-  "radicalRootsBest": "ベスト",
-  "radicalRootsSeconds": "60秒",
-  "radicalRootsStart": "計算開始",
-  "radicalRootsDescription": "60秒以内にできるだけ多く解いてください。",
-  "radicalRootsTimeUp": "タイムアップ！",
-  "radicalRootsGoalReached": "ゴール達成！",
-  "radicalRootsScoreMessage": "{score}個のルートを正しく計算しました！",
-  "radicalRootsTryAgainMessage": "練習を続けましょう！{score}個のルートを計算しました。",
-  "romanArithmeticTitle": "ローマ数字計算",
-  "romanArithmeticSubtitle": "ローマ数字を使って足し算と引き算を解いてください。",
-  "romanArithmeticBest": "ベスト",
-  "romanArithmeticSeconds": "60秒",
-  "romanArithmeticStart": "クエスト開始",
-  "romanArithmeticDescription": "変換して解いてください。制限時間は60秒です。",
-  "romanArithmeticTimeUp": "タイムアップ！",
-  "romanArithmeticGoalReached": "百人隊長レベル！",
-  "romanArithmeticScoreMessage": "ローマ数字の問題を{score}問解きました！",
-  "romanArithmeticTryAgainMessage": "来た、見た、勝った！{score}問解きました。",
-  "playNext": "次を再生",
-  "correct": "正解",
-  "incorrect": "不正解",
-  "magnetsTitle": "マグネット",
-  "magnetsSubtitle": "磁極数に基づいてグリッドにマグネットを配置します。",
-  "magnetsHowToPlay": "ドミノサイズの容器に「+」と「-」のマグネットを入れるか、空のままにします。行と列のヒントは、そのライン内の各磁極の総数を指定します。同じ磁極は直交して隣接させることはできません。",
-  "magnetsWinTitle": "極性のバランス！",
-  "magnetsWinMessage": "すべてのマグネットが完璧に配置されました！",
-  "lighthousesTitle": "灯台",
-  "lighthousesSubtitle": "灯台のヒントに基づいて船を配置します。",
-  "lighthousesHowToPlay": "グリッドに1x1の船を配置します。灯台は、水平および垂直に見える船の総数を示します。船は灯台や他の船に（斜めであっても）接触させることはできません。",
-  "lighthousesWinTitle": "海の安全！",
-  "lighthousesWinMessage": "すべての灯台が船を完璧に誘導しています！",
-  "dominosaTitle": "ドミノサ",
-  "dominosaSubtitle": "グリッドに隠されたすべてのドミノを見つけます。",
-  "dominosaHowToPlay": "数字のグリッド上にドミノの完全なセットを配置し、隣接する数字のすべてのペアがちょうど1つのドミノで覆われるようにします。各数字のペアはセットに1回だけ存在します。",
-  "dominosaWinTitle": "ドミノマスター！",
-  "dominosaWinMessage": "すべてのドミノが見つかり、配置されました！",
-  "skyscrapersTitle": "ビルディング",
-  "skyscrapersSubtitle": "グリッドを建物の高さで埋めます。",
-  "skyscrapersHowToPlay": "各行と列に各高さがちょうど1回ずつ含まれるように、グリッドを高さ（1-N）で埋めます。端のヒントは、その方向から見える建物の数を示し、高い建物は低い建物を遮ります。",
-  "skyscrapersWinTitle": "スカイライン復元！",
-  "skyscrapersWinMessage": "すべての建物が完璧に配置されました！",
-  "nurikabeTitle": "ぬりかべ",
-  "nurikabeSubtitle": "つながった海と離れた島を作ります。",
-  "nurikabeHowToPlay": "セルを塗りつぶして、1つのつながった「海」を作ります（2x2のブロックは不可）。塗りつぶされていないセルは「島」を形成し、各島にはその総面積を表す数字がちょうど1つ含まれます。",
-  "nurikabeWinTitle": "海の流れ！",
-  "nurikabeWinMessage": "島が分離され、海がつながりました！",
-  "fillominoTitle": "フィルオミノ",
-  "fillominoSubtitle": "グリッドを指定されたサイズのポリオミノに分割します。",
-  "fillominoHowToPlay": "グリッドをポリオミノに分割し、サイズNの各ポリオミノのすべてのセルに数字Nが含まれるようにします。同じサイズのポリオミノは直交して隣接させることはできません。",
-  "fillominoWinTitle": "グリッド分割！",
-  "fillominoWinMessage": "ロジックで完璧にタイル状に並べられました！",
-  "hitoriTitle": "ひとりにしてくれ",
-  "hitoriSubtitle": "各行と列の重複する数字を塗りつぶします。",
-  "hitoriHowToPlay": "どの行や列にも同じ数字が2回以上現れないようにセルを塗りつぶします。塗りつぶされたセルは（直交して）隣接できず、塗りつぶされていないすべてのセルは1つのつながったグループを形成する必要があります。",
-  "hitoriWinTitle": "ひとりにしてくれマスター！",
-  "hitoriWinMessage": "すべてを正常に解決しました！"
+  "topologyScore": "SCORE: ",
+  "semanticDistanceTitle": "意味的距離",
+  "semanticDistanceSubtitle": "単語間の概念的な距離を測定します",
+  "oxymoronHuntTitle": "矛盾語探し",
+  "oxymoronHuntSubtitle": "グリッド内の矛盾する単語をペアにします",
+  "portmanteauSplitTitle": "かばん語分解",
+  "portmanteauSplitSubtitle": "かばん語の元になった単語を特定します",
+  "chainReactionTitle": "連鎖反応",
+  "chainReactionSubtitle": "重なり合う文字を使って単語をつなげます",
+  "rhymeMasterTitle": "韻踏みマスター",
+  "rhymeMasterSubtitle": "ターゲットと韻を踏む単語を特定します",
+  "definitionDashTitle": "定義ダッシュ",
+  "definitionDashSubtitle": "正しい単語をその定義と一致させます",
+  "syllableStackTitle": "音節スタック",
+  "syllableStackSubtitle": "音節を積み重ねて完全な単語を作ります",
+  "sentenceUnscrambleTitle": "文章並べ替え",
+  "sentenceUnscrambleSubtitle": "単語を並べ替えて正しい文章を作ります",
+  "grammarSortTitle": "文法ソート",
+  "grammarSortSubtitle": "単語を品詞ごとに分類します",
+  "vowelReconstructTitle": "母音再構成",
+  "vowelReconstructSubtitle": "文章の中の欠けている母音を埋めます",
+  "consonantReconstructTitle": "子音再構成",
+  "consonantReconstructSubtitle": "文章の中の欠けている子音を埋めます",
+  "homophoneHuntTitle": "同音異義語探し",
+  "silentLetterSearchTitle": "黙字検索",
+  "silentLetterSearchSubtitle": "与えられた単語の中の読まない文字を特定します",
+  "palindromeBuilderTitle": "回文ビルダー",
+  "palindromeBuilderSubtitle": "最小限の文字を追加して回文を作ります",
+  "phoneticGuessTitle": "発音推測",
+  "phoneticGuessSubtitle": "発音記号から単語を特定します",
+  "spoonerismSolverTitle": "頭音交換ソルバー",
+  "spoonerismSolverSubtitle": "フレーズに対する正しい頭音交換を特定します",
+  "etymonOddballTitle": "語源の仲間外れ",
+  "etymonOddballSubtitle": "同じ語源を持たない単語を見つけます",
+  "etymologyOriginTitle": "語源の起源",
+  "etymologyOriginSubtitle": "借用語の起源言語を推測します",
+  "affixFactoryTitle": "接辞工場",
+  "affixFactorySubtitle": "接頭辞と接尾辞を使って有効な単語を作ります",
+  "cognateCatchTitle": "同源語キャッチ",
+  "cognateCatchSubtitle": "真の同源語と「空似言葉」を区別します",
+  "compoundConnectTitle": "複合語コネクト",
+  "compoundConnectSubtitle": "2つの単語を組み合わせて複合語を作ります",
+  "pangramSprintTitle": "パングラムスプリント",
+  "pangramSprintSubtitle": "アルファベットのすべての文字を使って文章を作ります",
+  "anagramDefinitionTitle": "アナグラム定義",
+  "anagramDefinitionSubtitle": "定義に基づいてアナグラムを解きます",
+  "letterBridgeTitle": "文字の橋",
+  "letterBridgeSubtitle": "2つの単語をつなぐ欠けている文字を見つけます",
+  "letterFrequencyScanTitle": "文字頻度スキャン",
+  "letterFrequencyScanSubtitle": "テキスト内に特定の文字が何回現れるか数えます",
+  "oneLetterShiftTitle": "一文字シフト",
+  "oneLetterShiftSubtitle": "一文字変えて別の単語に変換します",
+  "vocabularyBuilderMessage": "よくできました！素晴らしい語彙力です。スコア：{arg0}",
+  "@vocabularyBuilderMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "symmetryMessage": "手術のような精密さでパターンを完璧に再現しました。",
+  "temporalOrderMessage": "信じられない！あなたの時間的シーケンス記憶は非常に高精度です。",
+  "temporalOrderMessage1": "シーケンス記憶が正しくありません。練習あるのみです！",
+  "wordSearchMessage": "鋭い観察力ですべての単語が見つかりました。",
+  "colorMatchMessage": "精度：{arg0}%",
+  "@colorMatchMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "semanticLinkMessage": "{arg0}ポイント獲得しました！",
+  "@semanticLinkMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "reflexTapMessage": "{arg0}個のターゲットをタップしました！",
+  "@reflexTapMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "angleFinderMessage": "あなたの幾何学的な直感は完璧です！",
+  "angleFinderMessage1": "正解は {arg0}° でした",
+  "@angleFinderMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "angleFinderText": "{arg0}°",
+  "@angleFinderText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "visualStatisticalLearningMessage": "{arg0}個のパターンを正解しました！",
+  "@visualStatisticalLearningMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "nonogramText": "エラー：{arg0}",
+  "@nonogramText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "mentalCalendarMessage": "10問中 {arg0} 問正解しました！",
+  "@mentalCalendarMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "orbitTapMessage": "{arg0} 回のタップに成功しました！",
+  "@orbitTapMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "schulteTableMessage": "テーブルを {arg0} で完成させました。\n周辺視野を広げるために練習を続けましょう！",
+  "@schulteTableMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "schulteTableText": "テスト開始",
+  "relationalMemoryMessage": "素晴らしい空間関係記憶の精度です！",
+  "sudokuText": "エラー：{arg0}",
+  "@sudokuText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sdmtMessage": "{arg0} 個の記号を一致させました！このテストはスキャンスピードと視覚的注意力を測定します。",
+  "@sdmtMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "futoshikiMessage": "信じられない！フトシキのラテン方格を解きました。",
+  "letterFrequencyScanMessage": "「{arg1}」が {arg0} 回現れるのを正しく数えました。",
+  "@letterFrequencyScanMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "letterFrequencyScanText": "不正解です。正解は {arg0} 回でした。",
+  "@letterFrequencyScanText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "memoryMatrixMessage": "素晴らしい！ワーキングメモリが鋭いです。今日の目標達成！",
+  "memoryMatrixMessage1": "集中してもう一度挑戦し、メモリスコアを向上させましょう。",
+  "contextCluesMessage": "並外れています！語彙力と文脈分析力が最高レベルです。",
+  "contextCluesMessage1": "間違った単語を選択しました！言語的な文脈推論を鍛えて、もう一度挑戦しましょう。",
+  "oneLetterShiftMessage": "正しく {arg0} を {arg1} にシフトしました。",
+  "@oneLetterShiftMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "mentalAbacusMessage": "あなたの暗算はトップクラスです。",
+  "fractionMatcherMessage": "表現の一致で {arg0} ポイント獲得しました！",
+  "@fractionMatcherMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spellingSprintMessage": "10単語すべて正しく綴りました！",
+  "spellingSprintMessage1": "{arg0} 単語正しく綴りました。",
+  "@spellingSprintMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "stopSignalMessage": "{arg0} 回の正しい反応を達成しました！このテストは、計画された行動を抑制する能力を測定します。",
+  "@stopSignalMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "grammarPoliceMessage": "ゲームオーバー！文法の世界の秩序を守りました。スコア：{arg0}",
+  "@grammarPoliceMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "consonantReconstructMessage": "{arg0} ポイントで再構成しました！",
+  "@consonantReconstructMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "rhymeMasterMessage": "{arg1} 個中 {arg0} 個の韻を見つけました！",
+  "@rhymeMasterMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "vigilanceTaskMessage": "ヒット：{arg0}、ミス：{arg1}\n誤警報：{arg2}",
+  "@vigilanceTaskMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "silhouetteMatchOrthoMessage": "完璧な正投影アライメントスキルをお持ちですね！",
+  "silhouetteMatchOrthoText": "了解",
+  "silhouetteMatchOrthoText1": "透視投影が正しくありません！リセットして再試行してください。",
+  "fibonacciMergeMessage": "{arg0}：{arg1}",
+  "@fibonacciMergeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "factorFinderMessage": "すべての因数を見つけて {arg0} ポイント獲得しました！",
+  "@factorFinderMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "logicalSyllogismsMessage": "{arg0} 個の三段論法を正しく解きました！",
+  "@logicalSyllogismsMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "rotatingMazeMessage": "回転迷路のナビゲートに成功しました！",
+  "rotatingMazeText": "了解",
+  "rotatingMazeText1": "🌀 迷路が90°回転しました！グリッドがシフトしました！",
+  "mathPathMessage": "ターゲットの合計になる道を見つけました！",
+  "bridgesMessage": "すべての島をつなぐことに成功しました！",
+  "compoundConnectMessage": "複合語は {arg0}{arg1} です。",
+  "@compoundConnectMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "pangramSprintMessage": "26文字すべてを使って文章を作りました。",
+  "mirrorImageMessage": "鏡像を完璧に特定しました。",
+  "mirrorImageText": "鏡像",
+  "reverseStroopMessage": "{arg0} ポイント獲得しました！指示をよく見てください。",
+  "@reverseStroopMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "verbalAnalogiesMessage": "関係性に対する鋭い洞察力をお持ちですね。",
+  "corsiBlocksMessage1": "{arg1} 個のシーケンスを覚えました！空間記憶スパンは {arg0} に達しました。",
+  "@corsiBlocksMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "wordLadderMessage": "{arg0} から {arg1} まで {arg2} ステップで接続しました。",
+  "@wordLadderMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "d2AttentionMessage": "素晴らしい選択的スキャンです！最終スコア：{arg0}。",
+  "@d2AttentionMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "d2AttentionText": "遊び方",
+  "d2AttentionText1": "了解",
+  "tangleFixMessage": "すべての線が整理されました。",
+  "distractorMatrixMessage": "素晴らしい！数学の妨害にもかかわらずパターンを思い出しました！",
+  "distractorMatrixMessage1": "妨害に負けてしまいました！ワーキングメモリを鍛え直しましょう。",
+  "sentenceUnscrambleMessage": "{arg0} ポイントで並べ替えました！",
+  "@sentenceUnscrambleMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "kakuroMessage": "素晴らしい！すべての合計セグメントを完璧に一致させました。",
+  "symbolicFlankerMessage": "{arg1} 問中 {arg0} 問正解しました！",
+  "@symbolicFlankerMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "stroopTestMessage": "{arg0} 問正解しました！単語ではなく、文字の色に集中しましょう。",
+  "@stroopTestMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wisconsinCardSortingMessage": "{arg0} 枚のカードを正しく分類しました！",
+  "@wisconsinCardSortingMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "nBackMessage": "{arg0} 回の 2-back 一致を達成しました！ワーキングメモリはマルチタスクに不可欠です。",
+  "@nBackMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "rhythmMasterMessage": "{arg0} 回の完璧なヒットで {arg1} ポイント獲得しました！",
+  "@rhythmMasterMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "groceryListMessage": "買い物リストで {arg0} ポイント獲得しました！",
+  "@groceryListMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "groceryListText": "準備完了",
+  "mirrorTracingMessage": "脳が正常に協調性を再構築しました。",
+  "moduloClockMessage": "素晴らしいモジュロ暗算能力です！スコア：{arg0}",
+  "@moduloClockMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "moduloClockMessage1": "{arg1} 問中 {arg0} 問のモジュロ時計を解きました。スコア：{arg2}",
+  "@moduloClockMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "crownMessage": "完璧な論理ですべてのクラウンを配置しました。",
+  "dualCodingMessage": "素晴らしいデュアルタスクパフォーマンスです！ワーキングメモリスコア：{arg0}",
+  "@dualCodingMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "inequalityDashMessage": "不等式の一致で {arg0} ポイント獲得しました！",
+  "@inequalityDashMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceMonitoringMessage": "{arg1} 問中 {arg0} 問正解しました！",
+  "@sourceMonitoringMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "sourceMonitoringText": "想起開始",
+  "memoryPalaceText": "使用可能な単語",
+  "target10Message": "10にする数字の一致で {arg0} ポイント獲得しました！",
+  "@target10Message": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "paperFoldingMessage": "頭の中でパターンが見えていますね。",
+  "topologyText": "{arg0}{arg1} / 10",
+  "@topologyText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "waterSortMessage": "すべての色を完璧に仕分けました！",
+  "anagramDefinitionMessage": "正解は確かに「{arg0}」でした。",
+  "@anagramDefinitionMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "game2048Message": "{arg0}：{arg1}\n{arg2}",
+  "@game2048Message": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "game2048Message1": "{arg0}：{arg1}",
+  "@game2048Message1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "numericalEstimationMessage": "{arg0} 回の正しい推定を行いました。",
+  "@numericalEstimationMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "grammarSortMessage": "{arg0} 個の単語を正しく分類しました！",
+  "@grammarSortMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "vowelReconstructMessage": "{arg0} ポイントで再構成しました！",
+  "@vowelReconstructMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spatialConflictMessage": "{arg0} ポイント獲得（エラー {arg1} 回）！",
+  "@spatialConflictMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "spatialConflictText": "遊び方",
+  "spatialConflictText1": "了解",
+  "tracePathMessage": "精度は {arg0}% でした！",
+  "@tracePathMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleSwitcherMessage": "{arg1} 問中 {arg0} 問正解しました！",
+  "@ruleSwitcherMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "collatzMessage": "{arg0} ステップかかりました。最小可能ステップ数は {arg1} でした。",
+  "@collatzMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "collatzText": "/ 2",
+  "collatzText1": "+ 1",
+  "collatzText2": "3n + 1",
+  "divisibilityDashMessage": "{arg0} 個の数字を解きました！",
+  "@divisibilityDashMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "switchTaskMessage": "{arg0} 問正解しました！迅速な切り替えが柔軟性の鍵です。",
+  "@switchTaskMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sequenceSleuthMessage": "{arg0} 個の数列を解きました！",
+  "@sequenceSleuthMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "changeBlindnessMessage": "{arg0} 箇所の変化を見つけました！",
+  "@changeBlindnessMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "mentalRotationMessage": "{arg0} 個の図形を正しく回転させました！",
+  "@mentalRotationMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wordMastermindMessage": "コードをマスターしました！\n単語は「{arg0}」でした。",
+  "@wordMastermindMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wordMastermindMessage1": "隠された単語は「{arg0}」でした。",
+  "@wordMastermindMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "wordMastermindText": "{arg0}",
+  "@wordMastermindText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "simonSequenceMessage": "10枚すべてのタイルを覚えました！",
+  "simonSequenceMessage1": "シーケンスをマスターするためにもう一度挑戦しましょう。",
+  "oxymoronHuntMessage": "{arg0} 個の矛盾語を見つけました！",
+  "@oxymoronHuntMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spotlightTrackMessage": "素晴らしい空間追跡です！ {arg0} ポイント獲得しました。",
+  "@spotlightTrackMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "spotlightTrackText": "遊び方",
+  "spotlightTrackText1": "了解",
+  "spotlightTrackText2": "ラウンド開始",
+  "vennNumbersMessage": "{arg0} 個の数字を分類しました！",
+  "@vennNumbersMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "vennNumbersText": "どちらでもない",
+  "vennNumbersText1": "両方",
+  "silhouetteMatchMessage": "3Dから2Dへの変換能力に優れていますね。",
+  "sumSnakeMessage": "完璧な精度でターゲット {arg0} に到達しました！",
+  "@sumSnakeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sumSnakeText": "パスをクリア",
+  "percentagePeakMessage": "{arg0} 個のパーセント問題を解きました！",
+  "@percentagePeakMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "trailMakingMessage": "{arg0} 個のトレイルを完了しました！このテストは視覚的な検索速度と精神的な柔軟性を測定します。",
+  "@trailMakingMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "matrixReasoningMessage": "{arg0} 個の行列を正しく完成させました！",
+  "@matrixReasoningMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "tentsAndTreesMessage": "すべてのテントを正しく配置しました。",
+  "klotskiMessage": "素晴らしいスライディング！ {arg0} 手でヒーローブロックを解放しました。",
+  "@klotskiMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "sumPyramidMessage": "{arg0} 個の合計ピラミッドを正解しました！",
+  "@sumPyramidMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "simonCommandMessage": "素晴らしい選択的反応と集中力です！合計スコア：{arg0}",
+  "@simonCommandMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "simonCommandMessage1": "スコアは {arg0} でしたが、時間内に {arg1} 回の一致に達しませんでした。",
+  "@simonCommandMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "syllableStackMessage": "{arg0} ポイント獲得しました！",
+  "@syllableStackMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "slitherlinkMessage": "お見事！ループパズルを完成させました。",
+  "quickMathMessage": "{arg0} 問解きました！",
+  "@quickMathMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "commonDenominatorMessage": "{arg0} 問のGCD/LCM問題を解きました！",
+  "@commonDenominatorMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "chainReactionMessage": "最終スコアは {arg0} です。 {arg1} 単語の連鎖を作りました。",
+  "@chainReactionMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "chainReactionText": "{arg0}",
+  "@chainReactionText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "associativePairsMessage": "お見事！視覚的特徴を完璧に関連付けました。",
+  "associativePairsMessage1": "関連付けが間違っています！リンク記憶を鍛えて、もう一度挑戦しましょう。",
+  "portmanteauSplitMessage": "{arg0} 個のかばん語を分解しました！",
+  "@portmanteauSplitMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "magicSquaresText": "クリア",
+  "alphabetSudokuText": "エラー：{arg0}",
+  "@alphabetSudokuText": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "pipesMessage": "すべてのパイプをつなぎ、グリッドを埋めました。",
+  "dualMirrorMessage": "両方のアイコンをターゲットに導きました！",
+  "binaryCodeMessage": "素晴らしい迅速な10進数変換です！最終スコア：{arg0}",
+  "@binaryCodeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "binaryCodeMessage1": "{arg0} 個の2進数を正しく変換しました。スコア：{arg1}",
+  "@binaryCodeMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      },
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "oddOneOutMessage": "50個の仲間外れを見つけました！最終スコア：{arg0}",
+  "@oddOneOutMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "oddOneOutMessage1": "スコア：{arg0}",
+  "@oddOneOutMessage1": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "letterBridgeMessage": "ブリッジ文字を見つけました：{arg0}",
+  "@letterBridgeMessage": {
+    "placeholders": {
+      "arg0": {
+        "type": "String"
+      }
+    }
+  },
+  "imReady": "準備完了",
+  "soptTitle": "自己順序指差し",
+  "soptSubtitle": "毎回異なるカードをタップします。ポジションがシャッフルされる！",
+  "soptWinTitle": "シーケンスマスター！",
+  "soptGameOverMessage": "シャッフルされたカードを追跡することに成功して、 {score} ポイントを獲得しました!",
+  "soptChooseNovel": "新しいカードをタップします",
+  "soptGreatJob": "素晴らしい仕事だ！",
+  "soptAlreadyTapped": "すでにタップされています！",
+  "soptGrid": "グリッド",
+  "contRecogTitle": "継続的な認識",
+  "contRecogSubtitle": "このセッションでこのカードを見たことがありますか?",
+  "contRecogWinTitle": "認識の天才！",
+  "contRecogGameOverMessage": "あなたは {score} の正しい認識を獲得しました!",
+  "contRecogCorrect": "正しい！",
+  "contRecogWrong": "間違っている！",
+  "contRecogOldOrNew": "これは古いですか、それとも新しいですか?",
+  "contRecogNew": "新しい",
+  "contRecogOld": "古い",
+  "contRecogSeenPool": "見たプール",
+  "dnmsTitle": "不一致のメモリ",
+  "dnmsSubtitle": "記憶したサンプルに含まれていないカードをタップします。",
+  "dnmsWinTitle": "不一致の専門家!",
+  "dnmsGameOverMessage": "遅延非マッチングで {score} 個の正解を獲得しました。",
+  "dnmsChooseNovel": "新しいカードをタップします",
+  "dnmsMemorizeSample": "このカードを暗記してください",
+  "dnmsWaitForIt": "待ってください...",
+  "dnmsExcellent": "素晴らしい！",
+  "dnmsSampleTapped": "それがサンプルでした！",
+  "dnmsCards": "カード",
+  "symSpanTitle": "対称スパン",
+  "symSpanSubtitle": "垂直方向の対称性を識別しながら、細胞のパターンを思い出します。",
+  "symSpanWinTitle": "シンメトリーマスター！",
+  "symSpanGameOverMessage": "レイアウトを思い出し、対称性を特定することで、 {score} ポイントを獲得しました。",
+  "symSpanMemorizeRed": "赤血球の位置を記憶する",
+  "symSpanIsSymmetric": "模様は左右対称ですか？",
+  "symSpanRecallSequence": "シーケンスを正しい順序で呼び出します",
+  "symSpanGreatJob": "素晴らしい仕事だ！",
+  "symSpanTryAgain": "もう一度やり直してください！",
+  "symSpanLength": "長さ",
+  "readingSpanTitle": "読み取りスパン",
+  "readingSpanSubtitle": "一連の文字を思い出しながら文章を確認します。",
+  "readingSpanWinTitle": "読書の達人！",
+  "readingSpanGameOverMessage": "Reading Span の記憶力チャレンジで {score} ポイントを獲得しました!",
+  "readingSpanTrueFalse": "この発言は本当ですか、それとも嘘ですか?",
+  "readingSpanMemorizeLetter": "この手紙を覚えておいてください",
+  "readingSpanRecallLetters": "文字を順番に思い出す",
+  "readingSpanGreatJob": "素晴らしい仕事だ！",
+  "readingSpanTryAgain": "もう一度やり直してください！",
+  "readingSpanYourSequence": "あなたのシーケンス: {sequence}",
+  "readingSpanLength": "長さ",
+  "readingSpanSentence1": "太陽は東から昇ります。",
+  "readingSpanSentence2": "氷が沸騰して熱くなっています。",
+  "readingSpanSentence3": "魚は水中でも呼吸ができます。",
+  "readingSpanSentence4": "犬には翼があり空を飛ぶことができます。",
+  "readingSpanSentence5": "水は摂氏0度で凍ります。",
+  "readingSpanSentence6": "猫は小型犬のように吠えます。",
+  "readingSpanSentence7": "夏には木々が緑の葉を茂らせます。",
+  "readingSpanSentence8": "雨は地面から上に降り注ぎます。",
+  "readingSpanSentence9": "三角形には 4 つの等しい辺があります。",
+  "readingSpanSentence10": "リンゴは甘い果物の一種です。",
+  "readingSpanSentence11": "月はチェダーチーズでできています。",
+  "readingSpanSentence12": "自動車には転がるための車輪があります。",
+  "readingSpanSentence13": "火は凍てつくほど冷たい。",
+  "readingSpanSentence14": "紙は木材を加工して作られます。",
+  "readingSpanSentence15": "鳥には飛ぶために羽があります。",
+  "readingSpanSentence16": "バナナは松の木に生えています。",
+  "readingSpanSentence17": "ゾウはアリよりも小さいです。",
+  "readingSpanSentence18": "本には印刷されたテキストのページが含まれています。",
+  "countingSpanTitle": "カウンティングスパン",
+  "countingSpanSubtitle": "青い丸だけを数えます。次に、一連のカウントを思い出してください。",
+  "countingSpanWinTitle": "カウンティングの天才!",
+  "countingSpanGameOverMessage": "カウンティング スパン メモリ チャレンジで {score} ポイントを獲得しました!",
+  "countingSpanCountCircles": "青い丸だけを数える",
+  "countingSpanRecallCounts": "正しい順序でカウントを呼び出す",
+  "countingSpanGreatJob": "素晴らしい仕事だ！",
+  "countingSpanTryAgain": "もう一度やり直してください！",
+  "countingSpanYourSequence": "あなたのシーケンス: {sequence}",
+  "countingSpanLength": "長さ",
+  "objDispTitle": "オブジェクトの変位",
+  "objDispSubtitle": "レイアウトを覚える。位置を移動する 1 つのオブジェクトを見つけてタップします。",
+  "objDispWinTitle": "空間の天才！",
+  "objDispGameOverMessage": "{score} 個の移動オブジェクトを正しく特定しました。",
+  "objDispMemorizeAll": "すべての配置を記憶する",
+  "objDispWaitingShift": "レイアウト変更を待っています...",
+  "objDispTapMoved": "動いたオブジェクトをタップ",
+  "objDispExcellent": "素晴らしい！",
+  "objDispWrongObject": "オブジェクトが間違っています!",
+  "objDispItems": "アイテム",
+  "mandalaTitle": "マンダラリコール",
+  "mandalaSubtitle": "カラー構成を記憶します。色を選択してタイルを再ペイントします。",
+  "mandalaWinTitle": "マンダラアーティスト！",
+  "mandalaGameOverMessage": "色付きの幾何学的なレイアウトを再作成して、 {score} ポイントを獲得しました。",
+  "mandalaMemorizeColors": "タイルの色を記憶する",
+  "mandalaPaintCells": "オリジナルに合わせてセルをペイントする",
+  "mandalaExcellent": "素晴らしい！",
+  "mandalaIncorrectMatch": "間違った一致です!",
+  "mandalaSubmitRepaint": "リペイントを送信する",
+  "mandalaTiles": "タイル",
+  "runningSpanTitle": "ランニングスパン",
+  "runningSpanSubtitle": "手紙に注目してください。停止したら、最後の N 文字を順番に入力します。",
+  "runningSpanWinTitle": "バッファーマスター！",
+  "runningSpanGameOverMessage": "ランニング メモリ スパンで {score} ポイントを獲得しました!",
+  "runningSpanPrepareRecall": "最後の {count} 文字を思い出す準備をしてください",
+  "runningSpanWatchCarefully": "注意深く見てください...",
+  "runningSpanEnterLast": "最後の {count} 文字を入力してください",
+  "runningSpanGreatJob": "素晴らしい仕事だ！",
+  "runningSpanIncorrectBuffer": "バッファが間違っています!",
+  "runningSpanRecallLast": "最後の {count} を思い出してください",
+  "runningSpanStopsRandomly": "ストリームがランダムに停止します。",
+  "runningSpanEntered": "入力: {sequence}",
+  "runningSpanNItems": "N アイテム",
+  "spatialCabinetTitle": "空間キャビネット",
+  "spatialCabinetSubtitle": "どのキャビネットの引き出しにどのオブジェクトが入っているかを記憶します。",
+  "spatialCabinetWinTitle": "内閣の専門家！",
+  "spatialCabinetGameOverMessage": "Spatial Cabinet Memory で {score} ポイントを獲得しました!",
+  "spatialCabinetMemorize": "アイテムの場所を記憶する",
+  "spatialCabinetWhereIs": "{itemName} はどこですか?",
+  "spatialCabinetCorrect": "正しい！",
+  "spatialCabinetWrongDrawer": "引き出しが間違っています!",
+  "spatialCabinetItems": "アイテム",
+  "cabinetItemKey": "鍵",
+  "cabinetItemApple": "りんご",
+  "cabinetItemDiamond": "ダイヤモンド",
+  "cabinetItemBook": "本",
+  "cabinetItemUmbrella": "傘",
+  "cabinetItemCoffee": "コーヒー",
+  "cabinetItemLock": "ロック",
+  "cabinetItemPet": "ペット",
+  "cabinetItemCar": "車",
+  "@soptGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@contRecogGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@dnmsGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@symSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@readingSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@readingSpanYourSequence": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
+  "@countingSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@countingSpanYourSequence": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
+  "@objDispGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@mandalaGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanPrepareRecall": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanEnterLast": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanRecallLast": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@runningSpanEntered": {
+    "placeholders": {
+      "sequence": {
+        "type": "String"
+      }
+    }
+  },
+  "@spatialCabinetGameOverMessage": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "@spatialCabinetWhereIs": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "gamesTitleLabel": "ゲーム",
+  "yourFavorites": "お気に入り",
+  "readyForWorkout": "毎日の脳トレの準備はいいですか？",
+  "greatStartKeepGoing": "素晴らしいスタートです！その調子で続けましょう。",
+  "onFireToday": "今日は絶好調ですね！",
+  "incredibleSolvingToday": "今日は驚異的な解答数です！",
+  "newGameLabel": "新規",
+  "slitherlinkTitle": "スリザーリンク",
+  "slitherlinkSubtitle": "数字のヒントを使ってピンのグリッドをループで囲みます。",
+  "futoshikiTitle": "不等式パズル",
+  "futoshikiSubtitle": "不等号のヒントに従ってグリッドを埋めます。",
+  "kakuroTitle": "カックロ",
+  "kakuroSubtitle": "数字と合計を使ってクロスワードを解きます。",
+  "inequalityDashTitle": "不等式ダッシュ",
+  "inequalityDashSubtitle": "時間制限内に不等式を解きます。",
+  "factorFinderTitle": "因数探し",
+  "factorFinderSubtitle": "ターゲット数字のすべての因数を特定します。",
+  "collatzTitle": "コラッツの道",
+  "collatzSubtitle": "3N+1の数列を進みます。",
+  "sumPyramidTitle": "合計ピラミッド",
+  "sumPyramidSubtitle": "合計値のヒントを使ってピラミッドのセルを埋めます。",
+  "target10Title": "ターゲット10",
+  "target10Subtitle": "数字タイルを組み合わせて合計10を作ります。",
+  "fractionMatcherTitle": "分数マッチング",
+  "fractionMatcherSubtitle": "視覚的に等しい分数を一致させます。",
+  "dualCodingTitle": "デュアルコーディング",
+  "dualCodingSubtitle": "文字と記号を同時に一致させます。",
+  "distractorMatrixTitle": "妨害要素マトリックス",
+  "distractorMatrixSubtitle": "妨害要素の中からターゲットの形を見つけます。",
+  "temporalOrderTitle": "時系列順",
+  "temporalOrderSubtitle": "時系列の順序を思い出します。",
+  "associativePairsTitle": "連想ペア",
+  "associativePairsSubtitle": "対応する記号をペアにして一致させます。",
+  "blockCount3dTitle": "3Dブロック計算",
+  "blockCount3dSubtitle": "3次元空間内のブロックを数えます。",
+  "rotatingMazeTitle": "回転迷路",
+  "rotatingMazeSubtitle": "迷路を回転させてボールを出口に導きます。",
+  "silhouetteMatchOrthoTitle": "シルエットマッチ（正投影）",
+  "silhouetteMatchOrthoSubtitle": "3Dオブジェクトと正投影の影を一致させます。",
+  "spatialConflictTitle": "空間的葛藤",
+  "spatialConflictSubtitle": "文字と方向の不一致を解決します。",
+  "spotlightTrackTitle": "スポットライト追跡",
+  "spotlightTrackSubtitle": "動く影の中で点滅するアイテムを追跡します。",
+  "d2AttentionTitle": "d2注意テスト",
+  "d2AttentionSubtitle": "厳格な基準に従ってターゲット記号をタップします。",
+  "dualMirrorTitle": "デュアルミラー・ナビゲーション",
+  "dualMirrorSubtitle": "2つの迷路を同時に進みます。",
+  "contextCluesTitle": "文脈ヒント",
+  "contextCluesSubtitle": "文脈のヒントから隠された単語を推測します。",
+  "digitSpanReverseSubtitle": "数字を逆順に思い出します。",
+  "faceNameAssociationSubtitle": "提示された様々な顔の名前を思い出します。",
+  "staircaseMemorySubtitle": "階段状の順序でブロックを記憶します。",
+  "choiceReactionTimeSubtitle": "ヒントに一致する特定のボタンを素早くタップします。",
+  "attentionalBlinkSubtitle": "ストリーム内で素早く点滅するターゲットを捉えます。",
+  "visualStatisticalLearningSubtitle": "時系列の図形パターンを視覚的に学習します。",
+  "sternbergTaskSubtitle": "記号が記憶セットの中にあったか思い出します。",
+  "operationSpanSubtitle": "計算を解きながらアルファベットの文字列を思い出します。",
+  "continuousRecognitionTitle": "連続認識",
+  "continuousRecognitionSubtitle": "提示されたカードが以前のものか新しいものか識別します。",
+  "symmetrySpanTitle": "対称性スパン",
+  "symmetrySpanSubtitle": "垂直対称の判定を行いながらセルの座標を思い出します。",
+  "objectDisplacementTitle": "物体移動",
+  "objectDisplacementSubtitle": "配置を学習し、移動した1つの物体をタップします。",
+  "mandalaRecallTitle": "マンダラ想起",
+  "mandalaRecallSubtitle": "色のタイルの配置を記憶し、パレットからマンダラを塗り直します。",
+  "runningMemorySpanTitle": "ランニングスパン",
+  "runningMemorySpanSubtitle": "流れる文字を監視し、最後のN個のアイテムを思い出します。",
+  "spatialCabinetMemoryTitle": "空間キャビネット",
+  "spatialCabinetMemorySubtitle": "キャビネットの扉の裏にあるアイテムを記憶し、場所を特定します。",
+  "pathRecallSubtitle": "経路の選択を記憶し、繰り返します。",
+  "objectShuffleSubtitle": "深いカップの下でシャッフルされるアイテムを追跡します。",
+  "groceryListSubtitle": "リストにあるアイテムを記憶し、チェックを入れます。",
+  "quickMathSubtitle": "計算問題を最高速度で解きます。",
+  "mathGuessTitle": "数字当て",
+  "mathGuessSubtitle": "15回以内に隠された数字を当てます。",
+  "reflexTapSubtitle": "刺激を人間ができる限り素早くタップします。",
+  "pixelMimicSubtitle": "ピクセルグリッド上のデザインパターンを模倣します。",
+  "simonSequenceSubtitle": "記憶から図形の順序を繰り返します。",
+  "slidePuzzleSubtitle": "正方形のスライディンググリッドタイルを並べ替えます。",
+  "findWordTitle": "単語探し",
+  "schulteTableSubtitle": "1から25までの数字をタップします。",
+  "simonCommandTitle": "サイモンコマンド",
+  "simonCommandSubtitle": "音声の指示に従って素早く動作します。",
+  "binaryCodeTitle": "バイナリスピード",
+  "binaryCodeSubtitle": "バイナリコードを10進数に変換します。",
+  "moduloClockTitle": "剰余時計",
+  "moduloClockSubtitle": "時計を使って数学の方程式を計算します。",
+  "chimpTestTitle": "チンパンジーテスト",
+  "chimpTestSubtitle": "ランダムな数字を昇順にタップします。",
+  "relationalMemoryTitle": "関係記憶",
+  "relationalMemorySubtitle": "グリッドアイテムの正確な位置を思い出します。",
+  "factBinderTitle": "ファクトバインダー",
+  "factBinderSubtitle": "記号を結びつけ、発言内容を思い出します。",
+  "sourceMonitoringTitle": "ソースモニタリング",
+  "sourceMonitoringSubtitle": "文脈を思い出します。",
+  "klotskiTitle": "箱入り娘（クロツキ）",
+  "klotskiSubtitle": "ブロックをスライドさせて出口に到達させます。",
+  "homophoneHuntSubtitle": "正しく綴られた同音異義語を選択します",
+  "compassMazeCongrats": "エキスパートなナビゲーション！変化する方向の中、出口を見つけ出しました。",
+  "compassMazeMessage": "コンパスを使って迷路を進んでください。",
+  "compassMazeSubtitle": "コンパスの向きに基づいて移動方向が変わる迷路を進みます。",
+  "compassMazeTitle": "コンパス迷路",
+  "complexFoldingNetsCongrats": "高度な折り畳みロジック！3D形状を正確に視覚化できました。",
+  "complexFoldingNetsSubtitle": "非標準的な2D展開図を折り畳んだときに形成される複雑な3D形状を特定します。",
+  "complexFoldingNetsTitle": "展開図",
+  "crossSectionSliceCongrats": "驚異的な3D視覚化！形状の内部を完全に見抜きました。",
+  "crossSectionSliceSubtitle": "特定の角度から見た3Dオブジェクトの正しい2D断面を特定します。",
+  "crossSectionSliceTitle": "断面スライス",
+  "interlockPuzzleCongrats": "論理的な解体！パズルを完璧に解き明かしました。",
+  "interlockPuzzleSubtitle": "複雑に連動するブロックを正しい順序で分解または組み立てます。",
+  "interlockPuzzleTitle": "連動パズル",
+  "laserLinkCongrats": "精密な反射！グリッド全体に電力を供給することに成功しました。",
+  "laserLinkSubtitle": "鏡を回転させてレーザーを反射させ、すべてのターゲットをパワーアップさせます。",
+  "laserLinkTitle": "レーザーリンク",
+  "negativeSpaceDetectionCongrats": "鋭い洞察力！そこにないものを見る技術を習得しましたね。",
+  "negativeSpaceDetectionMessage": "空間に隠されたオブジェクトを特定してください。",
+  "negativeSpaceDetectionSubtitle": "オブジェクト間の空白によって形成される形状を特定します。",
+  "negativeSpaceDetectionTitle": "ネガティブスペース",
+  "pathIntersectCongrats": "同期されたナビゲーション！すべてのターゲットに完璧に到達しました。",
+  "pathIntersectSubtitle": "複数の経路を同時に進み、衝突することなくそれぞれのターゲットに到達します。",
+  "pathIntersectTitle": "パス交差",
+  "shadowPivotCongrats": "ダイナミックな空間認識！光と影をマスターしました。",
+  "shadowPivotSubtitle": "3Dオブジェクトが異なる軸で回転したときに投影される影を予測します。",
+  "shadowPivotTitle": "シャドウピボット",
+  "shapeEllipse": "楕円",
+  "shapeRectangle": "長方形",
+  "shapeTrapezoid": "台形",
+  "errorSomethingWrong": "Something went wrong",
+  "errorUnexpected": "An unexpected error occurred",
+  "errorTryAgain": "Try Again",
+  "leaveReview": "Leave Review",
+  "reportError": "Report Error",
+  "statsTitle": "Stats",
+  "statsAchievements": "Achievements",
+  "statsWeeklyActivity": "Weekly Activity",
+  "statsDayStreak": "{days} Day Streak",
+  "@statsDayStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "statsTotalXp": "Total XP",
+  "statsSolved": "Solved",
+  "statsLevel": "Level {level}",
+  "@statsLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "statsMaintainStreak": "Maintain your streak!",
+  "statsPercentToLevel": "{percent}% to Level {level}",
+  "@statsPercentToLevel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "statsCognitiveProfile": "Cognitive Profile",
+  "statsLocked": "Locked",
+  "achievementSeeker": "Seeker",
+  "achievementSeekerDesc": "Earn 100 XP",
+  "achievementApprentice": "Apprentice",
+  "achievementApprenticeDesc": "Earn 1,000 XP",
+  "achievementStrategist": "Strategist",
+  "achievementStrategistDesc": "Earn 5,000 XP",
+  "achievementElite": "Elite",
+  "achievementEliteDesc": "Earn 10,000 XP",
+  "achievementVeteran": "Veteran",
+  "achievementVeteranDesc": "Earn 25,000 XP",
+  "achievementMaster": "Master",
+  "achievementMasterDesc": "Earn 50,000 XP",
+  "achievementGrandmaster": "Grandmaster",
+  "achievementGrandmasterDesc": "Earn 100,000 XP",
+  "achievementLegend": "Legend",
+  "achievementLegendDesc": "Earn 250,000 XP",
+  "achievementMythic": "Mythic",
+  "achievementMythicDesc": "Earn 500,000 XP",
+  "achievementEternal": "Eternal",
+  "achievementEternalDesc": "Earn 1,000,000 XP",
+  "winFoundIt": "Found It!",
+  "winExcellentTracking": "Excellent tracking speed!",
+  "loseMissedIt": "Missed It!",
+  "loseKeepEyes": "Keep your eyes on the target.",
+  "winDecodedCorrectly": "Decoded Correctly!",
+  "winDecodedMessage": "Your brain successfully read the jumbled text!",
+  "loseTryAgainDecryption": "Try again to break the encryption.",
+  "winTargetReached": "Target Reached!",
+  "winExcellentCalculations": "Excellent calculations!",
+  "winCodeBroken": "Code Broken!",
+  "winDecodedPerfectly": "You decoded the message perfectly.",
+  "loseEncrypted": "Encrypted",
+  "winAmazing": "Amazing!",
+  "winReachedTarget": "You reached the target number!",
+  "loseTryAgainSolution": "Try again to find the solution.",
+  "winExcellent": "Excellent!",
+  "winLevelUp": "Level Up!",
+  "winPerfect": "Perfect!",
+  "winFloodSuccess": "Flood Success!",
+  "loseDryLand": "Dry Land...",
+  "winRoundComplete": "Round Complete",
+  "winStayVigilant": "Stay Vigilant!",
+  "loseKeepWatch": "Keep Watch!",
+  "winFocusMaster": "Focus Master!",
+  "loseConcentrationBroken": "Concentration Broken",
+  "winSpeedDemon": "Speed Demon!",
+  "loseSlowSteady": "Slow & Steady",
+  "loseTimeExpired": "Time Expired",
+  "winSharpEyes": "Sharp Eyes!",
+  "loseLostTrack": "Lost Track",
+  "winOrbitMaster": "Orbit Master!",
+  "loseOutOfSync": "Out of Sync",
+  "winSharpReflexes": "Sharp Reflexes!",
+  "loseOutOfTime": "Out of Time",
+  "winSurgeComplete": "Surge Complete!",
+  "loseTimeExpiredExcl": "Time Expired!",
+  "winMathGenius": "Math Genius!",
+  "loseTimeUp": "Time Up",
+  "winPlanningMaster": "Planning Master!",
+  "loseOutOfMoves": "Out of Moves",
+  "winTotalControl": "Total Control!",
+  "loseInhibitionFail": "Inhibition Fail",
+  "winMimicMaster": "Mimic Master!",
+  "losePatternMismatch": "Pattern Mismatch",
+  "winMemoryMaster": "Memory Master!",
+  "loseFadingEcho": "Fading Echo",
+  "winNeuroMaster": "Neuro-Master!",
+  "loseBrainFog": "Brain Fog",
+  "winBrainWizard": "Brain Wizard!",
+  "winSpatialMaster": "Spatial Master!",
+  "loseLostInSpace": "Lost in Space",
+  "winSequenceMaster": "Sequence Master!",
+  "winCountingGenius": "Counting Genius!",
+  "winNonMatchingExpert": "Non-Matching Expert!",
+  "winSymmetryMaster": "Symmetry Master!",
+  "winCabinetExpert": "Cabinet Expert!",
+  "winSpatialGenius": "Spatial Genius!",
+  "winReadingExpert": "Reading Expert!",
+  "winRecognitionGenius": "Recognition Genius!",
+  "winMandalaArtist": "Mandala Artist!",
+  "winTrackerPro": "Tracker Pro!",
+  "loseLostTrail": "Lost Trail",
+  "winLogicMaster": "Logic Master!",
+  "loseWrongAnswer": "Wrong Answer",
+  "winPathfinder": "Pathfinder!",
+  "loseLostYourWay": "Lost Your Way",
+  "winMentalGymnast": "Mental Gymnast!",
+  "loseWiresCrossed": "Wires Crossed",
+  "winCorrect": "Correct!",
+  "loseWrong": "Wrong",
+  "winRhythmGod": "Rhythm God!",
+  "loseOffBeat": "Off Beat",
+  "winSteadyHands": "Steady Hands!",
+  "loseShakyLine": "Shaky Line",
+  "winEquationSolved": "Equation Solved!",
+  "winMasterHunter": "Master Hunter!",
+  "loseHuntEnded": "Hunt Ended",
+  "winFluencyExpert": "Fluency Expert!",
+  "loseTimeUpExcl": "Time Up!",
+  "winSharpEye": "Sharp Eye!",
+  "loseMismatched": "Mismatched",
+  "winFibonacciMaster": "Fibonacci Master!",
+  "winMathWizard": "Math Wizard!",
+  "winPercentagePro": "Percentage Pro!",
+  "winSleuthMaster": "Sleuth Master!",
+  "winDivisibilityWhiz": "Divisibility Whiz!",
+  "winVennMaster": "Venn Master!",
+  "winChimpTestAced": "Chimp Test Aced",
+  "loseTestFailed": "Test Failed",
+  "winChimpMessage": "Sensational working memory span! You equal chimpanzee levels of cognitive recall.",
+  "loseChimpMessage": "You lost all lives. Keep training to scale up your memory grid capacity!",
+  "winPerfectRecall": "Perfect Recall!",
+  "winRememberedAll": "You remembered all details correctly!",
+  "loseSomeDetailsWrong": "Some details were remembered incorrectly.",
+  "winShikakuSolved": "You successfully solved the Shikaku puzzle.",
+  "snackbarIncorrectSum": "Incorrect sum! Try another one.",
+  "snackbarCorrectMatch": "Correct match!",
+  "snackbarWrongMatch": "Wrong match! Study a new shape.",
+  "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
+  "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
+  "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
+  "@snackbarWordMustContainCentral": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarWordAlreadyFound": "Word already found!",
+  "snackbarNotAValidWord": "Not a valid word!",
+  "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
+  "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
+  "@snackbarIncorrectCorrectAnswer": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarCorrect": "Correct!",
+  "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
+  "snackbarAllCorrect": "All associations correct!",
+  "snackbarIncorrectStudyAgain": "Incorrect translations! Study the association key again.",
+  "snackbarIncorrectArithmetic": "Incorrect arithmetic! Try again.",
+  "snackbarCorrectRecall": "Correct recall!",
+  "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
+  "snackbarPieceDoesNotFit": "Piece does not fit there!",
+  "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
+  "@snackbarInvalidStep": {
+    "placeholders": {
+      "mod": {
+        "type": "int"
+      },
+      "modulus": {
+        "type": "int"
+      },
+      "remainder": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
+  "@snackbarIncorrectGroup": {
+    "placeholders": {
+      "tries": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
+  "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
+  "@snackbarIncorrectDestination": {
+    "placeholders": {
+      "x": {
+        "type": "int"
+      },
+      "y": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
+  "@snackbarIncorrectCorrectCount": {
+    "placeholders": {
+      "suit": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
+  "snackbarSequenceMatched": "Sequence matched! Increasing length...",
+  "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
+  "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
+  "@snackbarIncorrectCorrectValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
+  "@snackbarIncorrectSlices": {
+    "placeholders": {
+      "selected": {
+        "type": "int"
+      },
+      "required": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
+  "snackbarCorrectOrder": "Correct chronological order!",
+  "snackbarIncorrectOrder": "Incorrect order! Study again.",
+  "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
+  "@snackbarIncorrectMissingValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
+  "@snackbarIncorrectLetterDigit": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      },
+      "digit": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
+  "@snackbarIncorrectCorrectPoint": {
+    "placeholders": {
+      "x": {
+        "type": "int"
+      },
+      "y": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarReachedExit": "Reached the exit! Generating next maze...",
+  "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
+  "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
+  "@snackbarIncorrectCorrectStack": {
+    "placeholders": {
+      "stack": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
+  "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
+  "@snackbarScaleNotBalanced": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
+  "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
+  "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
+  "@snackbarIncorrectCorrectForm": {
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
+  "@snackbarIncorrectInequality": {
+    "placeholders": {
+      "left": {
+        "type": "String"
+      },
+      "leftVal": {
+        "type": "int"
+      },
+      "correct": {
+        "type": "String"
+      },
+      "right": {
+        "type": "String"
+      },
+      "rightVal": {
+        "type": "int"
+      }
+    }
+  },
+  "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
+  "@snackbarIncorrectBaseConversion": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
+  "snackbarAlignedCorrectly": "Aligned and correctly identified!",
+  "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
+  "btnShuffleCups": "Shuffle Cups",
+  "btnSubmitGroup": "Submit Group",
+  "btnYes": "Yes",
+  "btnNo": "No",
+  "btnGotIt": "Got It",
+  "btnSubmit": "Submit",
+  "btnShowHint": "Show Hint",
+  "btnSubmitAlignment": "Submit Alignment",
+  "btnSubmitLocation": "Submit Location",
+  "btnStartDealing": "Start Dealing",
+  "btnImReady": "I'm Ready",
+  "btnStartGame": "Start Game",
+  "btnSubmitStack": "Submit Stack",
+  "btnImReadyToAnswer": "I'm Ready to Answer",
+  "btnNoMatch": "No Match",
+  "btnMatch": "Match",
+  "btnGuess": "Guess",
+  "btnPlayNow": "Play Now",
+  "btnClear": "Clear",
+  "phaseWatchCarefully": "Watch carefully...",
+  "phaseTapCupWithBall": "Tap the cup with the ball!",
+  "phaseTrackTheBall": "Track the ball",
+  "phaseFindTheBall": "Find the ball under the yellow cup!",
+  "phaseBallUnderCup": "The ball is under the highlighted cup. Remember it!",
+  "phaseWrongCup": "Wrong cup! The ball was under the highlighted cup.",
+  "phaseDecodeTheSentence": "Decode the sentence",
+  "phaseFindTheTarget": "Find the target",
+  "phaseTargetNumber": "Target Number",
+  "phaseSelectNumberToBegin": "Select a number to begin",
+  "phaseMemorizeDetails": "Memorize the details",
+  "phaseReadAndMemorize": "Read and Memorize Details:",
+  "phaseSolveTheGrid": "Solve the grid",
+  "phaseDirectionsList": "Directions List:",
+  "phaseYourStack": "Your Stack",
+  "phaseEmpty": "Empty",
+  "phaseTapToAdd": "Tap to Add",
+  "phaseCalculationLabel": "Calculation:",
+  "phaseTimeLeft": "Time: {time}s",
+  "@phaseTimeLeft": {
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  },
+  "phaseRemember2Back": "Remember 2 steps back",
+  "phaseMatch": "Match",
+  "hintTypeRhymingWord": "Type a rhyming word...",
+  "hintStartTyping": "Start typing...",
+  "hintTypeHeardWord": "Type the heard word",
+  "hintTypeGuess": "Type your guess...",
+  "hintTypeAnswerHere": "Type answer here",
+  "hintEnterNextWord": "Enter next word...",
+  "howToPlayTitle": "How to Play",
+  "howToPlayStep1": "1. A secret number is chosen between 1 and 10,000.",
+  "howToPlayStep2": "2. Type your guess on the number pad and submit it.",
+  "howToPlayStep3": "3. If wrong, you will get feedback on whether the secret is higher or lower.",
+  "howToPlayStep4": "4. You have exactly 15 attempts to find the secret number.",
+  "noGuessesYet": "No Guesses Yet",
+  "chancesLeft": "Chances Left",
+  "guessesMade": "Guesses Made",
+  "feedbackFindNumber": "Find the number between 1 and 10,000!",
+  "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
+  "feedbackCorrectExcl": "Correct! The number was {number}.",
+  "@feedbackCorrectExcl": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "feedbackCorrectEmoji": "Correct!",
+  "feedbackTooLow": "Too Low",
+  "feedbackTooHigh": "Too High",
+  "feedbackGameOver": "Game Over! The number was {number}.",
+  "@feedbackGameOver": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "feedbackGuessResult": "{guess} is {result}!",
+  "@feedbackGuessResult": {
+    "placeholders": {
+      "guess": {
+        "type": "int"
+      },
+      "result": {
+        "type": "String"
+      }
+    }
+  },
+  "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
+  "@feedbackWinMessage": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "guesses": {
+        "type": "int"
+      }
+    }
+  },
+  "feedbackLoseMessage": "Out of guesses! The number was {number}.",
+  "@feedbackLoseMessage": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "statTime": "Time",
+  "statScore": "Score",
+  "statGrid": "Grid",
+  "statMatches": "Matches",
+  "statLives": "Lives",
+  "statBeats": "Beats",
+  "statPerfect": "Perfect",
+  "statSeenPool": "Seen Pool",
+  "statCards": "Cards",
+  "statSpan": "Span",
+  "statLength": "Length",
+  "statItems": "Items",
+  "statProgress": "Progress",
+  "statTrials": "Trials",
+  "statTrails": "Trails",
+  "statMoves": "Moves",
+  "statFocalSearch": "Focal search on oscillations",
+  "phaseMemorizeSequence": "Memorize the sequence order",
+  "phaseDetermineOrder": "Determine which item came first/last",
+  "phaseCorrectOrder": "Correct order!",
+  "phaseWrongTimeline": "Wrong timeline!",
+  "phaseWatchPattern": "Watch the pattern",
+  "phaseRepeatPattern": "Repeat the pattern",
+  "phaseExcellent": "Excellent!",
+  "phaseTryAgain": "Try again!",
+  "phaseChooseWordFit": "Choose the word that fits",
+  "phaseExcellentContextual": "Excellent contextual match!",
+  "phaseIncorrectMatch": "Incorrect match",
+  "phaseMemorizePattern": "Memorize the pattern",
+  "phaseSelectTiles": "Select the tiles",
+  "phaseWrongTile": "Wrong tile",
+  "phaseMemorizeRedCell": "Memorize red cell location",
+  "phaseIsSymmetrical": "Is the pattern symmetrical?",
+  "phaseRecallSequence": "Recall sequence in correct order",
+  "phaseGreatJob": "Great job!",
+  "phaseChooseNovelCard": "Choose a novel card",
+  "phaseAlreadyTapped": "Already tapped!",
+  "phaseCountBlueCircles": "Count only blue circles",
+  "phaseRecallCountsOrder": "Recall counts in correct order",
+  "phaseChooseNovel": "Choose the novel card",
+  "phaseMemorizeCard": "Memorize this card",
+  "phaseWaitForIt": "Wait for it...",
+  "phaseThatWasSample": "That was the sample!",
+  "phaseSolveDistractor": "Solve the distractor question!",
+  "phaseSelectMemorized": "Select the memorized cells",
+  "phasePerfectRecall": "Perfect recall!",
+  "phaseWrongExcl": "Wrong!",
+  "phaseMemorizePlacements": "Memorize all placements",
+  "phaseWaitingForShift": "Waiting for layout shift...",
+  "phaseTapMovedObject": "Tap the object that moved",
+  "phaseWrongObject": "Wrong object!",
+  "phaseStudyColorShape": "Study the color-shape connections",
+  "phaseTapMatchingTrait": "Tap the matching trait",
+  "phaseGreatRecall": "Great recall!",
+  "phaseWrongLink": "Wrong link!",
+  "phaseTrueOrFalse": "Is this statement true or false?",
+  "phaseMemorizeLetter": "Memorize this letter",
+  "phaseRecallLettersSequence": "Recall letters in sequence",
+  "phaseMemorizeTileColors": "Memorize tile colors",
+  "phasePaintCells": "Paint cells to match original",
+  "phaseIncorrectMatchExcl": "Incorrect match!",
+  "phaseKeepYourEyes": "Keep your eyes on it!",
+  "phaseWhereIsTarget": "Where is the target object?",
+  "phaseTrackStar": "Track Star",
+  "dialogIncorrectSequenceStudy": "Incorrect sequence! Study the story again.",
+  "dialogStoryReconstruct": "Reconstruct the story by tapping sentences in order",
+  "dialogMemorizeOrder": "Memorize the chronological order of events",
+  "dialogMemorizeWordPairs": "Memorize these word pairs",
+  "dialogWhichWordPaired": "Which word was paired with the target?",
+  "dialogWatchSequence": "Watch the sequence path",
+  "dialogRepeatPath": "Repeat the path sequence",
+  "dialogShapeShifterTap": "Tap shapes that match the active target",
+  "dialogFocusTunnelTap": "Tap incoming shapes ONLY if they match the symbol seen 2 steps ago (2-Back).",
+  "dialogSequenceStackBuild": "Mentally track stack operations, then rebuild the final stack from bottom to top.",
+  "dialogFactorTreeComplete": "Complete the factor tree by tapping nodes and matching factors!",
+  "dialogBinaryScaleBalance": "Balance the scale by selecting powers of two (binary weights) that sum to the target.",
+  "dialogMatrixMultiplierSelect": "Select one row and one column that multiply to the target",
+  "dialogOddEvenFlashTap": "Tap the card when the active rule is satisfied",
+  "dialogBaseConversionConvert": "Convert the value from the source base to the destination base.",
+  "dialogGhostTapSync": "Synchronize with the rhythm, then tap when the invisible pulse would reach peak size.",
+  "dialogFrequencyTapIdentify": "Identify which pulsing light matches the requested target frequency.",
+  "dialogLetterGridSwap": "Swap adjacent letters to form the target words in rows.",
+  "dialogGraphCoordinatePlot": "Plot the coordinates on the Cartesian plane satisfying the equation.",
+  "dialogDigitSwapEquation": "Swap one digit from the top equation with one from the bottom equation to make both correct.",
+  "dialogAreaPerimeterAdjust": "Adjust the rectangle dimensions to match the target area and perimeter.",
+  "dialogCrackCipher": "Crack character-digit substitution cipher math problems.",
+  "dialogPeripheralFocus": "Solve math center equations, tap side panels when they flash",
+  "dialogGokigenSatisfy": "Satisfy vertex clues and avoid closed loops",
+  "dialogPercentageCalculate": "Calculate discount percentages and final checkout totals.",
+  "dialogBinomialMatch": "Match quadratic formulas with factored binomial values.",
+  "dialogNumberBondsCalculate": "Calculate the missing value in the number bond hierarchy.",
+  "correctLowercase": "correct",
+  "incorrectLowercase": "incorrect",
+  "notAValidWord": "Not a valid word",
+  "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
+  "correctExclEmoji": "Correct!",
+  "wrongExcl": "Wrong!",
+  "abstractPatternRecallSubtitle": "記憶研究から層状のカラフルな形状を再構築します。",
+  "abstractPatternRecallTitle": "パターンの重ね合わせ",
+  "actionSequenceRecallSubtitle": "キャラクター ジェスチャ アニメーション シーケンスを順番に繰り返します。",
+  "actionSequenceRecallTitle": "アクションリコール",
+  "affixBuilderSubtitle": "接頭辞/接尾辞を組み合わせてターゲット語彙を構築します。",
+  "affixBuilderTitle": "アフィックスビルダー",
+  "algebraicBalanceSubtitle": "方程式を解いて目標の合計を求めます。",
+  "algebraicBalanceTitle": "代数的バランス",
+  "areaPerimeterMatchSubtitle": "ターゲット領域と周囲の値に一致する長方形を描画します。",
+  "areaPerimeterMatchTitle": "面積と周囲",
+  "attentionalRsvpSubtitle": "高速シリアル レター フラッシュに表示される数字を識別します。",
+  "attentionalRsvpTitle": "注意して出欠を表明",
+  "auditoryNBackSubtitle": "記憶から N ステップ遡って聞いた音声文字を照合します。",
+  "auditoryNBackTitle": "聴覚Nバック",
+  "baseConversionRunSubtitle": "値を 2 進数、10 進数、16 進数、および 8 進数の間で変換します。",
+  "baseConversionRunTitle": "塩基変換",
+  "binaryScaleBalanceSubtitle": "2 の累乗ブロックを使用して 10 進重みのバランスをとります。",
+  "binaryScaleBalanceTitle": "バイナリスケールバランス",
+  "binomialMatchSubtitle": "二次公式を因数分解された二項値と照合します。",
+  "binomialMatchTitle": "二項一致",
+  "blinkDetectorSubtitle": "2回続けて点滅するグリッド面をタップします。",
+  "blinkDetectorTitle": "まばたき検出器",
+  "blockStackingPhysicsSubtitle": "不規則なブロックパネルを重力のバランスで積み重ねます。",
+  "blockStackingPhysicsTitle": "ブロックスタッキング",
+  "boggleWordSearchSubtitle": "隣接する接続されたパスをたどって、隠された単語を見つけます。",
+  "boggleWordSearchTitle": "ボグルコネクト",
+  "cardCountingMemorySubtitle": "継続的なカード配りの実行ですでに配られたカードを特定します。",
+  "cardCountingMemoryTitle": "カードカウンター",
+  "chalkAndTalkSubtitle": "気を散らす視覚的な要因を無視して、音声で聞こえる単語を入力します。",
+  "chalkAndTalkTitle": "チョーク＆トーク",
+  "codedCrosswordsCodeSubtitle": "数字と文字のコードを一致させるグリッド クロスワードを解きます。",
+  "codedCrosswordsCodeTitle": "コードワードクロスワード",
+  "colorMazeNavSubtitle": "動的許可色に一致する迷路タイルを移動します。",
+  "colorMazeNavTitle": "カラー迷路ナビ",
+  "colorWordMatchUpSubtitle": "変更ルールに基づいて、2 つの色の単語が一致するかどうかを判断します。",
+  "colorWordMatchUpTitle": "カラーマッチアップ",
+  "corralLoopSubtitle": "可視性と一致する数字を囲む単一のループを描画します。",
+  "corralLoopTitle": "コラル・ループ",
+  "countdownMathSubtitle": "乱数を組み合わせて 3 桁のターゲットを計算します。",
+  "countdownMathTitle": "カウントダウン計算",
+  "crossSectionMatch3DSubtitle": "3D 形状から切り取られた 2D スライス ジオメトリを識別します。",
+  "crossSectionMatch3DTitle": "3D断面図",
+  "cryptoArithmeticSubtitle": "文字と数字の置換暗号の数学の問題を解読します。",
+  "cryptoArithmeticTitle": "暗号演算",
+  "decipherCrypticCluesSubtitle": "言葉遊びパズルを解き、スペルの謎を解読してください。",
+  "decipherCrypticCluesTitle": "暗号解読者",
+  "delayedMatchSampleSubtitle": "数学の気を散らすものを解決した後、ターゲットのシンボルを一致させます。",
+  "delayedMatchSampleTitle": "遅延マッチ",
+  "digitSwapEqSubtitle": "式の間で 1 桁を入れ替えて、両方を修正します。",
+  "digitSwapEqTitle": "桁交換方程式",
+  "directionsRecallSubtitle": "メモリからパスの方向に一致するグリッド マップをナビゲートします。",
+  "directionsRecallTitle": "指示の呼び出し",
+  "doubleTroubleSubtitle": "分割画面で 2 つの別々のシンプルなゲームを同時にプレイします。",
+  "doubleTroubleTitle": "ダブルトラブル",
+  "dualTaskMemorySubtitle": "簡単な算術タスクを解決しながら単語セットを暗記します。",
+  "dualTaskMemoryTitle": "デュアルタスクメモリ",
+  "dynamicSalienceSubtitle": "わずかに異なるダイナミクスで動く形状を見つけてください。",
+  "dynamicSalienceTitle": "ダイナミックな顕著性",
+  "eventTimelineMemorySubtitle": "歴史的/架空のイベントカードを時系列に並べます。",
+  "eventTimelineMemoryTitle": "イベントのタイムライン",
+  "featureMatrixRecallSubtitle": "セルの形状と色の属性に関するクエリ プロンプトに答えます。",
+  "featureMatrixRecallTitle": "機能マトリックス",
+  "focusTunnelSubtitle": "移動するトンネルの壁に表示される一致するシンボルを特定します。",
+  "focusTunnelTitle": "フォーカストンネル",
+  "fractionalPizzaSubtitle": "目標合計の割合に一致するようにピザのスライスを分割します。",
+  "fractionalPizzaTitle": "フラクショナルピザ",
+  "frequencyTapSubtitle": "目的の光パルス周波数に一致するボタンをタップします。",
+  "frequencyTapTitle": "周波数タップ",
+  "galaxiesSymSubtitle": "グリッドを回転対称の銀河の形状に分割します。",
+  "galaxiesSymTitle": "銀河の対称性",
+  "gearRotationSubtitle": "最後の歯車の回転方向を予測します。",
+  "gearRotationTitle": "歯車の回転",
+  "ghostTapSubtitle": "目に見えないパルスが最大高さに達したらタップします。",
+  "ghostTapTitle": "ゴーストタップ",
+  "gokigenNanameSubtitle": "対角線を引いてループを作らずに点を接続します。",
+  "gokigenNanameTitle": "ゴキゲン菜々芽",
+  "gokigenVariantSubtitle": "頂点数を満たすループのない対角線を描画します。",
+  "gokigenVariantTitle": "ゴキゲンの異形",
+  "graphCoordinatePlotSubtitle": "線形/二次曲線に一致するグリッド座標をプロットします。",
+  "graphCoordinatePlotTitle": "グラフプロッタ",
+  "gridDisplacementSubtitle": "レイアウトを元のレイアウトと比較して、ずれたアイコンを特定します。",
+  "gridDisplacementTitle": "グリッドの変位",
+  "gridFitTetrisSubtitle": "静的で不規則なブロックをコンテナの境界に合わせて配置します。",
+  "gridFitTetrisTitle": "グリッドフィットソルバー",
+  "gridGazeSubtitle": "どのグリッド セルが異なる期間で点滅したかを特定します。",
+  "gridGazeTitle": "グリッドゲイズ",
+  "gridSumLineSubtitle": "値がターゲットに対して正確に評価されるパスを描画します。",
+  "gridSumLineTitle": "グリッド合計ライン",
+  "heyawakeSubtitle": "隣接する黒いセルのないシェードグリッドルーム。",
+  "heyawakeTitle": "Heyawake",
+  "idiomUnscrambleSubtitle": "スクランブルされた単語配列をイディオムの意味と一致するように配置します。",
+  "idiomUnscrambleTitle": "イディオムアンスクランブル",
+  "inequalityBalanceOpsSubtitle": "複雑な数学用語の間に不等号を配置します。",
+  "inequalityBalanceOpsTitle": "不平等の均衡",
+  "islandNurikabeSubtitle": "サイズの数値制約に一致するアイランドを形成します。",
+  "islandNurikabeTitle": "ぬりかべ島",
+  "isometricProjectionSubtitle": "3D ブロック図を正投影の 2D 上面/正面図に一致させます。",
+  "isometricProjectionTitle": "アイソメトリックプロジェクター",
+  "kakurasuSumsSubtitle": "重み付けされた行/列インデックスの合計を満たすようにセルをシェーディングします。",
+  "kakurasuSumsTitle": "カクラス・サムズ",
+  "layeredSilhouetteBlendSubtitle": "ターゲットの半透明の形状に合わせて色付きのレイヤーを重ねます。",
+  "layeredSilhouetteBlendTitle": "シルエットブレンド",
+  "letterBalanceScaleSubtitle": "文字の値が重みのバランスをとる単語を綴ります。",
+  "letterBalanceScaleTitle": "ワードバランススケール",
+  "letterGridSwapperSubtitle": "隣接する文字タイルを交換して、行と列の単語を完成させます。",
+  "letterGridSwapperTitle": "レタースワッパー",
+  "letterPyramidsSubtitle": "層ごとに 1 つのアナグラム文字を追加してワードタワーを構築します。",
+  "letterPyramidsTitle": "文字のピラミッド",
+  "litsTetrisSubtitle": "隣接する複製がない部屋にテトロミノを配置します。",
+  "litsTetrisTitle": "LITS テトロミノ",
+  "masyuSubtitle": "マシューサークルのルールに合わせて1つのループを描きます。",
+  "masyuTitle": "摩周ループ",
+  "mathMazeSubtitle": "目標合計を評価するパスをトレースします。",
+  "mathMazeTitle": "数学迷路",
+  "matrixMultiplierMatchSubtitle": "行と列の値を乗算してターゲットのドット積に一致させます。",
+  "matrixMultiplierMatchTitle": "マトリックスマッチャー",
+  "matrixMultiplierSubtitle": "ターゲットに乗算する行と列を選択します。",
+  "matrixMultiplierTitle": "マトリックス乗算器",
+  "mazeNav3DSubtitle": "一人称視点から 3D アイソメ迷路ルートをナビゲートします。",
+  "mazeNav3DTitle": "3D迷路ナビ",
+  "mirrorMazeSubtitle": "対角ミラーを使用してレーザー ビームの方向を変更します。",
+  "mirrorMazeTitle": "ミラーメイズ",
+  "moduloPathSubtitle": "モジュロ剰余値に一致するグリッド セルを走査します。",
+  "moduloPathTitle": "モジュロパス",
+  "multiTrackCounterSubtitle": "いずれかのカウンターが目標乗数まで増加したときにタップします。",
+  "multiTrackCounterTitle": "マルチトラックカウンター",
+  "narrativeRecallSubtitle": "ストーリーを読んで、具体的な量的かつ事実の詳細を思い出してください。",
+  "narrativeRecallTitle": "物語の想起",
+  "networkFlowSphericalSubtitle": "ラッピング円筒座標上でグリッド フローを接続します。",
+  "networkFlowSphericalTitle": "ネットワークフロー",
+  "norinoriSubtitle": "各部屋の 2 つの接続されたセルを正確に遮光します。",
+  "norinoriTitle": "ノリノリ",
+  "numberBondsSubtitle": "リンク ノードの値がターゲット接続の合計と等しくなるようにします。",
+  "numberBondsTitle": "番号結合",
+  "oddEvenFlashSubtitle": "数値のパリティを色のルールとすばやく照合します。",
+  "oddEvenFlashTitle": "奇数偶数フラッシュ",
+  "origamiUnfoldSubtitle": "折り畳んだシートを広げた後、パンチ穴のパターンを確認します。",
+  "origamiUnfoldTitle": "折り紙を広げる",
+  "patternSequenceDrawSubtitle": "アニメーション化されたパス シーケンスをグリッド上で繰り返します。",
+  "patternSequenceDrawTitle": "パターンリコール",
+  "percentageShoppingSubtitle": "割引率と最終チェックアウトの合計を計算します。",
+  "percentageShoppingTitle": "パーセンテージショッピング",
+  "peripheralFocusSubtitle": "数学を解いているときにサイドパネルの点滅に反応します。",
+  "peripheralFocusTitle": "周辺フォーカス",
+  "perspectiveShiftViewSubtitle": "文字/単語が綴られるまでブロック クラスターを回転させます。",
+  "perspectiveShiftViewTitle": "視点の変更",
+  "polyominoPackingSubtitle": "ランダムなポリオミノ ブロック片をターゲット領域に詰め込みます。",
+  "polyominoPackingTitle": "ポリオミノパッキン",
+  "portmanteauFactorySubtitle": "意味コンポーネントを結合して複合語を作成します。",
+  "portmanteauFactoryTitle": "かばん工場",
+  "primeFactorTreesSubtitle": "合成数を素数リーフ因子ペアに分解します。",
+  "primeFactorTreesTitle": "素因数ツリー",
+  "rippleEffectSubtitle": "間隔距離の制約を考慮して部屋に番号を入力します。",
+  "rippleEffectTitle": "波及効果",
+  "rollingBlockBloxSubtitle": "ブロックのピースを転がしてターゲットのスロットに垂直に着地させます。",
+  "rollingBlockBloxTitle": "ローリングブロック",
+  "roomInspectorSubtitle": "画面が空白のときに行われた家具の変更を特定します。",
+  "roomInspectorTitle": "ルームインスペクター",
+  "ropeTangleSolverSubtitle": "ノードをドラッグして、交差線がゼロの平面グラフをレイアウトします。",
+  "ropeTangleSolverTitle": "ロープアンタングラー",
+  "semanticAssociationSubtitle": "3 つの手がかりをすべて結び付ける単語を見つけてください。",
+  "semanticAssociationTitle": "連想語",
+  "semanticCategoryRecallSubtitle": "要求されたカテゴリのターゲットに一致する学習単語を特定します。",
+  "semanticCategoryRecallTitle": "カテゴリリコール",
+  "sequenceStackSubtitle": "プレート スタックの追加と削除を順番に再構築します。",
+  "sequenceStackTitle": "シーケンススタック",
+  "shakashakaSubtitle": "三角形のタイルを配置して長方形の白い領域を形成します。",
+  "shakashakaTitle": "シャカシャカ レクト",
+  "shapeShifterPeripheralSubtitle": "中心値を一致させながら、周辺形状の変化を追跡します。",
+  "shapeShifterPeripheralTitle": "外周形状",
+  "shapeShifterSubtitle": "目的の形状と色の組み合わせをタップします。",
+  "shapeShifterTitle": "シェイプシフター",
+  "sheepAndWolvesSubtitle": "羊とオオカミを分ける輪を描きます。",
+  "sheepAndWolvesTitle": "羊とオオカミ",
+  "shellGameSubtitle": "シャッフル カップの位置を入れ替えながら、隠しボールを追跡します。",
+  "shellGameTitle": "シェルゲーム",
+  "shikakuSubtitle": "グリッドを数字に合わせて正方形と長方形に分割します。",
+  "shikakuTitle": "シカク",
+  "signalAndNoiseSubtitle": "静的ノイズに隠れた目的の英数字を見つけます。",
+  "signalAndNoiseTitle": "シグナル＆ノイズ",
+  "soundAlikeHomophonesSubtitle": "文の正しい同音異義語のスペルを特定します。",
+  "soundAlikeHomophonesTitle": "同音異義語の一致",
+  "soundSequenceMatchSubtitle": "仮想キーボードで演奏されるノートシーケンスを繰り返します。",
+  "soundSequenceMatchTitle": "サウンドシーケンスの一致",
+  "soundWaveMatchSubtitle": "視覚波の周波数がピッチの変化と一致したらタップします。",
+  "soundWaveMatchTitle": "サウンドウェーブマッチ",
+  "spatialGridMemory3DSubtitle": "回転した 3D 立方体グリッド構造のフラッシュされたブロックを呼び出します。",
+  "spatialGridMemory3DTitle": "3D空間記憶",
+  "spatialGridRotationSubtitle": "軸座標に沿って回転された 3D ブロック配置を一致させます。",
+  "spatialGridRotationTitle": "空間グリッドの回転",
+  "storyBuilderSubtitle": "物語の時系列を再構成します。",
+  "storyBuilderTitle": "ストーリービルダー",
+  "stostoneSubtitle": "下の行を完全に埋めるためにドロップダウンするセルをシェーディングします。",
+  "stostoneTitle": "ストストーングラビティ",
+  "suguruTectonicSubtitle": "隣り合う部屋のブロックに 1 から K までの数字を入力します。",
+  "suguruTectonicTitle": "すぐるグリッド",
+  "symbolDigitAssocSubtitle": "数字キーに一致する記号変換シートを解決します。",
+  "symbolDigitAssocTitle": "記号と数字の関連付け",
+  "symmetryPaintSubtitle": "対称軸を横切って反射する鏡像セグメントを描画します。",
+  "symmetryPaintTitle": "シンメトリーペイント",
+  "syncRhythmSubtitle": "視覚的なメトロノームのスイープがシンコペーションされたビートと一致するときにタップします。",
+  "syncRhythmTitle": "シンクロリズム",
+  "synonymMatchSubtitle": "該当する単語ターゲットを同義語または反意語と照合します。",
+  "synonymMatchTitle": "同義語の一致",
+  "tangramPolygonSubtitle": "ポリゴン形状を配置してシルエットの輪郭を塗りつぶします。",
+  "tangramPolygonTitle": "タングラムフィット",
+  "tangramSubtitle": "ターゲットのシルエットを満たすようにシェイプを配置します。",
+  "tangramTitle": "タングラムパズル",
+  "tapaWallSubtitle": "セルをシェーディングして、連続した黒い壁のパターンを形成します。",
+  "tapaWallTitle": "タパウォール",
+  "targetPursuerSubtitle": "重なっている複数の円を追跡し、元のターゲットを選択します。",
+  "targetPursuerTitle": "ターゲット追跡者",
+  "tennerGridSubtitle": "列の合計に一致する 0 ～ 9 の数字を行に入力します。",
+  "tennerGridTitle": "テナーグリッド",
+  "triangularBridgesSubtitle": "要件を満たす3方向に島を接続します。",
+  "triangularBridgesTitle": "三角橋",
+  "tripletsLogicSubtitle": "3 つ連続しないように 3 つの図形でグリッドを塗りつぶします。",
+  "tripletsLogicTitle": "三つ子トリオ",
+  "typingRhythmSpeedSubtitle": "メトロノームのリズムビートに合わせて語彙を入力します。",
+  "typingRhythmSpeedTitle": "入力の流れ",
+  "typoglycemiaDecoderSubtitle": "乱雑な文章を解読してスピーディーに読みましょう。",
+  "typoglycemiaDecoderTitle": "低血糖デコーダー",
+  "unitConverterProSubtitle": "制限時間内で簡単に単位変換に答えてください。",
+  "unitConverterProTitle": "単位換算器",
+  "vectorGridAlignmentSubtitle": "シャドウ テンプレートのターゲットに合わせてシェイプを拡大縮小および回転します。",
+  "vectorGridAlignmentTitle": "ベクトルの整列",
+  "vektorVectorSubtitle": "ベクトルをスケールして、その合計がターゲットに到達するようにします。",
+  "vektorVectorTitle": "ベクトル",
+  "voiceToFaceMatchSubtitle": "音声音声クリップに関連付けられた正しい顔を選択します。",
+  "voiceToFaceMatchTitle": "声と顔の一致",
+  "vowelDropSubtitle": "母音を座標グリッドにドロップして単語を完成させます。",
+  "vowelDropTitle": "母音のドロップ",
+  "wireLoopGameSubtitle": "非接触で金属リングをワイヤー スプラインに沿ってドラッグします。",
+  "wireLoopGameTitle": "ワイヤーループ",
+  "wordAssociationRecallSubtitle": "ペアになった単語の関連付けを記憶から呼び出します。",
+  "wordAssociationRecallTitle": "単語の関連付け",
+  "wordChainShiritoriSubtitle": "前の文字出力から始まる単語ループをリンクします。",
+  "wordChainShiritoriTitle": "単語連鎖",
+  "wordGridConnectionSubtitle": "16 個の単語を 4 つずつ 4 つのカテゴリにグループ化します。",
+  "wordGridConnectionTitle": "単語のつながり",
+  "wordGridSudokuSubtitle": "グリッド行に文字をテッセレーションして単語を形成します。",
+  "wordGridSudokuTitle": "単語数独",
+  "wordSnakeTrailSubtitle": "主題の単語を綴った蛇のような文字跡をたどります。",
+  "wordSnakeTrailTitle": "ワードスネーク",
+  "wordWheelPangramSubtitle": "ホイールから中央のターゲット文字を含む単語を作成します。",
+  "wordWheelPangramTitle": "単語のアナグラム",
+  "wordWheelSubtitle": "中央の文字を含むホイール上の文字を使用して単語を作成します。",
+  "wordWheelTitle": "ワードホイール",
+  "yajilinSubtitle": "黒いセルを配置し、手がかりに一致する単一のループを描きます。",
+  "yajilinTitle": "Yajilin",
+  "btnMatchColor": "色を一致",
+  "btnMatchWord": "文字を一致",
+  "favoriteGame": "お気に入り",
+  "gameHidden": "ゲームを非表示にしました",
+  "hiddenGames": "非表示のゲーム",
+  "hideGame": "非表示",
+  "noHiddenGames": "非表示のゲームはありません",
+  "orbitTapTapToHit": "ボールがゲートに入ったらタップ",
+  "showHiddenGames": "非表示のゲームを表示 ({count})",
+  "@showHiddenGames": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "undo": "元に戻す",
+  "unfavoriteGame": "お気に入り解除",
+  "unhideGame": "再表示",
+  "kurodokoTitle": "Kurodoko",
+  "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
+  "kurodokoWinTitle": "WHERE IS BLACK SOLVED!",
+  "kurodokoWinMessage": "You mastered the visibility paths and isolated all black cells!",
+  "subitizingRushTitle": "Subitize Rush",
+  "subitizingRushSubtitle": "Instantly identify the quantity of flashed dots without counting.",
+  "subitizingRushWinTitle": "RAPID VISION!",
+  "subitizingRushWinMessage": "Your instant visual numerosity estimation is outstanding!",
+  "tapaTitle": "Tapa",
+  "tapaSubtitle": "Shade cells to form a continuous wall without 2x2 blocks.",
+  "tapaWinTitle": "TAPA WALL COMPLETED!",
+  "tapaWinMessage": "All numbered cell constraints perfectly satisfied!",
+  "exponentTowerTitle": "Exponent Tower",
+  "exponentTowerSubtitle": "Order dynamic power expressions from smallest to largest.",
+  "exponentTowerWinTitle": "TOWER STACKED!",
+  "exponentTowerWinMessage": "All power magnitudes calculated with perfect precision!",
+  "posnerSpatialCueingTitle": "Spatial Cue",
+  "posnerSpatialCueingSubtitle": "React swiftly to directional target appearances following spatial cues.",
+  "posnerSpatialCueingWinTitle": "ALERT VISION!",
+  "posnerSpatialCueingWinMessage": "Fast visual orienting and stimulus detection recorded!",
+  "gearTrainDirectionTitle": "Gear Train",
+  "gearTrainDirectionSubtitle": "Deduce the rotation direction of the target gear in the mechanical train.",
+  "gearTrainDirectionWinTitle": "MECHANISM SOLVED!",
+  "gearTrainDirectionWinMessage": "Kinematic gear rotational transmissions accurately traced!",
+  "continuousPairedAssociateTitle": "Pair Associate",
+  "continuousPairedAssociateSubtitle": "Memorize symbol pairs and recall the matching partner.",
+  "continuousPairedAssociateWinTitle": "PAIRS LINKED!",
+  "continuousPairedAssociateWinMessage": "Strong associative memory pathways established!",
+  "heyawakeWinTitle": "ROOMS BALANCED!",
+  "heyawakeWinMessage": "All room division rules and white path connections satisfied!",
+  "setTheoryVennTitle": "Venn Sets",
+  "setTheoryVennSubtitle": "Select the corresponding regions of the Venn diagram for the set formula.",
+  "setTheoryVennWinTitle": "SET LOGIC MASTER!",
+  "setTheoryVennWinMessage": "All set operations, unions, and intersections deduced flawlessly!",
+  "navonHierarchicalTitle": "Navon Global",
+  "navonHierarchicalSubtitle": "Identify either the large global letter or small local letters under prompt rules.",
+  "navonHierarchicalWinTitle": "FOCUS SHARPENED!",
+  "navonHierarchicalWinMessage": "Outstanding selective attention and global-local perception!",
+  "masyuWinTitle": "MASYU LOOP SOLVED!",
+  "masyuWinMessage": "All pearl turning and straight passage rules strictly satisfied!",
+  "primeGapHuntTitle": "Prime Gap",
+  "primeGapHuntSubtitle": "Calculate the arithmetic difference between consecutive prime numbers.",
+  "primeGapHuntWinTitle": "GAP CALCULATED!",
+  "primeGapHuntWinMessage": "Mastery of prime distribution and mental subtraction displayed!",
+  "yajilinWinTitle": "YAJILIN SOLVED!",
+  "yajilinWinMessage": "All arrow clue raycasts and orthogonal black cell separations satisfied!",
+  "algebraicInequalitySolverTitle": "Inequality",
+  "algebraicInequalitySolverSubtitle": "Solve linear single-variable algebraic inequalities swiftly.",
+  "algebraicInequalitySolverWinTitle": "ALGEBRA EXPERT!",
+  "algebraicInequalitySolverWinMessage": "Fast inequality reduction and algebraic balance achieved!",
+  "attentionalBlinkProbeTitle": "Blink Probe",
+  "attentionalBlinkProbeSubtitle": "Detect second target stimuli presented rapidly after primary targets.",
+  "attentionalBlinkProbeWinTitle": "TEMPORAL FOCUS!",
+  "attentionalBlinkProbeWinMessage": "Exceptional temporal visual processing across the blink refractory window!",
+  "modularClockArithmeticTitle": "Clock Modulo",
+  "modularClockArithmeticSubtitle": "Calculate cyclical clock time arithmetic under modulo 12 algebra.",
+  "modularClockArithmeticWinTitle": "CLOCKWORK PRECISION!",
+  "modularClockArithmeticWinMessage": "All modular hour shifts calculated with ease!",
+  "temporalOrderJudgmentTitle": "Time Order",
+  "temporalOrderJudgmentSubtitle": "Discriminate which of two millisecond-separated stimulus circles flashed first.",
+  "temporalOrderJudgmentWinTitle": "ULTRA-FAST PERCEPTION!",
+  "temporalOrderJudgmentWinMessage": "High-resolution temporal distinction demonstrated!",
+  "polyominoTilingTitle": "Polyomino",
+  "polyominoTilingSubtitle": "Rotate and assemble tetromino geometric shapes to tile the grid without gaps.",
+  "polyominoTilingWinTitle": "GRID TILED!",
+  "polyominoTilingWinMessage": "Seamless geometric spatial arrangement completed!",
+  "pythagoreanTripleBuilderTitle": "Pythagoras",
+  "pythagoreanTripleBuilderSubtitle": "Find the missing hypotenuse or leg value in integer Pythagorean triangles.",
+  "pythagoreanTripleBuilderWinTitle": "GEOMETRY MASTER!",
+  "pythagoreanTripleBuilderWinMessage": "All right-triangle integer triples rapidly solved!",
+  "visualSearchConjunctionTitle": "Conj. Search",
+  "visualSearchConjunctionSubtitle": "Quickly locate target shapes combining multiple feature dimensions (color and form).",
+  "visualSearchConjunctionWinTitle": "CONJUNCTION FOCUS!",
+  "visualSearchConjunctionWinMessage": "Flawless multi-feature parallel and serial visual search!",
+  "wireframe3DRotationTitle": "Wireframe 3D",
+  "wireframe3DRotationSubtitle": "Identify the correctly rotated 3D geometric wireframe following angular transformation.",
+  "wireframe3DRotationWinTitle": "3D ROTATION MASTER!",
+  "wireframe3DRotationWinMessage": "Precise 3D mental rotation and spatial orientation demonstrated!",
+  "wordPairAssociateMemoryTitle": "Word Pairs",
+  "wordPairAssociateMemorySubtitle": "Memorize associated word connections and select the target paired with the cue.",
+  "wordPairAssociateMemoryWinTitle": "ASSOCIATION MASTER!",
+  "wordPairAssociateMemoryWinMessage": "Strong episodic associative memory retention achieved!",
+  "binaryMatrixRankTitle": "Matrix Rank",
+  "binaryMatrixRankSubtitle": "Determine the linear algebraic rank of the 3x3 binary matrix over Galois field GF(2).",
+  "binaryMatrixRankWinTitle": "RANK COMPUTED!",
+  "binaryMatrixRankWinMessage": "Exact linear independence and matrix rank determined!",
+  "visualCrowdingAcuityTitle": "Visual Crowd",
+  "visualCrowdingAcuitySubtitle": "Identify the opening direction of the center Landolt ring amid flanking distractors.",
+  "visualCrowdingAcuityWinTitle": "SHARP PERCEPTION!",
+  "visualCrowdingAcuityWinMessage": "Excellent foveal spatial resolution under visual crowding conditions!",
+  "probeDigitSpanTitle": "Digit Probe",
+  "probeDigitSpanSubtitle": "Observe a fast serial sequence of numbers and recall the item following the probe digit.",
+  "probeDigitSpanWinTitle": "SERIAL PROBE MASTER!",
+  "probeDigitSpanWinMessage": "Flawless short-term serial position memory retrieval!",
+  "abReversalOddballTitle": "A-B Reversal",
+  "abReversalOddballSubtitle": "Respond to target stimuli and dynamically switch response criteria upon rule reversal.",
+  "abReversalOddballWinTitle": "FLEXIBILITY MASTER!",
+  "abReversalOddballWinMessage": "Exceptional cognitive switching and perceptual flexibility demonstrated!",
+  "conundrumAnagramTitle": "Conundrum",
+  "conundrumAnagramSubtitle": "Unscramble all 9 letters to discover the hidden full dictionary word.",
+  "conundrumAnagramWinTitle": "CONUNDRUM CRACKED!",
+  "conundrumAnagramWinMessage": "All 9-letter anagram conundrums successfully unscrambled!",
+  "vectorDotProductTitle": "Dot Product",
+  "vectorDotProductSubtitle": "Calculate the algebraic inner product u • v = (u_x * v_x) + (u_y * v_y).",
+  "vectorDotProductWinTitle": "INNER PRODUCT COMPUTED!",
+  "vectorDotProductWinMessage": "Exact geometric and algebraic vector projections achieved!",
+  "stroopNumberSizeTitle": "Size Stroop",
+  "stroopNumberSizeSubtitle": "Compare either numerical magnitude or physical font size under Stroop interference.",
+  "stroopNumberSizeWinTitle": "INHIBITION EXPERT!",
+  "stroopNumberSizeWinMessage": "Flawless perceptual conflict resolution under size-congruity Stroop!",
+  "wordLadderStepTitle": "Word Ladder",
+  "wordLadderStepSubtitle": "Complete the single-letter transformation sequence between source and destination words.",
+  "wordLadderStepWinTitle": "LADDER CLIMBED!",
+  "wordLadderStepWinMessage": "All single-letter step transformations completed!",
+  "corsiBackwardSpanTitle": "Corsi Backward",
+  "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
+  "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
 }

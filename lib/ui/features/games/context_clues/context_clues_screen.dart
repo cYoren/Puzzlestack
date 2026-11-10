@@ -1,3 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -23,8 +26,8 @@ class ContextCluesScreen extends ConsumerWidget {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'CONTEXT CLUES COMPLETE',
-            message: 'Exceptional! Your vocabulary and contextual analysis are top notch.',
+            title: L10nGameHelpers.getGameTitle(context, 'context_clues'),
+            message: AppLocalizations.of(context)!.contextCluesMessage,
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -42,8 +45,8 @@ class ContextCluesScreen extends ConsumerWidget {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'GAME OVER',
-            message: 'Wrong word selected! Train your verbal context reasoning and try again.',
+            title: L10nGameHelpers.getGameTitle(context, 'context_clues'),
+            message: AppLocalizations.of(context)!.contextCluesMessage1,
             isVictory: false,
             onHome: () {
               Navigator.of(context).pop();
@@ -62,8 +65,8 @@ class ContextCluesScreen extends ConsumerWidget {
     });
 
     return GameScaffold(
-      title: 'CONTEXT CLUES',
-      subtitle: 'Deduce words from context and definition clues',
+      title: L10nGameHelpers.getGameTitle(context, 'context_clues'),
+      subtitle: L10nGameHelpers.getGameTitle(context, 'context_clues'),
       actions: [
         TangibleButton(
           color: colorScheme.surface,
@@ -84,66 +87,21 @@ class ContextCluesScreen extends ConsumerWidget {
         builder: (context, constraints) {
           return Column(
             children: [
-              const SizedBox(height: DesignSystem.spaceMD),
-              _buildHeader(state, context),
-              const Spacer(),
-              ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: constraints.maxHeight * 0.7),
+              const SizedBox(height: DesignSystem.spaceXL),
+              Expanded(
                 child: Center(
-                  child: _buildMainBody(ref, state, context),
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(vertical: DesignSystem.spaceLG),
+                    physics: const BouncingScrollPhysics(),
+                    child: _buildMainBody(ref, state, context),
+                  ),
                 ),
               ),
-              const Spacer(),
               _buildInstruction(state, context),
               const SizedBox(height: DesignSystem.spaceLG),
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildHeader(ContextCluesState state, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildStatCard('LEVEL', '${state.currentLevel}/5', DesignSystem.accentAmber, context),
-        _buildStatCard(
-          'PROGRESS',
-          '${state.currentQuestionIndex + 1}/${state.questions.length}',
-          DesignSystem.primary,
-          context,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStatCard(String label, String value, Color color, BuildContext context) {
-    return TangibleContainer(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      color: Theme.of(context).colorScheme.surface,
-      depth: 2,
-      child: Column(
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 10,
-              color: color,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 1.0,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.onSurface,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -155,6 +113,7 @@ class ContextCluesScreen extends ConsumerWidget {
 
     final question = state.questions[state.currentQuestionIndex];
     final colorScheme = Theme.of(context).colorScheme;
+    final isMobile = DesignSystem.isMobile(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -211,11 +170,11 @@ class ContextCluesScreen extends ConsumerWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 2 : 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
-              childAspectRatio: 2.2,
+              childAspectRatio: isMobile ? 2.2 : 3.0,
             ),
             itemCount: question.options.length,
             itemBuilder: (context, index) {
@@ -246,14 +205,17 @@ class ContextCluesScreen extends ConsumerWidget {
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    option.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w900,
-                      color: state.selectedOption != null
-                          ? Colors.white
-                          : colorScheme.onSurface,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      option.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                        color: state.selectedOption != null
+                            ? Colors.white
+                            : colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ),

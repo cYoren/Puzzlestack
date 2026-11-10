@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -23,8 +25,8 @@ class _MirrorTracingScreenState extends ConsumerState<MirrorTracingScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: 'Mirror Tracing'.toUpperCase(),
-        message: 'Your brain successfully rewired its coordination.',
+        title: L10nGameHelpers.getGameTitle(context, 'mirror_tracing').toUpperCase(),
+        message: AppLocalizations.of(context)!.mirrorTracingMessage,
         isVictory: true,
         onHome: () {
           Navigator.of(context).pop();
@@ -33,8 +35,8 @@ class _MirrorTracingScreenState extends ConsumerState<MirrorTracingScreen> {
         onPlayAgain: () {
           Navigator.of(context).pop();
           _lastTouch = null;
-          // Trigger re-init if needed or just reset
-          ref.read(mirrorTracingNotifierProvider.notifier).resetTrace();
+          final canvasSize = ref.read(mirrorTracingNotifierProvider).canvasSize;
+          ref.read(mirrorTracingNotifierProvider.notifier).initGame(canvasSize);
         },
       ),
     );
@@ -55,8 +57,12 @@ class _MirrorTracingScreenState extends ConsumerState<MirrorTracingScreen> {
     });
 
     return GameScaffold(
-      title: 'Mirror Tracing',
+      title: L10nGameHelpers.getGameTitle(context, 'mirror_tracing'),
       subtitle: l10n.mirrorTracingSubtitle,
+      onReset: () {
+        setState(() => _lastTouch = null);
+        notifier.initGame(state.canvasSize);
+      },
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (state.canvasSize == Size.zero) {

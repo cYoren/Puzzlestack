@@ -196,7 +196,7 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
     final related = _isRelated(state, row, col);
     final conflict = value != 0 &&
         !given &&
-        !SudokuEngine().isValid(state.currentBoard, row, col, value);
+        !SudokuEngine.isValid(state.currentBoard, row, col, value);
 
     final zone = canvas.highlight.targetAlpha(cell(row, col));
 

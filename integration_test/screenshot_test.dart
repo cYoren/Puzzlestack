@@ -24,7 +24,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:puzzle/data/game_catalog.dart';
+import 'package:puzzle/data/game_categories.dart';
 import 'package:puzzle/data/models/game_streak.dart';
 import 'package:puzzle/data/models/user_data.dart';
 import 'package:puzzle/data/repositories/user_repository.dart';
@@ -113,11 +113,11 @@ void main() {
     final BuildContext context = tester.element(find.byType(MainShell));
     var index = 1;
     for (final id in kHeroGameIds) {
-      final game = GameCatalog.find(id);
+      final game = GameFeed.find(id);
       if (game == null) continue;
 
       Navigator.of(context).push(
-        CustomPageRoute(page: game.buildScreen(context)),
+        CustomPageRoute(page: game.builder(context)),
       );
       await _settle(tester);
 

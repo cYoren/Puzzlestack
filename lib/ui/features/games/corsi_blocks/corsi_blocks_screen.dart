@@ -35,8 +35,8 @@ class _CorsiBlocksScreenState extends ConsumerState<CorsiBlocksScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: won ? 'SPATIAL MASTER!' : 'LOST IN SPACE',
-        message: 'You recalled $score sequences! Your spatial memory span reached ${ref.read(corsiBlocksNotifierProvider).currentLength}.',
+        title: won ? AppLocalizations.of(context)!.corsiBlocksWinTitle : AppLocalizations.of(context)!.corsiBlocksLoseTitle,
+        message: AppLocalizations.of(context)!.corsiBlocksMessage(score, ref.read(corsiBlocksNotifierProvider).currentLength),
         onPlayAgain: () {
           ref.read(corsiBlocksNotifierProvider.notifier).initGame();
           Navigator.pop(context);
@@ -92,16 +92,17 @@ class _CorsiBlocksScreenState extends ConsumerState<CorsiBlocksScreen> {
   }
 
   Widget _buildPhaseIndicator(CorsiBlocksState state) {
+    final l10n = AppLocalizations.of(context)!;
     String text = '';
     Color color = Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7);
     if (state.phase == CorsiPhase.showing) {
-      text = 'WATCH THE PATTERN';
+      text = l10n.corsiBlocksWatch;
       color = DesignSystem.primary;
     } else if (state.phase == CorsiPhase.inputting) {
-      text = 'REPEAT THE PATTERN';
+      text = l10n.corsiBlocksRepeat;
       color = DesignSystem.accentBerry;
     } else {
-      text = state.lastRoundCorrect == true ? 'EXCELLENT!' : 'TRY AGAIN!';
+      text = state.lastRoundCorrect == true ? l10n.corsiBlocksExcellent : l10n.phaseTryAgain;
       color = state.lastRoundCorrect == true ? DesignSystem.success : DesignSystem.error;
     }
 
@@ -169,14 +170,15 @@ class _CorsiBlocksScreenState extends ConsumerState<CorsiBlocksScreen> {
   }
 
   Widget _buildStats(CorsiBlocksState state, bool isSmall) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: isSmall ? 16 : 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildStat('TIME', '${state.timeLeft}s', state.timeLeft < 10 ? DesignSystem.error : DesignSystem.primary, isSmall),
-          _buildStat('SPAN', '${state.currentLength}', DesignSystem.accentAmber, isSmall),
-          _buildStat('SCORE', '${state.score}', DesignSystem.success, isSmall),
+          _buildStat(l10n.statTime, '${state.timeLeft}s', state.timeLeft < 10 ? DesignSystem.error : DesignSystem.primary, isSmall),
+          _buildStat(l10n.statSpan, '${state.currentLength}', DesignSystem.accentAmber, isSmall),
+          _buildStat(l10n.statScore, '${state.score}', DesignSystem.success, isSmall),
         ],
       ),
     );

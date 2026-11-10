@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -31,28 +33,30 @@ class _MissingOperatorScreenState extends ConsumerState<MissingOperatorScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
-        title: isVictory ? 'EQUATION SOLVED!' : 'TRY AGAIN',
-        message: isVictory 
-            ? 'You found the correct operators!' 
-            : 'That set of operators didn\'t equal ${ref.read(missingOperatorNotifierProvider).problem?.result}.',
-        isVictory: isVictory,
-        onHome: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        },
-        onPlayAgain: () {
-          Navigator.of(context).pop();
-          setState(() => selectedSlot = null);
-          ref.read(missingOperatorNotifierProvider.notifier).initGame();
-        },
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return GameCompletionDialog(
+          title: isVictory ? l10n.missingOperatorTitle.toUpperCase() : l10n.gameOver,
+          message: isVictory 
+              ? 'You found the correct operators!' 
+              : 'That set of operators didn\'t equal ${ref.read(missingOperatorNotifierProvider).problem?.result}.',
+          isVictory: isVictory,
+          onHome: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
+          onPlayAgain: () {
+            Navigator.of(context).pop();
+            setState(() => selectedSlot = null);
+            ref.read(missingOperatorNotifierProvider.notifier).initGame();
+          },
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(missingOperatorNotifierProvider);
     final notifier = ref.read(missingOperatorNotifierProvider.notifier);
 
@@ -71,14 +75,14 @@ class _MissingOperatorScreenState extends ConsumerState<MissingOperatorScreen> {
 
     if (state.problem == null) {
       return GameScaffold(
-        title: l10n.missingOperatorTitle.toUpperCase(),
+        title: L10nGameHelpers.getGameTitle(context, 'missing_operator'),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return GameScaffold(
-      title: 'Operator Mix',
-      subtitle: l10n.missingOperatorSubtitle,
+      title: L10nGameHelpers.getGameTitle(context, 'missing_operator'),
+      subtitle: L10nGameHelpers.getGameSubtitle(context, 'missing_operator'),
       body: Column(
         children: [
           const SizedBox(height: DesignSystem.space2XL),

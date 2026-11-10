@@ -1,3 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'spatial_conflict_engine.dart';
@@ -25,8 +28,8 @@ class SpatialConflictScreen extends ConsumerWidget {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'COMPLETE',
-            message: 'You achieved a score of ${next.score} with ${next.errors} errors!',
+            title: L10nGameHelpers.getGameTitle(context, 'spatial_conflict'),
+            message: AppLocalizations.of(context)!.spatialConflictMessage((next.score).toString(), (next.errors).toString()),
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -41,8 +44,8 @@ class SpatialConflictScreen extends ConsumerWidget {
     });
 
     return GameScaffold(
-      title: 'Spatial Conflict',
-      subtitle: 'Inhibit Position Bias - Tap the Word Text',
+      title: L10nGameHelpers.getGameTitle(context, 'spatial_conflict'),
+      subtitle: L10nGameHelpers.getGameTitle(context, 'spatial_conflict'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
         notifier.reset();
@@ -51,7 +54,7 @@ class SpatialConflictScreen extends ConsumerWidget {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('HOW TO PLAY'),
+            title: Text(AppLocalizations.of(context)!.spatialConflictText),
             content: const Text(
               'A word ("LEFT" or "RIGHT") will appear on either the left or right side of the screen.\n\n'
               'Ignore which side the word physically appears on. Only pay attention to the text word itself and tap the matching button below.',
@@ -59,7 +62,7 @@ class SpatialConflictScreen extends ConsumerWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('GOT IT'),
+                child: Text(AppLocalizations.of(context)!.spatialConflictText1),
               ),
             ],
           ),

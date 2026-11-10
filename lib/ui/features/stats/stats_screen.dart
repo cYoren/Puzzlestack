@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../providers/user_providers.dart';
-import '../../../../utils/design_system.dart';
-import '../../../../widgets/tangible.dart';
-import '../../../data/game_data.dart';
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/providers/game_providers.dart';
+import 'package:puzzle/providers/user_providers.dart';
+import 'package:puzzle/ui/features/home/widgets/daily_progress_banner.dart';
+import 'package:puzzle/utils/design_system.dart';
+import 'package:puzzle/widgets/tangible.dart';
 
 class Achievement {
   final String title;
@@ -22,64 +24,64 @@ class Achievement {
 class StatsScreen extends ConsumerWidget {
   const StatsScreen({super.key});
 
-  static final List<Achievement> achievements = [
+  static List<Achievement> getAchievements(AppLocalizations l10n) => [
     Achievement(
-      title: 'SEEKER',
-      description: 'EARN 100 XP',
+      title: l10n.achievementSeeker,
+      description: l10n.achievementSeekerDesc,
       requiredXp: 100,
       icon: Icons.search_rounded,
     ),
     Achievement(
-      title: 'APPRENTICE',
-      description: 'EARN 1,000 XP',
+      title: l10n.achievementApprentice,
+      description: l10n.achievementApprenticeDesc,
       requiredXp: 1000,
       icon: Icons.school_rounded,
     ),
     Achievement(
-      title: 'STRATEGIST',
-      description: 'EARN 5,000 XP',
+      title: l10n.achievementStrategist,
+      description: l10n.achievementStrategistDesc,
       requiredXp: 5000,
       icon: Icons.psychology_rounded,
     ),
     Achievement(
-      title: 'ELITE',
-      description: 'EARN 10,000 XP',
+      title: l10n.achievementElite,
+      description: l10n.achievementEliteDesc,
       requiredXp: 10000,
       icon: Icons.military_tech_rounded,
     ),
     Achievement(
-      title: 'VETERAN',
-      description: 'EARN 25,000 XP',
+      title: l10n.achievementVeteran,
+      description: l10n.achievementVeteranDesc,
       requiredXp: 25000,
       icon: Icons.shield_rounded,
     ),
     Achievement(
-      title: 'MASTER',
-      description: 'EARN 50,000 XP',
+      title: l10n.achievementMaster,
+      description: l10n.achievementMasterDesc,
       requiredXp: 50000,
       icon: Icons.workspace_premium_rounded,
     ),
     Achievement(
-      title: 'GRANDMASTER',
-      description: 'EARN 100,000 XP',
+      title: l10n.achievementGrandmaster,
+      description: l10n.achievementGrandmasterDesc,
       requiredXp: 100000,
       icon: Icons.diamond_rounded,
     ),
     Achievement(
-      title: 'LEGEND',
-      description: 'EARN 250,000 XP',
+      title: l10n.achievementLegend,
+      description: l10n.achievementLegendDesc,
       requiredXp: 250000,
       icon: Icons.auto_awesome_rounded,
     ),
     Achievement(
-      title: 'MYTHIC',
-      description: 'EARN 500,000 XP',
+      title: l10n.achievementMythic,
+      description: l10n.achievementMythicDesc,
       requiredXp: 500000,
       icon: Icons.vignette_rounded,
     ),
     Achievement(
-      title: 'ETERNAL',
-      description: 'EARN 1,000,000 XP',
+      title: l10n.achievementEternal,
+      description: l10n.achievementEternalDesc,
       requiredXp: 1000000,
       icon: Icons.all_inclusive_rounded,
     ),
@@ -87,10 +89,9 @@ class StatsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userData = ref.watch(userDataNotifierProvider);
-    final streaks = ref.watch(gameStreakNotifierProvider);
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+    final achievements = StatsScreen.getAchievements(l10n);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -105,65 +106,49 @@ class StatsScreen extends ConsumerWidget {
                   floating: false,
                   snap: false,
                   backgroundColor: theme.scaffoldBackgroundColor,
-                  surfaceTintColor: Colors.transparent,
+                  elevation: 0,
+                  scrolledUnderElevation: 0,
                   centerTitle: true,
-                  title: Text(
-                    'STATS',
-                    style: TextStyle(
-                      fontFamily: 'Bebas Neue',
-                      letterSpacing: 1.5,
-                      fontWeight: FontWeight.w700,
-                      color: colorScheme.onSurface,
-                      fontSize: DesignSystem.fontSize2XL,
+                    title: Text(
+                      l10n.statsTitle,
+                      style: theme.textTheme.displaySmall?.copyWith(
+                        letterSpacing: 2.0,
+                      ),
                     ),
-                  ),
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(
                     DesignSystem.spaceLG,
                     DesignSystem.spaceMD,
                     DesignSystem.spaceLG,
-                    140, // Space for bottom nav
+                    140,
                   ),
                   sliver: SliverList(
-                    delegate: SliverChildListDelegate([
-                      _buildUserStats(
-                        context,
-                        userData.level,
-                        userData.xp,
-                        userData.totalSolved ?? 0,
-                        userData.superStreak ?? 0,
-                        userData.lastSuperStreakDate,
-                        ref,
-                      ),
-                      const SizedBox(height: DesignSystem.spaceXL),
-                      _buildCognitiveProfile(context, streaks),
-                      const SizedBox(height: DesignSystem.spaceXL),
-                      Text(
-                        'ACHIEVEMENTS',
-                        style: TextStyle(
-                          fontFamily: 'Bebas Neue',
-                          letterSpacing: 1.2,
-                          fontWeight: FontWeight.w700,
-                          color: colorScheme.primary,
-                          fontSize: DesignSystem.fontSizeLG,
-                        ),
-                      ),
-                      const SizedBox(height: DesignSystem.spaceMD),
-                      ...List.generate(
-                        achievements.length,
-                        (index) => Padding(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        if (index == 0) return _UserStatsCard(l10n: l10n);
+                        if (index == 1) return const SizedBox(height: DesignSystem.spaceXL);
+                        if (index == 2) return _CognitiveProfileCard(l10n: l10n);
+                        if (index == 3) return const SizedBox(height: DesignSystem.spaceXL);
+                        if (index == 4) {
+                          return Text(
+                            l10n.statsAchievements,
+                            style: theme.textTheme.displaySmall?.copyWith(
+                              fontSize: DesignSystem.fontSizeLG,
+                              color: theme.colorScheme.primary,
+                              letterSpacing: 1.5,
+                            ),
+                          );
+                        }
+                        if (index == 5) return const SizedBox(height: DesignSystem.spaceMD);
+                        final achievementIndex = index - 6;
+                        return Padding(
                           padding: const EdgeInsets.only(bottom: DesignSystem.spaceMD),
-                          child: _buildAchievementCard(
-                            context,
-                            achievements[index],
-                            userData.totalSolved ?? 0,
-                            userData.level,
-                            userData.xp,
-                          ),
-                        ),
-                      ),
-                    ]),
+                          child: _AchievementCard(achievement: achievements[achievementIndex], l10n: l10n),
+                        );
+                      },
+                      childCount: 6 + achievements.length,
+                    ),
                   ),
                 ),
               ],
@@ -173,17 +158,20 @@ class StatsScreen extends ConsumerWidget {
       ),
     );
   }
+}
 
-  Widget _buildUserStats(
-    BuildContext context,
-    int level,
-    int xp,
-    int totalSolved,
-    int superStreak,
-    DateTime? lastDate,
-    WidgetRef ref,
-  ) {
+class _UserStatsCard extends ConsumerWidget {
+  final AppLocalizations l10n;
+  const _UserStatsCard({required this.l10n});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final userData = ref.watch(userDataNotifierProvider);
     final notifier = ref.read(userDataNotifierProvider.notifier);
+    
+    final level = userData.level;
+    final xp = userData.xp;
     final currentLevelXp = notifier.xpForLevel(level);
     final nextLevelXp = notifier.xpForLevel(level + 1);
 
@@ -192,11 +180,12 @@ class StatsScreen extends ConsumerWidget {
 
     return Column(
       children: [
-        _buildStreakTracker(context, superStreak, lastDate),
+        _StreakTracker(l10n: l10n),
+        const SizedBox(height: DesignSystem.spaceMD),
+        const DailyProgressBanner(),
         const SizedBox(height: DesignSystem.spaceMD),
         TangibleContainer(
           color: DesignSystem.primary,
-          shadowColor: DesignSystem.primaryShadow,
           padding: const EdgeInsets.all(DesignSystem.spaceLG),
           child: Column(
             children: [
@@ -207,24 +196,20 @@ class StatsScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'LEVEL $level',
-                        style: const TextStyle(
-                          fontFamily: 'Bebas Neue',
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.0,
+                        l10n.statsLevel(level),
+                        style: theme.textTheme.displayLarge?.copyWith(
+                          fontSize: 42,
                           color: Colors.white,
-                          fontSize: 36,
+                          letterSpacing: 1.0,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'MAINTAIN YOUR STREAK!',
-                        style: TextStyle(
-                          fontFamily: 'Geist',
-                          letterSpacing: 0.5,
-                          fontWeight: FontWeight.w600,
-                          fontSize: DesignSystem.fontSizeXS,
+                        l10n.statsMaintainStreak,
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.w900,
                           color: Colors.white.withValues(alpha: 0.8),
+                          letterSpacing: 0.5,
                         ),
                       ),
                     ],
@@ -238,7 +223,7 @@ class StatsScreen extends ConsumerWidget {
                     ),
                     child: const Icon(
                       Icons.workspace_premium_rounded,
-                      size: 32,
+                      size: 36,
                       color: Colors.white,
                     ),
                   ),
@@ -269,16 +254,15 @@ class StatsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'XP PROGRESS',
-                    style: TextStyle(
-                      fontFamily: 'Geist',
-                      fontWeight: FontWeight.w600,
-                      fontSize: DesignSystem.fontSizeXS,
-                      letterSpacing: 0.5,
-                      color: Colors.white.withValues(alpha: 0.7),
+                    l10n.statsPercentToLevel((progress * 100).toInt(), level + 1),
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      fontFamily: 'Bebas Neue',
+                      fontSize: DesignSystem.fontSizeSM,
+                      color: Colors.white.withValues(alpha: 0.9),
+                      letterSpacing: 1.0,
                     ),
                   ),
                 ],
@@ -290,22 +274,20 @@ class StatsScreen extends ConsumerWidget {
         Row(
           children: [
             Expanded(
-              child: _buildSmallStatCard(
-                context,
-                'TOTAL XP',
-                '$xp',
-                Icons.bolt_rounded,
-                DesignSystem.accentAmber,
+              child: _SmallStatCard(
+                label: l10n.statsTotalXp,
+                value: '$xp',
+                icon: Icons.bolt_rounded,
+                color: DesignSystem.accentAmber,
               ),
             ),
             const SizedBox(width: DesignSystem.spaceMD),
             Expanded(
-              child: _buildSmallStatCard(
-                context,
-                'SOLVED',
-                '$totalSolved',
-                Icons.extension_rounded,
-                DesignSystem.success,
+              child: _SmallStatCard(
+                label: l10n.statsSolved,
+                value: '${userData.totalSolved ?? 0}',
+                icon: Icons.extension_rounded,
+                color: DesignSystem.success,
               ),
             ),
           ],
@@ -313,20 +295,26 @@ class StatsScreen extends ConsumerWidget {
       ],
     );
   }
+}
 
-  Widget _buildStreakTracker(
-      BuildContext context, int superStreak, DateTime? lastDate) {
+class _StreakTracker extends ConsumerWidget {
+  final AppLocalizations l10n;
+  const _StreakTracker({required this.l10n});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final userData = ref.watch(userDataNotifierProvider);
+    final superStreak = userData.superStreak ?? 0;
+    final lastDate = userData.lastSuperStreakDate;
+    
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-
     final currentWeekday = now.weekday;
     final mondayOfThisWeek = today.subtract(Duration(days: currentWeekday - 1));
 
     return TangibleContainer(
-      color: colorScheme.surface,
-      shadowColor: colorScheme.outline.withValues(alpha: 0.5),
       padding: const EdgeInsets.all(DesignSystem.spaceMD),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -335,13 +323,11 @@ class StatsScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'WEEKLY ACTIVITY',
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue',
-                  letterSpacing: 1.0,
-                  fontWeight: FontWeight.w700,
-                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                l10n.statsWeeklyActivity,
+                style: theme.textTheme.displaySmall?.copyWith(
                   fontSize: DesignSystem.fontSizeMD,
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  letterSpacing: 1.0,
                 ),
               ),
               Row(
@@ -350,13 +336,11 @@ class StatsScreen extends ConsumerWidget {
                       color: DesignSystem.gameOrange, size: 20),
                   const SizedBox(width: 4),
                   Text(
-                    '$superStreak DAY STREAK',
-                    style: const TextStyle(
-                      fontFamily: 'Bebas Neue',
-                      letterSpacing: 0.5,
-                      fontWeight: FontWeight.w700,
-                      color: DesignSystem.gameOrange,
+                    l10n.statsDayStreak(superStreak),
+                    style: theme.textTheme.displaySmall?.copyWith(
                       fontSize: DesignSystem.fontSizeMD,
+                      color: DesignSystem.gameOrange,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ],
@@ -365,7 +349,6 @@ class StatsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: DesignSystem.spaceMD),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(7, (index) {
               final dayDate = mondayOfThisWeek.add(Duration(days: index));
               final dayLabel = ['M', 'T', 'W', 'T', 'F', 'S', 'S'][index];
@@ -386,41 +369,44 @@ class StatsScreen extends ConsumerWidget {
                 }
               }
 
-              return Column(
-                children: [
-                  Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: isSolved
-                          ? DesignSystem.gameOrange
-                          : (isToday
-                              ? colorScheme.primary.withValues(alpha: 0.1)
-                              : colorScheme.outline.withValues(alpha: 0.1)),
-                      borderRadius:
-                          BorderRadius.circular(DesignSystem.radiusSM),
-                      border: isToday && !isSolved
-                          ? Border.all(color: colorScheme.primary, width: 2)
-                          : null,
-                    ),
-                    child: Center(
-                      child: isSolved
-                          ? const Icon(Icons.check_rounded,
-                              color: Colors.white, size: 20)
-                          : Text(
-                              dayLabel,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 12,
-                                color: isToday
-                                    ? colorScheme.primary
-                                    : colorScheme.onSurface
-                                        .withValues(alpha: 0.3),
+              return Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: index == 6 ? 0 : 4.0),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: isSolved
+                            ? DesignSystem.gameOrange
+                            : (isToday
+                                ? colorScheme.primary.withValues(alpha: 0.1)
+                                : colorScheme.onSurface.withValues(alpha: 0.05)),
+                        borderRadius:
+                            BorderRadius.circular(DesignSystem.radiusSM),
+                        border: isToday && !isSolved
+                            ? Border.all(color: colorScheme.primary, width: 2)
+                            : null,
+                      ),
+                      child: Center(
+                        child: isSolved
+                            ? const Icon(Icons.check_rounded,
+                                color: Colors.white, size: 20)
+                            : Text(
+                                dayLabel,
+                                style: TextStyle(
+                                  fontFamily: 'Geist',
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 12,
+                                  color: isToday
+                                      ? colorScheme.primary
+                                      : colorScheme.onSurface
+                                          .withValues(alpha: 0.3),
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
-                ],
+                ),
               );
             }),
           ),
@@ -428,27 +414,21 @@ class StatsScreen extends ConsumerWidget {
       ),
     );
   }
+}
 
-  Widget _buildCognitiveProfile(
-      BuildContext context, Map<String, dynamic> streaks) {
+class _CognitiveProfileCard extends ConsumerWidget {
+  final AppLocalizations l10n;
+  const _CognitiveProfileCard({required this.l10n});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final allGames = GameData.allGamesList;
-    final Map<String, int> totalPerCategory = {};
-    final Map<String, int> solvedPerCategory = {};
-
-    for (final game in allGames) {
-      final category = game['category'] as String;
-      final id = game['id'] as String;
-
-      totalPerCategory[category] = (totalPerCategory[category] ?? 0) + 1;
-      if (streaks.containsKey(id)) {
-        solvedPerCategory[category] = (solvedPerCategory[category] ?? 0) + 1;
-      }
-    }
-
-    final categories = totalPerCategory.keys.toList()..sort();
+    final totalStats = ref.watch(categoryStatsProvider);
+    final solvedStatsMap = ref.watch(solvedStatsProvider);
+    
+    final categories = totalStats.keys.where((k) => k != 'ALL').toList()..sort();
 
     final categoryColors = {
       'LOGIC': DesignSystem.gameTeal,
@@ -463,30 +443,30 @@ class StatsScreen extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'COGNITIVE PROFILE',
-          style: TextStyle(
-            fontFamily: 'Bebas Neue',
-            letterSpacing: 1.2,
-            fontWeight: FontWeight.w700,
-            color: colorScheme.primary,
+          l10n.statsCognitiveProfile,
+          style: theme.textTheme.displaySmall?.copyWith(
             fontSize: DesignSystem.fontSizeLG,
+            color: colorScheme.primary,
+            letterSpacing: 1.5,
           ),
         ),
         const SizedBox(height: DesignSystem.spaceMD),
         TangibleContainer(
-          color: colorScheme.surface,
-          shadowColor: colorScheme.outline.withValues(alpha: 0.5),
           padding: const EdgeInsets.all(DesignSystem.spaceMD),
           child: Column(
             children: categories.map((cat) {
-              final solved = solvedPerCategory[cat] ?? 0;
-              final total = totalPerCategory[cat] ?? 1;
+              final solved = solvedStatsMap[cat] ?? 0;
+              final total = totalStats[cat] ?? 1;
               final color = categoryColors[cat] ?? DesignSystem.primary;
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: DesignSystem.spaceMD),
-                child:
-                    _buildCategoryProgress(context, cat, solved, total, color),
+                child: _CategoryProgressItem(
+                  category: cat,
+                  solved: solved,
+                  total: total,
+                  color: color,
+                ),
               );
             }).toList(),
           ),
@@ -494,9 +474,23 @@ class StatsScreen extends ConsumerWidget {
       ],
     );
   }
+}
 
-  Widget _buildCategoryProgress(BuildContext context, String category,
-      int solved, int total, Color color) {
+class _CategoryProgressItem extends StatelessWidget {
+  final String category;
+  final int solved;
+  final int total;
+  final Color color;
+
+  const _CategoryProgressItem({
+    required this.category,
+    required this.solved,
+    required this.total,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final progress = (solved / total).clamp(0.0, 1.0);
@@ -509,22 +503,18 @@ class StatsScreen extends ConsumerWidget {
           children: [
             Text(
               category,
-              style: TextStyle(
-                fontFamily: 'Geist',
-                fontWeight: FontWeight.w700,
-                fontSize: DesignSystem.fontSizeXS,
-                letterSpacing: 0.5,
+              style: theme.textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.w900,
                 color: colorScheme.onSurface.withValues(alpha: 0.7),
+                letterSpacing: 0.5,
               ),
             ),
             Text(
               '$solved / $total',
-              style: TextStyle(
-                fontFamily: 'Bebas Neue',
-                fontWeight: FontWeight.w700,
+              style: theme.textTheme.displaySmall?.copyWith(
                 fontSize: DesignSystem.fontSizeSM,
-                letterSpacing: 0.5,
                 color: color,
+                letterSpacing: 1.0,
               ),
             ),
           ],
@@ -533,20 +523,20 @@ class StatsScreen extends ConsumerWidget {
         Stack(
           children: [
             Container(
-              height: 8,
+              height: 10,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(5),
               ),
             ),
             FractionallySizedBox(
               widthFactor: progress,
               child: Container(
-                height: 8,
+                height: 10,
                 decoration: BoxDecoration(
                   color: color,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(5),
                 ),
               ),
             ),
@@ -555,20 +545,27 @@ class StatsScreen extends ConsumerWidget {
       ],
     );
   }
+}
 
-  Widget _buildSmallStatCard(
-    BuildContext context,
-    String label,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
+class _SmallStatCard extends StatelessWidget {
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+
+  const _SmallStatCard({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     return TangibleContainer(
-      color: colorScheme.surface,
-      shadowColor: colorScheme.outline.withValues(alpha: 0.5),
       padding: const EdgeInsets.all(DesignSystem.spaceMD),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -576,16 +573,14 @@ class StatsScreen extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 16, color: color),
+              Icon(icon, size: 18, color: color),
               const SizedBox(width: 8),
               Text(
                 label,
-                style: TextStyle(
-                  fontFamily: 'Geist',
-                  fontWeight: FontWeight.w600,
-                  fontSize: DesignSystem.fontSizeXS,
-                  letterSpacing: 0.5,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  fontWeight: FontWeight.w900,
                   color: colorScheme.onSurface.withValues(alpha: 0.5),
+                  letterSpacing: 0.5,
                 ),
               ),
             ],
@@ -593,47 +588,55 @@ class StatsScreen extends ConsumerWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
-              fontFamily: 'Bebas Neue',
-              fontWeight: FontWeight.w700,
-              fontSize: 28,
-              letterSpacing: 0.5,
-              color: colorScheme.onSurface,
+            style: theme.textTheme.displayMedium?.copyWith(
+              fontSize: 32,
+              letterSpacing: 1.0,
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildAchievementCard(BuildContext context, Achievement achievement,
-      int totalSolved, int level, int xp) {
+class _AchievementCard extends ConsumerWidget {
+  final Achievement achievement;
+  final AppLocalizations l10n;
+
+  const _AchievementCard({required this.achievement, required this.l10n});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final xp = ref.watch(userDataNotifierProvider.select((d) => d.xp));
     final isUnlocked = xp >= achievement.requiredXp;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     return TangibleContainer(
-      color: isUnlocked ? colorScheme.surface : theme.scaffoldBackgroundColor,
-      shadowColor: colorScheme.outline.withValues(alpha: 0.5),
-      depth: isUnlocked ? 6.0 : 2.0,
       padding: const EdgeInsets.all(DesignSystem.spaceMD),
       child: Row(
         children: [
           Container(
-            width: 56,
-            height: 56,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: isUnlocked
                   ? DesignSystem.accentAmber.withValues(alpha: 0.2)
-                  : colorScheme.outline.withValues(alpha: 0.2),
+                  : colorScheme.onSurface.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(DesignSystem.radiusSM),
+              border: Border.all(
+                color: isUnlocked
+                    ? DesignSystem.accentAmber.withValues(alpha: 0.3)
+                    : Colors.transparent,
+                width: 1.5,
+              ),
             ),
             child: Icon(
               achievement.icon,
-              size: 28,
+              size: 32,
               color: isUnlocked
                   ? DesignSystem.accentAmber
-                  : colorScheme.onSurface.withValues(alpha: 0.2),
+                  : colorScheme.onSurface.withValues(alpha: 0.1),
             ),
           ),
           const SizedBox(width: DesignSystem.spaceMD),
@@ -643,26 +646,23 @@ class StatsScreen extends ConsumerWidget {
               children: [
                 Text(
                   achievement.title,
-                  style: TextStyle(
-                    fontFamily: 'Bebas Neue',
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.0,
+                  style: theme.textTheme.displaySmall?.copyWith(
                     fontSize: DesignSystem.fontSizeLG,
                     color: isUnlocked
                         ? colorScheme.onSurface
-                        : colorScheme.onSurface.withValues(alpha: 0.4),
+                        : colorScheme.onSurface.withValues(alpha: 0.3),
+                    letterSpacing: 1.5,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   achievement.description,
-                  style: TextStyle(
-                    fontFamily: 'Geist',
-                    fontWeight: FontWeight.w500,
-                    fontSize: DesignSystem.fontSizeSM,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
                     color: isUnlocked
                         ? colorScheme.onSurface.withValues(alpha: 0.6)
-                        : colorScheme.onSurface.withValues(alpha: 0.3),
+                        : colorScheme.onSurface.withValues(alpha: 0.2),
+                    letterSpacing: 0.5,
                   ),
                 ),
               ],
@@ -671,22 +671,23 @@ class StatsScreen extends ConsumerWidget {
           if (isUnlocked)
             const Icon(
               Icons.check_circle_rounded,
-              size: 28,
+              size: 32,
               color: DesignSystem.success,
             )
           else
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: colorScheme.outline.withValues(alpha: 0.2),
+                color: colorScheme.onSurface.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(DesignSystem.radiusXS),
               ),
               child: Text(
-                'LOCKED',
+                l10n.statsLocked,
                 style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 10,
-                  letterSpacing: 1.0,
+                  fontFamily: 'Geist',
+                  fontWeight: FontWeight.w900,
+                  fontSize: 9,
+                  letterSpacing: 1.5,
                   color: colorScheme.onSurface.withValues(alpha: 0.3),
                 ),
               ),

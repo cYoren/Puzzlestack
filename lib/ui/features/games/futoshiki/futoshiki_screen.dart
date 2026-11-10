@@ -1,3 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'futoshiki_provider.dart';
@@ -22,8 +25,8 @@ class FutoshikiScreen extends ConsumerWidget {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'PUZZLE SOLVED',
-            message: 'Incredible! You solved the Futoshiki Latin Square.',
+            title: L10nGameHelpers.getGameTitle(context, 'futoshiki'),
+            message: AppLocalizations.of(context)!.futoshikiMessage,
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -38,8 +41,8 @@ class FutoshikiScreen extends ConsumerWidget {
     });
 
     return GameScaffold(
-      title: 'Futoshiki',
-      subtitle: 'Fill 1-4 in each row and col. Respect all inequality (< and >) symbols.',
+      title: L10nGameHelpers.getGameTitle(context, 'futoshiki'),
+      subtitle: L10nGameHelpers.getGameTitle(context, 'futoshiki'),
       actions: [
         TangibleButton(
           color: Theme.of(context).colorScheme.surface,

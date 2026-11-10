@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/juice/game_scaffold.dart';
@@ -165,8 +167,8 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
             ref.read(simonSequenceNotifierProvider.notifier).reset();
             Navigator.of(context).pop();
           },
-          title: 'CONGRATS',
-          message: 'You memorized all 10 tiles!',
+          title: L10nGameHelpers.getGameTitle(context, 'simon_sequence'),
+          message: AppLocalizations.of(context)!.simonSequenceMessage,
         ),
       );
       return;
@@ -176,8 +178,8 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: 'WRONG SEQUENCE',
-        message: 'Try again to master the sequence.',
+        title: L10nGameHelpers.getGameTitle(context, 'simon_sequence'),
+        message: AppLocalizations.of(context)!.simonSequenceMessage1,
         onPlayAgain: () {
           Navigator.pop(context);
           ref.read(simonSequenceNotifierProvider.notifier).reset();

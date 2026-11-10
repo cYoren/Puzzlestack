@@ -1,3 +1,4 @@
+// ignore_for_file: library_private_types_in_public_api
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
@@ -23,4 +24,26 @@ class GameStreak with _$GameStreak {
 
   factory GameStreak.fromJson(Map<String, dynamic> json) =>
       _$GameStreakFromJson(json);
+}
+
+extension GameStreakValidation on GameStreak {
+  bool get isValid {
+    if (gameId.isEmpty) return false;
+    if (currentStreak < 0) return false;
+    return true;
+  }
+
+  GameStreak sanitized() {
+    return copyWith(
+      gameId: gameId.isEmpty ? 'unknown' : gameId,
+      currentStreak: currentStreak < 0 ? 0 : currentStreak,
+    );
+  }
+
+  int get daysSinceLastSolved {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final lastNormalized = DateTime(lastSolvedDate.year, lastSolvedDate.month, lastSolvedDate.day);
+    return today.difference(lastNormalized).inDays;
+  }
 }

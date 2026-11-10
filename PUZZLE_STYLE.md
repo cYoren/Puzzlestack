@@ -1,6 +1,6 @@
 # The Puzzlestack house style
 
-228 puzzles have to feel like one app. Today they share colours and fonts and nothing else.
+304 puzzles have to feel like one app. Today they share colours and fonts and nothing else.
 
 Measured on the current tree:
 
@@ -8,9 +8,13 @@ Measured on the current tree:
 | --- | --- |
 | Games that paint their board with `CustomPainter` | 19 |
 | Games built from widget grids | 142 |
-| Games with any drag interaction | **0** |
+| Games with any drag interaction | **0** (3 after Phase 1) |
 | Games calling haptics through `HapticFeedbackUtil` | 152 (good) |
 | Games with their own `AnimationController` | 7 |
+
+The counts were measured on the 161-game tree. Phase 2 merged 143 more games, so the same
+proportions now apply to 304; the three Phase 1 puzzles are the only ones on the contract so
+far, which is exactly why the ports and rebuilds come next.
 
 So: two rendering philosophies, no drag anywhere, and almost no motion. Colour and haptics are
 already shared; **feel is not**. Porting 67 more puzzles before fixing that would bake the

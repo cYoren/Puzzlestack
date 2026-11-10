@@ -6,7 +6,7 @@ part of 'hitori_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$hitoriNotifierHash() => r'c3fecb51854f089fc39fdaae814cfe40d865f696';
+String _$hitoriNotifierHash() => r'a9f6b22f6080ec8b375bb34ecbe834ae9d6ee5c2';
 
 /// See also [HitoriNotifier].
 @ProviderFor(HitoriNotifier)

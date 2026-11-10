@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/juice/game_scaffold.dart';
@@ -31,7 +33,7 @@ class SchulteTableScreen extends ConsumerWidget {
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
             title: l10n.schulteTableTitle.toUpperCase(),
-            message: 'You completed the table in ${_formatDuration(next.elapsedTime)}.\nKeep practicing to expand your peripheral vision!',
+            message: AppLocalizations.of(context)!.schulteTableMessage((_formatDuration(next.elapsedTime)).toString()),
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -46,7 +48,7 @@ class SchulteTableScreen extends ConsumerWidget {
     });
 
     return GameScaffold(
-      title: 'SCHULTE TABLE',
+      title: L10nGameHelpers.getGameTitle(context, 'schulte_table'),
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -111,7 +113,7 @@ class SchulteTableScreen extends ConsumerWidget {
             style: TextStyle(
               fontSize: isSmall ? 10 : 12,
               fontWeight: FontWeight.w900,
-              color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.5),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
               letterSpacing: 1.2,
             ),
           ),
@@ -192,7 +194,7 @@ class SchulteTableScreen extends ConsumerWidget {
           HapticFeedbackUtil.selectionClick();
           notifier.startGame();
         },
-        child: const Text('START TEST'),
+        child: Text(AppLocalizations.of(context)!.schulteTableText),
       );
     }
 
