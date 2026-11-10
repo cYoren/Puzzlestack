@@ -1,8 +1,8 @@
-# Mindstack store screenshots
+# Puzzlestack store screenshots
 
-> **This app ships as “Mindstack”.** The directory is named `Puzzlebox` for historical reasons
+> **This app ships as “Puzzlestack”.** The directory is named `Puzzlebox` for historical reasons
 > only — the GitHub repo, the `android:label`, the iOS `CFBundleDisplayName` and the store
-> listings all say Mindstack. Never use “Puzzlebox” in a store context.
+> listings all say Puzzlestack. Never use “Puzzlebox” in a store context.
 
 ## What is canonical
 

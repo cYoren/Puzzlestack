@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Compose Mindstack store screenshots in the shared portfolio house style.
+Compose Puzzlestack store screenshots in the shared portfolio house style.
 
 THIS IS THE ONLY SUPPORTED SCREENSHOT PIPELINE FOR THIS APP. It produces the same look as
-the Cirdoku and medhub listings, so Mindstack stays visually consistent with the portfolio:
+the Cirdoku and medhub listings, so Puzzlestack stays visually consistent with the portfolio:
 
     raw capture -> resize to 1290x2796 -> paste into the house device frame
     -> compose.py (gradient background, starfield, device glow, headline + subheadline)
@@ -39,7 +39,7 @@ COMPOSE = Path.home() / ".claude/skills/appstore-screenshots/scripts/compose.py"
 SCREEN_W, SCREEN_H = 1290, 2796
 SCREEN_X, SCREEN_Y = 67, 55
 
-# Mindstack brand palette, sampled from assets/icon/mindstack_icon.png.
+# Puzzlestack brand palette, sampled from assets/icon/puzzlestack_icon.png.
 BG_COLOR = "#0A0A0A"
 BG_GRADIENT = "#312E81"
 DEVICE_GLOW = "#D97706"

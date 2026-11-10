@@ -1,12 +1,12 @@
-# Releasing Mindstack
+# Releasing Puzzlestack
 
 ## Identity
 
 | Field | Value |
 | --- | --- |
-| Android `applicationId` | `com.medhub.mindstack` |
-| iOS / macOS bundle id | `com.medhub.mindstack` |
-| Display name | Mindstack |
+| Android `applicationId` | `com.medhub.puzzlestack` |
+| iOS / macOS bundle id | `com.medhub.puzzlestack` |
+| Display name | Puzzlestack |
 | Current version | see `version:` in `pubspec.yaml` (`name+buildNumber`) |
 
 The internal Dart package is still `puzzle`. That is deliberate — it is
@@ -39,9 +39,9 @@ Confirmed building from a clean tree on macOS (August 2026):
 | Platform | Command | Result |
 | --- | --- | --- |
 | Android (AAB) | `flutter build appbundle --release` | 49.1 MB bundle; ~20 MB per-device after Play splits it |
-| Android (APK) | `flutter build apk --debug` | package id `com.medhub.mindstack` |
-| iOS | `flutter build ios --simulator --debug` | builds as `com.medhub.mindstack` |
-| macOS | `flutter build macos --release` | `Mindstack.app` |
+| Android (APK) | `flutter build apk --debug` | package id `com.medhub.puzzlestack` |
+| iOS | `flutter build ios --simulator --debug` | builds as `com.medhub.puzzlestack` |
+| macOS | `flutter build macos --release` | `Puzzlestack.app` |
 | Web | `flutter build web --release` | title, manifest and favicon all branded |
 
 Windows and Linux have platform directories and workflows but were not built
@@ -80,6 +80,12 @@ Turning Shorebird on means building via the Shorebird CLI instead of
 `flutter build`. That adds a launch-time patch check to Shorebird's servers,
 which **must** be disclosed in `PRIVACY.md` and the Data Safety form before
 such a build is released.
+
+**The `app_id` in `shorebird.yaml` belongs to the pre-rename bundle id.**
+Shorebird registers an app per bundle id, so before the first Shorebird build
+run `shorebird init` (or `shorebird apps create`) for `com.medhub.puzzlestack`
+and commit the new `app_id`. Nothing breaks today because no shipped build
+contains the updater.
 
 ## Store listing
 

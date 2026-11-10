@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>com.medhub.mindstack</id>
+  <id>com.medhub.puzzlestack</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
-  <name>Mindstack</name>
+  <name>Puzzlestack</name>
   <summary>161 minimalist brain puzzles, one swipe away</summary>
   <description>
-    <p>Mindstack is a vertical-feed suite of 161 minimalist brain puzzles spanning logic, math, memory, spatial, attention and word games.</p>
+    <p>Puzzlestack is a vertical-feed suite of 161 minimalist brain puzzles spanning logic, math, memory, spatial, attention and word games.</p>
   </description>
-  <launchable type="desktop-id">com.medhub.mindstack.desktop</launchable>
+  <launchable type="desktop-id">com.medhub.puzzlestack.desktop</launchable>
   <content_rating type="oars-1.1" />
 </component>

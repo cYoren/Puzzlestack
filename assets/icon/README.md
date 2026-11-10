@@ -1,6 +1,6 @@
 # App icon
 
-`mindstack_icon.png` is the Mindstack mark: three cascading rounded cards
+`puzzlestack_icon.png` is the Puzzlestack mark: three cascading rounded cards
 (indigo → indigo → amber) on the brand's near-black background, referencing
 both the "stack" in the name and the app's Shuffle feed.
 

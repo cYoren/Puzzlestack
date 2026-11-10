@@ -1,8 +1,8 @@
-# Mindstack
+# Puzzlestack
 
 A cross-platform suite of **161 minimalist brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
 
-Two ideas sit at the heart of Mindstack:
+Two ideas sit at the heart of Puzzlestack:
 
 1. **Shuffle feed (the "I'm bored" mode).** A full-screen, vertical, TikTok-style feed. Swipe up and you drop straight into a fresh random puzzle. No menus, no friction, just one more.
 2. **Discovery home instead of a long list.** 161 games is a lot. The home is a calm discovery surface: a Shuffle hero, a Daily Pick, a Quick Play (under 2 min) row, "jump back in" recents, and the full catalog tucked into six category rooms.
@@ -38,7 +38,7 @@ dart run build_runner build --delete-conflicting-outputs   # generates *.g.dart 
 flutter run                                                 # or: flutter run -d chrome
 ```
 
-The internal Dart package name stays `puzzle` (it is referenced by ~126 files and is invisible to users); the user-facing branding is Mindstack.
+The internal Dart package name stays `puzzle` (it is referenced by ~126 files and is invisible to users); the user-facing branding is Puzzlestack.
 
 ## Releasing
 
@@ -50,6 +50,6 @@ policy; [SCREENSHOTS.md](SCREENSHOTS.md) covers regenerating store screenshots.
 
 GPL-3.0. See [LICENSE](LICENSE).
 
-Mindstack is a modified derivative of [Puzzle](https://github.com/sidhant947/Puzzle)
+Puzzlestack is a modified derivative of [Puzzle](https://github.com/sidhant947/Puzzle)
 by Sidhant Khatkar, also GPL-3.0. See [NOTICE](NOTICE) for the attribution and
 the list of modifications.

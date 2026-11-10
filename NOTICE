@@ -1,5 +1,5 @@
-Mindstack
-Copyright (C) 2026 Gustavo Marcelino and the Mindstack authors
+Puzzlestack
+Copyright (C) 2026 Gustavo Marcelino and the Puzzlestack authors
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -14,19 +14,22 @@ PARTICULAR PURPOSE. See the GNU General Public License for more details.
 Attribution and modification notice
 -----------------------------------
 
-Mindstack is a modified derivative of "Puzzle" by Sidhant Khatkar
+Puzzlestack is a modified derivative of "Puzzle" by Sidhant Khatkar
 <https://github.com/sidhant947/Puzzle>, distributed under GPL-3.0.
 
-This is a modified version. Changes made by the Mindstack authors include, but
+This is a modified version. Changes made by the Puzzlestack authors include, but
 are not limited to:
 
   2026-06  Added a full-screen vertical "Shuffle" feed and a discovery-oriented
            home screen (Daily Pick, Quick Play, recents, category rooms) in
            place of the original flat game list.
 
-  2026-08  Rebranded to Mindstack: new application name and identifiers
-           (com.medhub.mindstack), new icon and color system, and rewritten
-           user-facing copy and store listing.
+  2026-08  Rebranded the fork to Mindstack: new application name and
+           identifiers (com.medhub.mindstack), new icon and color system, and
+           rewritten user-facing copy and store listing.
+
+  2026-11  Renamed to Puzzlestack: application name and identifiers changed
+           again (com.medhub.puzzlestack), before any public release.
 
 The original work remains the copyright of its respective authors. This notice
 is provided in accordance with sections 4 and 5 of the GNU General Public
