@@ -15,7 +15,7 @@ Three sources feed it. They are ranked by what they buy us, not by how easy they
 | **Puzzlestack** (this repo) | our fork, 161 games | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, 121 commits ahead of our fork point | 205 games | 44 games we are missing |
 | **invariant** (`Downloads/memes/invariant-main.zip`) | a Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | generators, validators, solvers |
-| **Simon Tatham's collection** | the reference implementation | 40 games, MIT, C | the correctness bar |
+| **Simon Tatham's collection** | the reference implementation, **bundled inside the same zip** at `Puzzle inspirations/puzzles-master/` | 65 `.c` files, all 40 puzzles + the shared solver core | the correctness bar |
 
 ### The invariant archive is Godot, not Flutter
 
@@ -32,8 +32,27 @@ clean per-puzzle split that maps almost 1:1 onto our Dart layout:
 <puzzle>_settings.gd    ->  settings sheet
 ```
 
-GDScript is close enough to Dart that this is translation, not archaeology. The value is
-the algorithms: generators that guarantee a unique solution and solvers that prove it.
+GDScript is close enough to Dart that this is translation, not archaeology.
+
+**What the zip actually contains** (audited file by file):
+
+| Path | What it is | Size |
+| --- | --- | --- |
+| `INVARIANT/` | Godot 4 port, 35 puzzles | 32,107 LOC GDScript |
+| `invariant_flutter/` | Flutter scaffold, **one** puzzle ported (`galaxies`) | 8 `.dart` files, 1,087 LOC |
+| `Puzzle inspirations/puzzles-master/` | Tatham's **complete C source**, all 40 puzzles | 65 `.c`, 214 files |
+| `Full context/` | porting methodology (`TASKS.md`), failure modes, per-puzzle requirements | ~18 KB |
+
+The Flutter folder is a proof of concept, not a port: `main.dart`, one `galaxies`
+puzzle split into `domain/` `logic/` `ui/`, and a theme. It is still worth reading, because
+its Dart structure is the one we want. The C source is the more valuable half: it is the
+reference every ported generator can be tested against, and it ships in the same archive.
+
+**Caveat on the Godot port:** only 3 of its 35 generators mention uniqueness at all
+(`singles`, `unruly`, `untangle`), and its test suite covers the framework (undo/redo, seeded
+RNG), not per-puzzle equivalence against the C. So it gives us structure and algorithms, not
+a proven correctness bar. That bar comes from `puzzles-master/`, which is why Phase 2 ports
+from the C and uses the Godot code as the map.
 
 ### Coverage math
 
