@@ -6,7 +6,7 @@ part of 'nurikabe_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$nurikabeNotifierHash() => r'e2a7edb76c0e2051c80ed475907be04aae57960a';
+String _$nurikabeNotifierHash() => r'fb3d39b63b0b0b01870144c97febf4cb19d96a56';
 
 /// See also [NurikabeNotifier].
 @ProviderFor(NurikabeNotifier)

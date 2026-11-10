@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -26,14 +28,15 @@ class _MagicSquaresScreenState extends ConsumerState<MagicSquaresScreen> {
   }
 
   void _showCompletionDialog(bool isVictory) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: isVictory ? 'PERFECT!' : 'GAME OVER',
+        title: isVictory ? l10n.winPerfect : l10n.gameOver,
         message: isVictory 
-            ? 'The square is balanced!' 
-            : 'Something is not adding up.',
+            ? l10n.snackbarAlignedPerfectly 
+            : l10n.snackbarIncorrectSum,
         isVictory: isVictory,
         onHome: () {
           Navigator.of(context).pop();
@@ -74,7 +77,7 @@ class _MagicSquaresScreenState extends ConsumerState<MagicSquaresScreen> {
     }
 
     return GameScaffold(
-      title: 'Magic Square',
+      title: L10nGameHelpers.getGameTitle(context, 'magic_squares'),
       subtitle: l10n.magicSquaresSubtitle(state.targetSum),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -187,8 +190,8 @@ class _MagicSquaresScreenState extends ConsumerState<MagicSquaresScreen> {
             onTap: notifier.onClear,
             color: DesignSystem.error,
             shadowColor: const Color(0xFFB91C1C),
-            child: const Center(
-              child: Text('CLEAR', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900)),
+            child: Center(
+              child: Text(AppLocalizations.of(context)!.magicSquaresText, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900)),
             ),
           ),
         ],

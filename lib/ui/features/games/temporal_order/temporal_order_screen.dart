@@ -1,3 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -60,8 +63,8 @@ class TemporalOrderScreen extends ConsumerWidget {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'TEMPORAL ORDER COMPLETE',
-            message: 'Incredible! Your temporal sequence memory is high-fidelity.',
+            title: L10nGameHelpers.getGameTitle(context, 'temporal_order'),
+            message: AppLocalizations.of(context)!.temporalOrderMessage,
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -79,8 +82,8 @@ class TemporalOrderScreen extends ConsumerWidget {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'GAME OVER',
-            message: 'Incorrect sequence memory. Practice makes perfect!',
+            title: L10nGameHelpers.getGameTitle(context, 'temporal_order'),
+            message: AppLocalizations.of(context)!.temporalOrderMessage1,
             isVictory: false,
             onHome: () {
               Navigator.of(context).pop();
@@ -99,8 +102,8 @@ class TemporalOrderScreen extends ConsumerWidget {
     });
 
     return GameScaffold(
-      title: 'TEMPORAL ORDER',
-      subtitle: 'Track the sequential timeline of icons',
+      title: L10nGameHelpers.getGameTitle(context, 'temporal_order'),
+      subtitle: L10nGameHelpers.getGameTitle(context, 'temporal_order'),
       actions: [
         TangibleButton(
           color: colorScheme.surface,
@@ -330,11 +333,11 @@ Widget _buildInstruction(TemporalOrderState state, BuildContext context) {
       break;
     case TemporalOrderStatus.success:
     case TemporalOrderStatus.completed:
-      text = 'CORRECT ORDER!';
+      text = AppLocalizations.of(context)!.phaseCorrectOrder;
       color = DesignSystem.accentEmerald;
       break;
     case TemporalOrderStatus.failure:
-      text = 'WRONG TIMELINE!';
+      text = AppLocalizations.of(context)!.phaseWrongTimeline;
       color = DesignSystem.error;
       break;
   }

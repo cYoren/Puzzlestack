@@ -1,3 +1,4 @@
+
 class MemoryPalaceEngine {
   static const List<String> wordPool = [
     'Apple', 'Banana', 'Cat', 'Dog', 'Elephant', 'Frog', 'Guitar', 'Hat', 'Ice', 'Jacket',

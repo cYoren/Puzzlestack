@@ -1,7 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../data/game_catalog.dart';
+import '../../../data/game_categories.dart';
+import '../../../data/game_metadata.dart';
 import '../../../utils/design_system.dart';
 
 /// The "I'm bored" mode: a full-screen, vertical, TikTok-style feed of puzzles.
@@ -31,7 +32,7 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
   final Random _random = Random();
 
   /// Lazily grown list of games in feed order. Index N is built on demand.
-  final List<GameInfo> _order = [];
+  final List<GameMetadata> _order = [];
 
   bool _swipeEnabled = true;
   bool _showHint = true;
@@ -40,8 +41,8 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
   @override
   void initState() {
     super.initState();
-    final GameInfo first = (widget.startGameId != null
-            ? GameCatalog.find(widget.startGameId!)
+    final GameMetadata first = (widget.startGameId != null
+            ? GameFeed.find(widget.startGameId!)
             : null) ??
         _pick(exceptId: null);
     _order.add(first);
@@ -49,19 +50,19 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
 
   /// Picks the next random game, honouring an optional category filter and
   /// avoiding an immediate repeat where possible.
-  GameInfo _pick({required String? exceptId}) {
+  GameMetadata _pick({required String? exceptId}) {
     final String? cat = widget.categoryId;
     if (cat == null) {
-      return GameCatalog.randomGame(exceptId: exceptId, random: _random);
+      return GameFeed.randomGame(exceptId: exceptId, random: _random);
     }
-    final pool = GameCatalog.inCategory(cat);
+    final pool = GameCategories.inCategory(cat);
     if (pool.isEmpty) {
-      return GameCatalog.randomGame(exceptId: exceptId, random: _random);
+      return GameFeed.randomGame(exceptId: exceptId, random: _random);
     }
     if (pool.length == 1 || exceptId == null) {
       return pool[_random.nextInt(pool.length)];
     }
-    GameInfo g;
+    GameMetadata g;
     do {
       g = pool[_random.nextInt(pool.length)];
     } while (g.id == exceptId);
@@ -76,7 +77,7 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
 
   /// Guarantees [_order] has an entry at [index], appending a non-repeating
   /// random game when needed.
-  GameInfo _gameAt(int index) {
+  GameMetadata _gameAt(int index) {
     while (_order.length <= index) {
       final String? prevId = _order.isNotEmpty ? _order.last.id : null;
       _order.add(_pick(exceptId: prevId));
@@ -123,7 +124,7 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
               // Unique key per page so each game gets a distinct element.
               return KeyedSubtree(
                 key: ValueKey('shuffle_${index}_${game.id}'),
-                child: game.buildScreen(context),
+                child: game.builder(context),
               );
             },
           ),
@@ -142,7 +143,7 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
 }
 
 class _TopBar extends StatelessWidget {
-  final GameInfo game;
+  final GameMetadata game;
   final bool swipeEnabled;
   final VoidCallback onClose;
   final VoidCallback onToggleLock;
@@ -156,7 +157,7 @@ class _TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cat = GameCatalog.categoryInfo(game.category);
+    final cat = GameCategories.info(game.category);
     return SafeArea(
       child: IgnorePointer(
         ignoring: false,
@@ -174,7 +175,7 @@ class _TopBar extends StatelessWidget {
                 onTap: onClose,
               ),
               const Spacer(),
-              _pill(cat: cat, title: game.title),
+              _pill(cat: cat, title: game.titleGetter(context)),
               const Spacer(),
               _circleButton(
                 icon: swipeEnabled

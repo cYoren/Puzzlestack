@@ -1,7 +1,9 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../core/juice/game_scaffold.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
@@ -24,7 +26,7 @@ class MentalCalendarScreen extends ConsumerWidget {
       onHowToPlay: () => _showHowToPlay(context, l10n),
       body: state.phase == MentalCalendarPhase.result
           ? _buildResult(context, ref, state)
-          : _buildGame(ref, state),
+          : _buildGame(context, ref, state),
     );
   }
 
@@ -44,7 +46,7 @@ class MentalCalendarScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildGame(WidgetRef ref, MentalCalendarState state) {
+  Widget _buildGame(BuildContext context, WidgetRef ref, MentalCalendarState state) {
     final dateStr = DateFormat('MMMM d, yyyy').format(state.currentDate);
     
     final days = List.generate(7, (index) {
@@ -128,7 +130,7 @@ class MentalCalendarScreen extends ConsumerWidget {
               borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
             ),
             child: Text(
-              state.lastResult! ? 'CORRECT!' : 'WRONG',
+              state.lastResult! ? AppLocalizations.of(context)!.phaseCorrectOrder : AppLocalizations.of(context)!.phaseWrongTimeline,
               style: DesignSystem.theme.textTheme.headlineMedium?.copyWith(
                 color: state.lastResult! ? DesignSystem.success : DesignSystem.error,
               ),
@@ -140,6 +142,7 @@ class MentalCalendarScreen extends ConsumerWidget {
 
   Widget _buildResult(BuildContext context, WidgetRef ref, MentalCalendarState state) {
     Future.microtask(() {
+      if (!context.mounted) return;
       final score = state.correctCount;
       if (score >= 7) {
         ref.read(gameStreakNotifierProvider.notifier).completeGame('mental_calendar');
@@ -159,8 +162,8 @@ class MentalCalendarScreen extends ConsumerWidget {
             Navigator.of(context).pop();
             ref.read(mentalCalendarNotifierProvider.notifier).resetGame();
           },
-          title: 'RESULT',
-          message: 'You got $score correct out of 10!',
+          title: L10nGameHelpers.getGameTitle(context, 'mental_calendar'),
+          message: AppLocalizations.of(context)!.mentalCalendarMessage((score).toString()),
         ),
       );
     });

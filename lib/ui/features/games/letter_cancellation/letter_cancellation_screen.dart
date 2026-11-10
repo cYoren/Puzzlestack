@@ -5,7 +5,7 @@ import '../../../../utils/haptic_feedback.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../providers/user_providers.dart';
 import '../../../core/juice/game_scaffold.dart';
-import '../../../../l10n/app_localizations.dart';
+import 'package:puzzle/l10n/app_localizations.dart';
 import 'letter_cancellation_provider.dart';
 
 class LetterCancellationScreen extends ConsumerStatefulWidget {
@@ -82,6 +82,18 @@ class _LetterCancellationScreenState extends ConsumerState<LetterCancellationScr
                 _buildStat(l10n.letterCancellationFound, '${state.foundIndices.length}/${state.targetCount}'),
                 _buildStat(l10n.letterCancellationTime, '${state.timeLeft}s', color: state.timeLeft < 10 ? DesignSystem.error : null),
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceMD),
+            child: Text(
+              l10n.letterCancellationSubtitle(state.target),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
+                fontWeight: FontWeight.w500,
+                fontSize: DesignSystem.fontSizeSM,
+              ),
             ),
           ),
           const SizedBox(height: DesignSystem.spaceMD),

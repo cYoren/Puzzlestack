@@ -6,7 +6,7 @@ part of 'fillomino_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fillominoNotifierHash() => r'15e9632e2312107f26c5ed288ebff015b9ab5d6e';
+String _$fillominoNotifierHash() => r'1304afeb2d2dee18f3584f48048c5b0b5ad40303';
 
 /// See also [FillominoNotifier].
 @ProviderFor(FillominoNotifier)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../data/game_catalog.dart';
+import '../../../data/game_categories.dart';
+import '../../../data/game_metadata.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/navigation_utils.dart';
 import '../../../widgets/tangible.dart';
@@ -7,16 +8,16 @@ import '../shuffle/shuffle_feed_screen.dart';
 import 'category_room_screen.dart';
 import 'game_search_delegate.dart';
 
-/// The Puzzlestack home: a calm discovery surface instead of a flat list of 161
-/// games. Funnels people into the Shuffle feed, surfaces a Daily Pick and a
+/// The Puzzlestack home: a calm discovery surface instead of a flat list of
+/// three hundred games. Funnels people into the Shuffle feed, surfaces a Daily Pick and a
 /// Quick Play row, and tucks the full catalog into six category rooms.
 class DiscoveryHomeScreen extends StatelessWidget {
   const DiscoveryHomeScreen({super.key});
 
-  void _openGame(BuildContext context, GameInfo game) {
+  void _openGame(BuildContext context, GameMetadata game) {
     Navigator.push(
       context,
-      CustomPageRoute(page: game.buildScreen(context)),
+      CustomPageRoute(page: game.builder(context)),
     );
   }
 
@@ -40,8 +41,8 @@ class DiscoveryHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final daily = GameCatalog.dailyPick();
-    final quick = GameCatalog.quickPlay;
+    final daily = GameFeed.dailyPick();
+    final quick = GameFeed.quickPlay;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -235,8 +236,8 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _dailyCard(BuildContext context, GameInfo game) {
-    final cat = GameCatalog.categoryInfo(game.category);
+  Widget _dailyCard(BuildContext context, GameMetadata game) {
+    final cat = GameCategories.info(game.category);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
       child: TangibleContainer(
@@ -260,7 +261,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    game.title,
+                    game.titleGetter(context),
                     style: TextStyle(
                       fontSize: DesignSystem.fontSizeLG,
                       fontWeight: FontWeight.w700,
@@ -292,7 +293,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _quickRow(BuildContext context, List<GameInfo> games) {
+  Widget _quickRow(BuildContext context, List<GameMetadata> games) {
     return SizedBox(
       height: 116,
       child: ListView.separated(
@@ -311,7 +312,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _quickTile(BuildContext context, GameInfo game) {
+  Widget _quickTile(BuildContext context, GameMetadata game) {
     return GestureDetector(
       onTap: () => _openGame(context, game),
       child: Container(
@@ -328,7 +329,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
           children: [
             Icon(game.icon, color: game.color, size: 26),
             Text(
-              game.title,
+              game.titleGetter(context),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -344,7 +345,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
   }
 
   Widget _categoryGrid(BuildContext context) {
-    final cats = GameCatalog.categories;
+    final cats = GameCategories.all;
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
       sliver: SliverGrid(
@@ -363,7 +364,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
   }
 
   Widget _categoryTile(BuildContext context, CategoryInfo cat) {
-    final count = GameCatalog.countInCategory(cat.id);
+    final count = GameCategories.countIn(cat.id);
     return GestureDetector(
       onTap: () => Navigator.push(
         context,

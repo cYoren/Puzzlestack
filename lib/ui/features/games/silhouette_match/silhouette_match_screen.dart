@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -25,15 +27,17 @@ class _SilhouetteMatchScreenState extends ConsumerState<SilhouetteMatchScreen> {
     });
   }
 
-  void _showCompletionDialog() {
+  void _showCompletionDialog(bool isVictory) {
     final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.silhouetteMatchTitle.toUpperCase(),
-        message: 'Your brain is excellent at 3D to 2D translation.',
-        isVictory: true,
+        message: isVictory
+            ? l10n.silhouetteMatchMessage
+            : l10n.loseTryAgainSolution,
+        isVictory: isVictory,
         onHome: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
@@ -54,22 +58,31 @@ class _SilhouetteMatchScreenState extends ConsumerState<SilhouetteMatchScreen> {
     final notifier = ref.read(silhouetteMatchNotifierProvider.notifier);
 
     ref.listen(silhouetteMatchNotifierProvider, (previous, next) {
-      if (next.isVictory && !(previous?.isVictory ?? false)) {
-        HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('silhouette_match');
-        _showCompletionDialog();
+      if ((next.isVictory && !(previous?.isVictory ?? false)) ||
+          (next.isFailed && !(previous?.isFailed ?? false))) {
+        if (next.isVictory) {
+          HapticFeedbackUtil.victory();
+          ref.read(gameStreakNotifierProvider.notifier).completeGame('silhouette_match');
+        } else {
+          HapticFeedbackUtil.error();
+        }
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            _showCompletionDialog(next.isVictory);
+          }
+        });
       }
     });
 
     if (state.isLoading) {
       return GameScaffold(
-        title: 'Silhouette Match',
+        title: L10nGameHelpers.getGameTitle(context, 'silhouette_match'),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return GameScaffold(
-      title: 'Silhouette Match',
+      title: L10nGameHelpers.getGameTitle(context, 'silhouette_match'),
       subtitle: l10n.silhouetteMatchSubtitle,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(DesignSystem.spaceLG),

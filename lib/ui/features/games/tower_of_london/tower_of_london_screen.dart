@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -25,14 +27,15 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
   }
 
   void _showCompletionDialog(bool isVictory, bool isOutOfMoves) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: isVictory ? 'PLANNING MASTER!' : 'OUT OF MOVES',
+        title: isVictory ? l10n.winPlanningMaster : l10n.loseOutOfMoves,
         message: isVictory 
-            ? 'You solved it in ${ref.read(towerOfLondonNotifierProvider).moves} moves!' 
-            : 'You exceeded the move limit. Try more efficient planning.',
+            ? l10n.snackbarCorrect 
+            : l10n.loseOutOfMoves,
         isVictory: isVictory,
         onHome: () {
           Navigator.of(context).pop();
@@ -75,18 +78,18 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
     }
 
     return GameScaffold(
-      title: 'Tower of London',
+      title: L10nGameHelpers.getGameTitle(context, 'tower_of_london'),
       subtitle: l10n.towerOfLondonSubtitle,
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
             child: Center(
-              child: _buildStat('MOVES', '${state.moves}/${state.maxMoves}', color: state.moves >= state.maxMoves - 2 ? DesignSystem.error : null),
+              child: _buildStat(l10n.statMoves, '${state.moves}/${state.maxMoves}', color: state.moves >= state.maxMoves - 2 ? DesignSystem.error : null),
             ),
           ),
           Text(
-            'TARGET',
+            l10n.statGrid,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w900,

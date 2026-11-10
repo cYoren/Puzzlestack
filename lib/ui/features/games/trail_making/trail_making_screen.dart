@@ -8,6 +8,7 @@ import '../../../../providers/user_providers.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../../utils/haptic_feedback.dart';
 import 'trail_making_provider.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
 
 class TrailMakingScreen extends ConsumerStatefulWidget {
   const TrailMakingScreen({super.key});
@@ -34,24 +35,26 @@ class _TrailMakingScreenState extends ConsumerState<TrailMakingScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
-        title: won ? 'TRACKER PRO!' : 'LOST TRAIL',
-        message: 'You completed $score trails! This test measures your visual search speed and mental flexibility.',
-        onPlayAgain: () {
-          ref.read(trailMakingNotifierProvider.notifier).initGame();
-          Navigator.pop(context);
-        },
-        onHome: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return GameCompletionDialog(
+          title: won ? l10n.trailMakingTitle.toUpperCase() : l10n.gameOver,
+          message: AppLocalizations.of(context)!.trailMakingMessage((score).toString()),
+          onPlayAgain: () {
+            ref.read(trailMakingNotifierProvider.notifier).initGame();
+            Navigator.pop(context);
+          },
+          onHome: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
     final state = ref.watch(trailMakingNotifierProvider);
     final notifier = ref.read(trailMakingNotifierProvider.notifier);
@@ -63,8 +66,8 @@ class _TrailMakingScreenState extends ConsumerState<TrailMakingScreen> {
     });
 
     return GameScaffold(
-      title: l10n.trailMakingTitle.toUpperCase(),
-      subtitle: l10n.trailMakingSubtitle,
+      title: L10nGameHelpers.getGameTitle(context, 'trail_making'),
+      subtitle: L10nGameHelpers.getGameSubtitle(context, 'trail_making'),
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(
@@ -132,13 +135,14 @@ class _TrailMakingScreenState extends ConsumerState<TrailMakingScreen> {
   }
 
   Widget _buildStats(TrailMakingState state, bool isSmall) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: isSmall ? 16 : 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildStat('TIME', '${state.timeLeft}s', state.timeLeft < 10 ? DesignSystem.error : DesignSystem.primary, isSmall),
-          _buildStat('TRAILS', '${state.score}', DesignSystem.success, isSmall),
+          _buildStat(l10n.statTime, '${state.timeLeft}s', state.timeLeft < 10 ? DesignSystem.error : DesignSystem.primary, isSmall),
+          _buildStat(l10n.statTrails, '${state.score}', DesignSystem.success, isSmall),
         ],
       ),
     );
