@@ -6,7 +6,7 @@ part of 'sudoku_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sudokuNotifierHash() => r'f59fac70c6c6e0cddb8d837dbe5587f48e61f0a2';
+String _$sudokuNotifierHash() => r'a28f4d1729ade3750db4f3ba77bd0302ea730e5a';
 
 /// See also [SudokuNotifier].
 @ProviderFor(SudokuNotifier)
