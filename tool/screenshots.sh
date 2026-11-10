@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Capture + compose Mindstack store screenshots locally.
+# Capture + compose Puzzlestack store screenshots locally.
 #
 # Usage:
 #   tool/screenshots.sh <device_id>     # a simulator UDID, or emulator-5554

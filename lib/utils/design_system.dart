@@ -26,7 +26,7 @@ class DesignSystem {
   static const double radiusXL = 32.0;
   static const double radiusFull = 999.0;
 
-  // --- Mindstack Brand Colors ---
+  // --- Puzzlestack Brand Colors ---
   // Deep indigo + amber, matching the app icon's cascading-card mark.
   static const Color primary = Color(0xFF4338CA); // Indigo 700
   static const Color primaryShadow = Color(0xFF3730A3); // Indigo 800

@@ -16,14 +16,14 @@ void main() {
       entries.add(entry);
     }
 
-    final ours = entries.where((e) => e.packages.contains('Mindstack'));
-    expect(ours, isNotEmpty, reason: 'Mindstack license entry not registered');
+    final ours = entries.where((e) => e.packages.contains('Puzzlestack'));
+    expect(ours, isNotEmpty, reason: 'Puzzlestack license entry not registered');
 
     final text = ours.first.paragraphs.map((p) => p.text).join(' ');
     expect(text, contains('GNU General Public License'));
     expect(text, contains('sidhant947/Puzzle'),
         reason: 'upstream attribution required by GPL-3.0 sections 4 and 5');
-    expect(text, contains('github.com/cYoren/Mindstack'),
+    expect(text, contains('github.com/cYoren/Puzzlestack'),
         reason: 'GPL-3.0 requires pointing users at the corresponding source');
   });
 }

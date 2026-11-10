@@ -1,5 +1,5 @@
 name: puzzle
-description: "Mindstack: a vertical-feed suite of 161 minimalist brain puzzles."
+description: "Puzzlestack: a vertical-feed suite of 161 minimalist brain puzzles."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -108,21 +108,21 @@ flutter:
           weight: 700
 
 msix_config:
-  display_name: Mindstack
-  publisher_display_name: Mindstack
-  identity_name: com.medhub.mindstack
+  display_name: Puzzlestack
+  publisher_display_name: Puzzlestack
+  identity_name: com.medhub.puzzlestack
   logo_path: windows\runner\resources\app_icon.ico
   executable_name: bin\puzzle.exe
   install_certificate: false
 
-# App icon generation (Mindstack logo).
-# 1. Save the 1024x1024 logo to assets/icon/mindstack_icon.png
+# App icon generation (Puzzlestack logo).
+# 1. Save the 1024x1024 logo to assets/icon/puzzlestack_icon.png
 # 2. Run: dart run flutter_launcher_icons
 flutter_launcher_icons:
-  image_path: "assets/icon/mindstack_icon.png"
+  image_path: "assets/icon/puzzlestack_icon.png"
   android: true
   adaptive_icon_background: "#0A0A0A"
-  adaptive_icon_foreground: "assets/icon/mindstack_icon.png"
+  adaptive_icon_foreground: "assets/icon/puzzlestack_icon.png"
   ios: true
   remove_alpha_ios: true
   web:

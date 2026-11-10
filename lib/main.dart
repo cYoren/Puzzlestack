@@ -15,15 +15,15 @@ import 'ui/features/main_shell/main_shell.dart';
 import 'utils/design_system.dart';
 import 'widgets/error_boundary.dart';
 
-/// Mindstack's own license, shown alongside the dependency licenses in the
+/// Puzzlestack's own license, shown alongside the dependency licenses in the
 /// in-app Licenses page. GPL-3.0 requires that a modified work carry notice of
 /// the modification and preserve attribution to the original.
 void registerAppLicense() {
   LicenseRegistry.addLicense(() async* {
     yield const LicenseEntryWithLineBreaks(
-      ['Mindstack'],
-      'Mindstack\n'
-      'Copyright (C) 2026 Gustavo Marcelino and the Mindstack authors\n'
+      ['Puzzlestack'],
+      'Puzzlestack\n'
+      'Copyright (C) 2026 Gustavo Marcelino and the Puzzlestack authors\n'
       '\n'
       'This program is free software: you can redistribute it and/or modify '
       'it under the terms of the GNU General Public License as published by '
@@ -35,10 +35,10 @@ void registerAppLicense() {
       'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU '
       'General Public License for more details.\n'
       '\n'
-      'Mindstack is a modified derivative of "Puzzle" by Sidhant Khatkar '
+      'Puzzlestack is a modified derivative of "Puzzle" by Sidhant Khatkar '
       '(https://github.com/sidhant947/Puzzle), also licensed under GPL-3.0. '
       'Source for this version is available at '
-      'https://github.com/cYoren/Mindstack.',
+      'https://github.com/cYoren/Puzzlestack.',
     );
   });
 }
@@ -59,7 +59,7 @@ void main() async {
       size: Size(1280, 720),
       minimumSize: Size(800, 600),
       center: true,
-      title: "Mindstack",
+      title: "Puzzlestack",
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
@@ -123,7 +123,7 @@ class MyApp extends ConsumerWidget {
     }
 
     return MaterialApp(
-      title: 'Mindstack',
+      title: 'Puzzlestack',
       debugShowCheckedModeBanner: false,
       theme: DesignSystem.lightTheme,
       darkTheme: DesignSystem.darkTheme,

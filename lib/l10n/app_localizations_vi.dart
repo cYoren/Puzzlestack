@@ -9,7 +9,7 @@ class AppLocalizationsVi extends AppLocalizations {
   AppLocalizationsVi([String locale = 'vi']) : super(locale);
 
   @override
-  String get appTitle => 'Mindstack';
+  String get appTitle => 'Puzzlestack';
 
   @override
   String get home => 'Trang chủ';

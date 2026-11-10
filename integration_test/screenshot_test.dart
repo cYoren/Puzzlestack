@@ -1,4 +1,4 @@
-// Automated store screenshots for Mindstack.
+// Automated store screenshots for Puzzlestack.
 //
 // The MainShell context is intentionally held across await points; see the
 // comment at its declaration for why re-resolving it does not work here.
@@ -87,7 +87,7 @@ void main() {
     } catch (_) {}
   });
 
-  testWidgets('capture Mindstack store screenshots', (tester) async {
+  testWidgets('capture Puzzlestack store screenshots', (tester) async {
     final repo = UserRepository();
     await repo.init();
 

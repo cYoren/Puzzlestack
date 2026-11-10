@@ -1,11 +1,11 @@
 {
-    "name": "Mindstack",
-    "short_name": "Mindstack",
+    "name": "Puzzlestack",
+    "short_name": "Puzzlestack",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0A0A0A",
     "theme_color": "#0A0A0A",
-    "description": "Mindstack — 161 minimalist brain puzzles, one swipe away.",
+    "description": "Puzzlestack — 161 minimalist brain puzzles, one swipe away.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

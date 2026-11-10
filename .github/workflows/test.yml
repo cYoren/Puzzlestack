@@ -53,5 +53,5 @@ jobs:
       - name: Build Linux Artifacts
         run: |
           flutter build linux --release
-          cp -r build/linux/x64/release/bundle mindstack-linux
-          tar -czf mindstack-linux.tar.gz mindstack-linux
+          cp -r build/linux/x64/release/bundle puzzlestack-linux
+          tar -czf puzzlestack-linux.tar.gz puzzlestack-linux

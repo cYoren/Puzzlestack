@@ -1,6 +1,6 @@
-# Contributing to Mindstack
+# Contributing to Puzzlestack
 
-First off, thank you for considering contributing to Mindstack! It's people like you that make Mindstack such a great tool.
+First off, thank you for considering contributing to Puzzlestack! It's people like you that make Puzzlestack such a great tool.
 
 Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
 
@@ -20,42 +20,42 @@ Following these guidelines helps to communicate that you respect the time of the
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Mindstack Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [gustavo.cesar.marcelino4@gmail.com].
+This project and everyone participating in it is governed by the [Puzzlestack Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [gustavo.cesar.marcelino4@gmail.com].
 
 ## How Can I Contribute?
 
 ### Reporting Bugs
 
-This section guides you through submitting a bug report for Mindstack. Following these guidelines helps maintainers and the community understand your report, reproduce the behavior, and find related bugs.
+This section guides you through submitting a bug report for Puzzlestack. Following these guidelines helps maintainers and the community understand your report, reproduce the behavior, and find related bugs.
 
 Before creating bug reports, please check [this list](#before-submitting-a-bug-report) to be sure that you need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report) by filling out the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md).
 
 ### Suggesting Enhancements
 
-This section guides you through submitting an enhancement suggestion for Mindstack, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion and find related suggestions.
+This section guides you through submitting an enhancement suggestion for Puzzlestack, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion and find related suggestions.
 
 When you are creating an enhancement suggestion, please [include as many details as possible](#how-do-i-submit-a-good-enhancement-suggestion) by filling out the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md).
 
 ### Your First Code Contribution
 
-Unsure where to begin contributing to Mindstack? You can start by looking through these `beginner` and `help-wanted` issues:
+Unsure where to begin contributing to Puzzlestack? You can start by looking through these `beginner` and `help-wanted` issues:
 
-- [Beginner issues](https://github.com/cYoren/Mindstack/labels/beginner) - issues which should only require a few lines of code, and a test or two.
-- [Help wanted issues](https://github.com/cYoren/Mindstack/labels/help-wanted) - issues which should be a bit more involved than `beginner` issues.
+- [Beginner issues](https://github.com/cYoren/Puzzlestack/labels/beginner) - issues which should only require a few lines of code, and a test or two.
+- [Help wanted issues](https://github.com/cYoren/Puzzlestack/labels/help-wanted) - issues which should be a bit more involved than `beginner` issues.
 
 #### Local Development Setup
 
 To get started with the codebase:
 
 1.  **Prerequisites**: Ensure you have [Flutter SDK](https://docs.flutter.dev/get-started/install) installed.
-2.  **Clone the Repo**: `git clone https://github.com/cYoren/Mindstack.git`
+2.  **Clone the Repo**: `git clone https://github.com/cYoren/Puzzlestack.git`
 3.  **Install Dependencies**: `flutter pub get`
 4.  **Run Build Runner**: This project uses code generation. Run `flutter pub run build_runner build --delete-conflicting-outputs` to generate the necessary files.
 5.  **Run the App**: `flutter run`
 
 ### Pull Requests
 
-The process which describes how to contribute to Mindstack:
+The process which describes how to contribute to Puzzlestack:
 
 1.  Fork the repo and create your branch from `main`.
 2.  If you've added code that should be tested, add tests.
