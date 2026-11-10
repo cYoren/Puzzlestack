@@ -4,7 +4,8 @@ The goal is not "more games". It is **the best-built puzzle app on the stores**:
 puzzle has exactly one solution, every puzzle can be solved by logic alone, and every
 board looks like it belongs in this app.
 
-Three sources feed it. They are ranked by what they buy us, not by how easy they are.
+Four sources feed it. They are ranked by what they buy us, not by how easy they are.
+Where each one lives, its licence, and its pinned commit are in [REFERENCE.md](REFERENCE.md).
 
 ---
 
@@ -13,9 +14,9 @@ Three sources feed it. They are ranked by what they buy us, not by how easy they
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
 | **Puzzlestack** (this repo) | our fork, 161 games | 78,131 LOC game code | the base |
-| **sidhant947/Puzzle** (upstream) | the app we forked from, 121 commits ahead of our fork point | 205 games | 44 games we are missing |
-| **invariant** (`Downloads/memes/invariant-main.zip`) | a Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | generators, validators, solvers |
-| **Simon Tatham's collection** | the reference implementation, **bundled inside the same zip** at `Puzzle inspirations/puzzles-master/` | 65 `.c` files, all 40 puzzles + the shared solver core | the correctness bar |
+| **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | 205 games | 44 games we are missing |
+| **invariant** | a Godot 4 port of Simon Tatham's collection, **no licence declared** | 35 puzzles, 32,107 LOC GDScript | the map, read only |
+| **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
 
 ### The invariant archive is Godot, not Flutter
 
@@ -40,19 +41,26 @@ GDScript is close enough to Dart that this is translation, not archaeology.
 | --- | --- | --- |
 | `INVARIANT/` | Godot 4 port, 35 puzzles | 32,107 LOC GDScript |
 | `invariant_flutter/` | Flutter scaffold, **one** puzzle ported (`galaxies`) | 8 `.dart` files, 1,087 LOC |
-| `Puzzle inspirations/puzzles-master/` | Tatham's **complete C source**, all 40 puzzles | 65 `.c`, 214 files |
+| `Puzzle inspirations/puzzles-master/` | an **old copy** of Tatham's C source | 65 `.c`, 214 files |
 | `Full context/` | porting methodology (`TASKS.md`), failure modes, per-puzzle requirements | ~18 KB |
 
 The Flutter folder is a proof of concept, not a port: `main.dart`, one `galaxies`
 puzzle split into `domain/` `logic/` `ui/`, and a theme. It is still worth reading, because
-its Dart structure is the one we want. The C source is the more valuable half: it is the
-reference every ported generator can be tested against, and it ships in the same archive.
+its Dart structure is the one we want.
 
-**Caveat on the Godot port:** only 3 of its 35 generators mention uniqueness at all
-(`singles`, `unruly`, `untangle`), and its test suite covers the framework (undo/redo, seeded
-RNG), not per-puzzle equivalence against the C. So it gives us structure and algorithms, not
-a proven correctness bar. That bar comes from `puzzles-master/`, which is why Phase 2 ports
-from the C and uses the Godot code as the map.
+**Two caveats on the Godot port.**
+
+1. Only 3 of its 35 generators mention uniqueness at all (`singles`, `unruly`, `untangle`),
+   and its test suite covers the framework (undo/redo, seeded RNG), not per-puzzle
+   equivalence against the C. It gives structure, not a proven correctness bar.
+2. **It has no licence.** No `LICENSE`, no `COPYING`, no header. Absent a licence the default
+   is all rights reserved, so its GDScript may be read and may not be copied into a GPL-3.0
+   tree. Rules and algorithms are not copyrightable; the code expressing them is.
+
+That is why Phase 3 ports **from Tatham's C** (MIT, compatible with our GPL-3.0) and uses the
+Godot code only as a map: where an algorithm sits, how a puzzle decomposes. The bundled C
+copy in the zip is from 2014; the pinned clone in `tatham-c/` is current and has 42 games,
+including `hat` and `spectre`, which the public page does not list yet.
 
 ### Coverage math
 
@@ -61,11 +69,11 @@ from the C and uses the Godot code as the map.
 | Games today | 161 |
 | + upstream games we never received | +44 → 205 |
 | + Tatham puzzles invariant has that we lack | +21 → 226 |
-| + Tatham puzzles invariant lacks (Mosaic, Palisade) | +2 → 228 |
+| + Tatham puzzles invariant never ported | +4 → 230 |
 
-Tatham's 40, accounted for: 14 we already have (rebuilt in Phase 4), 21 ported in Phase 3,
-2 hand-ported in Phase 5, 3 we already cover under our own names (`Minesweeper` = Mines,
-`Nonogram` = Pattern, `Sudoku` = Solo).
+Tatham's **42**, accounted for: 17 we already cover (14 rebuilt in Phase 4, plus
+`Minesweeper` = Mines, `Nonogram` = Pattern, `Sudoku` = Solo), 21 ported in Phase 3, 4
+hand-ported in Phase 5 (`Mosaic`, `Palisade`, `Hat`, `Spectre`).
 
 ---
 
@@ -110,14 +118,16 @@ finish all three.
 
 ## Phase 2 — Pull the 44 upstream games
 
-The upstream app kept growing after we forked: 121 commits, 44 new games (mostly word and
-language: Affix Factory, Anagram Definition, Etymology Origin, Homophone Hunt, Spoonerism
-Solver, and so on), per-game guide text, a `_metadata.dart` per game, and fixes we never
-got.
+We forked on 2026-06-07, when upstream was at `d4d5d09` with **161 games** — the exact count
+we still have, which confirms the fork base. Since then: **100 commits**, 44 new games
+(mostly word and language: Affix Factory, Anagram Definition, Etymology Origin, Homophone
+Hunt, Spoonerism Solver, and so on), per-game guide text, a `_metadata.dart` per game, and
+fixes we never got.
 
-**Work:** merge upstream into a branch, keep our Shuffle feed and discovery home on top,
-resolve the registry difference (`game_data.dart` vs their `game_registry.dart`), and take
-the guides.
+**Work:** merge upstream into a branch from `d4d5d09`, keep our Shuffle feed and discovery
+home on top, resolve the registry difference (`game_data.dart` vs their `game_registry.dart`),
+and take the guides. Bounding the merge to a known base is what keeps it reviewable instead
+of a 100-commit avalanche.
 
 **Watch out:** their games ship `_metadata.dart` and guide entries we do not have. Take the
 whole pattern, not just the screens, or the registry will fight us later.
@@ -129,8 +139,10 @@ and discovery home still work, and every new game appears in the right category 
 
 ## Phase 3 — Port the 21 Tatham puzzles we lack
 
-Ported **from Tatham's C** (`Puzzle inspirations/puzzles-master/`), using the Godot port in
-`INVARIANT/puzzles/` as the map of where each algorithm lives. Restyled to the house style:
+Ported **from Tatham's C** (`~/Projects/puzzlestack-reference/tatham-c/`, MIT, pinned at
+`616da16`), using the Godot port as a map of where each algorithm lives. **Never copy a line
+from the Godot port: it has no licence** (see [REFERENCE.md](REFERENCE.md)). Restyled to the
+house style:
 
 `Black Box, Cube, Filling, Galaxies, Guess, Inertia, Map, Netslide, Pearl, Pegs, Range,
 Rectangles, Same Game, Signpost, Sixteen, Slant, Tracks, Twiddle, Undead, Unruly, Untangle`
@@ -160,7 +172,7 @@ two loops.
 `Bridges, Dominosa, Slide Puzzle, Lights Out, Color Flood, KenKen, Akari, Slitherlink,
 Magnets, Pipes, Hitori, Tents & Trees, Skyscrapers, Futoshiki`
 
-Same bar as Phase 2. This phase adds no games and is the most valuable one in the document:
+Same bar as Phase 3. This phase adds no games and is the most valuable one in the document:
 it is the difference between "161 puzzles" and "161 puzzles that are actually correct".
 
 **Done when:** all 14 pass the 200-board uniqueness test, and the Sudoku engine no longer
@@ -168,10 +180,12 @@ strips clues to a count without checking.
 
 ---
 
-## Phase 5 — The two invariant never ported
+## Phase 5 — The four invariant never ported
 
-`Mosaic` and `Palisade`, straight from Tatham's C. Small, and they close the collection at
-40/40.
+`Mosaic`, `Palisade`, `Hat`, `Spectre`, straight from Tatham's C. The first two are small.
+`Hat` and `Spectre` are the aperiodic monotile tilings, they are newer than the public page,
+and they are the kind of puzzle nobody else on the store has. They close the collection at
+**42/42**.
 
 ---
 
@@ -202,4 +216,6 @@ strips clues to a count without checking.
 6. **No puzzle owns its gestures.** Input goes through the board contract, haptics through the
    five verbs, motion through the five moves. A puzzle that wires its own `GestureDetector`
    is a fork of the app inside the app.
-7. **Stop at the gate.** Each phase ends with a number we can check, not a feeling.
+7. **Port from the MIT source, not the unlicensed one.** Tatham's C is the source of truth;
+   the Godot port is a map. Reading an algorithm is fine, copying its code is not.
+8. **Stop at the gate.** Each phase ends with a number we can check, not a feeling.
