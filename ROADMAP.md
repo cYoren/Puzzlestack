@@ -63,8 +63,8 @@ from the C and uses the Godot code as the map.
 | + Tatham puzzles invariant has that we lack | +21 → 226 |
 | + Tatham puzzles invariant lacks (Mosaic, Palisade) | +2 → 228 |
 
-Tatham's 40, accounted for: 14 we already have (rebuilt in Phase 3), 21 ported in Phase 2,
-2 hand-ported, 3 we already cover under our own names (`Minesweeper` = Mines,
+Tatham's 40, accounted for: 14 we already have (rebuilt in Phase 4), 21 ported in Phase 3,
+2 hand-ported in Phase 5, 3 we already cover under our own names (`Minesweeper` = Mines,
 `Nonogram` = Pattern, `Sudoku` = Solo).
 
 ---
@@ -78,7 +78,37 @@ otherwise need rebasing across 87 files.
 
 ---
 
-## Phase 1 — Pull the 44 upstream games
+## Phase 1 — Build the house feel (the interaction layer)
+
+**This phase exists because of a measurement.** Today 19 of 161 games paint their board with
+`CustomPainter` and 142 use widget grids; **zero** have a drag interaction; 7 have any
+animation. Colour and haptics are shared, feel is not. Porting 67 more puzzles first would
+bake that inconsistency in 67 more times.
+
+So before any port: one **board contract** (`PuzzleBoard`: state, `movesFor`, `apply`,
+`isSolved`, `paint`), one **drag engine** built on the Declarative Dragging model
+(Horowitz, Blinn & Heer, UIST 2026 — <https://declarative-dragging.github.io/>), five motion
+moves, five verbs. Full spec in [PUZZLE_STYLE.md](PUZZLE_STYLE.md).
+
+The point of the D2 model here: a puzzle declares *which future states a drag can reach* and
+the engine synthesizes float, drop zones, snapping and settle. Every puzzle gets the same
+tactile feel without writing gesture code, and a port becomes generator + rules + paint.
+
+**Prove it on three puzzles that cover the three shapes of interaction:**
+
+| Puzzle | Interaction it proves |
+| --- | --- |
+| Sudoku | tap a cell, pick a digit |
+| Slitherlink | drag a line between edges |
+| Water Sort | drag a column onto another |
+
+**Done when:** those three run on the contract with no `GestureDetector` of their own, the
+five motion moves and five verbs are the only ones in the codebase, and a tap-only player can
+finish all three.
+
+---
+
+## Phase 2 — Pull the 44 upstream games
 
 The upstream app kept growing after we forked: 121 commits, 44 new games (mostly word and
 language: Affix Factory, Anagram Definition, Etymology Origin, Homophone Hunt, Spoonerism
@@ -97,9 +127,10 @@ and discovery home still work, and every new game appears in the right category 
 
 ---
 
-## Phase 2 — Port the 21 Tatham puzzles we lack
+## Phase 3 — Port the 21 Tatham puzzles we lack
 
-From `INVARIANT/puzzles/`, translated to Dart, restyled to our design system:
+Ported **from Tatham's C** (`Puzzle inspirations/puzzles-master/`), using the Godot port in
+`INVARIANT/puzzles/` as the map of where each algorithm lives. Restyled to the house style:
 
 `Black Box, Cube, Filling, Galaxies, Guess, Inertia, Map, Netslide, Pearl, Pegs, Range,
 Rectangles, Same Game, Signpost, Sixteen, Slant, Tracks, Twiddle, Undead, Unruly, Untangle`
@@ -113,13 +144,14 @@ style and theirs is Godot.
 3. Three difficulty levels that actually differ in solving depth, not just board size.
 4. Hint reveals one logical step, not the answer.
 5. Board renders at 60fps on a mid-range Android, and taps are forgiving at phone size.
+6. It passes the house-style gate in [PUZZLE_STYLE.md](PUZZLE_STYLE.md) §6.
 
 **Done when:** 226 games, and each ported puzzle has a test that generates 200 boards and
 asserts one solution each.
 
 ---
 
-## Phase 3 — Rebuild the 14 classics we already have
+## Phase 4 — Rebuild the 14 classics we already have
 
 These exist but were written without a uniqueness guarantee. They are the ones users can
 tell are wrong: ambiguous Sudoku, Nonogram that accepts a second picture, Slitherlink with
@@ -136,14 +168,14 @@ strips clues to a count without checking.
 
 ---
 
-## Phase 4 — The two invariant never ported
+## Phase 5 — The two invariant never ported
 
 `Mosaic` and `Palisade`, straight from Tatham's C. Small, and they close the collection at
 40/40.
 
 ---
 
-## Phase 5 — Release
+## Phase 6 — Release
 
 - Store title and copy: the number in "161 Brain Puzzles" changes every phase, so it is set
   once, at the end, from the real registry count.
@@ -167,4 +199,7 @@ strips clues to a count without checking.
    `Light Up` and `Loopy` are not.
 5. **The registry is the source of truth.** If a game is not in `game_data.dart` with a
    category, it does not exist, no matter how good the screen is.
-6. **Stop at the gate.** Each phase ends with a number we can check, not a feeling.
+6. **No puzzle owns its gestures.** Input goes through the board contract, haptics through the
+   five verbs, motion through the five moves. A puzzle that wires its own `GestureDetector`
+   is a fork of the app inside the app.
+7. **Stop at the gate.** Each phase ends with a number we can check, not a feeling.
