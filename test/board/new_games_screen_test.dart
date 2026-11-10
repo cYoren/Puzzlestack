@@ -6,6 +6,7 @@ import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
+import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
 import 'package:puzzle/ui/features/games/pegs/pegs_screen.dart';
 import 'package:puzzle/ui/features/games/twiddle/twiddle_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
@@ -47,6 +48,7 @@ void main() {
   final screens = <String, Widget>{
     'Pegs': const PegsScreen(),
     'Twiddle': const TwiddleScreen(),
+    'Galaxies': const GalaxiesScreen(),
   };
 
   for (final entry in screens.entries) {

@@ -10677,6 +10677,36 @@ abstract class AppLocalizations {
   /// **'One peg left. That is a clean board.'**
   String get pegsCongrats;
 
+  /// No description provided for @galaxiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Galaxies'**
+  String get galaxiesTitle;
+
+  /// No description provided for @galaxiesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give every dot its own symmetric region'**
+  String get galaxiesSubtitle;
+
+  /// No description provided for @galaxiesCongrats.
+  ///
+  /// In en, this message translates to:
+  /// **'Every dot has its own galaxy.'**
+  String get galaxiesCongrats;
+
+  /// No description provided for @galaxiesPickDot.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a dot, then tap the cells that belong to it'**
+  String get galaxiesPickDot;
+
+  /// No description provided for @galaxiesPaintCells.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap cells to paint them, tap a painted cell to clear it'**
+  String get galaxiesPaintCells;
+
   /// No description provided for @twiddleTitle.
   ///
   /// In en, this message translates to:
