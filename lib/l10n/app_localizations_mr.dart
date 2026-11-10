@@ -6060,6 +6060,23 @@ class AppLocalizationsMr extends AppLocalizations {
   String get pegsCongrats => 'एक पेग शिल्लक. स्वच्छ बोर्ड.';
 
   @override
+  String get galaxiesTitle => 'Galaxies';
+
+  @override
+  String get galaxiesSubtitle => 'Give every dot its own symmetric region';
+
+  @override
+  String get galaxiesCongrats => 'Every dot has its own galaxy.';
+
+  @override
+  String get galaxiesPickDot =>
+      'Tap a dot, then tap the cells that belong to it';
+
+  @override
+  String get galaxiesPaintCells =>
+      'Tap cells to paint them, tap a painted cell to clear it';
+
+  @override
   String get twiddleTitle => 'ट्विडल';
 
   @override

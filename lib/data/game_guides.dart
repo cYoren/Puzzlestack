@@ -5079,6 +5079,24 @@ const Map<String, GameGuide> gameGuides = {
       "If you're stuck on a word, switch to the intersecting words to get more letters.",
     ],
   ),
+  "galaxies": GameGuide(
+    title: "Galaxies",
+    category: "LOGIC",
+    objective: "Split the board into regions, one per dot. Every region must be symmetric about its own dot, and no region may hold two dots.",
+    controls: "Tap a dot to pick it up, then tap the cells that belong to it. Or drag the dot onto a cell. Painting a cell also paints the cell it reflects onto. Tap a painted cell with no dot picked to clear it. The hint button shows one cell the rules can prove.",
+    walkthrough: [
+      "Step 1: Tap a dot to pick it up. The dot you picked is ringed.",
+      "Step 2: Tap a cell near that dot. Its mirror image about the dot is painted at the same time, so the region stays symmetric.",
+      "Step 3: Keep painting outward until the region is as big as it can be without touching another dot's cells.",
+      "Step 4: Move to the next dot and repeat. The board is solved when every cell belongs to exactly one dot.",
+    ],
+    strategies: [
+      "Start with the dots closest to an edge. Their regions have the fewest places to go, so they decide themselves quickly.",
+      "A cell whose mirror image is already another dot's cannot belong to this dot. That single fact usually settles the cells around a crowded corner.",
+      "Watch for cells that would be cut off. If painting a cell would leave a gap no region can reach, that cell belongs to the dot on the other side of the gap.",
+      "When two dots are close together, one of them usually has only one way out. Find it before painting anything else.",
+    ],
+  ),
   "pegs": GameGuide(
     title: "Pegs",
     category: "LOGIC",

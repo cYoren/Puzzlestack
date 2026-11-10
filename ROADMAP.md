@@ -37,7 +37,7 @@ which is why the work can start now — but Phase 6 cannot ship iOS without it.
 
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
-| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **306** after Phases 2 and 3 | 78,131 LOC game code | the base |
+| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **307** after Phases 2 and 3 | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | **304 registered games** | all of them, merged in Phase 2 |
 | **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
@@ -89,8 +89,8 @@ the zip is from 2014; the pinned clone in `tatham-c/` is current and has 42 game
 | --- | --- |
 | Games at the fork point | 161 |
 | + upstream games we never received | **+143 → 304** (Phase 2, landed) |
-| + Tatham puzzles we actually lack (see Phase 3) | **+13** → 319 |
-| + Tatham puzzles invariant never ported | +4 → 323 |
+| + Tatham puzzles we actually lack (see Phase 3) | **+13** → 317 |
+| + Tatham puzzles invariant never ported | +4 → 321 |
 
 The 44 in the first draft of this table came from upstream's `game_data.dart`, which lists 205
 games. That file is legacy: the registry they actually ship from (`game_registry.dart`, one
@@ -235,37 +235,77 @@ the registry rather than guessed from the name:
 **Left to port: 13** — Black Box, Cube, Galaxies, Inertia, Map, Netslide, Pegs, Range, Same
 Game, Signpost, Tracks, Twiddle, Undead.
 
-### Landed so far: 2 of 13, on a shared grid base
+### Landed so far: 3 of 13
 
 `lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
 repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
-grid puzzle only writes rules and paint. Both ports below are built on it, and so is every
-remaining one.
+grid puzzle only writes rules and paint.
+
+`lib/core/deduction.dart` — **the uniqueness harness.** This is the piece the rest of Phase 3
+depends on, and it exists because "solvable by construction" does not apply to a deduction
+puzzle: whether a set of clues pins down exactly one answer is a property of the clues, not of
+how they were made, so it has to be counted. The harness is small:
+
+```text
+DeductionModel   copy()  isComplete  choice  assume(slot, value)
+DeductionRule    level (1 = easiest)  apply(model) -> settled | -1 for contradiction
+countSolutions   reason first, guess only where reasoning stops, stop at 2
+solvingLevel     the lowest rule level whose rules alone finish the board
+rate             one answer? which level?  -> impossible | ambiguous | unfinished | solved
+```
+
+Two properties make it worth having rather than each puzzle writing its own:
+
+1. **The rule levels *are* the difficulty scale.** A board is "hard" because the easy rules
+   cannot finish it, not because it is bigger. That is roadmap bar 3, made measurable.
+2. **`countSolutions` refuses to guess.** When the search runs out of budget it returns
+   `truncated`, and `rate` throws rather than report a verdict it did not earn. A test that
+   counts solutions must fail loudly, never pass quietly.
 
 | Puzzle | Interaction it proves | Correctness |
 | --- | --- | --- |
-| **Pegs** | drag a peg onto the square it lands on | generator is reverse play from one peg, so the board is solvable by construction; the recorded line is replayed in the test |
+| **Pegs** | drag a peg onto the square it lands on | reverse play from one peg, so solvable by construction; the test replays the recorded line over 200 boards |
 | **Twiddle** | drag a tile onto the square the turn would move it to | scrambled from solved, so the solution is the scramble backwards |
+| **Galaxies** | drag a dot onto a cell; the cell it reflects onto joins too | **counted**: 200 easy + 200 medium boards, each proven to have exactly one solution, and the solver's count checked against a brute force that ignores the rules |
 
-Both are tap-playable as well: tap a peg to pick it up, tap where it lands; tap a tile to
-turn its block. Both have three difficulties that change the work, not just the size: Pegs
-grows the board (7×7, 9×9, 11×11, so 15 to 45 pegs to clear), Twiddle grows the grid, the
-block and the scramble (3×3/2×2/14, 4×4/2×2/34, 5×5/3×3/70).
+### What Galaxies cost, and what it taught
 
-Two things the ports taught, worth carrying into the next eleven:
+Galaxies is the first puzzle here whose correctness is a *count*, and it took four wrong
+generators to get one that works. The lessons are worth more than the puzzle:
 
-1. **A hint should use the line the generator already knows.** Both puzzles ship the sequence
-   that solves them, so while the player is still on it the hint is exact and free. The
-   search only runs once they step off — and for Pegs that search is bounded, because a
-   25-peg board can outrun a depth-first walk. It falls back to the first legal jump rather
-   than pretending.
-2. **Solvability is a proof, not a search.** "Generator guarantees a unique solution" does
-   not mean "run a solver in the test". For Pegs and Twiddle the test replays the
-   generator's own line over 200 boards, which is exact and takes a second. The uniqueness
-   bar bites on the deduction puzzles (Galaxies, Range, Signpost, Undead), which need a real
-   solution counter and come next.
+1. **A dot pinned in place cannot tile a board.** The first generator fixed each dot and grew
+   its region in mirror pairs. It never finished: a handful of cells always ended up with
+   their reflections spoken for. The fix is Tatham's — the dot moves to wherever the region's
+   centre of symmetry now is, so a region can grow into a shape its original dot could not
+   have owned.
+2. **Symmetry at every step is too strong an invariant.** Even with a moving dot, insisting
+   the region is symmetric *right now* jams the growth. The working invariant is weaker:
+   every cell's reflection must be **ours or still free**. A region is allowed to be lopsided
+   while it grows. Once the board is full there are no free cells, so the invariant becomes
+   symmetry on its own — and the generator checks that at the end rather than assuming it.
+3. **"No options" is not a dead end.** The same mistake as the Pegs stranded-peg prune, in a
+   different costume: a cell no region can take *yet* may become takeable once a neighbour's
+   centre shifts. Only a board where nothing anywhere can move is stuck.
+4. **Dots belong on edges and vertices too.** Restricting dots to cell centres was the first
+   simplification, and it is what made tiling impossible. A dot on an edge owns an even number
+   of cells; a dot on a vertex owns four around it. All three are real Galaxies dots.
+5. **The third depth tier is real but rare.** Measured over hundreds of boards: the mirror
+   rule alone finishes most 6×6 boards, connectivity is needed at 8×8, and the look-ahead rule
+   is needed at 9×9 with 14 dots — roughly one board in ten proposals. That is why the three
+   difficulties are 6×6/6 dots, 8×8/12 dots and 9×9/14 dots: those are the sizes and
+   densities that actually produce each level, not sizes chosen for looks.
 
-**Done when:** 319 games, and each ported puzzle has a test that generates 200 boards and
+### The bar, as it stands
+
+| | |
+| --- | --- |
+| 200 boards, one solution each | Pegs, Twiddle (replayed), Galaxies easy + medium (counted) |
+| hard tier | 50 boards, not 200: a hard Galaxies takes ~0.5 s to find because the generator throws away boards that come back easier than asked for. 200 would add two minutes to every test run. |
+| logic-only solver | Galaxies ships only boards the rules can finish; a board that needs a guess is discarded |
+| three difficulties by depth | rule level 1 / 2 / 3, asserted per board |
+| hint reveals one step | one cell the rules can prove, from the solver, not from the stored answer |
+
+**Done when:** 317 games, and each ported puzzle has a test that generates 200 boards and
 asserts one solution each.
 
 ---
