@@ -6045,4 +6045,32 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => 'میخ‌ها';
+
+  @override
+  String get pegsSubtitle =>
+      'یک میخ را از روی همسایه‌اش بپر تا حذف شود. فقط یکی بماند.';
+
+  @override
+  String get pegsCongrats => 'یک میخ باقی ماند. صفحه تمیز.';
+
+  @override
+  String get twiddleTitle => 'چرخش';
+
+  @override
+  String get twiddleSubtitle => 'بلوک‌ها را بچرخانید تا اعداد به ترتیب درآیند.';
+
+  @override
+  String get twiddleCongrats => 'هر عدد سر جای خودش.';
+
+  @override
+  String get difficultyEasy => 'آسان';
+
+  @override
+  String get difficultyMedium => 'متوسط';
+
+  @override
+  String get difficultyHard => 'سخت';
 }

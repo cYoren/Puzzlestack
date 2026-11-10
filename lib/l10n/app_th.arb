@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "หมุด",
+  "pegsSubtitle": "กระโดดหมุดข้ามหมุดข้างเคียงเพื่อกิน ให้เหลือเพียงหมุดเดียว",
+  "pegsCongrats": "เหลือหมุดเดียว กระดานสะอาดหมดจด",
+  "twiddleTitle": "หมุนบล็อก",
+  "twiddleSubtitle": "หมุนบล็อกจนตัวเลขเรียงตามลำดับ",
+  "twiddleCongrats": "ทุกตัวเลขอยู่ถูกที่",
+  "difficultyEasy": "ง่าย",
+  "difficultyMedium": "ปานกลาง",
+  "difficultyHard": "ยาก"
 }

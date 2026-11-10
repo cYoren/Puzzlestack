@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "Pegs",
+  "pegsSubtitle": "Przeskocz pionkiem nad sąsiadem, aby go zbić. Zostaw jeden.",
+  "pegsCongrats": "Został jeden pionek. Czysta plansza.",
+  "twiddleTitle": "Twiddle",
+  "twiddleSubtitle": "Obracaj bloki, aż liczby ułożą się po kolei.",
+  "twiddleCongrats": "Każda liczba na swoim miejscu.",
+  "difficultyEasy": "ŁATWY",
+  "difficultyMedium": "ŚREDNI",
+  "difficultyHard": "TRUDNY"
 }

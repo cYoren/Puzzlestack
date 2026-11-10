@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "Pegs",
+  "pegsSubtitle": "Sautez un pion par-dessus son voisin pour le capturer. Il n'en reste qu'un.",
+  "pegsCongrats": "Un pion restant. Plateau net.",
+  "twiddleTitle": "Twiddle",
+  "twiddleSubtitle": "Faites tourner les blocs jusqu'à ce que les nombres soient dans l'ordre.",
+  "twiddleCongrats": "Chaque nombre à sa place.",
+  "difficultyEasy": "FACILE",
+  "difficultyMedium": "MOYEN",
+  "difficultyHard": "DIFFICILE"
 }

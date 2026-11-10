@@ -37,7 +37,7 @@ which is why the work can start now — but Phase 6 cannot ship iOS without it.
 
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
-| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **304** after Phase 2 | 78,131 LOC game code | the base |
+| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **306** after Phases 2 and 3 | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | **304 registered games** | all of them, merged in Phase 2 |
 | **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
@@ -89,17 +89,18 @@ the zip is from 2014; the pinned clone in `tatham-c/` is current and has 42 game
 | --- | --- |
 | Games at the fork point | 161 |
 | + upstream games we never received | **+143 → 304** (Phase 2, landed) |
-| + Tatham puzzles invariant has that we lack | +21 → 325 |
-| + Tatham puzzles invariant never ported | +4 → 329 |
+| + Tatham puzzles we actually lack (see Phase 3) | **+13** → 319 |
+| + Tatham puzzles invariant never ported | +4 → 323 |
 
 The 44 in the first draft of this table came from upstream's `game_data.dart`, which lists 205
 games. That file is legacy: the registry they actually ship from (`game_registry.dart`, one
 `_metadata.dart` per game) has **304**. Phase 2 merged the registry, so the real number is 304
 and the porting phases add to that.
 
-Tatham's **42**, accounted for: 17 we already cover (14 rebuilt in Phase 4, plus
-`Minesweeper` = Mines, `Nonogram` = Pattern, `Sudoku` = Solo), 21 ported in Phase 3, 4
-hand-ported in Phase 5 (`Mosaic`, `Palisade`, `Hat`, `Spectre`).
+Tatham's **42**, accounted for: 25 we already cover (14 rebuilt in Phase 4, plus
+`Minesweeper` = Mines, `Nonogram` = Pattern, `Sudoku` = Solo, and the eight the Phase 2 merge
+brought in under other names), 13 ported in Phase 3, 4 hand-ported in Phase 5 (`Mosaic`,
+`Palisade`, `Hat`, `Spectre`).
 
 ---
 
@@ -194,7 +195,7 @@ Two things the merge forced, both worth knowing:
 
 ---
 
-## Phase 3 — Port the 21 Tatham puzzles we lack
+## Phase 3 — Port the Tatham puzzles we lack
 
 Ported **from Tatham's C** (`~/Projects/puzzlestack-reference/tatham-c/`, MIT, pinned at
 `616da16`), reading our own Godot port first as the map of where each algorithm lives, then
@@ -215,7 +216,56 @@ style and theirs is Godot.
 5. Board renders at 60fps on a mid-range Android, and taps are forgiving at phone size.
 6. It passes the house-style gate in [PUZZLE_STYLE.md](PUZZLE_STYLE.md) §6.
 
-**Done when:** 226 games, and each ported puzzle has a test that generates 200 boards and
+### The list was 21 before the merge; it is 13 now
+
+Eight of those twenty-one arrived with Phase 2 under other names. Checked one by one against
+the registry rather than guessed from the name:
+
+| Tatham | We already have it as |
+| --- | --- |
+| Filling | `fillomino` |
+| Pearl | `masyu` (Masyu *is* Pearl) |
+| Rectangles | `shikaku` |
+| Slant | `gokigen_naname` |
+| Sixteen | `slide_puzzle` (rebuilt for uniqueness in Phase 4) |
+| Unruly | `binary_puzzle` (Takuzu) |
+| Untangle | `tangle_fix` |
+| Guess | `word_mastermind` (same Mastermind deduction, word content) |
+
+**Left to port: 13** — Black Box, Cube, Galaxies, Inertia, Map, Netslide, Pegs, Range, Same
+Game, Signpost, Tracks, Twiddle, Undead.
+
+### Landed so far: 2 of 13, on a shared grid base
+
+`lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
+repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
+grid puzzle only writes rules and paint. Both ports below are built on it, and so is every
+remaining one.
+
+| Puzzle | Interaction it proves | Correctness |
+| --- | --- | --- |
+| **Pegs** | drag a peg onto the square it lands on | generator is reverse play from one peg, so the board is solvable by construction; the recorded line is replayed in the test |
+| **Twiddle** | drag a tile onto the square the turn would move it to | scrambled from solved, so the solution is the scramble backwards |
+
+Both are tap-playable as well: tap a peg to pick it up, tap where it lands; tap a tile to
+turn its block. Both have three difficulties that change the work, not just the size: Pegs
+grows the board (7×7, 9×9, 11×11, so 15 to 45 pegs to clear), Twiddle grows the grid, the
+block and the scramble (3×3/2×2/14, 4×4/2×2/34, 5×5/3×3/70).
+
+Two things the ports taught, worth carrying into the next eleven:
+
+1. **A hint should use the line the generator already knows.** Both puzzles ship the sequence
+   that solves them, so while the player is still on it the hint is exact and free. The
+   search only runs once they step off — and for Pegs that search is bounded, because a
+   25-peg board can outrun a depth-first walk. It falls back to the first legal jump rather
+   than pretending.
+2. **Solvability is a proof, not a search.** "Generator guarantees a unique solution" does
+   not mean "run a solver in the test". For Pegs and Twiddle the test replays the
+   generator's own line over 200 boards, which is exact and takes a second. The uniqueness
+   bar bites on the deduction puzzles (Galaxies, Range, Signpost, Undead), which need a real
+   solution counter and come next.
+
+**Done when:** 319 games, and each ported puzzle has a test that generates 200 boards and
 asserts one solution each.
 
 ---

@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "ペグ",
+  "pegsSubtitle": "ペグを隣の上で跳ばして取り除きます。最後に1つだけ残します。",
+  "pegsCongrats": "残ったのは1つだけ。きれいに片づきました。",
+  "twiddleTitle": "ツイドル",
+  "twiddleSubtitle": "数字が順番に並ぶまでブロックを回します。",
+  "twiddleCongrats": "すべての数字が定位置に。",
+  "difficultyEasy": "やさしい",
+  "difficultyMedium": "ふつう",
+  "difficultyHard": "むずかしい"
 }

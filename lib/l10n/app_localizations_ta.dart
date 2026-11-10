@@ -6149,4 +6149,33 @@ class AppLocalizationsTa extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => 'பெக்குகள்';
+
+  @override
+  String get pegsSubtitle =>
+      'ஒரு பெக்கை அதன் அண்டையின் மேல் தாண்டி எடுத்துவிடுங்கள். ஒன்றை மட்டும் விடுங்கள்.';
+
+  @override
+  String get pegsCongrats => 'ஒரு பெக் மீதம். சுத்தமான பலகை.';
+
+  @override
+  String get twiddleTitle => 'ட்விடில்';
+
+  @override
+  String get twiddleSubtitle =>
+      'எண்கள் வரிசையாக வரும்வரை தொகுதிகளை சுழற்றுங்கள்.';
+
+  @override
+  String get twiddleCongrats => 'ஒவ்வொரு எண்ணும் அதன் இடத்தில்.';
+
+  @override
+  String get difficultyEasy => 'எளிது';
+
+  @override
+  String get difficultyMedium => 'நடுத்தரம்';
+
+  @override
+  String get difficultyHard => 'கடினம்';
 }

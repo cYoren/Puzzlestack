@@ -6138,4 +6138,33 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Außergewöhnliche visuell-räumliche Arbeitsgedächtnismanipulation und umgekehrte Sequenzierung!';
+
+  @override
+  String get pegsTitle => 'Pegs';
+
+  @override
+  String get pegsSubtitle =>
+      'Springe mit einem Stift über seinen Nachbarn und schlage ihn. Einer bleibt übrig.';
+
+  @override
+  String get pegsCongrats => 'Ein Stift übrig. Sauber gelöst.';
+
+  @override
+  String get twiddleTitle => 'Twiddle';
+
+  @override
+  String get twiddleSubtitle =>
+      'Drehe Blöcke, bis die Zahlen der Reihe nach stehen.';
+
+  @override
+  String get twiddleCongrats => 'Jede Zahl an ihrem Platz.';
+
+  @override
+  String get difficultyEasy => 'LEICHT';
+
+  @override
+  String get difficultyMedium => 'MITTEL';
+
+  @override
+  String get difficultyHard => 'SCHWER';
 }

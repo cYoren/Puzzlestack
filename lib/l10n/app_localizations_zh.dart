@@ -5738,4 +5738,31 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => '孔明棋';
+
+  @override
+  String get pegsSubtitle => '跳过相邻的棋子把它吃掉，最后只留一枚。';
+
+  @override
+  String get pegsCongrats => '只剩一枚，棋盘清得干净。';
+
+  @override
+  String get twiddleTitle => '旋转方块';
+
+  @override
+  String get twiddleSubtitle => '转动方块，让数字按顺序排好。';
+
+  @override
+  String get twiddleCongrats => '每个数字都归位了。';
+
+  @override
+  String get difficultyEasy => '简单';
+
+  @override
+  String get difficultyMedium => '中等';
+
+  @override
+  String get difficultyHard => '困难';
 }

@@ -6071,4 +6071,33 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get corsiBackwardSpanWinMessage =>
       'Exceptional visuospatial working memory manipulation and reverse sequencing!';
+
+  @override
+  String get pegsTitle => 'Пегс';
+
+  @override
+  String get pegsSubtitle =>
+      'Перепрыгните шашкой через соседнюю и снимите её. Оставьте одну.';
+
+  @override
+  String get pegsCongrats => 'Осталась одна шашка. Чистая доска.';
+
+  @override
+  String get twiddleTitle => 'Твиддл';
+
+  @override
+  String get twiddleSubtitle =>
+      'Поворачивайте блоки, пока числа не встанут по порядку.';
+
+  @override
+  String get twiddleCongrats => 'Каждое число на своём месте.';
+
+  @override
+  String get difficultyEasy => 'ЛЕГКО';
+
+  @override
+  String get difficultyMedium => 'СРЕДНЕ';
+
+  @override
+  String get difficultyHard => 'СЛОЖНО';
 }

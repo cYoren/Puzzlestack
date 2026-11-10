@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "पेग्स",
+  "pegsSubtitle": "एक पेग त्याच्या शेजाऱ्यावरून उडी मारून काढा. फक्त एक ठेवा.",
+  "pegsCongrats": "एक पेग शिल्लक. स्वच्छ बोर्ड.",
+  "twiddleTitle": "ट्विडल",
+  "twiddleSubtitle": "संख्या क्रमाने येईपर्यंत ब्लॉक फिरवा.",
+  "twiddleCongrats": "प्रत्येक संख्या आपल्या जागी.",
+  "difficultyEasy": "सोपे",
+  "difficultyMedium": "मध्यम",
+  "difficultyHard": "कठीण"
 }
