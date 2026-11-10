@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
@@ -346,14 +348,20 @@ class DiscoveryHomeScreen extends StatelessWidget {
 
   Widget _categoryGrid(BuildContext context) {
     final cats = GameCategories.all;
+    // 1.5 is the shape we want; 104dp is the height the tile needs to hold an
+    // icon, a count, a label and a tagline. On a 320dp phone the ratio alone
+    // gives 90dp and the tile overflows, so take whichever is taller.
+    final width = MediaQuery.sizeOf(context).width;
+    final tileWidth = (width - 2 * DesignSystem.spaceLG - DesignSystem.spaceSM) / 2;
+    final tileHeight = math.max(104.0, tileWidth / 1.5);
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
       sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: DesignSystem.spaceSM,
           crossAxisSpacing: DesignSystem.spaceSM,
-          childAspectRatio: 1.5,
+          mainAxisExtent: tileHeight,
         ),
         delegate: SliverChildBuilderDelegate(
           (context, i) => _categoryTile(context, cats[i]),
@@ -390,6 +398,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Bebas Neue',
                     fontSize: DesignSystem.fontSizeLG,
+                    height: 1.0,
                     color: cat.color,
                   ),
                 ),
@@ -400,9 +409,14 @@ class DiscoveryHomeScreen extends StatelessWidget {
               children: [
                 Text(
                   cat.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: DesignSystem.fontSizeLG,
                     fontWeight: FontWeight.w800,
+                    // The theme's body height (1.6) makes two lines of text
+                    // taller than the tile. Tighten it here, not the tile.
+                    height: 1.2,
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
@@ -412,6 +426,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: DesignSystem.fontSizeXS,
+                    height: 1.2,
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
