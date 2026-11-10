@@ -141,6 +141,9 @@ class GalaxiesNotifier extends _$GalaxiesNotifier {
     if (state.isSolved) return false;
     final dot = state.owner[cell];
     if (dot == -1) return false;
+    // The cells a dot sits in are forced by the rules, so clearing one only
+    // makes the board unsolvable until it is painted back.
+    if (state.puzzle.seedCells(dot).contains(cell)) return false;
 
     final owner = [...state.owner];
     owner[cell] = -1;

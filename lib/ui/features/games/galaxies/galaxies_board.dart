@@ -55,23 +55,48 @@ class GalaxiesBoard extends GridBoard<GalaxiesState> {
         margin + (dot.y / 2 + 0.5) * cellHeight,
       );
 
-  /// The dot a cell holds, if any.
-  int? dotAt(int row, int col) {
+  /// Cell index to the dot that sits in it, for dots that sit in a cell.
+  ///
+  /// Built once: [paintCell] asks this for every cell on every frame, and
+  /// rebuilding it there would allocate thousands of lists a second.
+  late final List<int> _dotOfCell = () {
+    final map = List<int>.filled(puzzle.cellCount, -1);
     for (var dot = 0; dot < puzzle.dots.length; dot++) {
       final seeds = puzzle.seedCells(dot);
-      if (seeds.length == 1 && seeds.single == puzzle.index(row, col)) {
-        return dot;
-      }
+      if (seeds.length == 1) map[seeds.single] = dot;
     }
-    return null;
+    return map;
+  }();
+
+  /// The dot a cell holds, if any.
+  int? dotAt(int row, int col) {
+    final dot = _dotOfCell[puzzle.index(row, col)];
+    return dot == -1 ? null : dot;
   }
 
-  /// A hue per region, spread by the golden angle so neighbouring regions do
-  /// not land on neighbouring colours.
+  /// One colour per region, spread by the golden angle so neighbouring regions
+  /// do not land on neighbouring colours.
+  ///
+  /// Cached because it is asked for once per cell per frame, and rebuilt only
+  /// when the theme flips between light and dark.
+  List<Color>? _regionColours;
+  bool? _regionColoursDark;
+
   Color regionColour(int dot, PuzzlePalette palette) {
     final dark = palette.bed.computeLuminance() < 0.5;
-    final hue = (dot * 137.508) % 360;
-    return HSLColor.fromAHSL(1, hue, 0.45, dark ? 0.40 : 0.68).toColor();
+    if (_regionColours == null || _regionColoursDark != dark) {
+      _regionColoursDark = dark;
+      _regionColours = [
+        for (var index = 0; index < puzzle.dots.length; index++)
+          HSLColor.fromAHSL(
+            1,
+            (index * 137.508) % 360,
+            0.45,
+            dark ? 0.40 : 0.68,
+          ).toColor(),
+      ];
+    }
+    return _regionColours![dot];
   }
 
   // ------------------------------------------------------------------- rules
@@ -148,6 +173,7 @@ class GalaxiesBoard extends GridBoard<GalaxiesState> {
     }
 
     if (state.owner[cellIndex] == -1) return null;
+    if (puzzle.seedCells(state.owner[cellIndex]).contains(cellIndex)) return null;
     return PuzzleMove<GalaxiesState>(
       kind: MoveKind.clear,
       source: element,
@@ -158,6 +184,7 @@ class GalaxiesBoard extends GridBoard<GalaxiesState> {
   GalaxiesState _clear(GalaxiesState current, int cell) {
     final dot = current.owner[cell];
     if (dot == -1) return current;
+    if (puzzle.seedCells(dot).contains(cell)) return current;
     final owner = [...current.owner];
     owner[cell] = -1;
     final mirror = puzzle.mirrorOf(cell, dot);

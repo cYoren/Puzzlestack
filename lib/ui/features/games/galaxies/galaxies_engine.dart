@@ -167,7 +167,14 @@ class GalaxiesEngine {
       final puzzle = propose(difficulty, rng);
       if (puzzle == null) continue;
 
-      final rating = rateGalaxies(puzzle);
+      final PuzzleRating rating;
+      try {
+        rating = rateGalaxies(puzzle);
+      } on StateError {
+        // The counter gave up rather than lie about the board. Treat that as a
+        // board we cannot vouch for and try another.
+        continue;
+      }
       if (rating.verdict != PuzzleVerdict.solved) continue;
       if (rating.level == difficulty.level) return puzzle;
 
