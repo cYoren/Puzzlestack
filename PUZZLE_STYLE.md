@@ -65,6 +65,22 @@ Why this is the right foundation for 228 puzzles:
 Tap remains a first-class path: a tap is a drag that resolved immediately. Puzzles must be
 fully playable without dragging, for accessibility.
 
+### What we take from the paper, and what we leave
+
+The demos are **grabby**: things come up with weight, follow your hand, and the world shows
+you what is possible while you hold them. That is not decoration, it is the mechanism — you
+cannot read a speculative state if the motion is too tight to see it. So we take the
+weight and the reveal.
+
+We leave the drift. The demos are desktop mouse, where lag reads as mass; under a finger,
+lag reads as broken. On touch the element tracks 1:1, offset 12dp above the fingertip so the
+finger does not cover the thing it holds.
+
+We also leave the long tails. A mouse can enjoy a 400ms settle; a thumb doing forty moves a
+minute cannot. The rule is **heavy lift, fast land**: generous on the way up, decisive on the
+way down. That is what a well-made physical object does, and it is satisfying in a way that
+neither Apple-quiet nor toy-floaty is.
+
 ## 3. Visual language
 
 On top of `DesignSystem` (Geist, indigo `#4338CA`, amber `#D97706`, AMOLED dark). Board rules:
@@ -95,15 +111,21 @@ Dark mode is AMOLED: board bed is true black, cells `#1E1E1E`, no white text on 
 
 ## 4. Motion
 
-Five moves. Nothing longer than 300ms. Nothing loops.
+Five moves. Nothing longer than 300ms. Nothing loops. **Heavy lift, fast land.**
 
 | Move | Duration | Curve |
 | --- | --- | --- |
-| Press | 90ms, scale 0.96 | `easeOut` |
-| Lift (drag start) | 120ms, scale 1.06 | spring 400/28 |
-| Snap (drop) | 180ms | spring 380/26 |
-| Invalid | 120ms, shake ±4dp ×3 | `easeInOut` |
-| Win cascade | 45ms stagger, 220ms per cell | `easeOutCubic` |
+| Press | 90ms, scale 0.97 | `easeOut` |
+| Lift (drag start) | **200ms**, scale 1.08 | spring 260/20 — visible overshoot, weight |
+| Drag follow | 1:1 tracking, 12dp above the finger | none — no lag on touch |
+| Drop zones | 120ms fade in, `primary` at 8% | `easeOut` |
+| Snap (drop) | **160ms**, spring 500/30 | decisive, 1–2% overshoot, never bouncy |
+| Invalid | 220ms recoil to origin, spring 320/24, plus an `error` tint pulse | `easeOut` |
+| Win cascade | 45ms stagger, 260ms per cell, 1.0→1.06→1.0 pop | `easeOutCubic` |
+
+The asymmetry is the point: 200ms up, 160ms down. The lift is where the object gains
+weight and the possible worlds appear; the landing is where it commits. Equal durations
+read as a toggle, not as a grab.
 
 Motion is feedback, not decoration. If a cell moves, the player learned something.
 
@@ -126,7 +148,8 @@ A puzzle is on brand when all of these are true:
 
 1. It implements `PuzzleBoard`; no `GestureDetector`, no `CustomPaint` outside the contract.
 2. It emits verbs, not raw haptics.
-3. It uses the five motion moves with the values above.
+3. It uses the motion moves with the values above — including the asymmetry: nothing lands
+   slower than it lifted.
 4. It is playable by tap alone, and better by drag.
 5. It passes the uniqueness test (roadmap Phase 3 bar).
 6. It looks right in light and AMOLED dark, at 320dp width and on a tablet.
