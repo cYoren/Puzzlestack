@@ -212,15 +212,6 @@ class GalaxiesEngine {
     return null;
   }
 
-  /// Same as [propose] but with the size given directly, for tuning.
-  GalaxiesPuzzle? proposeCustom(int rows, int cols, int dots, Random random) {
-    for (var attempt = 0; attempt < 12; attempt++) {
-      final puzzle = _proposeSized(rows, cols, dots, random);
-      if (puzzle != null) return puzzle;
-    }
-    return null;
-  }
-
   GalaxiesPuzzle? _proposeOnce(GalaxiesDifficulty difficulty, Random random) =>
       _proposeSized(
         difficulty.rows,
