@@ -76,5 +76,11 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.byType(ShuffleFeedScreen), findsOneWidget);
+
+    // The feed picks a game at random, and some games start their own timers
+    // on the first frame. Tear the screen down so those timers go with it
+    // instead of failing the test as pending.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
   });
 }

@@ -6,7 +6,7 @@ part of 'pegs_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pegsNotifierHash() => r'35f0458588e9715a5388bd08791ecc334de15b7a';
+String _$pegsNotifierHash() => r'9cd63fd33bc92a2d7db14b2781768294c66e5196';
 
 /// See also [PegsNotifier].
 @ProviderFor(PegsNotifier)

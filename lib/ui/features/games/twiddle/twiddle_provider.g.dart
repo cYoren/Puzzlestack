@@ -6,7 +6,7 @@ part of 'twiddle_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$twiddleNotifierHash() => r'55cb1d2b45f38a151f662a93d068a9a080d90ea4';
+String _$twiddleNotifierHash() => r'102aeb9aa359617a4ec9a6d0747a8ec5ce5de048';
 
 /// See also [TwiddleNotifier].
 @ProviderFor(TwiddleNotifier)
