@@ -20,7 +20,9 @@ class ToyState extends PuzzleState {
 }
 
 class ToyBoard extends PuzzleBoard<ToyState> {
-  ToyBoard({required this.state});
+  ToyBoard({required this.state, this.solved = false});
+
+  final bool solved;
 
   static const ElementRef left = ElementRef('cell', 0);
   static const ElementRef right = ElementRef('cell', 1);
@@ -57,7 +59,7 @@ class ToyBoard extends PuzzleBoard<ToyState> {
       );
 
   @override
-  bool get isSolved => false;
+  bool get isSolved => solved;
 
   @override
   void paint(PuzzleCanvas canvas, ToyState state) {}
@@ -163,6 +165,36 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(moves, isEmpty);
+    });
+
+    testWidgets('the win cascade runs before the dialog is allowed',
+        (tester) async {
+      var solvedCalls = 0;
+      Widget frame(ToyBoard board) => MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: SizedBox(
+                  width: 200,
+                  child: PuzzleBoardView<ToyState>(
+                    board: board,
+                    onMove: (_) {},
+                    onSolved: () => solvedCalls++,
+                  ),
+                ),
+              ),
+            ),
+          );
+
+      await tester.pumpWidget(frame(ToyBoard(state: const ToyState())));
+      expect(solvedCalls, 0);
+
+      await tester.pumpWidget(
+        frame(ToyBoard(state: const ToyState(), solved: true)),
+      );
+      expect(solvedCalls, 0, reason: 'the celebration comes first');
+
+      await tester.pumpAndSettle();
+      expect(solvedCalls, 1);
     });
 
     testWidgets('a tap on an element with no tap move emits nothing',
