@@ -265,9 +265,10 @@ class PegsEngine {
         return false;
       }
 
-      // A peg that can never be jumped over can never be removed, so it has
-      // to be the survivor. Two of them cannot both survive, which is the
-      // prune that makes the search finish.
+      // A peg that is walled in — it can neither be jumped over nor jump — is
+      // there for the rest of the game, so it has to be the survivor. Two of
+      // them cannot both survive, and that is the prune that makes the search
+      // finish.
       if (_strandedPegs(current, rows, cols) > 1) return false;
 
       final key = _key(current);
