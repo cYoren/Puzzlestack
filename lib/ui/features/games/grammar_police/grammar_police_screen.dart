@@ -1,6 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../l10n/app_localizations.dart';
 import 'grammar_police_provider.dart';
 import '../../../../providers/user_providers.dart';
 import '../../../../utils/design_system.dart';
@@ -178,7 +178,7 @@ class _GrammarPoliceScreenState extends ConsumerState<GrammarPoliceScreen> {
           ref.read(grammarPoliceNotifierProvider.notifier).startGame();
           Navigator.of(context).pop();
         },
-        message: 'Game Over! You maintained order in the world of grammar. Score: $score',
+        message: AppLocalizations.of(context)!.grammarPoliceMessage((score).toString()),
       ),
     );
   }

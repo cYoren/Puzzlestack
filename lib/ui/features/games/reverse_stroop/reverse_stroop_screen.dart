@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/juice/game_scaffold.dart';
@@ -26,6 +28,7 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
 
   void _showGameOverDialog(int score) {
     bool won = score >= 50; // Threshold for winning
+    final l10n = AppLocalizations.of(context)!;
     if (won) {
       HapticFeedbackUtil.victory();
       ref.read(gameStreakNotifierProvider.notifier).completeGame('reverse_stroop');
@@ -36,8 +39,8 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: won ? 'FOCUS MASTER!' : 'CONCENTRATION BROKEN',
-        message: 'You scored $score points! Keep your eye on the instructions.',
+        title: won ? l10n.winFocusMaster : l10n.loseConcentrationBroken,
+        message: AppLocalizations.of(context)!.reverseStroopMessage((score).toString()),
         onPlayAgain: () {
           ref.read(reverseStroopNotifierProvider.notifier).startGame();
           Navigator.pop(context);
@@ -64,8 +67,8 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
     });
 
     if (state.currentStimulus == null) {
-      return const GameScaffold(
-        title: 'REVERSE STROOP',
+      return GameScaffold(
+        title: L10nGameHelpers.getGameTitle(context, 'reverse_stroop'),
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -90,7 +93,7 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
                   depth: 2.0,
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   child: Text(
-                    stimulus.rule == StroopRule.text ? 'MATCH TEXT' : 'MATCH COLOR',
+                    stimulus.rule == StroopRule.text ? l10n.btnMatchWord : l10n.btnMatchColor,
                     style: TextStyle(
                       letterSpacing: 2,
                       fontWeight: FontWeight.w900,
@@ -174,13 +177,14 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
   }
 
   Widget _buildStats(ReverseStroopState state, bool isSmall) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: isSmall ? 16 : 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildStat('TIME', '${state.timeLeft}s', state.timeLeft < 10 ? DesignSystem.error : DesignSystem.primary, isSmall),
-          _buildStat('SCORE', '${state.score}', DesignSystem.success, isSmall),
+          _buildStat(l10n.statTime, '${state.timeLeft}s', state.timeLeft < 10 ? DesignSystem.error : DesignSystem.primary, isSmall),
+          _buildStat(l10n.statScore, '${state.score}', DesignSystem.success, isSmall),
         ],
       ),
     );

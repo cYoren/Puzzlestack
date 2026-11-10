@@ -1,3 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -40,6 +43,7 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inequalityDashNotifierProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -50,8 +54,9 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'TIME\'S UP!',
-            message: 'You scored ${next.score} points matching inequalities!',
+
+            title: l10n.timeUp,
+            message: AppLocalizations.of(context)!.inequalityDashMessage((next.score).toString()),
             onHome: () {
               Navigator.of(context).pop(); // Dismiss dialog
               Navigator.of(context).pop(); // Back to home
@@ -67,8 +72,8 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
 
     if (state.isLoading || state.currentQuestion == null) {
       return GameScaffold(
-        title: 'INEQUALITY DASH',
-        subtitle: 'High-speed formula comparison',
+        title: L10nGameHelpers.getGameTitle(context, 'inequality_dash'),
+        subtitle: L10nGameHelpers.getGameTitle(context, 'inequality_dash'),
         body: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -78,8 +83,8 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
     final question = state.currentQuestion!;
 
     return GameScaffold(
-      title: 'INEQUALITY DASH',
-      subtitle: 'Compare the values: is Left <, =, or > Right?',
+      title: L10nGameHelpers.getGameTitle(context, 'inequality_dash'),
+      subtitle: L10nGameHelpers.getGameTitle(context, 'inequality_dash'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
         ref.read(inequalityDashNotifierProvider.notifier).reset();
@@ -255,7 +260,7 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: DesignSystem.spaceMD),
                         child: Text(
-                          state.lastAnswerCorrect! ? 'CORRECT!' : 'WRONG!',
+                          state.lastAnswerCorrect! ? AppLocalizations.of(context)!.correct : AppLocalizations.of(context)!.incorrect,
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 16,

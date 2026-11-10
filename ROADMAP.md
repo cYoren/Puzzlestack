@@ -37,8 +37,8 @@ which is why the work can start now — but Phase 6 cannot ship iOS without it.
 
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
-| **Puzzlestack** (this repo) | our fork, 161 games | 78,131 LOC game code | the base |
-| **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | 205 games | 44 games we are missing |
+| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **304** after Phase 2 | 78,131 LOC game code | the base |
+| **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | **304 registered games** | all of them, merged in Phase 2 |
 | **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
 
@@ -87,10 +87,15 @@ the zip is from 2014; the pinned clone in `tatham-c/` is current and has 42 game
 
 | | Count |
 | --- | --- |
-| Games today | 161 |
-| + upstream games we never received | +44 → 205 |
-| + Tatham puzzles invariant has that we lack | +21 → 226 |
-| + Tatham puzzles invariant never ported | +4 → 230 |
+| Games at the fork point | 161 |
+| + upstream games we never received | **+143 → 304** (Phase 2, landed) |
+| + Tatham puzzles invariant has that we lack | +21 → 325 |
+| + Tatham puzzles invariant never ported | +4 → 329 |
+
+The 44 in the first draft of this table came from upstream's `game_data.dart`, which lists 205
+games. That file is legacy: the registry they actually ship from (`game_registry.dart`, one
+`_metadata.dart` per game) has **304**. Phase 2 merged the registry, so the real number is 304
+and the porting phases add to that.
 
 Tatham's **42**, accounted for: 17 we already cover (14 rebuilt in Phase 4, plus
 `Minesweeper` = Mines, `Nonogram` = Pattern, `Sudoku` = Solo), 21 ported in Phase 3, 4
@@ -164,6 +169,28 @@ whole pattern, not just the screens, or the registry will fight us later.
 
 **Done when:** 205 games in the registry, `flutter analyze` clean, tests green, Shuffle feed
 and discovery home still work, and every new game appears in the right category room.
+
+**Landed, at 304 games rather than 205.** See the coverage math above: `game_data.dart` was
+the stale list. What the merge actually took:
+
+- the 100 upstream commits, with real ancestry: our repository had a fresh history, so a
+  graft commit put our tree on top of the fork point `d4d5d09` and the merge became a
+  three-way one instead of 100 commits of conflicts;
+- **one registry.** `game_registry.dart` (304 `_metadata.dart` files, localized titles,
+  popularity) replaces our `game_catalog.dart` and upstream's legacy `game_data.dart`. Both
+  are deleted, along with the five home widgets only the old upstream home used;
+- **the guides**: 305 entries in `game_guides.dart`, now reachable from the info button on
+  every game screen instead of only from a tile we no longer render;
+- our branding survived the merge: bundle ids, store links, brand colours, the discovery home
+  and the Shuffle feed. Upstream's `app_de.arb` was invalid JSON on their main; fixed here.
+
+Two things the merge forced, both worth knowing:
+
+1. Upstream had deleted the unused `final l10n = …` locals in nine screens and then started
+   using them again. Our tree had deleted the same lines for the analyzer. Taking their
+   version of those nine files was the whole fix.
+2. `analysis_options.yaml` merged into a file with two `analyzer:` keys, which made
+   `dart format` (and therefore `flutter gen-l10n`) fail. One block now.
 
 ---
 

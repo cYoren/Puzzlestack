@@ -24,8 +24,8 @@ class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
       totalSolved: fields[4] as int?,
       favoriteGameIds: (fields[5] as List?)?.cast<String>(),
       isTrialModeEnabled: fields[6] as bool?,
-      name: fields[7] as String?,
-      isOnboarded: fields[8] as bool?,
+      hiddenGameIds: (fields[7] as List?)?.cast<String>(),
+      isKeepScreenAwakeEnabled: fields[8] as bool?,
     );
   }
 
@@ -45,12 +45,12 @@ class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
       ..write(obj.totalSolved)
       ..writeByte(6)
       ..write(obj.isTrialModeEnabled)
-      ..writeByte(7)
-      ..write(obj.name)
       ..writeByte(8)
-      ..write(obj.isOnboarded)
+      ..write(obj.isKeepScreenAwakeEnabled)
       ..writeByte(5)
-      ..write(obj.favoriteGameIds);
+      ..write(obj.favoriteGameIds)
+      ..writeByte(7)
+      ..write(obj.hiddenGameIds);
   }
 
   @override
@@ -81,8 +81,10 @@ _$UserDataImpl _$$UserDataImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       isTrialModeEnabled: json['isTrialModeEnabled'] as bool?,
-      name: json['name'] as String?,
-      isOnboarded: json['isOnboarded'] as bool?,
+      hiddenGameIds: (json['hiddenGameIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      isKeepScreenAwakeEnabled: json['isKeepScreenAwakeEnabled'] as bool?,
     );
 
 Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
@@ -94,6 +96,6 @@ Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
       'totalSolved': instance.totalSolved,
       'favoriteGameIds': instance.favoriteGameIds,
       'isTrialModeEnabled': instance.isTrialModeEnabled,
-      'name': instance.name,
-      'isOnboarded': instance.isOnboarded,
+      'hiddenGameIds': instance.hiddenGameIds,
+      'isKeepScreenAwakeEnabled': instance.isKeepScreenAwakeEnabled,
     };

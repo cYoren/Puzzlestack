@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -33,26 +35,28 @@ class _TracePathScreenState extends ConsumerState<TracePathScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
-        title: won ? 'STEADY HANDS!' : 'SHAKY LINE',
-        message: 'Your accuracy was ${(accuracy * 100).toInt()}%!',
-        isVictory: won,
-        onPlayAgain: () {
-          final size = MediaQuery.of(context).size;
-          ref.read(tracePathNotifierProvider.notifier).initGame(Size(size.width, size.height * 0.6));
-          Navigator.pop(context);
-        },
-        onHome: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return GameCompletionDialog(
+          title: won ? l10n.tracePathTitle.toUpperCase() : l10n.gameOver,
+          message: AppLocalizations.of(context)!.tracePathMessage(((accuracy * 100).toInt()).toString()),
+          isVictory: won,
+          onPlayAgain: () {
+            final size = MediaQuery.of(context).size;
+            ref.read(tracePathNotifierProvider.notifier).initGame(Size(size.width, size.height * 0.6));
+            Navigator.pop(context);
+          },
+          onHome: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
     final state = ref.watch(tracePathNotifierProvider);
     final notifier = ref.read(tracePathNotifierProvider.notifier);
@@ -69,12 +73,12 @@ class _TracePathScreenState extends ConsumerState<TracePathScreen> {
     });
 
     if (state.isLoading) {
-      return GameScaffold(title: l10n.tracePathTitle.toUpperCase(), body: Center(child: CircularProgressIndicator()));
+      return GameScaffold(title: L10nGameHelpers.getGameTitle(context, 'trace_path'), body: Center(child: CircularProgressIndicator()));
     }
 
     return GameScaffold(
-      title: 'TRACE PATH',
-      subtitle: l10n.tracePathSubtitle,
+      title: L10nGameHelpers.getGameTitle(context, 'trace_path'),
+      subtitle: L10nGameHelpers.getGameSubtitle(context, 'trace_path'),
       body: Column(
         children: [
           SizedBox(height: DesignSystem.spaceLG),

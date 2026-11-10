@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'word_mastermind_provider.dart';
@@ -120,7 +122,7 @@ class WordMastermindScreen extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          Text('$count', style: TextStyle(fontWeight: FontWeight.w900, color: color, fontSize: 12)),
+          Text(AppLocalizations.of(context)!.wordMastermindText((count).toString()), style: TextStyle(fontWeight: FontWeight.w900, color: color, fontSize: 12)),
           SizedBox(width: 2),
           Text(label, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
         ],
@@ -250,8 +252,8 @@ class WordMastermindScreen extends ConsumerWidget {
             ref.read(wordMastermindNotifierProvider.notifier).reset();
             Navigator.of(context).pop();
           },
-          title: 'SOLVED!',
-          message: 'You mastered the code!\nThe word was: ${state.targetWord}',
+          title: L10nGameHelpers.getGameTitle(context, 'word_mastermind'),
+          message: AppLocalizations.of(context)!.wordMastermindMessage((state.targetWord).toString()),
         ),
       );
       return;
@@ -272,8 +274,8 @@ class WordMastermindScreen extends ConsumerWidget {
           ref.read(wordMastermindNotifierProvider.notifier).reset();
           Navigator.of(context).pop();
         },
-        title: 'OUT OF TRIES',
-        message: 'The hidden word was: ${state.targetWord.toUpperCase()}',
+        title: L10nGameHelpers.getGameTitle(context, 'word_mastermind'),
+        message: AppLocalizations.of(context)!.wordMastermindMessage1((state.targetWord.toUpperCase()).toString()),
       ),
     );
   }

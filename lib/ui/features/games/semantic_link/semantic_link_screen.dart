@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../providers/user_providers.dart';
@@ -33,7 +35,7 @@ class _SemanticLinkScreenState extends ConsumerState<SemanticLinkScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.timeUp.toUpperCase(),
-        message: 'You scored $score points!',
+        message: AppLocalizations.of(context)!.semanticLinkMessage((score).toString()),
         isVictory: score > 5,
         onHome: () {
           Navigator.of(context).pop();
@@ -70,7 +72,7 @@ class _SemanticLinkScreenState extends ConsumerState<SemanticLinkScreen> {
     });
 
     return GameScaffold(
-      title: 'Semantic Link',
+      title: L10nGameHelpers.getGameTitle(context, 'semantic_link'),
       subtitle: l10n.semanticLinkSubtitle,
       body: Column(
         children: [

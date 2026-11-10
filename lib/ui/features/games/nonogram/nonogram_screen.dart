@@ -67,7 +67,7 @@ class _NonogramScreenState extends ConsumerState<NonogramScreen> {
       ],
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text(AppLocalizations.of(context)!.nonogramText((err).toString()))),
         data: (nonogramState) => LayoutBuilder(
           builder: (context, constraints) {
             return Column(
@@ -100,7 +100,7 @@ class _NonogramScreenState extends ConsumerState<NonogramScreen> {
                                       _buildRowClue(nonogramState.rowClues[r]),
                                       const SizedBox(width: 8),
                                       for (int c = 0; c < nonogramState.size; c++)
-                                        Expanded(child: NonogramCell(row: r, col: c, isMarkMode: _isMarkMode)),
+                                        Expanded(child: NonogramCell(key: ValueKey('nonogram_cell_${r}_$c'), row: r, col: c, isMarkMode: _isMarkMode)),
                                     ],
                                   ),
                                 ),
@@ -280,10 +280,6 @@ class NonogramCell extends ConsumerWidget {
         onTap: () {
           HapticFeedbackUtil.lightImpact();
           ref.read(nonogramNotifierProvider.notifier).toggleCell(row, col, isMarkMode);
-        },
-        onLongPress: () {
-          HapticFeedbackUtil.mediumImpact();
-          ref.read(nonogramNotifierProvider.notifier).toggleCell(row, col, true);
         },
         child: Center(
           child: value == 2

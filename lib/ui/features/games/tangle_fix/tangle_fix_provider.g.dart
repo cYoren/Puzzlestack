@@ -6,7 +6,7 @@ part of 'tangle_fix_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tangleFixNotifierHash() => r'6f6e3a06fedc4f2d31b5a08ce1795009beb2443f';
+String _$tangleFixNotifierHash() => r'44d2ec4f582eca69b285e4256b2145bb8a7330ce';
 
 /// See also [TangleFixNotifier].
 @ProviderFor(TangleFixNotifier)

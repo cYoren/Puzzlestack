@@ -42,12 +42,15 @@ the C is the correctness bar. Use both, in that order.
 ## The upstream fork base
 
 Our repo forked from `sidhant947/Puzzle` on **2026-06-07**. That day upstream was at
-`d4d5d09` with **161 games** — which is exactly what we have, and confirms the fork point.
+`d4d5d09` with **161 games** — which is exactly what we had, and confirms the fork point.
+Upstream's `game_data.dart` still lists 205 games; that file is legacy. The registry they ship
+from has 304, and Phase 2 merged all of them.
 
 | | Value |
 | --- | --- |
 | Fork base | `d4d5d09` (2026-06-07), 161 games |
-| Upstream HEAD when audited | `3a0928d` (2026-11-08), 205 games |
+| Registry | `lib/data/game_registry.dart`, one `_metadata.dart` per game, 304 entries |
+| Upstream HEAD when audited | `3a0928d` (2026-11-08), **304** registered games |
 | Commits we never received | **100** |
 
 Phase 2 merges from that base, so the diff is bounded and reviewable.

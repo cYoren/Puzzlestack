@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -29,30 +31,32 @@ class _PrimeHunterScreenState extends ConsumerState<PrimeHunterScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
-        title: isVictory ? 'MASTER HUNTER!' : 'HUNT ENDED',
-        message: isVictory 
-            ? 'Your prime number detection is perfect!' 
-            : 'Primes are the building blocks of numbers! Your score: ${ref.read(primeHunterNotifierProvider).score}',
-        isVictory: isVictory,
-        onHome: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        },
-        onPlayAgain: () {
-          Navigator.of(context).pop();
-          ref.read(primeHunterNotifierProvider.notifier).resetGame();
-        },
-      ),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return GameCompletionDialog(
+          title: isVictory ? l10n.primeHunterTitle.toUpperCase() : l10n.gameOver,
+          message: isVictory 
+              ? 'Your prime number detection is perfect!' 
+              : 'Primes are the building blocks of numbers! Your score: ${ref.read(primeHunterNotifierProvider).score}',
+          isVictory: isVictory,
+          onHome: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
+          onPlayAgain: () {
+            Navigator.of(context).pop();
+            ref.read(primeHunterNotifierProvider.notifier).resetGame();
+          },
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final colorScheme = Theme.of(context).colorScheme;
     final state = ref.watch(primeHunterNotifierProvider);
     final notifier = ref.read(primeHunterNotifierProvider.notifier);
+    final colorScheme = Theme.of(context).colorScheme;
 
     ref.listen(primeHunterNotifierProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
@@ -71,14 +75,14 @@ class _PrimeHunterScreenState extends ConsumerState<PrimeHunterScreen> {
 
     if (state.isLoading) {
       return GameScaffold(
-        title: l10n.primeHunterTitle.toUpperCase(),
+        title: L10nGameHelpers.getGameTitle(context, 'prime_hunter'),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return GameScaffold(
-      title: 'Prime Hunter',
-      subtitle: l10n.primeHunterSubtitle,
+      title: L10nGameHelpers.getGameTitle(context, 'prime_hunter'),
+      subtitle: L10nGameHelpers.getGameSubtitle(context, 'prime_hunter'),
       body: Column(
         children: [
           Padding(

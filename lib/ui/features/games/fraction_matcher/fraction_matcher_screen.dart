@@ -1,3 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math' as math;
@@ -36,6 +39,7 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(fractionMatcherNotifierProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -46,8 +50,9 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'TIME\'S UP!',
-            message: 'You scored ${next.score} points matching representations!',
+
+            title: l10n.timeUp,
+            message: AppLocalizations.of(context)!.fractionMatcherMessage((next.score).toString()),
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -63,8 +68,8 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
 
     if (state.isLoading || state.currentLevel == null) {
       return GameScaffold(
-        title: 'FRACTION MATCHER',
-        subtitle: 'Rapid representation matching',
+        title: L10nGameHelpers.getGameTitle(context, 'fraction_matcher'),
+        subtitle: L10nGameHelpers.getGameTitle(context, 'fraction_matcher'),
         body: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -74,8 +79,8 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
     final level = state.currentLevel!;
 
     return GameScaffold(
-      title: 'FRACTION MATCHER',
-      subtitle: 'Match the representation to the target fraction.',
+      title: L10nGameHelpers.getGameTitle(context, 'fraction_matcher'),
+      subtitle: L10nGameHelpers.getGameTitle(context, 'fraction_matcher'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
         ref.read(fractionMatcherNotifierProvider.notifier).reset();
@@ -281,7 +286,7 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: DesignSystem.spaceSM),
                     child: Text(
-                      state.lastAnswerCorrect! ? 'CORRECT!' : 'WRONG!',
+                      state.lastAnswerCorrect! ? AppLocalizations.of(context)!.correct : AppLocalizations.of(context)!.incorrect,
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 16,

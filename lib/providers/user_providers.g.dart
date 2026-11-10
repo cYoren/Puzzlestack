@@ -21,12 +21,12 @@ final userRepositoryProvider = Provider<UserRepository>.internal(
 );
 
 typedef UserRepositoryRef = ProviderRef<UserRepository>;
-String _$userDataNotifierHash() => r'e296964a329b7d74e20eb237138f9c98bad314a6';
+String _$userDataNotifierHash() => r'0ac92e76f55e732d3b55b6eac6ec631fbd97913f';
 
 /// See also [UserDataNotifier].
 @ProviderFor(UserDataNotifier)
 final userDataNotifierProvider =
-    AutoDisposeNotifierProvider<UserDataNotifier, UserData>.internal(
+    NotifierProvider<UserDataNotifier, UserData>.internal(
   UserDataNotifier.new,
   name: r'userDataNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -36,14 +36,14 @@ final userDataNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$UserDataNotifier = AutoDisposeNotifier<UserData>;
+typedef _$UserDataNotifier = Notifier<UserData>;
 String _$gameStreakNotifierHash() =>
-    r'813d40f4b65d03faccd4313349476fdef32405c2';
+    r'c6aad79563b03b448cd9a84133e1de752b169bbf';
 
 /// See also [GameStreakNotifier].
 @ProviderFor(GameStreakNotifier)
-final gameStreakNotifierProvider = AutoDisposeNotifierProvider<
-    GameStreakNotifier, Map<String, GameStreak>>.internal(
+final gameStreakNotifierProvider =
+    NotifierProvider<GameStreakNotifier, Map<String, GameStreak>>.internal(
   GameStreakNotifier.new,
   name: r'gameStreakNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -53,6 +53,6 @@ final gameStreakNotifierProvider = AutoDisposeNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$GameStreakNotifier = AutoDisposeNotifier<Map<String, GameStreak>>;
+typedef _$GameStreakNotifier = Notifier<Map<String, GameStreak>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

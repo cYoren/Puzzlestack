@@ -1,3 +1,6 @@
+import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/design_system.dart';
@@ -48,6 +51,7 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(target10NotifierProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -58,8 +62,9 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
           context: context,
           barrierDismissible: false,
           builder: (context) => GameCompletionDialog(
-            title: 'TIME\'S UP!',
-            message: 'You scored ${next.score} points matching numbers to 10!',
+
+            title: l10n.timeUp,
+            message: AppLocalizations.of(context)!.target10Message((next.score).toString()),
             onHome: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
@@ -75,8 +80,8 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
 
     if (state.isLoading || state.grid.isEmpty) {
       return GameScaffold(
-        title: 'TARGET 10',
-        subtitle: 'Sprint grid-clearing',
+        title: L10nGameHelpers.getGameTitle(context, 'target_10'),
+        subtitle: L10nGameHelpers.getGameTitle(context, 'target_10'),
         body: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -90,8 +95,8 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
     }
 
     return GameScaffold(
-      title: 'TARGET 10',
-      subtitle: 'Select tiles that add up to exactly 10 to clear them.',
+      title: L10nGameHelpers.getGameTitle(context, 'target_10'),
+      subtitle: L10nGameHelpers.getGameTitle(context, 'target_10'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
         ref.read(target10NotifierProvider.notifier).reset();

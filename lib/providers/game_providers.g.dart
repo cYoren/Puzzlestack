@@ -6,7 +6,7 @@ part of 'game_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filteredGamesHash() => r'373ec2e724d5642b0556146587e57becf290fa2f';
+String _$filteredGamesHash() => r'212e60a2d8f3353fd3c6febbcf20e55db1274c9c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const filteredGamesProvider = FilteredGamesFamily();
 
 /// See also [filteredGames].
-class FilteredGamesFamily extends Family<List<Map<String, dynamic>>> {
+class FilteredGamesFamily extends Family<List<GameMetadata>> {
   /// See also [filteredGames].
   const FilteredGamesFamily();
 
@@ -42,10 +42,12 @@ class FilteredGamesFamily extends Family<List<Map<String, dynamic>>> {
   FilteredGamesProvider call({
     required String searchQuery,
     required String selectedCategory,
+    required Map<String, String> localizedTitles,
   }) {
     return FilteredGamesProvider(
       searchQuery: searchQuery,
       selectedCategory: selectedCategory,
+      localizedTitles: localizedTitles,
     );
   }
 
@@ -56,6 +58,7 @@ class FilteredGamesFamily extends Family<List<Map<String, dynamic>>> {
     return call(
       searchQuery: provider.searchQuery,
       selectedCategory: provider.selectedCategory,
+      localizedTitles: provider.localizedTitles,
     );
   }
 
@@ -75,17 +78,18 @@ class FilteredGamesFamily extends Family<List<Map<String, dynamic>>> {
 }
 
 /// See also [filteredGames].
-class FilteredGamesProvider
-    extends AutoDisposeProvider<List<Map<String, dynamic>>> {
+class FilteredGamesProvider extends AutoDisposeProvider<List<GameMetadata>> {
   /// See also [filteredGames].
   FilteredGamesProvider({
     required String searchQuery,
     required String selectedCategory,
+    required Map<String, String> localizedTitles,
   }) : this._internal(
           (ref) => filteredGames(
             ref as FilteredGamesRef,
             searchQuery: searchQuery,
             selectedCategory: selectedCategory,
+            localizedTitles: localizedTitles,
           ),
           from: filteredGamesProvider,
           name: r'filteredGamesProvider',
@@ -98,6 +102,7 @@ class FilteredGamesProvider
               FilteredGamesFamily._allTransitiveDependencies,
           searchQuery: searchQuery,
           selectedCategory: selectedCategory,
+          localizedTitles: localizedTitles,
         );
 
   FilteredGamesProvider._internal(
@@ -109,14 +114,16 @@ class FilteredGamesProvider
     required super.from,
     required this.searchQuery,
     required this.selectedCategory,
+    required this.localizedTitles,
   }) : super.internal();
 
   final String searchQuery;
   final String selectedCategory;
+  final Map<String, String> localizedTitles;
 
   @override
   Override overrideWith(
-    List<Map<String, dynamic>> Function(FilteredGamesRef provider) create,
+    List<GameMetadata> Function(FilteredGamesRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -129,12 +136,13 @@ class FilteredGamesProvider
         debugGetCreateSourceHash: null,
         searchQuery: searchQuery,
         selectedCategory: selectedCategory,
+        localizedTitles: localizedTitles,
       ),
     );
   }
 
   @override
-  AutoDisposeProviderElement<List<Map<String, dynamic>>> createElement() {
+  AutoDisposeProviderElement<List<GameMetadata>> createElement() {
     return _FilteredGamesProviderElement(this);
   }
 
@@ -142,7 +150,8 @@ class FilteredGamesProvider
   bool operator ==(Object other) {
     return other is FilteredGamesProvider &&
         other.searchQuery == searchQuery &&
-        other.selectedCategory == selectedCategory;
+        other.selectedCategory == selectedCategory &&
+        other.localizedTitles == localizedTitles;
   }
 
   @override
@@ -150,21 +159,25 @@ class FilteredGamesProvider
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, searchQuery.hashCode);
     hash = _SystemHash.combine(hash, selectedCategory.hashCode);
+    hash = _SystemHash.combine(hash, localizedTitles.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin FilteredGamesRef on AutoDisposeProviderRef<List<Map<String, dynamic>>> {
+mixin FilteredGamesRef on AutoDisposeProviderRef<List<GameMetadata>> {
   /// The parameter `searchQuery` of this provider.
   String get searchQuery;
 
   /// The parameter `selectedCategory` of this provider.
   String get selectedCategory;
+
+  /// The parameter `localizedTitles` of this provider.
+  Map<String, String> get localizedTitles;
 }
 
 class _FilteredGamesProviderElement
-    extends AutoDisposeProviderElement<List<Map<String, dynamic>>>
+    extends AutoDisposeProviderElement<List<GameMetadata>>
     with FilteredGamesRef {
   _FilteredGamesProviderElement(super.provider);
 
@@ -173,6 +186,54 @@ class _FilteredGamesProviderElement
   @override
   String get selectedCategory =>
       (origin as FilteredGamesProvider).selectedCategory;
+  @override
+  Map<String, String> get localizedTitles =>
+      (origin as FilteredGamesProvider).localizedTitles;
 }
+
+String _$categoryStatsHash() => r'915b141f1fff412001a17066a1c94c04e62ceb50';
+
+/// See also [categoryStats].
+@ProviderFor(categoryStats)
+final categoryStatsProvider = AutoDisposeProvider<Map<String, int>>.internal(
+  categoryStats,
+  name: r'categoryStatsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$categoryStatsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef CategoryStatsRef = AutoDisposeProviderRef<Map<String, int>>;
+String _$solvedStatsHash() => r'3a0964f8255b59990f7ee043cae23182a9376f68';
+
+/// See also [solvedStats].
+@ProviderFor(solvedStats)
+final solvedStatsProvider = AutoDisposeProvider<Map<String, int>>.internal(
+  solvedStats,
+  name: r'solvedStatsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$solvedStatsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SolvedStatsRef = AutoDisposeProviderRef<Map<String, int>>;
+String _$solvedTodayCountHash() => r'23f255d11a91c9da2a313aec31210ba998e8d4a0';
+
+/// See also [solvedTodayCount].
+@ProviderFor(solvedTodayCount)
+final solvedTodayCountProvider = AutoDisposeProvider<int>.internal(
+  solvedTodayCount,
+  name: r'solvedTodayCountProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$solvedTodayCountHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SolvedTodayCountRef = AutoDisposeProviderRef<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

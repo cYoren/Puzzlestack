@@ -42,6 +42,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get timeUp => 'Hết giờ!';
 
   @override
+  String get victory => 'Chiến thắng!';
+
+  @override
+  String get gameWin => 'LÀM TỐT LẮM!';
+
+  @override
   String get completed => 'Hoàn thành!';
 
   @override
@@ -119,6 +125,12 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get trialModeDescription =>
       'Giải 20 câu để kết thúc thay vì hẹn giờ 60 giây';
+
+  @override
+  String get keepScreenAwake => 'Giữ màn hình luôn sáng';
+
+  @override
+  String get keepScreenAwakeDescription => 'Ngăn màn hình tắt trong khi chơi';
 
   @override
   String get appearance => 'Giao diện';
@@ -1148,7 +1160,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get reflexTapTitle => 'Nhấn phản xạ';
 
   @override
-  String get visualStatisticalLearningTitle => 'Trò chơi kết thúc';
+  String get visualStatisticalLearningTitle => 'Học thống kê trực quan';
 
   @override
   String get orbitTapTitle => 'Nhấn theo quỹ đạo';
@@ -1157,7 +1169,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get orbitTapSubtitle => 'Nhấn khi các quả bóng thẳng hàng với cổng';
 
   @override
-  String get schulteTableTitle => 'Tập trung tuyệt vời!';
+  String get orbitTapTapToHit => 'Chạm khi quả bóng đi vào cổng';
+
+  @override
+  String get schulteTableTitle => 'Bảng Schulte';
 
   @override
   String get multipleObjectTrackingTitle => 'Theo dõi đối tượng';
@@ -1174,13 +1189,13 @@ class AppLocalizationsVi extends AppLocalizations {
       'Sử dụng bảng mã ở trên để tìm chữ số cho ký hiệu được hiển thị.';
 
   @override
-  String get memoryMatrixTitle => 'Đã đạt mục tiêu!';
+  String get memoryMatrixTitle => 'Ma trận trí nhớ';
 
   @override
   String get memoryMatrixSubtitle => 'Ghi nhớ mẫu và nhấn vào các ô.';
 
   @override
-  String get mentalAbacusTitle => 'Bậc thầy bàn tính!';
+  String get mentalAbacusTitle => 'Bàn tính nhẩm';
 
   @override
   String get mentalAbacusSubtitle => 'Giải toán bằng bàn tính Soroban';
@@ -1239,7 +1254,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get verbalAnalogiesTitle => 'Bậc thầy ẩn dụ!';
+  String get verbalAnalogiesTitle => 'Ẩn dụ ngôn từ';
 
   @override
   String get verbalAnalogiesSubtitle => 'Hoàn thành mối quan hệ';
@@ -1259,7 +1274,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Kết nối các từ bằng cách thay đổi từng chữ cái một.';
 
   @override
-  String get tangleFixTitle => 'Đã gỡ rối!';
+  String get tangleFixTitle => 'Gỡ rối dây';
 
   @override
   String get tangleFixSubtitle =>
@@ -1292,7 +1307,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Xác định màu mực của từ được hiển thị. Bỏ qua ý nghĩa của từ đó!';
 
   @override
-  String get wisconsinCardSortingTitle => 'Trò chơi kết thúc';
+  String get wisconsinCardSortingTitle => 'Phân loại thẻ Wisconsin';
 
   @override
   String get wisconsinCardSortingSubtitle =>
@@ -1323,7 +1338,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get mirrorTracingTitle => 'Vẽ ngược hoàn hảo!';
+  String get mirrorTracingTitle => 'Vẽ ngược qua gương';
 
   @override
   String get mirrorTracingSubtitle =>
@@ -1354,13 +1369,13 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get paperFoldingTitle => 'Gấp giấy hoàn hảo!';
+  String get paperFoldingTitle => 'Gấp giấy';
 
   @override
   String get paperFoldingSubtitle => 'Nó sẽ trông như thế nào khi mở ra?';
 
   @override
-  String get waterSortTitle => 'Làm tốt lắm!';
+  String get waterSortTitle => 'Rót nước đúng ống';
 
   @override
   String get waterSortSubtitle =>
@@ -1445,7 +1460,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Giải các phép tính hình ảnh để tìm giá trị của mỗi ký hiệu. Kết quả của phép tính cuối cùng là gì?';
 
   @override
-  String get silhouetteMatchTitle => 'Đã khớp!';
+  String get silhouetteMatchTitle => 'Ghép bóng hình';
 
   @override
   String get silhouetteMatchSubtitle => 'Hình bóng nào khớp với đối tượng này?';
@@ -1874,6 +1889,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get shapeStar => 'HÌNH NGÔI SAO';
 
   @override
+  String get shapeRectangle => 'HÌNH CHỮ NHẬT';
+
+  @override
+  String get shapeEllipse => 'HÌNH ELIP';
+
+  @override
+  String get shapeTrapezoid => 'HÌNH THANG';
+
+  @override
   String get colorRedLabel => 'ĐỎ';
 
   @override
@@ -1958,4 +1982,4091 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get topologyScore => 'ĐIỂM: ';
+
+  @override
+  String get semanticDistanceTitle => 'Khoảng cách Ngữ nghĩa';
+
+  @override
+  String get semanticDistanceSubtitle =>
+      'Đo lường khoảng cách khái niệm giữa các từ';
+
+  @override
+  String get oxymoronHuntTitle => 'Săn tìm Nghịch hợp';
+
+  @override
+  String get oxymoronHuntSubtitle => 'Ghép các cặp từ mâu thuẫn trong lưới';
+
+  @override
+  String get portmanteauSplitTitle => 'Phân tách Từ ghép lai';
+
+  @override
+  String get portmanteauSplitSubtitle =>
+      'Xác định các từ gốc của một từ ghép lai';
+
+  @override
+  String get chainReactionTitle => 'Phản ứng Chuỗi';
+
+  @override
+  String get chainReactionSubtitle => 'Kết nối các từ bằng các chữ cái lặp lại';
+
+  @override
+  String get rhymeMasterTitle => 'Bậc thầy Gieo vần';
+
+  @override
+  String get rhymeMasterSubtitle => 'Xác định các từ vần với từ mục tiêu';
+
+  @override
+  String get definitionDashTitle => 'Chạy đua Định nghĩa';
+
+  @override
+  String get definitionDashSubtitle => 'Nối từ đúng với định nghĩa của nó';
+
+  @override
+  String get syllableStackTitle => 'Xếp chồng Âm tiết';
+
+  @override
+  String get syllableStackSubtitle =>
+      'Xếp các âm tiết để tạo thành từ hoàn chỉnh';
+
+  @override
+  String get sentenceUnscrambleTitle => 'Sắp xếp Câu';
+
+  @override
+  String get sentenceUnscrambleSubtitle =>
+      'Sắp xếp lại các từ để tạo thành một câu có nghĩa';
+
+  @override
+  String get grammarSortTitle => 'Phân loại Ngữ pháp';
+
+  @override
+  String get grammarSortSubtitle => 'Phân loại từ theo từ loại';
+
+  @override
+  String get vowelReconstructTitle => 'Khôi phục Nguyên âm';
+
+  @override
+  String get vowelReconstructSubtitle => 'Điền các nguyên âm còn thiếu vào câu';
+
+  @override
+  String get consonantReconstructTitle => 'Khôi phục Phụ âm';
+
+  @override
+  String get consonantReconstructSubtitle =>
+      'Điền các phụ âm còn thiếu vào câu';
+
+  @override
+  String get homophoneHuntTitle => 'Săn tìm Từ đồng âm';
+
+  @override
+  String get silentLetterSearchTitle => 'Tìm chữ cái câm';
+
+  @override
+  String get silentLetterSearchSubtitle =>
+      'Xác định các chữ cái không phát âm trong từ';
+
+  @override
+  String get palindromeBuilderTitle => 'Tạo từ Đối xứng';
+
+  @override
+  String get palindromeBuilderSubtitle =>
+      'Tạo một từ đối xứng bằng cách thêm ít chữ cái nhất';
+
+  @override
+  String get phoneticGuessTitle => 'Đoán theo Phiên âm';
+
+  @override
+  String get phoneticGuessSubtitle =>
+      'Xác định từ dựa trên cách phiên âm của nó';
+
+  @override
+  String get spoonerismSolverTitle => 'Giải mã Nói lái';
+
+  @override
+  String get spoonerismSolverSubtitle =>
+      'Xác định cách nói lái đúng cho cụm từ';
+
+  @override
+  String get etymonOddballTitle => 'Tìm gốc từ khác biệt';
+
+  @override
+  String get etymonOddballSubtitle =>
+      'Tìm từ không có chung gốc từ với các từ còn lại';
+
+  @override
+  String get etymologyOriginTitle => 'Nguồn gốc Từ nguyên';
+
+  @override
+  String get etymologyOriginSubtitle => 'Đoán ngôn ngữ gốc của từ mượn';
+
+  @override
+  String get affixFactoryTitle => 'Xưởng Phụ tố';
+
+  @override
+  String get affixFactorySubtitle =>
+      'Tạo các từ có nghĩa bằng tiền tố và hậu tố';
+
+  @override
+  String get cognateCatchTitle => 'Tìm Từ đồng gốc';
+
+  @override
+  String get cognateCatchSubtitle =>
+      'Phân biệt giữa từ đồng gốc thật và từ giả đồng gốc';
+
+  @override
+  String get compoundConnectTitle => 'Kết nối Từ ghép';
+
+  @override
+  String get compoundConnectSubtitle =>
+      'Kết hợp hai từ để tạo thành một từ ghép';
+
+  @override
+  String get pangramSprintTitle => 'Chạy đua Pangram';
+
+  @override
+  String get pangramSprintSubtitle =>
+      'Xây dựng một câu sử dụng mọi chữ cái trong bảng chữ cái';
+
+  @override
+  String get anagramDefinitionTitle => 'Định nghĩa Từ đảo chữ';
+
+  @override
+  String get anagramDefinitionSubtitle =>
+      'Giải từ đảo chữ dựa trên định nghĩa của nó';
+
+  @override
+  String get letterBridgeTitle => 'Cầu nối Chữ cái';
+
+  @override
+  String get letterBridgeSubtitle => 'Tìm chữ cái còn thiếu để nối hai từ';
+
+  @override
+  String get letterFrequencyScanTitle => 'Quét tần suất Chữ cái';
+
+  @override
+  String get letterFrequencyScanSubtitle =>
+      'Đếm số lần một chữ cái xuất hiện trong văn bản';
+
+  @override
+  String get oneLetterShiftTitle => 'Dịch chuyển một chữ cái';
+
+  @override
+  String get oneLetterShiftSubtitle =>
+      'Biến đổi một từ thành từ khác bằng cách thay đổi một chữ cái';
+
+  @override
+  String vocabularyBuilderMessage(String arg0) {
+    return 'Làm tốt lắm! Vốn từ vựng của bạn rất ấn tượng. Điểm: $arg0';
+  }
+
+  @override
+  String get symmetryMessage =>
+      'Bạn đã đối xứng hóa mẫu hình một cách hoàn hảo với độ chính xác tuyệt đối.';
+
+  @override
+  String get temporalOrderMessage =>
+      'Đáng kinh ngạc! Trí nhớ trình tự thời gian của bạn rất chuẩn xác.';
+
+  @override
+  String get temporalOrderMessage1 =>
+      'Trí nhớ trình tự không chính xác. Có công mài sắt có ngày nên kim!';
+
+  @override
+  String get wordSearchMessage =>
+      'Đã tìm thấy tất cả các từ với khả năng quan sát tinh tường.';
+
+  @override
+  String colorMatchMessage(String arg0) {
+    return 'Độ chính xác của bạn: $arg0%';
+  }
+
+  @override
+  String semanticLinkMessage(String arg0) {
+    return 'Bạn đã ghi được $arg0 điểm!';
+  }
+
+  @override
+  String reflexTapMessage(String arg0) {
+    return 'Bạn đã chạm vào $arg0 mục tiêu!';
+  }
+
+  @override
+  String get angleFinderMessage => 'Trực giác hình học của bạn thật hoàn hảo!';
+
+  @override
+  String angleFinderMessage1(String arg0) {
+    return 'Câu trả lời đúng là $arg0°';
+  }
+
+  @override
+  String angleFinderText(String arg0) {
+    return '$arg0°';
+  }
+
+  @override
+  String visualStatisticalLearningMessage(String arg0) {
+    return 'Bạn đã ghi được $arg0 mẫu hình đúng!';
+  }
+
+  @override
+  String nonogramText(String arg0) {
+    return 'Lỗi: $arg0';
+  }
+
+  @override
+  String mentalCalendarMessage(String arg0) {
+    return 'Bạn đã làm đúng $arg0 trên 10!';
+  }
+
+  @override
+  String orbitTapMessage(String arg0) {
+    return 'Bạn đã chạm thành công $arg0 lần!';
+  }
+
+  @override
+  String schulteTableMessage(String arg0) {
+    return 'Bạn đã hoàn thành bảng trong $arg0.\nHãy tiếp tục luyện tập để mở rộng tầm nhìn ngoại vi!';
+  }
+
+  @override
+  String get schulteTableText => 'BẮT ĐẦU KIỂM TRA';
+
+  @override
+  String get relationalMemoryMessage =>
+      'Độ chính xác trí nhớ quan hệ không gian thật tuyệt vời!';
+
+  @override
+  String sudokuText(String arg0) {
+    return 'Lỗi: $arg0';
+  }
+
+  @override
+  String sdmtMessage(String arg0) {
+    return 'Bạn đã khớp được $arg0 biểu tượng! Bài kiểm tra này đo tốc độ quét và sự chú ý thị giác của bạn.';
+  }
+
+  @override
+  String get futoshikiMessage =>
+      'Đáng kinh ngạc! Bạn đã giải được ô số Futoshiki.';
+
+  @override
+  String letterFrequencyScanMessage(String arg0, String arg1) {
+    return 'Bạn đã đếm đúng $arg0 lần xuất hiện của \"$arg1\".';
+  }
+
+  @override
+  String letterFrequencyScanText(String arg0) {
+    return 'Không chính xác. Số lượng là $arg0.';
+  }
+
+  @override
+  String get memoryMatrixMessage =>
+      'Ấn tượng! Trí nhớ ngắn hạn của bạn rất nhạy bén. Mục tiêu hàng ngày đã hoàn thành!';
+
+  @override
+  String get memoryMatrixMessage1 =>
+      'Hãy tập trung và thử lại để cải thiện điểm trí nhớ của bạn.';
+
+  @override
+  String get contextCluesMessage =>
+      'Xuất sắc! Vốn từ vựng và khả năng phân tích ngữ cảnh của bạn thật tuyệt vời.';
+
+  @override
+  String get contextCluesMessage1 =>
+      'Đã chọn sai từ! Hãy rèn luyện tư duy ngữ cảnh ngôn ngữ và thử lại.';
+
+  @override
+  String oneLetterShiftMessage(String arg0, String arg1) {
+    return 'Bạn đã chuyển đổi chính xác $arg0 thành $arg1.';
+  }
+
+  @override
+  String get mentalAbacusMessage =>
+      'Khả năng tính nhẩm của bạn thuộc hàng đẳng cấp.';
+
+  @override
+  String fractionMatcherMessage(String arg0) {
+    return 'Bạn đã ghi được $arg0 điểm khi ghép các biểu thức!';
+  }
+
+  @override
+  String get spellingSprintMessage => 'Bạn đã đánh vần đúng cả 10 từ!';
+
+  @override
+  String spellingSprintMessage1(String arg0) {
+    return 'Bạn đã đánh vần được $arg0 từ.';
+  }
+
+  @override
+  String stopSignalMessage(String arg0) {
+    return 'Bạn đã đạt được $arg0 phản hồi chính xác! Bài kiểm tra này đo khả năng kiềm chế một hành động đã dự định.';
+  }
+
+  @override
+  String grammarPoliceMessage(String arg0) {
+    return 'Trò chơi kết thúc! Bạn đã duy trì trật tự trong thế giới ngữ pháp. Điểm: $arg0';
+  }
+
+  @override
+  String consonantReconstructMessage(String arg0) {
+    return 'Bạn đã khôi phục thành công với số điểm $arg0!';
+  }
+
+  @override
+  String rhymeMasterMessage(String arg0, String arg1) {
+    return 'Bạn đã tìm được $arg0 trên $arg1 vần!';
+  }
+
+  @override
+  String vigilanceTaskMessage(String arg0, String arg1, String arg2) {
+    return 'Số lần trúng: $arg0, Số lần bỏ lỡ: $arg1\nBáo động giả: $arg2';
+  }
+
+  @override
+  String get silhouetteMatchOrthoMessage =>
+      'Bạn có kỹ năng căn chỉnh chính hình hoàn hảo!';
+
+  @override
+  String get silhouetteMatchOrthoText => 'ĐÃ HIỂU';
+
+  @override
+  String get silhouetteMatchOrthoText1 =>
+      'Phép chiếu phối cảnh không chính xác! Chạm vào Đặt lại để thử lại.';
+
+  @override
+  String fibonacciMergeMessage(String arg0, String arg1) {
+    return '$arg0: $arg1';
+  }
+
+  @override
+  String factorFinderMessage(String arg0) {
+    return 'Bạn đã ghi được $arg0 điểm bằng cách tìm tất cả các ước số!';
+  }
+
+  @override
+  String logicalSyllogismsMessage(String arg0) {
+    return 'Bạn đã giải đúng $arg0 tam đoạn luận!';
+  }
+
+  @override
+  String get rotatingMazeMessage =>
+      'Bạn đã vượt qua mê cung xoay động thành công!';
+
+  @override
+  String get rotatingMazeText => 'ĐÃ HIỂU';
+
+  @override
+  String get rotatingMazeText1 => '🌀 Mê cung đã xoay 90°! Lưới đã thay đổi!';
+
+  @override
+  String get mathPathMessage =>
+      'You found the path that adds up to the target!';
+
+  @override
+  String get bridgesMessage => 'You successfully connected all the islands!';
+
+  @override
+  String compoundConnectMessage(String arg0, String arg1) {
+    return 'The compound word is $arg0$arg1.';
+  }
+
+  @override
+  String get pangramSprintMessage =>
+      'You built a sentence using all 26 letters.';
+
+  @override
+  String get mirrorImageMessage => 'You perfectly identified the reflection.';
+
+  @override
+  String get mirrorImageText => 'MIRROR IMAGE';
+
+  @override
+  String reverseStroopMessage(String arg0) {
+    return 'You scored $arg0 points! Keep your eye on the instructions.';
+  }
+
+  @override
+  String get verbalAnalogiesMessage =>
+      'You have a sharp mind for relationships.';
+
+  @override
+  String corsiBlocksMessage1(String arg0, String arg1) {
+    return 'You recalled $arg1 sequences! Your spatial memory span reached $arg0.';
+  }
+
+  @override
+  String wordLadderMessage(String arg0, String arg1, String arg2) {
+    return 'You successfully connected $arg0 to $arg1 in $arg2 steps.';
+  }
+
+  @override
+  String d2AttentionMessage(String arg0) {
+    return 'Incredible selective scanning! Final score: $arg0.';
+  }
+
+  @override
+  String get d2AttentionText => 'HOW TO PLAY';
+
+  @override
+  String get d2AttentionText1 => 'GOT IT';
+
+  @override
+  String get tangleFixMessage => 'All lines are clear and smooth.';
+
+  @override
+  String get distractorMatrixMessage =>
+      'Incredible! You recalled patterns despite cognitive math distractors!';
+
+  @override
+  String get distractorMatrixMessage1 =>
+      'The distractors got you! Retrain your working memory.';
+
+  @override
+  String sentenceUnscrambleMessage(String arg0) {
+    return 'You unscrambled a score of $arg0!';
+  }
+
+  @override
+  String get kakuroMessage =>
+      'Incredible! You matched all sum segments perfectly.';
+
+  @override
+  String symbolicFlankerMessage(String arg0, String arg1) {
+    return 'You got $arg0 correct out of $arg1!';
+  }
+
+  @override
+  String stroopTestMessage(String arg0) {
+    return 'You scored $arg0 correctly! Focus on the color of the ink, not the word.';
+  }
+
+  @override
+  String wisconsinCardSortingMessage(String arg0) {
+    return 'You correctly sorted $arg0 cards!';
+  }
+
+  @override
+  String nBackMessage(String arg0) {
+    return 'You achieved $arg0 2-back matches! Your working memory is vital for multitasking.';
+  }
+
+  @override
+  String rhythmMasterMessage(String arg0, String arg1) {
+    return 'You got $arg0 perfect hits and $arg1 points!';
+  }
+
+  @override
+  String groceryListMessage(String arg0, Object score) {
+    return 'You scored $arg0 points in Grocery List!';
+  }
+
+  @override
+  String get groceryListText => 'I\\';
+
+  @override
+  String get mirrorTracingMessage =>
+      'Your brain successfully rewired its coordination.';
+
+  @override
+  String moduloClockMessage(String arg0) {
+    return 'Excellent modular mental math coordination! Score: $arg0';
+  }
+
+  @override
+  String moduloClockMessage1(String arg0, String arg1, String arg2) {
+    return 'You managed $arg0 of $arg1 modular clock solutions. Score: $arg2';
+  }
+
+  @override
+  String get crownMessage =>
+      'All crowns placed successfully with perfect logic.';
+
+  @override
+  String dualCodingMessage(String arg0) {
+    return 'Fantastic dual-task performance! Your working memory score: $arg0';
+  }
+
+  @override
+  String inequalityDashMessage(String arg0) {
+    return 'You scored $arg0 points matching inequalities!';
+  }
+
+  @override
+  String sourceMonitoringMessage(String arg0, String arg1) {
+    return 'You scored $arg0 out of $arg1!';
+  }
+
+  @override
+  String get sourceMonitoringText => 'START RECALL';
+
+  @override
+  String get memoryPalaceText => 'AVAILABLE WORDS';
+
+  @override
+  String target10Message(String arg0) {
+    return 'You scored $arg0 points matching numbers to 10!';
+  }
+
+  @override
+  String get paperFoldingMessage => 'You can see the patterns in your mind.';
+
+  @override
+  String topologyText(String arg0, String arg1) {
+    return '$arg0$arg1 / 10';
+  }
+
+  @override
+  String get waterSortMessage => 'You sorted all the colors perfectly!';
+
+  @override
+  String anagramDefinitionMessage(String arg0) {
+    return 'The word was indeed \"$arg0\".';
+  }
+
+  @override
+  String game2048Message(String arg0, String arg1, String arg2) {
+    return '$arg0: $arg1\n$arg2';
+  }
+
+  @override
+  String game2048Message1(String arg0, String arg1) {
+    return '$arg0: $arg1';
+  }
+
+  @override
+  String numericalEstimationMessage(String arg0) {
+    return 'You made $arg0 correct estimations.';
+  }
+
+  @override
+  String grammarSortMessage(String arg0) {
+    return 'You sorted $arg0 words correctly!';
+  }
+
+  @override
+  String vowelReconstructMessage(String arg0) {
+    return 'You reconstructed a score of $arg0!';
+  }
+
+  @override
+  String spatialConflictMessage(String arg0, String arg1) {
+    return 'You achieved a score of $arg0 with $arg1 errors!';
+  }
+
+  @override
+  String get spatialConflictText => 'HOW TO PLAY';
+
+  @override
+  String get spatialConflictText1 => 'GOT IT';
+
+  @override
+  String tracePathMessage(String arg0) {
+    return 'Your accuracy was $arg0%!';
+  }
+
+  @override
+  String ruleSwitcherMessage(String arg0, String arg1) {
+    return 'You scored $arg0 correct out of $arg1!';
+  }
+
+  @override
+  String collatzMessage(String arg0, String arg1) {
+    return 'You took $arg0 steps. Min possible was $arg1.';
+  }
+
+  @override
+  String get collatzText => '/ 2';
+
+  @override
+  String get collatzText1 => '+ 1';
+
+  @override
+  String get collatzText2 => '3n + 1';
+
+  @override
+  String divisibilityDashMessage(String arg0) {
+    return 'You solved $arg0 numbers!';
+  }
+
+  @override
+  String switchTaskMessage(String arg0) {
+    return 'You scored $arg0 correctly! Fast switching is key to mental flexibility.';
+  }
+
+  @override
+  String sequenceSleuthMessage(String arg0) {
+    return 'You solved $arg0 sequences!';
+  }
+
+  @override
+  String changeBlindnessMessage(String arg0) {
+    return 'You found $arg0 changes!';
+  }
+
+  @override
+  String mentalRotationMessage(String arg0) {
+    return 'You rotated $arg0 shapes correctly!';
+  }
+
+  @override
+  String wordMastermindMessage(String arg0) {
+    return 'You mastered the code!\nThe word was: $arg0';
+  }
+
+  @override
+  String wordMastermindMessage1(String arg0) {
+    return 'The hidden word was: $arg0';
+  }
+
+  @override
+  String wordMastermindText(String arg0) {
+    return '$arg0';
+  }
+
+  @override
+  String get simonSequenceMessage => 'You memorized all 10 tiles!';
+
+  @override
+  String get simonSequenceMessage1 => 'Try again to master the sequence.';
+
+  @override
+  String oxymoronHuntMessage(String arg0) {
+    return 'You found $arg0 oxymorons!';
+  }
+
+  @override
+  String spotlightTrackMessage(String arg0) {
+    return 'Incredible spatial tracking! You scored $arg0 points.';
+  }
+
+  @override
+  String get spotlightTrackText => 'HOW TO PLAY';
+
+  @override
+  String get spotlightTrackText1 => 'GOT IT';
+
+  @override
+  String get spotlightTrackText2 => 'START ROUND';
+
+  @override
+  String vennNumbersMessage(String arg0) {
+    return 'You categorized $arg0 numbers!';
+  }
+
+  @override
+  String get vennNumbersText => 'NEITHER';
+
+  @override
+  String get vennNumbersText1 => 'BOTH';
+
+  @override
+  String get silhouetteMatchMessage =>
+      'Your brain is excellent at 3D to 2D translation.';
+
+  @override
+  String sumSnakeMessage(String arg0) {
+    return 'Target $arg0 reached with perfect precision!';
+  }
+
+  @override
+  String get sumSnakeText => 'CLEAR PATH';
+
+  @override
+  String percentagePeakMessage(String arg0) {
+    return 'You solved $arg0 percentage problems!';
+  }
+
+  @override
+  String trailMakingMessage(String arg0) {
+    return 'You completed $arg0 trails! This test measures your visual search speed and mental flexibility.';
+  }
+
+  @override
+  String matrixReasoningMessage(String arg0) {
+    return 'You completed $arg0 matrices correctly!';
+  }
+
+  @override
+  String get tentsAndTreesMessage =>
+      'You have successfully placed all the tents.';
+
+  @override
+  String klotskiMessage(String arg0) {
+    return 'Sensational sliding! You freed the Hero block in $arg0 moves.';
+  }
+
+  @override
+  String sumPyramidMessage(String arg0) {
+    return 'You solved $arg0 sum pyramids successfully!';
+  }
+
+  @override
+  String simonCommandMessage(String arg0) {
+    return 'Excellent selective response and focus! Total Score: $arg0';
+  }
+
+  @override
+  String simonCommandMessage1(String arg0, String arg1) {
+    return 'You scored $arg0 but did not reach $arg1 matches in time.';
+  }
+
+  @override
+  String syllableStackMessage(String arg0) {
+    return 'You stacked up a score of $arg0!';
+  }
+
+  @override
+  String get slitherlinkMessage =>
+      'Awesome! You successfully completed the loop puzzle.';
+
+  @override
+  String quickMathMessage(String arg0) {
+    return 'You solved $arg0 problems!';
+  }
+
+  @override
+  String commonDenominatorMessage(String arg0) {
+    return 'You solved $arg0 GCD/LCM problems!';
+  }
+
+  @override
+  String chainReactionMessage(String arg0, String arg1) {
+    return 'Your final score is $arg0. You built a chain of $arg1 words.';
+  }
+
+  @override
+  String chainReactionText(String arg0) {
+    return '$arg0';
+  }
+
+  @override
+  String get associativePairsMessage =>
+      'Brilliant! You associated visual traits flawlessly.';
+
+  @override
+  String get associativePairsMessage1 =>
+      'Wrong association! Sharpen your link memory and try again.';
+
+  @override
+  String portmanteauSplitMessage(String arg0) {
+    return 'You split $arg0 portmanteaus!';
+  }
+
+  @override
+  String get magicSquaresText => 'CLEAR';
+
+  @override
+  String alphabetSudokuText(String arg0) {
+    return 'Error: $arg0';
+  }
+
+  @override
+  String get pipesMessage => 'You connected all the pipes and filled the grid.';
+
+  @override
+  String get dualMirrorMessage => 'You navigated both icons to their targets!';
+
+  @override
+  String binaryCodeMessage(String arg0) {
+    return 'Sensational rapid decimal translation! Final Score: $arg0';
+  }
+
+  @override
+  String binaryCodeMessage1(String arg0, String arg1) {
+    return 'You correctly converted $arg0 binary numbers. Score: $arg1';
+  }
+
+  @override
+  String oddOneOutMessage(String arg0) {
+    return 'You found 50 odd ones! Final score: $arg0';
+  }
+
+  @override
+  String oddOneOutMessage1(String arg0) {
+    return 'Your score: $arg0';
+  }
+
+  @override
+  String letterBridgeMessage(String arg0) {
+    return 'You found the bridge letter: $arg0';
+  }
+
+  @override
+  String get imReady => 'TÔI ĐÃ SẴN SÀNG';
+
+  @override
+  String get soptTitle => 'Tự trỏ chỉ';
+
+  @override
+  String get soptSubtitle =>
+      'Nhấn vào một thẻ khác nhau mỗi lần. Các vị trí xáo trộn!';
+
+  @override
+  String get soptWinTitle => 'Trình tự chủ nhân!';
+
+  @override
+  String soptGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score điểm bằng cách theo dõi thành công các lá bài được xáo trộn!';
+  }
+
+  @override
+  String get soptChooseNovel => 'Nhấn vào một thẻ mới';
+
+  @override
+  String get soptGreatJob => 'Làm tốt lắm!';
+
+  @override
+  String get soptAlreadyTapped => 'Đã khai thác rồi!';
+
+  @override
+  String get soptGrid => 'Lưới';
+
+  @override
+  String get contRecogTitle => 'Nhận dạng liên tục';
+
+  @override
+  String get contRecogSubtitle =>
+      'Bạn đã nhìn thấy thẻ này trước đây trong phiên này chưa?';
+
+  @override
+  String get contRecogWinTitle => 'Công nhận thiên tài!';
+
+  @override
+  String contRecogGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score công nhận chính xác!';
+  }
+
+  @override
+  String get contRecogCorrect => 'Chính xác!';
+
+  @override
+  String get contRecogWrong => 'Sai!';
+
+  @override
+  String get contRecogOldOrNew => 'Cái này cũ hay mới?';
+
+  @override
+  String get contRecogNew => 'Mới';
+
+  @override
+  String get contRecogOld => 'Cũ';
+
+  @override
+  String get contRecogSeenPool => 'Nhìn thấy hồ bơi';
+
+  @override
+  String get dnmsTitle => 'Bộ nhớ không khớp';
+
+  @override
+  String get dnmsSubtitle => 'Nhấn vào thẻ không có trong mẫu đã ghi nhớ.';
+
+  @override
+  String get dnmsWinTitle => 'Chuyên gia không phù hợp!';
+
+  @override
+  String dnmsGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score câu trả lời đúng trong phần Trì hoãn không khớp!';
+  }
+
+  @override
+  String get dnmsChooseNovel => 'Nhấn vào thẻ mới';
+
+  @override
+  String get dnmsMemorizeSample => 'Ghi nhớ thẻ này';
+
+  @override
+  String get dnmsWaitForIt => 'Đợi nó...';
+
+  @override
+  String get dnmsExcellent => 'Xuất sắc!';
+
+  @override
+  String get dnmsSampleTapped => 'Đó là mẫu!';
+
+  @override
+  String get dnmsCards => 'Thẻ';
+
+  @override
+  String get symSpanTitle => 'Khoảng đối xứng';
+
+  @override
+  String get symSpanSubtitle =>
+      'Nhớ lại các mẫu tế bào trong khi xác định tính đối xứng dọc.';
+
+  @override
+  String get symSpanWinTitle => 'Bậc thầy đối xứng!';
+
+  @override
+  String symSpanGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score điểm bằng cách nhớ lại bố cục và xác định tính đối xứng!';
+  }
+
+  @override
+  String get symSpanMemorizeRed => 'Ghi nhớ vị trí tế bào màu đỏ';
+
+  @override
+  String get symSpanIsSymmetric => 'Mô hình có đối xứng không?';
+
+  @override
+  String get symSpanRecallSequence => 'Nhớ lại trình tự đúng thứ tự';
+
+  @override
+  String get symSpanGreatJob => 'Làm tốt lắm!';
+
+  @override
+  String get symSpanTryAgain => 'Hãy thử lại!';
+
+  @override
+  String get symSpanLength => 'Chiều dài';
+
+  @override
+  String get readingSpanTitle => 'Khoảng đọc';
+
+  @override
+  String get readingSpanSubtitle =>
+      'Xác minh câu trong khi ghi nhớ một chuỗi các chữ cái.';
+
+  @override
+  String get readingSpanWinTitle => 'Chuyên gia đọc sách!';
+
+  @override
+  String readingSpanGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score điểm trong thử thách trí nhớ Reading Span!';
+  }
+
+  @override
+  String get readingSpanTrueFalse => 'Tuyên bố này đúng hay sai?';
+
+  @override
+  String get readingSpanMemorizeLetter => 'Hãy ghi nhớ lá thư này';
+
+  @override
+  String get readingSpanRecallLetters => 'Nhớ lại các chữ cái theo thứ tự';
+
+  @override
+  String get readingSpanGreatJob => 'Làm tốt lắm!';
+
+  @override
+  String get readingSpanTryAgain => 'Hãy thử lại!';
+
+  @override
+  String readingSpanYourSequence(String sequence) {
+    return 'Trình tự của bạn: $sequence';
+  }
+
+  @override
+  String get readingSpanLength => 'Chiều dài';
+
+  @override
+  String get readingSpanSentence1 => 'Mặt trời mọc ở phía đông.';
+
+  @override
+  String get readingSpanSentence2 => 'Nước đá đang sôi sùng sục.';
+
+  @override
+  String get readingSpanSentence3 => 'Cá có thể thở dưới nước.';
+
+  @override
+  String get readingSpanSentence4 => 'Chó có cánh và có thể bay.';
+
+  @override
+  String get readingSpanSentence5 => 'Nước đóng băng ở 0 độ C.';
+
+  @override
+  String get readingSpanSentence6 => 'Mèo sủa như chó nhỏ.';
+
+  @override
+  String get readingSpanSentence7 => 'Cây có lá xanh vào mùa hè.';
+
+  @override
+  String get readingSpanSentence8 => 'Mưa rơi từ mặt đất lên.';
+
+  @override
+  String get readingSpanSentence9 => 'Một tam giác có bốn cạnh bằng nhau.';
+
+  @override
+  String get readingSpanSentence10 => 'Táo là một loại trái cây ngọt ngào.';
+
+  @override
+  String get readingSpanSentence11 => 'Mặt trăng được làm từ phô mai cheddar.';
+
+  @override
+  String get readingSpanSentence12 => 'Ô tô có bánh xe để lăn.';
+
+  @override
+  String get readingSpanSentence13 => 'Lửa lạnh cóng.';
+
+  @override
+  String get readingSpanSentence14 => 'Giấy được làm từ gỗ đã qua chế biến.';
+
+  @override
+  String get readingSpanSentence15 => 'Chim có lông để giúp chúng bay.';
+
+  @override
+  String get readingSpanSentence16 => 'Chuối mọc trên cây thông.';
+
+  @override
+  String get readingSpanSentence17 => 'Con voi nhỏ hơn con kiến.';
+
+  @override
+  String get readingSpanSentence18 => 'Sách chứa các trang in văn bản.';
+
+  @override
+  String get countingSpanTitle => 'Khoảng đếm';
+
+  @override
+  String get countingSpanSubtitle =>
+      'Chỉ đếm vòng tròn màu xanh. Sau đó nhớ lại thứ tự đếm.';
+
+  @override
+  String get countingSpanWinTitle => 'Đếm thiên tài!';
+
+  @override
+  String countingSpanGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score điểm trong thử thách trí nhớ Đếm khoảng thời gian!';
+  }
+
+  @override
+  String get countingSpanCountCircles => 'Chỉ đếm vòng tròn màu xanh';
+
+  @override
+  String get countingSpanRecallCounts => 'Nhớ lại số đếm theo đúng thứ tự';
+
+  @override
+  String get countingSpanGreatJob => 'Làm tốt lắm!';
+
+  @override
+  String get countingSpanTryAgain => 'Hãy thử lại!';
+
+  @override
+  String countingSpanYourSequence(String sequence) {
+    return 'Trình tự của bạn: $sequence';
+  }
+
+  @override
+  String get countingSpanLength => 'Chiều dài';
+
+  @override
+  String get objDispTitle => 'Độ dịch chuyển của vật thể';
+
+  @override
+  String get objDispSubtitle =>
+      'Ghi nhớ bố cục. Tìm và chạm vào một đối tượng có thể thay đổi vị trí.';
+
+  @override
+  String get objDispWinTitle => 'Thiên tài không gian!';
+
+  @override
+  String objDispGameOverMessage(int score) {
+    return 'Bạn đã xác định chính xác $score đối tượng bị dịch chuyển!';
+  }
+
+  @override
+  String get objDispMemorizeAll => 'Ghi nhớ tất cả các vị trí';
+
+  @override
+  String get objDispWaitingShift => 'Đang chờ thay đổi bố cục...';
+
+  @override
+  String get objDispTapMoved => 'Nhấn vào đối tượng đã di chuyển';
+
+  @override
+  String get objDispExcellent => 'Xuất sắc!';
+
+  @override
+  String get objDispWrongObject => 'Sai đối tượng!';
+
+  @override
+  String get objDispItems => 'Mặt hàng';
+
+  @override
+  String get mandalaTitle => 'Thu hồi Mandala';
+
+  @override
+  String get mandalaSubtitle =>
+      'Ghi nhớ cấu hình màu. Chọn màu sắc và sơn lại gạch.';
+
+  @override
+  String get mandalaWinTitle => 'Nghệ sĩ Mandala!';
+
+  @override
+  String mandalaGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score điểm bằng cách tạo lại các bố cục hình học đầy màu sắc!';
+  }
+
+  @override
+  String get mandalaMemorizeColors => 'Ghi nhớ màu gạch';
+
+  @override
+  String get mandalaPaintCells => 'Sơn các ô để phù hợp với bản gốc';
+
+  @override
+  String get mandalaExcellent => 'Xuất sắc!';
+
+  @override
+  String get mandalaIncorrectMatch => 'Trận đấu không chính xác!';
+
+  @override
+  String get mandalaSubmitRepaint => 'Gửi sơn lại';
+
+  @override
+  String get mandalaTiles => 'Gạch lát';
+
+  @override
+  String get runningSpanTitle => 'Khoảng chạy';
+
+  @override
+  String get runningSpanSubtitle =>
+      'Xem các chữ cái. Khi chúng dừng lại, hãy nhập N chữ cái cuối cùng theo thứ tự.';
+
+  @override
+  String get runningSpanWinTitle => 'Bậc thầy đệm!';
+
+  @override
+  String runningSpanGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score điểm trong Chạy bộ nhớ kéo dài!';
+  }
+
+  @override
+  String runningSpanPrepareRecall(int count) {
+    return 'Chuẩn bị nhớ lại $count chữ cái cuối cùng';
+  }
+
+  @override
+  String get runningSpanWatchCarefully => 'Hãy để ý cẩn thận...';
+
+  @override
+  String runningSpanEnterLast(int count) {
+    return 'Nhập $count chữ cái cuối cùng';
+  }
+
+  @override
+  String get runningSpanGreatJob => 'Làm tốt lắm!';
+
+  @override
+  String get runningSpanIncorrectBuffer => 'Bộ đệm không chính xác!';
+
+  @override
+  String runningSpanRecallLast(int count) {
+    return 'Nhớ lại $count lần cuối';
+  }
+
+  @override
+  String get runningSpanStopsRandomly => 'Luồng dừng ngẫu nhiên!';
+
+  @override
+  String runningSpanEntered(String sequence) {
+    return 'Đã nhập: $sequence';
+  }
+
+  @override
+  String get runningSpanNItems => 'Vật phẩm N';
+
+  @override
+  String get spatialCabinetTitle => 'Tủ không gian';
+
+  @override
+  String get spatialCabinetSubtitle => 'Ghi nhớ ngăn tủ nào chứa đồ vật nào.';
+
+  @override
+  String get spatialCabinetWinTitle => 'Chuyên gia nội các!';
+
+  @override
+  String spatialCabinetGameOverMessage(int score) {
+    return 'Bạn đã ghi được $score điểm trong Bộ nhớ tủ không gian!';
+  }
+
+  @override
+  String get spatialCabinetMemorize => 'Ghi nhớ vị trí vật phẩm';
+
+  @override
+  String spatialCabinetWhereIs(String itemName) {
+    return '$itemName ở đâu?';
+  }
+
+  @override
+  String get spatialCabinetCorrect => 'Chính xác!';
+
+  @override
+  String get spatialCabinetWrongDrawer => 'Ngăn kéo sai!';
+
+  @override
+  String get spatialCabinetItems => 'Mặt hàng';
+
+  @override
+  String get cabinetItemKey => 'Chìa khóa';
+
+  @override
+  String get cabinetItemApple => 'Quả táo';
+
+  @override
+  String get cabinetItemDiamond => 'Kim cương';
+
+  @override
+  String get cabinetItemBook => 'Sách';
+
+  @override
+  String get cabinetItemUmbrella => 'Chiếc ô';
+
+  @override
+  String get cabinetItemCoffee => 'Cà phê';
+
+  @override
+  String get cabinetItemLock => 'Khóa';
+
+  @override
+  String get cabinetItemPet => 'Thú cưng';
+
+  @override
+  String get cabinetItemCar => 'Xe hơi';
+
+  @override
+  String get gamesTitleLabel => 'TRÒ CHƠI';
+
+  @override
+  String get yourFavorites => 'YÊU THÍCH CỦA BẠN';
+
+  @override
+  String get readyForWorkout => 'SẴN SÀNG CHO BÀI TẬP HÀNG NGÀY CỦA BẠN?';
+
+  @override
+  String get greatStartKeepGoing => 'KHỞI ĐẦU TUYỆT VỜI! HÃY TIẾP TỤC.';
+
+  @override
+  String get onFireToday => 'HÔM NAY BẠN ĐANG RẤT SUNG SỨC!';
+
+  @override
+  String get incredibleSolvingToday => 'GIẢI QUYẾT ĐÁNG KINH NGẠC HÔM NAY!';
+
+  @override
+  String get newGameLabel => 'MỚI';
+
+  @override
+  String get slitherlinkTitle => 'Slitherlink';
+
+  @override
+  String get slitherlinkSubtitle => 'VÂY QUANH LƯỚI PIN BẰNG CÁC GỢI Ý SỐ.';
+
+  @override
+  String get futoshikiTitle => 'Futoshiki';
+
+  @override
+  String get futoshikiSubtitle => 'ĐIỀN VÀO LƯỚI BẰNG CÁC GỢI Ý LỚN HƠN.';
+
+  @override
+  String get kakuroTitle => 'Kakuro';
+
+  @override
+  String get kakuroSubtitle => 'GIẢI CÁC Ô CHỮ VỚI CÁC CON SỐ VÀ TỔNG.';
+
+  @override
+  String get inequalityDashTitle => 'Đua Bất Đẳng Thức';
+
+  @override
+  String get inequalityDashSubtitle =>
+      'GIẢI CÁC BẤT ĐẲNG THỨC DƯỚI ÁP LỰC THỜI GIAN.';
+
+  @override
+  String get factorFinderTitle => 'Tìm Ước Số';
+
+  @override
+  String get factorFinderSubtitle =>
+      'XÁC ĐỊNH TẤT CẢ CÁC ƯỚC SỐ CỦA CÁC SỐ MỤC TIÊU.';
+
+  @override
+  String get collatzTitle => 'Đường dẫn Collatz';
+
+  @override
+  String get collatzSubtitle => 'ĐIỀU HƯỚNG DÃY SỐ 3N+1.';
+
+  @override
+  String get sumPyramidTitle => 'Kim Tự Tháp Tổng';
+
+  @override
+  String get sumPyramidSubtitle =>
+      'ĐIỀN VÀO CÁC Ô KIM TỰ THÁP VỚI CÁC GỢI Ý TOÁN HỌC VỀ TỔNG.';
+
+  @override
+  String get target10Title => 'Mục Tiêu 10';
+
+  @override
+  String get target10Subtitle => 'KẾT HỢP CÁC Ô SỐ ĐỂ CÓ ĐƯỢC MƯỜI TỔNG.';
+
+  @override
+  String get fractionMatcherTitle => 'Ghép Phân Số';
+
+  @override
+  String get fractionMatcherSubtitle =>
+      'GHÉP CÁC PHÂN SỐ TƯƠNG ĐƯƠNG BẰNG TRỰC QUAN.';
+
+  @override
+  String get dualCodingTitle => 'Mã Hóa Kép';
+
+  @override
+  String get dualCodingSubtitle => 'GHÉP CÁC CHỮ CÁI VÀ BIỂU TƯỢNG ĐỒNG THỜI.';
+
+  @override
+  String get distractorMatrixTitle => 'Ma Trận Gây Nhiễu';
+
+  @override
+  String get distractorMatrixSubtitle =>
+      'TÌM CÁC HÌNH DẠNG MỤC TIÊU GIỮA CÁC YẾU TỐ GÂY NHIỄU.';
+
+  @override
+  String get temporalOrderTitle => 'Thứ Tự Thời Gian';
+
+  @override
+  String get temporalOrderSubtitle => 'NHỚ LẠI TRÌNH TỰ THỜI GIAN.';
+
+  @override
+  String get associativePairsTitle => 'Cặp Liên Kết';
+
+  @override
+  String get associativePairsSubtitle =>
+      'GHÉP ĐÔI VÀ KHỚP CÁC BIỂU TƯỢNG TƯƠNG ỨNG.';
+
+  @override
+  String get blockCount3dTitle => 'Đếm Khối 3D';
+
+  @override
+  String get blockCount3dSubtitle => 'ĐẾM CÁC KHỐI TRONG KHÔNG GIAN BA CHIỀU.';
+
+  @override
+  String get rotatingMazeTitle => 'Mê Cung Xoay';
+
+  @override
+  String get rotatingMazeSubtitle => 'XOAY MÊ CUNG ĐỂ DẪN BÓNG ĐẾN LỐI THOÁT.';
+
+  @override
+  String get silhouetteMatchOrthoTitle => 'Khớp Hình Chiếu (Ortho)';
+
+  @override
+  String get silhouetteMatchOrthoSubtitle =>
+      'KHỚP CÁC ĐỐI TƯỢNG 3D VỚI CÁC BÓNG CHIẾU THẲNG GÓC.';
+
+  @override
+  String get spatialConflictTitle => 'Xung Đột Không Gian';
+
+  @override
+  String get spatialConflictSubtitle =>
+      'GIẢI QUYẾT SỰ KHÁC BIỆT GIỮA VĂN BẢN VÀ HƯỚNG.';
+
+  @override
+  String get spotlightTrackTitle => 'Theo Dấu Đèn Chiếu';
+
+  @override
+  String get spotlightTrackSubtitle =>
+      'THEO DÕI CÁC MỤC NHẤP NHÁY TRONG CÁC BÓNG DI CHUYỂN.';
+
+  @override
+  String get d2AttentionTitle => 'Chú Ý d2';
+
+  @override
+  String get d2AttentionSubtitle =>
+      'CHẠM VÀO CÁC BIỂU TƯỢNG MỤC TIÊU VỚI CÁC TIÊU CHÍ NGHIÊM NGẶT.';
+
+  @override
+  String get dualMirrorTitle => 'Điều Hướng Gương Kép';
+
+  @override
+  String get dualMirrorSubtitle => 'ĐIỀU HƯỚNG HAI MÊ CUNG CÙNG MỘT LÚC.';
+
+  @override
+  String get contextCluesTitle => 'Gợi Ý Ngữ Cảnh';
+
+  @override
+  String get contextCluesSubtitle => 'SUY LUẬN TỪ ẨN TỪ CÁC GỢI Ý NGỮ CẢNH.';
+
+  @override
+  String get digitSpanReverseSubtitle =>
+      'NHỚ LẠI CÁC CHỮ SỐ THEO THỨ TỰ NGƯỢC LẠI.';
+
+  @override
+  String get faceNameAssociationSubtitle =>
+      'NHỚ LẠI TÊN CHO CÁC KHUÔN MẶT ĐA DẠNG ĐƯỢC TRÌNH BÀY.';
+
+  @override
+  String get staircaseMemorySubtitle =>
+      'GHI NHỚ CÁC KHỐI THEO TRÌNH TỰ TỪNG BƯỚC.';
+
+  @override
+  String get choiceReactionTimeSubtitle =>
+      'CHẠM NHANH VÀO CÁC NÚT CỤ THỂ KHỚP VỚI CÁC GỢI Ý.';
+
+  @override
+  String get attentionalBlinkSubtitle =>
+      'PHÁT HIỆN CÁC MỤC TIÊU NHANH NHẤP NHÁY TRONG DÒNG CHẢY.';
+
+  @override
+  String get visualStatisticalLearningSubtitle =>
+      'HỌC CÁC MẪU HÌNH DẠNG THỜI GIAN BẰNG TRỰC QUAN.';
+
+  @override
+  String get sternbergTaskSubtitle =>
+      'NHỚ LẠI XEM BIỂU TƯỢNG CÓ TRONG BỘ NHỚ HAY KHÔNG.';
+
+  @override
+  String get operationSpanSubtitle => 'GIẢI TOÁN VÀ NHỚ LẠI CÁC CHUỖI CHỮ CÁI.';
+
+  @override
+  String get continuousRecognitionTitle => 'Nhận Biết Liên Tục';
+
+  @override
+  String get continuousRecognitionSubtitle =>
+      'XÁC ĐỊNH XEM THẺ ĐƯỢC TRÌNH BÀY LÀ CŨ HAY MỚI.';
+
+  @override
+  String get symmetrySpanTitle => 'Khoảng Đối Xứng';
+
+  @override
+  String get symmetrySpanSubtitle =>
+      'NHỚ LẠI TỌA ĐỘ Ô GIỮA CÁC QUYẾT ĐỊNH ĐỐI XỨNG DỌC.';
+
+  @override
+  String get objectDisplacementTitle => 'Sự Dịch Chuyển Vật Thể';
+
+  @override
+  String get objectDisplacementSubtitle =>
+      'NGHIÊN CỨU CÁC VỊ TRÍ VÀ CHẠM VÀO VẬT THỂ DUY NHẤT ĐÃ DI CHUYỂN.';
+
+  @override
+  String get mandalaRecallTitle => 'Nhớ Lại Mandala';
+
+  @override
+  String get mandalaRecallSubtitle =>
+      'GHI NHỚ CÁC Ô MÀU VÀ VẼ LẠI MANDALA TỪ BẢNG MÀU.';
+
+  @override
+  String get runningMemorySpanTitle => 'Khoảng Nhớ Chạy';
+
+  @override
+  String get runningMemorySpanSubtitle =>
+      'THEO DÕI CÁC CHỮ CÁI ĐANG CHẠY VÀ NHỚ LẠI N MỤC CUỐI CÙNG.';
+
+  @override
+  String get spatialCabinetMemoryTitle => 'Tủ Không Gian';
+
+  @override
+  String get spatialCabinetMemorySubtitle =>
+      'GHI NHỚ VÀ XÁC ĐỊNH VỊ TRÍ CÁC MỤC SAU CỬA TỦ.';
+
+  @override
+  String get pathRecallSubtitle => 'GHI NHỚ VÀ LẶP LẠI CÁC LỰA CHỌN ĐƯỜNG DẪN.';
+
+  @override
+  String get objectShuffleSubtitle =>
+      'THEO DÕI CÁC MỤC ĐÃ ĐƯỢC TRÁO ĐỔI DƯỚI CÁC CHIẾC CỐC SÂU.';
+
+  @override
+  String get groceryListSubtitle =>
+      'GHI NHỚ VÀ ĐÁNH DẤU CÁC MỤC TRÊN DANH SÁCH.';
+
+  @override
+  String get quickMathSubtitle => 'GIẢI CÁC CÂU HỎI SỐ HỌC VỚI TỐC ĐỘ TỐI ĐA.';
+
+  @override
+  String get mathGuessTitle => 'Đoán Toán Học';
+
+  @override
+  String get mathGuessSubtitle => 'ĐOÁN SỐ ẨN TRONG VÒNG 15 LẦN THỬ.';
+
+  @override
+  String get reflexTapSubtitle => 'CHẠM VÀO CÁC KÍCH THÍCH NHANH NHẤT CÓ THỂ.';
+
+  @override
+  String get pixelMimicSubtitle =>
+      'BẮT CHƯỚC CÁC MẪU THIẾT KẾ TRÊN LƯỚI PIXEL.';
+
+  @override
+  String get simonSequenceSubtitle =>
+      'LẶP LẠI CÁC TRÌNH TỰ HÌNH DẠNG TỪ BỘ NHỚ.';
+
+  @override
+  String get slidePuzzleSubtitle => 'SẮP XẾP LẠI CÁC Ô LƯỚI TRƯỢT HÌNH VUÔNG.';
+
+  @override
+  String get findWordTitle => 'Tìm Từ';
+
+  @override
+  String get schulteTableSubtitle => 'CHẠM VÀO CÁC SỐ TỪ MỘT ĐẾN HAI MƯƠI LĂM.';
+
+  @override
+  String get simonCommandTitle => 'Lệnh Simon';
+
+  @override
+  String get simonCommandSubtitle =>
+      'THỰC HIỆN CÁC HƯỚNG DẪN BẰNG GIỌNG NÓI NHANH CHÓNG.';
+
+  @override
+  String get binaryCodeTitle => 'Tốc Độ Nhị Phân';
+
+  @override
+  String get binaryCodeSubtitle => 'DỊCH CÁC MÃ NHỊ PHÂN SANG THẬP PHÂN.';
+
+  @override
+  String get moduloClockTitle => 'Đồng Hồ Modulo';
+
+  @override
+  String get moduloClockSubtitle =>
+      'TÍNH TOÁN CÁC PHƯƠNG TRÌNH TOÁN HỌC BẰNG CÁCH SỬ DỤNG ĐỒNG HỒ.';
+
+  @override
+  String get chimpTestTitle => 'Bài Kiểm Tra Tinh Tinh';
+
+  @override
+  String get chimpTestSubtitle =>
+      'CHẠM VÀO CÁC SỐ NGẪU NHIÊN THEO THỨ TỰ TĂNG DẦN.';
+
+  @override
+  String get relationalMemoryTitle => 'Bộ Nhớ Quan Hệ';
+
+  @override
+  String get relationalMemorySubtitle =>
+      'NHỚ LẠI VỊ TRÍ CHÍNH XÁC CỦA CÁC MỤC TRONG LƯỚI.';
+
+  @override
+  String get factBinderTitle => 'Ràng Buộc Sự Thật';
+
+  @override
+  String get factBinderSubtitle =>
+      'KẾT NỐI CÁC BIỂU TƯỢNG VÀ NHỚ LẠI CÁC TUYÊN BỐ.';
+
+  @override
+  String get sourceMonitoringTitle => 'Theo Dõi Nguồn';
+
+  @override
+  String get sourceMonitoringSubtitle => 'NHỚ LẠI NGỮ CẢNH.';
+
+  @override
+  String get klotskiTitle => 'Thoát Khỏi Klotski';
+
+  @override
+  String get klotskiSubtitle => 'TRƯỢT CÁC KHỐI ĐỂ ĐẾN ĐƯỢC LỐI RA.';
+
+  @override
+  String get homophoneHuntSubtitle => 'Chọn từ đồng âm có cách viết đúng';
+
+  @override
+  String get laserLinkTitle => 'Liên kết Laser';
+
+  @override
+  String get laserLinkSubtitle =>
+      'Xoay gương để phản xạ tia laser và cung cấp năng lượng cho tất cả các mục tiêu.';
+
+  @override
+  String get laserLinkCongrats =>
+      'Phản xạ chính xác! Bạn đã cấp nguồn thành công cho toàn bộ lưới.';
+
+  @override
+  String get crossSectionSliceTitle => 'Lát cắt ngang';
+
+  @override
+  String get crossSectionSliceSubtitle =>
+      'Xác định mặt cắt 2D chính xác của một đối tượng 3D từ một góc cụ thể.';
+
+  @override
+  String get crossSectionSliceCongrats =>
+      'Hình dung 3D đáng kinh ngạc! Bạn đã nhìn thấu suốt hình dạng đó.';
+
+  @override
+  String get shadowPivotTitle => 'Trục bóng';
+
+  @override
+  String get shadowPivotCongrats =>
+      'Lập luận không gian năng động! Bạn đã làm chủ ánh sáng và bóng tối.';
+
+  @override
+  String get shadowPivotSubtitle =>
+      'Dự đoán bóng của một đối tượng 3D khi nó quay trên các trục khác nhau.';
+
+  @override
+  String get interlockPuzzleTitle => 'Câu đố lồng nhau';
+
+  @override
+  String get interlockPuzzleSubtitle =>
+      'Tháo rời hoặc lắp ráp các khối lồng vào nhau phức tạp theo trình tự chính xác.';
+
+  @override
+  String get interlockPuzzleCongrats =>
+      'Giải mã logic! Bạn đã tháo gỡ câu đố một cách hoàn hảo.';
+
+  @override
+  String get pathIntersectTitle => 'Giao lộ đường dẫn';
+
+  @override
+  String get pathIntersectSubtitle =>
+      'Điều hướng nhiều con đường cùng lúc để đạt được các mục tiêu tương ứng mà không bị va chạm.';
+
+  @override
+  String get pathIntersectCongrats =>
+      'Điều hướng đồng bộ! Bạn đã đạt được tất cả các mục tiêu một cách hoàn hảo.';
+
+  @override
+  String get negativeSpaceDetectionTitle => 'Không gian âm';
+
+  @override
+  String get negativeSpaceDetectionSubtitle =>
+      'Xác định hình dạng được tạo bởi không gian trống giữa các vật thể.';
+
+  @override
+  String get negativeSpaceDetectionCongrats =>
+      'Nhận thức sắc bén! Bạn đã thành thạo nghệ thuật nhìn thấy những gì không có ở đó.';
+
+  @override
+  String get compassMazeTitle => 'Mê cung La bàn';
+
+  @override
+  String get compassMazeSubtitle =>
+      'Điều hướng một mê cung nơi các hướng di chuyển thay đổi dựa trên hướng la bàn của bạn.';
+
+  @override
+  String get compassMazeCongrats =>
+      'Điều hướng điêu luyện! Bạn đã tìm thấy lối thoát qua các hướng thay đổi liên tục.';
+
+  @override
+  String get complexFoldingNetsTitle => 'Lưới gấp';
+
+  @override
+  String get complexFoldingNetsSubtitle =>
+      'Xác định hình dạng 3D phức tạp nào sẽ được tạo thành bằng cách gấp một lưới 2D không chuẩn.';
+
+  @override
+  String get complexFoldingNetsCongrats =>
+      'Logic gấp nâng cao! Bạn đã hình dung thành công hình dạng 3D.';
+
+  @override
+  String get compassMazeMessage => 'Điều hướng mê cung bằng la bàn.';
+
+  @override
+  String get negativeSpaceDetectionMessage =>
+      'Xác định vật thể ẩn trong không gian.';
+
+  @override
+  String get shikakuTitle => 'Shikaku';
+
+  @override
+  String get shikakuSubtitle =>
+      'CHIA LƯỚI THÀNH CÁC HÌNH VUÔNG VÀ HÌNH CHỮ NHẬT ĐỐI VỚI CÁC SỐ.';
+
+  @override
+  String get countdownMathTitle => 'Toán đếm ngược';
+
+  @override
+  String get countdownMathSubtitle =>
+      'KẾT HỢP CÁC SỐ NGẪU NHIÊN ĐỂ TÍNH MỤC TIÊU BA CHỮ SỐ.';
+
+  @override
+  String get narrativeRecallTitle => 'Nhớ lại tường thuật';
+
+  @override
+  String get narrativeRecallSubtitle =>
+      'ĐỌC CÂU CHUYỆN VÀ GHI NHỚ CÁC CHI TIẾT ĐỊNH LƯỢNG VÀ THỰC TẾ CỤ THỂ.';
+
+  @override
+  String get shellGameTitle => 'Trò chơi vỏ sò';
+
+  @override
+  String get shellGameSubtitle =>
+      'THEO DÕI MỘT BÓNG ẨN NHƯ CÁC ĐỊA ĐIỂM ĐỔI ĐỔI CÚP XÁC NHẬN.';
+
+  @override
+  String get typoglycemiaDecoderTitle => 'Bộ giải mã typoglycemia';
+
+  @override
+  String get typoglycemiaDecoderSubtitle =>
+      'Xắp xếp lại và đọc các câu lộn xộn một cách nhanh chóng.';
+
+  @override
+  String get shapeShifterTitle => 'Bộ chuyển đổi hình dạng';
+
+  @override
+  String get shapeShifterSubtitle => 'Nhấn vào tổ hợp màu-hình dạng mục tiêu.';
+
+  @override
+  String get gokigenNanameTitle => 'Gokigen Naname';
+
+  @override
+  String get gokigenNanameSubtitle =>
+      'Vẽ các đường chéo để nối các điểm không có vòng lặp.';
+
+  @override
+  String get matrixMultiplierTitle => 'Nhân ma trận';
+
+  @override
+  String get matrixMultiplierSubtitle =>
+      'Chọn một hàng và cột để nhân với mục tiêu.';
+
+  @override
+  String get wordAssociationRecallTitle => 'Hiệp hội từ';
+
+  @override
+  String get wordAssociationRecallSubtitle =>
+      'Nhớ lại các liên kết từ được ghép nối từ bộ nhớ.';
+
+  @override
+  String get gearRotationTitle => 'Xoay bánh răng';
+
+  @override
+  String get gearRotationSubtitle =>
+      'Dự đoán hướng quay của bánh răng cuối cùng.';
+
+  @override
+  String get wordWheelTitle => 'Bánh xe từ';
+
+  @override
+  String get wordWheelSubtitle =>
+      'Tạo từ bằng cách sử dụng các chữ cái trên bánh xe, bao gồm cả chữ cái ở giữa.';
+
+  @override
+  String get oddEvenFlashTitle => 'Flash Chẵn Lẻ';
+
+  @override
+  String get oddEvenFlashSubtitle =>
+      'Nhanh chóng khớp số chẵn lẻ với quy tắc màu.';
+
+  @override
+  String get norinoriTitle => 'Norinori';
+
+  @override
+  String get norinoriSubtitle =>
+      'Che chính xác hai ô được kết nối trong mỗi phòng.';
+
+  @override
+  String get algebraicBalanceTitle => 'Cân bằng đại số';
+
+  @override
+  String get algebraicBalanceSubtitle =>
+      'Giải các phương trình để tìm tổng mục tiêu.';
+
+  @override
+  String get patternSequenceDrawTitle => 'Thu hồi mẫu';
+
+  @override
+  String get patternSequenceDrawSubtitle =>
+      'Lặp lại chuỗi đường dẫn hoạt hình trên lưới.';
+
+  @override
+  String get tangramTitle => 'Câu đố Tangram';
+
+  @override
+  String get tangramSubtitle =>
+      'Sắp xếp các hình dạng để lấp đầy hình bóng mục tiêu.';
+
+  @override
+  String get semanticAssociationTitle => 'Hiệp hội từ';
+
+  @override
+  String get semanticAssociationSubtitle => 'Tìm từ kết nối cả ba đầu mối.';
+
+  @override
+  String get peripheralFocusTitle => 'Lấy nét ngoại vi';
+
+  @override
+  String get peripheralFocusSubtitle =>
+      'Phản ứng với các bảng bên nhấp nháy trong khi giải toán.';
+
+  @override
+  String get masyuTitle => 'Vòng Masyu';
+
+  @override
+  String get masyuSubtitle =>
+      'Vẽ một vòng lặp phù hợp với quy tắc vòng tròn Masyu.';
+
+  @override
+  String get mathMazeTitle => 'Mê cung toán học';
+
+  @override
+  String get mathMazeSubtitle =>
+      'Theo dõi một đường dẫn đánh giá tổng mục tiêu.';
+
+  @override
+  String get storyBuilderTitle => 'Người xây dựng câu chuyện';
+
+  @override
+  String get storyBuilderSubtitle =>
+      'Xây dựng lại trình tự thời gian của câu chuyện.';
+
+  @override
+  String get mirrorMazeTitle => 'Mê cung gương';
+
+  @override
+  String get mirrorMazeSubtitle =>
+      'Chuyển hướng chùm tia laser bằng gương chéo.';
+
+  @override
+  String get wordGridConnectionTitle => 'Kết nối từ';
+
+  @override
+  String get wordGridConnectionSubtitle => 'Nhóm 16 từ thành bốn loại bốn.';
+
+  @override
+  String get shapeShifterPeripheralTitle => 'Hình dạng ngoại vi';
+
+  @override
+  String get shapeShifterPeripheralSubtitle =>
+      'Theo dõi các thay đổi hình dạng ngoại vi trong khi khớp các giá trị trung tâm.';
+
+  @override
+  String get soundWaveMatchTitle => 'Trận đấu sóng âm thanh';
+
+  @override
+  String get soundWaveMatchSubtitle =>
+      'Nhấn vào khi tần số sóng hình ảnh phù hợp với sự thay đổi cao độ.';
+
+  @override
+  String get multiTrackCounterTitle => 'Bộ đếm nhiều đường';
+
+  @override
+  String get multiTrackCounterSubtitle =>
+      'Nhấn khi bất kỳ bộ đếm nào tăng lên theo hệ số mục tiêu.';
+
+  @override
+  String get colorWordMatchUpTitle => 'Phối màu';
+
+  @override
+  String get colorWordMatchUpSubtitle =>
+      'Xác định xem hai từ màu có khớp nhau hay không dựa trên việc thay đổi quy tắc.';
+
+  @override
+  String get signalAndNoiseTitle => 'Tín hiệu & Tiếng ồn';
+
+  @override
+  String get signalAndNoiseSubtitle =>
+      'Xác định vị trí các ký tự chữ và số mục tiêu ẩn trong tiếng ồn tĩnh.';
+
+  @override
+  String get focusTunnelTitle => 'Đường hầm tập trung';
+
+  @override
+  String get focusTunnelSubtitle =>
+      'Xác định các ký hiệu phù hợp xuất hiện trên các bức tường đường hầm chuyển động.';
+
+  @override
+  String get targetPursuerTitle => 'Người theo đuổi mục tiêu';
+
+  @override
+  String get targetPursuerSubtitle =>
+      'Theo dõi nhiều vòng tròn chồng chéo và chọn mục tiêu ban đầu.';
+
+  @override
+  String get gridGazeTitle => 'Lưới nhìn';
+
+  @override
+  String get gridGazeSubtitle =>
+      'Xác định ô lưới nào nhấp nháy với thời lượng khác nhau.';
+
+  @override
+  String get doubleTroubleTitle => 'Rắc rối kép';
+
+  @override
+  String get doubleTroubleSubtitle =>
+      'Chơi đồng thời hai trò chơi đơn giản riêng biệt trên màn hình chia đôi.';
+
+  @override
+  String get syncRhythmTitle => 'Đồng bộ nhịp điệu';
+
+  @override
+  String get syncRhythmSubtitle =>
+      'Nhấn khi quét máy đếm nhịp trực quan khớp với nhịp đảo phách.';
+
+  @override
+  String get ghostTapTitle => 'cú nhấn ma';
+
+  @override
+  String get ghostTapSubtitle => 'Nhấn khi xung vô hình đạt đến độ cao tối đa.';
+
+  @override
+  String get attentionalRsvpTitle => 'Trả lời chú ý';
+
+  @override
+  String get attentionalRsvpSubtitle =>
+      'Xác định các chữ số xuất hiện trong đèn flash chữ cái nối tiếp nhanh chóng.';
+
+  @override
+  String get colorMazeNavTitle => 'Mê cung màu sắc';
+
+  @override
+  String get colorMazeNavSubtitle =>
+      'Điều hướng các ô mê cung phù hợp với màu sắc cho phép động.';
+
+  @override
+  String get dynamicSalienceTitle => 'Sự nổi bật năng động';
+
+  @override
+  String get dynamicSalienceSubtitle =>
+      'Tìm hình dạng chuyển động với động lực hơi khác nhau.';
+
+  @override
+  String get chalkAndTalkTitle => 'Phấn & Nói';
+
+  @override
+  String get chalkAndTalkSubtitle =>
+      'Nhập các từ được nghe bằng âm thanh trong khi bỏ qua các yếu tố gây phân tâm thị giác.';
+
+  @override
+  String get blinkDetectorTitle => 'Máy dò nhấp nháy';
+
+  @override
+  String get blinkDetectorSubtitle =>
+      'Chạm vào mặt lưới nhấp nháy nhanh hai lần liên tiếp.';
+
+  @override
+  String get frequencyTapTitle => 'Nhấn tần số';
+
+  @override
+  String get frequencyTapSubtitle =>
+      'Nhấn vào nút phù hợp với tần số xung ánh sáng mục tiêu.';
+
+  @override
+  String get yajilinTitle => 'Yajilin';
+
+  @override
+  String get yajilinSubtitle =>
+      'Đặt các ô màu đen và vẽ một vòng lặp phù hợp với các manh mối.';
+
+  @override
+  String get heyawakeTitle => 'Heyawake';
+
+  @override
+  String get heyawakeSubtitle => 'Phòng lưới bóng râm không có ô đen liền kề.';
+
+  @override
+  String get gokigenVariantTitle => 'Biến thể Gokigen';
+
+  @override
+  String get gokigenVariantSubtitle =>
+      'Vẽ các đường chéo không có vòng lặp đáp ứng số đỉnh.';
+
+  @override
+  String get sheepAndWolvesTitle => 'Cừu & Sói';
+
+  @override
+  String get sheepAndWolvesSubtitle =>
+      'Vẽ một vòng tròn ngăn cách cừu với sói.';
+
+  @override
+  String get islandNurikabeTitle => 'Đảo Nurikabe';
+
+  @override
+  String get islandNurikabeSubtitle =>
+      'Các đảo hình thành phù hợp với các ràng buộc về kích thước số.';
+
+  @override
+  String get shakashakaTitle => 'Shakashaka Rects';
+
+  @override
+  String get shakashakaSubtitle =>
+      'Đặt các viên gạch hình tam giác để tạo thành các vùng màu trắng hình chữ nhật.';
+
+  @override
+  String get litsTetrisTitle => 'LITS Tetromino';
+
+  @override
+  String get litsTetrisSubtitle =>
+      'Đặt tetromino trong các phòng không có bản sao liền kề.';
+
+  @override
+  String get tapaWallTitle => 'Tường Tapa';
+
+  @override
+  String get tapaWallSubtitle =>
+      'Bóng các ô để tạo thành một mẫu tường đen liên tục.';
+
+  @override
+  String get triangularBridgesTitle => 'Cầu tam giác';
+
+  @override
+  String get triangularBridgesSubtitle =>
+      'Kết nối đảo 3 hướng đáp ứng yêu cầu.';
+
+  @override
+  String get rippleEffectTitle => 'Hiệu ứng gợn sóng';
+
+  @override
+  String get rippleEffectSubtitle =>
+      'Điền số vào các phòng tôn trọng các ràng buộc về khoảng cách khoảng cách.';
+
+  @override
+  String get suguruTectonicTitle => 'Lưới Suguru';
+
+  @override
+  String get suguruTectonicSubtitle =>
+      'Điền vào các khối phòng các số từ 1 đến K mà không có hàng xóm nào bằng nhau.';
+
+  @override
+  String get tennerGridTitle => 'Lưới Tenner';
+
+  @override
+  String get tennerGridSubtitle =>
+      'Điền vào các hàng các chữ số từ 0 đến 9 tổng số cột phù hợp.';
+
+  @override
+  String get kakurasuSumsTitle => 'Tổng Kakurasu';
+
+  @override
+  String get kakurasuSumsSubtitle =>
+      'Làm mờ các ô để đáp ứng tổng chỉ số hàng/col có trọng số.';
+
+  @override
+  String get corralLoopTitle => 'Vòng Corral';
+
+  @override
+  String get corralLoopSubtitle =>
+      'Vẽ một vòng lặp đơn bao quanh các số phù hợp với khả năng hiển thị.';
+
+  @override
+  String get stostoneTitle => 'Trọng lực đá';
+
+  @override
+  String get stostoneSubtitle =>
+      'Tạo bóng cho các ô thả xuống để lấp đầy các hàng dưới cùng một cách hoàn hảo.';
+
+  @override
+  String get tripletsLogicTitle => 'Bộ ba sinh ba';
+
+  @override
+  String get tripletsLogicSubtitle =>
+      'Lấp đầy lưới bằng ba hình dạng, tránh tạo thành ba hình liên tiếp.';
+
+  @override
+  String get galaxiesSymTitle => 'Sự đối xứng của các thiên hà';
+
+  @override
+  String get galaxiesSymSubtitle =>
+      'Chia lưới thành các hình dạng thiên hà đối xứng xoay.';
+
+  @override
+  String get matrixMultiplierMatchTitle => 'Bộ so khớp ma trận';
+
+  @override
+  String get matrixMultiplierMatchSubtitle =>
+      'Nhân các giá trị hàng và cột để khớp với tích số chấm mục tiêu.';
+
+  @override
+  String get primeFactorTreesTitle => 'Cây nguyên tố';
+
+  @override
+  String get primeFactorTreesSubtitle =>
+      'Phân tách các số tổng hợp thành các cặp thừa số lá nguyên tố.';
+
+  @override
+  String get vektorVectorTitle => 'véc tơ véc tơ';
+
+  @override
+  String get vektorVectorSubtitle =>
+      'Các vectơ tỷ lệ để làm cho tổng của chúng chạm vào mục tiêu.';
+
+  @override
+  String get binomialMatchTitle => 'Trận đấu nhị thức';
+
+  @override
+  String get binomialMatchSubtitle =>
+      'Ghép các công thức bậc hai với các giá trị nhị thức được phân tích thành thừa số.';
+
+  @override
+  String get percentageShoppingTitle => 'Phần trăm mua sắm';
+
+  @override
+  String get percentageShoppingSubtitle =>
+      'Tính tỷ lệ phần trăm giảm giá và tổng số tiền thanh toán cuối cùng.';
+
+  @override
+  String get cryptoArithmeticTitle => 'Số học tiền điện tử';
+
+  @override
+  String get cryptoArithmeticSubtitle =>
+      'Giải các bài toán về mật mã thay thế chữ số ký tự.';
+
+  @override
+  String get fractionalPizzaTitle => 'Pizza phân số';
+
+  @override
+  String get fractionalPizzaSubtitle =>
+      'Phân vùng các lát bánh pizza để khớp với các phân số tổng mục tiêu.';
+
+  @override
+  String get numberBondsTitle => 'Trái phiếu số';
+
+  @override
+  String get numberBondsSubtitle =>
+      'Các giá trị nút liên kết bằng tổng kết nối mục tiêu.';
+
+  @override
+  String get gridSumLineTitle => 'Đường tổng lưới';
+
+  @override
+  String get gridSumLineSubtitle =>
+      'Vẽ một đường dẫn có giá trị đánh giá chính xác đến mục tiêu.';
+
+  @override
+  String get binaryScaleBalanceTitle => 'Số dư quy mô nhị phân';
+
+  @override
+  String get binaryScaleBalanceSubtitle =>
+      'Cân bằng trọng lượng thập phân bằng cách sử dụng lũy thừa hai khối.';
+
+  @override
+  String get moduloPathTitle => 'Đường dẫn Modulo';
+
+  @override
+  String get moduloPathSubtitle =>
+      'Các ô lưới ngang khớp với các giá trị còn lại theo modulo.';
+
+  @override
+  String get digitSwapEqTitle => 'Phương trình hoán đổi chữ số';
+
+  @override
+  String get digitSwapEqSubtitle =>
+      'Trao đổi các chữ số đơn giữa các phương trình để sửa cả hai.';
+
+  @override
+  String get areaPerimeterMatchTitle => 'Diện tích & Chu vi';
+
+  @override
+  String get areaPerimeterMatchSubtitle =>
+      'Vẽ các hình chữ nhật phù hợp với các giá trị diện tích và chu vi mục tiêu.';
+
+  @override
+  String get inequalityBalanceOpsTitle => 'Cân bằng bất bình đẳng';
+
+  @override
+  String get inequalityBalanceOpsSubtitle =>
+      'Đặt các ký hiệu bất đẳng thức giữa các thuật ngữ toán học phức tạp.';
+
+  @override
+  String get graphCoordinatePlotTitle => 'Máy vẽ đồ thị';
+
+  @override
+  String get graphCoordinatePlotSubtitle =>
+      'Vẽ tọa độ lưới khớp với các đường cong tuyến tính/bậc hai.';
+
+  @override
+  String get baseConversionRunTitle => 'Chuyển đổi cơ sở';
+
+  @override
+  String get baseConversionRunSubtitle =>
+      'Chuyển đổi các giá trị giữa nhị phân, thập phân, hex và bát phân.';
+
+  @override
+  String get unitConverterProTitle => 'Bộ chuyển đổi đơn vị';
+
+  @override
+  String get unitConverterProSubtitle =>
+      'Trả lời chuyển đổi đơn vị nhanh chóng trong thời gian giới hạn.';
+
+  @override
+  String get auditoryNBackTitle => 'Thính giác N-Back';
+
+  @override
+  String get auditoryNBackSubtitle =>
+      'Trận đấu nói chữ N bước trở lại từ bộ nhớ.';
+
+  @override
+  String get abstractPatternRecallTitle => 'Phân lớp mẫu';
+
+  @override
+  String get abstractPatternRecallSubtitle =>
+      'Tái tạo lại các hình dạng nhiều lớp đầy màu sắc từ nghiên cứu trí nhớ.';
+
+  @override
+  String get roomInspectorTitle => 'Thanh tra phòng';
+
+  @override
+  String get roomInspectorSubtitle =>
+      'Xác định các sửa đổi đồ nội thất được thực hiện trong khi màn hình trống.';
+
+  @override
+  String get voiceToFaceMatchTitle => 'Kết hợp giọng nói-khuôn mặt';
+
+  @override
+  String get voiceToFaceMatchSubtitle =>
+      'Chọn đúng khuôn mặt được liên kết với clip giọng nói âm thanh.';
+
+  @override
+  String get spatialGridMemory3DTitle => 'Bộ nhớ không gian 3D';
+
+  @override
+  String get spatialGridMemory3DSubtitle =>
+      'Nhớ lại các khối nhấp nháy trong cấu trúc lưới khối 3D xoay.';
+
+  @override
+  String get sequenceStackTitle => 'ngăn xếp trình tự';
+
+  @override
+  String get sequenceStackSubtitle =>
+      'Xây dựng lại các phần bổ sung và loại bỏ chồng đĩa theo thứ tự.';
+
+  @override
+  String get semanticCategoryRecallTitle => 'Hạng mục Thu hồi';
+
+  @override
+  String get semanticCategoryRecallSubtitle =>
+      'Xác định các từ nghiên cứu phù hợp với mục tiêu danh mục được yêu cầu.';
+
+  @override
+  String get gridDisplacementTitle => 'Dịch chuyển lưới';
+
+  @override
+  String get gridDisplacementSubtitle =>
+      'Xác định các biểu tượng đã thay đổi so sánh bố cục với bản gốc.';
+
+  @override
+  String get soundSequenceMatchTitle => 'Kết hợp trình tự âm thanh';
+
+  @override
+  String get soundSequenceMatchSubtitle =>
+      'Lặp lại chuỗi nốt nhạc được chơi trên bàn phím ảo.';
+
+  @override
+  String get cardCountingMemoryTitle => 'Máy đếm thẻ';
+
+  @override
+  String get cardCountingMemorySubtitle =>
+      'Xác định các lá bài đã được chia trong các lần chia bài liên tục.';
+
+  @override
+  String get directionsRecallTitle => 'Hướng dẫn thu hồi';
+
+  @override
+  String get directionsRecallSubtitle =>
+      'Điều hướng bản đồ lưới phù hợp với hướng đường dẫn từ bộ nhớ.';
+
+  @override
+  String get eventTimelineMemoryTitle => 'Dòng thời gian sự kiện';
+
+  @override
+  String get eventTimelineMemorySubtitle =>
+      'Sắp xếp các thẻ sự kiện lịch sử/hư cấu theo thứ tự thời gian.';
+
+  @override
+  String get featureMatrixRecallTitle => 'Ma trận tính năng';
+
+  @override
+  String get featureMatrixRecallSubtitle =>
+      'Trả lời các câu hỏi gợi ý về thuộc tính màu sắc hình dạng ô.';
+
+  @override
+  String get delayedMatchSampleTitle => 'Trận đấu bị trì hoãn';
+
+  @override
+  String get delayedMatchSampleSubtitle =>
+      'Ghép biểu tượng mục tiêu sau khi giải các câu đố toán học.';
+
+  @override
+  String get symbolDigitAssocTitle => 'PGS ký hiệu-chữ số';
+
+  @override
+  String get symbolDigitAssocSubtitle =>
+      'Giải các bảng dịch ký hiệu khớp với các phím chữ số.';
+
+  @override
+  String get dualTaskMemoryTitle => 'Bộ nhớ tác vụ kép';
+
+  @override
+  String get dualTaskMemorySubtitle =>
+      'Ghi nhớ các bộ từ trong khi giải các bài toán số học nhanh chóng.';
+
+  @override
+  String get actionSequenceRecallTitle => 'Thu hồi hành động';
+
+  @override
+  String get actionSequenceRecallSubtitle =>
+      'Lặp lại chuỗi hoạt ảnh cử chỉ của nhân vật theo thứ tự.';
+
+  @override
+  String get tangramPolygonTitle => 'Tangram Fit';
+
+  @override
+  String get tangramPolygonSubtitle =>
+      'Sắp xếp các hình dạng đa giác để điền vào đường viền hình bóng.';
+
+  @override
+  String get mazeNav3DTitle => 'Mê cung 3D';
+
+  @override
+  String get mazeNav3DSubtitle =>
+      'Điều hướng các tuyến đường mê cung đẳng cự 3D từ góc nhìn thứ nhất.';
+
+  @override
+  String get isometricProjectionTitle => 'Máy chiếu đẳng cự';
+
+  @override
+  String get isometricProjectionSubtitle =>
+      'Ghép các số liệu khối 3D với các chế độ xem trên/phía trước 2D chính tả.';
+
+  @override
+  String get polyominoPackingTitle => 'Đóng gói Polyomino';
+
+  @override
+  String get polyominoPackingSubtitle =>
+      'Gói các mảnh khối polyomino ngẫu nhiên vào khu vực mục tiêu.';
+
+  @override
+  String get spatialGridRotationTitle => 'Xoay lưới không gian';
+
+  @override
+  String get spatialGridRotationSubtitle =>
+      'Khớp cách sắp xếp khối 3D được xoay dọc theo tọa độ trục.';
+
+  @override
+  String get wireLoopGameTitle => 'vòng dây';
+
+  @override
+  String get wireLoopGameSubtitle =>
+      'Kéo các vòng kim loại dọc theo các chốt dây mà không tiếp xúc.';
+
+  @override
+  String get origamiUnfoldTitle => 'Origami mở ra';
+
+  @override
+  String get origamiUnfoldSubtitle =>
+      'Xác định các mẫu đục lỗ sau khi mở các tờ gấp.';
+
+  @override
+  String get ropeTangleSolverTitle => 'Dụng cụ gỡ dây';
+
+  @override
+  String get ropeTangleSolverSubtitle =>
+      'Kéo các nút để bố trí đồ thị phẳng với các đường chéo bằng 0.';
+
+  @override
+  String get gridFitTetrisTitle => 'Bộ giải phù hợp với lưới';
+
+  @override
+  String get gridFitTetrisSubtitle =>
+      'Sắp xếp các khối tĩnh không đều để phù hợp với giới hạn vùng chứa.';
+
+  @override
+  String get vectorGridAlignmentTitle => 'Căn chỉnh vectơ';
+
+  @override
+  String get vectorGridAlignmentSubtitle =>
+      'Chia tỷ lệ và xoay hình dạng để phù hợp với mục tiêu mẫu bóng.';
+
+  @override
+  String get blockStackingPhysicsTitle => 'Xếp chồng khối';
+
+  @override
+  String get blockStackingPhysicsSubtitle =>
+      'Xếp các tấm khối không đều nhau cân bằng trọng lực.';
+
+  @override
+  String get crossSectionMatch3DTitle => 'Mặt cắt 3D';
+
+  @override
+  String get crossSectionMatch3DSubtitle =>
+      'Xác định hình học lát cắt 2D được cắt từ hình dạng 3D.';
+
+  @override
+  String get symmetryPaintTitle => 'Sơn đối xứng';
+
+  @override
+  String get symmetryPaintSubtitle =>
+      'Vẽ các đoạn ảnh phản chiếu qua các trục đối xứng.';
+
+  @override
+  String get rollingBlockBloxTitle => 'Khối lăn';
+
+  @override
+  String get rollingBlockBloxSubtitle =>
+      'Lăn các mảnh khối để hạ cánh thẳng đứng vào các khe mục tiêu.';
+
+  @override
+  String get perspectiveShiftViewTitle => 'Thay đổi quan điểm';
+
+  @override
+  String get perspectiveShiftViewSubtitle =>
+      'Xoay các cụm khối cho đến khi chúng đánh vần được các chữ cái/từ.';
+
+  @override
+  String get networkFlowSphericalTitle => 'Luồng mạng';
+
+  @override
+  String get networkFlowSphericalSubtitle =>
+      'Kết nối các luồng lưới trên tọa độ hình trụ.';
+
+  @override
+  String get layeredSilhouetteBlendTitle => 'Pha trộn bóng';
+
+  @override
+  String get layeredSilhouetteBlendSubtitle =>
+      'Xếp chồng các lớp màu để phù hợp với hình dạng mờ mục tiêu.';
+
+  @override
+  String get wordWheelPangramTitle => 'đảo chữ từ';
+
+  @override
+  String get wordWheelPangramSubtitle =>
+      'Xây dựng các từ có chứa các chữ cái mục tiêu trung tâm từ bánh xe.';
+
+  @override
+  String get letterGridSwapperTitle => 'Trao đổi thư';
+
+  @override
+  String get letterGridSwapperSubtitle =>
+      'Hoán đổi các ô chữ cái liền kề để hoàn thành các từ hàng và cột.';
+
+  @override
+  String get synonymMatchTitle => 'Kết hợp từ đồng nghĩa';
+
+  @override
+  String get synonymMatchSubtitle =>
+      'Ghép các mục tiêu từ rơi xuống với từ đồng nghĩa hoặc trái nghĩa.';
+
+  @override
+  String get vowelDropTitle => 'nguyên âm thả';
+
+  @override
+  String get vowelDropSubtitle =>
+      'Thả các nguyên âm vào lưới tọa độ để hoàn thành các từ.';
+
+  @override
+  String get letterBalanceScaleTitle => 'Thang đo cân bằng từ';
+
+  @override
+  String get letterBalanceScaleSubtitle =>
+      'Đánh vần các từ có giá trị chữ cái cân bằng trọng lượng.';
+
+  @override
+  String get wordChainShiritoriTitle => 'Chuỗi từ';
+
+  @override
+  String get wordChainShiritoriSubtitle =>
+      'Liên kết các vòng lặp từ bắt đầu bằng đầu ra chữ cái trước đó.';
+
+  @override
+  String get affixBuilderTitle => 'Trình tạo gắn kết';
+
+  @override
+  String get affixBuilderSubtitle =>
+      'Kết hợp các tiền tố/hậu tố để xây dựng từ vựng mục tiêu.';
+
+  @override
+  String get decipherCrypticCluesTitle => 'Giải mã mật mã';
+
+  @override
+  String get decipherCrypticCluesSubtitle =>
+      'Giải các câu đố chơi chữ và giải mã các câu đố chính tả.';
+
+  @override
+  String get boggleWordSearchTitle => 'Kết nối Boggle';
+
+  @override
+  String get boggleWordSearchSubtitle =>
+      'Theo dõi các đường dẫn được kết nối liền kề để tìm các từ ẩn.';
+
+  @override
+  String get idiomUnscrambleTitle => 'Thành ngữ xắp xếp lại';
+
+  @override
+  String get idiomUnscrambleSubtitle =>
+      'Sắp xếp các mảng từ được xáo trộn để phù hợp với ý nghĩa thành ngữ.';
+
+  @override
+  String get letterPyramidsTitle => 'Kim tự tháp chữ cái';
+
+  @override
+  String get letterPyramidsSubtitle =>
+      'Xây dựng các tháp từ thêm các chữ cái đảo chữ duy nhất cho mỗi tầng.';
+
+  @override
+  String get soundAlikeHomophonesTitle => 'Trận đấu đồng âm';
+
+  @override
+  String get soundAlikeHomophonesSubtitle =>
+      'Xác định đúng cách viết đồng âm cho câu.';
+
+  @override
+  String get wordGridSudokuTitle => 'Sudoku từ';
+
+  @override
+  String get wordGridSudokuSubtitle =>
+      'Xếp các chữ cái theo hàng lưới tạo thành từ.';
+
+  @override
+  String get portmanteauFactoryTitle => 'Nhà máy Portmanteau';
+
+  @override
+  String get portmanteauFactorySubtitle =>
+      'Hợp nhất các thành phần ngữ nghĩa tạo thành từ ghép.';
+
+  @override
+  String get codedCrosswordsCodeTitle => 'Mật mã Ô chữ';
+
+  @override
+  String get codedCrosswordsCodeSubtitle =>
+      'Giải ô chữ dạng lưới khớp với mã số theo chữ cái.';
+
+  @override
+  String get wordSnakeTrailTitle => 'rắn chữ';
+
+  @override
+  String get wordSnakeTrailSubtitle =>
+      'Dấu vết các dấu vết giống như con rắn đánh vần các từ theo chủ đề.';
+
+  @override
+  String get typingRhythmSpeedTitle => 'Luồng gõ';
+
+  @override
+  String get typingRhythmSpeedSubtitle =>
+      'Nhập từ vựng phù hợp với nhịp điệu của máy đếm nhịp.';
+
+  @override
+  String get errorSomethingWrong => 'Something went wrong';
+
+  @override
+  String get errorUnexpected => 'An unexpected error occurred';
+
+  @override
+  String get errorTryAgain => 'Try Again';
+
+  @override
+  String get leaveReview => 'Leave Review';
+
+  @override
+  String get reportError => 'Report Error';
+
+  @override
+  String get statsTitle => 'Stats';
+
+  @override
+  String get statsAchievements => 'Achievements';
+
+  @override
+  String get statsWeeklyActivity => 'Weekly Activity';
+
+  @override
+  String statsDayStreak(int days) {
+    return '$days Day Streak';
+  }
+
+  @override
+  String get statsTotalXp => 'Total XP';
+
+  @override
+  String get statsSolved => 'Solved';
+
+  @override
+  String statsLevel(int level) {
+    return 'Level $level';
+  }
+
+  @override
+  String get statsMaintainStreak => 'Maintain your streak!';
+
+  @override
+  String statsPercentToLevel(int percent, int level) {
+    return '$percent% to Level $level';
+  }
+
+  @override
+  String get statsCognitiveProfile => 'Cognitive Profile';
+
+  @override
+  String get statsLocked => 'Locked';
+
+  @override
+  String get achievementSeeker => 'Seeker';
+
+  @override
+  String get achievementSeekerDesc => 'Earn 100 XP';
+
+  @override
+  String get achievementApprentice => 'Apprentice';
+
+  @override
+  String get achievementApprenticeDesc => 'Earn 1,000 XP';
+
+  @override
+  String get achievementStrategist => 'Strategist';
+
+  @override
+  String get achievementStrategistDesc => 'Earn 5,000 XP';
+
+  @override
+  String get achievementElite => 'Elite';
+
+  @override
+  String get achievementEliteDesc => 'Earn 10,000 XP';
+
+  @override
+  String get achievementVeteran => 'Veteran';
+
+  @override
+  String get achievementVeteranDesc => 'Earn 25,000 XP';
+
+  @override
+  String get achievementMaster => 'Master';
+
+  @override
+  String get achievementMasterDesc => 'Earn 50,000 XP';
+
+  @override
+  String get achievementGrandmaster => 'Grandmaster';
+
+  @override
+  String get achievementGrandmasterDesc => 'Earn 100,000 XP';
+
+  @override
+  String get achievementLegend => 'Legend';
+
+  @override
+  String get achievementLegendDesc => 'Earn 250,000 XP';
+
+  @override
+  String get achievementMythic => 'Mythic';
+
+  @override
+  String get achievementMythicDesc => 'Earn 500,000 XP';
+
+  @override
+  String get achievementEternal => 'Eternal';
+
+  @override
+  String get achievementEternalDesc => 'Earn 1,000,000 XP';
+
+  @override
+  String get winFoundIt => 'Found It!';
+
+  @override
+  String get winExcellentTracking => 'Excellent tracking speed!';
+
+  @override
+  String get loseMissedIt => 'Missed It!';
+
+  @override
+  String get loseKeepEyes => 'Keep your eyes on the target.';
+
+  @override
+  String get winDecodedCorrectly => 'Decoded Correctly!';
+
+  @override
+  String get winDecodedMessage =>
+      'Your brain successfully read the jumbled text!';
+
+  @override
+  String get loseTryAgainDecryption => 'Try again to break the encryption.';
+
+  @override
+  String get winTargetReached => 'Target Reached!';
+
+  @override
+  String get winExcellentCalculations => 'Excellent calculations!';
+
+  @override
+  String get winCodeBroken => 'Code Broken!';
+
+  @override
+  String get winDecodedPerfectly => 'You decoded the message perfectly.';
+
+  @override
+  String get loseEncrypted => 'Encrypted';
+
+  @override
+  String get winAmazing => 'Amazing!';
+
+  @override
+  String get winReachedTarget => 'You reached the target number!';
+
+  @override
+  String get loseTryAgainSolution => 'Try again to find the solution.';
+
+  @override
+  String get winExcellent => 'Excellent!';
+
+  @override
+  String get winLevelUp => 'Level Up!';
+
+  @override
+  String get winPerfect => 'Perfect!';
+
+  @override
+  String get winFloodSuccess => 'Flood Success!';
+
+  @override
+  String get loseDryLand => 'Dry Land...';
+
+  @override
+  String get winRoundComplete => 'Round Complete';
+
+  @override
+  String get winStayVigilant => 'Stay Vigilant!';
+
+  @override
+  String get loseKeepWatch => 'Keep Watch!';
+
+  @override
+  String get winFocusMaster => 'Focus Master!';
+
+  @override
+  String get loseConcentrationBroken => 'Concentration Broken';
+
+  @override
+  String get winSpeedDemon => 'Speed Demon!';
+
+  @override
+  String get loseSlowSteady => 'Slow & Steady';
+
+  @override
+  String get loseTimeExpired => 'Time Expired';
+
+  @override
+  String get winSharpEyes => 'Sharp Eyes!';
+
+  @override
+  String get loseLostTrack => 'Lost Track';
+
+  @override
+  String get winOrbitMaster => 'Orbit Master!';
+
+  @override
+  String get loseOutOfSync => 'Out of Sync';
+
+  @override
+  String get winSharpReflexes => 'Sharp Reflexes!';
+
+  @override
+  String get loseOutOfTime => 'Out of Time';
+
+  @override
+  String get winSurgeComplete => 'Surge Complete!';
+
+  @override
+  String get loseTimeExpiredExcl => 'Time Expired!';
+
+  @override
+  String get winMathGenius => 'Math Genius!';
+
+  @override
+  String get loseTimeUp => 'Time Up';
+
+  @override
+  String get winPlanningMaster => 'Planning Master!';
+
+  @override
+  String get loseOutOfMoves => 'Out of Moves';
+
+  @override
+  String get winTotalControl => 'Total Control!';
+
+  @override
+  String get loseInhibitionFail => 'Inhibition Fail';
+
+  @override
+  String get winMimicMaster => 'Mimic Master!';
+
+  @override
+  String get losePatternMismatch => 'Pattern Mismatch';
+
+  @override
+  String get winMemoryMaster => 'Memory Master!';
+
+  @override
+  String get loseFadingEcho => 'Fading Echo';
+
+  @override
+  String get winNeuroMaster => 'Neuro-Master!';
+
+  @override
+  String get loseBrainFog => 'Brain Fog';
+
+  @override
+  String get winBrainWizard => 'Brain Wizard!';
+
+  @override
+  String get winSpatialMaster => 'Spatial Master!';
+
+  @override
+  String get loseLostInSpace => 'Lost in Space';
+
+  @override
+  String get winSequenceMaster => 'Sequence Master!';
+
+  @override
+  String get winCountingGenius => 'Counting Genius!';
+
+  @override
+  String get winNonMatchingExpert => 'Non-Matching Expert!';
+
+  @override
+  String get winSymmetryMaster => 'Symmetry Master!';
+
+  @override
+  String get winCabinetExpert => 'Cabinet Expert!';
+
+  @override
+  String get winSpatialGenius => 'Spatial Genius!';
+
+  @override
+  String get winReadingExpert => 'Reading Expert!';
+
+  @override
+  String get winRecognitionGenius => 'Recognition Genius!';
+
+  @override
+  String get winMandalaArtist => 'Mandala Artist!';
+
+  @override
+  String get winTrackerPro => 'Tracker Pro!';
+
+  @override
+  String get loseLostTrail => 'Lost Trail';
+
+  @override
+  String get winLogicMaster => 'Logic Master!';
+
+  @override
+  String get loseWrongAnswer => 'Wrong Answer';
+
+  @override
+  String get winPathfinder => 'Pathfinder!';
+
+  @override
+  String get loseLostYourWay => 'Lost Your Way';
+
+  @override
+  String get winMentalGymnast => 'Mental Gymnast!';
+
+  @override
+  String get loseWiresCrossed => 'Wires Crossed';
+
+  @override
+  String get winCorrect => 'Correct!';
+
+  @override
+  String get loseWrong => 'Wrong';
+
+  @override
+  String get winRhythmGod => 'Rhythm God!';
+
+  @override
+  String get loseOffBeat => 'Off Beat';
+
+  @override
+  String get winSteadyHands => 'Steady Hands!';
+
+  @override
+  String get loseShakyLine => 'Shaky Line';
+
+  @override
+  String get winEquationSolved => 'Equation Solved!';
+
+  @override
+  String get winMasterHunter => 'Master Hunter!';
+
+  @override
+  String get loseHuntEnded => 'Hunt Ended';
+
+  @override
+  String get winFluencyExpert => 'Fluency Expert!';
+
+  @override
+  String get loseTimeUpExcl => 'Time Up!';
+
+  @override
+  String get winSharpEye => 'Sharp Eye!';
+
+  @override
+  String get loseMismatched => 'Mismatched';
+
+  @override
+  String get winFibonacciMaster => 'Fibonacci Master!';
+
+  @override
+  String get winMathWizard => 'Math Wizard!';
+
+  @override
+  String get winPercentagePro => 'Percentage Pro!';
+
+  @override
+  String get winSleuthMaster => 'Sleuth Master!';
+
+  @override
+  String get winDivisibilityWhiz => 'Divisibility Whiz!';
+
+  @override
+  String get winVennMaster => 'Venn Master!';
+
+  @override
+  String get winChimpTestAced => 'Chimp Test Aced';
+
+  @override
+  String get loseTestFailed => 'Test Failed';
+
+  @override
+  String get winChimpMessage =>
+      'Sensational working memory span! You equal chimpanzee levels of cognitive recall.';
+
+  @override
+  String get loseChimpMessage =>
+      'You lost all lives. Keep training to scale up your memory grid capacity!';
+
+  @override
+  String get winPerfectRecall => 'Perfect Recall!';
+
+  @override
+  String get winRememberedAll => 'You remembered all details correctly!';
+
+  @override
+  String get loseSomeDetailsWrong =>
+      'Some details were remembered incorrectly.';
+
+  @override
+  String get winShikakuSolved => 'You successfully solved the Shikaku puzzle.';
+
+  @override
+  String get snackbarIncorrectSum => 'Incorrect sum! Try another one.';
+
+  @override
+  String get snackbarCorrectMatch => 'Correct match!';
+
+  @override
+  String get snackbarWrongMatch => 'Wrong match! Study a new shape.';
+
+  @override
+  String get snackbarAlignedPerfectly => 'Aligned perfectly! Next target...';
+
+  @override
+  String get snackbarNotAligned =>
+      'Not aligned yet! Keep adjusting the rotation, scale, or positions.';
+
+  @override
+  String snackbarWordMustContainCentral(String letter) {
+    return 'Word must contain the central letter \"$letter\"!';
+  }
+
+  @override
+  String get snackbarWordAlreadyFound => 'Word already found!';
+
+  @override
+  String get snackbarNotAValidWord => 'Not a valid word!';
+
+  @override
+  String get snackbarIncorrectLookClose =>
+      'Incorrect reading. Look closely at the words!';
+
+  @override
+  String snackbarIncorrectCorrectAnswer(String answer) {
+    return 'Incorrect! The correct answer was $answer';
+  }
+
+  @override
+  String get hideGame => 'Ẩn';
+
+  @override
+  String get unhideGame => 'Hiện';
+
+  @override
+  String get favoriteGame => 'Yêu thích';
+
+  @override
+  String get unfavoriteGame => 'Bỏ yêu thích';
+
+  @override
+  String get hiddenGames => 'TRÒ CHƠI ĐÃ ẨN';
+
+  @override
+  String showHiddenGames(int count) {
+    return 'Hiển thị trò chơi đã ẩn ($count)';
+  }
+
+  @override
+  String get noHiddenGames => 'Không có trò chơi nào bị ẩn';
+
+  @override
+  String get gameHidden => 'Đã ẩn trò chơi';
+
+  @override
+  String get undo => 'Hoàn tác';
+
+  @override
+  String get snackbarCorrect => 'Correct!';
+
+  @override
+  String get snackbarIncorrectTryNew => 'Incorrect recall! Try a new grid.';
+
+  @override
+  String get snackbarAllCorrect => 'All associations correct!';
+
+  @override
+  String get snackbarIncorrectStudyAgain =>
+      'Incorrect translations! Study the association key again.';
+
+  @override
+  String get snackbarIncorrectArithmetic => 'Incorrect arithmetic! Try again.';
+
+  @override
+  String get snackbarCorrectRecall => 'Correct recall!';
+
+  @override
+  String get snackbarWrongRecall => 'Wrong recall selection! Try a new set.';
+
+  @override
+  String get snackbarPieceDoesNotFit => 'Piece does not fit there!';
+
+  @override
+  String snackbarInvalidStep(int mod, int modulus, int remainder) {
+    return 'Invalid step! $mod mod $modulus is not $remainder.';
+  }
+
+  @override
+  String snackbarIncorrectGroup(int tries) {
+    return 'Incorrect group! $tries tries remaining.';
+  }
+
+  @override
+  String get snackbarIncorrectSwapped =>
+      'Incorrect! Swapped items are highlighted in green.';
+
+  @override
+  String snackbarIncorrectDestination(int x, int y) {
+    return 'Incorrect! The final destination was ($x, $y).';
+  }
+
+  @override
+  String snackbarIncorrectCorrectCount(String suit, int count) {
+    return 'Incorrect! The correct count for $suit was $count.';
+  }
+
+  @override
+  String get snackbarIncorrectSequence =>
+      'Incorrect sequence! Watch closely again.';
+
+  @override
+  String get snackbarSequenceMatched =>
+      'Sequence matched! Increasing length...';
+
+  @override
+  String get snackbarIncorrectAnswer => 'Incorrect answer! Try again.';
+
+  @override
+  String snackbarIncorrectCorrectValue(String value) {
+    return 'Incorrect! The correct value was $value';
+  }
+
+  @override
+  String snackbarIncorrectSlices(int selected, String required) {
+    return 'Incorrect! You selected $selected slices, but need $required.';
+  }
+
+  @override
+  String get snackbarReachedEndNoMatch =>
+      'Reached end but total does not match target!';
+
+  @override
+  String get snackbarCorrectOrder => 'Correct chronological order!';
+
+  @override
+  String get snackbarIncorrectOrder => 'Incorrect order! Study again.';
+
+  @override
+  String snackbarIncorrectMissingValue(String value) {
+    return 'Incorrect! The missing value was $value';
+  }
+
+  @override
+  String snackbarIncorrectLetterDigit(String letter, int digit) {
+    return 'Incorrect! $letter = $digit';
+  }
+
+  @override
+  String snackbarIncorrectCorrectPoint(int x, int y) {
+    return 'Incorrect! The correct point was ($x, $y).';
+  }
+
+  @override
+  String get snackbarReachedExit => 'Reached the exit! Generating next maze...';
+
+  @override
+  String get snackbarCannotMoveBlocked =>
+      'Cannot move forward: Blocked by wall!';
+
+  @override
+  String snackbarIncorrectCorrectStack(String stack) {
+    return 'Incorrect! The correct final stack was: $stack';
+  }
+
+  @override
+  String get snackbarIncorrectStudyStory =>
+      'Incorrect sequence! Study the story again.';
+
+  @override
+  String snackbarScaleNotBalanced(int current, int target) {
+    return 'Scale is not balanced! Current weight is $current, Target is $target.';
+  }
+
+  @override
+  String get snackbarWordMatchedTracing => 'Word matched! Tracing next word...';
+
+  @override
+  String get snackbarIncorrectTraceFromStart =>
+      'Incorrect sequence! Try tracing from the start cell.';
+
+  @override
+  String snackbarIncorrectCorrectForm(String form) {
+    return 'Incorrect! The factored form is $form';
+  }
+
+  @override
+  String snackbarIncorrectInequality(
+      String left, int leftVal, String correct, String right, int rightVal) {
+    return 'Incorrect! $left ($leftVal) $correct $right ($rightVal)';
+  }
+
+  @override
+  String snackbarIncorrectBaseConversion(String answer) {
+    return 'Incorrect! The correct answer was $answer';
+  }
+
+  @override
+  String get snackbarIncorrectStudyPairs =>
+      'Incorrect! Let\'s study the pairs again.';
+
+  @override
+  String get snackbarAlignedCorrectly => 'Aligned and correctly identified!';
+
+  @override
+  String get snackbarIncorrectPerspective =>
+      'Incorrect perspective angle rotation! Try aligning them first.';
+
+  @override
+  String get btnShuffleCups => 'Shuffle Cups';
+
+  @override
+  String get btnSubmitGroup => 'Submit Group';
+
+  @override
+  String get btnYes => 'Yes';
+
+  @override
+  String get btnNo => 'No';
+
+  @override
+  String get btnGotIt => 'Got It';
+
+  @override
+  String get btnSubmit => 'Submit';
+
+  @override
+  String get btnShowHint => 'Show Hint';
+
+  @override
+  String get btnSubmitAlignment => 'Submit Alignment';
+
+  @override
+  String get btnSubmitLocation => 'Submit Location';
+
+  @override
+  String get btnStartDealing => 'Start Dealing';
+
+  @override
+  String get btnImReady => 'I\'m Ready';
+
+  @override
+  String get btnStartGame => 'Start Game';
+
+  @override
+  String get btnSubmitStack => 'Submit Stack';
+
+  @override
+  String get btnImReadyToAnswer => 'I\'m Ready to Answer';
+
+  @override
+  String get btnNoMatch => 'No Match';
+
+  @override
+  String get btnMatch => 'Match';
+
+  @override
+  String get btnMatchColor => 'KHỚP MÀU';
+
+  @override
+  String get btnMatchWord => 'KHỚP TỪ';
+
+  @override
+  String get btnGuess => 'Guess';
+
+  @override
+  String get btnPlayNow => 'Play Now';
+
+  @override
+  String get btnClear => 'Clear';
+
+  @override
+  String get phaseWatchCarefully => 'Watch carefully...';
+
+  @override
+  String get phaseTapCupWithBall => 'Tap the cup with the ball!';
+
+  @override
+  String get phaseTrackTheBall => 'Track the ball';
+
+  @override
+  String get phaseFindTheBall => 'Find the ball under the yellow cup!';
+
+  @override
+  String get phaseBallUnderCup =>
+      'The ball is under the highlighted cup. Remember it!';
+
+  @override
+  String get phaseWrongCup =>
+      'Wrong cup! The ball was under the highlighted cup.';
+
+  @override
+  String get phaseDecodeTheSentence => 'Decode the sentence';
+
+  @override
+  String get phaseFindTheTarget => 'Find the target';
+
+  @override
+  String get phaseTargetNumber => 'Target Number';
+
+  @override
+  String get phaseSelectNumberToBegin => 'Select a number to begin';
+
+  @override
+  String get phaseMemorizeDetails => 'Memorize the details';
+
+  @override
+  String get phaseReadAndMemorize => 'Read and Memorize Details:';
+
+  @override
+  String get phaseSolveTheGrid => 'Solve the grid';
+
+  @override
+  String get phaseDirectionsList => 'Directions List:';
+
+  @override
+  String get phaseYourStack => 'Your Stack';
+
+  @override
+  String get phaseEmpty => 'Empty';
+
+  @override
+  String get phaseTapToAdd => 'Tap to Add';
+
+  @override
+  String get phaseCalculationLabel => 'Calculation:';
+
+  @override
+  String phaseTimeLeft(int time) {
+    return 'Time: ${time}s';
+  }
+
+  @override
+  String get phaseRemember2Back => 'Remember 2 steps back';
+
+  @override
+  String get phaseMatch => 'Match';
+
+  @override
+  String get hintTypeRhymingWord => 'Type a rhyming word...';
+
+  @override
+  String get hintStartTyping => 'Start typing...';
+
+  @override
+  String get hintTypeHeardWord => 'Type the heard word';
+
+  @override
+  String get hintTypeGuess => 'Type your guess...';
+
+  @override
+  String get hintTypeAnswerHere => 'Type answer here';
+
+  @override
+  String get hintEnterNextWord => 'Enter next word...';
+
+  @override
+  String get howToPlayTitle => 'How to Play';
+
+  @override
+  String get howToPlayStep1 =>
+      '1. A secret number is chosen between 1 and 10,000.';
+
+  @override
+  String get howToPlayStep2 =>
+      '2. Type your guess on the number pad and submit it.';
+
+  @override
+  String get howToPlayStep3 =>
+      '3. If wrong, you will get feedback on whether the secret is higher or lower.';
+
+  @override
+  String get howToPlayStep4 =>
+      '4. You have exactly 15 attempts to find the secret number.';
+
+  @override
+  String get noGuessesYet => 'No Guesses Yet';
+
+  @override
+  String get chancesLeft => 'Chances Left';
+
+  @override
+  String get guessesMade => 'Guesses Made';
+
+  @override
+  String get feedbackFindNumber => 'Find the number between 1 and 10,000!';
+
+  @override
+  String get feedbackEnterNumber => 'Enter a number between 1 and 10,000!';
+
+  @override
+  String feedbackCorrectExcl(int number) {
+    return 'Correct! The number was $number.';
+  }
+
+  @override
+  String get feedbackCorrectEmoji => 'Correct!';
+
+  @override
+  String get feedbackTooLow => 'Too Low';
+
+  @override
+  String get feedbackTooHigh => 'Too High';
+
+  @override
+  String feedbackGameOver(int number) {
+    return 'Game Over! The number was $number.';
+  }
+
+  @override
+  String feedbackGuessResult(int guess, String result) {
+    return '$guess is $result!';
+  }
+
+  @override
+  String feedbackWinMessage(int number, int guesses) {
+    return 'Correct! You found $number with $guesses guesses left!';
+  }
+
+  @override
+  String feedbackLoseMessage(int number) {
+    return 'Out of guesses! The number was $number.';
+  }
+
+  @override
+  String get statTime => 'Time';
+
+  @override
+  String get statScore => 'Score';
+
+  @override
+  String get statGrid => 'Grid';
+
+  @override
+  String get statMatches => 'Matches';
+
+  @override
+  String get statLives => 'Lives';
+
+  @override
+  String get statBeats => 'Beats';
+
+  @override
+  String get statPerfect => 'Perfect';
+
+  @override
+  String get statSeenPool => 'Seen Pool';
+
+  @override
+  String get statCards => 'Cards';
+
+  @override
+  String get statSpan => 'Span';
+
+  @override
+  String get statLength => 'Length';
+
+  @override
+  String get statItems => 'Items';
+
+  @override
+  String get statProgress => 'Progress';
+
+  @override
+  String get statTrials => 'Trials';
+
+  @override
+  String get statTrails => 'Trails';
+
+  @override
+  String get statMoves => 'Moves';
+
+  @override
+  String get statFocalSearch => 'Focal search on oscillations';
+
+  @override
+  String get phaseMemorizeSequence => 'Memorize the sequence order';
+
+  @override
+  String get phaseDetermineOrder => 'Determine which item came first/last';
+
+  @override
+  String get phaseCorrectOrder => 'Correct order!';
+
+  @override
+  String get phaseWrongTimeline => 'Wrong timeline!';
+
+  @override
+  String get phaseWatchPattern => 'Watch the pattern';
+
+  @override
+  String get phaseRepeatPattern => 'Repeat the pattern';
+
+  @override
+  String get phaseExcellent => 'Excellent!';
+
+  @override
+  String get phaseTryAgain => 'Try again!';
+
+  @override
+  String get phaseChooseWordFit => 'Choose the word that fits';
+
+  @override
+  String get phaseExcellentContextual => 'Excellent contextual match!';
+
+  @override
+  String get phaseIncorrectMatch => 'Incorrect match';
+
+  @override
+  String get phaseMemorizePattern => 'Memorize the pattern';
+
+  @override
+  String get phaseSelectTiles => 'Select the tiles';
+
+  @override
+  String get phaseWrongTile => 'Wrong tile';
+
+  @override
+  String get phaseMemorizeRedCell => 'Memorize red cell location';
+
+  @override
+  String get phaseIsSymmetrical => 'Is the pattern symmetrical?';
+
+  @override
+  String get phaseRecallSequence => 'Recall sequence in correct order';
+
+  @override
+  String get phaseGreatJob => 'Great job!';
+
+  @override
+  String get phaseChooseNovelCard => 'Choose a novel card';
+
+  @override
+  String get phaseAlreadyTapped => 'Already tapped!';
+
+  @override
+  String get phaseCountBlueCircles => 'Count only blue circles';
+
+  @override
+  String get phaseRecallCountsOrder => 'Recall counts in correct order';
+
+  @override
+  String get phaseChooseNovel => 'Choose the novel card';
+
+  @override
+  String get phaseMemorizeCard => 'Memorize this card';
+
+  @override
+  String get phaseWaitForIt => 'Wait for it...';
+
+  @override
+  String get phaseThatWasSample => 'That was the sample!';
+
+  @override
+  String get phaseSolveDistractor => 'Solve the distractor question!';
+
+  @override
+  String get phaseSelectMemorized => 'Select the memorized cells';
+
+  @override
+  String get phasePerfectRecall => 'Perfect recall!';
+
+  @override
+  String get phaseWrongExcl => 'Wrong!';
+
+  @override
+  String get phaseMemorizePlacements => 'Memorize all placements';
+
+  @override
+  String get phaseWaitingForShift => 'Waiting for layout shift...';
+
+  @override
+  String get phaseTapMovedObject => 'Tap the object that moved';
+
+  @override
+  String get phaseWrongObject => 'Wrong object!';
+
+  @override
+  String get phaseStudyColorShape => 'Study the color-shape connections';
+
+  @override
+  String get phaseTapMatchingTrait => 'Tap the matching trait';
+
+  @override
+  String get phaseGreatRecall => 'Great recall!';
+
+  @override
+  String get phaseWrongLink => 'Wrong link!';
+
+  @override
+  String get phaseTrueOrFalse => 'Is this statement true or false?';
+
+  @override
+  String get phaseMemorizeLetter => 'Memorize this letter';
+
+  @override
+  String get phaseRecallLettersSequence => 'Recall letters in sequence';
+
+  @override
+  String get phaseMemorizeTileColors => 'Memorize tile colors';
+
+  @override
+  String get phasePaintCells => 'Paint cells to match original';
+
+  @override
+  String get phaseIncorrectMatchExcl => 'Incorrect match!';
+
+  @override
+  String get phaseKeepYourEyes => 'Keep your eyes on it!';
+
+  @override
+  String get phaseWhereIsTarget => 'Where is the target object?';
+
+  @override
+  String get phaseTrackStar => 'Track Star';
+
+  @override
+  String get dialogIncorrectSequenceStudy =>
+      'Incorrect sequence! Study the story again.';
+
+  @override
+  String get dialogStoryReconstruct =>
+      'Reconstruct the story by tapping sentences in order';
+
+  @override
+  String get dialogMemorizeOrder =>
+      'Memorize the chronological order of events';
+
+  @override
+  String get dialogMemorizeWordPairs => 'Memorize these word pairs';
+
+  @override
+  String get dialogWhichWordPaired => 'Which word was paired with the target?';
+
+  @override
+  String get dialogWatchSequence => 'Watch the sequence path';
+
+  @override
+  String get dialogRepeatPath => 'Repeat the path sequence';
+
+  @override
+  String get dialogShapeShifterTap => 'Tap shapes that match the active target';
+
+  @override
+  String get dialogFocusTunnelTap =>
+      'Tap incoming shapes ONLY if they match the symbol seen 2 steps ago (2-Back).';
+
+  @override
+  String get dialogSequenceStackBuild =>
+      'Mentally track stack operations, then rebuild the final stack from bottom to top.';
+
+  @override
+  String get dialogFactorTreeComplete =>
+      'Complete the factor tree by tapping nodes and matching factors!';
+
+  @override
+  String get dialogBinaryScaleBalance =>
+      'Balance the scale by selecting powers of two (binary weights) that sum to the target.';
+
+  @override
+  String get dialogMatrixMultiplierSelect =>
+      'Select one row and one column that multiply to the target';
+
+  @override
+  String get dialogOddEvenFlashTap =>
+      'Tap the card when the active rule is satisfied';
+
+  @override
+  String get dialogBaseConversionConvert =>
+      'Convert the value from the source base to the destination base.';
+
+  @override
+  String get dialogGhostTapSync =>
+      'Synchronize with the rhythm, then tap when the invisible pulse would reach peak size.';
+
+  @override
+  String get dialogFrequencyTapIdentify =>
+      'Identify which pulsing light matches the requested target frequency.';
+
+  @override
+  String get dialogLetterGridSwap =>
+      'Swap adjacent letters to form the target words in rows.';
+
+  @override
+  String get dialogGraphCoordinatePlot =>
+      'Plot the coordinates on the Cartesian plane satisfying the equation.';
+
+  @override
+  String get dialogDigitSwapEquation =>
+      'Swap one digit from the top equation with one from the bottom equation to make both correct.';
+
+  @override
+  String get dialogAreaPerimeterAdjust =>
+      'Adjust the rectangle dimensions to match the target area and perimeter.';
+
+  @override
+  String get dialogCrackCipher =>
+      'Crack character-digit substitution cipher math problems.';
+
+  @override
+  String get dialogPeripheralFocus =>
+      'Solve math center equations, tap side panels when they flash';
+
+  @override
+  String get dialogGokigenSatisfy =>
+      'Satisfy vertex clues and avoid closed loops';
+
+  @override
+  String get dialogPercentageCalculate =>
+      'Calculate discount percentages and final checkout totals.';
+
+  @override
+  String get dialogBinomialMatch =>
+      'Match quadratic formulas with factored binomial values.';
+
+  @override
+  String get dialogNumberBondsCalculate =>
+      'Calculate the missing value in the number bond hierarchy.';
+
+  @override
+  String get correctLowercase => 'correct';
+
+  @override
+  String get incorrectLowercase => 'incorrect';
+
+  @override
+  String get notAValidWord => 'Not a valid word';
+
+  @override
+  String get enterNumberRange => 'ENTER A NUMBER BETWEEN 1 AND 10,000!';
+
+  @override
+  String get correctExclEmoji => 'Correct!';
+
+  @override
+  String get wrongExcl => 'Wrong!';
+
+  @override
+  String get kurodokoTitle => 'Kurodoko';
+
+  @override
+  String get kurodokoSubtitle =>
+      'Place black cells so numbers see the exact count of white cells.';
+
+  @override
+  String get kurodokoWinTitle => 'WHERE IS BLACK SOLVED!';
+
+  @override
+  String get kurodokoWinMessage =>
+      'You mastered the visibility paths and isolated all black cells!';
+
+  @override
+  String get subitizingRushTitle => 'Subitize Rush';
+
+  @override
+  String get subitizingRushSubtitle =>
+      'Instantly identify the quantity of flashed dots without counting.';
+
+  @override
+  String get subitizingRushWinTitle => 'RAPID VISION!';
+
+  @override
+  String get subitizingRushWinMessage =>
+      'Your instant visual numerosity estimation is outstanding!';
+
+  @override
+  String get tapaTitle => 'Tapa';
+
+  @override
+  String get tapaSubtitle =>
+      'Shade cells to form a continuous wall without 2x2 blocks.';
+
+  @override
+  String get tapaWinTitle => 'TAPA WALL COMPLETED!';
+
+  @override
+  String get tapaWinMessage =>
+      'All numbered cell constraints perfectly satisfied!';
+
+  @override
+  String get exponentTowerTitle => 'Exponent Tower';
+
+  @override
+  String get exponentTowerSubtitle =>
+      'Order dynamic power expressions from smallest to largest.';
+
+  @override
+  String get exponentTowerWinTitle => 'TOWER STACKED!';
+
+  @override
+  String get exponentTowerWinMessage =>
+      'All power magnitudes calculated with perfect precision!';
+
+  @override
+  String get posnerSpatialCueingTitle => 'Spatial Cue';
+
+  @override
+  String get posnerSpatialCueingSubtitle =>
+      'React swiftly to directional target appearances following spatial cues.';
+
+  @override
+  String get posnerSpatialCueingWinTitle => 'ALERT VISION!';
+
+  @override
+  String get posnerSpatialCueingWinMessage =>
+      'Fast visual orienting and stimulus detection recorded!';
+
+  @override
+  String get gearTrainDirectionTitle => 'Gear Train';
+
+  @override
+  String get gearTrainDirectionSubtitle =>
+      'Deduce the rotation direction of the target gear in the mechanical train.';
+
+  @override
+  String get gearTrainDirectionWinTitle => 'MECHANISM SOLVED!';
+
+  @override
+  String get gearTrainDirectionWinMessage =>
+      'Kinematic gear rotational transmissions accurately traced!';
+
+  @override
+  String get continuousPairedAssociateTitle => 'Pair Associate';
+
+  @override
+  String get continuousPairedAssociateSubtitle =>
+      'Memorize symbol pairs and recall the matching partner.';
+
+  @override
+  String get continuousPairedAssociateWinTitle => 'PAIRS LINKED!';
+
+  @override
+  String get continuousPairedAssociateWinMessage =>
+      'Strong associative memory pathways established!';
+
+  @override
+  String get heyawakeWinTitle => 'ROOMS BALANCED!';
+
+  @override
+  String get heyawakeWinMessage =>
+      'All room division rules and white path connections satisfied!';
+
+  @override
+  String get setTheoryVennTitle => 'Venn Sets';
+
+  @override
+  String get setTheoryVennSubtitle =>
+      'Select the corresponding regions of the Venn diagram for the set formula.';
+
+  @override
+  String get setTheoryVennWinTitle => 'SET LOGIC MASTER!';
+
+  @override
+  String get setTheoryVennWinMessage =>
+      'All set operations, unions, and intersections deduced flawlessly!';
+
+  @override
+  String get navonHierarchicalTitle => 'Navon Global';
+
+  @override
+  String get navonHierarchicalSubtitle =>
+      'Identify either the large global letter or small local letters under prompt rules.';
+
+  @override
+  String get navonHierarchicalWinTitle => 'FOCUS SHARPENED!';
+
+  @override
+  String get navonHierarchicalWinMessage =>
+      'Outstanding selective attention and global-local perception!';
+
+  @override
+  String get masyuWinTitle => 'MASYU LOOP SOLVED!';
+
+  @override
+  String get masyuWinMessage =>
+      'All pearl turning and straight passage rules strictly satisfied!';
+
+  @override
+  String get primeGapHuntTitle => 'Prime Gap';
+
+  @override
+  String get primeGapHuntSubtitle =>
+      'Calculate the arithmetic difference between consecutive prime numbers.';
+
+  @override
+  String get primeGapHuntWinTitle => 'GAP CALCULATED!';
+
+  @override
+  String get primeGapHuntWinMessage =>
+      'Mastery of prime distribution and mental subtraction displayed!';
+
+  @override
+  String get yajilinWinTitle => 'YAJILIN SOLVED!';
+
+  @override
+  String get yajilinWinMessage =>
+      'All arrow clue raycasts and orthogonal black cell separations satisfied!';
+
+  @override
+  String get algebraicInequalitySolverTitle => 'Inequality';
+
+  @override
+  String get algebraicInequalitySolverSubtitle =>
+      'Solve linear single-variable algebraic inequalities swiftly.';
+
+  @override
+  String get algebraicInequalitySolverWinTitle => 'ALGEBRA EXPERT!';
+
+  @override
+  String get algebraicInequalitySolverWinMessage =>
+      'Fast inequality reduction and algebraic balance achieved!';
+
+  @override
+  String get attentionalBlinkProbeTitle => 'Blink Probe';
+
+  @override
+  String get attentionalBlinkProbeSubtitle =>
+      'Detect second target stimuli presented rapidly after primary targets.';
+
+  @override
+  String get attentionalBlinkProbeWinTitle => 'TEMPORAL FOCUS!';
+
+  @override
+  String get attentionalBlinkProbeWinMessage =>
+      'Exceptional temporal visual processing across the blink refractory window!';
+
+  @override
+  String get modularClockArithmeticTitle => 'Clock Modulo';
+
+  @override
+  String get modularClockArithmeticSubtitle =>
+      'Calculate cyclical clock time arithmetic under modulo 12 algebra.';
+
+  @override
+  String get modularClockArithmeticWinTitle => 'CLOCKWORK PRECISION!';
+
+  @override
+  String get modularClockArithmeticWinMessage =>
+      'All modular hour shifts calculated with ease!';
+
+  @override
+  String get temporalOrderJudgmentTitle => 'Time Order';
+
+  @override
+  String get temporalOrderJudgmentSubtitle =>
+      'Discriminate which of two millisecond-separated stimulus circles flashed first.';
+
+  @override
+  String get temporalOrderJudgmentWinTitle => 'ULTRA-FAST PERCEPTION!';
+
+  @override
+  String get temporalOrderJudgmentWinMessage =>
+      'High-resolution temporal distinction demonstrated!';
+
+  @override
+  String get polyominoTilingTitle => 'Polyomino';
+
+  @override
+  String get polyominoTilingSubtitle =>
+      'Rotate and assemble tetromino geometric shapes to tile the grid without gaps.';
+
+  @override
+  String get polyominoTilingWinTitle => 'GRID TILED!';
+
+  @override
+  String get polyominoTilingWinMessage =>
+      'Seamless geometric spatial arrangement completed!';
+
+  @override
+  String get pythagoreanTripleBuilderTitle => 'Pythagoras';
+
+  @override
+  String get pythagoreanTripleBuilderSubtitle =>
+      'Find the missing hypotenuse or leg value in integer Pythagorean triangles.';
+
+  @override
+  String get pythagoreanTripleBuilderWinTitle => 'GEOMETRY MASTER!';
+
+  @override
+  String get pythagoreanTripleBuilderWinMessage =>
+      'All right-triangle integer triples rapidly solved!';
+
+  @override
+  String get visualSearchConjunctionTitle => 'Conj. Search';
+
+  @override
+  String get visualSearchConjunctionSubtitle =>
+      'Quickly locate target shapes combining multiple feature dimensions (color and form).';
+
+  @override
+  String get visualSearchConjunctionWinTitle => 'CONJUNCTION FOCUS!';
+
+  @override
+  String get visualSearchConjunctionWinMessage =>
+      'Flawless multi-feature parallel and serial visual search!';
+
+  @override
+  String get wireframe3DRotationTitle => 'Wireframe 3D';
+
+  @override
+  String get wireframe3DRotationSubtitle =>
+      'Identify the correctly rotated 3D geometric wireframe following angular transformation.';
+
+  @override
+  String get wireframe3DRotationWinTitle => '3D ROTATION MASTER!';
+
+  @override
+  String get wireframe3DRotationWinMessage =>
+      'Precise 3D mental rotation and spatial orientation demonstrated!';
+
+  @override
+  String get wordPairAssociateMemoryTitle => 'Word Pairs';
+
+  @override
+  String get wordPairAssociateMemorySubtitle =>
+      'Memorize associated word connections and select the target paired with the cue.';
+
+  @override
+  String get wordPairAssociateMemoryWinTitle => 'ASSOCIATION MASTER!';
+
+  @override
+  String get wordPairAssociateMemoryWinMessage =>
+      'Strong episodic associative memory retention achieved!';
+
+  @override
+  String get binaryMatrixRankTitle => 'Matrix Rank';
+
+  @override
+  String get binaryMatrixRankSubtitle =>
+      'Determine the linear algebraic rank of the 3x3 binary matrix over Galois field GF(2).';
+
+  @override
+  String get binaryMatrixRankWinTitle => 'RANK COMPUTED!';
+
+  @override
+  String get binaryMatrixRankWinMessage =>
+      'Exact linear independence and matrix rank determined!';
+
+  @override
+  String get visualCrowdingAcuityTitle => 'Visual Crowd';
+
+  @override
+  String get visualCrowdingAcuitySubtitle =>
+      'Identify the opening direction of the center Landolt ring amid flanking distractors.';
+
+  @override
+  String get visualCrowdingAcuityWinTitle => 'SHARP PERCEPTION!';
+
+  @override
+  String get visualCrowdingAcuityWinMessage =>
+      'Excellent foveal spatial resolution under visual crowding conditions!';
+
+  @override
+  String get probeDigitSpanTitle => 'Digit Probe';
+
+  @override
+  String get probeDigitSpanSubtitle =>
+      'Observe a fast serial sequence of numbers and recall the item following the probe digit.';
+
+  @override
+  String get probeDigitSpanWinTitle => 'SERIAL PROBE MASTER!';
+
+  @override
+  String get probeDigitSpanWinMessage =>
+      'Flawless short-term serial position memory retrieval!';
+
+  @override
+  String get abReversalOddballTitle => 'A-B Reversal';
+
+  @override
+  String get abReversalOddballSubtitle =>
+      'Respond to target stimuli and dynamically switch response criteria upon rule reversal.';
+
+  @override
+  String get abReversalOddballWinTitle => 'FLEXIBILITY MASTER!';
+
+  @override
+  String get abReversalOddballWinMessage =>
+      'Exceptional cognitive switching and perceptual flexibility demonstrated!';
+
+  @override
+  String get conundrumAnagramTitle => 'Conundrum';
+
+  @override
+  String get conundrumAnagramSubtitle =>
+      'Unscramble all 9 letters to discover the hidden full dictionary word.';
+
+  @override
+  String get conundrumAnagramWinTitle => 'CONUNDRUM CRACKED!';
+
+  @override
+  String get conundrumAnagramWinMessage =>
+      'All 9-letter anagram conundrums successfully unscrambled!';
+
+  @override
+  String get vectorDotProductTitle => 'Dot Product';
+
+  @override
+  String get vectorDotProductSubtitle =>
+      'Calculate the algebraic inner product u • v = (u_x * v_x) + (u_y * v_y).';
+
+  @override
+  String get vectorDotProductWinTitle => 'INNER PRODUCT COMPUTED!';
+
+  @override
+  String get vectorDotProductWinMessage =>
+      'Exact geometric and algebraic vector projections achieved!';
+
+  @override
+  String get stroopNumberSizeTitle => 'Size Stroop';
+
+  @override
+  String get stroopNumberSizeSubtitle =>
+      'Compare either numerical magnitude or physical font size under Stroop interference.';
+
+  @override
+  String get stroopNumberSizeWinTitle => 'INHIBITION EXPERT!';
+
+  @override
+  String get stroopNumberSizeWinMessage =>
+      'Flawless perceptual conflict resolution under size-congruity Stroop!';
+
+  @override
+  String get wordLadderStepTitle => 'Word Ladder';
+
+  @override
+  String get wordLadderStepSubtitle =>
+      'Complete the single-letter transformation sequence between source and destination words.';
+
+  @override
+  String get wordLadderStepWinTitle => 'LADDER CLIMBED!';
+
+  @override
+  String get wordLadderStepWinMessage =>
+      'All single-letter step transformations completed!';
+
+  @override
+  String get corsiBackwardSpanTitle => 'Corsi Backward';
+
+  @override
+  String get corsiBackwardSpanSubtitle =>
+      'Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.';
+
+  @override
+  String get corsiBackwardSpanWinTitle => 'BACKWARD SPAN PRO!';
+
+  @override
+  String get corsiBackwardSpanWinMessage =>
+      'Exceptional visuospatial working memory manipulation and reverse sequencing!';
 }

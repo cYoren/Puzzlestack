@@ -1,4 +1,6 @@
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../providers/user_providers.dart';
@@ -33,7 +35,7 @@ class _NumericalEstimationScreenState extends ConsumerState<NumericalEstimationS
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: state.isTrialMode ? l10n.completed.toUpperCase() : l10n.timeUp.toUpperCase(),
-        message: 'You made ${state.score} correct estimations.',
+        message: AppLocalizations.of(context)!.numericalEstimationMessage((state.score).toString()),
         isVictory: state.isTrialMode ? state.score >= 10 : state.score > 5,
         onHome: () {
           Navigator.of(context).pop();
@@ -63,7 +65,7 @@ class _NumericalEstimationScreenState extends ConsumerState<NumericalEstimationS
     });
 
     return GameScaffold(
-      title: 'Quick Estimate',
+      title: L10nGameHelpers.getGameTitle(context, 'numerical_estimation'),
       subtitle: l10n.numericalEstimationSubtitle,
       body: Column(
         children: [
