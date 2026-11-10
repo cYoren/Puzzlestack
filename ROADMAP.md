@@ -9,6 +9,30 @@ Where each one lives, its licence, and its pinned commit are in [REFERENCE.md](R
 
 ---
 
+## Open decision: can this ship on the App Store at all?
+
+This is the one thing that could invalidate half the plan, so it is decided before Phase 1,
+not discovered at submission.
+
+Puzzlestack is **GPL-3.0**, because it is a derivative of `sidhant947/Puzzle`, which is
+GPL-3.0. The FSF's position is that Apple's App Store terms conflict with the GPL: the
+store's usage restrictions are further restrictions the licence does not permit. VLC was
+pulled over exactly this. Google Play has no such conflict.
+
+The three ways out, in order of preference:
+
+1. **Ask the upstream author for a licence exception** — permission to ship the derived work
+   under the App Store terms. Costs an email, and the answer may well be yes. This is the
+   only option that keeps iOS and the GPL history intact.
+2. **Relicense to a permissive licence**, which needs the same permission plus our own
+   consent as authors of the changes. Cleanest legally, loses the GPL guarantee.
+3. **Ship Android, web and desktop; skip iOS.** Costs half the market.
+
+Until one is chosen, treat iOS as unconfirmed. Nothing in Phases 1–5 depends on the answer,
+which is why the work can start now — but Phase 6 cannot ship iOS without it.
+
+---
+
 ## Inventory (verified 2026-11-10)
 
 | Source | What it is | Size | What we take |
