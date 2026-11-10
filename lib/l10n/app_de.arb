@@ -2381,7 +2381,7 @@
       }
     }
   },
- "snackbarIncorrectSwapped": "Falsch! Vertauschte Elemente sind grün markiert.",
+  "snackbarIncorrectSwapped": "Falsch! Vertauschte Elemente sind grün markiert.",
   "snackbarIncorrectDestination": "Falsch! Das endgültige Ziel war ({x}, {y}).",
   "@snackbarIncorrectDestination": {
     "placeholders": {
@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Rückwärts",
   "corsiBackwardSpanSubtitle": "Beobachte ein sequenzielles räumliches Block-Tippmuster und gib es in exakter umgekehrter Reihenfolge wieder.",
   "corsiBackwardSpanWinTitle": "RÜCKWÄRTS-SPANNE-PROFI!",
-  "corsiBackwardSpanWinMessage": "Außergewöhnliche visuell-räumliche Arbeitsgedächtnismanipulation und umgekehrte Sequenzierung!"
+  "corsiBackwardSpanWinMessage": "Außergewöhnliche visuell-räumliche Arbeitsgedächtnismanipulation und umgekehrte Sequenzierung!",
+  "pegsTitle": "Pegs",
+  "pegsSubtitle": "Springe mit einem Stift über seinen Nachbarn und schlage ihn. Einer bleibt übrig.",
+  "pegsCongrats": "Ein Stift übrig. Sauber gelöst.",
+  "twiddleTitle": "Twiddle",
+  "twiddleSubtitle": "Drehe Blöcke, bis die Zahlen der Reihe nach stehen.",
+  "twiddleCongrats": "Jede Zahl an ihrem Platz.",
+  "difficultyEasy": "LEICHT",
+  "difficultyMedium": "MITTEL",
+  "difficultyHard": "SCHWER"
 }

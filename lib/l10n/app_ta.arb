@@ -3117,5 +3117,14 @@
   "corsiBackwardSpanTitle": "Corsi Backward",
   "corsiBackwardSpanSubtitle": "Observe a sequential spatial block tapping pattern and reproduce it in exact reverse order.",
   "corsiBackwardSpanWinTitle": "BACKWARD SPAN PRO!",
-  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!"
+  "corsiBackwardSpanWinMessage": "Exceptional visuospatial working memory manipulation and reverse sequencing!",
+  "pegsTitle": "பெக்குகள்",
+  "pegsSubtitle": "ஒரு பெக்கை அதன் அண்டையின் மேல் தாண்டி எடுத்துவிடுங்கள். ஒன்றை மட்டும் விடுங்கள்.",
+  "pegsCongrats": "ஒரு பெக் மீதம். சுத்தமான பலகை.",
+  "twiddleTitle": "ட்விடில்",
+  "twiddleSubtitle": "எண்கள் வரிசையாக வரும்வரை தொகுதிகளை சுழற்றுங்கள்.",
+  "twiddleCongrats": "ஒவ்வொரு எண்ணும் அதன் இடத்தில்.",
+  "difficultyEasy": "எளிது",
+  "difficultyMedium": "நடுத்தரம்",
+  "difficultyHard": "கடினம்"
 }

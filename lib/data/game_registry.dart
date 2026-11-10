@@ -198,6 +198,8 @@ import '../ui/features/games/schulte_table/schulte_table_metadata.dart';
 import '../ui/features/games/calculation_sprint/calculation_sprint_metadata.dart';
 import '../ui/features/games/color_flood/color_flood_metadata.dart';
 import '../ui/features/games/tangle_fix/tangle_fix_metadata.dart';
+import '../ui/features/games/pegs/pegs_metadata.dart';
+import '../ui/features/games/twiddle/twiddle_metadata.dart';
 import '../ui/features/games/simon_command/simon_command_metadata.dart';
 import '../ui/features/games/binary_code/binary_code_metadata.dart';
 import '../ui/features/games/modulo_clock/modulo_clock_metadata.dart';
@@ -630,5 +632,7 @@ List<GameMetadata> _buildGameList() {
     stroopNumberSizeMetadata,
     wordLadderStepMetadata,
     corsiBackwardSpanMetadata,
+    pegsMetadata,
+    twiddleMetadata,
   ];
 }
