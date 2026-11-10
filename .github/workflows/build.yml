@@ -56,8 +56,8 @@ jobs:
       - name: Build Linux Artifacts
         run: |
           flutter build linux --release
-          cp -r build/linux/x64/release/bundle mindstack-linux
-          tar -czf mindstack-linux.tar.gz mindstack-linux
+          cp -r build/linux/x64/release/bundle puzzlestack-linux
+          tar -czf puzzlestack-linux.tar.gz puzzlestack-linux
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -69,7 +69,7 @@ jobs:
             build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
             build/app/outputs/flutter-apk/app-x86_64-release.apk
             build/app/outputs/bundle/release/app-release.aab
-            mindstack-linux.tar.gz
+            puzzlestack-linux.tar.gz
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

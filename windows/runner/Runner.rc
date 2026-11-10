@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Mindstack" "\0"
-            VALUE "FileDescription", "Mindstack" "\0"
+            VALUE "CompanyName", "Puzzlestack" "\0"
+            VALUE "FileDescription", "Puzzlestack" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mindstack" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 Mindstack. All rights reserved." "\0"
+            VALUE "InternalName", "puzzlestack" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Puzzlestack. All rights reserved." "\0"
             VALUE "OriginalFilename", "puzzle.exe" "\0"
-            VALUE "ProductName", "Mindstack" "\0"
+            VALUE "ProductName", "Puzzlestack" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

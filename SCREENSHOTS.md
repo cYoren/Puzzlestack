@@ -1,6 +1,6 @@
 # Automated store screenshots
 
-Mindstack captures store screenshots with a Flutter `integration_test` and
+Puzzlestack captures store screenshots with a Flutter `integration_test` and
 frames them into store-sized images with a small Python script. Nothing is
 hand-cropped.
 
@@ -41,7 +41,7 @@ python3 tool/compose_house_style.py
 ## Run it in CI
 
 `.github/workflows/screenshots.yml` boots an Android emulator, captures and composes,
-and uploads everything as the `mindstack-screenshots` artifact. Its Android captures are for
+and uploads everything as the `puzzlestack-screenshots` artifact. Its Android captures are for
 review only — **store-quality images must come from an iOS simulator in `en-US`**. It is
 manual-only: trigger it from the **Actions** tab (Run workflow).
 
@@ -51,7 +51,7 @@ manual-only: trigger it from the **Actions** tab (Run workflow).
 - **Headlines / order / which shots ship:** edit the `SHOTS` list at the top of
   `tool/compose_house_style.py`.
 - **Brand colours:** the constants under `SHOTS` in the same file, sampled from
-  `assets/icon/mindstack_icon.png`.
+  `assets/icon/puzzlestack_icon.png`.
 - **Device frame:** `tool/assets/house-device-frame-iphone-6.9.png`, shared across the
   portfolio (master copy in `Games/shared-assets/`). Screenshot is pasted at offset (67, 55).
 
