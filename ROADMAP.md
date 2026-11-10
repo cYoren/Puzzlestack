@@ -15,7 +15,7 @@ Where each one lives, its licence, and its pinned commit are in [REFERENCE.md](R
 | --- | --- | --- | --- |
 | **Puzzlestack** (this repo) | our fork, 161 games | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | 205 games | 44 games we are missing |
-| **invariant** | a Godot 4 port of Simon Tatham's collection, **no licence declared** | 35 puzzles, 32,107 LOC GDScript | the map, read only |
+| **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
 
 ### The invariant archive is Godot, not Flutter
@@ -48,19 +48,16 @@ The Flutter folder is a proof of concept, not a port: `main.dart`, one `galaxies
 puzzle split into `domain/` `logic/` `ui/`, and a theme. It is still worth reading, because
 its Dart structure is the one we want.
 
-**Two caveats on the Godot port.**
+It is our own project, so its code can be translated into this repo freely. The one caveat is
+quality, not permission: only 3 of its 35 generators mention uniqueness at all (`singles`,
+`unruly`, `untangle`), and its test suite covers the framework (undo/redo, seeded RNG), not
+per-puzzle equivalence against the C. It gives structure and a fast read, not a proven
+correctness bar.
 
-1. Only 3 of its 35 generators mention uniqueness at all (`singles`, `unruly`, `untangle`),
-   and its test suite covers the framework (undo/redo, seeded RNG), not per-puzzle
-   equivalence against the C. It gives structure, not a proven correctness bar.
-2. **It has no licence.** No `LICENSE`, no `COPYING`, no header. Absent a licence the default
-   is all rights reserved, so its GDScript may be read and may not be copied into a GPL-3.0
-   tree. Rules and algorithms are not copyrightable; the code expressing them is.
-
-That is why Phase 3 ports **from Tatham's C** (MIT, compatible with our GPL-3.0) and uses the
-Godot code only as a map: where an algorithm sits, how a puzzle decomposes. The bundled C
-copy in the zip is from 2014; the pinned clone in `tatham-c/` is current and has 42 games,
-including `hat` and `spectre`, which the public page does not list yet.
+So Phase 3 reads the Godot code first (it is the better map of how a puzzle decomposes) and
+ports the generator from Tatham's C, which guarantees unique solutions. The bundled C copy in
+the zip is from 2014; the pinned clone in `tatham-c/` is current and has 42 games, including
+`hat` and `spectre`, which the public page does not list yet.
 
 ### Coverage math
 
@@ -140,8 +137,8 @@ and discovery home still work, and every new game appears in the right category 
 ## Phase 3 — Port the 21 Tatham puzzles we lack
 
 Ported **from Tatham's C** (`~/Projects/puzzlestack-reference/tatham-c/`, MIT, pinned at
-`616da16`), using the Godot port as a map of where each algorithm lives. **Never copy a line
-from the Godot port: it has no licence** (see [REFERENCE.md](REFERENCE.md)). Restyled to the
+`616da16`), reading our own Godot port first as the map of where each algorithm lives, then
+taking the generator from the C because it guarantees a unique solution. Restyled to the
 house style:
 
 `Black Box, Cube, Filling, Galaxies, Guess, Inertia, Map, Netslide, Pearl, Pegs, Range,
@@ -216,6 +213,6 @@ and they are the kind of puzzle nobody else on the store has. They close the col
 6. **No puzzle owns its gestures.** Input goes through the board contract, haptics through the
    five verbs, motion through the five moves. A puzzle that wires its own `GestureDetector`
    is a fork of the app inside the app.
-7. **Port from the MIT source, not the unlicensed one.** Tatham's C is the source of truth;
-   the Godot port is a map. Reading an algorithm is fine, copying its code is not.
+7. **Read the Godot port, port from the C.** Our GDScript is the faster read and the better
+   map; Tatham's C is the correctness bar. When they disagree, the C wins.
 8. **Stop at the gate.** Each phase ends with a number we can check, not a feeling.
