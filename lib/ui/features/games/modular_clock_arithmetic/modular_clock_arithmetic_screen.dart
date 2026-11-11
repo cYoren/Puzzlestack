@@ -151,8 +151,9 @@ class _ModularClockArithmeticScreenState extends ConsumerState<ModularClockArith
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.schedule_rounded, size: 18, color: DesignSystem.gameIndigo),
               const SizedBox(width: 6),
               Text(
@@ -167,12 +168,14 @@ class _ModularClockArithmeticScreenState extends ConsumerState<ModularClockArith
               ),
             ],
           ),
+          ),
         ),
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.stars_rounded, size: 18, color: DesignSystem.primary),
               const SizedBox(width: 6),
               Text(
@@ -186,6 +189,7 @@ class _ModularClockArithmeticScreenState extends ConsumerState<ModularClockArith
                 ),
               ),
             ],
+          ),
           ),
         ),
       ],

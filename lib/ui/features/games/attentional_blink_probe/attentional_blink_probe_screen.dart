@@ -168,8 +168,9 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.flash_on_rounded, size: 18, color: DesignSystem.gameRose),
               const SizedBox(width: 6),
               Text(
@@ -184,12 +185,14 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
               ),
             ],
           ),
+          ),
         ),
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.stars_rounded, size: 18, color: DesignSystem.primary),
               const SizedBox(width: 6),
               Text(
@@ -203,6 +206,7 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
                 ),
               ),
             ],
+          ),
           ),
         ),
       ],
