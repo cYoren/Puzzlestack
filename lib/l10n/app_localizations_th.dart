@@ -413,6 +413,12 @@ class AppLocalizationsTh extends AppLocalizations {
   String get magnetsWinMessage => 'แม่เหล็กทั้งหมดถูกจัดเรียงอย่างสมบูรณ์แบบ!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'ประภาคาร';
 
   @override

@@ -417,6 +417,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get magnetsWinMessage => 'সব ম্যাগনেট নিখুঁতভাবে সাজানো হয়েছে!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'লাইটহাউস';
 
   @override

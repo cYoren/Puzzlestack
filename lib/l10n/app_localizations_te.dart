@@ -417,6 +417,12 @@ class AppLocalizationsTe extends AppLocalizations {
   String get magnetsWinMessage => 'అన్ని అయస్కాంతాలు సరిగ్గా అమర్చబడ్డాయి!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'లైట్‌హౌస్‌లు';
 
   @override

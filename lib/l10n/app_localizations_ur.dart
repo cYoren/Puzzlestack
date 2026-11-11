@@ -419,6 +419,12 @@ class AppLocalizationsUr extends AppLocalizations {
       'تمام میگنےٹس مکمل طور پر ترتیب دیئے گئے ہیں!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'لائٹ ہاؤسز';
 
   @override

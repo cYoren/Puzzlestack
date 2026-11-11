@@ -418,6 +418,12 @@ class AppLocalizationsFa extends AppLocalizations {
   String get magnetsWinMessage => 'همه آهنرباها به خوبی چیده شده‌اند!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'فانوس‌های دریایی';
 
   @override
