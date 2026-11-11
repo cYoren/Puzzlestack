@@ -127,8 +127,9 @@ class VennNumbersEngine {
   }
 
   List<VennRule> _getTwoDistinctRules() {
+    // "Multiples of 2" is deliberately absent: it is "Even Numbers" wearing a
+    // different name, and a board that shows both has two empty regions.
     final allRules = [
-      MultiplesRule(2),
       MultiplesRule(3),
       MultiplesRule(5),
       PrimesRule(),
@@ -138,8 +139,21 @@ class VennNumbersEngine {
       ComparisonRule(20, greater: true),
       ComparisonRule(50, greater: false),
     ];
-    
+
     allRules.shuffle(_random);
+    final first = allRules.first;
+    // Distinct by behaviour, not by class or description: two rules that agree
+    // on every number in range make the same degenerate board.
+    for (final candidate in allRules.skip(1)) {
+      if (_differ(first, candidate)) return [first, candidate];
+    }
     return allRules.sublist(0, 2);
+  }
+
+  bool _differ(VennRule a, VennRule b) {
+    for (var n = 1; n <= 100; n++) {
+      if (a.test(n) != b.test(n)) return true;
+    }
+    return false;
   }
 }
