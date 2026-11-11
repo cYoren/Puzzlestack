@@ -190,8 +190,8 @@ class _ModuloClockScreenState extends ConsumerState<ModuloClockScreen> {
                   color: colorScheme.surface,
                   shadowColor: DesignSystem.gameAmber.withValues(alpha: 0.15),
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 36),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                  child: SingleChildScrollView(
+                    child: Column(               mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
                         Icons.access_time_filled_rounded,
@@ -217,6 +217,7 @@ class _ModuloClockScreenState extends ConsumerState<ModuloClockScreen> {
                         ),
                       ),
                     ],
+                  ),
                   ),
                 ),
               ),

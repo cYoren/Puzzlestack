@@ -155,8 +155,9 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
                   borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
                   border: Border.all(color: Colors.blue, width: 2),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(                mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.volume_up_rounded, color: Colors.blue, size: 28),
                     const SizedBox(width: 12),
@@ -170,6 +171,7 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
                       ),
                     ),
                   ],
+                ),
                 ),
               ),
               const SizedBox(height: 30),

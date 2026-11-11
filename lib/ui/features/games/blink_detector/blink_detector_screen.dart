@@ -215,12 +215,14 @@ class _BlinkDetectorScreenState extends ConsumerState<BlinkDetectorScreen> {
                             borderRadius: BorderRadius.circular(DesignSystem.radiusSM),
                           ),
                           alignment: Alignment.center,
-                          child: Column(
+                          child: SingleChildScrollView(
+                            child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               // Eyes
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(                              mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
                                     width: 12,
@@ -241,6 +243,7 @@ class _BlinkDetectorScreenState extends ConsumerState<BlinkDetectorScreen> {
                                   ),
                                 ],
                               ),
+                              ),
                               const SizedBox(height: 12),
                               // Mouth
                               Container(
@@ -252,6 +255,7 @@ class _BlinkDetectorScreenState extends ConsumerState<BlinkDetectorScreen> {
                                 ),
                               ),
                             ],
+                          ),
                           ),
                         ),
                       );

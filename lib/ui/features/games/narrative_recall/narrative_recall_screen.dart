@@ -231,8 +231,8 @@ class _NarrativeRecallScreenState extends ConsumerState<NarrativeRecallScreen> {
   }
 
   Widget _buildStoryView() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return SingleChildScrollView(
+      child: Column( mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
           'Read and Memorize Details:',
@@ -262,6 +262,7 @@ class _NarrativeRecallScreenState extends ConsumerState<NarrativeRecallScreen> {
           child: Text(AppLocalizations.of(context)!.btnImReadyToAnswer, style: TextStyle(fontWeight: FontWeight.bold)),
         ),
       ],
+    ),
     );
   }
 

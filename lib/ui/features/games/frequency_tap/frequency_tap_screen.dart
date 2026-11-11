@@ -139,7 +139,12 @@ class _FrequencyTapScreenState extends ConsumerState<FrequencyTapScreen> with Ti
           },
         ),
       ],
-      body: Column(
+      body: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
@@ -272,6 +277,10 @@ class _FrequencyTapScreenState extends ConsumerState<FrequencyTapScreen> with Ti
           ),
           const SizedBox(height: 30),
         ],
+      ),
+            ),
+          ),
+        ),
       ),
     );
   }

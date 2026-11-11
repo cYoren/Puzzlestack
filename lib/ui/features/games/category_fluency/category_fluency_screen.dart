@@ -92,8 +92,9 @@ class _CategoryFluencyScreenState extends ConsumerState<CategoryFluencyScreen> {
         padding: const EdgeInsets.all(DesignSystem.spaceLG),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,6 +126,7 @@ class _CategoryFluencyScreenState extends ConsumerState<CategoryFluencyScreen> {
                   ),
                 ),
               ],
+            ),
             ),
             SizedBox(height: DesignSystem.spaceXL),
             TextField(

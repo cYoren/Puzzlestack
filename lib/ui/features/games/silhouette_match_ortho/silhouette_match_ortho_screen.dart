@@ -195,8 +195,9 @@ class _SilhouetteMatchOrthoScreenState extends ConsumerState<SilhouetteMatchOrth
                     // Section 3: The 3 options
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: List.generate(3, (index) {
                           final option = state.options[index];
                           final isSelected = state.selectedIndex == index;
@@ -263,6 +264,7 @@ class _SilhouetteMatchOrthoScreenState extends ConsumerState<SilhouetteMatchOrth
                             ),
                           );
                         }),
+                      ),
                       ),
                     ),
 

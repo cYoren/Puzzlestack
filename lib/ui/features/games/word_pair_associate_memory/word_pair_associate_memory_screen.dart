@@ -258,8 +258,9 @@ class _WordPairAssociateMemoryScreenState extends ConsumerState<WordPairAssociat
                   borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
                   border: Border.all(color: DesignSystem.gameIndigo, width: 1.5),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(                mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       pair.wordA,
@@ -284,6 +285,7 @@ class _WordPairAssociateMemoryScreenState extends ConsumerState<WordPairAssociat
                       ),
                     ),
                   ],
+                ),
                 ),
               ),
             );

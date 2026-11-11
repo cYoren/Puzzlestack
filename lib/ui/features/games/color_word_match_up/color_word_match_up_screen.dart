@@ -205,7 +205,8 @@ class _ColorWordMatchUpScreenState extends ConsumerState<ColorWordMatchUpScreen>
           ),
           Expanded(
             child: Center(
-              child: Column(
+              child: SingleChildScrollView(
+                child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Active Rule Display
@@ -234,8 +235,9 @@ class _ColorWordMatchUpScreenState extends ConsumerState<ColorWordMatchUpScreen>
                   ),
                   const SizedBox(height: 50),
                   // The two words
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
                         padding: const EdgeInsets.all(20),
@@ -271,7 +273,9 @@ class _ColorWordMatchUpScreenState extends ConsumerState<ColorWordMatchUpScreen>
                       ),
                     ],
                   ),
+                  ),
                 ],
+              ),
               ),
             ),
           ),

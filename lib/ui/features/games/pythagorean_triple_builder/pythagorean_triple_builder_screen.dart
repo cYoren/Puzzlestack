@@ -206,8 +206,9 @@ class _PythagoreanTripleBuilderScreenState extends ConsumerState<PythagoreanTrip
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildSideCard('LEG a', aLabel, _currentQuestion.missingIndex == 0, colorScheme),
               const Text('+', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
@@ -215,6 +216,7 @@ class _PythagoreanTripleBuilderScreenState extends ConsumerState<PythagoreanTrip
               const Text('=', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               _buildSideCard('HYP c', cLabel, _currentQuestion.missingIndex == 2, colorScheme),
             ],
+          ),
           ),
         ],
       ),

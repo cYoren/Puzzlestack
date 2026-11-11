@@ -157,8 +157,9 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
           return TangibleButton(
             onTap: () => ref.read(crossSectionSliceNotifierProvider.notifier).submitAnswer(shape),
             color: Theme.of(context).colorScheme.surface,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(_getShapeIcon(shape), size: 20),
                 const SizedBox(width: 8),
@@ -171,6 +172,7 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
                   ),
                 ),
               ],
+            ),
             ),
           );
         }).toList(),

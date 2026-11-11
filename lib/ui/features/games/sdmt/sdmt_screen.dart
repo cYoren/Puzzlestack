@@ -96,8 +96,9 @@ class _SDMTScreenState extends ConsumerState<SDMTScreen> {
       child: TangibleContainer(
         color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.all(12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(        mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: state.symbolKey.entries.map((entry) {
             return Column(
               children: [
@@ -125,6 +126,7 @@ class _SDMTScreenState extends ConsumerState<SDMTScreen> {
               ],
             );
           }).toList(),
+        ),
         ),
       ),
     );

@@ -86,7 +86,12 @@ class _SpoonerismSolverScreenState extends ConsumerState<SpoonerismSolverScreen>
           ? const Center(child: CircularProgressIndicator(color: DesignSystem.primary))
           : LayoutBuilder(
               builder: (context, constraints) {
-                return Column(
+                return LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Column(
                   children: [
                     const Spacer(),
                     Padding(
@@ -145,6 +150,10 @@ class _SpoonerismSolverScreenState extends ConsumerState<SpoonerismSolverScreen>
                     ),
                     const Spacer(),
                   ],
+                ),
+                      ),
+                    ),
+                  ),
                 );
               },
             ),

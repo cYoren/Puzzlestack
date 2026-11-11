@@ -248,8 +248,9 @@ class _MathMazeScreenState extends ConsumerState<MathMazeScreen> {
                 width: 2,
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   children: [
@@ -289,6 +290,7 @@ class _MathMazeScreenState extends ConsumerState<MathMazeScreen> {
                   ),
                 ),
               ],
+            ),
             ),
           ),
           // Maze Grid
