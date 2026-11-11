@@ -42,7 +42,8 @@ class SettingsScreen extends ConsumerWidget {
                       letterSpacing: 1.5,
                       fontWeight: FontWeight.w700,
                       color: colorScheme.onSurface,
-                      fontSize: DesignSystem.fontSize2XL, // Beautiful large Bebas Neue title
+                      fontSize: DesignSystem
+                          .fontSize2XL, // Beautiful large Bebas Neue title
                     ),
                   ),
                 ),
@@ -101,16 +102,16 @@ class SettingsScreen extends ConsumerWidget {
                         context,
                         l10n.privacyPolicy,
                         Icons.privacy_tip_rounded,
-                        // TODO: point at Puzzlestack's own hosted privacy policy once published.
-                        () => _launchUrl('https://github.com/cYoren/Puzzlestack'),
+                        () => _launchUrl(
+                            'https://cyoren.github.io/Puzzlestack/privacy.html'),
                       ),
                       const SizedBox(height: DesignSystem.spaceSM),
                       _buildSettingsItem(
                         context,
                         l10n.termsOfService,
                         Icons.description_rounded,
-                        // TODO: point at Puzzlestack's own hosted terms of service once published.
-                        () => _launchUrl('https://github.com/cYoren/Puzzlestack'),
+                        () => _launchUrl(
+                            'https://cyoren.github.io/Puzzlestack/terms.html'),
                       ),
                       const SizedBox(height: DesignSystem.spaceSM),
                       _buildSettingsItem(
@@ -143,7 +144,8 @@ class SettingsScreen extends ConsumerWidget {
         color: colorScheme.primary,
         letterSpacing: 1.2,
         fontWeight: FontWeight.w700,
-        fontSize: DesignSystem.fontSizeLG, // 18.0 is perfectly readable in Bebas Neue
+        fontSize:
+            DesignSystem.fontSizeLG, // 18.0 is perfectly readable in Bebas Neue
       ),
     );
   }
@@ -210,13 +212,8 @@ class SettingsScreen extends ConsumerWidget {
         _buildThemeOption(context, ref, AppThemeMode.dark, l10n.themeDark,
             Icons.dark_mode_rounded, currentMode == AppThemeMode.dark),
         const SizedBox(height: DesignSystem.spaceSM),
-        _buildThemeOption(
-            context,
-            ref,
-            AppThemeMode.system,
-            l10n.themeSystem,
-            Icons.brightness_auto_rounded,
-            currentMode == AppThemeMode.system),
+        _buildThemeOption(context, ref, AppThemeMode.system, l10n.themeSystem,
+            Icons.brightness_auto_rounded, currentMode == AppThemeMode.system),
       ],
     );
   }
@@ -226,9 +223,12 @@ class SettingsScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final Color resolvedColor = isSelected ? colorScheme.primary : colorScheme.surface;
+    final Color resolvedColor =
+        isSelected ? colorScheme.primary : colorScheme.surface;
     final Color textColor = isSelected ? Colors.white : colorScheme.onSurface;
-    final Color iconColor = isSelected ? Colors.white : colorScheme.onSurface.withValues(alpha: 0.7);
+    final Color iconColor = isSelected
+        ? Colors.white
+        : colorScheme.onSurface.withValues(alpha: 0.7);
 
     return TangibleButton(
       color: resolvedColor,
@@ -254,9 +254,13 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           Icon(
-            isSelected ? Icons.check_circle_rounded : Icons.radio_button_off_rounded,
+            isSelected
+                ? Icons.check_circle_rounded
+                : Icons.radio_button_off_rounded,
             size: 24,
-            color: isSelected ? Colors.white : colorScheme.onSurface.withValues(alpha: 0.2),
+            color: isSelected
+                ? Colors.white
+                : colorScheme.onSurface.withValues(alpha: 0.2),
           ),
         ],
       ),
