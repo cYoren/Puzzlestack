@@ -2204,6 +2204,15 @@ class AppLocalizationsTh extends AppLocalizations {
       'เหลือเชื่อ! คุณแก้โจทย์ตาราง Futoshiki Latin Square ได้สำเร็จ';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return 'คุณนับจำนวนการปรากฏของ \"$arg1\" ได้ถูกต้อง $arg0 ครั้ง';
   }

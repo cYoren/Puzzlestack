@@ -2135,6 +2135,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get futoshikiMessage => '놀랍습니다! Futoshiki 라틴 방진을 해결하셨습니다.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return '\"$arg1\"의 출현 횟수 $arg0번을 정확히 세셨습니다.';
   }

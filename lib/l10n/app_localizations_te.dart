@@ -2258,6 +2258,15 @@ class AppLocalizationsTe extends AppLocalizations {
       'అద్భుతం! మీరు ఫుతోషికి లాటిన్ స్క్వేర్‌ను పరిష్కరించారు.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return 'మీరు \"$arg1\" యొక్క $arg0 ఉనికిని సరిగ్గా లెక్కించారు.';
   }

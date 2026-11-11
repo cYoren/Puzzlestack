@@ -2122,6 +2122,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get futoshikiMessage => '不可思议！你解决了 Futoshiki 拉丁方块。';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return '你正确计算了 \"$arg1\" 出现了 $arg0 次。';
   }

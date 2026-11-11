@@ -6,6 +6,7 @@ import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
+import 'package:puzzle/ui/features/games/futoshiki/futoshiki_screen.dart';
 import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
 import 'package:puzzle/ui/features/games/kurodoko/kurodoko_screen.dart';
 import 'package:puzzle/ui/features/games/lights_out/lights_out_screen.dart';
@@ -57,6 +58,7 @@ void main() {
     'Same Game': const SameGameScreen(),
     'Lights Out': const LightsOutScreen(),
     'Skyscrapers': const SkyscrapersScreen(),
+    'Futoshiki': const FutoshikiScreen(),
   };
 
   for (final entry in screens.entries) {

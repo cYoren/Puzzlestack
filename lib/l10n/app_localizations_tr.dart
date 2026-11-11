@@ -2241,6 +2241,15 @@ class AppLocalizationsTr extends AppLocalizations {
       'İnanılmaz! Futoshiki Latin Karesini çözdünüz.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return '\"$arg1\" harfinin $arg0 kez geçtiğini doğru saydınız.';
   }

@@ -2135,6 +2135,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get futoshikiMessage => '信じられない！フトシキのラテン方格を解きました。';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return '「$arg1」が $arg0 回現れるのを正しく数えました。';
   }

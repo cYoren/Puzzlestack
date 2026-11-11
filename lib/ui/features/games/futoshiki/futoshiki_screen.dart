@@ -1,268 +1,295 @@
-import 'package:puzzle/l10n/app_localizations.dart';
-import 'package:puzzle/utils/l10n_game_helpers.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'futoshiki_provider.dart';
-import '../../../../widgets/game_completion_dialog.dart';
-import '../../../../widgets/tangible.dart';
+
+import '../../../../l10n/app_localizations.dart';
+import '../../../../providers/user_providers.dart';
 import '../../../../utils/design_system.dart';
-import '../../../../utils/haptic_feedback.dart';
+import '../../../../widgets/game_completion_dialog.dart';
+import '../../../../widgets/game_hud.dart';
+import '../../../../widgets/tangible.dart';
+import '../../../core/board/board_verb.dart';
+import '../../../core/board/puzzle_board_view.dart';
 import '../../../core/juice/game_scaffold.dart';
+import 'futoshiki_board.dart';
+import 'futoshiki_engine.dart';
+import 'futoshiki_provider.dart';
 
 class FutoshikiScreen extends ConsumerWidget {
   const FutoshikiScreen({super.key});
 
+  Future<void> _onSolved(
+    BuildContext context,
+    WidgetRef ref,
+    FutoshikiNotifier notifier,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    await ref
+        .read(gameStreakNotifierProvider.notifier)
+        .completeGame('futoshiki', xpAmount: 30);
+    if (!context.mounted) return;
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => GameCompletionDialog(
+        title: l10n.futoshikiWinTitle,
+        message: l10n.futoshikiMessage,
+        onHome: () {
+          Navigator.of(dialogContext).pop();
+          Navigator.of(dialogContext).pop();
+        },
+        onPlayAgain: () {
+          notifier.newGame();
+          Navigator.of(dialogContext).pop();
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(futoshikiNotifierProvider);
     final notifier = ref.read(futoshikiNotifierProvider.notifier);
 
-    ref.listen(futoshikiNotifierProvider, (previous, next) {
-      if (next.isSolved && !(previous?.isSolved ?? false)) {
-        HapticFeedbackUtil.victory();
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => GameCompletionDialog(
-            title: L10nGameHelpers.getGameTitle(context, 'futoshiki'),
-            message: AppLocalizations.of(context)!.futoshikiMessage,
-            onHome: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            },
-            onPlayAgain: () {
-              notifier.newGame();
-              Navigator.of(context).pop();
-            },
-          ),
-        );
-      }
-    });
-
     return GameScaffold(
-      title: L10nGameHelpers.getGameTitle(context, 'futoshiki'),
-      subtitle: L10nGameHelpers.getGameTitle(context, 'futoshiki'),
+      title: l10n.futoshikiTitle,
+      subtitle: l10n.futoshikiSubtitle,
       actions: [
         TangibleButton(
           color: Theme.of(context).colorScheme.surface,
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
-            HapticFeedbackUtil.mediumImpact();
-            notifier.reset();
+            emitVerb(BoardVerb.select);
+            notifier.hint();
           },
           padding: const EdgeInsets.all(12),
-          child: Icon(Icons.refresh_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface),
+          child: Icon(
+            Icons.lightbulb_outline_rounded,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(width: 8),
+        TangibleButton(
+          color: Theme.of(context).colorScheme.surface,
+          shadowColor: Theme.of(context).colorScheme.outline,
+          onTap: () {
+            emitVerb(BoardVerb.select);
+            notifier.newGame();
+          },
+          padding: const EdgeInsets.all(12),
+          child: Icon(
+            Icons.refresh_rounded,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
       ],
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final boardWidth = constraints.maxWidth * 0.85;
-          final boardSize = boardWidth > 320.0 ? 320.0 : boardWidth;
-
-          return Column(
-            children: [
-              const Spacer(),
-              Center(
-                child: TangibleContainer(
-                  color: Theme.of(context).colorScheme.surface,
-                  shadowColor: Theme.of(context).colorScheme.outline,
-                  depth: 4.0,
-                  radius: DesignSystem.radiusLG,
-                  padding: const EdgeInsets.all(DesignSystem.spaceMD),
-                  child: SizedBox(
-                    width: boardSize,
-                    height: boardSize,
-                    child: _buildBoard(context, state, notifier),
-                  ),
-                ),
-              ),
-              const Spacer(),
-              // Bottom keyboard input
-              _buildInputKeyboard(context, state, notifier),
-              const Spacer(),
-              ],
-              );
-              },
-              ),    );
-  }
-
-  Widget _buildBoard(BuildContext context, FutoshikiState state, FutoshikiNotifier notifier) {
-    final size = state.level.size;
-    final List<Widget> children = [];
-
-    for (int r = 0; r < size; r++) {
-      // 1. Build a cell row
-      final List<Widget> rowCells = [];
-      for (int c = 0; c < size; c++) {
-        rowCells.add(Expanded(flex: 2, child: _buildCell(context, r, c, state, notifier)));
-        if (c < size - 1) {
-          rowCells.add(Expanded(flex: 1, child: _buildHInt(context, r, c, state)));
-        }
-      }
-      children.add(Expanded(flex: 2, child: Row(children: rowCells)));
-
-      // 2. Build a vertical inequality row (if not the last row)
-      if (r < size - 1) {
-        final List<Widget> vIneqs = [];
-        for (int c = 0; c < size; c++) {
-          vIneqs.add(Expanded(flex: 2, child: _buildVInt(context, r, c, state)));
-          if (c < size - 1) {
-            vIneqs.add(const Expanded(flex: 1, child: SizedBox.shrink()));
-          }
-        }
-        children.add(Expanded(flex: 1, child: Row(children: vIneqs)));
-      }
-    }
-
-    return Column(children: children);
-  }
-
-  Widget _buildCell(
-    BuildContext context,
-    int r,
-    int c,
-    FutoshikiState state,
-    FutoshikiNotifier notifier,
-  ) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final value = state.currentGrid[r][c];
-    final isClue = state.level.clues[r][c] != null;
-    final isSelected = state.selectedRow == r && state.selectedCol == c;
-
-    Color cellColor = colorScheme.surface;
-    Color? shadowColor = colorScheme.outline;
-    double depth = 2.0;
-
-    if (isClue) {
-      cellColor = colorScheme.outline.withValues(alpha: 0.15);
-      shadowColor = colorScheme.outline;
-      depth = 0.0;
-    } else if (isSelected) {
-      cellColor = DesignSystem.primary;
-      shadowColor = DesignSystem.primary.withValues(alpha: 0.5);
-      depth = 2.0;
-    }
-
-    return GestureDetector(
-      onTap: () {
-        HapticFeedbackUtil.lightImpact();
-        notifier.selectCell(r, c);
-      },
-      child: TangibleContainer(
-        color: cellColor,
-        shadowColor: shadowColor,
-        depth: depth,
-        radius: DesignSystem.radiusSM,
-        padding: EdgeInsets.zero,
-        child: Center(
-          child: FittedBox(
-            child: Text(
-              value != null ? '$value' : '',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: isClue ? FontWeight.w900 : FontWeight.w700,
-                color: isSelected ? Colors.white : (isClue ? colorScheme.onSurface : colorScheme.onSurface.withValues(alpha: 0.8)),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHInt(BuildContext context, int r, int c, FutoshikiState state) {
-    final ineq = state.level.hInequalities[r][c];
-    if (ineq == null) return const SizedBox.shrink();
-
-    return Center(
-      child: Text(
-        ineq,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w900,
-          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildVInt(BuildContext context, int r, int c, FutoshikiState state) {
-    final ineq = state.level.vInequalities[r][c];
-    if (ineq == null) return const SizedBox.shrink();
-
-    IconData icon;
-    if (ineq == '^') {
-      icon = Icons.expand_less_rounded;
-    } else {
-      icon = Icons.expand_more_rounded;
-    }
-
-    return Center(
-      child: Icon(
-        icon,
-        size: 20,
-        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
-      ),
-    );
-  }
-
-  Widget _buildInputKeyboard(BuildContext context, FutoshikiState state, FutoshikiNotifier notifier) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Column(
         children: [
-          for (int i = 1; i <= 4; i++)
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: TangibleButton(
-                  onTap: () {
-                    HapticFeedbackUtil.lightImpact();
-                    notifier.setCellValue(i);
-                  },
-                  color: colorScheme.surface,
-                  shadowColor: colorScheme.outline,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  radius: DesignSystem.radiusSM,
-                  child: Center(
-                    child: Text(
-                      '$i',
-                      style: TextStyle(
-                        color: colorScheme.onSurface,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
+          _DifficultyRow(
+            selected: state.difficulty,
+            onSelected: (difficulty) {
+              emitVerb(BoardVerb.select);
+              notifier.setDifficulty(difficulty);
+            },
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+            child: GameHud(
+              children: [
+                _Stat(
+                  label: l10n.futoshikiGivens.toUpperCase(),
+                  value: '${state.puzzle.givens.length}',
+                  color: DesignSystem.primary,
                 ),
-              ),
+                _Stat(
+                  label: l10n.futoshikiEdges.toUpperCase(),
+                  value: '${state.puzzle.inequalityCount}',
+                  color: DesignSystem.gameIndigo,
+                ),
+              ],
             ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: TangibleButton(
-                onTap: () {
-                  HapticFeedbackUtil.lightImpact();
-                  notifier.setCellValue(null);
+          ),
+          const Spacer(),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 420),
+              child: PuzzleBoardView<FutoshikiState>(
+                board: FutoshikiBoard(state: state),
+                onMove: (move) {
+                  notifier.select(move.source.a * state.n + move.source.b);
                 },
-                color: colorScheme.surface,
-                shadowColor: colorScheme.outline,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                radius: DesignSystem.radiusSM,
-                child: Center(
-                  child: Icon(
-                    Icons.backspace_outlined,
-                    color: DesignSystem.error,
-                    size: 20,
-                  ),
-                ),
+                onSolved: () => _onSolved(context, ref, notifier),
               ),
             ),
           ),
+          const Spacer(),
+          _ValuePad(
+            n: state.n,
+            onValue: (value) {
+              emitVerb(BoardVerb.place);
+              notifier.enter(value);
+            },
+            onErase: () {
+              emitVerb(BoardVerb.select);
+              notifier.erase();
+            },
+          ),
+          const SizedBox(height: DesignSystem.spaceMD),
+        ],
+      ),
+    );
+  }
+}
+
+class _ValuePad extends StatelessWidget {
+  const _ValuePad({
+    required this.n,
+    required this.onValue,
+    required this.onErase,
+  });
+
+  final int n;
+  final ValueChanged<int> onValue;
+  final VoidCallback onErase;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: DesignSystem.spaceSM,
+      runSpacing: DesignSystem.spaceSM,
+      children: [
+        for (var value = 1; value <= n; value++)
+          TangibleButton(
+            color: scheme.surface,
+            shadowColor: scheme.outline,
+            padding: const EdgeInsets.symmetric(
+              horizontal: DesignSystem.spaceMD,
+              vertical: DesignSystem.spaceXS,
+            ),
+            onTap: () => onValue(value),
+            child: Text(
+              '$value',
+              style: TextStyle(
+                fontSize: DesignSystem.fontSizeLG,
+                fontWeight: FontWeight.w900,
+                color: scheme.onSurface,
+              ),
+            ),
+          ),
+        TangibleButton(
+          color: scheme.surface,
+          shadowColor: scheme.outline,
+          padding: const EdgeInsets.symmetric(
+            horizontal: DesignSystem.spaceMD,
+            vertical: DesignSystem.spaceXS,
+          ),
+          onTap: onErase,
+          child: Icon(
+            Icons.backspace_rounded,
+            size: 18,
+            color: scheme.onSurface,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Stat extends StatelessWidget {
+  const _Stat({required this.label, required this.value, required this.color});
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return TangibleContainer(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$label ',
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeXS,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.6,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.55),
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeMD,
+              fontWeight: FontWeight.w900,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DifficultyRow extends StatelessWidget {
+  const _DifficultyRow({required this.selected, required this.onSelected});
+
+  final FutoshikiDifficulty selected;
+  final ValueChanged<FutoshikiDifficulty> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final labels = {
+      FutoshikiDifficulty.easy: l10n.difficultyEasy,
+      FutoshikiDifficulty.medium: l10n.difficultyMedium,
+      FutoshikiDifficulty.hard: l10n.difficultyHard,
+    };
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: DesignSystem.spaceSM,
+        bottom: DesignSystem.spaceSM,
+      ),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 8,
+        children: [
+          for (final difficulty in FutoshikiDifficulty.values)
+            TangibleButton(
+              color: difficulty == selected
+                  ? DesignSystem.primary
+                  : Theme.of(context).colorScheme.surface,
+              shadowColor: Theme.of(context).colorScheme.outline,
+              depth: difficulty == selected ? 2 : 3,
+              padding: const EdgeInsets.symmetric(
+                horizontal: DesignSystem.spaceMD,
+                vertical: DesignSystem.spaceXS,
+              ),
+              onTap: () => onSelected(difficulty),
+              child: Text(
+                labels[difficulty]!,
+                style: TextStyle(
+                  fontSize: DesignSystem.fontSizeXS,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.6,
+                  color: difficulty == selected
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
         ],
       ),
     );

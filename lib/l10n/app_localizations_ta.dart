@@ -2293,6 +2293,15 @@ class AppLocalizationsTa extends AppLocalizations {
       'அற்புதம்! நீங்கள் புடோஷிகி லத்தீன் சதுரத்தைத் தீர்த்துவிட்டீர்கள்.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return '\"$arg1\" எத்தனை முறை வந்துள்ளது என்பதை சரியாக $arg0 என்று எண்ணியுள்ளீர்கள்.';
   }
