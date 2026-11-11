@@ -37,10 +37,19 @@ void main() {
       expect(problem.correctRegion, expected);
     });
 
-    test('generateProblem produces two distinct rules', () {
-      final problem = engine.generateProblem();
-      expect(problem.ruleA.runtimeType != problem.ruleB.runtimeType ||
-          problem.ruleA.toString() != problem.ruleB.toString(), isTrue);
+    test('generateProblem produces two rules that behave differently', () {
+      // Distinct by class is not enough: "Multiples of 2" and "Even Numbers"
+      // are different classes with the same truth table, and a board built
+      // from them has two empty regions.
+      for (var i = 0; i < 50; i++) {
+        final problem = engine.generateProblem();
+        final differs = [
+          for (var n = 1; n <= 100; n++) n,
+        ].any((n) => problem.ruleA.test(n) != problem.ruleB.test(n));
+        expect(differs, isTrue,
+            reason: '${problem.ruleA.description} and '
+                '${problem.ruleB.description} agree on every number');
+      }
     });
   });
 
