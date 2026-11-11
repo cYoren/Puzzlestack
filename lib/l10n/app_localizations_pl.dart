@@ -6113,6 +6113,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get pegsCongrats => 'Został jeden pionek. Czysta plansza.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

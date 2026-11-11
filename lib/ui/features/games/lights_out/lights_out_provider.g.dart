@@ -6,12 +6,12 @@ part of 'lights_out_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$lightsOutNotifierHash() => r'26ba53b9d2a290dcaa6485bf35552fa321e076fb';
+String _$lightsOutNotifierHash() => r'ba7ea87b4b48a85be0f66e2ec3368dc24ad4fe7a';
 
 /// See also [LightsOutNotifier].
 @ProviderFor(LightsOutNotifier)
 final lightsOutNotifierProvider =
-    AutoDisposeNotifierProvider<LightsOutNotifier, List<List<bool>>>.internal(
+    AutoDisposeNotifierProvider<LightsOutNotifier, LightsOutState>.internal(
   LightsOutNotifier.new,
   name: r'lightsOutNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final lightsOutNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$LightsOutNotifier = AutoDisposeNotifier<List<List<bool>>>;
+typedef _$LightsOutNotifier = AutoDisposeNotifier<LightsOutState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

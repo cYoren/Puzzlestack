@@ -6115,6 +6115,12 @@ class AppLocalizationsTe extends AppLocalizations {
   String get pegsCongrats => 'ఒక పెగ్ మిగిలింది. శుభ్రమైన బోర్డు.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

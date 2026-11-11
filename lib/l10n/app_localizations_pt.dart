@@ -6107,6 +6107,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pegsCongrats => 'Sobrou uma peça. Tabuleiro limpo.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

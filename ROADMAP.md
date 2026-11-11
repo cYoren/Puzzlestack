@@ -401,8 +401,25 @@ These exist but were written without a uniqueness guarantee. They are the ones u
 tell are wrong: ambiguous Sudoku, Nonogram that accepts a second picture, Slitherlink with
 two loops.
 
-`Bridges, Dominosa, Slide Puzzle, Lights Out, Color Flood, KenKen, Akari, Slitherlink,
-Magnets, Pipes, Hitori, Tents & Trees, Skyscrapers, Futoshiki`
+`Bridges, Dominosa, Slide Puzzle, Color Flood, KenKen, Akari, Slitherlink, Magnets, Pipes,
+Hitori, Tents & Trees, Skyscrapers, Futoshiki` — **13 left**, Lights Out is rebuilt.
+
+### Landed: Lights Out, where uniqueness is linear algebra
+
+The old game was 5x5. On 5x5 the toggle matrix has rank 23 of 25, so **every solvable board has
+four solutions** and "solved" was whichever one the player stumbled into. On 4x4 it is worse:
+sixteen.
+
+The rebuild picks sizes where the matrix is invertible — 3x3 (rank 9/9), 6x6 (36/36) and 8x8
+(64/64) — and builds the board forwards from a chosen press set, so the presses that made it are
+the only presses that clear it. The test counts solutions by Gaussian elimination over GF(2)
+rather than trusting the construction: 200 boards per tier, each exactly one. The engine also
+asserts the two sizes that are *not* invertible (4x4 → 16, 5x5 → 4), so the table in its
+comment cannot rot.
+
+Difficulty is size and press count together: 3x3 needing 2–4 presses, 6x6 needing 8–12, 8x8
+needing 14–20. The hint is exact and free: the presses still to make are `solution XOR pressed`,
+so it reveals one press, not the answer.
 
 Same bar as Phase 3. This phase adds no games and is the most valuable one in the document:
 it is the difference between "307 puzzles" and "307 puzzles that are actually correct".
