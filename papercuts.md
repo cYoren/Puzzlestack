@@ -41,6 +41,23 @@ python3 -c "import json; print(json.dumps({'title': ..., 'head': ..., 'base': 'm
 gh api repos/cYoren/Puzzlestack/pulls -X POST --input /tmp/pr.json
 ```
 
+### `dart format` on a directory rewrites the whole repo
+
+The SDK's formatter is the new "tall style" and this tree predates it. `dart format lib/ui`
+reformatted **967 files** that had nothing to do with the change. Format the files you touched,
+by name, or not at all.
+
+### A widget test only remembers the first exception
+
+`tester.takeException()` returns the first error and, once a second one arrives, starts
+returning `FlutterError("Multiple exceptions (N) were detected")` instead of the errors. The
+count is per test and never resets, so a loop over many games blames every game after the first
+one that breaks. That is how the 320dp audit reported 34 games "throwing" when none did.
+
+The fix, now in `test/board/game_audit.dart`: one `testWidgets` per game, and capture
+`FlutterErrorDetails` by swapping `FlutterError.onError` for the duration of the pump. The
+details carry the widget and its `file:line`, which `takeException` throws away.
+
 ### `flutter gen-l10n` prints a warning that is not a warning
 
 > To use the command line arguments, delete the l10n.yaml file in the Flutter project

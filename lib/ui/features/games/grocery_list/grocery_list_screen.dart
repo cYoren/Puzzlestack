@@ -8,6 +8,7 @@ import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'grocery_list_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class GroceryListScreen extends ConsumerStatefulWidget {
   const GroceryListScreen({super.key});
@@ -113,9 +114,7 @@ class _GroceryListScreenState extends ConsumerState<GroceryListScreen> {
           child: Column(
             children: state.list.map((item) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                child: GameHud(children: [
                   Text(item['item']!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
                   Text(item['category']!, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
                 ],

@@ -8,6 +8,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class LetterGridSwapperScreen extends ConsumerStatefulWidget {
   const LetterGridSwapperScreen({super.key});
@@ -188,9 +189,7 @@ class _LetterGridSwapperScreenState extends ConsumerState<LetterGridSwapperScree
                 color: DesignSystem.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                child: GameHud(children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

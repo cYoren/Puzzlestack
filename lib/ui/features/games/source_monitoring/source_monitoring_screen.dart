@@ -9,6 +9,7 @@ import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'source_monitoring_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class SourceMonitoringScreen extends ConsumerStatefulWidget {
   const SourceMonitoringScreen({super.key});
@@ -79,9 +80,7 @@ class _SourceMonitoringScreenState extends ConsumerState<SourceMonitoringScreen>
                       depth: 4.0,
                       color: item.color.withValues(alpha: 0.1),
                       padding: const EdgeInsets.all(DesignSystem.spaceLG),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        child: GameHud(children: [
                           Text(item.word, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                           Text(item.sourceName, style: TextStyle(color: item.color, fontWeight: FontWeight.w900)),
                         ],

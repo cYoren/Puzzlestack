@@ -10,6 +10,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../utils/design_system.dart';
 import '../../../../utils/haptic_feedback.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class SpatialConflictScreen extends ConsumerWidget {
   const SpatialConflictScreen({super.key});
@@ -76,9 +77,7 @@ class SpatialConflictScreen extends ConsumerWidget {
               // Trial & Score Board
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG, vertical: DesignSystem.spaceSM),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  child: GameHud(children: [
                     TangibleContainer(
                       depth: 2.0,
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

@@ -10,6 +10,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'semantic_distance_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class SemanticDistanceScreen extends ConsumerStatefulWidget {
   const SemanticDistanceScreen({super.key});
@@ -121,9 +122,7 @@ class _SemanticDistanceScreenState extends ConsumerState<SemanticDistanceScreen>
               DesignSystem.spaceMD,
               DesignSystem.spaceXS,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(

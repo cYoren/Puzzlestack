@@ -10,6 +10,7 @@ import '../../../../utils/haptic_feedback.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ChimpTestScreen extends ConsumerStatefulWidget {
   const ChimpTestScreen({super.key});
@@ -153,9 +154,7 @@ class _ChimpTestScreenState extends ConsumerState<ChimpTestScreen> {
             child: Column(
               children: [
                 const SizedBox(height: DesignSystem.spaceLG),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  GameHud(children: [
                     Text(
                       "ROUND: $_round / $totalRounds",
                       style: theme.textTheme.titleMedium?.copyWith(

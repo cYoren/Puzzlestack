@@ -10,6 +10,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'chain_reaction_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ChainReactionScreen extends ConsumerStatefulWidget {
   const ChainReactionScreen({super.key});
@@ -89,9 +90,7 @@ class _ChainReactionScreenState extends ConsumerState<ChainReactionScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(

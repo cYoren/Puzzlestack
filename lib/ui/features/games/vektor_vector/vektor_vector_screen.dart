@@ -8,6 +8,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class VektorVectorScreen extends ConsumerStatefulWidget {
   const VektorVectorScreen({super.key});
@@ -214,9 +215,7 @@ class _VektorVectorScreenState extends ConsumerState<VektorVectorScreen> {
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  GameHud(children: [
                     Text(
                       'Scale Vector u: $_scaleA',
                       style: const TextStyle(fontWeight: FontWeight.bold),

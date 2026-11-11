@@ -11,6 +11,7 @@ import '../../../../utils/haptic_feedback.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class BinaryCodeScreen extends ConsumerStatefulWidget {
   const BinaryCodeScreen({super.key});
@@ -158,9 +159,7 @@ class _BinaryCodeScreenState extends ConsumerState<BinaryCodeScreen> {
         child: Column(
           children: [
             const SizedBox(height: DesignSystem.spaceLG),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              GameHud(children: [
                 Text(
                   "TRANSLATED: $_correctAnswers / $targetAnswers",
                   style: theme.textTheme.titleMedium?.copyWith(

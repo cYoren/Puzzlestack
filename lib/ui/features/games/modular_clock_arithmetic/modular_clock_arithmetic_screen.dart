@@ -9,6 +9,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'modular_clock_arithmetic_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ModularClockArithmeticScreen extends ConsumerStatefulWidget {
   const ModularClockArithmeticScreen({super.key});
@@ -146,9 +147,7 @@ class _ModularClockArithmeticScreenState extends ConsumerState<ModularClockArith
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,

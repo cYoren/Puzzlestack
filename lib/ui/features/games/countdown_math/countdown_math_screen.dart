@@ -9,6 +9,7 @@ import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class CountdownMathScreen extends ConsumerStatefulWidget {
   const CountdownMathScreen({super.key});
@@ -200,9 +201,7 @@ class _CountdownMathScreenState extends ConsumerState<CountdownMathScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                child: GameHud(children: [
                   Text(AppLocalizations.of(context)!.phaseFindTheTarget, style: Theme.of(context).textTheme.titleMedium),
                   IconButton(
                     icon: const Icon(Icons.refresh_rounded),

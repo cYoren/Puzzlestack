@@ -9,6 +9,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'continuous_paired_associate_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ContinuousPairedAssociateScreen extends ConsumerStatefulWidget {
   const ContinuousPairedAssociateScreen({super.key});
@@ -181,9 +182,7 @@ class _ContinuousPairedAssociateScreenState extends ConsumerState<ContinuousPair
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
