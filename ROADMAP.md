@@ -19,7 +19,7 @@ someone can take without reading the rest of this file.
 | 1 | ~~Port the Tatham puzzles we lack~~ **Done**: Signpost was the twelfth and last on the critical path (2026-11-11). The three still unported are marked optional, below. | — | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
-| 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
+| 4 | **Release.** Nothing blocks it: the licence is settled, the copy and the privacy page are done. The screenshots are the last pass, and they need a device. | one pass | [Phase 6](#phase-6--release) |
 | — | **Optional: three Tatham puzzles** (Black Box, Undead, Tracks). Nice to have, not release blockers, and nothing else in the plan depends on them. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 
 Dropping the three optional ports does not shrink the shipping app: 313 games is what the
@@ -47,39 +47,26 @@ Signpost itself, Galaxies and Kurodoko; Magnets and Tents & Trees are the two mo
 
 Blocked on a human, not on an agent:
 
-- **The App Store licence question.** Email sent to the upstream author on 2026-11-10; now waiting
-  on a reply nobody here can hurry. Blocks iOS release only — see the next section.
 - **Codex review is out of credits.** PRs are self-reviewed and merged. See
   [papercuts.md](papercuts.md) for what that costs.
 
 ---
 
-## Open decision: can this ship on the App Store at all?
-
-This is the one thing that could invalidate half the plan, so it is decided before Phase 1,
-not discovered at submission.
+## Decided: this ships on the App Store too
 
 Puzzlestack is **GPL-3.0**, because it is a derivative of `sidhant947/Puzzle`, which is
-GPL-3.0. The FSF's position is that Apple's App Store terms conflict with the GPL: the
-store's usage restrictions are further restrictions the licence does not permit. VLC was
-pulled over exactly this. Google Play has no such conflict.
+GPL-3.0. The FSF's position is that Apple's App Store terms conflict with the GPL: the store's
+usage restrictions are further restrictions the licence does not permit. Google Play has no such
+conflict.
 
-The three ways out, in order of preference:
+**The upstream author was asked for permission and gave it.** Email sent 2026-11-10; reply
+received and confirmed by Gus. Permission to distribute the derived work through the App Store
+covers the one thing the licence alone could not, and keeps iOS in the release along with the
+GPL history intact. The email is held by the authors, and the permission is recorded in
+[NOTICE](NOTICE).
 
-1. **Ask the upstream author for a licence exception** — permission to ship the derived work
-   under the App Store terms. Costs an email, and the answer may well be yes. This is the
-   only option that keeps iOS and the GPL history intact.
-2. **Relicense to a permissive licence**, which needs the same permission plus our own
-   consent as authors of the changes. Cleanest legally, loses the GPL guarantee.
-3. **Ship Android, web and desktop; skip iOS.** Costs half the market.
-
-**Status: option 1 is in motion.** The email to the upstream author went on **2026-11-10**.
-Awaiting a reply, which may take weeks or never come.
-
-Until an answer arrives, treat iOS as unconfirmed. Nothing in Phases 1–5 depends on it, which is
-why the work continues — but Phase 6 cannot ship iOS without it, and **no iOS release work should
-start before the reply**. If no reply comes, the fallback is option 3: ship Android, web and
-desktop, and keep iOS out of the store listing rather than ship it in breach.
+So iOS ships with Android, from the same version and the same copy. Nothing here is waiting on
+anybody any more.
 
 ---
 
@@ -754,26 +741,34 @@ and they are the kind of puzzle nobody else on the store has. They close the col
 
 ## Phase 6 — Release
 
-Audited against the tree on **2026-11-11**. The registry has **313** games (Logic 53, Math 63,
+Audited and cleared on **2026-11-11**. The registry has **313** games (Logic 53, Math 63,
 Memory 54, Spatial 38, Attention 54, Word 51). Every Phase 3 port lays out at 320dp and on a
 tablet in the screen test, and `flutter analyze` reports nothing but the four `avoid_print`
 infos in the developer-only audit tool.
 
-### What is left, and who can do it
+### What was cleared
+
+| Item | What happened |
+| --- | --- |
+| **App Store licence** | **Settled.** The upstream author replied and gave permission for the derived work to ship through the App Store. Recorded in [NOTICE](NOTICE). iOS is in the release. |
+| **Play listing copy** | **Rewritten at 313.** The 161 count is gone from title, short and full description. The exhaustive game list was dropped: 313 names do not fit Play's 4000-character limit, so the copy names the six rooms and a set of highlights instead. |
+| **Web copy** | `web/index.html` and `web/manifest.json` said 161; both say 313 now. |
+| **Stale images** | **Deleted.** The eight phone screenshots still said MINDSTACK and 161, and so did the feature graphic. The graphic is regenerated from the app's own fonts and palette by `tool/feature_graphic.py`; the screenshots will be recaptured. |
+| **Privacy policy URL** | **Hosted** at <https://cyoren.github.io/Puzzlestack/privacy.html>, with terms at <https://cyoren.github.io/Puzzlestack/terms.html>. The in-app Privacy Policy and Terms links point there, and the two `TODO`s in the settings screen are gone. |
+| **Linux app id** | Was still `com.medhub.puzzlebox`. Now `com.medhub.puzzlestack`, like every other platform. |
+
+### What is left
 
 | Item | Status | Needs |
 | --- | --- | --- |
-| **App Store licence** | **Blocked.** Email to the upstream author sent 2026-11-10, no reply. | A human, and only for iOS. Play, web and desktop do not depend on it. |
-| **Play listing copy** | **Stale.** `title.txt`, `short_description.txt` and `full_description.txt` all say **161**; the game is 313. `full_description.txt` also lists 161 games by name. | An agent, at release time — the number moves again if Phase 5 lands. |
-| **Play screenshots** | **Stale and wrong.** All eight still show **MINDSTACK** and the headline "161 puzzles, one calm home", from August 2026, before the rename, when the app had 161 games. | An agent, with an emulator: `tool/screenshots.sh`, then restage. |
-| **Privacy policy URL** | **Not hosted.** `PRIVACY.md` is written and accurate; Play and the App Store both require a public URL, and the in-app Privacy Policy / Terms links point at the repo. | A human: one static page. |
-| **Play Data Safety form** | **Answers ready, not entered.** The answers in [RELEASE.md](RELEASE.md) are verified against the source: no data collected, nothing transmitted. | A human, in the console. |
-| **Shorebird `app_id`** | **Stale.** `shorebird.yaml` still carries the pre-rename id. Harmless while no shipped build bundles the updater. | An agent: `shorebird init` for `com.medhub.puzzlestack`, if OTA is wanted at launch. |
-| **Android + iOS together** | Not started. Same version, same copy, same price. | Blocked on the licence for iOS. |
+| **Store screenshots** | Removed, not yet recaptured. The pipeline is fixed and self-contained first: it used to call a `compose.py` that lived outside the repo and no longer exists, and it shipped one 1290x2796 set to both stores although Play refuses anything past 2:1. It now composes two canvases from one capture. | A capture run on a device: `tool/screenshots.sh <device>`. |
+| **Play Data Safety form** | Answers ready and verified against the source in [RELEASE.md](RELEASE.md): no data collected, nothing transmitted. | A human, in the console. |
+| **Shorebird `app_id`** | Still the pre-rename id. Harmless: no shipped build bundles the updater. | An agent, with the Shorebird CLI, only if OTA is wanted at launch. |
+| **Android + iOS together** | Same version, same copy, same listing assets. | The release build itself. |
 | **SDK skew** | One info-level deprecation (`cacheExtent` → `scrollCacheExtent`) that only clears on a deliberate Flutter upgrade. | An agent, separately. |
 
-Nothing else is pending. Phases 3, 4 and 5 no longer gate the release: Phase 4 is closed, the
-three Tatham ports left in Phase 3 are optional, and Phase 5 is new content rather than a fix.
+Phases 3, 4 and 5 do not gate the release: Phase 4 is closed, the three Tatham ports left in
+Phase 3 are optional, and Phase 5 is new content rather than a fix.
 
 ### Decided for after release: the paywall
 

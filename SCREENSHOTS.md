@@ -23,8 +23,10 @@ tool/screenshots.sh emulator-5554   # a specific device id
 Output:
 
 - `screenshots/raw/` — raw device PNGs, named `NN_<gameId>.png`
-- `screenshots/aso-refresh/final/ios/iphone/` — 1290×2796, ships to the App Store
-- `screenshots/aso-refresh/final/android/phone/` — 1290×2796, ships to Google Play
+- `screenshots/aso-refresh/final/ios/` — 1290×2796, ships to the App Store
+- `screenshots/aso-refresh/final/play/` — 1080×1920, ships to Google Play
+
+Two canvases, not one: Play refuses an aspect past 2:1 and 1290×2796 is 2.17:1.
 
 See `screenshots/README.md` for which paths are canonical and why.
 
@@ -35,8 +37,12 @@ See `screenshots/README.md` for which paths are canonical and why.
 Recompose without recapturing (after editing headline copy):
 
 ```bash
-python3 tool/compose_house_style.py
+uv run --with pillow python3 tool/compose_house_style.py
 ```
+
+The composer lives in `tool/compose_house_style.py` and needs only Pillow. It used to call a
+shared `compose.py` from a skills directory outside the repo; that directory is gone, so the
+framing and composition are vendored here.
 
 ## Run it in CI
 

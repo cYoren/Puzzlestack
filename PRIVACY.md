@@ -1,6 +1,9 @@
 # Privacy Policy for Puzzlestack
 
-**Last updated: 6 August 2026**
+**Last updated: 11 November 2026**
+
+Published at <https://cyoren.github.io/Puzzlestack/privacy.html>. The published page is
+`docs/privacy.html`; change both together.
 
 Puzzlestack is a collection of offline brain puzzles. It does not collect,
 transmit, or sell your personal data. There are no accounts, no advertising, and
