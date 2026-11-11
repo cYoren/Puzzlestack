@@ -2580,6 +2580,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tentsAndTreesMessage => '모든 텐트를 성공적으로 배치했습니다.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return '환상적인 슬라이딩입니다! $arg0번의 이동 만에 영웅 블록을 탈출시켰습니다.';
   }

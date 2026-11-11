@@ -2715,6 +2715,15 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tentsAndTreesMessage => 'আপনি সফলভাবে সব তাবু স্থাপন করেছেন।';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'অসাধারণ স্লাইডিং! আপনি $arg0 চালের মধ্যে হিরো ব্লকটি মুক্ত করেছেন।';
   }

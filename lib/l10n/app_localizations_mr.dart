@@ -2701,6 +2701,15 @@ class AppLocalizationsMr extends AppLocalizations {
       'तुम्ही सर्व तंबू यशस्वीरित्या लावले आहेत.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'विलक्षण स्लाइडिंग! तुम्ही $arg0 चालींमध्ये हिरो ब्लॉक मुक्त केला.';
   }

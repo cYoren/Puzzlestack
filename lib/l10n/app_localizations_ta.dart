@@ -2762,6 +2762,15 @@ class AppLocalizationsTa extends AppLocalizations {
       'அனைத்துக் கூடாரங்களையும் வெற்றிகரமாக அமைத்துவிட்டீர்கள்.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'அற்புதமான சறுக்கல்! ஹீரோ பிளாக்கை $arg0 நகர்வுகளில் விடுவித்துவிட்டீர்கள்.';
   }

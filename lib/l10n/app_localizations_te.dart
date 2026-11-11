@@ -2721,6 +2721,15 @@ class AppLocalizationsTe extends AppLocalizations {
   String get tentsAndTreesMessage => 'మీరు అన్ని టెంట్లను విజయవంతంగా అమర్చారు.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'అద్భుతమైన స్లైడింగ్! మీరు హీరో బ్లాక్‌ను $arg0 కదలికలలో విడిపించారు.';
   }

@@ -2725,6 +2725,15 @@ class AppLocalizationsPl extends AppLocalizations {
       'Udało Ci się rozstawić wszystkie namioty.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'Rewelacyjne przesuwanie! Uwolniłeś blok Bohatera w $arg0 ruchach.';
   }

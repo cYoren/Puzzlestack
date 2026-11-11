@@ -2661,6 +2661,15 @@ class AppLocalizationsTh extends AppLocalizations {
   String get tentsAndTreesMessage => 'คุณกางเต็นท์ทั้งหมดได้สำเร็จแล้ว';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'การเลื่อนที่ยอดเยี่ยม! คุณพาบล็อกฮีโร่ออกมาได้ใน $arg0 การเคลื่อนที่';
   }

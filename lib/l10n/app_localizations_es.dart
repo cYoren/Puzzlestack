@@ -2745,6 +2745,15 @@ class AppLocalizationsEs extends AppLocalizations {
       'Has colocado correctamente todas las tiendas.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return '¡Deslizamiento sensacional! Has liberado el bloque Héroe en $arg0 movimientos.';
   }
