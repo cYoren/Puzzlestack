@@ -896,6 +896,18 @@ abstract class AppLocalizations {
   /// **'All magnets are perfectly arranged!'**
   String get magnetsWinMessage;
 
+  /// No description provided for @magnetsPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Magnets'**
+  String get magnetsPlaced;
+
+  /// No description provided for @magnetsLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get magnetsLevel;
+
   /// No description provided for @lighthousesTitle.
   ///
   /// In en, this message translates to:

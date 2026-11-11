@@ -416,6 +416,12 @@ class AppLocalizationsTr extends AppLocalizations {
       'Tüm mıknatıslar mükemmel bir şekilde düzenlendi!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'DENİZ FENERLERİ';
 
   @override

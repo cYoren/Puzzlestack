@@ -419,6 +419,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Tous les aimants sont parfaitement disposés !';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'PHARES';
 
   @override

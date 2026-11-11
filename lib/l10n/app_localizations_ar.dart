@@ -413,6 +413,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get magnetsWinMessage => 'تم ترتيب جميع المغناطيسات بشكل مثالي!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'منارات';
 
   @override

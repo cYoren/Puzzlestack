@@ -417,6 +417,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get magnetsWinMessage => 'Semua magnet telah diatur dengan sempurna!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'MERCUSUAR';
 
   @override
