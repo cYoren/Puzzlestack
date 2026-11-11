@@ -422,6 +422,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get magnetsLevel => 'Depth';
 
   @override
+  String get cubeTitle => 'CUBE';
+
+  @override
+  String get cubeSubtitle => 'Roll the cube, collect the blue squares.';
+
+  @override
+  String get cubeWinTitle => 'SIX BLUES!';
+
+  @override
+  String get cubeWinMessage => 'Every face of the cube is blue.';
+
+  @override
+  String get cubeHowToPlay =>
+      'Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube\'s bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.';
+
+  @override
+  String get cubeFaces => 'Faces';
+
+  @override
+  String get cubeMoves => 'Moves';
+
+  @override
+  String get cubeBest => 'Best';
+
+  @override
   String get lighthousesTitle => 'LIGHTHOUSES';
 
   @override
