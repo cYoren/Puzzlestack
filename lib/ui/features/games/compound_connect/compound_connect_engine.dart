@@ -25,8 +25,15 @@ class CompoundConnectEngine {
 
   List<String> getOptions(CompoundTask task) {
     final options = [task.suffix];
-    final otherSuffixes = _tasks.where((t) => t.suffix != task.suffix).map((t) => t.suffix).toList();
-    otherSuffixes.shuffle();
+    // A suffix can belong to more than one task, so the raw list can hold the
+    // same distractor twice and the player sees a duplicate button. Dedupe
+    // before taking three.
+    final otherSuffixes = _tasks
+        .where((t) => t.suffix != task.suffix)
+        .map((t) => t.suffix)
+        .toSet()
+        .toList()
+      ..shuffle();
     options.addAll(otherSuffixes.take(3));
     options.shuffle();
     return options;
