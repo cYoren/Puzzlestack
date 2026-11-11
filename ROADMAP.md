@@ -331,6 +331,24 @@ The lesson from all four is the same one the Galaxies generator taught, in a new
 a port disagrees with the C, the C is usually right, and "this looks redundant" is a reason to
 work out *why* it is there before deleting it.
 
+### A number worth knowing: 118 of 307 games are broken at 320dp
+
+`test/board/game_audit.dart` pumps every game in the registry on a 320dp phone and counts what
+breaks. It is a measuring tool, not a test, so it stays out of the suite:
+
+```
+flutter test test/board/game_audit.dart
+AUDIT checked=307 overflow=84 threw=35
+```
+
+**84 games overflow the screen and 35 more throw.** That is 119 of 307, and it is the strongest
+argument for Phase 3 being a rebuild rather than a port: the 304 that arrived with the merge were
+never held to a layout gate, and a third of them fall over on the smallest phone the app supports.
+The four rebuilt games are not on that list.
+
+This is not this phase's job — it is 119 separate fixes — but it should be Phase 4's first item,
+and the tool exists so the count can be watched instead of guessed.
+
 ### The bar, as it stands
 
 | | |
