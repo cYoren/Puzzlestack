@@ -59,6 +59,7 @@ class PathRecallNotifier extends _$PathRecallNotifier {
 
   @override
   PathRecallState build() {
+    ref.onDispose(() { _playbackTimer?.cancel(); });
     return PathRecallState(gridSize: _gridSize);
   }
 

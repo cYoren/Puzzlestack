@@ -51,6 +51,7 @@ class QuickMathNotifier extends _$QuickMathNotifier {
 
   @override
   QuickMathState build() {
+    ref.onDispose(() { _timer?.cancel(); });
     return QuickMathState(currentProblem: MathProblem(equation: '', answer: 0));
   }
 

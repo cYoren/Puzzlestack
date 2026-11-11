@@ -72,6 +72,7 @@ class MandalaRecallNotifier extends _$MandalaRecallNotifier {
 
   @override
   MandalaRecallState build() {
+    ref.onDispose(() { _gameTimer?.cancel(); _phaseTimer?.cancel(); });
     return MandalaRecallState();
   }
 
