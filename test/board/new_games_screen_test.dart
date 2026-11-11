@@ -8,6 +8,7 @@ import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
 import 'package:puzzle/ui/features/games/dominosa/dominosa_screen.dart';
 import 'package:puzzle/ui/features/games/futoshiki/futoshiki_screen.dart';
+import 'package:puzzle/ui/features/games/cube/cube_screen.dart';
 import 'package:puzzle/ui/features/games/magnets/magnets_screen.dart';
 import 'package:puzzle/ui/features/games/tents_and_trees/tents_and_trees_screen.dart';
 import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
@@ -65,6 +66,7 @@ void main() {
     'Dominosa': const DominosaScreen(),
     'Magnets': const MagnetsScreen(),
     'Tents & Trees': const TentsAndTreesScreen(),
+    'Cube': const CubeScreen(),
   };
 
   for (final entry in screens.entries) {
