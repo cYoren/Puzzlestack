@@ -1667,6 +1667,9 @@
     }
   },
   "tentsAndTreesMessage": "You have successfully placed all the tents.",
+  "tentsAndTreesWinTitle": "CAMP READY!",
+  "tentsAndTreesTents": "Tents",
+  "tentsAndTreesDepth": "Depth",
   "klotskiMessage": "Sensational sliding! You freed the Hero block in {arg0} moves.",
   "@klotskiMessage": {
     "placeholders": {

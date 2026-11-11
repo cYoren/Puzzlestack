@@ -2701,6 +2701,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tentsAndTreesMessage => 'Tüm çadırları başarıyla yerleştirdiniz.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'Harika kaydırma! Kahraman bloğu $arg0 hamlede serbest bıraktınız.';
   }
