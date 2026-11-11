@@ -6150,6 +6150,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pegsCongrats => 'Ein Stift übrig. Sauber gelöst.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

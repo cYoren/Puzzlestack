@@ -6162,6 +6162,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pegsCongrats => 'Un pion restant. Plateau net.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

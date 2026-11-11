@@ -10677,6 +10677,18 @@ abstract class AppLocalizations {
   /// **'One peg left. That is a clean board.'**
   String get pegsCongrats;
 
+  /// No description provided for @lightsOutPresses.
+  ///
+  /// In en, this message translates to:
+  /// **'Presses'**
+  String get lightsOutPresses;
+
+  /// No description provided for @lightsOutLit.
+  ///
+  /// In en, this message translates to:
+  /// **'Lit'**
+  String get lightsOutLit;
+
   /// No description provided for @sameGameTitle.
   ///
   /// In en, this message translates to:

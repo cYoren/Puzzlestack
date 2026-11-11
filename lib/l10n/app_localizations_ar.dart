@@ -5986,6 +5986,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pegsCongrats => 'بقيت قطعة واحدة. لوحة نظيفة.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

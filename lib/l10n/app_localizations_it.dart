@@ -6132,6 +6132,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get pegsCongrats => 'Resta una pedina. Tavola pulita.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

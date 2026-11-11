@@ -6092,6 +6092,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get pegsCongrats => 'एक पेग बचा। साफ़ बोर्ड।';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override
