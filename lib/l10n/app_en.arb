@@ -191,6 +191,8 @@
   "dominosaHowToPlay": "Arrange a complete set of dominoes on a grid of numbers such that every pair of adjacent numbers is covered by exactly one domino. Each number pair exists only once in the set.",
   "dominosaWinTitle": "DOMINO MASTER!",
   "dominosaWinMessage": "Every domino has been found and placed!",
+  "skyscrapersClues": "Clues",
+  "skyscrapersFilled": "Filled",
   "skyscrapersTitle": "SKYSCRAPERS",
   "skyscrapersSubtitle": "Fill the grid with building heights.",
   "skyscrapersHowToPlay": "Fill the grid with heights (1-N) such that each row and column contains each height exactly once. Clues on the edges indicate how many buildings are visible from that direction, with taller buildings blocking shorter ones.",

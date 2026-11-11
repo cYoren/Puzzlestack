@@ -451,6 +451,12 @@ class AppLocalizationsTe extends AppLocalizations {
   String get dominosaWinMessage => 'ప్రతి డొమినో కనుగొనబడింది మరియు ఉంచబడింది!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'స్కైస్క్రాపర్స్';
 
   @override

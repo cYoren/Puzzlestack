@@ -956,6 +956,18 @@ abstract class AppLocalizations {
   /// **'Every domino has been found and placed!'**
   String get dominosaWinMessage;
 
+  /// No description provided for @skyscrapersClues.
+  ///
+  /// In en, this message translates to:
+  /// **'Clues'**
+  String get skyscrapersClues;
+
+  /// No description provided for @skyscrapersFilled.
+  ///
+  /// In en, this message translates to:
+  /// **'Filled'**
+  String get skyscrapersFilled;
+
   /// No description provided for @skyscrapersTitle.
   ///
   /// In en, this message translates to:

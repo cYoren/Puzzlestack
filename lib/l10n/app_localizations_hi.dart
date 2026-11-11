@@ -448,6 +448,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get dominosaWinMessage => 'हर डोमिनोज़ मिल गया है और रख दिया गया है!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'स्काईस्क्रेपर्स';
 
   @override

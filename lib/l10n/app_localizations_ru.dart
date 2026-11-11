@@ -449,6 +449,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get dominosaWinMessage => 'Все костяшки домино найдены и размещены!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'НЕБОСКРЕБЫ';
 
   @override
