@@ -998,6 +998,54 @@ abstract class AppLocalizations {
   /// **'Coloured'**
   String get mapColoured;
 
+  /// No description provided for @inertiaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'INERTIA'**
+  String get inertiaTitle;
+
+  /// No description provided for @inertiaSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Slide the ball, collect every gem, avoid the mines.'**
+  String get inertiaSubtitle;
+
+  /// No description provided for @inertiaWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ALL GEMS!'**
+  String get inertiaWinTitle;
+
+  /// No description provided for @inertiaWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every gem collected and not a mine touched.'**
+  String get inertiaWinMessage;
+
+  /// No description provided for @inertiaHowToPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.'**
+  String get inertiaHowToPlay;
+
+  /// No description provided for @inertiaGems.
+  ///
+  /// In en, this message translates to:
+  /// **'Gems'**
+  String get inertiaGems;
+
+  /// No description provided for @inertiaMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves'**
+  String get inertiaMoves;
+
+  /// No description provided for @inertiaExploded.
+  ///
+  /// In en, this message translates to:
+  /// **'MINE! Tap to retry'**
+  String get inertiaExploded;
+
   /// No description provided for @lighthousesTitle.
   ///
   /// In en, this message translates to:
