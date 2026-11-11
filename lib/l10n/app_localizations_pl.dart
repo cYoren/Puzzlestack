@@ -454,6 +454,12 @@ class AppLocalizationsPl extends AppLocalizations {
       'Każda kostka domina została znaleziona i umieszczona!';
 
   @override
+  String get dominosaPlaced => 'Placed';
+
+  @override
+  String get dominosaTypes => 'Types';
+
+  @override
   String get skyscrapersClues => 'Clues';
 
   @override

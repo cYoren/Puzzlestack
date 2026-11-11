@@ -1,186 +1,235 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:puzzle/l10n/app_localizations.dart';
-import '../../../../../providers/user_providers.dart';
-import '../../../../../utils/haptic_feedback.dart';
-import '../../../core/juice/game_scaffold.dart';
-import '../../../../widgets/game_completion_dialog.dart';
-import '../../../../widgets/tangible.dart';
+
+import '../../../../l10n/app_localizations.dart';
+import '../../../../providers/user_providers.dart';
 import '../../../../utils/design_system.dart';
+import '../../../../widgets/game_completion_dialog.dart';
+import '../../../../widgets/game_hud.dart';
+import '../../../../widgets/tangible.dart';
+import '../../../core/board/board_verb.dart';
+import '../../../core/board/puzzle_board_view.dart';
+import '../../../core/juice/game_scaffold.dart';
+import 'dominosa_board.dart';
+import 'dominosa_engine.dart';
 import 'dominosa_provider.dart';
 
-class DominosaScreen extends ConsumerStatefulWidget {
+class DominosaScreen extends ConsumerWidget {
   const DominosaScreen({super.key});
 
-  @override
-  ConsumerState<DominosaScreen> createState() => _DominosaScreenState();
-}
-
-class _DominosaScreenState extends ConsumerState<DominosaScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(dominosaNotifierProvider.notifier).initGame();
-    });
-  }
-
-  void _showCompletionDialog() {
+  Future<void> _onSolved(
+    BuildContext context,
+    WidgetRef ref,
+    DominosaNotifier notifier,
+  ) async {
     final l10n = AppLocalizations.of(context)!;
-    showDialog(
+    await ref
+        .read(gameStreakNotifierProvider.notifier)
+        .completeGame('dominosa', xpAmount: 30);
+    if (!context.mounted) return;
+    await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
+      builder: (dialogContext) => GameCompletionDialog(
         title: l10n.dominosaWinTitle,
         message: l10n.dominosaWinMessage,
-        isVictory: true,
         onHome: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
+          Navigator.of(dialogContext).pop();
+          Navigator.of(dialogContext).pop();
         },
         onPlayAgain: () {
-          Navigator.of(context).pop();
-          ref.read(dominosaNotifierProvider.notifier).initGame();
+          notifier.newGame();
+          Navigator.of(dialogContext).pop();
         },
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final colorScheme = Theme.of(context).colorScheme;
     final state = ref.watch(dominosaNotifierProvider);
     final notifier = ref.read(dominosaNotifierProvider.notifier);
-
-    ref.listen(dominosaNotifierProvider, (previous, next) {
-      if (next.isVictory && !(previous?.isVictory ?? false)) {
-        HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('dominosa');
-        _showCompletionDialog();
-      }
-    });
-
-    if (state.isLoading) {
-      return GameScaffold(
-        title: l10n.dominosaTitle,
-        body: const Center(child: CircularProgressIndicator()),
-      );
-    }
 
     return GameScaffold(
       title: l10n.dominosaTitle,
       subtitle: l10n.dominosaSubtitle,
       actions: [
         TangibleButton(
-          color: colorScheme.surface,
-          shadowColor: colorScheme.outline,
-          padding: const EdgeInsets.all(8),
+          color: Theme.of(context).colorScheme.surface,
+          shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text(l10n.howToPlay),
-                content: Text(l10n.dominosaHowToPlay),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(l10n.gotIt),
-                  ),
-                ],
-              ),
-            );
+            emitVerb(BoardVerb.select);
+            notifier.hint();
           },
-          child: Icon(Icons.help_outline, color: colorScheme.onSurface),
+          padding: const EdgeInsets.all(12),
+          child: Icon(
+            Icons.lightbulb_outline_rounded,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(width: 8),
+        TangibleButton(
+          color: Theme.of(context).colorScheme.surface,
+          shadowColor: Theme.of(context).colorScheme.outline,
+          onTap: () {
+            emitVerb(BoardVerb.select);
+            notifier.newGame();
+          },
+          padding: const EdgeInsets.all(12),
+          child: Icon(
+            Icons.refresh_rounded,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
       ],
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(DesignSystem.spaceLG),
-          child: AspectRatio(
-            aspectRatio: state.grid[0].length / state.grid.length,
-            child: LayoutBuilder(builder: (context, constraints) {
-              final rows = state.grid.length;
-              final cols = state.grid[0].length;
-              final cellSize = constraints.maxWidth / cols;
-              return Stack(
-                children: [
-                  // Cells
-                  for (int r = 0; r < rows; r++)
-                    for (int c = 0; c < cols; c++)
-                      Positioned(
-                        left: c * cellSize,
-                        top: r * cellSize,
-                        width: cellSize,
-                        height: cellSize,
-                        child: _buildCell(state, notifier, r, c, cellSize),
-                      ),
-                  // Selections
-                  for (var sel in state.selections)
-                    _buildSelection(sel, cellSize),
-                ],
-              );
-            }),
+      body: Column(
+        children: [
+          _DifficultyRow(
+            selected: state.difficulty,
+            onSelected: (difficulty) {
+              emitVerb(BoardVerb.select);
+              notifier.setDifficulty(difficulty);
+            },
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCell(DominosaState state, DominosaNotifier notifier, int r, int c, double size) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final val = state.grid[r][c];
-    final isSelected = state.firstSelected != null && state.firstSelected![0] == r && state.firstSelected![1] == c;
-
-    return GestureDetector(
-      onTap: () => notifier.selectCell(r, c),
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: isSelected ? colorScheme.primary.withValues(alpha: 0.2) : colorScheme.surface,
-          border: Border.all(
-            color: colorScheme.outline.withValues(alpha: 0.1), 
-            width: 0.5,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            val.toString(),
-            style: TextStyle(
-              color: colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+            child: GameHud(
+              children: [
+                _Stat(
+                  label: l10n.dominosaPlaced.toUpperCase(),
+                  value:
+                      '${state.placed.length ~/ 2}/${state.puzzle.dominoCount}',
+                  color: DesignSystem.primary,
+                ),
+                _Stat(
+                  label: l10n.dominosaTypes.toUpperCase(),
+                  value: '${state.usedTypes.length}/${state.puzzle.dominoCount}',
+                  color: DesignSystem.gameIndigo,
+                ),
+              ],
             ),
           ),
-        ),
+          const Spacer(),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 460),
+              child: PuzzleBoardView<DominosaState>(
+                board: DominosaBoard(state: state),
+                onMove: (move) {
+                  final a = move.source.a * state.cols + move.source.b;
+                  final target = move.target;
+                  if (target == null) {
+                    notifier.select(a);
+                    return;
+                  }
+                  notifier.place(a, target.a * state.cols + target.b);
+                },
+                onSolved: () => _onSolved(context, ref, notifier),
+              ),
+            ),
+          ),
+          const Spacer(),
+        ],
       ),
     );
   }
+}
 
-  Widget _buildSelection(IList<IList<int>> sel, double cellSize) {
-    final colorScheme = Theme.of(context).colorScheme;
-    int r1 = sel[0][0], c1 = sel[0][1];
-    int r2 = sel[1][0], c2 = sel[1][1];
-    
-    double left = (c1 < c2 ? c1 : c2) * cellSize;
-    double top = (r1 < r2 ? r1 : r2) * cellSize;
-    double width = (c1 == c2) ? cellSize : cellSize * 2;
-    double height = (r1 == r2) ? cellSize : cellSize * 2;
+class _Stat extends StatelessWidget {
+  const _Stat({required this.label, required this.value, required this.color});
 
-    return Positioned(
-      left: left + 4,
-      top: top + 4,
-      width: width - 8,
-      height: height - 8,
-      child: IgnorePointer(
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: colorScheme.primary, width: 3),
-            borderRadius: BorderRadius.circular(8),
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return TangibleContainer(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$label ',
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeXS,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.6,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.55),
+            ),
           ),
-        ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeMD,
+              fontWeight: FontWeight.w900,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DifficultyRow extends StatelessWidget {
+  const _DifficultyRow({required this.selected, required this.onSelected});
+
+  final DominosaDifficulty selected;
+  final ValueChanged<DominosaDifficulty> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final labels = {
+      DominosaDifficulty.easy: l10n.difficultyEasy,
+      DominosaDifficulty.medium: l10n.difficultyMedium,
+      DominosaDifficulty.hard: l10n.difficultyHard,
+    };
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: DesignSystem.spaceSM,
+        bottom: DesignSystem.spaceSM,
+      ),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 8,
+        children: [
+          for (final difficulty in DominosaDifficulty.values)
+            TangibleButton(
+              color: difficulty == selected
+                  ? DesignSystem.primary
+                  : Theme.of(context).colorScheme.surface,
+              shadowColor: Theme.of(context).colorScheme.outline,
+              depth: difficulty == selected ? 2 : 3,
+              padding: const EdgeInsets.symmetric(
+                horizontal: DesignSystem.spaceMD,
+                vertical: DesignSystem.spaceXS,
+              ),
+              onTap: () => onSelected(difficulty),
+              child: Text(
+                labels[difficulty]!,
+                style: TextStyle(
+                  fontSize: DesignSystem.fontSizeXS,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.6,
+                  color: difficulty == selected
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

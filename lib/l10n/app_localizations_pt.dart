@@ -454,6 +454,12 @@ class AppLocalizationsPt extends AppLocalizations {
       'Todos os dominós foram encontrados e colocados!';
 
   @override
+  String get dominosaPlaced => 'Placed';
+
+  @override
+  String get dominosaTypes => 'Types';
+
+  @override
   String get skyscrapersClues => 'Clues';
 
   @override
