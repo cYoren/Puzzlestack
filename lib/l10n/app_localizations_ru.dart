@@ -6084,6 +6084,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get pegsCongrats => 'Осталась одна шашка. Чистая доска.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

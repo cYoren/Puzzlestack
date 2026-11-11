@@ -8,6 +8,7 @@ import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
 import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
 import 'package:puzzle/ui/features/games/kurodoko/kurodoko_screen.dart';
+import 'package:puzzle/ui/features/games/lights_out/lights_out_screen.dart';
 import 'package:puzzle/ui/features/games/pegs/pegs_screen.dart';
 import 'package:puzzle/ui/features/games/same_game/same_game_screen.dart';
 import 'package:puzzle/ui/features/games/twiddle/twiddle_screen.dart';
@@ -53,6 +54,7 @@ void main() {
     'Galaxies': const GalaxiesScreen(),
     'Kurodoko': const KurodokoScreen(),
     'Same Game': const SameGameScreen(),
+    'Lights Out': const LightsOutScreen(),
   };
 
   for (final entry in screens.entries) {

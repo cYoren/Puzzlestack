@@ -5983,6 +5983,12 @@ class AppLocalizationsTh extends AppLocalizations {
   String get pegsCongrats => 'เหลือหมุดเดียว กระดานสะอาดหมดจด';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

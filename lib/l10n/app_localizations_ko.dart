@@ -5770,6 +5770,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pegsCongrats => '페그 하나만 남았습니다. 깔끔한 판입니다.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

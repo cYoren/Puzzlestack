@@ -6109,6 +6109,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get pegsCongrats => 'Tersisa satu pasak. Papan bersih.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override
