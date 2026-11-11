@@ -184,8 +184,11 @@ class _KenKenScreenState extends ConsumerState<KenKenScreen> {
   Widget _buildNumpad(KenKenState state, KenKenNotifier notifier) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      // A 9x9 board needs ten buttons; at 320dp they do not fit one row.
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: DesignSystem.spaceSM,
+        runSpacing: DesignSystem.spaceSM,
         children: [
           ...List.generate(state.size, (i) => _buildNumButton(i + 1, notifier)),
           _buildControlButton(Icons.backspace_rounded, notifier.onClear, DesignSystem.error),

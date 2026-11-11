@@ -134,13 +134,14 @@ class _TapaScreenState extends ConsumerState<TapaScreen> {
   }
 
   Widget _buildLegend(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    // Three labelled swatches do not fit 320dp side by side; let them wrap.
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 16,
+      runSpacing: 8,
       children: [
         _buildLegendItem(colorScheme.surface, "EMPTY", colorScheme.onSurface.withValues(alpha: 0.5), true),
-        const SizedBox(width: 16),
         _buildLegendItem(colorScheme.onSurface, "WALL (TAP 1)", colorScheme.surface, false),
-        const SizedBox(width: 16),
         _buildLegendItem(DesignSystem.gameRed.withValues(alpha: 0.2), "DOT (TAP 2)", DesignSystem.gameRed, false),
       ],
     );

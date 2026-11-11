@@ -121,7 +121,9 @@ class _SentenceUnscrambleScreenState extends ConsumerState<SentenceUnscrambleScr
                 padding: const EdgeInsets.all(DesignSystem.spaceLG),
                 child: Column(
                   children: [
-                    Row(
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
                       children: [
                         Icon(Icons.edit_note_rounded, size: 20, color: colorScheme.onSurface.withValues(alpha: 0.4)),
                         const SizedBox(width: 8),
@@ -135,6 +137,7 @@ class _SentenceUnscrambleScreenState extends ConsumerState<SentenceUnscrambleScr
                           ),
                         ),
                       ],
+                    ),
                     ),
                     const Divider(),
                     Expanded(
