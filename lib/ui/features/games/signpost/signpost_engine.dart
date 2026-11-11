@@ -693,14 +693,30 @@ class SignpostEngine {
 
   // ------------------------------------------------------------- generator
 
-  /// A board that needs [difficulty]'s rule level exactly.
+  /// A board that needs [difficulty]'s rule level.
+  ///
+  /// The level is a target, not a promise. A hard board takes a few hundred
+  /// milliseconds to find and the tier is only reached some of the time, and a
+  /// screen that thinks for ten seconds is worse than a board that is a little
+  /// easier than asked for. So the search runs inside [budget] and returns the
+  /// hardest board it found, which is always a real one: [strip] only gives
+  /// numbers away while the rules still finish the board, so every candidate is
+  /// unique and every candidate is playable. Raise [budget] when the exact
+  /// level is what is being checked, which is what the tests do.
   SignpostPuzzle generate(
     SignpostDifficulty difficulty, {
     Random? random,
-    int attempts = 240,
+    Duration budget = const Duration(milliseconds: 900),
+    int attempts = 400,
   }) {
     final rng = random ?? Random();
+    final watch = Stopwatch()..start();
+    SignpostPuzzle? hardest;
+    var hardestLevel = 0;
+
     for (var attempt = 0; attempt < attempts; attempt++) {
+      if (watch.elapsed > budget) break;
+
       final filled = _fill(difficulty, rng);
       if (filled == null) continue;
 
@@ -714,12 +730,17 @@ class SignpostEngine {
         clues: clues,
         solution: filled.numbers,
       );
-      if (levelOf(puzzle) != difficulty.level) continue;
-      return puzzle;
+      final level = levelOf(puzzle) ?? 1;
+      if (level == difficulty.level) return puzzle;
+      if (level > hardestLevel) {
+        hardest = puzzle;
+        hardestLevel = level;
+      }
     }
+
+    if (hardest != null) return hardest;
     throw StateError(
-      'could not build a level ${difficulty.level} '
-      '${difficulty.rows}x${difficulty.cols} Signpost board',
+      'could not build a ${difficulty.rows}x${difficulty.cols} Signpost board',
     );
   }
 

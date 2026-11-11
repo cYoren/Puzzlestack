@@ -456,8 +456,9 @@ Two measurements changed the plan rather than the code:
   costs a fraction of a second to build and the uniqueness proof is the same one, so 25 is the
   honest sample rather than a slower test that proves the same thing.
 
-The last 200-board run: easy and medium are generated and counted in under two seconds
-together, and 25 hard boards take about four.
+The last run: the 200 easy and 200 medium boards are generated and counted in under two
+seconds together, and the 25 hard ones add a few seconds. Worth re-measuring before it is quoted
+anywhere else.
 
 ### What Galaxies cost, and what it taught
 
