@@ -8,6 +8,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'vector_dot_product_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class VectorDotProductScreen extends ConsumerStatefulWidget {
   const VectorDotProductScreen({super.key});
@@ -134,9 +135,7 @@ class _VectorDotProductScreenState extends ConsumerState<VectorDotProductScreen>
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,

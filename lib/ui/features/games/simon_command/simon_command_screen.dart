@@ -11,6 +11,7 @@ import '../../../../utils/haptic_feedback.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class SimonCommandScreen extends ConsumerStatefulWidget {
   const SimonCommandScreen({super.key});
@@ -158,9 +159,7 @@ class _SimonCommandScreenState extends ConsumerState<SimonCommandScreen> {
         child: Column(
           children: [
             const SizedBox(height: DesignSystem.spaceLG),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              GameHud(children: [
                 Text(
                   "MATCHES: $_correctAnswers / $targetScore",
                   style: theme.textTheme.titleMedium?.copyWith(

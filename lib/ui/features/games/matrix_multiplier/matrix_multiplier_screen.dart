@@ -8,6 +8,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class MatrixMultiplierScreen extends ConsumerStatefulWidget {
   const MatrixMultiplierScreen({super.key});
@@ -166,9 +167,7 @@ class _MatrixMultiplierScreenState extends ConsumerState<MatrixMultiplierScreen>
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    child: GameHud(children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

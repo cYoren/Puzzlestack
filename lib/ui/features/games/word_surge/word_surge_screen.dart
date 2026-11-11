@@ -10,6 +10,7 @@ import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../utils/design_system.dart';
 import 'word_surge_provider.dart';
 import 'word_surge_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class WordSurgeScreen extends ConsumerStatefulWidget {
   const WordSurgeScreen({super.key});
@@ -84,9 +85,7 @@ class _WordSurgeScreenState extends ConsumerState<WordSurgeScreen> {
         padding: const EdgeInsets.all(DesignSystem.spaceLG),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              GameHud(children: [
                 Text(
                   'Score: ${state.score} / ${state.targetScore}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),

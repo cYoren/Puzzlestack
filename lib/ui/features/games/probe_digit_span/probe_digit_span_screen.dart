@@ -9,6 +9,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'probe_digit_span_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ProbeDigitSpanScreen extends ConsumerStatefulWidget {
   const ProbeDigitSpanScreen({super.key});
@@ -170,9 +171,7 @@ class _ProbeDigitSpanScreenState extends ConsumerState<ProbeDigitSpanScreen> {
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,

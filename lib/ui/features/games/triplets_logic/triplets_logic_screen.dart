@@ -8,6 +8,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class TripletsLogicScreen extends ConsumerStatefulWidget {
   const TripletsLogicScreen({super.key});
@@ -385,9 +386,7 @@ class _TripletsLogicScreenState extends ConsumerState<TripletsLogicScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 const Text(
                   'Select a shape tool to paint',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),

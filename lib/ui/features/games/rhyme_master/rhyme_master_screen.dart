@@ -10,6 +10,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'rhyme_master_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class RhymeMasterScreen extends ConsumerStatefulWidget {
   const RhymeMasterScreen({super.key});
@@ -89,9 +90,7 @@ class _RhymeMasterScreenState extends ConsumerState<RhymeMasterScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(

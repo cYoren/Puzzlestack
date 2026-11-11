@@ -17,7 +17,7 @@ someone can take without reading the rest of this file.
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
 | 1 | **Nine Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
-| 2 | **119 games broken at 320dp** (85 overflow, 35 throw). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-119-games-do-not-fit-a-phone) |
+| 2 | **About 85 games still overflow at 320dp** (down from 117), and **29 leak a timer** after the screen closes. Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-about-85-games-still-do-not-fit-a-phone) |
 | 3 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 4 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 5 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
@@ -406,53 +406,74 @@ Magnets, Pipes, Hitori, Tents & Trees, Skyscrapers, Futoshiki`
 Same bar as Phase 3. This phase adds no games and is the most valuable one in the document:
 it is the difference between "307 puzzles" and "307 puzzles that are actually correct".
 
-### Do this first: 119 games do not fit a phone
+### Do this first: about 85 games still do not fit a phone
 
 Measured, not guessed, with `test/board/game_audit.dart`:
 
 ```
-flutter test test/board/game_audit.dart
-AUDIT checked=307 overflow=85 threw=34
+flutter test -j 4 test/board/game_audit.dart
+AUDIT checked=307 overflow=85 threw=0
 ```
 
-That is **119 of 307 games broken at 320dp** — the smallest phone the app supports. The four
-rebuilt games are not on either list. Every id below is a separate, small, self-contained job:
-open the game, pump it at 320dp, fix the layout or the exception, add it to
+The first run of this tool said **119** broken: 85 overflow and 34 throw. The 34 were an
+artifact. The test binding keeps the *first* exception of a test and counts the rest, so one
+game that overflowed made every later game report "Multiple exceptions (N) were detected" and
+land in the `threw` list. A test per game, and capturing `FlutterErrorDetails` instead of
+`takeException`, showed the truth: **no game throws at 320dp, 117 overflowed, and the number
+moved by one or two between runs because of the cascade, not because games randomise.**
+
+The first pass is in: the stat strip every game draws above its board is now one widget,
+`lib/widgets/game_hud.dart`, a `Wrap` instead of a `Row(mainAxisAlignment: spaceBetween)`.
+Sixty-six screens were converted, and 33 of them stopped overflowing outright. The rest now
+overflow somewhere else — the header was the first wall, not the only one.
+
+**Still overflowing (about 85; the list moves by one or two between runs because a few
+games randomise their layout):**
+
+  ab_reversal_oddball, algebraic_balance, algebraic_inequality_solver, anagram_definition,
+  angle_finder, area_perimeter_match, attentional_blink_probe, base_conversion_run, binary_code,
+  binary_scale_balance, binomial_match, blink_detector, chalk_and_talk, color_word_match_up,
+  compound_connect, conjunction_search, conundrum_anagram, corsi_backward_span, counting_sheep,
+  cross_section_slice, cube_net_fold, directions_recall, face_name_association,
+  face_trait_association, fact_binder, factor_finder, fractional_pizza, fraction_match,
+  fraction_matcher, frequency_tap, gear_rotation, gear_train_direction, graph_coordinate_plot,
+  grid_displacement, heyawake, hue_sort, inequality_dash, kenken, letter_bridge,
+  logical_syllogisms, math_maze, matrix_multiplier, mental_calendar, modular_clock_arithmetic,
+  modulo_clock, modulo_path, narrative_recall, palindrome_builder, paper_folding,
+  percentage_peak, percentage_shopping, perspective_taking, polyomino_tiling,
+  posner_spatial_cueing, prime_gap_hunt, probe_digit_span, pythagorean_triple_builder,
+  room_inspector, rotating_maze, sdmt, semantic_association, semantic_distance,
+  sentence_unscramble, sequence_sleuth, set_theory_venn, shape_shifter,
+  silhouette_match_ortho, stroop_number_size, sum_pyramid, tangram, tapa, target_10,
+  temporal_order_judgment, tenner_grid, vector_dot_product, vektor_vector, venn_numbers,
+  visual_crowding_acuity, visual_search_conjunction, wireframe_3d_rotation,
+  word_association_recall, word_ladder_step, word_pair_associate_memory, yajilin
+
+Twenty-five of those overflow *downwards* — a `Column` of fixed-height pieces that does not fit
+578dp of body — and the rest are rows that are not the stat strip: number pads, legends, option
+grids. Each is a separate, small job: open the game, pump it at 320dp, fix the layout, add it to
 `test/board/new_games_screen_test.dart` so it cannot regress.
 
-**Overflow the screen (85):**
+### And 29 games leave a timer running after you leave
 
-  algebraic_inequality_solver, anagram_definition, angle_finder, area_perimeter_match,
-  base_conversion_run, binary_matrix_rank, binary_scale_balance, binomial_match,
-  chain_reaction, chalk_and_talk, chimp_test, collatz, color_maze_nav, compound_connect,
-  consonant_reconstruct, continuous_paired_associate, conundrum_anagram, corsi_backward_span,
-  countdown_math, counting_sheep, d2_attention, exponent_tower, face_name_association,
-  factor_finder, fraction_match, fraction_matcher, frequency_tap, grammar_sort,
-  graph_coordinate_plot, grid_displacement, grocery_list, heyawake, hue_sort, inequality_dash,
-  kenken, letter_bridge, letter_grid_swapper, math_maze, matrix_reasoning, mental_calendar,
-  mental_rotation, modular_clock_arithmetic, modulo_path, multi_track_counter,
-  navon_hierarchical, oxymoron_hunt, palindrome_builder, percentage_peak, percentage_shopping,
-  perspective_taking, portmanteau_split, posner_spatial_cueing, probe_digit_span,
-  relational_memory, rhyme_master, rotating_maze, sdmt, semantic_association, semantic_link,
-  sequence_sleuth, shape_shifter, shell_game, shikaku, silhouette_match_ortho, simon_command,
-  spatial_conflict, spoonerism_solver, spotlight_track, stroop_number_size, subitizing_rush,
-  sum_pyramid, syllable_stack, tapa, target_10, tenner_grid, triplets_logic,
-  typoglycemia_decoder, venn_numbers, visual_crowding_acuity, vowel_reconstruct,
-  wireframe_3d_rotation, word_association_recall, word_snake_trail, word_surge, yajilin
+Found by the same audit, and not on the old list because the old single-test loop could not see
+it. The widget tree is disposed, the timer is not:
 
-**Throw while building (34):**
+```
+flutter test -j 4 test/board/game_audit.dart   # the run ends with 29 failed tests
+A Timer is still pending even after the widget tree was disposed.
+```
 
-  ab_reversal_oddball, algebraic_balance, attentional_blink_probe, binary_code,
-  blink_detector, color_word_match_up, conjunction_search, cross_section_slice, cube_net_fold,
-  directions_recall, face_trait_association, fact_binder, fractional_pizza, gear_rotation,
-  gear_train_direction, logical_syllogisms, matrix_multiplier, modulo_clock, narrative_recall,
-  paper_folding, polyomino_tiling, prime_gap_hunt, pythagorean_triple_builder, room_inspector,
-  semantic_distance, sentence_unscramble, set_theory_venn, source_monitoring,
-  temporal_order_judgment, vector_dot_product, vektor_vector, visual_search_conjunction,
-  word_ladder_step, word_pair_associate_memory
+  arithmetic_chain, common_denominator, continuous_recognition, corsi_blocks, counting_span,
+  divisibility_dash, dnms, flanker_test, go_no_go, mandala_recall, object_displacement,
+  object_shuffle, path_recall, percentage_peak, pixel_mimic, quick_math, reading_span,
+  running_memory_span, sequence_sleuth, simon_sequence, sopt, spatial_cabinet_memory,
+  sternberg_task, stop_signal, switch_task, symmetry_span, trail_making, venn_numbers,
+  vigilance_task
 
-The count moves by one or two between runs because a few games randomise their layout. Treat it
-as "about 119", not a fixed number.
+A periodic timer that outlives its screen is a battery bug, not a test annoyance: the callback
+keeps firing (and can keep the device awake) after the player has gone home. Cancel it in the
+notifier's `dispose`.
 
 **Done when:** the audit reports `overflow=0 threw=0`, and both lists are empty.
 

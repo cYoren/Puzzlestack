@@ -8,6 +8,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class WordSnakeTrailScreen extends ConsumerStatefulWidget {
   const WordSnakeTrailScreen({super.key});
@@ -188,9 +189,7 @@ class _WordSnakeTrailScreenState extends ConsumerState<WordSnakeTrailScreen> {
         child: Column(
           children: [
             // Score and Target info
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              GameHud(children: [
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(

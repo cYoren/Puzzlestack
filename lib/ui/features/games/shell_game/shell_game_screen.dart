@@ -9,6 +9,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ShellGameScreen extends ConsumerStatefulWidget {
   const ShellGameScreen({super.key});
@@ -160,9 +161,7 @@ class _ShellGameScreenState extends ConsumerState<ShellGameScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                child: GameHud(children: [
                   Text(AppLocalizations.of(context)!.phaseTrackTheBall, style: Theme.of(context).textTheme.titleMedium),
                   IconButton(
                     icon: const Icon(Icons.refresh_rounded),
