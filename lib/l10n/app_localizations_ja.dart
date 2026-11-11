@@ -508,6 +508,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get netslideScramble => 'Depth';
 
   @override
+  String get signpostTitle => 'SIGNPOST';
+
+  @override
+  String get signpostSubtitle =>
+      'Give every cell the next number, following the arrows.';
+
+  @override
+  String get signpostWinTitle => 'EVERY NUMBER PLACED!';
+
+  @override
+  String get signpostWinMessage =>
+      'One chain from 1 to the last, every arrow pointing the way.';
+
+  @override
+  String get signpostHowToPlay =>
+      'Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.';
+
+  @override
+  String get signpostMoves => 'Links';
+
+  @override
+  String get signpostGivens => 'Givens';
+
+  @override
   String get lighthousesTitle => '灯台';
 
   @override

@@ -16,34 +16,34 @@ someone can take without reading the rest of this file.
 
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
-| 1 | **Four Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube, Map, Inertia and Netslide are done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+| 1 | ~~Port the Tatham puzzles we lack~~ **Done**: Signpost was the twelfth and last on the critical path (2026-11-11). The three still unported are marked optional, below. | — | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
+| — | **Optional: three Tatham puzzles** (Black Box, Undead, Tracks). Nice to have, not release blockers, and nothing else in the plan depends on them. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 
-The four left in Phase 3, with what each one needs:
+Dropping the three optional ports does not shrink the shipping app: 313 games is what the
+store copy is set from, and 316 was only ever what the full Tatham sweep would have reached.
+
+The three optional ports, with what each one needs:
 
 | Puzzle | Tatham file | Lines | Needs the solver? |
 | --- | --- | --- | --- |
 | Black Box | `blackbox.c` | 1587 | yes, deduction |
-| Signpost | `signpost.c` | 2568 | yes, deduction |
 | Undead | `undead.c` | 3049 | yes, deduction |
 | Tracks | `tracks.c` | 3159 | yes, deduction |
 
-All four need `lib/core/deduction.dart`, and all four have a design decision to make before the
+All three need `lib/core/deduction.dart`, and each has a design decision to make before the
 code is worth writing:
 
 - **Black Box** needs the off-centre ray geometry. With axis-aligned rays only, every ball is
   an absorber and the puzzle collapses to "the first ball in each row", so it needs
   half-cell entry points and deflection.
-- **Signpost** arrows alone do not pin the chain down: a cell's arrow points *along a ray*, and
-  its successor can be any cell on that ray. Tatham's answer is a solver that adds numerals
-  until it finishes; without that, uniqueness has to be counted over Hamiltonian paths.
 - **Undead** needs mirror ray-tracing before the counts mean anything.
 - **Tracks** needs a railway solver before its clues mean anything.
 
-Galaxies and Kurodoko are the two worked examples to copy; Magnets and Tents & Trees are the
-two most recent.
+Signpost was the fourth of that four and is done, so the worked examples to copy are now
+Signpost itself, Galaxies and Kurodoko; Magnets and Tents & Trees are the two most recent.
 
 Blocked on a human, not on an agent:
 
@@ -87,7 +87,7 @@ desktop, and keep iOS out of the store listing rather than ship it in breach.
 
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
-| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **312** after Phases 2 and 3 | 78,131 LOC game code | the base |
+| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **313** after Phases 2 and 3 | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | **304 registered games** | all of them, merged in Phase 2 |
 | **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
@@ -282,12 +282,13 @@ the registry rather than guessed from the name:
 | Untangle | `tangle_fix` |
 | Guess | `word_mastermind` (same Mastermind deduction, word content) |
 
-**Left to port: 9.** Kurodoko is Tatham's Range and arrived with the merge too, so the 13
-became 12 and three of those are done. Two more names were checked rather than assumed:
-`cube_net_fold` is a cube-net puzzle but not `cube.c`, and `mental_mapping` is a
-follow-the-arrows memory game, nothing to do with `map.c`.
+**Left to port: 3, all optional.** Kurodoko is Tatham's Range and arrived with the merge too,
+so the 13 became 12, and nine of those are done — Signpost was the last one on the release
+path. The three that remain (Black Box, Undead, Tracks) are optional: nothing in Phase 6 needs
+them. Two names were checked rather than assumed: `cube_net_fold` is a cube-net puzzle but not
+`cube.c`, and `mental_mapping` is a follow-the-arrows memory game, nothing to do with `map.c`.
 
-### Landed so far: 8 of 12, plus one rebuilt
+### Landed so far: 9 of 12, plus one rebuilt
 
 `lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
 repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
@@ -407,6 +408,58 @@ Two mistakes worth recording:
    over one int takes under a millisecond. When you write a state as "the position *and* every
    square", say so in the type and hash accordingly — or pack it.
 
+### Landed: Signpost, where the numbers are not the board
+
+Every cell carries an arrow, and the arrow points *along a ray* rather than at a neighbour:
+the cell holding `k` must point at the cell holding `k+1`, wherever that is on the line. Every
+number from 1 to N is used once, and a few are given. Tatham's `signpost.c` (Janko's "arrow
+path"), the twelfth and last Phase 3 port on the release path.
+
+**The player's board is the links, not the numbers.** `links[cell]` is the cell that follows
+it, and the numbers are read off the chains. Three things fall out of that, and they are the
+whole design:
+
+1. A link can be rewired without rewriting anything. Nothing the player worked out is thrown
+   away by extending a chain or splitting one.
+2. A chain that has not met a given number yet shows **no numbers at all**. It has none: it
+   could sit anywhere in the sequence, and printing a guess would be the app lying to the
+   player in the one place where the deduction matters.
+3. Uniqueness is a property of the arrows and the given numbers, so it is counted like every
+   other deduction puzzle here — over the links, which is a Hamiltonian path count.
+
+Tatham's board numbers those floating chains too, in colours, to keep them out of each other's
+way. That is a packing convention, not a fact, and it is what a port should drop first: it
+makes the board look solved where it is only provisionally numbered. Blank is the same
+information without the claim.
+
+**Generation is Tatham's, whole.** Grow a full path from the head and the tail at once, taking
+any unclaimed cell along a ray; keep `1` and `N`, add given numbers at random until the rules
+can finish the board, then take them back out again while they still can. The given count *is*
+the difficulty, exactly as Tatham's own presets have it, and the removal loop is what turns the
+count into three tiers.
+
+**Three strengths, because one forced link is not a difficulty scale.** The generator's rule
+(the forced link, Tatham's whole solver) is the easy tier. The second strength assumes a link
+and lets the forced rule work over it: a dead end two steps away, which no single-move rule can
+see. The third does the same with both cheaper strengths underneath, and is what finishes the
+boards where nothing is locally forced. That is the harness's level 1 / 2 / 3, asserted per
+board: easy 4x4, medium 5x5 pinned to the corners, hard 5x5 with free ends.
+
+Two measurements changed the plan rather than the code:
+
+- **The hard tier cannot be 6x6.** A 6x6 board that genuinely needs the lookahead took about
+  twenty seconds to find, because every candidate link runs a propagation before it can be
+  doubted. Restricting the refutation to cells with exactly two candidates — the only ones a
+  single refutation can turn into a link — brought a 5x5 hard board down to a few hundred
+  milliseconds, which is the difference between a tier and a hang.
+- **The tier test counts 25 hard boards, not 200.** Everything else is at the bar; a hard board
+  costs a fraction of a second to build and the uniqueness proof is the same one, so 25 is the
+  honest sample rather than a slower test that proves the same thing.
+
+The last run: the 200 easy and 200 medium boards are generated and counted in under two
+seconds together, and the 25 hard ones add a few seconds. Worth re-measuring before it is quoted
+anywhere else.
+
 ### What Galaxies cost, and what it taught
 
 Galaxies is the first puzzle here whose correctness is a *count*, and it took four wrong
@@ -480,7 +533,8 @@ work out *why* it is there before deleting it.
 | three difficulties by depth | rule level 1 / 2 / 3, asserted per board |
 | hint reveals one step | one cell the rules can prove, from the solver, not from the stored answer |
 
-**Done when:** 316 games, and each ported puzzle has a test that generates 200 boards and
+**Done when:** 313 games with the three optional ports left out (316 with them), and each
+ported puzzle has a test that generates 200 boards and
 asserts one solution each. Same Game is the exception to the wording, not the bar: its board is
 built by legal inverse moves, so the test asserts the construction held and the board is full.
 
@@ -700,13 +754,39 @@ and they are the kind of puzzle nobody else on the store has. They close the col
 
 ## Phase 6 — Release
 
-- Store title and copy: the number in "307 Brain Puzzles" changes every phase, so it is set
-  once, at the end, from the real registry count.
-- Regenerate screenshots only if the home or a hero game changed visually (the house-style
-  pipeline draws headlines, not the app name, so the rename did not need it).
-- Data safety form, privacy policy, Shorebird `app_id` re-registered for
-  `com.medhub.puzzlestack` (see RELEASE.md).
-- Android + iOS together, same version, same copy.
+Audited against the tree on **2026-11-11**. The registry has **313** games (Logic 53, Math 63,
+Memory 54, Spatial 38, Attention 54, Word 51). Every Phase 3 port lays out at 320dp and on a
+tablet in the screen test, and `flutter analyze` reports nothing but the four `avoid_print`
+infos in the developer-only audit tool.
+
+### What is left, and who can do it
+
+| Item | Status | Needs |
+| --- | --- | --- |
+| **App Store licence** | **Blocked.** Email to the upstream author sent 2026-11-10, no reply. | A human, and only for iOS. Play, web and desktop do not depend on it. |
+| **Play listing copy** | **Stale.** `title.txt`, `short_description.txt` and `full_description.txt` all say **161**; the game is 313. `full_description.txt` also lists 161 games by name. | An agent, at release time — the number moves again if Phase 5 lands. |
+| **Play screenshots** | **Stale and wrong.** All eight still show **MINDSTACK** and the headline "161 puzzles, one calm home", from August 2026, before the rename, when the app had 161 games. | An agent, with an emulator: `tool/screenshots.sh`, then restage. |
+| **Privacy policy URL** | **Not hosted.** `PRIVACY.md` is written and accurate; Play and the App Store both require a public URL, and the in-app Privacy Policy / Terms links point at the repo. | A human: one static page. |
+| **Play Data Safety form** | **Answers ready, not entered.** The answers in [RELEASE.md](RELEASE.md) are verified against the source: no data collected, nothing transmitted. | A human, in the console. |
+| **Shorebird `app_id`** | **Stale.** `shorebird.yaml` still carries the pre-rename id. Harmless while no shipped build bundles the updater. | An agent: `shorebird init` for `com.medhub.puzzlestack`, if OTA is wanted at launch. |
+| **Android + iOS together** | Not started. Same version, same copy, same price. | Blocked on the licence for iOS. |
+| **SDK skew** | One info-level deprecation (`cacheExtent` → `scrollCacheExtent`) that only clears on a deliberate Flutter upgrade. | An agent, separately. |
+
+Nothing else is pending. Phases 3, 4 and 5 no longer gate the release: Phase 4 is closed, the
+three Tatham ports left in Phase 3 are optional, and Phase 5 is new content rather than a fix.
+
+### Decided for after release: the paywall
+
+The app will sell access, and the rule is narrow enough to write down now so the release build
+does not paint us into a corner:
+
+- **Every puzzle can be played at least once by everyone.** The free tier is not a teaser of
+  three games; the whole catalogue is reachable.
+- **Some puzzles are free forever**, and what makes a puzzle paid is decided per puzzle, not by
+  category or position in the feed.
+- So the paywall gates **replays and volume**, not first contact. Nothing in the release work
+  may put a locked tile in front of a game the player has never opened, and the Shuffle feed
+  must not be able to hand out only locked puzzles.
 
 ---
 
