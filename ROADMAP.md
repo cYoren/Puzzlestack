@@ -20,7 +20,7 @@ someone can take without reading the rest of this file.
 | 2 | **119 games broken at 320dp** (85 overflow, 35 throw). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-119-games-do-not-fit-a-phone) |
 | 3 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 4 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
-| 5 | **Release.** Blocked on the licence decision below. | one pass | [Phase 6](#phase-6--release) |
+| 5 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
 The nine left in Phase 3, with what each one needs:
 
@@ -42,8 +42,8 @@ exercise the harness again — Galaxies and Kurodoko are the two worked examples
 
 Blocked on a human, not on an agent:
 
-- **The App Store licence question.** Only Gus can send the email; see the next section. Blocks
-  Phase 6 and nothing else.
+- **The App Store licence question.** Email sent to the upstream author on 2026-11-10; now waiting
+  on a reply nobody here can hurry. Blocks iOS release only — see the next section.
 - **Codex review is out of credits.** PRs are self-reviewed and merged. See
   [papercuts.md](papercuts.md) for what that costs.
 
@@ -68,8 +68,13 @@ The three ways out, in order of preference:
    consent as authors of the changes. Cleanest legally, loses the GPL guarantee.
 3. **Ship Android, web and desktop; skip iOS.** Costs half the market.
 
-Until one is chosen, treat iOS as unconfirmed. Nothing in Phases 1–5 depends on the answer,
-which is why the work can start now — but Phase 6 cannot ship iOS without it.
+**Status: option 1 is in motion.** The email to the upstream author went on **2026-11-10**.
+Awaiting a reply, which may take weeks or never come.
+
+Until an answer arrives, treat iOS as unconfirmed. Nothing in Phases 1–5 depends on it, which is
+why the work continues — but Phase 6 cannot ship iOS without it, and **no iOS release work should
+start before the reply**. If no reply comes, the fallback is option 3: ship Android, web and
+desktop, and keep iOS out of the store listing rather than ship it in breach.
 
 ---
 
