@@ -5748,6 +5748,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pegsCongrats => '只剩一枚，棋盘清得干净。';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

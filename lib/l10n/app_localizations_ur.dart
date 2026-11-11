@@ -6084,6 +6084,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get pegsCongrats => 'ایک پیگ باقی۔ صاف ستھرا بورڈ۔';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

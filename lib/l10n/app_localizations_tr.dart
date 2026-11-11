@@ -6079,6 +6079,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get pegsCongrats => 'Tek pul kaldı. Tertemiz bir tahta.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

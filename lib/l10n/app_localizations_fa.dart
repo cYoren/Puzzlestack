@@ -6057,6 +6057,12 @@ class AppLocalizationsFa extends AppLocalizations {
   String get pegsCongrats => 'یک میخ باقی ماند. صفحه تمیز.';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override

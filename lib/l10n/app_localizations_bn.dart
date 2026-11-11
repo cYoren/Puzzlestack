@@ -6086,6 +6086,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get pegsCongrats => 'একটি পেগ বাকি। পরিষ্কার বোর্ড।';
 
   @override
+  String get lightsOutPresses => 'Presses';
+
+  @override
+  String get lightsOutLit => 'Lit';
+
+  @override
   String get sameGameTitle => 'Same Game';
 
   @override
