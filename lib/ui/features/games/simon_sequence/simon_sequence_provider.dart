@@ -69,6 +69,10 @@ class SimonSequenceNotifier extends _$SimonSequenceNotifier {
   /// leaves a timer behind that fires into a disposed notifier. This one is
   /// held, cancelled on dispose, and completes early so the await unwinds.
   Future<void> _delay(Duration duration) {
+    // If a second delay starts while one is in flight, release the first so its
+    // await unwinds instead of waiting for a timer that will never come.
+    final previous = _delayCompleter;
+    if (previous != null && !previous.isCompleted) previous.complete();
     final completer = Completer<void>();
     _delayCompleter = completer;
     _delayTimer?.cancel();
