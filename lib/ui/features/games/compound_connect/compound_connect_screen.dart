@@ -79,7 +79,9 @@ class _CompoundConnectScreenState extends ConsumerState<CompoundConnectScreen> {
               child: Column(
                 children: [
                   const Spacer(),
-                  Row(
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TangibleContainer(
@@ -116,6 +118,7 @@ class _CompoundConnectScreenState extends ConsumerState<CompoundConnectScreen> {
                         ),
                       ),
                     ],
+                  ),
                   ),
                   const Spacer(),
                   Text(

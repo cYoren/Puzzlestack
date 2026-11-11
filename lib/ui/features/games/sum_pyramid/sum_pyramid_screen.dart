@@ -248,7 +248,9 @@ class _SumPyramidScreenState extends ConsumerState<SumPyramidScreen> {
                           horizontal: DesignSystem.spaceMD,
                         ),
                         color: colorScheme.surface,
-                        child: Row(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.stars_rounded, color: DesignSystem.accentAmber, size: 20),
@@ -262,6 +264,7 @@ class _SumPyramidScreenState extends ConsumerState<SumPyramidScreen> {
                               ),
                             ),
                           ],
+                        ),
                         ),
                       ),
                     ),
