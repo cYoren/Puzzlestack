@@ -16,12 +16,12 @@ someone can take without reading the rest of this file.
 
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
-| 1 | **Four Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube, Map and Inertia are done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+| 1 | **Five Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube, Map and Inertia are done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
-The four left in Phase 3, with what each one needs:
+The five left in Phase 3, with what each one needs:
 
 | Puzzle | Tatham file | Lines | Needs the solver? |
 | --- | --- | --- | --- |
@@ -31,10 +31,11 @@ The four left in Phase 3, with what each one needs:
 | Undead | `undead.c` | 3049 | yes, deduction |
 | Tracks | `tracks.c` | 3159 | yes, deduction |
 
-Five need `lib/core/deduction.dart` (Black Box, Map, Signpost, Tracks, Undead); three need only
-an interaction (Cube, Netslide, Inertia). **Start with Cube** if you want a fast win, or
-**Signpost** if you want to exercise the harness again — Galaxies and Kurodoko are the two
-worked examples to copy.
+Four of these need `lib/core/deduction.dart` (Black Box, Signpost, Tracks, Undead); Netslide
+needs only an interaction. **Start with Netslide** if you want the shorter job — it is a sliding
+puzzle on a wrapping net, and its loops are the only tricky part — or **Undead** if you want to
+exercise the harness again: Galaxies and Kurodoko are the two worked examples to copy, and
+Magnets and Tents & Trees are the two most recent.
 
 Blocked on a human, not on an agent:
 
@@ -78,7 +79,7 @@ desktop, and keep iOS out of the store listing rather than ship it in breach.
 
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
-| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **308** after Phases 2 and 3 | 78,131 LOC game code | the base |
+| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **311** after Phases 2 and 3 | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | **304 registered games** | all of them, merged in Phase 2 |
 | **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
