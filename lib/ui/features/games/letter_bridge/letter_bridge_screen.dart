@@ -54,7 +54,9 @@ class LetterBridgeScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            Row(
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildWordPart(context, state.firstPart, true),
@@ -63,6 +65,7 @@ class LetterBridgeScreen extends ConsumerWidget {
                 const SizedBox(width: 8),
                 _buildWordPart(context, state.secondPart, false),
               ],
+            ),
             ),
             const SizedBox(height: 48),
             _buildKeyboard(context, notifier),
