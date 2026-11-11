@@ -41,6 +41,15 @@ flutter run                                                 # or: flutter run -d
 
 The internal Dart package name stays `puzzle` (it is referenced by ~126 files and is invisible to users); the user-facing branding is Puzzlestack.
 
+## Working on it
+
+- **[ROADMAP.md](ROADMAP.md)** — what is left and in what order. Its **Open work** table at the
+  top is the entry point: every remaining job is named, sized and linked.
+- **[papercuts.md](papercuts.md)** — the friction. Test flags, Flutter traps that produced real
+  bugs, and what porting from Tatham's C keeps teaching.
+- **[PUZZLE_STYLE.md](PUZZLE_STYLE.md)** — the house style every board is held to.
+- **[REFERENCE.md](REFERENCE.md)** — where each source lives, its licence and pinned commit.
+
 ## Releasing
 
 See [RELEASE.md](RELEASE.md) for build and signing, the Play Data Safety
