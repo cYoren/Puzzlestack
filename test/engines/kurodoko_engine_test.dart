@@ -126,7 +126,7 @@ void main() {
         final puzzle = engine.generate(
           difficulty: KurodokoDifficulty.easy,
           random: random,
-        )!;
+        );
         expect(engine.isSolved(puzzle, puzzle.solution), isTrue,
             reason: 'board $i: the stored answer is not an answer');
       }
@@ -172,7 +172,7 @@ void main() {
         final puzzle = engine.generate(
           difficulty: KurodokoDifficulty.easy,
           random: random,
-        )!;
+        );
         for (var cell = 0; cell < puzzle.cellCount; cell++) {
           if (puzzle.clues[cell] > 0) continue;
           final flipped = [...puzzle.solution];
@@ -191,7 +191,7 @@ void main() {
         final puzzle = engine.generate(
           difficulty: KurodokoDifficulty.easy,
           random: random,
-        )!;
+        );
         final model = KurodokoModel(puzzle, [...puzzle.solution]);
         for (var cell = 0; cell < puzzle.cellCount; cell++) {
           final clue = puzzle.clues[cell];
@@ -216,7 +216,7 @@ void main() {
         final puzzle = engine.generate(
           difficulty: KurodokoDifficulty.easy,
           random: random,
-        )!;
+        );
 
         for (var cell = 0; cell < puzzle.cellCount; cell++) {
           if (puzzle.clues[cell] > 0) continue;
@@ -257,8 +257,7 @@ void main() {
           difficulty: KurodokoDifficulty.easy,
           random: random,
         );
-        expect(puzzle, isNotNull, reason: 'board $i: generation gave up');
-        final rating = rate(KurodokoModel.blank(puzzle!), kurodokoRules);
+        final rating = rate(KurodokoModel.blank(puzzle), kurodokoRules);
         expect(rating.verdict, PuzzleVerdict.solved, reason: 'board $i: $rating');
         expect(rating.solutions, 1, reason: 'board $i: $rating');
         expect(rating.level, KurodokoDifficulty.easy.level,
@@ -273,8 +272,7 @@ void main() {
           difficulty: KurodokoDifficulty.medium,
           random: random,
         );
-        expect(puzzle, isNotNull, reason: 'board $i: generation gave up');
-        final rating = rate(KurodokoModel.blank(puzzle!), kurodokoRules);
+        final rating = rate(KurodokoModel.blank(puzzle), kurodokoRules);
         expect(rating.verdict, PuzzleVerdict.solved, reason: 'board $i: $rating');
         expect(rating.solutions, 1, reason: 'board $i: $rating');
         expect(rating.level, KurodokoDifficulty.medium.level,
@@ -289,8 +287,7 @@ void main() {
           difficulty: KurodokoDifficulty.hard,
           random: random,
         );
-        expect(puzzle, isNotNull, reason: 'board $i: generation gave up');
-        final rating = rate(KurodokoModel.blank(puzzle!), kurodokoRules);
+        final rating = rate(KurodokoModel.blank(puzzle), kurodokoRules);
         expect(rating.verdict, PuzzleVerdict.solved, reason: 'board $i: $rating');
         expect(rating.solutions, 1, reason: 'board $i: $rating');
         expect(rating.level, KurodokoDifficulty.hard.level,
@@ -307,7 +304,7 @@ void main() {
           final puzzle = engine.generate(
             difficulty: difficulty,
             random: random,
-          )!;
+          );
           final rating = rate(KurodokoModel.blank(puzzle), kurodokoRules);
           expect(rating.level, difficulty.level,
               reason: '${difficulty.label} board $i came back at '

@@ -89,7 +89,7 @@ void main() {
       final puzzle = const KurodokoEngine().generate(
         difficulty: KurodokoDifficulty.easy,
         random: Random(3),
-      )!;
+      );
       final board = KurodokoBoard(
         state: KurodokoState(
           puzzle: puzzle,
@@ -123,7 +123,7 @@ void main() {
       final puzzle = const KurodokoEngine().generate(
         difficulty: KurodokoDifficulty.easy,
         random: Random(8),
-      )!;
+      );
       // Every state in one board: black, white, undecided, clue, and a hint.
       final grid = [...puzzle.solution];
       for (var cell = 0; cell < puzzle.cellCount; cell += 3) {

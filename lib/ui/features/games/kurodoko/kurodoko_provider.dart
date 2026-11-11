@@ -71,13 +71,10 @@ class KurodokoNotifier extends _$KurodokoNotifier {
 
   KurodokoState _newPuzzle(KurodokoDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty: difficulty);
-    // Generation is bounded but not guaranteed: if the attempt budget runs out
-    // the player gets the easiest board rather than an error screen.
-    final board = puzzle ?? _engine.generate(difficulty: KurodokoDifficulty.easy);
     return KurodokoState(
-      puzzle: board!,
-      grid: List<KurodokoCell>.filled(board.cellCount, KurodokoCell.unknown),
-      difficulty: board == puzzle ? difficulty : KurodokoDifficulty.easy,
+      puzzle: puzzle,
+      grid: List<KurodokoCell>.filled(puzzle.cellCount, KurodokoCell.unknown),
+      difficulty: difficulty,
     );
   }
 

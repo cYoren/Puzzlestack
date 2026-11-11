@@ -623,16 +623,24 @@ const List<DeductionRule<KurodokoModel>> kurodokoRules = [
 class KurodokoEngine {
   const KurodokoEngine();
 
-  /// A board that needs exactly [difficulty]'s rule level, or null if the
-  /// attempt budget ran out.
-  KurodokoPuzzle? generate({
+  /// A board that needs [difficulty]'s rule level.
+  ///
+  /// The level is a target, not a promise. If the attempt budget runs out the
+  /// last board proposed comes back rather than nothing: [propose] only strips
+  /// clues while the board still falls to reasoning, so that board is always
+  /// valid, always unique, and merely easier than asked for. A screen with an
+  /// easier puzzle on it beats a screen with a null on it.
+  KurodokoPuzzle generate({
     required KurodokoDifficulty difficulty,
     Random? random,
     int attempts = 400,
   }) {
+    assert(attempts > 0);
     random ??= Random();
+    late KurodokoPuzzle last;
     for (var attempt = 0; attempt < attempts; attempt++) {
       final puzzle = propose(difficulty, random);
+      last = puzzle;
       // The rules are sound, so a board they can finish has exactly one answer
       // and counting it would only re-derive that. Asking the two questions
       // that matter — does the level finish it, and does the level below? — is
@@ -641,7 +649,7 @@ class KurodokoEngine {
       if (_solvableAt(puzzle, difficulty.level - 1)) continue;
       return puzzle;
     }
-    return null;
+    return last;
   }
 
   /// One candidate: place black cells, number the white ones, then take clues
