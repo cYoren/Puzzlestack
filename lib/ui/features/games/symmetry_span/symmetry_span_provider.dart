@@ -79,6 +79,7 @@ class SymmetrySpanNotifier extends _$SymmetrySpanNotifier {
 
   @override
   SymmetrySpanState build() {
+    ref.onDispose(() { _gameTimer?.cancel(); _phaseTimer?.cancel(); });
     return SymmetrySpanState();
   }
 
