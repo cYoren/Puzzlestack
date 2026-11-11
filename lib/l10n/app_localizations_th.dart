@@ -446,6 +446,12 @@ class AppLocalizationsTh extends AppLocalizations {
   String get dominosaWinMessage => 'พบและวางโดมิโนทุกตัวแล้ว!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'ตึกระฟ้า';
 
   @override

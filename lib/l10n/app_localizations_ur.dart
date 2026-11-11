@@ -453,6 +453,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get dominosaWinMessage => 'ہر ڈومینو مل گیا ہے اور رکھ دیا گیا ہے!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'سکائی سکریپرز';
 
   @override

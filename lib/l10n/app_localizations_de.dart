@@ -453,6 +453,12 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jeder Dominostein wurde gefunden und platziert!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'WOLKENKRATZER';
 
   @override

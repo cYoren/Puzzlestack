@@ -455,6 +455,12 @@ class AppLocalizationsTa extends AppLocalizations {
       'ஒவ்வொரு டோமினோவும் கண்டறியப்பட்டு வைக்கப்பட்டுள்ளது!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'வானளாவிய கட்டிடங்கள்';
 
   @override

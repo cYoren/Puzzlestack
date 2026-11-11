@@ -1,191 +1,297 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:puzzle/l10n/app_localizations.dart';
-import '../../../../../providers/user_providers.dart';
-import '../../../../../utils/haptic_feedback.dart';
-import '../../../core/juice/game_scaffold.dart';
-import '../../../../widgets/game_completion_dialog.dart';
-import '../../../../widgets/tangible.dart';
+
+import '../../../../l10n/app_localizations.dart';
+import '../../../../providers/user_providers.dart';
 import '../../../../utils/design_system.dart';
+import '../../../../widgets/game_completion_dialog.dart';
+import '../../../../widgets/game_hud.dart';
+import '../../../../widgets/tangible.dart';
+import '../../../core/board/board_verb.dart';
+import '../../../core/board/puzzle_board_view.dart';
+import '../../../core/juice/game_scaffold.dart';
+import 'skyscrapers_board.dart';
+import 'skyscrapers_engine.dart';
 import 'skyscrapers_provider.dart';
 
-class SkyscrapersScreen extends ConsumerStatefulWidget {
+class SkyscrapersScreen extends ConsumerWidget {
   const SkyscrapersScreen({super.key});
 
-  @override
-  ConsumerState<SkyscrapersScreen> createState() => _SkyscrapersScreenState();
-}
-
-class _SkyscrapersScreenState extends ConsumerState<SkyscrapersScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(skyscrapersNotifierProvider.notifier).initGame();
-    });
-  }
-
-  void _showCompletionDialog() {
+  Future<void> _onSolved(
+    BuildContext context,
+    WidgetRef ref,
+    SkyscrapersNotifier notifier,
+  ) async {
     final l10n = AppLocalizations.of(context)!;
-    showDialog(
+    await ref
+        .read(gameStreakNotifierProvider.notifier)
+        .completeGame('skyscrapers', xpAmount: 30);
+    if (!context.mounted) return;
+    await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
+      builder: (dialogContext) => GameCompletionDialog(
         title: l10n.skyscrapersWinTitle,
         message: l10n.skyscrapersWinMessage,
-        isVictory: true,
         onHome: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
+          Navigator.of(dialogContext).pop();
+          Navigator.of(dialogContext).pop();
         },
         onPlayAgain: () {
-          Navigator.of(context).pop();
-          ref.read(skyscrapersNotifierProvider.notifier).initGame();
+          notifier.newGame();
+          Navigator.of(dialogContext).pop();
         },
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final colorScheme = Theme.of(context).colorScheme;
     final state = ref.watch(skyscrapersNotifierProvider);
     final notifier = ref.read(skyscrapersNotifierProvider.notifier);
-
-    ref.listen(skyscrapersNotifierProvider, (previous, next) {
-      if (next.isVictory && !(previous?.isVictory ?? false)) {
-        HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('skyscrapers');
-        _showCompletionDialog();
-      }
-    });
-
-    if (state.isLoading) {
-      return GameScaffold(
-        title: l10n.skyscrapersTitle,
-        body: const Center(child: CircularProgressIndicator()),
-      );
-    }
 
     return GameScaffold(
       title: l10n.skyscrapersTitle,
       subtitle: l10n.skyscrapersSubtitle,
       actions: [
         TangibleButton(
-          color: colorScheme.surface,
-          shadowColor: colorScheme.outline,
-          padding: const EdgeInsets.all(8),
+          color: Theme.of(context).colorScheme.surface,
+          shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text(l10n.howToPlay),
-                content: Text(l10n.skyscrapersHowToPlay),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(l10n.gotIt),
-                  ),
-                ],
-              ),
-            );
+            emitVerb(BoardVerb.select);
+            notifier.hint();
           },
-          child: Icon(Icons.help_outline, color: colorScheme.onSurface),
+          padding: const EdgeInsets.all(12),
+          child: Icon(
+            Icons.lightbulb_outline_rounded,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(width: 8),
+        TangibleButton(
+          color: Theme.of(context).colorScheme.surface,
+          shadowColor: Theme.of(context).colorScheme.outline,
+          onTap: () {
+            emitVerb(BoardVerb.select);
+            notifier.newGame();
+          },
+          padding: const EdgeInsets.all(12),
+          child: Icon(
+            Icons.refresh_rounded,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
       ],
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(DesignSystem.spaceLG),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: LayoutBuilder(builder: (context, constraints) {
-              final size = state.grid.length;
-              final cellSize = constraints.maxWidth / (size + 2);
-              return Column(
-                children: [
-                  // Top clues
-                  Row(
-                    children: [
-                      SizedBox(width: cellSize),
-                      ...List.generate(size, (i) => _buildClue(state.top[i], cellSize)),
-                      SizedBox(width: cellSize),
-                    ],
-                  ),
-                  // Middle: Left clues + Grid + Right clues
-                  ...List.generate(size, (r) {
-                    return Row(
-                      children: [
-                        _buildClue(state.left[r], cellSize),
-                        ...List.generate(size, (c) => _buildCell(state, notifier, r, c, cellSize)),
-                        _buildClue(state.right[r], cellSize),
-                      ],
-                    );
-                  }),
-                  // Bottom clues
-                  Row(
-                    children: [
-                      SizedBox(width: cellSize),
-                      ...List.generate(size, (i) => _buildClue(state.bottom[i], cellSize)),
-                      SizedBox(width: cellSize),
-                    ],
-                  ),
-                ],
-              );
-            }),
+      body: Column(
+        children: [
+          _DifficultyRow(
+            selected: state.difficulty,
+            onSelected: (difficulty) {
+              emitVerb(BoardVerb.select);
+              notifier.setDifficulty(difficulty);
+            },
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildClue(int val, double size) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Center(
-        child: Text(
-          val == 0 ? '' : val.toString(),
-          style: TextStyle(
-            color: colorScheme.onSurface.withValues(alpha: 0.6),
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCell(SkyscrapersState state, SkyscrapersNotifier notifier, int r, int c, double size) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final val = state.grid[r][c];
-
-    return GestureDetector(
-      onTap: () {
-        int nextVal = (val + 1) % (state.grid.length + 1);
-        notifier.updateCell(r, c, nextVal);
-      },
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          border: Border.all(
-            color: colorScheme.outline.withValues(alpha: 0.3), 
-            width: 0.5,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            val == 0 ? '' : val.toString(),
-            style: TextStyle(
-              color: colorScheme.onSurface,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+            child: GameHud(
+              children: [
+                _Stat(
+                  label: l10n.skyscrapersClues.toUpperCase(),
+                  value: '${state.puzzle.clueCount}',
+                  color: DesignSystem.primary,
+                ),
+                _Stat(
+                  label: l10n.skyscrapersFilled.toUpperCase(),
+                  value:
+                      '${state.values.where((v) => v != 0).length}/${state.n * state.n}',
+                  color: DesignSystem.gameIndigo,
+                ),
+              ],
             ),
           ),
+          const Spacer(),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 420),
+              child: PuzzleBoardView<SkyscrapersState>(
+                board: SkyscrapersBoard(state: state),
+                onMove: (move) {
+                  notifier.select(move.source.a * state.n + move.source.b);
+                },
+                onSolved: () => _onSolved(context, ref, notifier),
+              ),
+            ),
+          ),
+          const Spacer(),
+          _ValuePad(
+            n: state.n,
+            onValue: (value) {
+              emitVerb(BoardVerb.place);
+              notifier.enter(value);
+            },
+            onErase: () {
+              emitVerb(BoardVerb.select);
+              notifier.erase();
+            },
+          ),
+          const SizedBox(height: DesignSystem.spaceMD),
+        ],
+      ),
+    );
+  }
+}
+
+class _ValuePad extends StatelessWidget {
+  const _ValuePad({
+    required this.n,
+    required this.onValue,
+    required this.onErase,
+  });
+
+  final int n;
+  final ValueChanged<int> onValue;
+  final VoidCallback onErase;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: DesignSystem.spaceSM,
+      runSpacing: DesignSystem.spaceSM,
+      children: [
+        for (var value = 1; value <= n; value++)
+          TangibleButton(
+            color: scheme.surface,
+            shadowColor: scheme.outline,
+            padding: const EdgeInsets.symmetric(
+              horizontal: DesignSystem.spaceMD,
+              vertical: DesignSystem.spaceXS,
+            ),
+            onTap: () => onValue(value),
+            child: Text(
+              '$value',
+              style: TextStyle(
+                fontSize: DesignSystem.fontSizeLG,
+                fontWeight: FontWeight.w900,
+                color: scheme.onSurface,
+              ),
+            ),
+          ),
+        TangibleButton(
+          color: scheme.surface,
+          shadowColor: scheme.outline,
+          padding: const EdgeInsets.symmetric(
+            horizontal: DesignSystem.spaceMD,
+            vertical: DesignSystem.spaceXS,
+          ),
+          onTap: onErase,
+          child: Icon(
+            Icons.backspace_rounded,
+            size: 18,
+            color: scheme.onSurface,
+          ),
         ),
+      ],
+    );
+  }
+}
+
+class _Stat extends StatelessWidget {
+  const _Stat({required this.label, required this.value, required this.color});
+
+  final String label;
+  final String value;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return TangibleContainer(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$label ',
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeXS,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.6,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.55),
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeMD,
+              fontWeight: FontWeight.w900,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DifficultyRow extends StatelessWidget {
+  const _DifficultyRow({required this.selected, required this.onSelected});
+
+  final SkyscrapersDifficulty selected;
+  final ValueChanged<SkyscrapersDifficulty> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final labels = {
+      SkyscrapersDifficulty.easy: l10n.difficultyEasy,
+      SkyscrapersDifficulty.medium: l10n.difficultyMedium,
+      SkyscrapersDifficulty.hard: l10n.difficultyHard,
+    };
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: DesignSystem.spaceSM,
+        bottom: DesignSystem.spaceSM,
+      ),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 8,
+        children: [
+          for (final difficulty in SkyscrapersDifficulty.values)
+            TangibleButton(
+              color: difficulty == selected
+                  ? DesignSystem.primary
+                  : Theme.of(context).colorScheme.surface,
+              shadowColor: Theme.of(context).colorScheme.outline,
+              depth: difficulty == selected ? 2 : 3,
+              padding: const EdgeInsets.symmetric(
+                horizontal: DesignSystem.spaceMD,
+                vertical: DesignSystem.spaceXS,
+              ),
+              onTap: () => onSelected(difficulty),
+              child: Text(
+                labels[difficulty]!,
+                style: TextStyle(
+                  fontSize: DesignSystem.fontSizeXS,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.6,
+                  color: difficulty == selected
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

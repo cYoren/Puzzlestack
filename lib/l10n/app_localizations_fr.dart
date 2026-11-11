@@ -454,6 +454,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dominosaWinMessage => 'Chaque domino a été trouvé et placé !';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'GRATTE-CIEL';
 
   @override
