@@ -262,8 +262,9 @@ class _AreaPerimeterMatchScreenState extends ConsumerState<AreaPerimeterMatchScr
                 ),
                 const SizedBox(height: 16),
                 // Current stats readout
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(                mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       'Current Area: ${_currentW * _currentH}',
@@ -274,6 +275,7 @@ class _AreaPerimeterMatchScreenState extends ConsumerState<AreaPerimeterMatchScr
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                     ),
                   ],
+                ),
                 ),
               ],
             ),

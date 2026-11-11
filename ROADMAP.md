@@ -17,10 +17,9 @@ someone can take without reading the rest of this file.
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
 | 1 | **Eight Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
-| 2 | **About 69 games still overflow at 320dp** (down from 117). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-about-69-games-still-do-not-fit-a-phone) |
-| 3 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
-| 4 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
-| 5 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
+| 2 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
+| 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
+| 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
 The eight left in Phase 3, with what each one needs:
 
@@ -408,57 +407,41 @@ Magnets, Pipes, Hitori, Tents & Trees, Skyscrapers, Futoshiki`
 Same bar as Phase 3. This phase adds no games and is the most valuable one in the document:
 it is the difference between "307 puzzles" and "307 puzzles that are actually correct".
 
-### Do this first: about 69 games still do not fit a phone
+### Landed: every game fits a phone
 
-Measured, not guessed, with `test/board/game_audit.dart`:
+Measured, not guessed, with `test/board/game_audit.dart`, five runs in a row:
 
 ```
 flutter test -j 4 test/board/game_audit.dart
-AUDIT checked=308 overflow=69 threw=0
+AUDIT checked=308 overflow=0 threw=0
 ```
 
 The first run of this tool said **119** broken: 85 overflow and 34 throw. The 34 were an
 artifact. The test binding keeps the *first* exception of a test and counts the rest, so one
 game that overflowed made every later game report "Multiple exceptions (N) were detected" and
-land in the `threw` list. A test per game, and capturing `FlutterErrorDetails` instead of
-`takeException`, showed the truth: **no game throws at 320dp, 117 overflowed, and the number
-moved by one or two between runs because of the cascade, not because games randomise.**
+land in the `threw` list. A test per game, capturing `FlutterErrorDetails` instead of
+`takeException`, showed the truth: no game throws at 320dp, and 117 overflowed.
 
-The first pass is in: the stat strip every game draws above its board is now one widget,
-`lib/widgets/game_hud.dart`, a `Wrap` instead of a `Row(mainAxisAlignment: spaceBetween)`.
-Sixty-six screens were converted, and 33 of them stopped overflowing outright. The rest now
-overflow somewhere else — the header was the first wall, not the only one.
+Getting from 117 to 0 was four shapes, in this order:
 
-A second pass took the next two shapes: a chip whose content is wider than the `Expanded` that
-holds it (six games) and a display row that is simply too wide for 320dp — an equation, a word
-split, a legend, a number pad (seven more). The first is a `FittedBox(fit: scaleDown)` around
-the chip's content, so the label shrinks instead of clipping; the second is a `Wrap` where the
-items are buttons (a tap target must not shrink) and a `FittedBox` where they are read-only.
+1. **The stat strip.** About fifty screens drew score/timer/trial as a
+   `Row(mainAxisAlignment: spaceBetween)` of chips. A `Row` gives every chip its intrinsic
+   width and then overflows; `lib/widgets/game_hud.dart` is that strip as a `Wrap`. 66 screens
+   converted, 33 fixed outright.
+2. **Chip content wider than its `Expanded`.** A `FittedBox(fit: scaleDown)` around the chip's
+   content, so the label shrinks a few percent instead of clipping.
+3. **Display rows too wide for 320dp.** Equations, word splits, legends, number pads. Read-only
+   rows scale down; rows of buttons wrap, because a tap target must not shrink.
+4. **Columns taller than the body.** 578dp of body is not much. A column with no flex is a
+   `SingleChildScrollView`; a column that uses `Spacer` to centre itself is the
+   `LayoutBuilder` + `ConstrainedBox(minHeight)` + `IntrinsicHeight` recipe, so it still centres
+   when it fits and scrolls when it does not. Four screens had a lazy viewport inside, which
+   `IntrinsicHeight` cannot measure; those drop the `Spacer`s for fixed gaps and scroll plainly.
 
-**Still overflowing (69):**
-
-  ab_reversal_oddball, algebraic_inequality_solver, anagram_definition, angle_finder,
-  area_perimeter_match, attentional_blink_probe, base_conversion_run, binary_code,
-  binary_scale_balance, binomial_match, blink_detector, category_fluency, chalk_and_talk,
-  color_word_match_up, conjunction_search, conundrum_anagram, corsi_backward_span,
-  counting_sheep, cross_section_slice, cube_net_fold, directions_recall, face_name_association,
-  face_trait_association, fact_binder, fractional_pizza, frequency_tap, gear_rotation,
-  gear_train_direction, graph_coordinate_plot, grid_displacement, heyawake,
-  letter_frequency_scan, logical_syllogisms, math_maze, matrix_multiplier, mental_calendar,
-  modulo_clock, modulo_path, narrative_recall, palindrome_builder, paper_folding,
-  percentage_peak, percentage_shopping, perspective_taking, polyomino_tiling, prime_gap_hunt,
-  probe_digit_span, pythagorean_triple_builder, reading_span, room_inspector, rotating_maze,
-  sdmt, semantic_association, semantic_distance, sequence_sleuth, set_theory_venn,
-  shape_shifter, silhouette_match_ortho, stroop_number_size, temporal_order_judgment,
-  tenner_grid, vector_dot_product, vektor_vector, venn_numbers, visual_search_conjunction,
-  word_association_recall, word_ladder_step, word_pair_associate_memory, yajilin
-
-The list moves by one or two between runs because a few games randomise their layout.
-
-Twenty-five of those overflow *downwards* — a `Column` of fixed-height pieces that does not fit
-578dp of body — and the rest are rows that are not the stat strip: number pads, legends, option
-grids. Each is a separate, small job: open the game, pump it at 320dp, fix the layout, add it to
-`test/board/new_games_screen_test.dart` so it cannot regress.
+The lesson from the last one is worth keeping: `IntrinsicHeight` is the right tool for a
+centred column that must also scroll, but it refuses to measure a `ListView` or `GridView`, and
+the failure is a layout assertion at runtime, not a compile error. The audit caught all four in
+one run.
 
 ### Landed: the 29 timers that outlived their screen
 

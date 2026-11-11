@@ -152,8 +152,9 @@ class _SemanticDistanceScreenState extends ConsumerState<SemanticDistanceScreen>
                     onTap: state.isGameOver ? null : () => notifier.requestHint(),
                     color: DesignSystem.gameAmber.withValues(alpha: 0.12),
                     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(                    mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.lightbulb_outline_rounded, size: 16, color: DesignSystem.gameAmber),
                         const SizedBox(width: 6),
@@ -166,6 +167,7 @@ class _SemanticDistanceScreenState extends ConsumerState<SemanticDistanceScreen>
                           ),
                         ),
                       ],
+                    ),
                     ),
                   ),
                 ),

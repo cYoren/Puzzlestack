@@ -188,8 +188,9 @@ class _CorsiBackwardSpanScreenState extends ConsumerState<CorsiBackwardSpanScree
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               Icon(
                 _isDemonstrating ? Icons.visibility_rounded : Icons.undo_rounded,
                 size: 18,
@@ -207,6 +208,7 @@ class _CorsiBackwardSpanScreenState extends ConsumerState<CorsiBackwardSpanScree
                 ),
               ),
             ],
+          ),
           ),
         ),
         TangibleContainer(

@@ -273,8 +273,9 @@ class _SetTheoryVennScreenState extends ConsumerState<SetTheoryVennScreen> {
           ),
           Expanded(
             child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(              mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _buildRegionButton(VennRegion.onlyA, "ONLY A", colorScheme),
                   const SizedBox(width: 8),
@@ -282,6 +283,7 @@ class _SetTheoryVennScreenState extends ConsumerState<SetTheoryVennScreen> {
                   const SizedBox(width: 8),
                   _buildRegionButton(VennRegion.onlyB, "ONLY B", colorScheme),
                 ],
+              ),
               ),
             ),
           ),
@@ -308,8 +310,8 @@ class _SetTheoryVennScreenState extends ConsumerState<SetTheoryVennScreen> {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Column(       mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 isSelected ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
@@ -327,6 +329,7 @@ class _SetTheoryVennScreenState extends ConsumerState<SetTheoryVennScreen> {
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),

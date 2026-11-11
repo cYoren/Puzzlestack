@@ -283,7 +283,8 @@ class _RoomInspectorScreenState extends ConsumerState<RoomInspectorScreen> {
                                   ),
                                   alignment: Alignment.center,
                                   child: item != null
-                                      ? Column(
+                                      ? SingleChildScrollView(
+                                        child: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Icon(item.icon, size: 40, color: item.color),
@@ -297,7 +298,8 @@ class _RoomInspectorScreenState extends ConsumerState<RoomInspectorScreen> {
                                               ),
                                             ),
                                           ],
-                                        )
+                                        ),
+                                      )
                                       : null,
                                 ),
                               );

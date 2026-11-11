@@ -119,15 +119,17 @@ class _AlgebraicInequalitySolverScreenState extends ConsumerState<AlgebraicInequ
             horizontal: DesignSystem.spaceLG,
             vertical: DesignSystem.spaceMD,
           ),
-          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
             children: [
               _buildHeader(colorScheme),
-              const Spacer(flex: 1),
+              const SizedBox(height: 12),
               _buildInequalityCard(colorScheme),
-              const Spacer(flex: 2),
+              const SizedBox(height: 24),
               _buildChoicesGrid(colorScheme),
-              const Spacer(flex: 1),
+              const SizedBox(height: 12),
             ],
+          ),
           ),
         ),
       ),

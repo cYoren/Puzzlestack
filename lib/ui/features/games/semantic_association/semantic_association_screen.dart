@@ -206,8 +206,9 @@ class _SemanticAssociationScreenState extends ConsumerState<SemanticAssociationS
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(                mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
                       onPressed: () {
@@ -232,6 +233,7 @@ class _SemanticAssociationScreenState extends ConsumerState<SemanticAssociationS
                       child: Text(AppLocalizations.of(context)!.btnSubmit),
                     ),
                   ],
+                ),
                 ),
               ],
             ),

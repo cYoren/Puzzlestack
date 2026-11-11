@@ -75,7 +75,12 @@ class _VennNumbersScreenState extends ConsumerState<VennNumbersScreen> {
           return SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,6 +120,10 @@ class _VennNumbersScreenState extends ConsumerState<VennNumbersScreen> {
                   ),
                   const SizedBox(height: 20),
                 ],
+              ),
+                    ),
+                  ),
+                ),
               ),
             ),
           );

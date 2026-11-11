@@ -137,7 +137,12 @@ class _ReadingSpanScreenState extends ConsumerState<ReadingSpanScreen> {
     if (state.phase == ReadingSpanPhase.showingSentence && state.currentSentence != null) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TangibleContainer(
@@ -190,6 +195,10 @@ class _ReadingSpanScreenState extends ConsumerState<ReadingSpanScreen> {
               ],
             ),
           ],
+        ),
+              ),
+            ),
+          ),
         ),
       );
     } else if (state.phase == ReadingSpanPhase.showingLetter && state.highlightedLetter.isNotEmpty) {

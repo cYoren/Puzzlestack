@@ -75,7 +75,12 @@ class _AnagramDefinitionScreenState extends ConsumerState<AnagramDefinitionScree
           ? const Center(child: CircularProgressIndicator(color: DesignSystem.gameGreen))
           : Padding(
               padding: const EdgeInsets.all(DesignSystem.spaceLG),
-              child: Column(
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
                 children: [
                   const SizedBox(height: DesignSystem.spaceLG),
                   TangibleContainer(
@@ -179,6 +184,10 @@ class _AnagramDefinitionScreenState extends ConsumerState<AnagramDefinitionScree
                   ),
                   const SizedBox(height: DesignSystem.spaceLG),
                 ],
+              ),
+                    ),
+                  ),
+                ),
               ),
             ),
     );

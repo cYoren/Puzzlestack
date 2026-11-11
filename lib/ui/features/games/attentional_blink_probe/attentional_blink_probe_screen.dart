@@ -269,8 +269,9 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
             color: colorScheme.surface,
             onTap: _isStreaming ? null : () => _submitAnswer(true),
             padding: const EdgeInsets.symmetric(vertical: 20),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.check_circle_rounded, color: DesignSystem.success, size: 24),
                 SizedBox(width: 8),
@@ -285,6 +286,7 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
                 ),
               ],
             ),
+            ),
           ),
         ),
         const SizedBox(width: DesignSystem.spaceMD),
@@ -293,8 +295,9 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
             color: colorScheme.surface,
             onTap: _isStreaming ? null : () => _submitAnswer(false),
             padding: const EdgeInsets.symmetric(vertical: 20),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.cancel_rounded, color: DesignSystem.error, size: 24),
                 SizedBox(width: 8),
@@ -308,6 +311,7 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
                   ),
                 ),
               ],
+            ),
             ),
           ),
         ),

@@ -301,8 +301,9 @@ class _GearTrainDirectionScreenState extends ConsumerState<GearTrainDirectionScr
             color: colorScheme.surface,
             onTap: () => _submitAnswer(GearDirection.clockwise),
             padding: const EdgeInsets.symmetric(vertical: 18),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.rotate_right_rounded, color: DesignSystem.primary, size: 24),
                 SizedBox(width: 8),
@@ -317,6 +318,7 @@ class _GearTrainDirectionScreenState extends ConsumerState<GearTrainDirectionScr
                 ),
               ],
             ),
+            ),
           ),
         ),
         const SizedBox(width: DesignSystem.spaceMD),
@@ -325,8 +327,9 @@ class _GearTrainDirectionScreenState extends ConsumerState<GearTrainDirectionScr
             color: colorScheme.surface,
             onTap: () => _submitAnswer(GearDirection.counterClockwise),
             padding: const EdgeInsets.symmetric(vertical: 18),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.rotate_left_rounded, color: DesignSystem.gameRose, size: 24),
                 SizedBox(width: 8),
@@ -340,6 +343,7 @@ class _GearTrainDirectionScreenState extends ConsumerState<GearTrainDirectionScr
                   ),
                 ),
               ],
+            ),
             ),
           ),
         ),

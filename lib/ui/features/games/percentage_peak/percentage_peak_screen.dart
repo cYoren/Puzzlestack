@@ -72,7 +72,12 @@ class _PercentagePeakScreenState extends ConsumerState<PercentagePeakScreen> {
           return SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,6 +124,10 @@ class _PercentagePeakScreenState extends ConsumerState<PercentagePeakScreen> {
                   _buildNumberPad(notifier, constraints),
                   const SizedBox(height: 20),
                 ],
+              ),
+                    ),
+                  ),
+                ),
               ),
             ),
           );

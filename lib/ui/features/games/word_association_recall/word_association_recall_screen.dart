@@ -186,8 +186,9 @@ class _WordAssociationRecallScreenState extends ConsumerState<WordAssociationRec
               width: 2,
             ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
@@ -207,6 +208,7 @@ class _WordAssociationRecallScreenState extends ConsumerState<WordAssociationRec
                     ),
               ),
             ],
+          ),
           ),
         ),
         const SizedBox(height: 40),

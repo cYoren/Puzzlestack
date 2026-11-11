@@ -133,8 +133,9 @@ class _HeyawakeScreenState extends ConsumerState<HeyawakeScreen> {
   }
 
   Widget _buildLegend(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(    mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildLegendItem(colorScheme.surface, "EMPTY", colorScheme.onSurface.withValues(alpha: 0.5), true),
         const SizedBox(width: 16),
@@ -142,6 +143,7 @@ class _HeyawakeScreenState extends ConsumerState<HeyawakeScreen> {
         const SizedBox(width: 16),
         _buildLegendItem(DesignSystem.accentEmerald.withValues(alpha: 0.2), "WHITE (TAP 2)", DesignSystem.accentEmerald, false),
       ],
+    ),
     );
   }
 

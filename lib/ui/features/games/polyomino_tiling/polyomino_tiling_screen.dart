@@ -178,8 +178,9 @@ class _PolyominoTilingScreenState extends ConsumerState<PolyominoTilingScreen> {
                 onTap: _selectedPieceId != null ? _rotateSelectedPiece : null,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(                  mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.rotate_right_rounded,
                           color: _selectedPieceId != null ? Colors.white : colorScheme.onSurface.withValues(alpha: 0.3)),
@@ -195,6 +196,7 @@ class _PolyominoTilingScreenState extends ConsumerState<PolyominoTilingScreen> {
                         ),
                       ),
                     ],
+                  ),
                   ),
                 ),
               ),

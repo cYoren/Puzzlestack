@@ -151,8 +151,8 @@ class _GraphCoordinatePlotScreenState extends ConsumerState<GraphCoordinatePlotS
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(DesignSystem.spaceMD),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Column(       mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -255,6 +255,7 @@ class _GraphCoordinatePlotScreenState extends ConsumerState<GraphCoordinatePlotS
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),

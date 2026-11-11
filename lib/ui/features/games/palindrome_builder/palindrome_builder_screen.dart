@@ -72,7 +72,12 @@ class _PalindromeBuilderScreenState extends ConsumerState<PalindromeBuilderScree
           ? const Center(child: CircularProgressIndicator(color: DesignSystem.primary))
           : LayoutBuilder(
               builder: (context, constraints) {
-                return Column(
+                return LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Column(
                   children: [
                     const Spacer(),
                     Padding(
@@ -187,6 +192,10 @@ class _PalindromeBuilderScreenState extends ConsumerState<PalindromeBuilderScree
                     ),
                     SizedBox(height: constraints.maxHeight * 0.05),
                   ],
+                ),
+                      ),
+                    ),
+                  ),
                 );
               },
             ),

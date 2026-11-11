@@ -243,7 +243,8 @@ class _UnitConverterProScreenState extends ConsumerState<UnitConverterProScreen>
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(DesignSystem.spaceMD),
-          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -290,6 +291,7 @@ class _UnitConverterProScreenState extends ConsumerState<UnitConverterProScreen>
                 children: _currentTask.options.map((value) => _buildOptionButton(value, isDark)).toList(),
               ),
             ],
+          ),
           ),
         ),
       ),

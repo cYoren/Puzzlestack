@@ -137,7 +137,12 @@ class _VektorVectorScreenState extends ConsumerState<VektorVectorScreen> {
           },
         ),
       ],
-      body: Column(
+      body: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Column(
         children: [
           // Info and Target board
           Padding(
@@ -242,8 +247,9 @@ class _VektorVectorScreenState extends ConsumerState<VektorVectorScreen> {
                   },
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Scale Vector v: $_scaleB',
@@ -254,6 +260,7 @@ class _VektorVectorScreenState extends ConsumerState<VektorVectorScreen> {
                       style: TextStyle(color: Colors.purple[400], fontSize: 12),
                     ),
                   ],
+                ),
                 ),
                 Slider(
                   value: _scaleB.toDouble(),
@@ -274,6 +281,10 @@ class _VektorVectorScreenState extends ConsumerState<VektorVectorScreen> {
             ),
           ),
         ],
+      ),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -159,8 +159,9 @@ class _ConundrumAnagramScreenState extends ConsumerState<ConundrumAnagramScreen>
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.spellcheck_rounded, size: 18, color: DesignSystem.gameRose),
               const SizedBox(width: 6),
               Text(
@@ -174,6 +175,7 @@ class _ConundrumAnagramScreenState extends ConsumerState<ConundrumAnagramScreen>
                 ),
               ),
             ],
+          ),
           ),
         ),
         TangibleContainer(
