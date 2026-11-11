@@ -205,6 +205,7 @@ import '../ui/features/games/cube/cube_metadata.dart';
 import '../ui/features/games/map/map_metadata.dart';
 import '../ui/features/games/inertia/inertia_metadata.dart';
 import '../ui/features/games/netslide/netslide_metadata.dart';
+import '../ui/features/games/signpost/signpost_metadata.dart';
 import '../ui/features/games/twiddle/twiddle_metadata.dart';
 import '../ui/features/games/simon_command/simon_command_metadata.dart';
 import '../ui/features/games/binary_code/binary_code_metadata.dart';
@@ -645,6 +646,7 @@ List<GameMetadata> _buildGameList() {
     mapMetadata,
     inertiaMetadata,
     netslideMetadata,
+    signpostMetadata,
     twiddleMetadata,
   ];
 }
