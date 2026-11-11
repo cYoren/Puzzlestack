@@ -49,7 +49,7 @@ from has 304, and Phase 2 merged all of them; Phase 3 adds the Tatham ports on t
 | | Value |
 | --- | --- |
 | Fork base | `d4d5d09` (2026-06-07), 161 games |
-| Registry | `lib/data/game_registry.dart`, one `_metadata.dart` per game, 307 entries |
+| Registry | `lib/data/game_registry.dart`, one `_metadata.dart` per game, 313 entries |
 | Upstream HEAD when audited | `3a0928d` (2026-11-08), **304** registered games |
 | Commits we never received | **100** |
 

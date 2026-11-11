@@ -1,17 +1,17 @@
 # Puzzlestack
 
-A cross-platform suite of **307 minimalist brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
+A cross-platform suite of **313 minimalist brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
 
 Two ideas sit at the heart of Puzzlestack:
 
 1. **Shuffle feed (the "I'm bored" mode).** A full-screen, vertical, TikTok-style feed. Swipe up and you drop straight into a fresh random puzzle. No menus, no friction, just one more.
-2. **Discovery home instead of a long list.** 307 games is a lot. The home is a calm discovery surface: a Shuffle hero, a Daily Pick, a Quick Play (under 2 min) row, "jump back in" recents, and the full catalog tucked into six category rooms.
+2. **Discovery home instead of a long list.** 313 games is a lot. The home is a calm discovery surface: a Shuffle hero, a Daily Pick, a Quick Play (under 2 min) row, "jump back in" recents, and the full catalog tucked into six category rooms.
 
 ---
 
-## The 307 games, by category
+## The 313 games, by category
 
-- **Logic (47):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies and more.
+- **Logic (53):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies and more.
 - **Math (63):** 2048, KenKen, Magic Squares, Prime Hunter, Fraction Match, Quick Math, Sum Pyramid and more.
 - **Memory (54):** Memory Matrix, Corsi Blocks, N-Back, Memory Palace, Digit Span, Face/Name and more.
 - **Spatial (38):** Mental Rotation, Paper Folding, Cube Net Fold, Classic Maze, Mirror Image and more.

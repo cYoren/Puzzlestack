@@ -13,6 +13,7 @@ import 'package:puzzle/ui/features/games/magnets/magnets_screen.dart';
 import 'package:puzzle/ui/features/games/map/map_screen.dart';
 import 'package:puzzle/ui/features/games/inertia/inertia_screen.dart';
 import 'package:puzzle/ui/features/games/netslide/netslide_screen.dart';
+import 'package:puzzle/ui/features/games/signpost/signpost_screen.dart';
 import 'package:puzzle/ui/features/games/tents_and_trees/tents_and_trees_screen.dart';
 import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
 import 'package:puzzle/ui/features/games/kurodoko/kurodoko_screen.dart';
@@ -73,6 +74,7 @@ void main() {
     'Map': const MapScreen(),
     'Inertia': const InertiaScreen(),
     'Netslide': const NetslideScreen(),
+    'Signpost': const SignpostScreen(),
   };
 
   for (final entry in screens.entries) {
