@@ -272,28 +272,37 @@ class _AlgebraicBalanceScreenState extends ConsumerState<AlgebraicBalanceScreen>
                     padding: const EdgeInsets.all(24.0),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _buildExpression(_eq1StarCoeff, _eq1HeartCoeff, 0),
-                            Text(' = $_eq1Value', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                          ],
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildExpression(_eq1StarCoeff, _eq1HeartCoeff, 0),
+                              Text(' = $_eq1Value', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        Row(
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             _buildExpression(_eq2StarCoeff, 0, _eq2SunCoeff),
                             Text(' = $_eq2Value', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                           ],
                         ),
+                        ),
                         const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _buildExpression(0, _eq3HeartCoeff, _eq3SunCoeff),
-                            Text(' = $_eq3Value', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                          ],
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildExpression(0, _eq3HeartCoeff, _eq3SunCoeff),
+                              Text(' = $_eq3Value', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
                         ),
                       ],
                     ),

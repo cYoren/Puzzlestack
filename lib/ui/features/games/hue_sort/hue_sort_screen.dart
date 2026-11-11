@@ -71,7 +71,9 @@ class HueSortScreen extends ConsumerWidget {
           vertical: DesignSystem.spaceSM,
         ),
         color: colorScheme.surface,
-        child: Row(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
@@ -89,6 +91,7 @@ class HueSortScreen extends ConsumerWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

@@ -121,7 +121,9 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
                           horizontal: DesignSystem.spaceMD,
                         ),
                         color: colorScheme.surface,
-                        child: Row(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(Icons.stars_rounded, color: DesignSystem.accentAmber, size: 20),
@@ -135,6 +137,7 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
                               ),
                             ),
                           ],
+                        ),
                         ),
                       ),
                     ),
