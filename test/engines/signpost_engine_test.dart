@@ -150,6 +150,12 @@ void main() {
       expect(position.impossible, isFalse);
       expect(position.chainOf, [0, 0, 1, 0]);
       expect(engine.legal(position, puzzle, 3, 0), isFalse);
+
+      // Close the ring and the board is dead: no move out of it at all, and
+      // nothing to ask a half-defined chain about.
+      final looped = SignpostPosition.of(puzzle, [1, 3, 0, 2]);
+      expect(looped.impossible, isTrue);
+      expect(engine.legal(looped, puzzle, 2, 1), isFalse);
     });
 
     test('two known numbers have to be consecutive', () {
