@@ -2228,6 +2228,15 @@ class AppLocalizationsRu extends AppLocalizations {
       'Невероятно! Вы решили латинский квадрат Футошики.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return 'Вы правильно насчитали $arg0 вхождений «$arg1».';
   }

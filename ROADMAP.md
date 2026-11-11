@@ -409,7 +409,7 @@ board, which makes them the worst place to spend a week.
 
 What is left to rebuild, all of it obscure enough that a correct board is a differentiator:
 
-`Dominosa, Magnets, Tents & Trees, Futoshiki` — **4 left**. Lights Out and Skyscrapers are done.
+`Dominosa, Magnets, Tents & Trees` — **3 left**. Lights Out, Skyscrapers and Futoshiki are done.
 
 ### Landed: Skyscrapers, and a Latin base four puzzles can share
 
@@ -432,6 +432,20 @@ assumed, the line is filtered against a constraint the puzzle already stated.
 
 That base is why Futoshiki, and later KenKen or Sudoku if the scope ever reopens, cost a
 predicate rather than a solver.
+
+### Landed: Futoshiki, which is Skyscrapers with a different predicate
+
+The old generator sprinkled inequalities at a fixed 30% chance and then added givens until a
+brute-force count said "one solution". That is a uniqueness check but not a *reasoning* check —
+a board can be unique and still need a guess — and the givens were never minimised.
+
+The rebuild starts from **every** inequality and removes them one at a time, keeping a removal
+only while the board stays unique and the line filter can still finish it. Most boards end up
+with no givens at all: the inequalities alone pin the square down, which is what a good
+Futoshiki looks like. Easy keeps 60% of the edges, medium 45%, hard removes everything it can.
+
+It cost one predicate and one board file, because `lib/core/latin.dart` already had the rest.
+That is the payoff the base was built for.
 
 ### Landed: Lights Out, where uniqueness is linear algebra
 

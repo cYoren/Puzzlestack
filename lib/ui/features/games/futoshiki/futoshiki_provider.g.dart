@@ -6,7 +6,7 @@ part of 'futoshiki_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$futoshikiNotifierHash() => r'2ba4bdb06f72b824fcfb7c0fd31a6b9bb2b39eb1';
+String _$futoshikiNotifierHash() => r'ddf83300cd7d9b528e15541ada56cad3217c0585';
 
 /// See also [FutoshikiNotifier].
 @ProviderFor(FutoshikiNotifier)
