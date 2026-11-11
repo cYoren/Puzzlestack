@@ -1092,6 +1092,9 @@
     }
   },
   "futoshikiMessage": "Incredible! You solved the Futoshiki Latin Square.",
+  "futoshikiWinTitle": "SQUARE SOLVED!",
+  "futoshikiGivens": "Givens",
+  "futoshikiEdges": "Edges",
   "letterFrequencyScanMessage": "You correctly counted {arg0} occurrences of \"{arg1}\".",
   "@letterFrequencyScanMessage": {
     "placeholders": {

@@ -1,106 +1,69 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/core/deduction.dart';
 import 'package:puzzle/ui/features/games/futoshiki/futoshiki_engine.dart';
 
 void main() {
-  group('FutoshikiEngine', () {
-    late FutoshikiEngine engine;
+  const engine = FutoshikiEngine();
 
-    setUp(() {
-      engine = FutoshikiEngine();
-    });
+  group('generator', () {
+    for (final difficulty in FutoshikiDifficulty.values) {
+      test('${difficulty.name}: 30 boards, each unique and solvable by logic', () {
+        final rng = Random(29);
+        for (var i = 0; i < 30; i++) {
+          final puzzle = engine.generate(difficulty, random: rng);
+          final n = puzzle.n;
 
-    group('generateLevel', () {
-      test('returns a FutoshikiLevel', () {
-        final level = engine.generateLevel(size: 4);
-        expect(level, isA<FutoshikiLevel>());
-      });
-
-      test('solution is a valid Latin Square', () {
-        final level = engine.generateLevel(size: 4);
-        final solution = level.solution;
-
-        for (int r = 0; r < 4; r++) {
-          final rowValues = solution[r].toSet();
-          expect(rowValues.length, 4);
-          for (final v in rowValues) {
-            expect(v, greaterThanOrEqualTo(1));
-            expect(v, lessThanOrEqualTo(4));
+          // The solution is a Latin square.
+          for (var row = 0; row < n; row++) {
+            final line = [for (var col = 0; col < n; col++) puzzle.solution[row * n + col]];
+            expect(line.toSet().length, n, reason: 'board $i row $row');
           }
-        }
-
-        for (int c = 0; c < 4; c++) {
-          final colValues = <int>{};
-          for (int r = 0; r < 4; r++) {
-            colValues.add(solution[r][c]);
+          for (var col = 0; col < n; col++) {
+            final line = [for (var row = 0; row < n; row++) puzzle.solution[row * n + col]];
+            expect(line.toSet().length, n, reason: 'board $i col $col');
           }
-          expect(colValues.length, 4);
-        }
-      });
 
-      test('clues matrix has correct dimensions', () {
-        final level = engine.generateLevel(size: 4);
-        expect(level.clues.length, 4);
-        expect(level.clues[0].length, 4);
-      });
-
-      test('hInequalities has correct dimensions', () {
-        final level = engine.generateLevel(size: 4);
-        expect(level.hInequalities.length, 4);
-        expect(level.hInequalities[0].length, 3);
-      });
-
-      test('vInequalities has correct dimensions', () {
-        final level = engine.generateLevel(size: 4);
-        expect(level.vInequalities.length, 3);
-        expect(level.vInequalities[0].length, 4);
-      });
-
-      test('horizontal inequalities are consistent with solution', () {
-        final level = engine.generateLevel(size: 4);
-        for (int r = 0; r < 4; r++) {
-          for (int c = 0; c < 3; c++) {
-            final ineq = level.hInequalities[r][c];
-            if (ineq != null) {
-              final left = level.solution[r][c];
-              final right = level.solution[r][c + 1];
-              if (ineq == '<') {
-                expect(left, lessThan(right));
-              } else {
-                expect(left, greaterThan(right));
-              }
+          // Every inequality agrees with the solution.
+          for (var row = 0; row < n; row++) {
+            for (var col = 0; col + 1 < n; col++) {
+              final edge = puzzle.horizontal[row * (n - 1) + col];
+              if (edge == 0) continue;
+              final a = puzzle.solution[row * n + col];
+              final b = puzzle.solution[row * n + col + 1];
+              expect(edge == 1 ? a < b : a > b, isTrue,
+                  reason: 'board $i horizontal $row,$col');
             }
           }
-        }
-      });
-
-      test('vertical inequalities are consistent with solution', () {
-        final level = engine.generateLevel(size: 4);
-        for (int r = 0; r < 3; r++) {
-          for (int c = 0; c < 4; c++) {
-            final ineq = level.vInequalities[r][c];
-            if (ineq != null) {
-              final top = level.solution[r][c];
-              final bottom = level.solution[r + 1][c];
-              if (ineq == '^') {
-                expect(top, lessThan(bottom));
-              } else {
-                expect(top, greaterThan(bottom));
-              }
+          for (var row = 0; row + 1 < n; row++) {
+            for (var col = 0; col < n; col++) {
+              final edge = puzzle.vertical[row * n + col];
+              if (edge == 0) continue;
+              final a = puzzle.solution[row * n + col];
+              final b = puzzle.solution[(row + 1) * n + col];
+              expect(edge == 1 ? a < b : a > b, isTrue,
+                  reason: 'board $i vertical $row,$col');
             }
           }
-        }
-      });
 
-      test('exposed clues match solution values', () {
-        final level = engine.generateLevel(size: 4);
-        for (int r = 0; r < 4; r++) {
-          for (int c = 0; c < 4; c++) {
-            if (level.clues[r][c] != null) {
-              expect(level.clues[r][c], level.solution[r][c]);
-            }
-          }
+          // Givens agree with the solution.
+          puzzle.givens.forEach((cell, value) {
+            expect(puzzle.solution[cell], value, reason: 'board $i given $cell');
+          });
+
+          final rating = engine.rating(puzzle);
+          expect(rating.verdict, PuzzleVerdict.solved, reason: 'board $i: $rating');
+          expect(rating.solutions, 1);
         }
       });
+    }
+
+    test('hard boards keep few inequalities', () {
+      final rng = Random(31);
+      final puzzle = engine.generate(FutoshikiDifficulty.hard, random: rng);
+      final total = puzzle.n * (puzzle.n - 1) * 2;
+      expect(puzzle.inequalityCount, lessThan(total));
     });
   });
 }

@@ -2249,6 +2249,15 @@ class AppLocalizationsHi extends AppLocalizations {
       'अविश्वसनीय! आपने फुतोशिकी लैटिन स्क्वायर को हल कर लिया।';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return 'आपने \"$arg1\" की $arg0 बार होने वाली घटनाओं को सही ढंग से गिना।';
   }

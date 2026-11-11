@@ -2198,6 +2198,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get futoshikiMessage => 'مذهل! لقد حللت مربع فوتوشيكي اللاتيني.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return 'لقد عددت بشكل صحيح $arg0 مرات ظهور لـ \"$arg1\".';
   }

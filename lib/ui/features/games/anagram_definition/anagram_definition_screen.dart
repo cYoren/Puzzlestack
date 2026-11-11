@@ -126,8 +126,9 @@ class _AnagramDefinitionScreenState extends ConsumerState<AnagramDefinitionScree
                     ),
                   ),
                   const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(                  mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(targetLength, (index) {
                       final char = index < state.currentGuess.length ? state.currentGuess[index] : '';
                       return Container(
@@ -153,6 +154,7 @@ class _AnagramDefinitionScreenState extends ConsumerState<AnagramDefinitionScree
                         ),
                       );
                     }),
+                  ),
                   ),
                   const Spacer(),
                   _buildKeyboard(context, state, notifier),

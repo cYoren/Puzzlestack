@@ -4094,6 +4094,24 @@ abstract class AppLocalizations {
   /// **'Incredible! You solved the Futoshiki Latin Square.'**
   String get futoshikiMessage;
 
+  /// No description provided for @futoshikiWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SQUARE SOLVED!'**
+  String get futoshikiWinTitle;
+
+  /// No description provided for @futoshikiGivens.
+  ///
+  /// In en, this message translates to:
+  /// **'Givens'**
+  String get futoshikiGivens;
+
+  /// No description provided for @futoshikiEdges.
+  ///
+  /// In en, this message translates to:
+  /// **'Edges'**
+  String get futoshikiEdges;
+
   /// No description provided for @letterFrequencyScanMessage.
   ///
   /// In en, this message translates to:

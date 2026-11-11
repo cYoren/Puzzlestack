@@ -2229,6 +2229,15 @@ class AppLocalizationsFa extends AppLocalizations {
       'فوق‌العاده است! شما مربع لاتین فوتوشیکی را حل کردید.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return 'شما به درستی $arg0 بار تکرار «$arg1» را شمردید.';
   }
