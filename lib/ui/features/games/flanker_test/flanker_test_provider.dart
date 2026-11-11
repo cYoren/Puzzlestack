@@ -51,6 +51,7 @@ class FlankerTestNotifier extends _$FlankerTestNotifier {
 
   @override
   FlankerTestState build() {
+    ref.onDispose(() { _timer?.cancel(); });
     return FlankerTestState(currentDisplay: '', targetDirection: 0);
   }
 

@@ -17,7 +17,7 @@ someone can take without reading the rest of this file.
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
 | 1 | **Nine Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
-| 2 | **About 85 games still overflow at 320dp** (down from 117), and **29 leak a timer** after the screen closes. Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-about-85-games-still-do-not-fit-a-phone) |
+| 2 | **About 85 games still overflow at 320dp** (down from 117). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-about-85-games-still-do-not-fit-a-phone) |
 | 3 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 4 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 5 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
@@ -454,26 +454,24 @@ Twenty-five of those overflow *downwards* — a `Column` of fixed-height pieces 
 grids. Each is a separate, small job: open the game, pump it at 320dp, fix the layout, add it to
 `test/board/new_games_screen_test.dart` so it cannot regress.
 
-### And 29 games leave a timer running after you leave
+### Landed: the 29 timers that outlived their screen
 
-Found by the same audit, and not on the old list because the old single-test loop could not see
-it. The widget tree is disposed, the timer is not:
+The audit's first clean run also caught a bug nobody was looking for. Twenty-nine games left a
+timer running after the widget tree was disposed:
 
 ```
-flutter test -j 4 test/board/game_audit.dart   # the run ends with 29 failed tests
 A Timer is still pending even after the widget tree was disposed.
 ```
 
-  arithmetic_chain, common_denominator, continuous_recognition, corsi_blocks, counting_span,
-  divisibility_dash, dnms, flanker_test, go_no_go, mandala_recall, object_displacement,
-  object_shuffle, path_recall, percentage_peak, pixel_mimic, quick_math, reading_span,
-  running_memory_span, sequence_sleuth, simon_sequence, sopt, spatial_cabinet_memory,
-  sternberg_task, stop_signal, switch_task, symmetry_span, trail_making, venn_numbers,
-  vigilance_task
-
 A periodic timer that outlives its screen is a battery bug, not a test annoyance: the callback
-keeps firing (and can keep the device awake) after the player has gone home. Cancel it in the
-notifier's `dispose`.
+keeps firing (and can keep the device awake) after the player has gone home. Twenty-four games
+had the timer field but no `ref.onDispose`; three used `Future.delayed`, which cannot be
+cancelled at all; one stored a `Timer` nowhere. All twenty-nine now cancel on dispose, and
+`simon_sequence` awaits a cancellable delay instead of `Future.delayed` so leaving mid-sequence
+unwinds instead of firing into a dead notifier.
+
+The audit run is clean of timer failures now, which means a red run means overflow and nothing
+else.
 
 **Done when:** the audit reports `overflow=0 threw=0`, and both lists are empty.
 

@@ -62,6 +62,7 @@ class SternbergState {
 class SternbergTaskNotifier extends _$SternbergTaskNotifier {
   final _engine = SternbergTaskEngine();
   Timer? _timer;
+  Timer? _phaseTimer;
 
   @override
   SternbergState build() {
@@ -97,7 +98,8 @@ class SternbergTaskNotifier extends _$SternbergTaskNotifier {
     );
 
     // Show memory set for 2 seconds
-    Future.delayed(const Duration(milliseconds: 2000), () {
+    _phaseTimer?.cancel();
+    _phaseTimer = Timer(const Duration(milliseconds: 2000), () {
       if (state.isGameOver) return;
       state = state.copyWith(phase: SternbergPhase.probe);
     });
@@ -116,7 +118,8 @@ class SternbergTaskNotifier extends _$SternbergTaskNotifier {
           : (state.setSize > 3 ? state.setSize - 1 : 3),
     );
 
-    Future.delayed(const Duration(milliseconds: 500), () {
+    _phaseTimer?.cancel();
+    _phaseTimer = Timer(const Duration(milliseconds: 500), () {
       if (state.isGameOver) return;
       _nextTrial();
     });
@@ -124,5 +127,6 @@ class SternbergTaskNotifier extends _$SternbergTaskNotifier {
 
   void cleanUp() {
     _timer?.cancel();
+    _phaseTimer?.cancel();
   }
 }

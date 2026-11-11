@@ -106,6 +106,7 @@ class ReadingSpanNotifier extends _$ReadingSpanNotifier {
 
   @override
   ReadingSpanState build() {
+    ref.onDispose(() { _gameTimer?.cancel(); _phaseTimer?.cancel(); });
     return ReadingSpanState();
   }
 
