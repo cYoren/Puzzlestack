@@ -1115,7 +1115,7 @@ abstract class AppLocalizations {
   /// No description provided for @signpostHowToPlay.
   ///
   /// In en, this message translates to:
-  /// **'Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. Tapping a cell that already points somewhere takes that link back.'**
+  /// **'Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.'**
   String get signpostHowToPlay;
 
   /// No description provided for @signpostMoves.
