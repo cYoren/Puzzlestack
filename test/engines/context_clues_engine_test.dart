@@ -33,9 +33,16 @@ void main() {
       });
 
       test('options are shuffled (not always same order)', () {
-        final q1 = engine.generateQuestionsForLevel(1).first;
-        final q2 = engine.generateQuestionsForLevel(1).first;
-        expect(q1.options, isNot(equals(q2.options)));
+        // Four options have 24 orders, so two consecutive boards match with
+        // probability 1/24. Comparing one pair made this test fail roughly one
+        // run in twenty-five, which is a fact about the test, not the engine:
+        // compare thirty boards and ask for more than one order.
+        final orders = <String>{
+          for (var i = 0; i < 30; i++)
+            engine.generateQuestionsForLevel(1).first.options.join('|'),
+        };
+        expect(orders.length, greaterThan(1),
+            reason: 'thirty boards all came out in the same order');
       });
 
       test('returns all questions from pool', () {
