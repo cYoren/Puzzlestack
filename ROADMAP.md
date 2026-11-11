@@ -401,8 +401,37 @@ These exist but were written without a uniqueness guarantee. They are the ones u
 tell are wrong: ambiguous Sudoku, Nonogram that accepts a second picture, Slitherlink with
 two loops.
 
-`Bridges, Dominosa, Slide Puzzle, Color Flood, KenKen, Akari, Slitherlink, Magnets, Pipes,
-Hitori, Tents & Trees, Skyscrapers, Futoshiki` — **13 left**, Lights Out is rebuilt.
+**Scope narrowed (Gus, 2026-11-11): skip the very famous ones.** Sudoku, Nonogram, Slitherlink,
+Akari, KenKen, Bridges, Slide Puzzle, Color Flood, Pipes and Hitori stay as they are. They are
+the puzzles every other app already has, so rebuilding them is the most work for the least
+differentiation — and a player who knows Sudoku is the player most likely to notice a wrong
+board, which makes them the worst place to spend a week.
+
+What is left to rebuild, all of it obscure enough that a correct board is a differentiator:
+
+`Dominosa, Magnets, Tents & Trees, Futoshiki` — **4 left**. Lights Out and Skyscrapers are done.
+
+### Landed: Skyscrapers, and a Latin base four puzzles can share
+
+The old generator built a cyclic Latin square, shuffled its rows and columns, and published
+**every clue** — sixteen on a 4x4 — without ever checking that the clues pin down one answer.
+Two Latin squares can show the same skyline from all four sides, so that board could ship
+ambiguous.
+
+The rebuild starts from a full clue set, then **removes clues one at a time**, keeping a removal
+only while the board stays unique *and* the rules can still finish it. That is the Phase 3 bar
+applied to a classic that never had it, and it turns the clue count into the difficulty: 4x4
+down to 8 clues, 5x5 to 10, 6x6 to 12.
+
+The rules are not hand-written visibility tricks. `lib/core/latin.dart` holds the Latin-square
+model, elimination, hidden singles, and a **line filter** that enumerates the line's legal
+arrangements (at most 720 for n=6) and keeps only the values that appear in one. A puzzle
+supplies one predicate per line — Skyscrapers checks the two skyline clues, Futoshiki will check
+its inequalities — and the filter does the rest. It is deduction, not search: nothing is
+assumed, the line is filtered against a constraint the puzzle already stated.
+
+That base is why Futoshiki, and later KenKen or Sudoku if the scope ever reopens, cost a
+predicate rather than a solver.
 
 ### Landed: Lights Out, where uniqueness is linear algebra
 

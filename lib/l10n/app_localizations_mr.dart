@@ -450,6 +450,12 @@ class AppLocalizationsMr extends AppLocalizations {
       'प्रत्येक डोमिनो सापडला आहे आणि ठेवला गेला आहे!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'स्कायस्क्रेपर्स';
 
   @override

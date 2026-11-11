@@ -454,6 +454,12 @@ class AppLocalizationsPl extends AppLocalizations {
       'Każda kostka domina została znaleziona i umieszczona!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'WIEŻOWCE';
 
   @override
