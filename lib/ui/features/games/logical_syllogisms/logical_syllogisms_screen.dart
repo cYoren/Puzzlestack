@@ -8,6 +8,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'logical_syllogisms_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class LogicalSyllogismsScreen extends ConsumerStatefulWidget {
   const LogicalSyllogismsScreen({super.key});
@@ -75,9 +76,7 @@ class _LogicalSyllogismsScreenState extends ConsumerState<LogicalSyllogismsScree
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(

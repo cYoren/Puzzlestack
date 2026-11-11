@@ -9,6 +9,7 @@ import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'collatz_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class CollatzScreen extends ConsumerStatefulWidget {
   const CollatzScreen({super.key});
@@ -76,9 +77,7 @@ class _CollatzScreenState extends ConsumerState<CollatzScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                GameHud(children: [
                   Text(
                     'STEPS: ${state.stepsTaken}',
                     style: TextStyle(fontWeight: FontWeight.bold, color: colorScheme.primary),

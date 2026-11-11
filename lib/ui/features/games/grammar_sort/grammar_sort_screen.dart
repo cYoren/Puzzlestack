@@ -11,6 +11,7 @@ import '../../../../widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'grammar_sort_engine.dart';
 import 'grammar_sort_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class GrammarSortScreen extends ConsumerStatefulWidget {
   const GrammarSortScreen({super.key});
@@ -77,9 +78,7 @@ class _GrammarSortScreenState extends ConsumerState<GrammarSortScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Center(

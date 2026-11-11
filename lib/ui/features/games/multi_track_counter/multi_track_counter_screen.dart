@@ -9,6 +9,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class MultiTrackCounterScreen extends ConsumerStatefulWidget {
   const MultiTrackCounterScreen({super.key});
@@ -161,9 +162,7 @@ class _MultiTrackCounterScreenState extends ConsumerState<MultiTrackCounterScree
                 borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
                 border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.2), width: 1.5),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                child: GameHud(children: [
                   Text(
                     'TARGET RULE:',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(

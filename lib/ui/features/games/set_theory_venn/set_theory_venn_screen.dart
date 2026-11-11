@@ -8,6 +8,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'set_theory_venn_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class SetTheoryVennScreen extends ConsumerStatefulWidget {
   const SetTheoryVennScreen({super.key});
@@ -146,9 +147,7 @@ class _SetTheoryVennScreenState extends ConsumerState<SetTheoryVennScreen> {
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,

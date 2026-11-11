@@ -10,6 +10,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'sentence_unscramble_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class SentenceUnscrambleScreen extends ConsumerStatefulWidget {
   const SentenceUnscrambleScreen({super.key});
@@ -76,9 +77,7 @@ class _SentenceUnscrambleScreenState extends ConsumerState<SentenceUnscrambleScr
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Center(

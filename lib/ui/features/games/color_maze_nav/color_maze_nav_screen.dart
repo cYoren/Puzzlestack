@@ -9,6 +9,7 @@ import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ColorMazeNavScreen extends ConsumerStatefulWidget {
   const ColorMazeNavScreen({super.key});
@@ -176,9 +177,7 @@ class _ColorMazeNavScreenState extends ConsumerState<ColorMazeNavScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 // Active Permission Card
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
