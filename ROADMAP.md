@@ -17,7 +17,7 @@ someone can take without reading the rest of this file.
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
 | 1 | **Eight Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
-| 2 | **About 73 games still overflow at 320dp** (down from 117). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-about-73-games-still-do-not-fit-a-phone) |
+| 2 | **About 69 games still overflow at 320dp** (down from 117). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-about-69-games-still-do-not-fit-a-phone) |
 | 3 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 4 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 5 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
@@ -408,13 +408,13 @@ Magnets, Pipes, Hitori, Tents & Trees, Skyscrapers, Futoshiki`
 Same bar as Phase 3. This phase adds no games and is the most valuable one in the document:
 it is the difference between "307 puzzles" and "307 puzzles that are actually correct".
 
-### Do this first: about 73 games still do not fit a phone
+### Do this first: about 69 games still do not fit a phone
 
 Measured, not guessed, with `test/board/game_audit.dart`:
 
 ```
 flutter test -j 4 test/board/game_audit.dart
-AUDIT checked=307 overflow=73 threw=0
+AUDIT checked=308 overflow=69 threw=0
 ```
 
 The first run of this tool said **119** broken: 85 overflow and 34 throw. The 34 were an
@@ -435,25 +435,23 @@ split, a legend, a number pad (seven more). The first is a `FittedBox(fit: scale
 the chip's content, so the label shrinks instead of clipping; the second is a `Wrap` where the
 items are buttons (a tap target must not shrink) and a `FittedBox` where they are read-only.
 
-**Still overflowing (73):**
+**Still overflowing (69):**
 
   ab_reversal_oddball, algebraic_inequality_solver, anagram_definition, angle_finder,
   area_perimeter_match, attentional_blink_probe, base_conversion_run, binary_code,
   binary_scale_balance, binomial_match, blink_detector, category_fluency, chalk_and_talk,
   color_word_match_up, conjunction_search, conundrum_anagram, corsi_backward_span,
-  counting_sheep, cross_section_slice, cube_net_fold, directions_recall,
-  face_name_association, face_trait_association, fact_binder, fractional_pizza, frequency_tap,
-  gear_rotation, gear_train_direction, graph_coordinate_plot, grid_displacement, heyawake,
-  logical_syllogisms, math_maze, matrix_multiplier, mental_calendar, modular_clock_arithmetic,
+  counting_sheep, cross_section_slice, cube_net_fold, directions_recall, face_name_association,
+  face_trait_association, fact_binder, fractional_pizza, frequency_tap, gear_rotation,
+  gear_train_direction, graph_coordinate_plot, grid_displacement, heyawake,
+  letter_frequency_scan, logical_syllogisms, math_maze, matrix_multiplier, mental_calendar,
   modulo_clock, modulo_path, narrative_recall, palindrome_builder, paper_folding,
-  percentage_peak, percentage_shopping, perspective_taking, polyomino_tiling,
-  posner_spatial_cueing, prime_gap_hunt, probe_digit_span, pythagorean_triple_builder,
-  room_inspector, rotating_maze, sdmt, semantic_association, semantic_distance,
-  sequence_sleuth, set_theory_venn, shape_shifter, silhouette_match_ortho, stroop_number_size,
-  tangram, temporal_order_judgment, tenner_grid, unit_converter_pro, vector_dot_product,
-  vektor_vector, venn_numbers, visual_crowding_acuity, visual_search_conjunction,
-  wireframe_3d_rotation, word_association_recall, word_ladder_step, word_pair_associate_memory,
-  yajilin
+  percentage_peak, percentage_shopping, perspective_taking, polyomino_tiling, prime_gap_hunt,
+  probe_digit_span, pythagorean_triple_builder, reading_span, room_inspector, rotating_maze,
+  sdmt, semantic_association, semantic_distance, sequence_sleuth, set_theory_venn,
+  shape_shifter, silhouette_match_ortho, stroop_number_size, temporal_order_judgment,
+  tenner_grid, vector_dot_product, vektor_vector, venn_numbers, visual_search_conjunction,
+  word_association_recall, word_ladder_step, word_pair_associate_memory, yajilin
 
 The list moves by one or two between runs because a few games randomise their layout.
 
