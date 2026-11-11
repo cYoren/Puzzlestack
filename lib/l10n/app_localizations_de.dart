@@ -448,6 +448,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get cubeBest => 'Best';
 
   @override
+  String get mapTitle => 'MAP';
+
+  @override
+  String get mapSubtitle =>
+      'Four-colour the map: no two touching regions may match.';
+
+  @override
+  String get mapWinTitle => 'MAP COLOURED!';
+
+  @override
+  String get mapWinMessage =>
+      'Every region has a colour, and no neighbours clash.';
+
+  @override
+  String get mapHowToPlay =>
+      'Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.';
+
+  @override
+  String get mapRegions => 'Regions';
+
+  @override
+  String get mapColoured => 'Coloured';
+
+  @override
   String get lighthousesTitle => 'LEUCHTTÜRME';
 
   @override
