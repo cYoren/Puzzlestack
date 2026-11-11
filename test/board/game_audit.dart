@@ -70,8 +70,8 @@ void main() {
     // ignore: avoid_print
     print('AUDIT checked=$checked overflow=${broken.length} threw=${threw.length}');
     // ignore: avoid_print
-    print('AUDIT overflow: ${broken.take(25).join(", ")}');
+    print('AUDIT overflow: ${broken.join(", ")}');
     // ignore: avoid_print
-    print('AUDIT threw: ${threw.take(10).join(" | ")}');
+    print('AUDIT threw: ${threw.map((t) => t.split(":").first).join(", ")}');
   }, timeout: const Timeout(Duration(minutes: 10)));
 }

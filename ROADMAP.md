@@ -9,6 +9,46 @@ Where each one lives, its licence, and its pinned commit are in [REFERENCE.md](R
 
 ---
 
+## Open work
+
+What is left, in the order it should be picked up. Everything here is a self-contained job
+someone can take without reading the rest of this file.
+
+| # | Job | Size | Where |
+| --- | --- | --- | --- |
+| 1 | **Nine Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+| 2 | **119 games broken at 320dp** (85 overflow, 35 throw). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-119-games-do-not-fit-a-phone) |
+| 3 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
+| 4 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
+| 5 | **Release.** Blocked on the licence decision below. | one pass | [Phase 6](#phase-6--release) |
+
+The nine left in Phase 3, with what each one needs:
+
+| Puzzle | Tatham file | Lines | Needs the solver? |
+| --- | --- | --- | --- |
+| Black Box | `blackbox.c` | 1587 | yes, deduction |
+| Same Game | `samegame.c` | 1686 | no, click groups |
+| Cube | `cube.c` | 1787 | no, folding |
+| Netslide | `netslide.c` | 1889 | no, sliding |
+| Inertia | `inertia.c` | 2246 | no, arcade |
+| Signpost | `signpost.c` | 2568 | yes, deduction |
+| Undead | `undead.c` | 3049 | yes, deduction |
+| Tracks | `tracks.c` | 3159 | yes, deduction |
+| Map | `map.c` | 3474 | yes, deduction |
+
+Five need `lib/core/deduction.dart` (Black Box, Map, Signpost, Tracks, Undead); four need only an
+interaction. **Start with Same Game** if you want a fast win, or **Signpost** if you want to
+exercise the harness again — Galaxies and Kurodoko are the two worked examples to copy.
+
+Blocked on a human, not on an agent:
+
+- **The App Store licence question.** Only Gus can send the email; see the next section. Blocks
+  Phase 6 and nothing else.
+- **Codex review is out of credits.** PRs are self-reviewed and merged. See
+  [papercuts.md](papercuts.md) for what that costs.
+
+---
+
 ## Open decision: can this ship on the App Store at all?
 
 This is the one thing that could invalidate half the plan, so it is decided before Phase 1,
@@ -200,13 +240,13 @@ Two things the merge forced, both worth knowing:
 Ported **from Tatham's C** (`~/Projects/puzzlestack-reference/tatham-c/`, MIT, pinned at
 `616da16`), reading our own Godot port first as the map of where each algorithm lives, then
 taking the generator from the C because it guarantees a unique solution. Restyled to the
-house style:
-
-`Black Box, Cube, Filling, Galaxies, Guess, Inertia, Map, Netslide, Pearl, Pegs, Range,
-Rectangles, Same Game, Signpost, Sixteen, Slant, Tracks, Twiddle, Undead, Unruly, Untangle`
+house style.
 
 Take the **generator, validator and solver**. Do not take the renderer: ours is the house
 style and theirs is Godot.
+
+**Start here: [Open work](#open-work) names the nine puzzles left, with file sizes and
+whether each one needs the solver.**
 
 **Per puzzle, the bar is:**
 1. Generator guarantees a unique solution, and the test proves it by counting solutions.
@@ -216,7 +256,7 @@ style and theirs is Godot.
 5. Board renders at 60fps on a mid-range Android, and taps are forgiving at phone size.
 6. It passes the house-style gate in [PUZZLE_STYLE.md](PUZZLE_STYLE.md) §6.
 
-### The list was 21 before the merge; it is 13 now
+### The list was 21 before the merge; it is 12 now
 
 Eight of those twenty-one arrived with Phase 2 under other names. Checked one by one against
 the registry rather than guessed from the name:
@@ -232,8 +272,10 @@ the registry rather than guessed from the name:
 | Untangle | `tangle_fix` |
 | Guess | `word_mastermind` (same Mastermind deduction, word content) |
 
-**Left to port: 13** — Black Box, Cube, Galaxies, Inertia, Map, Netslide, Pegs, Range, Same
-Game, Signpost, Tracks, Twiddle, Undead.
+**Left to port: 9.** Kurodoko is Tatham's Range and arrived with the merge too, so the 13
+became 12 and three of those are done. Two more names were checked rather than assumed:
+`cube_net_fold` is a cube-net puzzle but not `cube.c`, and `mental_mapping` is a
+follow-the-arrows memory game, nothing to do with `map.c`.
 
 ### Landed so far: 3 of 12, plus one rebuilt
 
@@ -331,24 +373,6 @@ The lesson from all four is the same one the Galaxies generator taught, in a new
 a port disagrees with the C, the C is usually right, and "this looks redundant" is a reason to
 work out *why* it is there before deleting it.
 
-### A number worth knowing: 118 of 307 games are broken at 320dp
-
-`test/board/game_audit.dart` pumps every game in the registry on a 320dp phone and counts what
-breaks. It is a measuring tool, not a test, so it stays out of the suite:
-
-```
-flutter test test/board/game_audit.dart
-AUDIT checked=307 overflow=84 threw=35
-```
-
-**84 games overflow the screen and 35 more throw.** That is 119 of 307, and it is the strongest
-argument for Phase 3 being a rebuild rather than a port: the 304 that arrived with the merge were
-never held to a layout gate, and a third of them fall over on the smallest phone the app supports.
-The four rebuilt games are not on that list.
-
-This is not this phase's job — it is 119 separate fixes — but it should be Phase 4's first item,
-and the tool exists so the count can be watched instead of guessed.
-
 ### The bar, as it stands
 
 | | |
@@ -375,10 +399,57 @@ two loops.
 Magnets, Pipes, Hitori, Tents & Trees, Skyscrapers, Futoshiki`
 
 Same bar as Phase 3. This phase adds no games and is the most valuable one in the document:
-it is the difference between "161 puzzles" and "161 puzzles that are actually correct".
+it is the difference between "307 puzzles" and "307 puzzles that are actually correct".
 
-**Done when:** all 14 pass the 200-board uniqueness test, and the Sudoku engine no longer
-strips clues to a count without checking.
+### Do this first: 119 games do not fit a phone
+
+Measured, not guessed, with `test/board/game_audit.dart`:
+
+```
+flutter test test/board/game_audit.dart
+AUDIT checked=307 overflow=85 threw=34
+```
+
+That is **119 of 307 games broken at 320dp** — the smallest phone the app supports. The four
+rebuilt games are not on either list. Every id below is a separate, small, self-contained job:
+open the game, pump it at 320dp, fix the layout or the exception, add it to
+`test/board/new_games_screen_test.dart` so it cannot regress.
+
+**Overflow the screen (85):**
+
+  algebraic_inequality_solver, anagram_definition, angle_finder, area_perimeter_match,
+  base_conversion_run, binary_matrix_rank, binary_scale_balance, binomial_match,
+  chain_reaction, chalk_and_talk, chimp_test, collatz, color_maze_nav, compound_connect,
+  consonant_reconstruct, continuous_paired_associate, conundrum_anagram, corsi_backward_span,
+  countdown_math, counting_sheep, d2_attention, exponent_tower, face_name_association,
+  factor_finder, fraction_match, fraction_matcher, frequency_tap, grammar_sort,
+  graph_coordinate_plot, grid_displacement, grocery_list, heyawake, hue_sort, inequality_dash,
+  kenken, letter_bridge, letter_grid_swapper, math_maze, matrix_reasoning, mental_calendar,
+  mental_rotation, modular_clock_arithmetic, modulo_path, multi_track_counter,
+  navon_hierarchical, oxymoron_hunt, palindrome_builder, percentage_peak, percentage_shopping,
+  perspective_taking, portmanteau_split, posner_spatial_cueing, probe_digit_span,
+  relational_memory, rhyme_master, rotating_maze, sdmt, semantic_association, semantic_link,
+  sequence_sleuth, shape_shifter, shell_game, shikaku, silhouette_match_ortho, simon_command,
+  spatial_conflict, spoonerism_solver, spotlight_track, stroop_number_size, subitizing_rush,
+  sum_pyramid, syllable_stack, tapa, target_10, tenner_grid, triplets_logic,
+  typoglycemia_decoder, venn_numbers, visual_crowding_acuity, vowel_reconstruct,
+  wireframe_3d_rotation, word_association_recall, word_snake_trail, word_surge, yajilin
+
+**Throw while building (34):**
+
+  ab_reversal_oddball, algebraic_balance, attentional_blink_probe, binary_code,
+  blink_detector, color_word_match_up, conjunction_search, cross_section_slice, cube_net_fold,
+  directions_recall, face_trait_association, fact_binder, fractional_pizza, gear_rotation,
+  gear_train_direction, logical_syllogisms, matrix_multiplier, modulo_clock, narrative_recall,
+  paper_folding, polyomino_tiling, prime_gap_hunt, pythagorean_triple_builder, room_inspector,
+  semantic_distance, sentence_unscramble, set_theory_venn, source_monitoring,
+  temporal_order_judgment, vector_dot_product, vektor_vector, visual_search_conjunction,
+  word_ladder_step, word_pair_associate_memory
+
+The count moves by one or two between runs because a few games randomise their layout. Treat it
+as "about 119", not a fixed number.
+
+**Done when:** the audit reports `overflow=0 threw=0`, and both lists are empty.
 
 ---
 
@@ -393,7 +464,7 @@ and they are the kind of puzzle nobody else on the store has. They close the col
 
 ## Phase 6 — Release
 
-- Store title and copy: the number in "161 Brain Puzzles" changes every phase, so it is set
+- Store title and copy: the number in "307 Brain Puzzles" changes every phase, so it is set
   once, at the end, from the real registry count.
 - Regenerate screenshots only if the home or a hero game changed visually (the house-style
   pipeline draws headlines, not the app name, so the rename did not need it).
@@ -413,7 +484,7 @@ and they are the kind of puzzle nobody else on the store has. They close the col
    visuals are ours.
 4. **Keep our names, not Tatham's.** `Akari` and `Slitherlink` are what people search for;
    `Light Up` and `Loopy` are not.
-5. **The registry is the source of truth.** If a game is not in `game_data.dart` with a
+5. **The registry is the source of truth.** If a game is not in `game_registry.dart` with a
    category, it does not exist, no matter how good the screen is.
 6. **No puzzle owns its gestures.** Input goes through the board contract, haptics through the
    five verbs, motion through the five moves. A puzzle that wires its own `GestureDetector`
