@@ -7,7 +7,7 @@ part of 'symmetry_span_provider.dart';
 // **************************************************************************
 
 String _$symmetrySpanNotifierHash() =>
-    r'84acafed59faac1e6476d6ae34f669f0cbbf91a7';
+    r'087f8806191328755fe7749e6b06b78db4279555';
 
 /// See also [SymmetrySpanNotifier].
 @ProviderFor(SymmetrySpanNotifier)

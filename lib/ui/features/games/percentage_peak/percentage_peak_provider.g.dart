@@ -7,7 +7,7 @@ part of 'percentage_peak_provider.dart';
 // **************************************************************************
 
 String _$percentagePeakNotifierHash() =>
-    r'963cc4f7871709e3c1e7f0eaf20b455e8a44ab4f';
+    r'6df5c44065c473595c0f1bf6d0f2e63240bc9b29';
 
 /// See also [PercentagePeakNotifier].
 @ProviderFor(PercentagePeakNotifier)

@@ -6,7 +6,7 @@ part of 'vigilance_task_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$vigilanceNotifierHash() => r'709ecac5870948b1af6775313d369b9dab197fd6';
+String _$vigilanceNotifierHash() => r'114d5c899ff4aad6684edcf372eb65189978948a';
 
 /// See also [VigilanceNotifier].
 @ProviderFor(VigilanceNotifier)

@@ -7,7 +7,7 @@ part of 'spatial_cabinet_memory_provider.dart';
 // **************************************************************************
 
 String _$spatialCabinetMemoryNotifierHash() =>
-    r'75dd64fb180add23d4c3e10f3bee25e987477826';
+    r'86d9bd13c480215ffc13db6cab8098226e632234';
 
 /// See also [SpatialCabinetMemoryNotifier].
 @ProviderFor(SpatialCabinetMemoryNotifier)

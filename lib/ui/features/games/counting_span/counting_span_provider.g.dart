@@ -7,7 +7,7 @@ part of 'counting_span_provider.dart';
 // **************************************************************************
 
 String _$countingSpanNotifierHash() =>
-    r'7dd94291691305a4f075130221aa2f6b728a3a1b';
+    r'048fa323558d7fd90dd05aaec4d10f88028468bf';
 
 /// See also [CountingSpanNotifier].
 @ProviderFor(CountingSpanNotifier)

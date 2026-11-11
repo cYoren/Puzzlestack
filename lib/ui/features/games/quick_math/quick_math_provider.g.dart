@@ -6,7 +6,7 @@ part of 'quick_math_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$quickMathNotifierHash() => r'9d3d9cba1ca8c811712471a0579465240c5df0c3';
+String _$quickMathNotifierHash() => r'6d4b1b73296a62cc4ca5ad968c9555ae5ef5bb8e';
 
 /// See also [QuickMathNotifier].
 @ProviderFor(QuickMathNotifier)

@@ -9,11 +9,12 @@ import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
 import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
 import 'package:puzzle/ui/features/games/kurodoko/kurodoko_screen.dart';
 import 'package:puzzle/ui/features/games/pegs/pegs_screen.dart';
+import 'package:puzzle/ui/features/games/same_game/same_game_screen.dart';
 import 'package:puzzle/ui/features/games/twiddle/twiddle_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
 
-/// The two games added in Phase 3, pumped at the sizes the gate names: a
-/// 320dp phone and a tablet. A board that overflows or throws only shows up
+/// Every game added in Phase 3, pumped at the sizes the gate names: a 320dp
+/// phone and a tablet. A board that overflows or throws only shows up
 /// once it is actually laid out.
 class _FakeRepository extends UserRepository {
   @override
@@ -51,6 +52,7 @@ void main() {
     'Twiddle': const TwiddleScreen(),
     'Galaxies': const GalaxiesScreen(),
     'Kurodoko': const KurodokoScreen(),
+    'Same Game': const SameGameScreen(),
   };
 
   for (final entry in screens.entries) {

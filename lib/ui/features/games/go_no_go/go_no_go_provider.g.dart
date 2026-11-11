@@ -6,7 +6,7 @@ part of 'go_no_go_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$goNoGoNotifierHash() => r'6095dbdcfe2ee25748df30f8629a6b07308c6151';
+String _$goNoGoNotifierHash() => r'335742dff08fa616c9df5d7a4091b6b59690290a';
 
 /// See also [GoNoGoNotifier].
 @ProviderFor(GoNoGoNotifier)
