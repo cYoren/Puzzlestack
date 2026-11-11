@@ -19,7 +19,13 @@ void main() {
       test('${difficulty.name}: $boards boards, one answer each', () {
         final rng = Random(difficulty.index + 91);
         for (var i = 0; i < boards; i++) {
-          final puzzle = engine.generate(difficulty, random: rng);
+          // A generous budget: the tier claims the exact rule level, so the
+          // test refuses the easier fallback the app is allowed to take.
+          final puzzle = engine.generate(
+            difficulty,
+            random: rng,
+            budget: const Duration(seconds: 20),
+          );
           final where = '${difficulty.name} board $i';
 
           expect(puzzle.rows, difficulty.rows, reason: where);
