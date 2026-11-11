@@ -132,8 +132,9 @@ class _VisualSearchConjunctionScreenState extends ConsumerState<VisualSearchConj
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.manage_search_rounded, size: 18, color: DesignSystem.gameRose),
               const SizedBox(width: 6),
               Text(
@@ -148,12 +149,14 @@ class _VisualSearchConjunctionScreenState extends ConsumerState<VisualSearchConj
               ),
             ],
           ),
+          ),
         ),
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.stars_rounded, size: 18, color: DesignSystem.primary),
               const SizedBox(width: 6),
               Text(
@@ -167,6 +170,7 @@ class _VisualSearchConjunctionScreenState extends ConsumerState<VisualSearchConj
                 ),
               ),
             ],
+          ),
           ),
         ),
       ],
@@ -182,8 +186,9 @@ class _VisualSearchConjunctionScreenState extends ConsumerState<VisualSearchConj
         borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
         border: Border.all(color: colorScheme.outline.withValues(alpha: 0.5), width: 1.5),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(      mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
             'TARGET: ',
@@ -206,6 +211,7 @@ class _VisualSearchConjunctionScreenState extends ConsumerState<VisualSearchConj
             ),
           ),
         ],
+      ),
       ),
     );
   }

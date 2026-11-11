@@ -137,8 +137,9 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.format_size_rounded, size: 18, color: DesignSystem.gameRose),
               const SizedBox(width: 6),
               Text(
@@ -153,12 +154,14 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
               ),
             ],
           ),
+          ),
         ),
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.stars_rounded, size: 18, color: DesignSystem.primary),
               const SizedBox(width: 6),
               Text(
@@ -172,6 +175,7 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
                 ),
               ),
             ],
+          ),
           ),
         ),
       ],
@@ -212,8 +216,9 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
         borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
         border: Border.all(color: colorScheme.outline.withValues(alpha: 0.6), width: 2),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
             '${_currentTrial.leftNumber}',
@@ -239,6 +244,7 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
             ),
           ),
         ],
+      ),
       ),
     );
   }

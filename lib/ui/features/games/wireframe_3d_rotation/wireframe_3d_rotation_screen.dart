@@ -162,8 +162,9 @@ class _Wireframe3DRotationScreenState extends ConsumerState<Wireframe3DRotationS
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.architecture_rounded, size: 18, color: DesignSystem.gamePurple),
               const SizedBox(width: 6),
               Text(
@@ -178,12 +179,14 @@ class _Wireframe3DRotationScreenState extends ConsumerState<Wireframe3DRotationS
               ),
             ],
           ),
+          ),
         ),
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
-          child: Row(
-            children: [
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          children: [
               const Icon(Icons.stars_rounded, size: 18, color: DesignSystem.primary),
               const SizedBox(width: 6),
               Text(
@@ -197,6 +200,7 @@ class _Wireframe3DRotationScreenState extends ConsumerState<Wireframe3DRotationS
                 ),
               ),
             ],
+          ),
           ),
         ),
       ],
