@@ -4754,6 +4754,24 @@ abstract class AppLocalizations {
   /// **'You have successfully placed all the tents.'**
   String get tentsAndTreesMessage;
 
+  /// No description provided for @tentsAndTreesWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CAMP READY!'**
+  String get tentsAndTreesWinTitle;
+
+  /// No description provided for @tentsAndTreesTents.
+  ///
+  /// In en, this message translates to:
+  /// **'Tents'**
+  String get tentsAndTreesTents;
+
+  /// No description provided for @tentsAndTreesDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get tentsAndTreesDepth;
+
   /// No description provided for @klotskiMessage.
   ///
   /// In en, this message translates to:

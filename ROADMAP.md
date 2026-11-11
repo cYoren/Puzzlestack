@@ -17,7 +17,7 @@ someone can take without reading the rest of this file.
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
 | 1 | **Eight Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
-| 2 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
+| 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
@@ -409,7 +409,9 @@ board, which makes them the worst place to spend a week.
 
 What is left to rebuild, all of it obscure enough that a correct board is a differentiator:
 
-`Tents & Trees` — **1 left**. Lights Out, Skyscrapers, Futoshiki, Dominosa and Magnets are done.
+**Phase 4 is closed.** Six rebuilt — Lights Out, Skyscrapers, Futoshiki, Dominosa, Magnets and
+Tents & Trees — and the ten famous ones skipped by the decision above. Nothing is left in this
+phase.
 
 ### Landed: Skyscrapers, and a Latin base four puzzles can share
 
@@ -496,6 +498,26 @@ Three things came out of the port:
 Difficulty is 4x4, 5x6 and 6x6, gated on the rule level each tier must reach (1, 2 and 3).
 Level-3 boards are about one in two hundred random boards, so a hard board takes ~260ms to
 find — in line with a hard Galaxies, and the worst case is bounded by the attempt limit.
+
+### Landed: Tents & Trees, which closes the phase
+
+The old engine placed trees and tents and never asked whether the numbers pinned the tents
+down, so a board could accept a second arrangement. The rebuild builds a legal arrangement,
+reads the numbers off it, and hands the clues to the harness.
+
+Two things are worth keeping. The first is a bug that would have shipped: every rule filtered
+"cells that could still be a tent" by the tent bit alone, which **includes cells already
+settled as tents**. A rule that then marked the rest of the line as grass tried to turn a tent
+into grass and reported a contradiction — on every board, immediately. The filter has to be
+"undecided and could be a tent".
+
+The second is the difficulty scale. The three tiers are gated on the rule level a board
+*needs*, exactly: 5x5 boards the basic rules finish, 6x6 boards that need the counts, and 7x7
+boards that need the line filter. That last rule enumerates every arrangement a row's
+remaining tents can take — at most 35 for a row of seven — and keeps the cells that agree
+across all of them. It is the same idea as the Latin line filter, and it is what makes a 7x7
+board decidable without guessing: about one board in seventy-five needs it, which is why a
+hard board takes ~90ms to find.
 
 ### Landed: Lights Out, where uniqueness is linear algebra
 

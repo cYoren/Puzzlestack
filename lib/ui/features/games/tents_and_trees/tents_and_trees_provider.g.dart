@@ -7,12 +7,12 @@ part of 'tents_and_trees_provider.dart';
 // **************************************************************************
 
 String _$tentsAndTreesNotifierHash() =>
-    r'baa58ce130541016ff25af45d99a41e86e78918a';
+    r'984c7a6c0a3b02a5f1656fbcad9a716f39c9a786';
 
 /// See also [TentsAndTreesNotifier].
 @ProviderFor(TentsAndTreesNotifier)
-final tentsAndTreesNotifierProvider = AutoDisposeNotifierProvider<
-    TentsAndTreesNotifier, TentsAndTreesState>.internal(
+final tentsAndTreesNotifierProvider =
+    AutoDisposeNotifierProvider<TentsAndTreesNotifier, TentsState>.internal(
   TentsAndTreesNotifier.new,
   name: r'tentsAndTreesNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final tentsAndTreesNotifierProvider = AutoDisposeNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$TentsAndTreesNotifier = AutoDisposeNotifier<TentsAndTreesState>;
+typedef _$TentsAndTreesNotifier = AutoDisposeNotifier<TentsState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

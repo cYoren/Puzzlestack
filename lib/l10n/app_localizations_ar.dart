@@ -2650,6 +2650,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tentsAndTreesMessage => 'لقد نجحت في وضع جميع الخيام.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'انزلاق رائع! لقد حررت كتلة البطل في $arg0 حركات.';
   }

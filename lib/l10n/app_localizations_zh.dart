@@ -2566,6 +2566,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tentsAndTreesMessage => '你已成功放置了所有帐篷。';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return '精彩的滑动！你在 $arg0 步内释放了英雄方块。';
   }

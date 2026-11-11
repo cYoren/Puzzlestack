@@ -1,116 +1,107 @@
 import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/core/deduction.dart';
 import 'package:puzzle/ui/features/games/tents_and_trees/tents_and_trees_engine.dart';
+import 'package:puzzle/ui/features/games/tents_and_trees/tents_model.dart';
 
 void main() {
-  group('TentsAndTreesEngine', () {
-    late TentsAndTreesEngine engine;
+  const engine = TentsEngine();
 
-    setUp(() {
-      engine = TentsAndTreesEngine();
-    });
+  group('generator', () {
+    for (final difficulty in TentsDifficulty.values) {
+      test('${difficulty.name}: 20 boards, one answer, rules finish it', () {
+        final rng = Random(difficulty.index + 91);
+        for (var i = 0; i < 20; i++) {
+          final puzzle = engine.generate(difficulty, random: rng);
+          final where = '${difficulty.name} board $i';
 
-    group('generatePuzzle', () {
-      test('generates puzzle with correct size', () {
-        final level = engine.generatePuzzle(5);
-        expect(level.size, 5);
-      });
+          expect(puzzle.rows, difficulty.rows);
+          expect(puzzle.cols, difficulty.cols);
+          expect(puzzle.trees.length, puzzle.cellCount ~/ 5,
+              reason: '$where: wrong number of trees');
 
-      test('row clues have correct length', () {
-        final level = engine.generatePuzzle(5);
-        expect(level.rowClues.length, 5);
-      });
+          // The stored answer obeys every rule of the puzzle.
+          expect(engine.isSolved(puzzle, puzzle.solution), isTrue,
+              reason: '$where: the answer does not fit its own clues');
 
-      test('col clues have correct length', () {
-        final level = engine.generatePuzzle(5);
-        expect(level.colClues.length, 5);
-      });
+          // Every tent belongs to exactly one tree.
+          for (final tent in puzzle.solution) {
+            final trees = puzzle.trees.where((tree) {
+              final dr = (tree ~/ puzzle.cols) - (tent ~/ puzzle.cols);
+              final dc = (tree % puzzle.cols) - (tent % puzzle.cols);
+              return dr.abs() + dc.abs() == 1;
+            }).length;
+            expect(trees, 1, reason: '$where: tent $tent touches $trees trees');
+          }
 
-      test('row clues are non-negative', () {
-        final level = engine.generatePuzzle(5);
-        for (final clue in level.rowClues) {
-          expect(clue, greaterThanOrEqualTo(0));
+          // Exactly one answer, reached by the rules at the tier's level.
+          final rating = rate(TentsModel.fresh(puzzle), tentsRules);
+          expect(rating.verdict, PuzzleVerdict.solved, reason: '$where: $rating');
+          expect(rating.solutions, 1, reason: '$where: $rating');
+          expect(rating.level, difficulty.level,
+              reason: '$where: the board does not need the tier\'s depth');
         }
       });
+    }
+  });
 
-      test('col clues are non-negative', () {
-        final level = engine.generatePuzzle(5);
-        for (final clue in level.colClues) {
-          expect(clue, greaterThanOrEqualTo(0));
+  group('rules', () {
+    test('never contradict a board that has an answer', () {
+      final rng = Random(23);
+      for (final difficulty in TentsDifficulty.values) {
+        for (var i = 0; i < 25; i++) {
+          final puzzle = engine.generateUngated(difficulty, rng);
+          final model = TentsModel.fresh(puzzle);
+          final outcome = deduce(model, tentsRules);
+          expect(outcome.consistent, isTrue,
+              reason: '${difficulty.name} $i: rules called a real board impossible');
+          for (var cell = 0; cell < puzzle.cellCount; cell++) {
+            if (puzzle.isTree(cell)) continue;
+            final truth = puzzle.solution.contains(cell) ? kTent : kGrass;
+            expect(model.masks[cell] & truth, isNot(0),
+                reason: '${difficulty.name} $i: rules ruled out the answer at '
+                    'cell $cell');
+          }
         }
-      });
-
-      test('generates puzzle with size 4', () {
-        final level = engine.generatePuzzle(4);
-        expect(level.size, 4);
-        expect(level.rowClues.length, 4);
-        expect(level.colClues.length, 4);
-      });
+      }
     });
 
-    group('getRandomPuzzle', () {
-      test('returns a 5x5 puzzle', () {
-        final level = engine.getRandomPuzzle();
-        expect(level.size, 5);
-      });
+    test('a cell with no tree beside it can never hold a tent', () {
+      final puzzle = engine.generateUngated(TentsDifficulty.easy, Random(3));
+      final model = TentsModel.fresh(puzzle);
+      TentsReach().apply(model);
+      for (var cell = 0; cell < puzzle.cellCount; cell++) {
+        if (puzzle.isTree(cell)) continue;
+        final trees = model.orthogonal(cell).where(puzzle.isTree).length;
+        if (trees == 1) continue;
+        expect(model.valueAt(cell), kGrass,
+            reason: 'cell $cell touches $trees trees but could still be a tent');
+      }
+    });
+  });
 
-      test('has tree positions', () {
-        final level = engine.getRandomPuzzle();
-        expect(level.treePositions, isNotEmpty);
-      });
+  group('hint', () {
+    test('names a cell the rules prove, and the player has wrong', () {
+      final rng = Random(29);
+      for (var i = 0; i < 10; i++) {
+        final puzzle = engine.generate(TentsDifficulty.easy, random: rng);
+        // Take one tent away; the rules must be able to put it back.
+        final missing = [...puzzle.solution]..removeAt(i % puzzle.treeCount);
+        final hint = engine.hint(puzzle, missing);
+        expect(hint, isNotNull, reason: 'board $i: no hint for a wrong board');
+        expect(hint!.value, kTent,
+            reason: 'board $i: the missing tent is not the hint');
+        expect(puzzle.solution.contains(hint.cell), isTrue,
+            reason: 'board $i: hint names a cell that is not a tent');
+        expect(missing.contains(hint.cell), isFalse,
+            reason: 'board $i: hint names a cell the player already has');
+      }
     });
 
-    group('isSolved', () {
-      test('returns false for empty grid', () {
-        final level = engine.generatePuzzle(5);
-        final grid = List.generate(5, (_) => List.filled(5, CellType.empty));
-        expect(engine.isSolved(level, grid), isFalse);
-      });
-
-      test('returns false when row clue not met', () {
-        const level = TentsLevel(
-          size: 3,
-          treePositions: [Point(0, 0), Point(1, 2)],
-          rowClues: [1, 1, 0],
-          colClues: [1, 0, 1],
-        );
-        final grid = [
-          [CellType.tree, CellType.tent, CellType.grass],
-          [CellType.grass, CellType.grass, CellType.tree],
-          [CellType.grass, CellType.grass, CellType.grass],
-        ];
-        expect(engine.isSolved(level, grid), isFalse);
-      });
-
-      test('returns false when tent adjacent to another tent', () {
-        const level = TentsLevel(
-          size: 3,
-          treePositions: [Point(0, 0), Point(2, 2)],
-          rowClues: [1, 0, 1],
-          colClues: [0, 1, 1],
-        );
-        final grid = [
-          [CellType.tree, CellType.tent, CellType.grass],
-          [CellType.grass, CellType.tent, CellType.grass],
-          [CellType.grass, CellType.grass, CellType.tree],
-        ];
-        expect(engine.isSolved(level, grid), isFalse);
-      });
-
-      test('returns false when tent not adjacent to tree', () {
-        const level = TentsLevel(
-          size: 3,
-          treePositions: [Point(0, 0), Point(2, 2)],
-          rowClues: [1, 0, 1],
-          colClues: [1, 0, 1],
-        );
-        final grid = [
-          [CellType.tree, CellType.grass, CellType.tent],
-          [CellType.grass, CellType.grass, CellType.grass],
-          [CellType.tent, CellType.grass, CellType.tree],
-        ];
-        expect(engine.isSolved(level, grid), isFalse);
-      });
+    test('says nothing when the board is right', () {
+      final puzzle = engine.generate(TentsDifficulty.easy, random: Random(31));
+      expect(engine.hint(puzzle, puzzle.solution), isNull);
     });
   });
 }
