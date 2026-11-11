@@ -5734,11 +5734,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Platziere schwarze Zellen so, dass Zahlen die genaue Anzahl weißer Zellen sehen.';
 
   @override
-  String get kurodokoWinTitle => 'SCHWARZ GEFÜLLT GELÖST!';
+  String get kurodokoCongrats => 'Jede Zahl sieht genau, was sie sehen soll.';
 
   @override
-  String get kurodokoWinMessage =>
-      'Du hast die Sichtpfade gemeistert und alle schwarzen Zellen isoliert!';
+  String get kurodokoTapHint =>
+      'Tippe auf ein Feld, um es zu schwärzen. Nochmal tippen markiert es weiß.';
 
   @override
   String get subitizingRushTitle => 'Mengen-Blitz';

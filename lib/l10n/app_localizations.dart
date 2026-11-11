@@ -9963,17 +9963,17 @@ abstract class AppLocalizations {
   /// **'Place black cells so numbers see the exact count of white cells.'**
   String get kurodokoSubtitle;
 
-  /// No description provided for @kurodokoWinTitle.
+  /// No description provided for @kurodokoCongrats.
   ///
   /// In en, this message translates to:
-  /// **'WHERE IS BLACK SOLVED!'**
-  String get kurodokoWinTitle;
+  /// **'Every number sees exactly what it should.'**
+  String get kurodokoCongrats;
 
-  /// No description provided for @kurodokoWinMessage.
+  /// No description provided for @kurodokoTapHint.
   ///
   /// In en, this message translates to:
-  /// **'You mastered the visibility paths and isolated all black cells!'**
-  String get kurodokoWinMessage;
+  /// **'Tap a cell to blacken it, tap again to mark it white.'**
+  String get kurodokoTapHint;
 
   /// No description provided for @subitizingRushTitle.
   ///

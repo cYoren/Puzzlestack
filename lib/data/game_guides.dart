@@ -474,17 +474,19 @@ const Map<String, GameGuide> gameGuides = {
   "kurodoko": GameGuide(
     title: "Kurodoko",
     category: "LOGIC",
-    objective: "Place black cells on the grid so each numbered white cell sees the exact count of white cells orthogonally.",
-    controls: "Tap an empty cell once to mark as white, tap twice to mark as black.",
+    objective: "Blacken cells until every numbered cell sees exactly as many white cells as its number says, counting across and down through itself.",
+    controls: "Tap a cell to blacken it, tap it again to mark it white, and a third time to clear it. Numbers cannot be changed.",
     walkthrough: [
-      "Step 1: Check numbered clues; each indicates how many white cells can be seen horizontally and vertically.",
-      "Step 2: Ensure no two black cells touch orthogonally.",
-      "Step 3: Keep all white cells connected into a single group.",
+      "Step 1: A number counts the white cells in an unbroken line through it, across plus down, with the cell itself counted once.",
+      "Step 2: Start with a clue whose number is larger than the room around it. The cells it must reach have to be white.",
+      "Step 3: When a clue already sees its number, the cells just past the line on both sides have to be black.",
+      "Step 4: Blacken a cell and its four neighbours are white. Keep the white cells in one connected group and the board falls.",
     ],
     strategies: [
-      "Cells with large clues must have long unbroken white corridors.",
-      "Clues cannot be shaded black.",
-      "If a cell is black, all four orthogonal neighbors must be white.",
+      "A clue of 1 on a cell with neighbours means every neighbour is black.",
+      "Two black cells can never share an edge, so a black cell settles four cells at once.",
+      "If blackening a cell would cut the white cells into two groups, that cell has to be white.",
+      "When nothing else moves, try a cell one way and follow the consequences. If it contradicts, the other way is forced.",
     ],
   ),
   "subitizing_rush": GameGuide(

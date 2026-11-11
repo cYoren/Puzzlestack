@@ -5698,11 +5698,12 @@ class AppLocalizationsTe extends AppLocalizations {
       'Place black cells so numbers see the exact count of white cells.';
 
   @override
-  String get kurodokoWinTitle => 'WHERE IS BLACK SOLVED!';
+  String get kurodokoCongrats =>
+      'ప్రతి సంఖ్య చూడాల్సినదాన్ని సరిగ్గా చూస్తుంది.';
 
   @override
-  String get kurodokoWinMessage =>
-      'You mastered the visibility paths and isolated all black cells!';
+  String get kurodokoTapHint =>
+      'గడిని నల్లగా చేయడానికి తట్టండి. తెల్లగా గుర్తించడానికి మళ్లీ తట్టండి.';
 
   @override
   String get subitizingRushTitle => 'Subitize Rush';

@@ -5334,11 +5334,10 @@ class AppLocalizationsZh extends AppLocalizations {
       'Place black cells so numbers see the exact count of white cells.';
 
   @override
-  String get kurodokoWinTitle => 'WHERE IS BLACK SOLVED!';
+  String get kurodokoCongrats => '每个数字看到的格数都刚刚好。';
 
   @override
-  String get kurodokoWinMessage =>
-      'You mastered the visibility paths and isolated all black cells!';
+  String get kurodokoTapHint => '轻点格子涂黑，再轻点一次标记为白色。';
 
   @override
   String get subitizingRushTitle => 'Subitize Rush';
