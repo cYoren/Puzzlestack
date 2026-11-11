@@ -17,8 +17,8 @@
 #
 # Output:
 #   screenshots/raw/                              raw device PNGs
-#   screenshots/aso-refresh/final/ios/iphone/     1290x2796, App Store
-#   screenshots/aso-refresh/final/android/phone/  1290x2796, Google Play
+#   screenshots/aso-refresh/final/ios/            1290x2796, App Store
+#   screenshots/aso-refresh/final/play/           1080x1920, Google Play (16:9: Play caps at 2:1)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -38,7 +38,14 @@ flutter drive \
   ${DEVICE:+-d "$DEVICE"}
 
 echo "==> composing store images (house style)"
-python3 tool/compose_house_style.py
+if python3 -c "import PIL" 2>/dev/null; then
+  python3 tool/compose_house_style.py
+elif command -v uv >/dev/null 2>&1; then
+  uv run --with pillow python3 tool/compose_house_style.py
+else
+  echo "needs Pillow: pip install pillow, or install uv" >&2
+  exit 1
+fi
 
 echo "==> done. Store-ready images:"
 find screenshots/aso-refresh/final -type f | sort
