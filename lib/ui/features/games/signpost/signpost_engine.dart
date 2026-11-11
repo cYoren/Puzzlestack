@@ -313,6 +313,9 @@ bool _legal(
   if (from == to) return false;
   if (from < 0 || from >= puzzle.cellCount) return false;
   if (to < 0 || to >= puzzle.cellCount) return false;
+  // A board whose links already loop has no legal move out of it, and its
+  // chains are not well defined enough to ask about anyway.
+  if (position.impossible) return false;
   if (position.links[from] >= 0) return false;
   if (position.prev[to] >= 0) return false;
   if (!_pointsAt(puzzle, from, to)) return false;
