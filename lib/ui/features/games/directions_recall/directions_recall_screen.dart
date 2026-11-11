@@ -217,8 +217,9 @@ class _DirectionsRecallScreenState extends ConsumerState<DirectionsRecallScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Score / Timer Banner
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(              mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -246,6 +247,7 @@ class _DirectionsRecallScreenState extends ConsumerState<DirectionsRecallScreen>
                     ),
                   ),
                 ],
+              ),
               ),
               const SizedBox(height: 24),
               // Map Grid
@@ -295,13 +297,15 @@ class _DirectionsRecallScreenState extends ConsumerState<DirectionsRecallScreen>
                           ),
                           alignment: Alignment.center,
                           child: isStart
-                              ? Column(
+                              ? SingleChildScrollView(
+                                child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Icon(Icons.play_circle_filled_rounded, size: 24, color: Colors.green),
                                     Text(AppLocalizations.of(context)!.btnStartGame, style: TextStyle(fontSize: 8, color: Colors.green, fontWeight: FontWeight.bold)),
                                   ],
-                                )
+                                ),
+                              )
                               : (isSelected
                                   ? const Icon(Icons.location_on_rounded, size: 28, color: DesignSystem.primary)
                                   : null),
@@ -319,8 +323,12 @@ class _DirectionsRecallScreenState extends ConsumerState<DirectionsRecallScreen>
                   child: Text('DIRECTIONS LIST:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 12)),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                // The step chips are read-only, so they wrap rather than
+                // squeezing into one row at 320dp.
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
                   children: _steps.map((step) {
                     return Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

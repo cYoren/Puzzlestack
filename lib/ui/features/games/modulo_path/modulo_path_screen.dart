@@ -219,8 +219,9 @@ class _ModuloPathScreenState extends ConsumerState<ModuloPathScreen> {
                 width: 2,
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,6 +246,7 @@ class _ModuloPathScreenState extends ConsumerState<ModuloPathScreen> {
                   ),
                 ),
               ],
+            ),
             ),
           ),
           // Grid

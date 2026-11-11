@@ -253,8 +253,9 @@ class _FactBinderScreenState extends ConsumerState<FactBinderScreen> {
                           ),
                         ),
                         const SizedBox(height: DesignSystem.spaceMD),
-                        Row(
-                          children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(                        children: [
                             const Icon(Icons.work_rounded, size: 16, color: DesignSystem.accentBerry),
                             const SizedBox(width: 8),
                             Text(
@@ -263,9 +264,11 @@ class _FactBinderScreenState extends ConsumerState<FactBinderScreen> {
                             ),
                           ],
                         ),
+                        ),
                         const SizedBox(height: DesignSystem.spaceSM),
-                        Row(
-                          children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(                        children: [
                             const Icon(Icons.sports_esports_rounded, size: 16, color: DesignSystem.accentEmerald),
                             const SizedBox(width: 8),
                             Text(
@@ -273,6 +276,7 @@ class _FactBinderScreenState extends ConsumerState<FactBinderScreen> {
                               style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w800),
                             ),
                           ],
+                        ),
                         ),
                       ],
                     ),

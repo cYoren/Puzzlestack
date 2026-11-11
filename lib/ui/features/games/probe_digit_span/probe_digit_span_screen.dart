@@ -155,7 +155,12 @@ class _ProbeDigitSpanScreenState extends ConsumerState<ProbeDigitSpanScreen> {
             horizontal: DesignSystem.spaceLG,
             vertical: DesignSystem.spaceMD,
           ),
-          child: Column(
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
             children: [
               _buildHeader(colorScheme),
               const Spacer(flex: 1),
@@ -164,6 +169,10 @@ class _ProbeDigitSpanScreenState extends ConsumerState<ProbeDigitSpanScreen> {
               _buildNumpad(colorScheme),
               const Spacer(flex: 1),
             ],
+          ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

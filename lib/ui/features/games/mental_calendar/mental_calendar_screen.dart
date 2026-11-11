@@ -53,8 +53,8 @@ class MentalCalendarScreen extends ConsumerWidget {
       return DateFormat('EEEE').format(DateTime(2024, 1, index + 1));
     });
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return SingleChildScrollView(
+      child: Column( mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           '${state.totalTrials + 1} / 10',
@@ -137,6 +137,7 @@ class MentalCalendarScreen extends ConsumerWidget {
             ),
           ),
       ],
+    ),
     );
   }
 

@@ -257,8 +257,9 @@ class _TemporalOrderJudgmentScreenState extends ConsumerState<TemporalOrderJudgm
             ),
           ),
           const SizedBox(height: 36),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildFlashCircle(_isLeftLit),
               const SizedBox(width: 50),
@@ -266,6 +267,7 @@ class _TemporalOrderJudgmentScreenState extends ConsumerState<TemporalOrderJudgm
               const SizedBox(width: 50),
               _buildFlashCircle(_isRightLit),
             ],
+          ),
           ),
         ],
       ),

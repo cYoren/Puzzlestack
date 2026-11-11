@@ -255,7 +255,12 @@ class _TennerGridScreenState extends ConsumerState<TennerGridScreen> {
                   borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
                   border: Border.all(color: isDark ? DesignSystem.darkOutline : DesignSystem.outline, width: 2),
                 ),
-                child: Column(
+                child: LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     // Grid Rows
@@ -325,6 +330,10 @@ class _TennerGridScreenState extends ConsumerState<TennerGridScreen> {
                       }),
                     ),
                   ],
+                ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),

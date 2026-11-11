@@ -189,8 +189,8 @@ class _PercentageShoppingScreenState extends ConsumerState<PercentageShoppingScr
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(DesignSystem.spaceMD),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Column(       mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -253,6 +253,7 @@ class _PercentageShoppingScreenState extends ConsumerState<PercentageShoppingScr
                 children: _options.map((value) => _buildOptionButton(value, isDark)).toList(),
               ),
             ],
+          ),
           ),
         ),
       ),

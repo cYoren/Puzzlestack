@@ -57,7 +57,12 @@ class LetterFrequencyScanScreen extends ConsumerWidget {
       ],
       body: Padding(
         padding: const EdgeInsets.all(DesignSystem.spaceLG),
-        child: Column(
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TangibleContainer(
@@ -150,6 +155,10 @@ class LetterFrequencyScanScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
           ],
+        ),
+              ),
+            ),
+          ),
         ),
       ),
     );
