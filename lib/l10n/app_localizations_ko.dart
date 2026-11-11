@@ -436,6 +436,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get dominosaWinMessage => '모든 도미노를 찾아 배치했습니다!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => '스카이스크래퍼';
 
   @override

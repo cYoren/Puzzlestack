@@ -434,6 +434,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dominosaWinMessage => '所有的多米诺骨牌都已被找到并放置！';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => '摩天大楼';
 
   @override

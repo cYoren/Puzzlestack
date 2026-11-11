@@ -450,6 +450,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get dominosaWinMessage => 'Her domino bulundu ve yerleştirildi!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'GÖKDELENLER';
 
   @override

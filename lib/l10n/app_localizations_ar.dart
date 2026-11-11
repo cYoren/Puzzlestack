@@ -445,6 +445,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dominosaWinMessage => 'تم العثور على كل قطعة دومينو ووضعها!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'ناطحات سحاب';
 
   @override

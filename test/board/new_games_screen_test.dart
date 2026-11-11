@@ -11,6 +11,7 @@ import 'package:puzzle/ui/features/games/kurodoko/kurodoko_screen.dart';
 import 'package:puzzle/ui/features/games/lights_out/lights_out_screen.dart';
 import 'package:puzzle/ui/features/games/pegs/pegs_screen.dart';
 import 'package:puzzle/ui/features/games/same_game/same_game_screen.dart';
+import 'package:puzzle/ui/features/games/skyscrapers/skyscrapers_screen.dart';
 import 'package:puzzle/ui/features/games/twiddle/twiddle_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
 
@@ -55,6 +56,7 @@ void main() {
     'Kurodoko': const KurodokoScreen(),
     'Same Game': const SameGameScreen(),
     'Lights Out': const LightsOutScreen(),
+    'Skyscrapers': const SkyscrapersScreen(),
   };
 
   for (final entry in screens.entries) {

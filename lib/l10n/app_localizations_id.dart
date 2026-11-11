@@ -453,6 +453,12 @@ class AppLocalizationsId extends AppLocalizations {
       'Setiap domino telah ditemukan và ditempatkan!';
 
   @override
+  String get skyscrapersClues => 'Clues';
+
+  @override
+  String get skyscrapersFilled => 'Filled';
+
+  @override
   String get skyscrapersTitle => 'PENCERAK LANGIT';
 
   @override
