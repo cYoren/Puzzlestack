@@ -2286,6 +2286,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Incroyable ! Vous avez résolu le carré latin Futoshiki.';
 
   @override
+  String get futoshikiWinTitle => 'SQUARE SOLVED!';
+
+  @override
+  String get futoshikiGivens => 'Givens';
+
+  @override
+  String get futoshikiEdges => 'Edges';
+
+  @override
   String letterFrequencyScanMessage(String arg0, String arg1) {
     return 'Vous avez correctement compté $arg0 occurrences de \"$arg1\".';
   }
