@@ -16,18 +16,17 @@ someone can take without reading the rest of this file.
 
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
-| 1 | **Nine Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+| 1 | **Eight Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | **About 73 games still overflow at 320dp** (down from 117). Every id is listed; each is a small fix. | one game at a time | [Phase 4](#do-this-first-about-73-games-still-do-not-fit-a-phone) |
 | 3 | **14 classics rebuilt for uniqueness** (Sudoku, Nonogram, Slitherlink and 11 more). | one game at a time | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 4 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 5 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
-The nine left in Phase 3, with what each one needs:
+The eight left in Phase 3, with what each one needs:
 
 | Puzzle | Tatham file | Lines | Needs the solver? |
 | --- | --- | --- | --- |
 | Black Box | `blackbox.c` | 1587 | yes, deduction |
-| Same Game | `samegame.c` | 1686 | no, click groups |
 | Cube | `cube.c` | 1787 | no, folding |
 | Netslide | `netslide.c` | 1889 | no, sliding |
 | Inertia | `inertia.c` | 2246 | no, arcade |
@@ -36,9 +35,10 @@ The nine left in Phase 3, with what each one needs:
 | Tracks | `tracks.c` | 3159 | yes, deduction |
 | Map | `map.c` | 3474 | yes, deduction |
 
-Five need `lib/core/deduction.dart` (Black Box, Map, Signpost, Tracks, Undead); four need only an
-interaction. **Start with Same Game** if you want a fast win, or **Signpost** if you want to
-exercise the harness again — Galaxies and Kurodoko are the two worked examples to copy.
+Five need `lib/core/deduction.dart` (Black Box, Map, Signpost, Tracks, Undead); three need only
+an interaction (Cube, Netslide, Inertia). **Start with Cube** if you want a fast win, or
+**Signpost** if you want to exercise the harness again — Galaxies and Kurodoko are the two
+worked examples to copy.
 
 Blocked on a human, not on an agent:
 
@@ -82,7 +82,7 @@ desktop, and keep iOS out of the store listing rather than ship it in breach.
 
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
-| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **307** after Phases 2 and 3 | 78,131 LOC game code | the base |
+| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **308** after Phases 2 and 3 | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | **304 registered games** | all of them, merged in Phase 2 |
 | **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
@@ -282,7 +282,7 @@ became 12 and three of those are done. Two more names were checked rather than a
 `cube_net_fold` is a cube-net puzzle but not `cube.c`, and `mental_mapping` is a
 follow-the-arrows memory game, nothing to do with `map.c`.
 
-### Landed so far: 3 of 12, plus one rebuilt
+### Landed so far: 4 of 12, plus one rebuilt
 
 `lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
 repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
@@ -315,6 +315,7 @@ Two properties make it worth having rather than each puzzle writing its own:
 | **Twiddle** | drag a tile onto the square the turn would move it to | scrambled from solved, so the solution is the scramble backwards |
 | **Galaxies** | drag a dot onto a cell; the cell it reflects onto joins too | **counted**: 200 easy + 200 medium boards, each proven to have exactly one solution, and the solver's count checked against a brute force that ignores the rules |
 | **Kurodoko** (rebuilt, not added) | tap a cell to blacken it, again to mark it white | **counted**: 600 boards across three tiers, each proven unique; the rules are also proved sound cell by cell against the answer |
+| **Same Game** | tap a group of two or more | **constructed**: Tatham's reverse generator, ported whole, with every insertion checked to be a legal inverse move; 600 boards across three tiers, all fully covered and all with a legal move |
 
 ### What Galaxies cost, and what it taught
 
@@ -390,7 +391,8 @@ work out *why* it is there before deleting it.
 | hint reveals one step | one cell the rules can prove, from the solver, not from the stored answer |
 
 **Done when:** 316 games, and each ported puzzle has a test that generates 200 boards and
-asserts one solution each.
+asserts one solution each. Same Game is the exception to the wording, not the bar: its board is
+built by legal inverse moves, so the test asserts the construction held and the board is full.
 
 ---
 

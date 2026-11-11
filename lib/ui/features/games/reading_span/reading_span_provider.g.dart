@@ -7,7 +7,7 @@ part of 'reading_span_provider.dart';
 // **************************************************************************
 
 String _$readingSpanNotifierHash() =>
-    r'726a52c3257daf9a16c526461fa5c6e5872f834f';
+    r'ba56bb40112e91e71e760ebedd9291f23dd03586';
 
 /// See also [ReadingSpanNotifier].
 @ProviderFor(ReadingSpanNotifier)

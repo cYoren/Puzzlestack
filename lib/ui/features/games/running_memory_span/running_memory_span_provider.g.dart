@@ -7,7 +7,7 @@ part of 'running_memory_span_provider.dart';
 // **************************************************************************
 
 String _$runningMemorySpanNotifierHash() =>
-    r'b0ab19fa7d428c638ca3755132ed05e02c8941e9';
+    r'e6dc3ef4d6ab9922a6a74918ebe25cd7a6ca23cb';
 
 /// See also [RunningMemorySpanNotifier].
 @ProviderFor(RunningMemorySpanNotifier)

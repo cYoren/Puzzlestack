@@ -7,7 +7,7 @@ part of 'pixel_mimic_provider.dart';
 // **************************************************************************
 
 String _$pixelMimicNotifierHash() =>
-    r'2474776463346798a10ac74d5d035c0c280d5287';
+    r'00983999d14f4fcc906d4525e202318d95f9b2c3';
 
 /// See also [PixelMimicNotifier].
 @ProviderFor(PixelMimicNotifier)

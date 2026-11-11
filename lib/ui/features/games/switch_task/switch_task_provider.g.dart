@@ -7,7 +7,7 @@ part of 'switch_task_provider.dart';
 // **************************************************************************
 
 String _$switchTaskNotifierHash() =>
-    r'686c7d681371230e410124a5051b250d23e5197d';
+    r'f0b8973cbc7cd97730ccb505d8c3eeb22dbe68cf';
 
 /// See also [SwitchTaskNotifier].
 @ProviderFor(SwitchTaskNotifier)

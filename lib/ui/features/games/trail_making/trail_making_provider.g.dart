@@ -7,7 +7,7 @@ part of 'trail_making_provider.dart';
 // **************************************************************************
 
 String _$trailMakingNotifierHash() =>
-    r'922635c12a0b8789a3077b1fb41a7b28aefcfc6d';
+    r'f676ac5ed2c3d9ea10affaebc7c51bd4e0a6abb8';
 
 /// See also [TrailMakingNotifier].
 @ProviderFor(TrailMakingNotifier)

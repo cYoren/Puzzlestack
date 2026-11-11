@@ -7,7 +7,7 @@ part of 'divisibility_dash_provider.dart';
 // **************************************************************************
 
 String _$divisibilityDashNotifierHash() =>
-    r'96f679fd9e17b677fdf76d07a6c6e9e4f43ef576';
+    r'899a1d112b738454bdbfb58e6e236615ceb022bd';
 
 /// See also [DivisibilityDashNotifier].
 @ProviderFor(DivisibilityDashNotifier)
