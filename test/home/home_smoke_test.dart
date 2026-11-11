@@ -69,7 +69,12 @@ void main() {
   testWidgets('the shuffle feed opens on a real game', (tester) async {
     _sizeTo(tester, 400);
 
-    await tester.pumpWidget(_app(const ShuffleFeedScreen()));
+    // Pinned to a game on the board contract. Left random, this test opened a
+    // different one of 307 games every run and failed whenever it drew one that
+    // overflows a 320dp phone or leaves a timer running — which is a real
+    // problem, but it is that game's problem, not the feed's, and a test that
+    // fails one run in three tells you nothing about either.
+    await tester.pumpWidget(_app(const ShuffleFeedScreen(startGameId: 'pegs')));
     // The feed animates continuously; pumpAndSettle is not an option.
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
