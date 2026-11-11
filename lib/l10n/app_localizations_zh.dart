@@ -402,6 +402,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get magnetsWinMessage => '所有磁铁都已完美排列！';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => '灯塔';
 
   @override

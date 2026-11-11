@@ -181,6 +181,8 @@
   "magnetsHowToPlay": "Fill domino-sized containers with '+' and '-' magnets or leave them blank. Row and column clues specify the total number of each pole in that line. Identical poles cannot be adjacent orthogonally.",
   "magnetsWinTitle": "POLARITY BALANCED!",
   "magnetsWinMessage": "All magnets are perfectly arranged!",
+  "magnetsPlaced": "Magnets",
+  "magnetsLevel": "Depth",
   "lighthousesTitle": "LIGHTHOUSES",
   "lighthousesSubtitle": "Place ships based on lighthouse clues.",
   "lighthousesHowToPlay": "Place 1x1 ships in the grid. Lighthouses indicate the total number of ships visible horizontally and vertically. Ships cannot touch lighthouses or each other, even diagonally.",

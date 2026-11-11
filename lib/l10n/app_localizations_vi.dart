@@ -416,6 +416,12 @@ class AppLocalizationsVi extends AppLocalizations {
       'Tất cả các nam châm đã được sắp xếp hoàn hảo!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'NGỌN HẢI ĐĂNG';
 
   @override

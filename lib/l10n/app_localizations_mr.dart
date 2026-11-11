@@ -416,6 +416,12 @@ class AppLocalizationsMr extends AppLocalizations {
   String get magnetsWinMessage => 'सर्व मॅग्नेट्स उत्तम प्रकारे मांडले आहेत!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'दीपगृहे';
 
   @override
