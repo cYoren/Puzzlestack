@@ -12,9 +12,9 @@ Measured on the current tree:
 | Games calling haptics through `HapticFeedbackUtil` | 152 (good) |
 | Games with their own `AnimationController` | 7 |
 
-The counts were measured on the 161-game tree. Phase 2 merged 143 more games, so the same
-proportions now apply to 304; the three Phase 1 puzzles are the only ones on the contract so
-far, which is exactly why the ports and rebuilds come next.
+The counts were measured on the 161-game tree. Phase 2 merged 143 more games and Phase 3
+ported nine, so the same proportions now apply to 313; the Phase 3 and 4 puzzles are the only
+ones on the contract so far, which is exactly why the ports and rebuilds come next.
 
 So: two rendering philosophies, no drag anywhere, and almost no motion. Colour and haptics are
 already shared; **feel is not**. Porting 67 more puzzles before fixing that would bake the

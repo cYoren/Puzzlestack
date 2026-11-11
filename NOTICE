@@ -24,13 +24,22 @@ are not limited to:
            home screen (Daily Pick, Quick Play, recents, category rooms) in
            place of the original flat game list.
 
-  2026-08  Rebranded the fork to Mindstack: new application name and
-           identifiers (com.medhub.mindstack), new icon and color system, and
-           rewritten user-facing copy and store listing.
+  2026-08  Rebranded the fork: new application name and identifiers, new icon
+           and colour system, and rewritten user-facing copy and store listing.
 
-  2026-11  Renamed to Puzzlestack: application name and identifiers changed
-           again (com.medhub.puzzlestack), before any public release.
+  2026-11  Named Puzzlestack: application name and identifiers set to
+           com.medhub.puzzlestack, before any public release.
 
 The original work remains the copyright of its respective authors. This notice
 is provided in accordance with sections 4 and 5 of the GNU General Public
 License, version 3.
+
+Distribution note
+-----------------
+
+Apple's App Store terms are held by the Free Software Foundation to conflict with
+GPL-3.0. The upstream author of "Puzzle" has given permission for this derivative
+to be distributed through the App Store as well as through channels whose terms
+do not conflict with the licence. That permission was given by email in November
+2026 and is held by the Puzzlestack authors. The GPL-3.0 terms above still govern
+the source code itself.
