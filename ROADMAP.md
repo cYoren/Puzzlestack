@@ -89,8 +89,8 @@ the zip is from 2014; the pinned clone in `tatham-c/` is current and has 42 game
 | --- | --- |
 | Games at the fork point | 161 |
 | + upstream games we never received | **+143 → 304** (Phase 2, landed) |
-| + Tatham puzzles we actually lack (see Phase 3) | **+13** → 317 |
-| + Tatham puzzles invariant never ported | +4 → 321 |
+| + Tatham puzzles we actually lack (see Phase 3) | **+12** → 316 |
+| + Tatham puzzles invariant never ported | +4 → 320 |
 
 The 44 in the first draft of this table came from upstream's `game_data.dart`, which lists 205
 games. That file is legacy: the registry they actually ship from (`game_registry.dart`, one
@@ -235,7 +235,7 @@ the registry rather than guessed from the name:
 **Left to port: 13** — Black Box, Cube, Galaxies, Inertia, Map, Netslide, Pegs, Range, Same
 Game, Signpost, Tracks, Twiddle, Undead.
 
-### Landed so far: 3 of 13
+### Landed so far: 3 of 12, plus one rebuilt
 
 `lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
 repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
@@ -267,6 +267,7 @@ Two properties make it worth having rather than each puzzle writing its own:
 | **Pegs** | drag a peg onto the square it lands on | reverse play from one peg, so solvable by construction; the test replays the recorded line over 200 boards |
 | **Twiddle** | drag a tile onto the square the turn would move it to | scrambled from solved, so the solution is the scramble backwards |
 | **Galaxies** | drag a dot onto a cell; the cell it reflects onto joins too | **counted**: 200 easy + 200 medium boards, each proven to have exactly one solution, and the solver's count checked against a brute force that ignores the rules |
+| **Kurodoko** (rebuilt, not added) | tap a cell to blacken it, again to mark it white | **counted**: 600 boards across three tiers, each proven unique; the rules are also proved sound cell by cell against the answer |
 
 ### What Galaxies cost, and what it taught
 
@@ -295,17 +296,53 @@ generators to get one that works. The lessons are worth more than the puzzle:
    difficulties are 6×6/6 dots, 8×8/12 dots and 9×9/14 dots: those are the sizes and
    densities that actually produce each level, not sizes chosen for looks.
 
+### Kurodoko was already here, and the list was wrong again
+
+The plan said "port Range". Range is Tatham's name for Nikoli's **Kurodoko**, also sold as
+Kuromasu, and it arrived with the Phase 2 merge as `kurodoko`. So the count was wrong twice
+over: 21 became 13, and 13 is really **12**.
+
+Two more names needed checking rather than assuming. `cube_net_fold` is a cube-net puzzle but
+not Tatham's `cube.c` (fold 27 cubes into a 3x3x3), and `mental_mapping` is a follow-the-arrows
+memory game, nothing to do with `map.c` (four-colouring). Both stay on the missing list.
+
+**What was here was not worth keeping.** The shipped engine gave every board `size * 1.5` clues
+on a `size²` grid and never checked whether the answer was unique — so it could, and did, ship
+ambiguous boards — with no solver, no difficulty and one fixed size. It is now rebuilt on the
+harness, which makes this a replacement rather than a new game: the game count does not move.
+
+That rebuild is where the interesting bugs were, and all four were mine rather than Tatham's:
+
+1. **Four runs per direction, not three.** A clue's reach needs white, then undecided, then
+   *already-white beyond*, and then a fourth run of "anything not black" past that. Dropping the
+   fourth made the room a clue has too small, so the rule forced cells that were not forced.
+2. **"Beyond" has to mean already white.** The "this direction would overshoot" test only holds
+   if the cells past the gap are white already: then filling the gap would carry the run into
+   them. If they were merely undecided, the cut could happen out there instead and blaming the
+   gap is wrong. Using "not black" there produced boards the solver called impossible.
+3. **A rule must report news, not success.** `settle` returned true when a cell already had the
+   colour asked for, so the fixed-point loop never terminated. It now returns 1 for news, 0 for
+   "already knew", -1 for contradiction.
+4. **A split not-black graph is not a contradiction.** I added a check that Tatham does not
+   have, reasoning that cells only leave the not-black set. True, and irrelevant: the *white*
+   cells are free to be one piece with the rest going black. Removing it fixed 80 refusals.
+
+The lesson from all four is the same one the Galaxies generator taught, in a new costume: when
+a port disagrees with the C, the C is usually right, and "this looks redundant" is a reason to
+work out *why* it is there before deleting it.
+
 ### The bar, as it stands
 
 | | |
 | --- | --- |
-| 200 boards, one solution each | Pegs, Twiddle (replayed), Galaxies easy + medium (counted) |
+| 200 boards, one solution each | Pegs, Twiddle (replayed), Galaxies easy + medium, Kurodoko all three tiers (counted) |
 | hard tier | 50 boards, not 200: a hard Galaxies takes ~0.5 s to find because the generator throws away boards that come back easier than asked for. 200 would add two minutes to every test run. |
-| logic-only solver | Galaxies ships only boards the rules can finish; a board that needs a guess is discarded |
+| logic-only solver | Galaxies and Kurodoko ship only boards the rules can finish; a board that needs a guess is discarded |
+| rules proved sound | Kurodoko: 936 one-cell assumptions, no rule ever contradicts a valid board or settles a wrong cell |
 | three difficulties by depth | rule level 1 / 2 / 3, asserted per board |
 | hint reveals one step | one cell the rules can prove, from the solver, not from the stored answer |
 
-**Done when:** 317 games, and each ported puzzle has a test that generates 200 boards and
+**Done when:** 316 games, and each ported puzzle has a test that generates 200 boards and
 asserts one solution each.
 
 ---
