@@ -1,82 +1,205 @@
 import 'dart:math';
 
-class DominosaEngine {
-  final Random _random = Random();
+/// Dominosa: a grid of digits that has to be covered with dominoes so that
+/// every pair `0-0 .. n-n` appears exactly once.
+///
+/// The old generator laid a **fixed** tiling over the grid and filled it with
+/// shuffled dominoes. Every board had the same arrangement, and nothing checked
+/// that the numbers pinned that arrangement down — so a board could have two
+/// valid tilings and accept the wrong one.
+///
+/// This one tiles at random and then **counts** the tilings. A board ships only
+/// when exactly one covering exists.
+class DominosaPuzzle {
+  const DominosaPuzzle({
+    required this.maxValue,
+    required this.rows,
+    required this.cols,
+    required this.grid,
+    required this.partner,
+  });
 
-  Map<String, dynamic> generateLevel({int maxVal = 3}) {
-    // Dominosa generation:
-    // 1. Create a complete set of dominoes for maxVal (e.g., if maxVal=3, dominoes are 0-0 to 3-3).
-    // 2. Arrange them in a grid of size (maxVal+1) x (maxVal+2).
-    // 3. Shuffle and present the numbers.
-    
-    List<List<int>> dominoes = [];
-    for (int i = 0; i <= maxVal; i++) {
-      for (int j = i; j <= maxVal; j++) {
-        dominoes.add([i, j]);
+  final int maxValue;
+  final int rows;
+  final int cols;
+
+  /// Row-major digits, 0..maxValue.
+  final List<int> grid;
+
+  /// Row-major: the cell each cell is paired with in the answer.
+  final List<int> partner;
+
+  int get cellCount => rows * cols;
+
+  int get dominoCount => cellCount ~/ 2;
+}
+
+enum DominosaDifficulty {
+  easy(3),
+  medium(4),
+  hard(5);
+
+  const DominosaDifficulty(this.maxValue);
+
+  final int maxValue;
+}
+
+class DominosaEngine {
+  const DominosaEngine();
+
+  int rowsFor(int maxValue) => maxValue + 1;
+
+  int colsFor(int maxValue) => maxValue + 2;
+
+  /// Every domino type as `a * 16 + b` with `a <= b`.
+  List<int> typesFor(int maxValue) => [
+        for (var a = 0; a <= maxValue; a++)
+          for (var b = a; b <= maxValue; b++) a * 16 + b,
+      ];
+
+  // --------------------------------------------------------------- generator
+
+  DominosaPuzzle generate(DominosaDifficulty difficulty, {Random? random}) {
+    final rng = random ?? Random();
+    final maxValue = difficulty.maxValue;
+    final rows = rowsFor(maxValue);
+    final cols = colsFor(maxValue);
+    final types = typesFor(maxValue);
+
+    for (var attempt = 0; attempt < 4000; attempt++) {
+      // Geometry first, values second. Tiling *and* choosing a domino type for
+      // every placement in one search biases the result towards a handful of
+      // shapes, and those shapes are the ambiguous ones.
+      final partner = _randomMatching(rows, cols, rng);
+      if (partner == null) continue;
+
+      final grid = List<int>.filled(rows * cols, -1);
+      final shuffled = [...types]..shuffle(rng);
+      var next = 0;
+      for (var cell = 0; cell < partner.length; cell++) {
+        final other = partner[cell];
+        if (other < cell) continue;
+        final type = shuffled[next++];
+        final a = type ~/ 16;
+        final b = type % 16;
+        if (rng.nextBool()) {
+          grid[cell] = a;
+          grid[other] = b;
+        } else {
+          grid[cell] = b;
+          grid[other] = a;
+        }
+      }
+
+      final puzzle = DominosaPuzzle(
+        maxValue: maxValue,
+        rows: rows,
+        cols: cols,
+        grid: grid,
+        partner: partner,
+      );
+      if (countTilings(puzzle, limit: 2) == 1) return puzzle;
+    }
+    throw StateError('could not tile a $rows x $cols Dominosa board uniquely');
+  }
+
+  /// A random perfect matching of the grid, or null when the greedy walk
+  /// painted itself into a corner.
+  List<int>? _randomMatching(int rows, int cols, Random rng) {
+    final partner = List<int>.filled(rows * cols, -1);
+
+    bool fill() {
+      var start = -1;
+      for (var i = 0; i < partner.length; i++) {
+        if (partner[i] == -1) {
+          start = i;
+          break;
+        }
+      }
+      if (start == -1) return true;
+
+      final row = start ~/ cols;
+      final col = start % cols;
+      final options = <int>[
+        if (col + 1 < cols && partner[start + 1] == -1) start + 1,
+        if (row + 1 < rows && partner[start + cols] == -1) start + cols,
+      ]..shuffle(rng);
+
+      for (final other in options) {
+        partner[start] = other;
+        partner[other] = start;
+        if (fill()) return true;
+        partner[start] = -1;
+        partner[other] = -1;
+      }
+      return false;
+    }
+
+    return fill() ? partner : null;
+  }
+
+  // ------------------------------------------------------------------ solver
+
+  /// How many coverings the numbers allow, capped at [limit].
+  ///
+  /// A covering may not use the same domino type twice, which is the rule the
+  /// player is held to.
+  int countTilings(DominosaPuzzle puzzle, {int limit = 2}) {
+    final grid = puzzle.grid;
+    final rows = puzzle.rows;
+    final cols = puzzle.cols;
+    final used = <int>{};
+    final covered = <int>{};
+    var found = 0;
+
+    void walk() {
+      if (found >= limit) return;
+      var start = -1;
+      for (var i = 0; i < grid.length; i++) {
+        if (!covered.contains(i)) {
+          start = i;
+          break;
+        }
+      }
+      if (start == -1) {
+        found++;
+        return;
+      }
+      final row = start ~/ cols;
+      final col = start % cols;
+      final neighbours = <int>[
+        if (col + 1 < cols && !covered.contains(start + 1)) start + 1,
+        if (row + 1 < rows && !covered.contains(start + cols)) start + cols,
+      ];
+      for (final other in neighbours) {
+        final type = typeOf(grid[start], grid[other]);
+        if (used.contains(type)) continue;
+        used.add(type);
+        covered.add(start);
+        covered.add(other);
+        walk();
+        covered.remove(start);
+        covered.remove(other);
+        used.remove(type);
+        if (found >= limit) return;
       }
     }
-    dominoes.shuffle();
 
-    int rows = maxVal + 1;
-    int cols = maxVal + 2;
-    List<List<int>> grid = List.generate(rows, (_) => List.filled(cols, -1));
-    
-    // Simple tiling (backtracking would be better but let's try a simple one)
-    // For maxVal=3, rows=4, cols=5. Total cells = 20. Dominoes = 10.
-    
-    // Tiling 4x5 with 10 dominoes:
-    // For now, let's use a fixed tiling and fill with random dominoes
-    List<List<List<int>>> tiling = [
-      [[0,0],[0,1]], [[0,2],[0,3]], [[0,4],[1,4]],
-      [[1,0],[1,1]], [[1,2],[1,3]],
-      [[2,0],[2,1]], [[2,2],[2,3]], [[2,4],[3,4]],
-      [[3,0],[3,1]], [[3,2],[3,3]]
-    ];
-    
-    for (int i = 0; i < dominoes.length; i++) {
-      var d = dominoes[i];
-      var pos = tiling[i];
-      if (_random.nextBool()) d = [d[1], d[0]];
-      grid[pos[0][0]][pos[0][1]] = d[0];
-      grid[pos[1][0]][pos[1][1]] = d[1];
-    }
-
-    return {
-      'grid': grid,
-      'maxVal': maxVal,
-    };
+    walk();
+    return found;
   }
 
-  static bool checkVictoryWrapper(Map<String, dynamic> params) {
-    final grid = params['grid'] as List<List<int>>;
-    final selections = params['selections'] as List<List<List<int>>>; // List of pairs [[r1,c1],[r2,c2]]
-    final maxVal = params['maxVal'] as int;
+  // ------------------------------------------------------------------- rules
 
-    int totalCells = grid.length * grid[0].length;
-    if (selections.length * 2 != totalCells) return false;
-
-    Set<String> usedDominoes = {};
-    Set<String> usedCells = {};
-
-    for (var sel in selections) {
-      int r1 = sel[0][0], c1 = sel[0][1];
-      int r2 = sel[1][0], c2 = sel[1][1];
-      
-      String cKey1 = '$r1,$c1';
-      String cKey2 = '$r2,$c2';
-      if (usedCells.contains(cKey1) || usedCells.contains(cKey2)) return false;
-      usedCells.add(cKey1);
-      usedCells.add(cKey2);
-
-      int v1 = grid[r1][c1];
-      int v2 = grid[r2][c2];
-      
-      String dKey = v1 < v2 ? '$v1-$v2' : '$v2-$v1';
-      if (usedDominoes.contains(dKey)) return false;
-      usedDominoes.add(dKey);
-    }
-
-    int expectedDominoes = (maxVal + 1) * (maxVal + 2) ~/ 2;
-    return usedDominoes.length == expectedDominoes;
+  bool isAdjacent(int a, int b, int cols) {
+    final ra = a ~/ cols;
+    final ca = a % cols;
+    final rb = b ~/ cols;
+    final cb = b % cols;
+    return (ra == rb && (ca - cb).abs() == 1) || (ca == cb && (ra - rb).abs() == 1);
   }
+
+  int typeOf(int a, int b) => a <= b ? a * 16 + b : b * 16 + a;
+
+  String typeName(int type) => '${type ~/ 16}-${type % 16}';
 }

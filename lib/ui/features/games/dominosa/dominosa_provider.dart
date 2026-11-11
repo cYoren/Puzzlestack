@@ -1,136 +1,148 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+
+import '../../../core/board/puzzle_board.dart';
 import 'dominosa_engine.dart';
 
 part 'dominosa_provider.g.dart';
 
-class DominosaState {
-  final IList<IList<int>> grid;
-  final IList<IList<IList<int>>> selections;
-  final int maxVal;
-  final bool isVictory;
-  final bool isLoading;
-  final IList<int>? firstSelected; // [r, c]
-
-  DominosaState({
-    required this.grid,
-    required this.selections,
-    required this.maxVal,
-    this.isVictory = false,
-    this.isLoading = true,
-    this.firstSelected,
+@immutable
+class DominosaState extends PuzzleState {
+  const DominosaState({
+    required this.puzzle,
+    required this.placed,
+    required this.difficulty,
+    this.selected,
+    this.isSolved = false,
+    this.hintCell,
+    this.hintPartner,
   });
 
+  final DominosaPuzzle puzzle;
+
+  /// Cell -> the cell it is paired with, both directions. Empty when nothing
+  /// is placed.
+  final Map<int, int> placed;
+
+  final DominosaDifficulty difficulty;
+  final int? selected;
+  final bool isSolved;
+
+  /// A domino the hint is pointing at, and whether it is one the player got
+  /// wrong (`hintPartner` set and `hintWrong` true) or one from the answer.
+  final int? hintCell;
+  final int? hintPartner;
+
+  int get rows => puzzle.rows;
+
+  int get cols => puzzle.cols;
+
+  Set<int> get usedTypes {
+    final out = <int>{};
+    placed.forEach((cell, other) {
+      if (cell < other) {
+        out.add(puzzleType(cell, other));
+      }
+    });
+    return out;
+  }
+
+  int puzzleType(int a, int b) {
+    final va = puzzle.grid[a];
+    final vb = puzzle.grid[b];
+    return va <= vb ? va * 16 + vb : vb * 16 + va;
+  }
+
   DominosaState copyWith({
-    IList<IList<int>>? grid,
-    IList<IList<IList<int>>>? selections,
-    int? maxVal,
-    bool? isVictory,
-    bool? isLoading,
-    IList<int>? firstSelected,
-    bool clearSelected = false,
+    Map<int, int>? placed,
+    int? selected,
+    bool clearSelection = false,
+    bool? isSolved,
+    int? hintCell,
+    int? hintPartner,
+    bool clearHint = false,
   }) {
     return DominosaState(
-      grid: grid ?? this.grid,
-      selections: selections ?? this.selections,
-      maxVal: maxVal ?? this.maxVal,
-      isVictory: isVictory ?? this.isVictory,
-      isLoading: isLoading ?? this.isLoading,
-      firstSelected: clearSelected ? null : (firstSelected ?? this.firstSelected),
+      puzzle: puzzle,
+      placed: placed ?? this.placed,
+      difficulty: difficulty,
+      selected: clearSelection ? null : (selected ?? this.selected),
+      isSolved: isSolved ?? this.isSolved,
+      hintCell: clearHint ? null : (hintCell ?? this.hintCell),
+      hintPartner: clearHint ? null : (hintPartner ?? this.hintPartner),
     );
   }
 }
 
 @riverpod
 class DominosaNotifier extends _$DominosaNotifier {
-  final _engine = DominosaEngine();
+  final DominosaEngine _engine = const DominosaEngine();
 
   @override
-  DominosaState build() {
+  DominosaState build() => _newPuzzle(DominosaDifficulty.medium);
+
+  DominosaState _newPuzzle(DominosaDifficulty difficulty) {
     return DominosaState(
-      grid: <IList<int>>[].lock,
-      selections: <IList<IList<int>>>[].lock,
-      maxVal: 0,
+      puzzle: _engine.generate(difficulty),
+      placed: const {},
+      difficulty: difficulty,
     );
   }
 
-  void initGame() {
-    final level = _engine.generateLevel();
-    final grid = level['grid'] as List<List<int>>;
-    
-    state = DominosaState(
-      grid: grid.map((r) => r.lock).toIList(),
-      selections: <IList<IList<int>>>[].lock,
-      maxVal: level['maxVal'] as int,
-      isLoading: false,
-    );
+  void newGame() => state = _newPuzzle(state.difficulty);
+
+  void setDifficulty(DominosaDifficulty difficulty) {
+    if (difficulty == state.difficulty) return;
+    state = _newPuzzle(difficulty);
   }
 
-  void selectCell(int r, int c) {
-    if (state.isVictory) return;
+  void select(int cell) {
+    if (state.isSolved) return;
+    state = state.copyWith(selected: cell, clearHint: true);
+  }
 
-    if (state.firstSelected == null) {
-      // Check if already in a selection
-      if (_isInSelection(r, c)) {
-        _removeSelection(r, c);
+  /// Place the domino between two adjacent free cells, or clear a placed one.
+  void place(int a, int b) {
+    if (state.isSolved) return;
+    final placed = {...state.placed};
+
+    if (placed[a] == b) {
+      placed.remove(a);
+      placed.remove(b);
+      state = state.copyWith(placed: placed, clearSelection: true, clearHint: true);
+      return;
+    }
+    if (placed.containsKey(a) || placed.containsKey(b)) return;
+    if (!_engine.isAdjacent(a, b, state.cols)) return;
+
+    final type = state.puzzleType(a, b);
+    if (state.usedTypes.contains(type)) return;
+
+    placed[a] = b;
+    placed[b] = a;
+    final next = state.copyWith(placed: placed, clearSelection: true, clearHint: true);
+    state = next.copyWith(isSolved: placed.length == next.puzzle.cellCount);
+  }
+
+  /// One domino the player can place next, or the first one they got wrong.
+  ///
+  /// The board is unique, so the answer is the only covering there is; the hint
+  /// may point at it without spoiling anything the player could not work out.
+  void hint() {
+    if (state.isSolved) return;
+    final puzzle = state.puzzle;
+
+    for (final entry in state.placed.entries) {
+      if (entry.key < entry.value && puzzle.partner[entry.key] != entry.value) {
+        state = state.copyWith(hintCell: entry.key, hintPartner: entry.value);
         return;
       }
-      state = state.copyWith(firstSelected: [r, c].lock);
-    } else {
-      int r1 = state.firstSelected![0];
-      int c1 = state.firstSelected![1];
-      
-      if (r1 == r && c1 == c) {
-        state = state.copyWith(clearSelected: true);
-        return;
-      }
-
-      // Check adjacency
-      if ((r1 == r && (c1 - c).abs() == 1) || (c1 == c && (r1 - r).abs() == 1)) {
-        // Valid pair
-        if (!_isInSelection(r, c)) {
-           final newSel = [[r1, c1].lock, [r, c].lock].lock;
-           state = state.copyWith(
-             selections: state.selections.add(newSel),
-             clearSelected: true,
-           );
-           _checkVictory();
-        } else {
-          state = state.copyWith(clearSelected: true);
-        }
-      } else {
-        // Too far, change selection
-        state = state.copyWith(firstSelected: [r, c].lock);
-      }
     }
-  }
 
-  bool _isInSelection(int r, int c) {
-    for (var sel in state.selections) {
-      if ((sel[0][0] == r && sel[0][1] == c) || (sel[1][0] == r && sel[1][1] == c)) return true;
-    }
-    return false;
-  }
-
-  void _removeSelection(int r, int c) {
-    final newSelections = state.selections.where((sel) => 
-      !((sel[0][0] == r && sel[0][1] == c) || (sel[1][0] == r && sel[1][1] == c))
-    ).toIList();
-    state = state.copyWith(selections: newSelections);
-  }
-
-  void _checkVictory() {
-    final grid = state.grid.map((r) => r.toList()).toList();
-    final selections = state.selections.map((s) => s.map((p) => p.toList()).toList()).toList();
-
-    final isVictory = DominosaEngine.checkVictoryWrapper({
-      'grid': grid,
-      'selections': selections,
-      'maxVal': state.maxVal,
-    });
-
-    if (isVictory) {
-      state = state.copyWith(isVictory: true);
+    for (var cell = 0; cell < puzzle.cellCount; cell++) {
+      if (state.placed.containsKey(cell)) continue;
+      state = state.copyWith(hintCell: cell, hintPartner: puzzle.partner[cell]);
+      return;
     }
   }
 }

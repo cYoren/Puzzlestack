@@ -451,6 +451,12 @@ class AppLocalizationsVi extends AppLocalizations {
       'Mọi quân domino đã được tìm thấy và đặt đúng chỗ!';
 
   @override
+  String get dominosaPlaced => 'Placed';
+
+  @override
+  String get dominosaTypes => 'Types';
+
+  @override
   String get skyscrapersClues => 'Clues';
 
   @override

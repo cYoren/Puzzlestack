@@ -6,6 +6,7 @@ import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
+import 'package:puzzle/ui/features/games/dominosa/dominosa_screen.dart';
 import 'package:puzzle/ui/features/games/futoshiki/futoshiki_screen.dart';
 import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
 import 'package:puzzle/ui/features/games/kurodoko/kurodoko_screen.dart';
@@ -59,6 +60,7 @@ void main() {
     'Lights Out': const LightsOutScreen(),
     'Skyscrapers': const SkyscrapersScreen(),
     'Futoshiki': const FutoshikiScreen(),
+    'Dominosa': const DominosaScreen(),
   };
 
   for (final entry in screens.entries) {

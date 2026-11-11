@@ -409,7 +409,7 @@ board, which makes them the worst place to spend a week.
 
 What is left to rebuild, all of it obscure enough that a correct board is a differentiator:
 
-`Dominosa, Magnets, Tents & Trees` — **3 left**. Lights Out, Skyscrapers and Futoshiki are done.
+`Magnets, Tents & Trees` — **2 left**. Lights Out, Skyscrapers, Futoshiki and Dominosa are done.
 
 ### Landed: Skyscrapers, and a Latin base four puzzles can share
 
@@ -446,6 +446,19 @@ Futoshiki looks like. Easy keeps 60% of the edges, medium 45%, hard removes ever
 
 It cost one predicate and one board file, because `lib/core/latin.dart` already had the rest.
 That is the payoff the base was built for.
+
+### Landed: Dominosa, where the order of the search was the bug
+
+The old generator laid a **fixed** tiling over the grid — the same ten placements on every
+board — and filled it with shuffled dominoes. Nothing checked that the numbers pinned that
+tiling down, so a board could have two coverings and accept the wrong one.
+
+The rebuild tiles at random and **counts** the coverings, shipping only a board with exactly
+one. The interesting part was the first version, which searched for the tiling and the domino
+values at the same time. It worked on 4x5 but could not find a unique 5x6 or 6x7 board in 200
+attempts. Splitting the problem — random matching first, then a random bijection from the
+placements to the domino set — took the same sizes to 20/20 in under 100ms. The search was
+biasing itself towards a handful of shapes, and those shapes were the ambiguous ones.
 
 ### Landed: Lights Out, where uniqueness is linear algebra
 
