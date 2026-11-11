@@ -12,6 +12,7 @@ import 'package:puzzle/ui/features/games/cube/cube_screen.dart';
 import 'package:puzzle/ui/features/games/magnets/magnets_screen.dart';
 import 'package:puzzle/ui/features/games/map/map_screen.dart';
 import 'package:puzzle/ui/features/games/inertia/inertia_screen.dart';
+import 'package:puzzle/ui/features/games/netslide/netslide_screen.dart';
 import 'package:puzzle/ui/features/games/tents_and_trees/tents_and_trees_screen.dart';
 import 'package:puzzle/ui/features/games/galaxies/galaxies_screen.dart';
 import 'package:puzzle/ui/features/games/kurodoko/kurodoko_screen.dart';
@@ -71,6 +72,7 @@ void main() {
     'Cube': const CubeScreen(),
     'Map': const MapScreen(),
     'Inertia': const InertiaScreen(),
+    'Netslide': const NetslideScreen(),
   };
 
   for (final entry in screens.entries) {

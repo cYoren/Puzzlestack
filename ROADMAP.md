@@ -16,26 +16,34 @@ someone can take without reading the rest of this file.
 
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
-| 1 | **Five Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube, Map and Inertia are done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+| 1 | **Four Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube, Map, Inertia and Netslide are done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
-The five left in Phase 3, with what each one needs:
+The four left in Phase 3, with what each one needs:
 
 | Puzzle | Tatham file | Lines | Needs the solver? |
 | --- | --- | --- | --- |
 | Black Box | `blackbox.c` | 1587 | yes, deduction |
-| Netslide | `netslide.c` | 1889 | no, sliding |
 | Signpost | `signpost.c` | 2568 | yes, deduction |
 | Undead | `undead.c` | 3049 | yes, deduction |
 | Tracks | `tracks.c` | 3159 | yes, deduction |
 
-Four of these need `lib/core/deduction.dart` (Black Box, Signpost, Tracks, Undead); Netslide
-needs only an interaction. **Start with Netslide** if you want the shorter job — it is a sliding
-puzzle on a wrapping net, and its loops are the only tricky part — or **Undead** if you want to
-exercise the harness again: Galaxies and Kurodoko are the two worked examples to copy, and
-Magnets and Tents & Trees are the two most recent.
+All four need `lib/core/deduction.dart`, and all four have a design decision to make before the
+code is worth writing:
+
+- **Black Box** needs the off-centre ray geometry. With axis-aligned rays only, every ball is
+  an absorber and the puzzle collapses to "the first ball in each row", so it needs
+  half-cell entry points and deflection.
+- **Signpost** arrows alone do not pin the chain down: a cell's arrow points *along a ray*, and
+  its successor can be any cell on that ray. Tatham's answer is a solver that adds numerals
+  until it finishes; without that, uniqueness has to be counted over Hamiltonian paths.
+- **Undead** needs mirror ray-tracing before the counts mean anything.
+- **Tracks** needs a railway solver before its clues mean anything.
+
+Galaxies and Kurodoko are the two worked examples to copy; Magnets and Tents & Trees are the
+two most recent.
 
 Blocked on a human, not on an agent:
 
@@ -79,7 +87,7 @@ desktop, and keep iOS out of the store listing rather than ship it in breach.
 
 | Source | What it is | Size | What we take |
 | --- | --- | --- | --- |
-| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **311** after Phases 2 and 3 | 78,131 LOC game code | the base |
+| **Puzzlestack** (this repo) | our fork, 161 games at the fork point, **312** after Phases 2 and 3 | 78,131 LOC game code | the base |
 | **sidhant947/Puzzle** (upstream) | the app we forked from, **100 commits** ahead of our fork base `d4d5d09` | **304 registered games** | all of them, merged in Phase 2 |
 | **invariant** | our own Godot 4 port of Simon Tatham's collection | 35 puzzles, 32,107 LOC GDScript | the map, and code we own |
 | **Simon Tatham's collection** | the reference implementation, MIT, pinned at `616da16` | 42 games, 74 `.c` + the shared solver core | the correctness bar, and the code we port from |
@@ -279,7 +287,7 @@ became 12 and three of those are done. Two more names were checked rather than a
 `cube_net_fold` is a cube-net puzzle but not `cube.c`, and `mental_mapping` is a
 follow-the-arrows memory game, nothing to do with `map.c`.
 
-### Landed so far: 7 of 12, plus one rebuilt
+### Landed so far: 8 of 12, plus one rebuilt
 
 `lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
 repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
@@ -313,6 +321,27 @@ Two properties make it worth having rather than each puzzle writing its own:
 | **Galaxies** | drag a dot onto a cell; the cell it reflects onto joins too | **counted**: 200 easy + 200 medium boards, each proven to have exactly one solution, and the solver's count checked against a brute force that ignores the rules |
 | **Kurodoko** (rebuilt, not added) | tap a cell to blacken it, again to mark it white | **counted**: 600 boards across three tiers, each proven unique; the rules are also proved sound cell by cell against the answer |
 | **Same Game** | tap a group of two or more | **constructed**: Tatham's reverse generator, ported whole, with every insertion checked to be a legal inverse move; 600 boards across three tiers, all fully covered and all with a legal move |
+
+### Landed: Netslide, where the fallback was the bug
+
+A net of pipes on a grid. Slide a whole row or column one square, the tiles shuttle round, and
+the pipes never rotate — position is the only thing you can change. A wall across a line stops
+it sliding, which is what turns the grid into a set of shuttles instead of one big puzzle.
+Tatham's `netslide.c`, a cross between Net and Sixteen courtesy of Richard Boulton.
+
+**Generation is by construction.** A solved board is built first — a loop through every cell,
+with walls on the edges the loop does not use — and then scrambled by legal slides. A slide is a
+cyclic shift, so it is exactly invertible, and the puzzle carries the scramble it used. The test
+undoes that scramble and lands back on the solved board: the proof that a player can finish is a
+replay, not a hope.
+
+The bug was in the safety net. The solved loop wants a Hamiltonian cycle, which exists only when
+the cell count is even (the grid is bipartite, so every cycle is even); every tier is even, and
+a random walk finds a cycle in milliseconds. The fallback for when it does not was a
+**serpentine sweep**, and a serpentine does not close: its two ends are diagonally opposite, so
+the cell at the join came out with one pipe instead of two. The generator's own test caught it
+on 5x6. The fallback is now **ladders** — two adjacent columns form a loop, down one and up the
+other — which cannot fail and covers every cell exactly twice.
 
 ### Landed: Inertia, where the ball cannot stop halfway
 

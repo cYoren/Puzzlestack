@@ -1046,6 +1046,48 @@ abstract class AppLocalizations {
   /// **'MINE! Tap to retry'**
   String get inertiaExploded;
 
+  /// No description provided for @netslideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NETSLIDE'**
+  String get netslideTitle;
+
+  /// No description provided for @netslideSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Slide rows and columns until every pipe meets a pipe.'**
+  String get netslideSubtitle;
+
+  /// No description provided for @netslideWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NET COMPLETE!'**
+  String get netslideWinTitle;
+
+  /// No description provided for @netslideWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every pipe is connected.'**
+  String get netslideWinMessage;
+
+  /// No description provided for @netslideHowToPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.'**
+  String get netslideHowToPlay;
+
+  /// No description provided for @netslideMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'Slides'**
+  String get netslideMoves;
+
+  /// No description provided for @netslideScramble.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get netslideScramble;
+
   /// No description provided for @lighthousesTitle.
   ///
   /// In en, this message translates to:
