@@ -452,6 +452,12 @@ class AppLocalizationsBn extends AppLocalizations {
       'প্রতিটি ডমিনো খুঁজে পাওয়া গেছে এবং স্থাপন করা হয়েছে!';
 
   @override
+  String get dominosaPlaced => 'Placed';
+
+  @override
+  String get dominosaTypes => 'Types';
+
+  @override
   String get skyscrapersClues => 'Clues';
 
   @override

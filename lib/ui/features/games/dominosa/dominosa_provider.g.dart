@@ -6,7 +6,7 @@ part of 'dominosa_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dominosaNotifierHash() => r'1dc6d2bf2d77ef4855ed8eebca6ba958ad2f15a3';
+String _$dominosaNotifierHash() => r'74659edd3b006a949e7470b161b0f5221e59d320';
 
 /// See also [DominosaNotifier].
 @ProviderFor(DominosaNotifier)

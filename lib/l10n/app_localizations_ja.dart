@@ -436,6 +436,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get dominosaWinMessage => 'すべてのドミノが見つかり、配置されました！';
 
   @override
+  String get dominosaPlaced => 'Placed';
+
+  @override
+  String get dominosaTypes => 'Types';
+
+  @override
   String get skyscrapersClues => 'Clues';
 
   @override

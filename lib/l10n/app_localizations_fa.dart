@@ -452,6 +452,12 @@ class AppLocalizationsFa extends AppLocalizations {
   String get dominosaWinMessage => 'هر دومینو پیدا و جایگذاری شده است!';
 
   @override
+  String get dominosaPlaced => 'Placed';
+
+  @override
+  String get dominosaTypes => 'Types';
+
+  @override
   String get skyscrapersClues => 'Clues';
 
   @override
