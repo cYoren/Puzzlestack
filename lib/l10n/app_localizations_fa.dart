@@ -2691,6 +2691,15 @@ class AppLocalizationsFa extends AppLocalizations {
   String get tentsAndTreesMessage => 'شما با موفقیت تمام چادرها را قرار دادید.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'لغزش فوق‌العاده! شما بلوک قهرمان را در $arg0 حرکت آزاد کردید.';
   }

@@ -2730,6 +2730,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get tentsAndTreesMessage => 'Anda berhasil menempatkan semua tenda.';
 
   @override
+  String get tentsAndTreesWinTitle => 'CAMP READY!';
+
+  @override
+  String get tentsAndTreesTents => 'Tents';
+
+  @override
+  String get tentsAndTreesDepth => 'Depth';
+
+  @override
   String klotskiMessage(String arg0) {
     return 'Pergeseran yang sensasional! Anda membebaskan blok Hero dalam $arg0 langkah.';
   }
