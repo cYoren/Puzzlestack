@@ -1,109 +1,67 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/dominosa/dominosa_engine.dart';
 
 void main() {
-  group('DominosaEngine', () {
-    late DominosaEngine engine;
+  const engine = DominosaEngine();
 
-    setUp(() {
-      engine = DominosaEngine();
-    });
+  group('generator', () {
+    for (final difficulty in DominosaDifficulty.values) {
+      test('${difficulty.name}: 20 boards, each with exactly one tiling', () {
+        final rng = Random(41);
+        for (var i = 0; i < 20; i++) {
+          final puzzle = engine.generate(difficulty, random: rng);
+          final n = puzzle.maxValue;
 
-    group('generateLevel', () {
-      test('returns a map with grid and maxVal', () {
-        final level = engine.generateLevel(maxVal: 3);
-        expect(level.containsKey('grid'), isTrue);
-        expect(level.containsKey('maxVal'), isTrue);
-      });
+          expect(puzzle.rows, engine.rowsFor(n));
+          expect(puzzle.cols, engine.colsFor(n));
+          expect(puzzle.grid.every((v) => v >= 0 && v <= n), isTrue,
+              reason: 'board $i has a value out of range');
 
-      test('grid dimensions are (maxVal+1) x (maxVal+2)', () {
-        final level = engine.generateLevel(maxVal: 3);
-        final grid = level['grid'] as List<List<int>>;
-        expect(grid.length, 4); // rows = maxVal+1
-        expect(grid[0].length, 5); // cols = maxVal+2
-      });
-
-      test('generates level with default maxVal', () {
-        final level = engine.generateLevel();
-        expect(level.containsKey('grid'), isTrue);
-        expect(level.containsKey('maxVal'), isTrue);
-      });
-
-      test('grid values are in range 0..maxVal', () {
-        final level = engine.generateLevel(maxVal: 3);
-        final grid = level['grid'] as List<List<int>>;
-        for (final row in grid) {
-          for (final cell in row) {
-            expect(cell, greaterThanOrEqualTo(0));
-            expect(cell, lessThanOrEqualTo(3));
+          // The recorded tiling is a valid covering: every cell paired once,
+          // every domino type used once.
+          final seen = <int>{};
+          final types = <int>{};
+          for (var cell = 0; cell < puzzle.cellCount; cell++) {
+            final other = puzzle.partner[cell];
+            expect(other, isNot(-1), reason: 'board $i cell $cell unpaired');
+            expect(puzzle.partner[other], cell);
+            expect(engine.isAdjacent(cell, other, puzzle.cols), isTrue,
+                reason: 'board $i pair $cell-$other is not adjacent');
+            if (seen.add(cell)) {
+              seen.add(other);
+              types.add(engine.typeOf(puzzle.grid[cell], puzzle.grid[other]));
+            }
           }
+          expect(types.length, puzzle.dominoCount,
+              reason: 'board $i repeats a domino type');
+
+          // And nothing else covers it.
+          expect(engine.countTilings(puzzle, limit: 2), 1,
+              reason: 'board $i is not unique');
         }
       });
+    }
+  });
 
-      test('grid has no unassigned cells (-1)', () {
-        final level = engine.generateLevel(maxVal: 3);
-        final grid = level['grid'] as List<List<int>>;
-        for (final row in grid) {
-          for (final cell in row) {
-            expect(cell, isNot(-1));
-          }
-        }
-      });
+  group('rules', () {
+    test('adjacency is orthogonal only', () {
+      expect(engine.isAdjacent(0, 1, 5), isTrue);
+      expect(engine.isAdjacent(0, 5, 5), isTrue);
+      expect(engine.isAdjacent(0, 6, 5), isFalse);
+      expect(engine.isAdjacent(1, 5, 5), isFalse);
     });
 
-    group('checkVictoryWrapper', () {
-      test('returns false when selections count does not match cell count', () {
-        final grid = [
-          [0, 1, 0, 1, 0],
-          [1, 0, 1, 0, 1],
-          [0, 1, 0, 1, 0],
-          [1, 0, 1, 0, 1],
-        ];
-        final result = DominosaEngine.checkVictoryWrapper({
-          'grid': grid,
-          'selections': [
-            [[0, 0], [0, 1]],
-          ],
-          'maxVal': 1,
-        });
-        expect(result, isFalse);
-      });
+    test('a domino type is unordered', () {
+      expect(engine.typeOf(2, 5), engine.typeOf(5, 2));
+      expect(engine.typeName(engine.typeOf(2, 5)), '2-5');
+    });
 
-      test('returns false for overlapping cells', () {
-        final grid = [
-          [0, 0, 1],
-          [1, 0, 1],
-          [0, 1, 1],
-        ];
-        final result = DominosaEngine.checkVictoryWrapper({
-          'grid': grid,
-          'selections': [
-            [[0, 0], [0, 1]],
-            [[0, 0], [1, 0]],
-            [[0, 2], [1, 2]],
-          ],
-          'maxVal': 1,
-        });
-        expect(result, isFalse);
-      });
-
-      test('returns false for duplicate dominoes', () {
-        final grid = [
-          [0, 1, 0],
-          [1, 0, 1],
-          [0, 1, 0],
-        ];
-        final result = DominosaEngine.checkVictoryWrapper({
-          'grid': grid,
-          'selections': [
-            [[0, 0], [0, 1]],
-            [[0, 2], [1, 0]],
-            [[1, 1], [1, 2]],
-          ],
-          'maxVal': 1,
-        });
-        expect(result, isFalse);
-      });
+    test('the type set covers every pair once', () {
+      final types = engine.typesFor(3);
+      expect(types.length, 10);
+      expect(types.toSet().length, 10);
     });
   });
 }
