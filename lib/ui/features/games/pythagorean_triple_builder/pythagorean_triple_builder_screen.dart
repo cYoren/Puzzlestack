@@ -8,6 +8,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'pythagorean_triple_builder_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class PythagoreanTripleBuilderScreen extends ConsumerStatefulWidget {
   const PythagoreanTripleBuilderScreen({super.key});
@@ -134,9 +135,7 @@ class _PythagoreanTripleBuilderScreenState extends ConsumerState<PythagoreanTrip
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,

@@ -9,6 +9,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'attentional_blink_probe_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class AttentionalBlinkProbeScreen extends ConsumerStatefulWidget {
   const AttentionalBlinkProbeScreen({super.key});
@@ -163,9 +164,7 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,

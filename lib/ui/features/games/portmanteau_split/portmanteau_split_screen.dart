@@ -10,6 +10,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'portmanteau_split_provider.dart';
+import '../../../../widgets/game_hud.dart';
 
 class PortmanteauSplitScreen extends ConsumerStatefulWidget {
   const PortmanteauSplitScreen({super.key});
@@ -73,9 +74,7 @@ class _PortmanteauSplitScreenState extends ConsumerState<PortmanteauSplitScreen>
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(

@@ -8,6 +8,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'ab_reversal_oddball_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class ABReversalOddballScreen extends ConsumerStatefulWidget {
   const ABReversalOddballScreen({super.key});
@@ -136,9 +137,7 @@ class _ABReversalOddballScreenState extends ConsumerState<ABReversalOddballScree
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,

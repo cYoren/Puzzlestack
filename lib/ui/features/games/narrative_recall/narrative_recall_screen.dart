@@ -10,6 +10,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
+import '../../../../widgets/game_hud.dart';
 
 class NarrativeRecallScreen extends ConsumerStatefulWidget {
   const NarrativeRecallScreen({super.key});
@@ -207,9 +208,7 @@ class _NarrativeRecallScreenState extends ConsumerState<NarrativeRecallScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 Text(l10n.phaseMemorizeDetails, style: Theme.of(context).textTheme.titleMedium),
                 if (_showingStory)
                   Text(l10n.phaseTimeLeft(_timeLeft), style: const TextStyle(fontWeight: FontWeight.bold, color: DesignSystem.gameRose)),

@@ -10,6 +10,7 @@ import '../../../../widgets/tangible.dart';
 import '../../../../utils/design_system.dart';
 import '../../../../utils/haptic_feedback.dart';
 import '../../../core/juice/game_scaffold.dart';
+import '../../../../widgets/game_hud.dart';
 
 class SpotlightTrackScreen extends ConsumerWidget {
   const SpotlightTrackScreen({super.key});
@@ -77,9 +78,7 @@ class SpotlightTrackScreen extends ConsumerWidget {
           // Round & Score info
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG, vertical: DesignSystem.spaceSM),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              child: GameHud(children: [
                 TangibleContainer(
                   depth: 2.0,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

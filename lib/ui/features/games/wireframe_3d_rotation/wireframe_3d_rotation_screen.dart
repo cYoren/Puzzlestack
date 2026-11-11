@@ -9,6 +9,7 @@ import 'package:puzzle/widgets/game_completion_dialog.dart';
 import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import 'wireframe_3d_rotation_engine.dart';
+import '../../../../widgets/game_hud.dart';
 
 class Wireframe3DRotationScreen extends ConsumerStatefulWidget {
   const Wireframe3DRotationScreen({super.key});
@@ -157,9 +158,7 @@ class _Wireframe3DRotationScreenState extends ConsumerState<Wireframe3DRotationS
   }
 
   Widget _buildHeader(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+      return GameHud(children: [
         TangibleContainer(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           color: colorScheme.surface,
