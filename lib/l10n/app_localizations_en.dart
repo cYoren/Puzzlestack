@@ -497,6 +497,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inertiaExploded => 'MINE! Tap to retry';
 
   @override
+  String get netslideTitle => 'NETSLIDE';
+
+  @override
+  String get netslideSubtitle =>
+      'Slide rows and columns until every pipe meets a pipe.';
+
+  @override
+  String get netslideWinTitle => 'NET COMPLETE!';
+
+  @override
+  String get netslideWinMessage => 'Every pipe is connected.';
+
+  @override
+  String get netslideHowToPlay =>
+      'Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.';
+
+  @override
+  String get netslideMoves => 'Slides';
+
+  @override
+  String get netslideScramble => 'Depth';
+
+  @override
   String get lighthousesTitle => 'LIGHTHOUSES';
 
   @override
