@@ -1088,6 +1088,48 @@ abstract class AppLocalizations {
   /// **'Depth'**
   String get netslideScramble;
 
+  /// No description provided for @signpostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SIGNPOST'**
+  String get signpostTitle;
+
+  /// No description provided for @signpostSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give every cell the next number, following the arrows.'**
+  String get signpostSubtitle;
+
+  /// No description provided for @signpostWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY NUMBER PLACED!'**
+  String get signpostWinTitle;
+
+  /// No description provided for @signpostWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'One chain from 1 to the last, every arrow pointing the way.'**
+  String get signpostWinMessage;
+
+  /// No description provided for @signpostHowToPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. Tapping a cell that already points somewhere takes that link back.'**
+  String get signpostHowToPlay;
+
+  /// No description provided for @signpostMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get signpostMoves;
+
+  /// No description provided for @signpostGivens.
+  ///
+  /// In en, this message translates to:
+  /// **'Givens'**
+  String get signpostGivens;
+
   /// No description provided for @lighthousesTitle.
   ///
   /// In en, this message translates to:
