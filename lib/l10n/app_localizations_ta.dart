@@ -419,6 +419,12 @@ class AppLocalizationsTa extends AppLocalizations {
       'அனைத்து காந்தங்களும் கச்சிதமாக அமைக்கப்பட்டுள்ளன!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'கலங்கரை விளக்கங்கள்';
 
   @override

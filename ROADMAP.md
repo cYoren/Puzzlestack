@@ -409,7 +409,7 @@ board, which makes them the worst place to spend a week.
 
 What is left to rebuild, all of it obscure enough that a correct board is a differentiator:
 
-`Magnets, Tents & Trees` — **2 left**. Lights Out, Skyscrapers, Futoshiki and Dominosa are done.
+`Tents & Trees` — **1 left**. Lights Out, Skyscrapers, Futoshiki, Dominosa and Magnets are done.
 
 ### Landed: Skyscrapers, and a Latin base four puzzles can share
 
@@ -459,6 +459,43 @@ values at the same time. It worked on 4x5 but could not find a unique 5x6 or 6x7
 attempts. Splitting the problem — random matching first, then a random bijection from the
 placements to the domino set — took the same sizes to 20/20 in under 100ms. The search was
 biasing itself towards a handful of shapes, and those shapes were the ambiguous ones.
+
+### Landed: Magnets, which needed a solver, not a counter
+
+Magnets had a uniqueness check already, so the obvious repair was to keep it and add
+difficulty. That would have been wrong for a reason worth writing down.
+
+The first version of this rebuild measured "how much deduction does this board need" by
+asking, for each domino, whether exactly one of its three states still admits a completion.
+Every domino came back forced, on every board, at every size — which looked like a great
+result and was actually a tautology. In a board with one answer, *every* domino has exactly
+one state consistent with that answer. The measure was reading the answer, not the rules.
+
+So the rebuild ports Tatham's solver instead (`solve_state` and the functions it calls) onto
+`lib/core/deduction.dart`: cells carry a mask of `blank`/`+`/`-`, and five rules narrow it —
+row and column counts, the odd-length run, polarised dominoes filling a line, the last blank,
+and empty dominoes needing poles. The rule level a board needs is now the difficulty, and it
+is measured, not asserted.
+
+Three things came out of the port:
+
+1. **Propagation belongs in the model, not in a rule.** Tatham's `solve_set` updates the
+   domino's other half the moment a cell is decided. Written as a separate rule that runs
+   later in the round, a line rule could act on a half-decided domino and conclude the
+   opposite of the truth. The test that caught it compares the harness's solution count with
+   the engine's independent, rule-free counter — two implementations disagreeing is the only
+   cheap way to find an unsound rule.
+2. **"Empty dominoes need poles" counts slots, not dominoes.** A domino lying along the line
+   takes one slot; a domino crossing it leaves one cell, which is also one slot. Counting only
+   in-line dominoes made the rule fire when a crossing cell could still have taken the pole,
+   and it removed the truth on 257 of 40 boards.
+3. **The old screen never drew the dominoes.** The player tapped a cell and toggled a pair
+   they could not see. The board now outlines every domino, which is the puzzle's actual
+   shape, and taps cycle the whole domino.
+
+Difficulty is 4x4, 5x6 and 6x6, gated on the rule level each tier must reach (1, 2 and 3).
+Level-3 boards are about one in two hundred random boards, so a hard board takes ~260ms to
+find — in line with a hard Galaxies, and the worst case is bounded by the attempt limit.
 
 ### Landed: Lights Out, where uniqueness is linear algebra
 

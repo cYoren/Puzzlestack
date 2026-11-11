@@ -418,6 +418,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tutti i magneti sono disposti perfettamente!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => 'FARI';
 
   @override

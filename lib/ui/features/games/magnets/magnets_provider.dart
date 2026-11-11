@@ -1,113 +1,100 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+
+import '../../../core/board/puzzle_board.dart';
 import 'magnets_engine.dart';
 
 part 'magnets_provider.g.dart';
 
-class MagnetsState {
-  final IList<IList<IList<int>>> dominoes;
-  final IList<int> states; // 0: blank, 1: +-, 2: -+
-  final IList<int> rowPos;
-  final IList<int> rowNeg;
-  final IList<int> colPos;
-  final IList<int> colNeg;
-  final bool isVictory;
-  final bool isLoading;
-
-  MagnetsState({
-    required this.dominoes,
+@immutable
+class MagnetsState extends PuzzleState {
+  const MagnetsState({
+    required this.puzzle,
     required this.states,
-    required this.rowPos,
-    required this.rowNeg,
-    required this.colPos,
-    required this.colNeg,
-    this.isVictory = false,
-    this.isLoading = true,
+    required this.difficulty,
+    this.isSolved = false,
+    this.hintCell,
+    this.hintValue,
   });
 
+  final MagnetsPuzzle puzzle;
+
+  /// One entry per domino: 0 blank, 1 `a` is `+`, 2 `a` is `-`.
+  final List<int> states;
+
+  final MagnetsDifficulty difficulty;
+  final bool isSolved;
+
+  /// A cell the hint has proved, and the pole it must take.
+  final int? hintCell;
+  final int? hintValue;
+
+  int get rows => puzzle.rows;
+
+  int get cols => puzzle.cols;
+
+  /// The pole at a cell, as a mask value.
+  int poleAt(int cell) => const MagnetsEngine().poleAt(puzzle, states, cell);
+
+  int magnetsPlaced() => states.where((s) => s != 0).length;
+
   MagnetsState copyWith({
-    IList<IList<IList<int>>>? dominoes,
-    IList<int>? states,
-    IList<int>? rowPos,
-    IList<int>? rowNeg,
-    IList<int>? colPos,
-    IList<int>? colNeg,
-    bool? isVictory,
-    bool? isLoading,
+    List<int>? states,
+    bool? isSolved,
+    int? hintCell,
+    int? hintValue,
+    bool clearHint = false,
   }) {
     return MagnetsState(
-      dominoes: dominoes ?? this.dominoes,
+      puzzle: puzzle,
       states: states ?? this.states,
-      rowPos: rowPos ?? this.rowPos,
-      rowNeg: rowNeg ?? this.rowNeg,
-      colPos: colPos ?? this.colPos,
-      colNeg: colNeg ?? this.colNeg,
-      isVictory: isVictory ?? this.isVictory,
-      isLoading: isLoading ?? this.isLoading,
+      difficulty: difficulty,
+      isSolved: isSolved ?? this.isSolved,
+      hintCell: clearHint ? null : (hintCell ?? this.hintCell),
+      hintValue: clearHint ? null : (hintValue ?? this.hintValue),
     );
   }
 }
 
 @riverpod
 class MagnetsNotifier extends _$MagnetsNotifier {
-  final _engine = MagnetsEngine();
+  final MagnetsEngine _engine = const MagnetsEngine();
 
   @override
-  MagnetsState build() {
+  MagnetsState build() => _newPuzzle(MagnetsDifficulty.medium);
+
+  MagnetsState _newPuzzle(MagnetsDifficulty difficulty) {
+    final puzzle = _engine.generate(difficulty);
     return MagnetsState(
-      dominoes: <IList<IList<int>>>[].lock,
-      states: <int>[].lock,
-      rowPos: <int>[].lock,
-      rowNeg: <int>[].lock,
-      colPos: <int>[].lock,
-      colNeg: <int>[].lock,
+      puzzle: puzzle,
+      states: List<int>.filled(puzzle.dominoCount, 0),
+      difficulty: difficulty,
     );
   }
 
-  void initGame() {
-    final level = _engine.generateLevel(rows: 4, cols: 4);
-    final doms = level['dominoes'] as List<List<List<int>>>;
-    
-    state = MagnetsState(
-      dominoes: doms.map((d) => d.map((p) => p.lock).toIList()).toIList(),
-      states: List.filled(doms.length, 0).lock,
-      rowPos: (level['rowPos'] as List<int>).lock,
-      rowNeg: (level['rowNeg'] as List<int>).lock,
-      colPos: (level['colPos'] as List<int>).lock,
-      colNeg: (level['colNeg'] as List<int>).lock,
-      isLoading: false,
-    );
+  void newGame() => state = _newPuzzle(state.difficulty);
+
+  void setDifficulty(MagnetsDifficulty difficulty) {
+    if (difficulty == state.difficulty) return;
+    state = _newPuzzle(difficulty);
   }
 
-  void toggleDomino(int idx) {
-    if (state.isVictory) return;
-
-    final states = state.states.toList();
-    states[idx] = (states[idx] + 1) % 3;
-    
-    state = state.copyWith(states: states.lock);
-    _checkVictory();
+  /// Blank -> `+` -> `-` -> blank, for the whole domino.
+  void cycle(int domino) {
+    if (state.isSolved) return;
+    final states = [...state.states];
+    states[domino] = (states[domino] + 1) % 3;
+    final next = state.copyWith(states: states, clearHint: true);
+    state = next.copyWith(isSolved: _engine.isSolved(state.puzzle, states));
   }
 
-  void _checkVictory() {
-    final doms = state.dominoes.map((d) => d.map((p) => p.toList()).toList()).toList();
-    final states = state.states.toList();
-    final rowPos = state.rowPos.toList();
-    final rowNeg = state.rowNeg.toList();
-    final colPos = state.colPos.toList();
-    final colNeg = state.colNeg.toList();
-
-    final isVictory = MagnetsEngine.checkVictoryWrapper({
-      'dominoes': doms,
-      'states': states,
-      'rowPos': rowPos,
-      'rowNeg': rowNeg,
-      'colPos': colPos,
-      'colNeg': colNeg,
-    });
-
-    if (isVictory) {
-      state = state.copyWith(isVictory: true);
-    }
+  void hint() {
+    if (state.isSolved) return;
+    final found = _engine.hint(state.puzzle, state.states);
+    if (found == null) return;
+    state = state.copyWith(hintCell: found.cell, hintValue: found.value);
   }
+
+  /// The level this board needs, for the HUD.
+  int? get level => _engine.levelOf(state.puzzle);
 }

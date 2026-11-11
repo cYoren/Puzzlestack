@@ -404,6 +404,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get magnetsWinMessage => '모든 자석이 완벽하게 배치되었습니다!';
 
   @override
+  String get magnetsPlaced => 'Magnets';
+
+  @override
+  String get magnetsLevel => 'Depth';
+
+  @override
   String get lighthousesTitle => '등대';
 
   @override
