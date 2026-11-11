@@ -131,7 +131,12 @@ class _CubeNetFoldScreenState extends ConsumerState<CubeNetFoldScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-              child: Column(
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
                 children: [
                   const SizedBox(height: DesignSystem.spaceMD),
                   
@@ -172,8 +177,9 @@ class _CubeNetFoldScreenState extends ConsumerState<CubeNetFoldScreen> {
                   ),
                   const SizedBox(height: DesignSystem.spaceMD),
                   
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: List.generate(3, (index) {
                       final option = state.options[index];
                       final isSelected = state.selectedIndex == index;
@@ -243,6 +249,7 @@ class _CubeNetFoldScreenState extends ConsumerState<CubeNetFoldScreen> {
                       );
                     }),
                   ),
+                  ),
                   
                   const Spacer(),
                   
@@ -285,6 +292,10 @@ class _CubeNetFoldScreenState extends ConsumerState<CubeNetFoldScreen> {
                   ),
                   const SizedBox(height: DesignSystem.spaceLG),
                 ],
+              ),
+                    ),
+                  ),
+                ),
               ),
             ),
     );

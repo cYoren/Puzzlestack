@@ -115,7 +115,12 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
             horizontal: DesignSystem.spaceLG,
             vertical: DesignSystem.spaceMD,
           ),
-          child: Column(
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
             children: [
               _buildHeader(colorScheme),
               const Spacer(flex: 1),
@@ -126,6 +131,10 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
               _buildResponseButtons(colorScheme),
               const Spacer(flex: 1),
             ],
+          ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

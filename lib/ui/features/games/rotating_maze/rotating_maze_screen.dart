@@ -169,7 +169,12 @@ class _RotatingMazeScreenState extends ConsumerState<RotatingMazeScreen> {
                 final boardSize = math.min(constraints.maxWidth - 40, constraints.maxHeight * 0.55);
                 final cellSize = boardSize / state.size;
 
-                return Column(
+                return LayoutBuilder(
+                  builder: (context, constraints) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Column(
                   children: [
                     const SizedBox(height: DesignSystem.spaceMD),
                     
@@ -400,6 +405,10 @@ class _RotatingMazeScreenState extends ConsumerState<RotatingMazeScreen> {
                       ),
                     ),
                   ],
+                ),
+                      ),
+                    ),
+                  ),
                 );
               },
             ),

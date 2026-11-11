@@ -242,8 +242,9 @@ class _ABReversalOddballScreenState extends ConsumerState<ABReversalOddballScree
             color: colorScheme.surface,
             onTap: () => _submitResponse(true),
             padding: const EdgeInsets.symmetric(vertical: 20),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.check_circle_rounded, color: DesignSystem.success, size: 24),
                 SizedBox(width: 8),
@@ -258,6 +259,7 @@ class _ABReversalOddballScreenState extends ConsumerState<ABReversalOddballScree
                 ),
               ],
             ),
+            ),
           ),
         ),
         const SizedBox(width: DesignSystem.spaceMD),
@@ -266,8 +268,9 @@ class _ABReversalOddballScreenState extends ConsumerState<ABReversalOddballScree
             color: colorScheme.surface,
             onTap: () => _submitResponse(false),
             padding: const EdgeInsets.symmetric(vertical: 20),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.cancel_rounded, color: DesignSystem.error, size: 24),
                 SizedBox(width: 8),
@@ -281,6 +284,7 @@ class _ABReversalOddballScreenState extends ConsumerState<ABReversalOddballScree
                   ),
                 ),
               ],
+            ),
             ),
           ),
         ),

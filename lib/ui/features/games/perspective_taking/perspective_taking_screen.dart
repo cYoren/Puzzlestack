@@ -90,7 +90,8 @@ class _PerspectiveTakingScreenState extends ConsumerState<PerspectiveTakingScree
       subtitle: l10n.perspectiveTakingSubtitle(targetDirName),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-        child: Column(
+        child: SingleChildScrollView(
+          child: Column(
           children: [
             const SizedBox(height: DesignSystem.spaceMD),
             Text(
@@ -117,7 +118,7 @@ class _PerspectiveTakingScreenState extends ConsumerState<PerspectiveTakingScree
               fit: BoxFit.scaleDown,
               child: _buildTopDownView(state.topView, colorScheme, l10n),
             ),
-            const Spacer(),
+                  const SizedBox(height: 24),
             Text(
               l10n.perspectiveTakingChoosePerspective,
               style: TextStyle(
@@ -144,6 +145,7 @@ class _PerspectiveTakingScreenState extends ConsumerState<PerspectiveTakingScree
             ),
             const SizedBox(height: DesignSystem.space2XL),
           ],
+        ),
         ),
       ),
     );

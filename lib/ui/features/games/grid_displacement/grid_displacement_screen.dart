@@ -227,8 +227,9 @@ class _GridDisplacementScreenState extends ConsumerState<GridDisplacementScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Score Banner
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(              mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -260,6 +261,7 @@ class _GridDisplacementScreenState extends ConsumerState<GridDisplacementScreen>
                     ),
                   ),
                 ],
+              ),
               ),
               const SizedBox(height: 24),
               // Grid Room — Expanded prevents overflow, ConstrainedBox caps size

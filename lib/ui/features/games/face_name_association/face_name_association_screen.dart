@@ -170,8 +170,8 @@ class _FaceNameAssociationScreenState extends ConsumerState<FaceNameAssociationS
         border: Border.all(color: Theme.of(context).colorScheme.outline, width: 2),
       ),
       padding: const EdgeInsets.all(DesignSystem.spaceMD),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: SingleChildScrollView(
+        child: Column(   mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             padding: EdgeInsets.all(large ? DesignSystem.spaceLG : DesignSystem.spaceMD),
@@ -193,6 +193,7 @@ class _FaceNameAssociationScreenState extends ConsumerState<FaceNameAssociationS
             ),
           ],
         ],
+      ),
       ),
     );
   }

@@ -72,7 +72,12 @@ class _LogicalSyllogismsScreenState extends ConsumerState<LogicalSyllogismsScree
     return GameScaffold(
       title: l10n.logicalSyllogismsTitle.toUpperCase(),
       subtitle: l10n.logicalSyllogismsSubtitle,
-      body: Column(
+      body: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
@@ -156,6 +161,10 @@ class _LogicalSyllogismsScreenState extends ConsumerState<LogicalSyllogismsScree
           ),
           const SizedBox(height: DesignSystem.spaceXL),
         ],
+      ),
+            ),
+          ),
+        ),
       ),
     );
   }

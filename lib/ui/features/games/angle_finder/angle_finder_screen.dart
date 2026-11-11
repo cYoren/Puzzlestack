@@ -80,15 +80,17 @@ class _AngleFinderScreenState extends ConsumerState<AngleFinderScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(DesignSystem.spaceLG),
-              child: Column(
+              child: SingleChildScrollView(
+                child: Column(
                 children: [
                   _buildScoreBoard(state),
-                  const Spacer(),
+                  const SizedBox(height: 24),
                   _buildQuestionCard(state),
-                  const Spacer(),
+                  const SizedBox(height: 24),
                   _buildOptions(state, notifier),
                   const SizedBox(height: DesignSystem.space2XL),
                 ],
+              ),
               ),
             ),
     );

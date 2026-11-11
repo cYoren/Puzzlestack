@@ -199,8 +199,9 @@ class _VectorDotProductScreenState extends ConsumerState<VectorDotProductScreen>
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(          mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 _currentQuestion.vecAStr,
@@ -227,6 +228,7 @@ class _VectorDotProductScreenState extends ConsumerState<VectorDotProductScreen>
                 ),
               ),
             ],
+          ),
           ),
         ],
       ),

@@ -227,12 +227,14 @@ class _GearRotationScreenState extends ConsumerState<GearRotationScreen>
           // Control Buttons
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceLG),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildDirectionButton(true, 'CLOCKWISE', isDark),
                 _buildDirectionButton(false, 'COUNTER-CLOCKWISE', isDark),
               ],
+            ),
             ),
           ),
         ],

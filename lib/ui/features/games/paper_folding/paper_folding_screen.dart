@@ -255,8 +255,9 @@ class _PaperFoldingScreenState extends ConsumerState<PaperFoldingScreen> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(PaperFoldingEngine.gridSize, (y) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
+        return FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(        mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(PaperFoldingEngine.gridSize, (x) {
             final hasHole = holes.any((p) => p.x == x && p.y == y);
@@ -272,6 +273,7 @@ class _PaperFoldingScreenState extends ConsumerState<PaperFoldingScreen> {
               ),
             );
           }),
+        ),
         );
       }),
     );

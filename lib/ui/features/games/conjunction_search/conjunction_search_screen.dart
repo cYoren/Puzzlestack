@@ -197,8 +197,9 @@ class ConjunctionSearchScreen extends ConsumerWidget {
                   radius: DesignSystem.radiusMD,
                   color: isDark ? DesignSystem.darkSurface : Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(                  mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         l10n.conjunctionSearchFind,
@@ -221,6 +222,7 @@ class ConjunctionSearchScreen extends ConsumerWidget {
                         ),
                       ),
                     ],
+                  ),
                   ),
                 ),
               ),

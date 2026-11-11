@@ -158,7 +158,8 @@ class _FractionalPizzaScreenState extends ConsumerState<FractionalPizzaScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(DesignSystem.spaceMD),
-          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -194,8 +195,9 @@ class _FractionalPizzaScreenState extends ConsumerState<FractionalPizzaScreen> {
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                     ),
                     const SizedBox(height: 8),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(                    mainAxisSize: MainAxisSize.min,
                       children: [
                         Column(
                           mainAxisSize: MainAxisSize.min,
@@ -229,6 +231,7 @@ class _FractionalPizzaScreenState extends ConsumerState<FractionalPizzaScreen> {
                           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey),
                         )
                       ],
+                    ),
                     ),
                   ],
                 ),
@@ -280,6 +283,7 @@ class _FractionalPizzaScreenState extends ConsumerState<FractionalPizzaScreen> {
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),

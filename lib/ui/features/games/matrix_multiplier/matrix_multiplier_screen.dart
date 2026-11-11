@@ -208,8 +208,9 @@ class _MatrixMultiplierScreenState extends ConsumerState<MatrixMultiplierScreen>
               ),
               const SizedBox(height: DesignSystem.spaceMD),
               // Matrix A (Left) & Matrix B (Right)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Matrix A (Row selector)
@@ -320,6 +321,7 @@ class _MatrixMultiplierScreenState extends ConsumerState<MatrixMultiplierScreen>
                     ],
                   ),
                 ],
+              ),
               ),
               const SizedBox(height: 40),
               // Helper visualization equation

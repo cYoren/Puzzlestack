@@ -66,7 +66,8 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
                 final face = state.trials[index];
                 return TangibleContainer(
                   padding: const EdgeInsets.all(DesignSystem.spaceMD),
-                  child: Column(
+                  child: SingleChildScrollView(
+                    child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(face.imageUrl, style: const TextStyle(fontSize: 40)),
@@ -81,6 +82,7 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
                       const SizedBox(height: 4),
                       _buildTraitRow(Icons.favorite_rounded, face.hobby, fontSize: 12, iconSize: 14),
                     ],
+                  ),
                   ),
                 );
               },
