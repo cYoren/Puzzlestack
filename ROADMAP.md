@@ -16,17 +16,16 @@ someone can take without reading the rest of this file.
 
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
-| 1 | **Eight Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+| 1 | **Seven Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube is done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
-The eight left in Phase 3, with what each one needs:
+The seven left in Phase 3, with what each one needs:
 
 | Puzzle | Tatham file | Lines | Needs the solver? |
 | --- | --- | --- | --- |
 | Black Box | `blackbox.c` | 1587 | yes, deduction |
-| Cube | `cube.c` | 1787 | no, folding |
 | Netslide | `netslide.c` | 1889 | no, sliding |
 | Inertia | `inertia.c` | 2246 | no, arcade |
 | Signpost | `signpost.c` | 2568 | yes, deduction |
@@ -281,7 +280,7 @@ became 12 and three of those are done. Two more names were checked rather than a
 `cube_net_fold` is a cube-net puzzle but not `cube.c`, and `mental_mapping` is a
 follow-the-arrows memory game, nothing to do with `map.c`.
 
-### Landed so far: 4 of 12, plus one rebuilt
+### Landed so far: 5 of 12, plus one rebuilt
 
 `lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
 repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
@@ -315,6 +314,33 @@ Two properties make it worth having rather than each puzzle writing its own:
 | **Galaxies** | drag a dot onto a cell; the cell it reflects onto joins too | **counted**: 200 easy + 200 medium boards, each proven to have exactly one solution, and the solver's count checked against a brute force that ignores the rules |
 | **Kurodoko** (rebuilt, not added) | tap a cell to blacken it, again to mark it white | **counted**: 600 boards across three tiers, each proven unique; the rules are also proved sound cell by cell against the answer |
 | **Same Game** | tap a group of two or more | **constructed**: Tatham's reverse generator, ported whole, with every insertion checked to be a legal inverse move; 600 boards across three tiers, all fully covered and all with a legal move |
+
+### Landed: Cube, where the solver and the rules disagreed
+
+The fourth Tatham port, and the first with no deduction in it: you roll a cube over a grid,
+and landing on a square **swaps** the cube's bottom face with that square's colour. Collect
+the six blue squares; the board is done when all six faces are blue.
+
+That last sentence is an invariant rather than a rule. A swap moves a colour between a face
+and a square and never creates or destroys one, and the board starts with six blues, so
+"all six faces blue" and "no blue squares left" are the same statement.
+
+Tatham places six blue squares anywhere and trusts that a cube can always collect them. This
+generator does not trust: a board ships only when a breadth-first walk finds a line that
+clears it, and the shortest such line **is** the difficulty. 4x4 boards that clear in 7–9
+moves, 5x5 in 10–13, and 5x5 boards that need 14 or more.
+
+Two mistakes worth recording:
+
+1. **The roll was written twice and the two copies drifted.** One on lists, for the game; one
+   on packed ints, for the solver. Five of fifteen replayed boards ended a move short, which
+   reads as "this board cannot be solved" and is really "two rolls disagree". The fix was to
+   delete one: the game now decodes the solver's packed move, so there is exactly one
+   definition of rolling in the codebase.
+2. **Packing the state was not a micro-optimisation.** The first solver hashed a `CubePosition`
+   with its whole 25-element grid per state and took twenty seconds a board. The same search
+   over one int takes under a millisecond. When you write a state as "the position *and* every
+   square", say so in the type and hash accordingly — or pack it.
 
 ### What Galaxies cost, and what it taught
 

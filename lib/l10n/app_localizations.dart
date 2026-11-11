@@ -908,6 +908,54 @@ abstract class AppLocalizations {
   /// **'Depth'**
   String get magnetsLevel;
 
+  /// No description provided for @cubeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CUBE'**
+  String get cubeTitle;
+
+  /// No description provided for @cubeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Roll the cube, collect the blue squares.'**
+  String get cubeSubtitle;
+
+  /// No description provided for @cubeWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'SIX BLUES!'**
+  String get cubeWinTitle;
+
+  /// No description provided for @cubeWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every face of the cube is blue.'**
+  String get cubeWinMessage;
+
+  /// No description provided for @cubeHowToPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube\'s bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.'**
+  String get cubeHowToPlay;
+
+  /// No description provided for @cubeFaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Faces'**
+  String get cubeFaces;
+
+  /// No description provided for @cubeMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves'**
+  String get cubeMoves;
+
+  /// No description provided for @cubeBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best'**
+  String get cubeBest;
+
   /// No description provided for @lighthousesTitle.
   ///
   /// In en, this message translates to:
