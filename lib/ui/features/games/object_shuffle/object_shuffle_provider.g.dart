@@ -7,7 +7,7 @@ part of 'object_shuffle_provider.dart';
 // **************************************************************************
 
 String _$objectShuffleNotifierHash() =>
-    r'f55676fea433b2751d94271f3c4cd08c84095991';
+    r'b15a09667527618910a9f8cc1d211ceb8230c7f7';
 
 /// See also [ObjectShuffleNotifier].
 @ProviderFor(ObjectShuffleNotifier)

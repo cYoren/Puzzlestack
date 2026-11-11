@@ -10677,6 +10677,36 @@ abstract class AppLocalizations {
   /// **'One peg left. That is a clean board.'**
   String get pegsCongrats;
 
+  /// No description provided for @sameGameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Same Game'**
+  String get sameGameTitle;
+
+  /// No description provided for @sameGameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear a group of two or more to score. Empty the board to win.'**
+  String get sameGameSubtitle;
+
+  /// No description provided for @sameGameCongrats.
+  ///
+  /// In en, this message translates to:
+  /// **'Board cleared. Every square gone.'**
+  String get sameGameCongrats;
+
+  /// No description provided for @sameGameLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get sameGameLeft;
+
+  /// No description provided for @sameGameStuck.
+  ///
+  /// In en, this message translates to:
+  /// **'No groups left — start a new board.'**
+  String get sameGameStuck;
+
   /// No description provided for @galaxiesTitle.
   ///
   /// In en, this message translates to:

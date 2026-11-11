@@ -7,7 +7,7 @@ part of 'stop_signal_provider.dart';
 // **************************************************************************
 
 String _$stopSignalNotifierHash() =>
-    r'56e72efc942ec825fad0b66eb181053c5b60ccc9';
+    r'4276b0d605fe1542308816736971fb980f499a1c';
 
 /// See also [StopSignalNotifier].
 @ProviderFor(StopSignalNotifier)

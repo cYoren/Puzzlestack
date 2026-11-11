@@ -7,7 +7,7 @@ part of 'object_displacement_provider.dart';
 // **************************************************************************
 
 String _$objectDisplacementNotifierHash() =>
-    r'b3c68a788c52b0729dba454b2c813f0ef4873bbf';
+    r'1c67812b03bb2dec4c087693a3d64fa6a5fa9e17';
 
 /// See also [ObjectDisplacementNotifier].
 @ProviderFor(ObjectDisplacementNotifier)

@@ -7,7 +7,7 @@ part of 'path_recall_provider.dart';
 // **************************************************************************
 
 String _$pathRecallNotifierHash() =>
-    r'eced720d1e604c83c7f4ba2e0de6c6317991b046';
+    r'0bdc6efaf939bb8c620682776372fe42beaf9b72';
 
 /// See also [PathRecallNotifier].
 @ProviderFor(PathRecallNotifier)
