@@ -470,6 +470,32 @@ class AppLocalizationsHi extends AppLocalizations {
   String get mapColoured => 'Coloured';
 
   @override
+  String get inertiaTitle => 'INERTIA';
+
+  @override
+  String get inertiaSubtitle =>
+      'Slide the ball, collect every gem, avoid the mines.';
+
+  @override
+  String get inertiaWinTitle => 'ALL GEMS!';
+
+  @override
+  String get inertiaWinMessage => 'Every gem collected and not a mine touched.';
+
+  @override
+  String get inertiaHowToPlay =>
+      'Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.';
+
+  @override
+  String get inertiaGems => 'Gems';
+
+  @override
+  String get inertiaMoves => 'Moves';
+
+  @override
+  String get inertiaExploded => 'MINE! Tap to retry';
+
+  @override
   String get lighthousesTitle => 'लाइटहाउस';
 
   @override

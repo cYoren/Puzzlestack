@@ -16,18 +16,17 @@ someone can take without reading the rest of this file.
 
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
-| 1 | **Five Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube and Map are done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+| 1 | **Four Tatham puzzles to port.** Each is one PR: engine, provider, board, screen, metadata, 200-board test. Cube, Map and Inertia are done. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
 | 4 | **Release.** Waiting on the upstream author's reply about the App Store licence (email sent 2026-11-10). Android, web and desktop are not blocked. | one pass | [Phase 6](#phase-6--release) |
 
-The five left in Phase 3, with what each one needs:
+The four left in Phase 3, with what each one needs:
 
 | Puzzle | Tatham file | Lines | Needs the solver? |
 | --- | --- | --- | --- |
 | Black Box | `blackbox.c` | 1587 | yes, deduction |
 | Netslide | `netslide.c` | 1889 | no, sliding |
-| Inertia | `inertia.c` | 2246 | no, arcade |
 | Signpost | `signpost.c` | 2568 | yes, deduction |
 | Undead | `undead.c` | 3049 | yes, deduction |
 | Tracks | `tracks.c` | 3159 | yes, deduction |
@@ -279,7 +278,7 @@ became 12 and three of those are done. Two more names were checked rather than a
 `cube_net_fold` is a cube-net puzzle but not `cube.c`, and `mental_mapping` is a
 follow-the-arrows memory game, nothing to do with `map.c`.
 
-### Landed so far: 6 of 12, plus one rebuilt
+### Landed so far: 7 of 12, plus one rebuilt
 
 `lib/ui/core/board/grid_board.dart` — the arithmetic every cell puzzle would otherwise
 repeat: normalised cell rectangles, `cellAt(point)`, cell refs, and a `paintCell` hook so a
@@ -313,6 +312,24 @@ Two properties make it worth having rather than each puzzle writing its own:
 | **Galaxies** | drag a dot onto a cell; the cell it reflects onto joins too | **counted**: 200 easy + 200 medium boards, each proven to have exactly one solution, and the solver's count checked against a brute force that ignores the rules |
 | **Kurodoko** (rebuilt, not added) | tap a cell to blacken it, again to mark it white | **counted**: 600 boards across three tiers, each proven unique; the rules are also proved sound cell by cell against the answer |
 | **Same Game** | tap a group of two or more | **constructed**: Tatham's reverse generator, ported whole, with every insertion checked to be a legal inverse move; 600 boards across three tiers, all fully covered and all with a legal move |
+
+### Landed: Inertia, where the ball cannot stop halfway
+
+A ball on a grid of walls, gems and mines. Pick a direction and it slides until a wall stops
+it — it cannot stop halfway. Collect every gem without touching a mine. Tatham's
+`inertia.c`, rules and generator idea by Ben Olmstead.
+
+Turn-based and four-directional, where Tatham's animates and uses eight. The physics is the
+same puzzle; removing the diagonals costs nothing but ambiguity about which square a swipe is
+aiming at. Mines are a loss rather than a stop, so the run has a real failure state and a
+retry that restores the gems.
+
+The bug worth keeping is about where a gem may sit. A ball never stops in the open middle of a
+room — it stops against a wall — so a gem placed there is **unreachable and the board is
+dead**. The first generator scattered gems over every floor cell and could not build a single
+5x5 board in three thousand tries. It now asks the slide graph for the cells where a slide can
+actually end, and draws gems from those; the hit rate goes from 0% to about 90% on the same
+terrain, and generation takes 30ms for twenty boards.
 
 ### Landed: Map, where the answer is not unique and should not be
 
