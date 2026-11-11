@@ -41,10 +41,14 @@ class GoNoGoState {
 class GoNoGoNotifier extends _$GoNoGoNotifier {
   final _engine = GoNoGoEngine();
   Timer? _gameTimer;
+  Timer? _phaseTimer;
 
   @override
   GoNoGoState build() {
-    ref.onDispose(() => _gameTimer?.cancel());
+    ref.onDispose(() {
+      _gameTimer?.cancel();
+      _phaseTimer?.cancel();
+    });
     return GoNoGoState();
   }
 
@@ -59,7 +63,8 @@ class GoNoGoNotifier extends _$GoNoGoNotifier {
     // Show empty screen for a brief moment
     state = state.copyWith(clearSymbol: true, hasTapped: false);
     
-    Future.delayed(const Duration(milliseconds: 500), () {
+    _phaseTimer?.cancel();
+    _phaseTimer = Timer(const Duration(milliseconds: 500), () {
       if (state.isGameOver) return;
       
       final level = _engine.generateLevel(state.score);

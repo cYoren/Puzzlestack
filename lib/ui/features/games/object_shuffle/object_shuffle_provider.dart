@@ -65,6 +65,7 @@ class ObjectShuffleNotifier extends _$ObjectShuffleNotifier {
 
   @override
   ObjectShuffleState build() {
+    ref.onDispose(() { _shuffleTimer?.cancel(); });
     return ObjectShuffleState(objectSlots: List.generate(5, (i) => i), targetObjectIndex: 0);
   }
 
@@ -85,8 +86,10 @@ class ObjectShuffleNotifier extends _$ObjectShuffleNotifier {
       isLoading: false,
     );
 
-    // Show for 2 seconds then start shuffle
-    Timer(const Duration(seconds: 2), () {
+    // Show for 2 seconds then start shuffle. Stored, not fire-and-forget: a
+    // timer nobody holds cannot be cancelled when the player leaves.
+    _shuffleTimer?.cancel();
+    _shuffleTimer = Timer(const Duration(seconds: 2), () {
       _startShuffling();
     });
   }

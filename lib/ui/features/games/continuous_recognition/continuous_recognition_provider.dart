@@ -145,6 +145,7 @@ class ContinuousRecognitionNotifier extends _$ContinuousRecognitionNotifier {
 
   @override
   ContinuousRecognitionState build() {
+    ref.onDispose(() { _gameTimer?.cancel(); });
     return ContinuousRecognitionState();
   }
 
