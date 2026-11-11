@@ -6,7 +6,7 @@ part of 'kurodoko_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$kurodokoNotifierHash() => r'207605ea85db38c3ca7a06ea8a407a6b9d00336a';
+String _$kurodokoNotifierHash() => r'ef73defb85766ab2c55de4cb0e0f32e6066569cc';
 
 /// See also [KurodokoNotifier].
 @ProviderFor(KurodokoNotifier)

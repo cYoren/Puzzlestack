@@ -6,7 +6,7 @@ part of 'sopt_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$soptNotifierHash() => r'daa8e6b07b57958664544c8068290496e69af441';
+String _$soptNotifierHash() => r'e8327dd2b918260f58636cf97c8c086ce263a000';
 
 /// See also [SoptNotifier].
 @ProviderFor(SoptNotifier)

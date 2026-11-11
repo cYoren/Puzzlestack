@@ -7,7 +7,7 @@ part of 'simon_sequence_provider.dart';
 // **************************************************************************
 
 String _$simonSequenceNotifierHash() =>
-    r'51087ba0180d29ada081f66136c12479658f865e';
+    r'd92138555eb3bf6b81d4d9340d6a23248896bdf7';
 
 /// See also [SimonSequenceNotifier].
 @ProviderFor(SimonSequenceNotifier)

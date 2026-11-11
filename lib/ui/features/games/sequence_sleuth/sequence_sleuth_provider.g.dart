@@ -7,7 +7,7 @@ part of 'sequence_sleuth_provider.dart';
 // **************************************************************************
 
 String _$sequenceSleuthNotifierHash() =>
-    r'9cfdbd868c9fe8cfcdb16c70b5c02a40305747b9';
+    r'c091593c7c891166eb62f951bad9845e14119380';
 
 /// See also [SequenceSleuthNotifier].
 @ProviderFor(SequenceSleuthNotifier)

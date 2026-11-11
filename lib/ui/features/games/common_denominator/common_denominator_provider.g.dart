@@ -7,7 +7,7 @@ part of 'common_denominator_provider.dart';
 // **************************************************************************
 
 String _$commonDenominatorNotifierHash() =>
-    r'861fdbb368959ea80fec5a8fa30aa6ba8425e3a7';
+    r'a187a301f1aa678f91f1e46026457ac11d4c7cdf';
 
 /// See also [CommonDenominatorNotifier].
 @ProviderFor(CommonDenominatorNotifier)

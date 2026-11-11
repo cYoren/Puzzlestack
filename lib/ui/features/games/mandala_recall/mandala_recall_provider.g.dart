@@ -7,7 +7,7 @@ part of 'mandala_recall_provider.dart';
 // **************************************************************************
 
 String _$mandalaRecallNotifierHash() =>
-    r'b6000bb61d0157474701afdba9b1000761d51083';
+    r'2e138fde92ffc223bdc9a1150133207ac2268bee';
 
 /// See also [MandalaRecallNotifier].
 @ProviderFor(MandalaRecallNotifier)

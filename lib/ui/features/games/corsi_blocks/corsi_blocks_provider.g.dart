@@ -7,7 +7,7 @@ part of 'corsi_blocks_provider.dart';
 // **************************************************************************
 
 String _$corsiBlocksNotifierHash() =>
-    r'152660795b9e637c84a3610b14afa114a98b5015';
+    r'29064239ec2fa535ee181d5e0fd0474ff8e6b226';
 
 /// See also [CorsiBlocksNotifier].
 @ProviderFor(CorsiBlocksNotifier)

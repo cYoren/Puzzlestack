@@ -7,7 +7,7 @@ part of 'arithmetic_chain_provider.dart';
 // **************************************************************************
 
 String _$arithmeticChainNotifierHash() =>
-    r'a299d57a1c8dd0c1dfe67fa9ddca9376894de156';
+    r'788cd0e796b9f23529e66c6146262933845eeda5';
 
 /// See also [ArithmeticChainNotifier].
 @ProviderFor(ArithmeticChainNotifier)

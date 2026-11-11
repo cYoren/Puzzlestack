@@ -5771,6 +5771,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pegsCongrats => '残ったのは1つだけ。きれいに片づきました。';
 
   @override
+  String get sameGameTitle => 'Same Game';
+
+  @override
+  String get sameGameSubtitle =>
+      'Clear a group of two or more to score. Empty the board to win.';
+
+  @override
+  String get sameGameCongrats => 'Board cleared. Every square gone.';
+
+  @override
+  String get sameGameLeft => 'Left';
+
+  @override
+  String get sameGameStuck => 'No groups left — start a new board.';
+
+  @override
   String get galaxiesTitle => 'Galaxies';
 
   @override

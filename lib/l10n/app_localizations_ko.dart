@@ -5770,6 +5770,22 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pegsCongrats => '페그 하나만 남았습니다. 깔끔한 판입니다.';
 
   @override
+  String get sameGameTitle => 'Same Game';
+
+  @override
+  String get sameGameSubtitle =>
+      'Clear a group of two or more to score. Empty the board to win.';
+
+  @override
+  String get sameGameCongrats => 'Board cleared. Every square gone.';
+
+  @override
+  String get sameGameLeft => 'Left';
+
+  @override
+  String get sameGameStuck => 'No groups left — start a new board.';
+
+  @override
   String get galaxiesTitle => 'Galaxies';
 
   @override
