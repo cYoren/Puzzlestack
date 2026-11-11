@@ -202,6 +202,7 @@ import '../ui/features/games/galaxies/galaxies_metadata.dart';
 import '../ui/features/games/pegs/pegs_metadata.dart';
 import '../ui/features/games/same_game/same_game_metadata.dart';
 import '../ui/features/games/cube/cube_metadata.dart';
+import '../ui/features/games/map/map_metadata.dart';
 import '../ui/features/games/twiddle/twiddle_metadata.dart';
 import '../ui/features/games/simon_command/simon_command_metadata.dart';
 import '../ui/features/games/binary_code/binary_code_metadata.dart';
@@ -639,6 +640,7 @@ List<GameMetadata> _buildGameList() {
     pegsMetadata,
     sameGameMetadata,
     cubeMetadata,
+    mapMetadata,
     twiddleMetadata,
   ];
 }

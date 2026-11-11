@@ -956,6 +956,48 @@ abstract class AppLocalizations {
   /// **'Best'**
   String get cubeBest;
 
+  /// No description provided for @mapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MAP'**
+  String get mapTitle;
+
+  /// No description provided for @mapSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Four-colour the map: no two touching regions may match.'**
+  String get mapSubtitle;
+
+  /// No description provided for @mapWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MAP COLOURED!'**
+  String get mapWinTitle;
+
+  /// No description provided for @mapWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every region has a colour, and no neighbours clash.'**
+  String get mapWinMessage;
+
+  /// No description provided for @mapHowToPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.'**
+  String get mapHowToPlay;
+
+  /// No description provided for @mapRegions.
+  ///
+  /// In en, this message translates to:
+  /// **'Regions'**
+  String get mapRegions;
+
+  /// No description provided for @mapColoured.
+  ///
+  /// In en, this message translates to:
+  /// **'Coloured'**
+  String get mapColoured;
+
   /// No description provided for @lighthousesTitle.
   ///
   /// In en, this message translates to:
