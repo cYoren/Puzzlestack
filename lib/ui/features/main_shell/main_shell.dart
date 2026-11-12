@@ -90,9 +90,13 @@ class _MainShellState extends ConsumerState<MainShell>
 
   @override
   Widget build(BuildContext context) {
-    final bool wide = MediaQuery.sizeOf(context).width > 600;
+    final Size size = MediaQuery.sizeOf(context);
+    final bool wide = size.width > 600;
+    // A short phone cannot spare 58dp of board for a tab bar; the deal goes
+    // full height and keeps a way back in its own top bar.
+    final bool short = size.height < 720;
     final List<Widget> tabs = [
-      _tab(0, const FeedScreen()),
+      _tab(0, FeedScreen(onBrowse: short ? () => _select(1) : null)),
       _tab(1, const DiscoveryHomeScreen()),
       _tab(2, const StatsScreen()),
     ];
@@ -112,7 +116,7 @@ class _MainShellState extends ConsumerState<MainShell>
               ],
             )
           : IndexedStack(index: _selectedIndex, children: tabs),
-      bottomNavigationBar: wide
+      bottomNavigationBar: wide || (short && _selectedIndex == 0)
           ? null
           : _DeckBar(selectedIndex: _selectedIndex, onSelect: _select),
     );

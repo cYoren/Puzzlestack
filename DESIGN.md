@@ -40,6 +40,13 @@ Two faces, two jobs:
 The old app put letterspaced micro-labels above every heading (`I'M BORED`, `DAILY PICK`).
 Those are gone. A heading carries its own weight; a card carries its own label.
 
+## The icon
+
+`tool/icon.py` draws it: three cards on paper, the live one in indigo — the same mark as
+`DeckMark`, at icon scale. Android's adaptive foreground is the mark inside the 66% safe zone on
+a paper field, so a circular mask never cuts a card. Regenerate with
+`uv run --with pillow python3 tool/icon.py` then `dart run flutter_launcher_icons`.
+
 ## The card
 
 Every surface is a card from `lib/widgets/deck.dart`:
@@ -90,3 +97,12 @@ A new surface is on brand when all of these are true:
 4. Every interactive element has a default, pressed and disabled state.
 5. It reads in light and AMOLED dark at 320dp and on a tablet.
 6. It ships with a test or a screenshot that would catch it drifting.
+
+## Width and height
+
+- The feed card is capped at 560dp and centred; on a tablet an uncapped card turns a puzzle
+  into a poster with a postage stamp of content in the middle.
+- The stack is capped at 760dp; the room grid goes from two columns to three above 620dp and
+  keeps its tiles between 88 and 104dp tall.
+- On phones shorter than 720dp the deal drops the tab bar and keeps a grid button in its top
+  bar; below 760dp the card footer loses the subtitle. The board is the product; chrome yields.

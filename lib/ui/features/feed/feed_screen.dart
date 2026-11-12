@@ -31,6 +31,7 @@ class FeedScreen extends ConsumerStatefulWidget {
     this.startGameId,
     this.categoryId,
     this.isRoute = false,
+    this.onBrowse,
   });
 
   /// Open on a specific game instead of the first card of the deal.
@@ -42,6 +43,10 @@ class FeedScreen extends ConsumerStatefulWidget {
   /// True when pushed as its own page: adds a close button and puts the deck at
   /// the top of the screen.
   final bool isRoute;
+
+  /// Present when the feed is a tab. On short phones the bottom bar is dropped
+  /// so the board gets the height, and this is the way back to the stack.
+  final VoidCallback? onBrowse;
 
   @override
   ConsumerState<FeedScreen> createState() => _FeedScreenState();
@@ -184,6 +189,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
                   isFirst: index == 0,
                   showClose: widget.isRoute,
                   onClose: _close,
+                  onBrowse: widget.onBrowse,
                   onNext: _next,
                   onRestart: () => _restart(index),
                   onToggleLock: _toggleLock,
@@ -223,6 +229,7 @@ class _FeedCard extends StatelessWidget {
     required this.isFirst,
     required this.showClose,
     required this.onClose,
+    required this.onBrowse,
     required this.onNext,
     required this.onRestart,
     required this.onToggleLock,
@@ -236,6 +243,7 @@ class _FeedCard extends StatelessWidget {
   final bool isFirst;
   final bool showClose;
   final VoidCallback onClose;
+  final VoidCallback? onBrowse;
   final VoidCallback onNext;
   final VoidCallback onRestart;
   final VoidCallback onToggleLock;
@@ -255,40 +263,49 @@ class _FeedCard extends StatelessWidget {
         DesignSystem.spaceMD,
         22,
       ),
-      child: Column(
-        children: [
-          SafeArea(
-            bottom: false,
-            child: SizedBox(
-              height: 48,
-              child: _TopBar(showClose: showClose, onClose: onClose),
-            ),
-          ),
-          Expanded(
-            child: DeckCard(
-              clip: true,
-              padding: EdgeInsets.zero,
-              lift: isDark ? 0 : 1,
-              // Two empty cards under the live one: the stack is the promise
-              // that a swipe has somewhere to go.
-              pile: 2,
-              child: Column(
-                children: [
-                  _cardHeader(context, muted, accent),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: DesignSystem.spaceSM,
-                      ),
-                      child: game.builder(context),
-                    ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 560),
+          child: Column(
+            children: [
+              SafeArea(
+                bottom: false,
+                child: SizedBox(
+                  height: 48,
+                  child: _TopBar(
+                    showClose: showClose,
+                    onClose: onClose,
+                    onBrowse: onBrowse,
                   ),
-                  _cardFooter(context, colors, muted, accent),
-                ],
+                ),
               ),
-            ),
+              Expanded(
+                child: DeckCard(
+                  clip: true,
+                  padding: EdgeInsets.zero,
+                  lift: isDark ? 0 : 1,
+                  // Two empty cards under the live one: the stack is the promise
+                  // that a swipe has somewhere to go.
+                  pile: 2,
+                  child: Column(
+                    children: [
+                      _cardHeader(context, muted, accent),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: DesignSystem.spaceSM,
+                          ),
+                          child: game.builder(context),
+                        ),
+                      ),
+                      _cardFooter(context, colors, muted, accent),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -352,8 +369,10 @@ class _FeedCard extends StatelessWidget {
   Widget _cardFooter(
       BuildContext context, ColorScheme colors, Color muted, Color accent) {
     final l10n = AppLocalizations.of(context);
+    // On a short phone the board needs the height more than the subtitle does.
+    final bool compact = MediaQuery.sizeOf(context).height < 760;
     return Container(
-      padding: const EdgeInsets.fromLTRB(18, 14, 12, 12),
+      padding: EdgeInsets.fromLTRB(18, compact ? 10 : 14, 12, compact ? 8 : 12),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(color: DesignSystem.hairline(context), width: 1),
@@ -370,28 +389,32 @@ class _FeedCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontFamily: 'Bebas Neue',
-                fontSize: DesignSystem.fontSize3XL,
+                fontSize: compact
+                    ? DesignSystem.fontSize2XL
+                    : DesignSystem.fontSize3XL,
                 height: 0.95,
                 letterSpacing: 0.4,
                 color: colors.onSurface,
               ),
             ),
           ),
-          const SizedBox(height: 2),
-          Padding(
-            padding: const EdgeInsets.only(right: 6),
-            child: Text(
-              game.subtitleGetter(context),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: DesignSystem.fontSizeXS,
-                height: 1.3,
-                color: muted,
+          if (!compact) ...[
+            const SizedBox(height: 2),
+            Padding(
+              padding: const EdgeInsets.only(right: 6),
+              child: Text(
+                game.subtitleGetter(context),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: DesignSystem.fontSizeXS,
+                  height: 1.3,
+                  color: muted,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
+          ],
+          SizedBox(height: compact ? 4 : 10),
           Row(
             children: [
               _quietButton(
@@ -489,10 +512,15 @@ class _FeedCard extends StatelessWidget {
 }
 
 class _TopBar extends StatelessWidget {
-  const _TopBar({required this.showClose, required this.onClose});
+  const _TopBar({
+    required this.showClose,
+    required this.onClose,
+    required this.onBrowse,
+  });
 
   final bool showClose;
   final VoidCallback onClose;
+  final VoidCallback? onBrowse;
 
   @override
   Widget build(BuildContext context) {
@@ -514,6 +542,14 @@ class _TopBar extends StatelessWidget {
           ),
         ),
         const Spacer(),
+        if (onBrowse != null)
+          IconButton(
+            onPressed: onBrowse,
+            iconSize: 20,
+            color: DesignSystem.muted(context),
+            tooltip: AppLocalizations.of(context)?.navStack ?? 'Stack',
+            icon: const Icon(Icons.grid_view_rounded),
+          ),
         if (showClose)
           IconButton(
             onPressed: onClose,

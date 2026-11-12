@@ -32,7 +32,8 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
 - **State:** Riverpod (with codegen) + Hive for local persistence.
 - **Game registry:** `lib/data/game_registry.dart`, one `*_metadata.dart` per game (`id`, `category`, `icon`, `color`, `builder`, localized title and subtitle, popularity). Adding a game is adding a screen, its metadata file, and one line in the registry.
 - **Card shell:** `lib/widgets/deck.dart` — the mark, the wordmark, the paper card every
-  surface is built from.
+  surface is built from. `tool/icon.py` renders the same mark as the app icon
+  (`dart run flutter_launcher_icons` writes the platform sets).
 - **Board contract (Phase 1):** `lib/ui/core/board/` — one `PuzzleBoard` interface, one drag engine, five motion moves, five verbs. A puzzle is rules, geometry and paint; it owns no gestures.
 - **Discovery layer:**
   - `lib/data/game_categories.dart` — the six rooms, plus derived feeds (quick play, deterministic daily pick, shuffle order).

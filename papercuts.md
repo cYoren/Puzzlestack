@@ -203,3 +203,14 @@ The count moves by one or two between runs; a few games randomise their layout. 
 `flutter test -j 4` takes about 2 minutes, and the Kurodoko engine test alone is 98 seconds of
 that because it counts 600 boards. That is the bar doing its job, not a problem to fix — but do
 not run the full suite between small edits. Run the one file you are working on.
+
+### A game screen cannot tell it is in the feed
+
+`GameScaffold` is the one seam every game goes through (313 screens, zero exceptions), so embed
+mode lives there and is switched by `FeedSession.inFeed`. What it must not do is grow a second
+one: a game that reads the feed directly, or a "feed variant" of a game screen, is the start of
+313 special cases. If a card needs different chrome, it is the card's job, not the game's.
+
+The corollary, found the hard way: a completion dialog is pushed on the *root* navigator, so it
+sits outside the feed's widget subtree. An `InheritedWidget` will not reach it. `FeedSession` is
+a static handle for that reason alone.
