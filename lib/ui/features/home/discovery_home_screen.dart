@@ -56,11 +56,14 @@ class DiscoveryHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
-    final daily = GameFeed.dailyPick();
-    final quick = GameFeed.quickPlay;
-    final favorites = _favorites(ref);
     final hidden = ref.watch(
         userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
+    final hiddenSet = hidden.toSet();
+    final daily = GameFeed.dailyPick(exclude: hiddenSet);
+    final quick = GameFeed.quickPlay
+        .where((g) => !hiddenSet.contains(g.id))
+        .toList(growable: false);
+    final favorites = _favorites(ref);
 
     return Scaffold(
       backgroundColor: colorScheme.surface,

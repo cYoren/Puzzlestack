@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../utils/design_system.dart';
+import 'curation.dart';
 import 'game_metadata.dart';
 import 'game_registry.dart';
 
@@ -113,31 +114,45 @@ class GameFeed {
     'flanker_test',
   ];
 
-  static List<GameMetadata> get quickPlay =>
-      _quickPlayIds.map(find).whereType<GameMetadata>().toList(growable: false);
+  static List<GameMetadata> get quickPlay => _quickPlayIds
+      .map(find)
+      .whereType<GameMetadata>()
+      .where((g) => !feedBlocklist.contains(g.id))
+      .toList(growable: false);
+
+  /// The pool the reel draws from: the registry minus the hand-curated blocklist
+  /// (see `data/curation.dart`) minus [exclude] (the player's own hidden games).
+  /// Never empty: a blocklist that covers everything would otherwise hand the
+  /// feed a dead stream, so an empty pool falls back to the whole registry.
+  static List<GameMetadata> feedPool({Set<String> exclude = const {}}) {
+    final pool = allGamesMetadata
+        .where((g) => !feedBlocklist.contains(g.id) && !exclude.contains(g.id))
+        .toList(growable: false);
+    return pool.isEmpty ? allGamesMetadata : pool;
+  }
 
   /// A deterministic "puzzle of the day": same for everyone on a given date,
   /// changes at local midnight.
-  static GameMetadata dailyPick([DateTime? now]) {
+  static GameMetadata dailyPick(
+      {DateTime? now, Set<String> exclude = const {}}) {
     final date = now ?? DateTime.now();
     final seed = date.year * 10000 + date.month * 100 + date.day;
-    return allGamesMetadata[seed % allGamesMetadata.length];
+    // Drawn from the reel pool, so a puzzle we keep out of the feed is never
+    // also the one thing the home screen pushes today. [exclude] carries the
+    // player's own hidden games, which must not come back as the daily pick.
+    final pool = feedPool(exclude: exclude);
+    return pool[seed % pool.length];
   }
 
-  /// A random game. [exclude] removes ids from the draw (hidden games); if that
-  /// leaves nothing, the exclusion is ignored rather than handing back null.
+  /// A random game from the reel pool. [exclude] removes the player's hidden
+  /// games from the draw.
   static GameMetadata randomGame({
     String? exceptId,
     Random? random,
     Set<String> exclude = const {},
   }) {
     final rng = random ?? Random();
-    final pool = exclude.isEmpty
-        ? allGamesMetadata
-        : allGamesMetadata
-            .where((g) => !exclude.contains(g.id))
-            .toList(growable: false);
-    final source = pool.isEmpty ? allGamesMetadata : pool;
+    final source = feedPool(exclude: exclude);
     if (source.length <= 1 || exceptId == null) {
       return source[rng.nextInt(source.length)];
     }
@@ -148,7 +163,7 @@ class GameFeed {
     return game;
   }
 
-  /// A freshly shuffled ordering of every game, for the vertical feed.
+  /// A freshly shuffled ordering of the reel pool, for the vertical feed.
   static List<GameMetadata> shuffledOrder({Random? random}) =>
-      List<GameMetadata>.from(allGamesMetadata)..shuffle(random ?? Random());
+      List<GameMetadata>.from(feedPool())..shuffle(random ?? Random());
 }
