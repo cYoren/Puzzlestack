@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/game_providers.dart';
 import 'package:puzzle/utils/design_system.dart';
-import 'package:puzzle/widgets/tangible.dart';
+import 'package:puzzle/widgets/deck.dart';
 
 class DailyProgressBanner extends ConsumerWidget {
   const DailyProgressBanner({super.key});
@@ -21,10 +21,7 @@ class DailyProgressBanner extends ConsumerWidget {
       _ => l10n.incredibleSolvingToday,
     };
 
-    final displayColor =
-        solvedToday > 0 ? DesignSystem.primary : DesignSystem.gameBlue;
-
-    return TangibleContainer(
+    return DeckCard(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       child: Row(
         children: [
@@ -32,19 +29,16 @@ class DailyProgressBanner extends ConsumerWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: displayColor,
-              borderRadius: BorderRadius.circular(12.0),
+              shape: BoxShape.circle,
+              border: Border.all(color: DesignSystem.hairline(context)),
             ),
             child: Center(
-              child: Text(
+              child: DeckNumber(
                 '$solvedToday',
-                style: const TextStyle(
-                  fontFamily: 'Bebas Neue',
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  height: 1.0,
-                ),
+                size: 24,
+                color: solvedToday > 0
+                    ? DesignSystem.accent(context)
+                    : DesignSystem.muted(context),
               ),
             ),
           ),
@@ -56,11 +50,9 @@ class DailyProgressBanner extends ConsumerWidget {
                 Text(
                   l10n.solvedToday.toUpperCase(),
                   style: theme.textTheme.labelMedium?.copyWith(
-                    color: theme.brightness == Brightness.dark
-                        ? const Color(0xFF94A3B8)
-                        : const Color(0xFF475569),
-                    letterSpacing: 1.0,
-                    fontWeight: FontWeight.w900,
+                    color: DesignSystem.muted(context),
+                    letterSpacing: 0.8,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 4.0),

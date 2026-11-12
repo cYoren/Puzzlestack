@@ -55,22 +55,22 @@ CANVASES = {"ios": (1290, 2796), "play": (1080, 1920)}
 # The eight shots that ship, in listing order. Play caps a listing at 8 images;
 # Apple allows 10. Ordered so the suite hook lands first.
 SHOTS = [
-    ("00_home", "313 Puzzles, One Calm Home",
-     "Logic, math, memory and reflex, all in a single quiet app"),
-    ("01_sudoku", "Sudoku, Clean and Uncluttered",
+    ("00_deal", "Swipe. Solve. Repeat.",
+     "313 puzzles, one card at a time. Swipe up for the next"),
+    ("01_stack", "Six Rooms, 313 Puzzles",
+     "Logic, math, memory, spatial, attention and word"),
+    ("02_sudoku", "Sudoku, Clean and Uncluttered",
      "Every classic you know, stripped back to what actually matters"),
-    ("03_nonogram", "Nonograms That Click",
+    ("04_nonogram", "Nonograms That Click",
      "Read the numbers, fill the grid, watch the picture appear"),
-    ("05_crossword", "Crosswords Without the Clutter",
+    ("06_crossword", "Crosswords Without the Clutter",
      "Tap a clue, fill a word, nothing breaking your focus"),
-    ("08_water_sort", "Sort, Pour, Solve",
+    ("09_water_sort", "Sort, Pour, Solve",
      "Colour-sorting puzzles that are genuinely hard to put down"),
-    ("02_game_2048", "2048 and Every Other Classic",
+    ("03_game_2048", "2048 and Every Other Classic",
      "Slide, merge, chase a new best, one swipe at a time"),
-    ("06_minesweeper", "Minesweeper, Perfected",
+    ("07_minesweeper", "Minesweeper, Perfected",
      "Careful deduction on a grid that never fights you"),
-    ("10_schulte_table", "Train Focus in Under Two Minutes",
-     "Schulte tables and reflex drills for a quick mental reset"),
 ]
 
 

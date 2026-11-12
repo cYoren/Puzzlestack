@@ -1,73 +1,62 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
+import '../../../data/game_registry.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../utils/design_system.dart';
+import '../../../utils/haptic_feedback.dart';
 import '../../../utils/navigation_utils.dart';
-import '../../../widgets/tangible.dart';
-import '../shuffle/shuffle_feed_screen.dart';
+import '../../../widgets/deck.dart';
+import '../main_shell/main_shell.dart';
+import '../feed/feed_screen.dart';
 import 'category_room_screen.dart';
 import 'game_search_delegate.dart';
 
-/// The Puzzlestack home: a calm discovery surface instead of a flat list of
-/// three hundred games. Funnels people into the Shuffle feed, surfaces a Daily Pick and a
-/// Quick Play row, and tucks the full catalog into six category rooms.
+/// The stack: every puzzle, filed in six rooms.
+///
+/// This is the surface for someone who knows what they want. The deal is the
+/// default tab because most people do not, and this page does not repeat it:
+/// no second "shuffle" poster, just the six rooms, a card for today, a short
+/// row for when you have two minutes, and a way to find one by name.
 class DiscoveryHomeScreen extends StatelessWidget {
   const DiscoveryHomeScreen({super.key});
 
   void _openGame(BuildContext context, GameMetadata game) {
-    Navigator.push(
-      context,
-      CustomPageRoute(page: game.builder(context)),
-    );
-  }
-
-  void _openShuffle(BuildContext context, {String? categoryId}) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ShuffleFeedScreen(categoryId: categoryId),
-        fullscreenDialog: true,
-      ),
-    );
-  }
-
-  String _greeting() {
-    final h = DateTime.now().hour;
-    if (h < 12) return 'Good morning';
-    if (h < 18) return 'Good afternoon';
-    return 'Good evening';
+    HapticFeedbackUtil.selectionClick();
+    Navigator.push(context, CustomPageRoute(page: game.builder(context)));
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final daily = GameFeed.dailyPick();
-    final quick = GameFeed.quickPlay;
+    final GameMetadata daily = GameFeed.dailyPick();
+    final List<GameMetadata> quick = GameFeed.quickPlay;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: DesignSystem.paperOf(context),
       body: SafeArea(
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(child: _header(context)),
-            SliverToBoxAdapter(child: _shuffleHero(context)),
-            SliverToBoxAdapter(
-              child: _sectionTitle(context, 'DAILY PICK'),
-            ),
-            SliverToBoxAdapter(child: _dailyCard(context, daily)),
+            SliverToBoxAdapter(child: _dealCard(context)),
+            SliverToBoxAdapter(child: _todayCard(context, daily)),
             if (quick.isNotEmpty) ...[
               SliverToBoxAdapter(
-                child: _sectionTitle(context, 'QUICK PLAY · UNDER 2 MIN'),
+                child: _section(
+                    context,
+                    AppLocalizations.of(context)?.quickPlay ??
+                        'Under two minutes'),
               ),
               SliverToBoxAdapter(child: _quickRow(context, quick)),
             ],
             SliverToBoxAdapter(
-              child: _sectionTitle(context, 'EXPLORE BY CATEGORY'),
+              child: _section(
+                  context, AppLocalizations.of(context)?.rooms ?? 'Six rooms'),
             ),
-            _categoryGrid(context),
+            _roomGrid(context),
             const SliverToBoxAdapter(
               child: SizedBox(height: DesignSystem.spaceXL),
             ),
@@ -78,216 +67,127 @@ class DiscoveryHomeScreen extends StatelessWidget {
   }
 
   Widget _header(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         DesignSystem.spaceLG,
         DesignSystem.spaceMD,
-        DesignSystem.spaceLG,
         DesignSystem.spaceSM,
+        DesignSystem.spaceMD,
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _greeting().toUpperCase(),
-                  style: TextStyle(
-                    fontSize: DesignSystem.fontSizeSM,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.2,
-                    color: colorScheme.onSurface.withValues(alpha: 0.5),
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Puzzlestack',
-                  style: TextStyle(
-                    fontFamily: 'Bebas Neue',
-                    fontSize: DesignSystem.fontSize3XL,
-                    letterSpacing: 0.5,
-                    color: colorScheme.onSurface,
-                  ),
-                ),
-              ],
+          const Expanded(child: StackWordmark(size: 26)),
+          _chromeButton(
+            context,
+            icon: Icons.search_rounded,
+            tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+            onTap: () => showSearch(
+              context: context,
+              delegate: GameSearchDelegate(
+                onSelected: (g) => _openGame(context, g),
+              ),
             ),
           ),
-          Material(
-            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
-            shape: const CircleBorder(),
-            child: InkWell(
-              customBorder: const CircleBorder(),
-              onTap: () => showSearch(
-                context: context,
-                delegate: GameSearchDelegate(
-                  onSelected: (g) => _openGame(context, g),
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Icon(Icons.search_rounded, size: 24),
-              ),
-            ),
+          _chromeButton(
+            context,
+            icon: Icons.tune_rounded,
+            tooltip: AppLocalizations.of(context)?.settings ?? 'Settings',
+            onTap: () => openSettings(context),
           ),
         ],
       ),
     );
   }
 
-  Widget _shuffleHero(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: DesignSystem.spaceLG,
-        vertical: DesignSystem.spaceSM,
-      ),
-      child: GestureDetector(
-        onTap: () => _openShuffle(context),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(DesignSystem.spaceLG),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                DesignSystem.primary,
-                DesignSystem.accentBerry,
-              ],
-            ),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      "I'M BORED",
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: DesignSystem.fontSizeXS,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 1.4,
-                      ),
-                    ),
-                    SizedBox(height: 6),
-                    Text(
-                      'Shuffle',
-                      style: TextStyle(
-                        fontFamily: 'Bebas Neue',
-                        color: Colors.white,
-                        fontSize: DesignSystem.fontSizeHero,
-                        height: 1.0,
-                      ),
-                    ),
-                    SizedBox(height: 6),
-                    Text(
-                      'Swipe through random puzzles, one tap to start.',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: DesignSystem.fontSizeSM,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: DesignSystem.spaceMD),
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.18),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.shuffle_rounded,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-            ],
-          ),
+  Widget _chromeButton(
+    BuildContext context, {
+    required IconData icon,
+    required String tooltip,
+    required VoidCallback onTap,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: InkResponse(
+        onTap: onTap,
+        radius: 24,
+        child: SizedBox(
+          width: 44,
+          height: 44,
+          child: Icon(icon, size: 20, color: DesignSystem.muted(context)),
         ),
       ),
     );
   }
 
-  Widget _sectionTitle(BuildContext context, String text) {
+  /// The one place the whole deck is offered as a thing to do: a stack of
+  /// cards with the count on it. Tapping deals a full-screen hand.
+  Widget _dealCard(BuildContext context) {
+    final int total = allGamesMetadata.length;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         DesignSystem.spaceLG,
-        DesignSystem.spaceLG,
+        0,
         DesignSystem.spaceLG,
         DesignSystem.spaceSM,
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontFamily: 'Bebas Neue',
-          fontSize: DesignSystem.fontSizeMD,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 1.0,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      ),
-    );
-  }
-
-  Widget _dailyCard(BuildContext context, GameMetadata game) {
-    final cat = GameCategories.info(game.category);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-      child: TangibleContainer(
-        onTap: () => _openGame(context, game),
-        padding: const EdgeInsets.all(DesignSystem.spaceMD),
-        radius: DesignSystem.radiusLG,
+      child: DeckCard(
+        pile: 2,
+        lift: 1.2,
+        padding: const EdgeInsets.fromLTRB(20, 18, 18, 18),
+        onTap: () {
+          HapticFeedbackUtil.mediumImpact();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const FeedScreen(isRoute: true)),
+          );
+        },
         child: Row(
           children: [
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: game.color.withValues(alpha: 0.16),
-                borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
-              ),
-              child: Icon(game.icon, color: game.color, size: 28),
-            ),
-            const SizedBox(width: DesignSystem.spaceMD),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    game.titleGetter(context),
+                    'DEAL',
                     style: TextStyle(
-                      fontSize: DesignSystem.fontSizeLG,
-                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Bebas Neue',
+                      fontSize: DesignSystem.fontSizeHero + 6,
+                      height: 0.9,
+                      letterSpacing: 0.5,
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 6),
                   Text(
-                    '${cat.label} · today only',
+                    AppLocalizations.of(context)?.dealSubtitle ??
+                        'Every puzzle, one card at a time.',
                     style: TextStyle(
                       fontSize: DesignSystem.fontSizeSM,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withValues(alpha: 0.55),
+                      height: 1.3,
+                      color: DesignSystem.muted(context),
                     ),
                   ),
                 ],
               ),
             ),
-            Icon(
-              Icons.play_circle_fill_rounded,
-              color: game.color,
-              size: 32,
+            const SizedBox(width: DesignSystem.spaceSM),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                DeckNumber('$total',
+                    size: 44, color: DesignSystem.accent(context)),
+                Text(
+                  (AppLocalizations.of(context)?.puzzles ?? 'puzzles')
+                      .toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: 'Bebas Neue',
+                    fontSize: DesignSystem.fontSize2XS,
+                    letterSpacing: 1.4,
+                    height: 1,
+                    color: DesignSystem.muted(context),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -295,48 +195,121 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _todayCard(BuildContext context, GameMetadata game) {
+    final Color accent = DesignSystem.accent(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        DesignSystem.spaceLG,
+        DesignSystem.spaceSM,
+        DesignSystem.spaceLG,
+        DesignSystem.spaceSM,
+      ),
+      child: DeckCard(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+        onTap: () => _openGame(context, game),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    game.titleGetter(context),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: 'Bebas Neue',
+                      fontSize: DesignSystem.fontSize2XL,
+                      height: 1,
+                      letterSpacing: 0.4,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                DeckChip(
+                  label: (AppLocalizations.of(context)?.todaysCard ??
+                          "Today's card")
+                      .toUpperCase(),
+                  icon: Icons.wb_sunny_outlined,
+                  tint: accent,
+                  dense: true,
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              game.subtitleGetter(context),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: DesignSystem.fontSizeXS,
+                height: 1.35,
+                color: DesignSystem.muted(context),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _section(BuildContext context, String text) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        DesignSystem.spaceLG,
+        DesignSystem.spaceMD,
+        DesignSystem.spaceLG,
+        DesignSystem.spaceSM,
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontFamily: 'Bebas Neue',
+          fontSize: DesignSystem.fontSizeXL,
+          letterSpacing: 0.6,
+          height: 1,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+      ),
+    );
+  }
+
   Widget _quickRow(BuildContext context, List<GameMetadata> games) {
     return SizedBox(
-      height: 116,
+      height: 100,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        padding:
-            const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+        padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
         itemCount: games.length,
         separatorBuilder: (_, __) =>
             const SizedBox(width: DesignSystem.spaceSM),
-        itemBuilder: (context, i) {
-          final g = games[i];
-          return _quickTile(context, g);
-        },
+        itemBuilder: (context, i) => _quickTile(context, games[i]),
       ),
     );
   }
 
   Widget _quickTile(BuildContext context, GameMetadata game) {
-    return GestureDetector(
+    return DeckCard(
+      padding: const EdgeInsets.all(12),
+      radius: 16,
       onTap: () => _openGame(context, game),
-      child: Container(
-        width: 104,
-        padding: const EdgeInsets.all(DesignSystem.spaceSM),
-        decoration: BoxDecoration(
-          color: game.color.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
-          border: Border.all(color: game.color.withValues(alpha: 0.25)),
-        ),
+      child: SizedBox(
+        width: 92,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(game.icon, color: game.color, size: 26),
+            Icon(game.icon, size: 20, color: DesignSystem.accent(context)),
+            const SizedBox(height: 12),
             Text(
               game.titleGetter(context),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: DesignSystem.fontSizeSM,
-                fontWeight: FontWeight.w700,
+                fontSize: DesignSystem.fontSizeXS,
+                height: 1.2,
+                fontWeight: FontWeight.w600,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
@@ -346,14 +319,16 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _categoryGrid(BuildContext context) {
-    final cats = GameCategories.all;
-    // 1.5 is the shape we want; 104dp is the height the tile needs to hold an
-    // icon, a count, a label and a tagline. On a 320dp phone the ratio alone
-    // gives 90dp and the tile overflows, so take whichever is taller.
-    final width = MediaQuery.sizeOf(context).width;
-    final tileWidth = (width - 2 * DesignSystem.spaceLG - DesignSystem.spaceSM) / 2;
-    final tileHeight = math.max(104.0, tileWidth / 1.5);
+  Widget _roomGrid(BuildContext context) {
+    final List<CategoryInfo> cats = GameCategories.all;
+    // 104dp is the height the tile needs to hold a count, a name and a
+    // tagline. On a 320dp phone the ratio alone gives 90dp and the tile
+    // overflows, so take whichever is taller.
+    final double width = MediaQuery.sizeOf(context).width;
+    final double tileWidth =
+        (width - 2 * DesignSystem.spaceLG - DesignSystem.spaceSM) / 2;
+    final double tileHeight = math.max(92.0, tileWidth / 2.1);
+
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
       sliver: SliverGrid(
@@ -364,79 +339,61 @@ class DiscoveryHomeScreen extends StatelessWidget {
           mainAxisExtent: tileHeight,
         ),
         delegate: SliverChildBuilderDelegate(
-          (context, i) => _categoryTile(context, cats[i]),
+          (context, i) => _roomTile(context, cats[i]),
           childCount: cats.length,
         ),
       ),
     );
   }
 
-  Widget _categoryTile(BuildContext context, CategoryInfo cat) {
-    final count = GameCategories.countIn(cat.id);
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        CustomPageRoute(page: CategoryRoomScreen(categoryId: cat.id)),
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(DesignSystem.spaceMD),
-        decoration: BoxDecoration(
-          color: cat.color.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
-          border: Border.all(color: cat.color.withValues(alpha: 0.22)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(cat.icon, color: cat.color, size: 26),
-                Text(
-                  '$count',
-                  style: TextStyle(
-                    fontFamily: 'Bebas Neue',
-                    fontSize: DesignSystem.fontSizeLG,
-                    height: 1.0,
-                    color: cat.color,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
+  Widget _roomTile(BuildContext context, CategoryInfo cat) {
+    final int count = GameCategories.countIn(cat.id);
+    return DeckCard(
+      padding: const EdgeInsets.all(14),
+      radius: 16,
+      onTap: () {
+        HapticFeedbackUtil.selectionClick();
+        Navigator.push(
+          context,
+          CustomPageRoute(page: CategoryRoomScreen(categoryId: cat.id)),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
                   cat.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: DesignSystem.fontSizeLG,
-                    fontWeight: FontWeight.w800,
-                    // The theme's body height (1.6) makes two lines of text
-                    // taller than the tile. Tighten it here, not the tile.
-                    height: 1.2,
+                    fontFamily: 'Bebas Neue',
+                    fontSize: DesignSystem.fontSizeXL,
+                    height: 1,
+                    letterSpacing: 0.4,
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                Text(
-                  cat.tagline,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: DesignSystem.fontSizeXS,
-                    height: 1.2,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withValues(alpha: 0.55),
-                  ),
-                ),
-              ],
+              ),
+              DeckNumber('$count',
+                  size: 18, color: DesignSystem.muted(context)),
+            ],
+          ),
+          const SizedBox(height: 5),
+          Text(
+            cat.tagline,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeXS,
+              height: 1.25,
+              color: DesignSystem.muted(context),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
