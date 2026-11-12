@@ -113,10 +113,8 @@ class GameFeed {
     'flanker_test',
   ];
 
-  static List<GameMetadata> get quickPlay => _quickPlayIds
-      .map(find)
-      .whereType<GameMetadata>()
-      .toList(growable: false);
+  static List<GameMetadata> get quickPlay =>
+      _quickPlayIds.map(find).whereType<GameMetadata>().toList(growable: false);
 
   /// A deterministic "puzzle of the day": same for everyone on a given date,
   /// changes at local midnight.
@@ -126,14 +124,26 @@ class GameFeed {
     return allGamesMetadata[seed % allGamesMetadata.length];
   }
 
-  static GameMetadata randomGame({String? exceptId, Random? random}) {
+  /// A random game. [exclude] removes ids from the draw (hidden games); if that
+  /// leaves nothing, the exclusion is ignored rather than handing back null.
+  static GameMetadata randomGame({
+    String? exceptId,
+    Random? random,
+    Set<String> exclude = const {},
+  }) {
     final rng = random ?? Random();
-    if (allGamesMetadata.length <= 1 || exceptId == null) {
-      return allGamesMetadata[rng.nextInt(allGamesMetadata.length)];
+    final pool = exclude.isEmpty
+        ? allGamesMetadata
+        : allGamesMetadata
+            .where((g) => !exclude.contains(g.id))
+            .toList(growable: false);
+    final source = pool.isEmpty ? allGamesMetadata : pool;
+    if (source.length <= 1 || exceptId == null) {
+      return source[rng.nextInt(source.length)];
     }
     GameMetadata game;
     do {
-      game = allGamesMetadata[rng.nextInt(allGamesMetadata.length)];
+      game = source[rng.nextInt(source.length)];
     } while (game.id == exceptId);
     return game;
   }

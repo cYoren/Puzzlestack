@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../providers/user_providers.dart';
@@ -17,6 +19,11 @@ class _MainShellState extends ConsumerState<MainShell>
     with WidgetsBindingObserver {
   int _selectedIndex = 1;
 
+  /// The streak resets at local midnight, so a session left open overnight must
+  /// re-read it rather than trust the value loaded at launch.
+  Timer? _dayCheckTimer;
+  DateTime? _lastCheckedDate;
+
   final List<Widget> _screens = [
     const StatsScreen(),
     const DiscoveryHomeScreen(),
@@ -27,10 +34,27 @@ class _MainShellState extends ConsumerState<MainShell>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(gameStreakNotifierProvider.notifier).refreshStatus();
+    });
+    _lastCheckedDate = DateTime.now();
+    _dayCheckTimer = Timer.periodic(const Duration(minutes: 1), (_) {
+      _checkDayChange();
+    });
+  }
+
+  void _checkDayChange() {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    if (_lastCheckedDate == null || today != _lastCheckedDate) {
+      _lastCheckedDate = today;
+      ref.read(gameStreakNotifierProvider.notifier).refreshStatus();
+    }
   }
 
   @override
   void dispose() {
+    _dayCheckTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -229,8 +253,9 @@ class _MainShellState extends ConsumerState<MainShell>
   }) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final color =
-        isSelected ? colorScheme.primary : colorScheme.onSurface.withValues(alpha: 0.5);
+    final color = isSelected
+        ? colorScheme.primary
+        : colorScheme.onSurface.withValues(alpha: 0.5);
 
     return Expanded(
       child: GestureDetector(

@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:puzzle/l10n/app_localizations.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
+import '../../../providers/game_session_provider.dart';
+import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
+import '../../../utils/haptic_feedback.dart';
 import '../../../utils/navigation_utils.dart';
 import '../shuffle/shuffle_feed_screen.dart';
 
 /// One category's "room": its tagline, a category-scoped Shuffle button, and a
 /// grid of every game in that category.
-class CategoryRoomScreen extends StatelessWidget {
+///
+/// Each tile carries a star (favourite) and a long-press (hide). Both are the
+/// only ways the rest of the app learns about a game: the home screen shows a
+/// favourites row, and hidden games drop out of every browse surface.
+class CategoryRoomScreen extends ConsumerWidget {
   final String categoryId;
 
   const CategoryRoomScreen({super.key, required this.categoryId});
 
-  void _openGame(BuildContext context, GameMetadata game) {
+  void _openGame(BuildContext context, WidgetRef ref, GameMetadata game) {
+    // Tells the completion dialog which shelf the player is browsing, so "next
+    // puzzle" stays inside this category instead of jumping anywhere.
+    ref.read(gameSessionNotifierProvider.notifier).setSession(
+          gameId: game.id,
+          category: categoryId,
+          query: '',
+        );
     Navigator.push(
       context,
       CustomPageRoute(page: game.builder(context)),
@@ -20,9 +36,13 @@ class CategoryRoomScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cat = GameCategories.info(categoryId);
-    final games = GameCategories.inCategory(categoryId);
+    final hidden = ref.watch(
+        userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
+    final games = GameCategories.inCategory(categoryId)
+        .where((g) => !hidden.contains(g.id))
+        .toList(growable: false);
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -43,7 +63,8 @@ class CategoryRoomScreen extends StatelessWidget {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(child: _shuffleBanner(context, cat, games.length)),
+            SliverToBoxAdapter(
+                child: _shuffleBanner(context, cat, games.length)),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(
                 DesignSystem.spaceLG,
@@ -52,15 +73,14 @@ class CategoryRoomScreen extends StatelessWidget {
                 DesignSystem.spaceXL,
               ),
               sliver: SliverGrid(
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: DesignSystem.spaceSM,
                   crossAxisSpacing: DesignSystem.spaceSM,
                   childAspectRatio: 1.15,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, i) => _gameTile(context, games[i]),
+                  (context, i) => _gameTile(context, ref, games[i]),
                   childCount: games.length,
                 ),
               ),
@@ -141,9 +161,12 @@ class CategoryRoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _gameTile(BuildContext context, GameMetadata game) {
+  Widget _gameTile(BuildContext context, WidgetRef ref, GameMetadata game) {
+    final isFavorite = ref.watch(userDataNotifierProvider
+        .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
     return GestureDetector(
-      onTap: () => _openGame(context, game),
+      onTap: () => _openGame(context, ref, game),
+      onLongPress: () => _hideGame(context, ref, game),
       child: Container(
         padding: const EdgeInsets.all(DesignSystem.spaceMD),
         decoration: BoxDecoration(
@@ -155,7 +178,13 @@ class CategoryRoomScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(game.icon, color: game.color, size: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(game.icon, color: game.color, size: 30),
+                _favoriteStar(context, ref, game, isFavorite),
+              ],
+            ),
             Text(
               game.titleGetter(context),
               maxLines: 2,
@@ -168,6 +197,49 @@ class CategoryRoomScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// The star sits inside the tile, so it needs its own hit target that does not
+  /// fall through to the tile's onTap and open the game.
+  Widget _favoriteStar(
+      BuildContext context, WidgetRef ref, GameMetadata game, bool isFavorite) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        HapticFeedbackUtil.lightImpact();
+        ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, bottom: 8),
+        child: Icon(
+          isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
+          size: 20,
+          color: isFavorite
+              ? game.color
+              : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.28),
+        ),
+      ),
+    );
+  }
+
+  void _hideGame(BuildContext context, WidgetRef ref, GameMetadata game) {
+    final l10n = AppLocalizations.of(context)!;
+    HapticFeedbackUtil.mediumImpact();
+    ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(l10n.gameHidden),
+        action: SnackBarAction(
+          label: l10n.undo,
+          onPressed: () => ref
+              .read(userDataNotifierProvider.notifier)
+              .toggleHideGame(game.id),
+        ),
+        duration: const Duration(seconds: 4),
       ),
     );
   }
