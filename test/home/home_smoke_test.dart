@@ -6,7 +6,7 @@ import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/features/home/discovery_home_screen.dart';
-import 'package:puzzle/ui/features/shuffle/shuffle_feed_screen.dart';
+import 'package:puzzle/ui/features/feed/feed_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
 
 /// The two surfaces the roadmap says must survive the upstream merge: the
@@ -48,7 +48,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);
-      expect(find.text('DAILY PICK'), findsOneWidget);
+      expect(find.text('Six rooms'), findsOneWidget);
 
       // Scroll the whole page: the category tiles are built lazily, and a
       // tile that overflows its grid cell only shows up once it exists.
@@ -59,7 +59,14 @@ void main() {
             reason: 'layout broke at scroll step $i, ${width.toInt()}dp');
       }
 
-      for (final label in ['Logic', 'Math', 'Memory', 'Spatial', 'Attention', 'Word']) {
+      for (final label in [
+        'Logic',
+        'Math',
+        'Memory',
+        'Spatial',
+        'Attention',
+        'Word'
+      ]) {
         expect(find.text(label), findsWidgets,
             reason: '$label room is missing at ${width.toInt()}dp');
       }
@@ -74,13 +81,13 @@ void main() {
     // overflows a 320dp phone or leaves a timer running — which is a real
     // problem, but it is that game's problem, not the feed's, and a test that
     // fails one run in three tells you nothing about either.
-    await tester.pumpWidget(_app(const ShuffleFeedScreen(startGameId: 'pegs')));
+    await tester.pumpWidget(_app(const FeedScreen(startGameId: 'pegs')));
     // The feed animates continuously; pumpAndSettle is not an option.
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(tester.takeException(), isNull);
-    expect(find.byType(ShuffleFeedScreen), findsOneWidget);
+    expect(find.byType(FeedScreen), findsOneWidget);
 
     // The feed picks a game at random, and some games start their own timers
     // on the first frame. Tear the screen down so those timers go with it

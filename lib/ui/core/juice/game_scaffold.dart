@@ -8,6 +8,7 @@ import '../../../data/game_guides.dart';
 import '../../../data/game_registry.dart';
 import '../../../widgets/game_guide_screen.dart';
 import '../../../providers/user_providers.dart';
+import '../../features/feed/feed_session.dart';
 
 class GameScaffold extends ConsumerStatefulWidget {
   final String title;
@@ -60,7 +61,8 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
   @override
   Widget build(BuildContext context) {
     final keepAwake = ref.watch(
-      userDataNotifierProvider.select((u) => u.isKeepScreenAwakeEnabled ?? false),
+      userDataNotifierProvider
+          .select((u) => u.isKeepScreenAwakeEnabled ?? false),
     );
     _syncWakelock(keepAwake);
 
@@ -68,19 +70,48 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
     final colorScheme = theme.colorScheme;
     final mediaQuery = MediaQuery.of(context);
     final isMobile = DesignSystem.isMobile(context);
-    
+
+    // In the feed the puzzle is the card: it owns no chrome, no back button and
+    // no safe-area of its own. The feed draws all of that around it, which is
+    // how 313 screens get one shell instead of 313 shells.
+    final bool embedded = FeedSession.inFeed;
+
     // Calculate a responsive max width.
     // For games, we don't want the board to be wider than the available height
     // to prevent vertical overflow with AspectRatio(1) widgets.
-    final availableHeight = mediaQuery.size.height - mediaQuery.padding.top - mediaQuery.padding.bottom - kToolbarHeight;
+    final availableHeight = mediaQuery.size.height -
+        mediaQuery.padding.top -
+        mediaQuery.padding.bottom -
+        kToolbarHeight;
     final responsiveMaxWidth = math.min(600.0, availableHeight * 0.85);
+
+    if (embedded) {
+      return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: isMobile
+                  ? double.infinity
+                  : math.max(400.0, responsiveMaxWidth),
+            ),
+            child: widget.body,
+          ),
+        ),
+        bottomNavigationBar: widget.bottomNavigationBar,
+        floatingActionButton: widget.floatingActionButton,
+      );
+    }
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : math.max(400.0, responsiveMaxWidth)),
+            constraints: BoxConstraints(
+                maxWidth: isMobile
+                    ? double.infinity
+                    : math.max(400.0, responsiveMaxWidth)),
             child: Column(
               children: [
                 _buildAppBar(context),
@@ -94,7 +125,10 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
           ? SafeArea(
               child: Center(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : math.max(400.0, responsiveMaxWidth)),
+                  constraints: BoxConstraints(
+                      maxWidth: isMobile
+                          ? double.infinity
+                          : math.max(400.0, responsiveMaxWidth)),
                   child: widget.bottomNavigationBar,
                 ),
               ),
@@ -139,7 +173,8 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                   widget.title.toUpperCase(), // Game titles uppercase
                   style: TextStyle(
                     fontFamily: 'Bebas Neue', // Header font family
-                    fontSize: DesignSystem.fontSize2XL, // 24.0 (Gorgeous, high-readability title)
+                    fontSize: DesignSystem
+                        .fontSize2XL, // 24.0 (Gorgeous, high-readability title)
                     letterSpacing: 1.2,
                     fontWeight: FontWeight.w700,
                     color: colorScheme.onSurface,
@@ -176,11 +211,13 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
     Color? gameColor;
     try {
       final matchingGame = allGamesMetadata.firstWhere(
-        (g) => g.titleGetter(context).toUpperCase() == widget.title.toUpperCase(),
+        (g) =>
+            g.titleGetter(context).toUpperCase() == widget.title.toUpperCase(),
       );
       gameId = matchingGame.id;
       gameColor = matchingGame.color;
-      if (resolvedSubtitle == null || resolvedSubtitle.toUpperCase() == widget.title.toUpperCase()) {
+      if (resolvedSubtitle == null ||
+          resolvedSubtitle.toUpperCase() == widget.title.toUpperCase()) {
         resolvedSubtitle = matchingGame.subtitleGetter(context);
       }
     } catch (_) {
@@ -302,7 +339,8 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
         return Dialog(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          insetPadding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 380),
             child: TangibleContainer(
@@ -347,7 +385,8 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                     padding: const EdgeInsets.all(DesignSystem.spaceMD),
                     decoration: BoxDecoration(
                       color: colorScheme.onSurface.withValues(alpha: 0.05),
-                      borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+                      borderRadius:
+                          BorderRadius.circular(DesignSystem.radiusMD),
                       border: Border.all(
                         color: colorScheme.outline.withValues(alpha: 0.2),
                       ),
@@ -356,7 +395,8 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          resolvedSubtitle ?? "Objective: Solve the puzzle by completing the goals.",
+                          resolvedSubtitle ??
+                              "Objective: Solve the puzzle by completing the goals.",
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurface.withValues(alpha: 0.9),
@@ -366,7 +406,9 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                         ),
                         if (rulesList != null && rulesList.isNotEmpty) ...[
                           const SizedBox(height: DesignSystem.spaceMD),
-                          Divider(color: colorScheme.outline.withValues(alpha: 0.3), height: 1),
+                          Divider(
+                              color: colorScheme.outline.withValues(alpha: 0.3),
+                              height: 1),
                           const SizedBox(height: DesignSystem.spaceMD),
                           Text(
                             "RULES & CONDITIONS:",
@@ -379,30 +421,33 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                           ),
                           const SizedBox(height: DesignSystem.spaceSM),
                           ...rulesList.map((rule) => Padding(
-                            padding: const EdgeInsets.only(bottom: DesignSystem.spaceXS),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "• ",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: colorScheme.primary,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    rule,
-                                    style: theme.textTheme.bodyMedium?.copyWith(
-                                      color: colorScheme.onSurface.withValues(alpha: 0.8),
-                                      fontSize: 13.0,
-                                      height: 1.35,
+                                padding: const EdgeInsets.only(
+                                    bottom: DesignSystem.spaceXS),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "• ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: colorScheme.primary,
+                                      ),
                                     ),
-                                  ),
+                                    Expanded(
+                                      child: Text(
+                                        rule,
+                                        style: theme.textTheme.bodyMedium
+                                            ?.copyWith(
+                                          color: colorScheme.onSurface
+                                              .withValues(alpha: 0.8),
+                                          fontSize: 13.0,
+                                          height: 1.35,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          )),
+                              )),
                         ],
                       ],
                     ),
@@ -432,4 +477,3 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
     );
   }
 }
-

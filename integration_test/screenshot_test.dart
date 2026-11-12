@@ -99,8 +99,15 @@ void main() {
     );
     await _settle(tester);
 
-    // 1. The discovery home.
-    await _shoot(binding, tester, '00_home');
+    // 1. The deal. This is what the app opens on now, so it leads the set.
+    await _shoot(binding, tester, '00_deal');
+
+    // 2. The stack, one tap away on the bottom bar.
+    await tester.tap(find.text('STACK'));
+    await _settle(tester);
+    await _shoot(binding, tester, '01_stack');
+    await tester.tap(find.text('DEAL'));
+    await _settle(tester);
 
     // 2. Each hero game, pushed programmatically off the home navigator.
     //
@@ -111,7 +118,7 @@ void main() {
     // test, so the element stays valid and the async-gap lint below is a false
     // positive here.
     final BuildContext context = tester.element(find.byType(MainShell));
-    var index = 1;
+    var index = 2;
     for (final id in kHeroGameIds) {
       final game = GameFeed.find(id);
       if (game == null) continue;

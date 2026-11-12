@@ -6326,4 +6326,60 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get difficultyHard => 'TRUDNY';
+
+  @override
+  String get navDeal => 'Deal';
+
+  @override
+  String get navStack => 'Stack';
+
+  @override
+  String get navYou => 'You';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get nextPuzzle => 'Next puzzle';
+
+  @override
+  String get restartPuzzle => 'Restart';
+
+  @override
+  String get lockScroll => 'Lock scrolling';
+
+  @override
+  String get unlockScroll => 'Unlock scrolling';
+
+  @override
+  String get feedScrollLocked => 'Scroll locked. Tap the lock to deal again.';
+
+  @override
+  String get dealTitle => 'The deal';
+
+  @override
+  String get dealSubtitle => 'Every puzzle, one card at a time.';
+
+  @override
+  String get yourCards => 'Your cards';
+
+  @override
+  String get todaysCard => 'Today\'s card';
+
+  @override
+  String get quickPlay => 'Under two minutes';
+
+  @override
+  String get rooms => 'Six rooms';
+
+  @override
+  String get puzzles => 'puzzles';
+
+  @override
+  String get shuffleCategory => 'Deal this room';
+
+  @override
+  String deckProgress(String position, String total) {
+    return '$position of $total';
+  }
 }

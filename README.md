@@ -4,8 +4,15 @@ A cross-platform suite of **313 minimalist brain puzzles**, built with Flutter. 
 
 Two ideas sit at the heart of Puzzlestack:
 
-1. **Shuffle feed (the "I'm bored" mode).** A full-screen, vertical, TikTok-style feed. Swipe up and you drop straight into a fresh random puzzle. No menus, no friction, just one more.
-2. **Discovery home instead of a long list.** 313 games is a lot. The home is a calm discovery surface: a Shuffle hero, a Daily Pick, a Quick Play (under 2 min) row, "jump back in" recents, and the full catalog tucked into six category rooms.
+1. **The deal.** The app opens on a puzzle, not on a menu. One full-screen card, playable
+   where it lands; swipe up and the next card is dealt. The deck is a real shuffled pass over
+   all 313 puzzles, so nothing repeats until the bag is empty and the counter on the card
+   (`042 / 313`) is true. Solving a card offers one thing: the next card.
+2. **The stack.** When you know what you want, the second room files every puzzle by
+   category: six rooms, today's card, a row for when you have two minutes, and search.
+
+The look is a deck of paper cards: warm paper, ink, hairlines, Bebas display numerals, and one
+live colour (indigo) that only appears where something is active. See [DESIGN.md](DESIGN.md).
 
 ---
 
@@ -24,11 +31,17 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
 
 - **State:** Riverpod (with codegen) + Hive for local persistence.
 - **Game registry:** `lib/data/game_registry.dart`, one `*_metadata.dart` per game (`id`, `category`, `icon`, `color`, `builder`, localized title and subtitle, popularity). Adding a game is adding a screen, its metadata file, and one line in the registry.
+- **Card shell:** `lib/widgets/deck.dart` — the mark, the wordmark, the paper card every
+  surface is built from.
 - **Board contract (Phase 1):** `lib/ui/core/board/` — one `PuzzleBoard` interface, one drag engine, five motion moves, five verbs. A puzzle is rules, geometry and paint; it owns no gestures.
 - **Discovery layer:**
   - `lib/data/game_categories.dart` — the six rooms, plus derived feeds (quick play, deterministic daily pick, shuffle order).
-  - `lib/ui/features/shuffle/shuffle_feed_screen.dart` — the vertical Shuffle feed.
-  - `lib/ui/features/home/discovery_home_screen.dart` — the discovery home.
+  - `lib/ui/features/feed/feed_screen.dart` — the deal: one card per screen, swipe up.
+  - `lib/ui/features/feed/feed_deck.dart` — the order cards are dealt in (a shuffled pass,
+    never a repeat inside a pass, hidden games dropped first).
+  - `lib/ui/features/feed/feed_session.dart` — the bridge that lets a game screen and its
+    completion dialog behave as a card while the feed is on screen.
+  - `lib/ui/features/home/discovery_home_screen.dart` — the stack: rooms, today, quick play.
   - `lib/ui/features/home/category_room_screen.dart` — a single category's puzzles.
 
 ## Build & run
