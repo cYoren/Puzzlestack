@@ -170,8 +170,10 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     setState(() {
       _pressed = null;
       _lifted = element;
-      _grab = details.localPosition;
-      _pointer = details.localPosition;
+      // Grab from where the finger went down, not where the pan crossed its
+      // slop: using the pan start made every lifted cell jump by ~18dp.
+      _grab = _down;
+      _pointer = _down;
       _targets = targets;
       _hover = null;
     });
@@ -302,7 +304,31 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       return;
     }
     emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
-    widget.onMove(move);
+
+    // A tap that moves something somewhere gets the same settle a drag does.
+    // Without it a pour, a jump or a link happened in one frame, which read as
+    // the board flickering rather than the move being made.
+    final target = move.target;
+    final bounds = target == null ? null : widget.board.boundsOf(target);
+    final origin = widget.board.boundsOf(move.source);
+    if (target == null || bounds == null || origin == null) {
+      widget.onMove(move);
+      return;
+    }
+    final delta = bounds.center - origin.center;
+    setState(() {
+      _lifted = move.source;
+      _grab = Offset.zero;
+      _pointer = Offset.zero;
+      _pending = move;
+      _settling = true;
+      _settleFrom = Offset.zero;
+      _settleTo = Offset(delta.dx * _size.width, delta.dy * _size.height);
+    });
+    _settle.value = 0;
+    _settle
+        .animateWith(SpringSimulation(BoardMotion.snapSpring, 0, 1, 0))
+        .whenCompleteOrCancel(_commit);
   }
 
   // -------------------------------------------------------------------- win
