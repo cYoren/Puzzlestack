@@ -15,6 +15,9 @@ class WCSState {
   final bool isGameOver;
   final bool isLoading;
 
+  /// Set for one card after the sorting rule changes, so the screen can say so.
+  final bool ruleChanged;
+
   WCSState({
     this.stimulusCards = const [],
     this.currentCard,
@@ -25,6 +28,7 @@ class WCSState {
     this.timeLeft = 60,
     this.isGameOver = false,
     this.isLoading = true,
+    this.ruleChanged = false,
   });
 
   WCSState copyWith({
@@ -37,6 +41,7 @@ class WCSState {
     int? timeLeft,
     bool? isGameOver,
     bool? isLoading,
+    bool? ruleChanged,
   }) {
     return WCSState(
       stimulusCards: stimulusCards ?? this.stimulusCards,
@@ -48,6 +53,7 @@ class WCSState {
       timeLeft: timeLeft ?? this.timeLeft,
       isGameOver: isGameOver ?? this.isGameOver,
       isLoading: isLoading ?? this.isLoading,
+      ruleChanged: ruleChanged ?? this.ruleChanged,
     );
   }
 }
@@ -95,23 +101,29 @@ class WisconsinCardSortingNotifier extends _$WisconsinCardSortingNotifier {
     if (state.currentCard == null || state.isGameOver) return;
 
     final stimulus = state.stimulusCards[stimulusIndex];
-    final isCorrect = _engine.isMatch(state.currentCard!, stimulus, state.currentRule);
+    final isCorrect =
+        _engine.isMatch(state.currentCard!, stimulus, state.currentRule);
 
     int newConsecutive = isCorrect ? state.consecutiveCorrect + 1 : 0;
     WCSAttribute newRule = state.currentRule;
-    
-    // Shift rule after 5 consecutive correct matches
+    var ruleChanged = false;
+
+    // Shift rule after 5 consecutive correct matches. The switch is announced:
+    // a clinical test hides it, a game has to tell the player what changed or
+    // it is just losing to an invisible referee.
     if (newConsecutive >= 5) {
       newRule = _engine.nextRule(state.currentRule);
       newConsecutive = 0;
+      ruleChanged = true;
     }
 
     state = state.copyWith(
       score: state.score + (isCorrect ? 1 : 0),
       consecutiveCorrect: newConsecutive,
       currentRule: newRule,
-      lastFeedback: isCorrect ? 'CORRECT' : 'INCORRECT',
+      lastFeedback: isCorrect ? 'CORRECT' : 'NOT THIS ONE',
       currentCard: _engine.generateRandomCard(),
+      ruleChanged: ruleChanged,
     );
   }
 

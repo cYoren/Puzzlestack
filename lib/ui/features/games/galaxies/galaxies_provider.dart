@@ -184,4 +184,15 @@ class GalaxiesNotifier extends _$GalaxiesNotifier {
     }
     return null;
   }
+
+  /// Paints the answer's partition.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      owner: List<int>.from(state.puzzle.solution),
+      clearActive: true,
+      clearHint: true,
+      isSolved: true,
+    );
+  }
 }

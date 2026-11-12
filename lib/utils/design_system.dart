@@ -52,10 +52,10 @@ class DesignSystem {
   // --- Dark Theme Colors (AMOLED Optimized) ---
   static const Color darkBackground = Color(0xFF121212);
   static const Color darkSurface = Color(0xFF1E1E1E);
-  static const Color darkInk = Color(0xFFF8FAFC);
-  static const Color darkInkSlate = Color(0xFF94A3B8);
-  static const Color darkOutline = Color(0xFF2D2D2D);
-  static const Color darkOutlineVariant = Color(0xFF3A3A3A);
+  static const Color darkInk = Color(0xFFE4E4EA); // soft white: pure white glares
+  static const Color darkInkSlate = Color(0xFFA8B0BF);
+  static const Color darkOutline = Color(0xFF3E3E4A); // visible on #1E1E1E
+  static const Color darkOutlineVariant = Color(0xFF52525E);
 
   // --- Responsive Breakpoints ---
   static const double mobileMax = 600;

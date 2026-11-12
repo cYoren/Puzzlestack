@@ -102,4 +102,15 @@ class TwiddleNotifier extends _$TwiddleNotifier {
     }
     return true;
   }
+
+  /// Walks the scramble back, which is the answer by construction.
+  void solve() {
+    if (state.isSolved) return;
+    var grid = List<int>.from(state.grid);
+    for (final move in state.puzzle.solution) {
+      grid = _engine.apply(grid, state.size, move, state.block);
+      if (_engine.isSolved(grid)) break;
+    }
+    state = state.copyWith(grid: grid, isSolved: _engine.isSolved(grid));
+  }
 }

@@ -97,6 +97,32 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     if (hint != null) {
       _paintBlockOutline(canvas, hint.row, hint.col, canvas.palette.success);
     }
+
+    // While a tile is being dragged, outline the block that would turn, so the
+    // gesture is "this block rotates" rather than a mystery about which of the
+    // four blocks containing the tile is live.
+    final hover = canvas.highlight.hover;
+    if (hover != null) {
+      final (row, col) = engine
+          .blocksContaining(rows, state.block, hover.a, hover.b)
+          .reduce((a, b) {
+        final da = _centreDistance(a, hover.a, hover.b);
+        final db = _centreDistance(b, hover.a, hover.b);
+        return da <= db ? a : b;
+      });
+      _paintBlockOutline(
+        canvas,
+        row,
+        col,
+        canvas.palette.primary.withValues(alpha: 0.55),
+      );
+    }
+  }
+
+  double _centreDistance((int, int) corner, int row, int col) {
+    final centreRow = corner.$1 + (state.block - 1) / 2;
+    final centreCol = corner.$2 + (state.block - 1) / 2;
+    return (centreRow - row).abs() + (centreCol - col).abs();
   }
 
   @override
@@ -122,7 +148,7 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     canvas.text(
       '${_tileAt(row, col)}',
       rect,
-      fontSize: rect.height * 0.42,
+      fontSize: canvas.fontSizeFor(rect, 0.42),
       weight: FontWeight.w800,
       color: correct ? palette.primary : palette.ink,
     );
@@ -145,7 +171,7 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     canvas.text(
       '${_tileAt(element.a, element.b)}',
       rect,
-      fontSize: rect.height * 0.42,
+      fontSize: canvas.fontSizeFor(rect, 0.42),
       weight: FontWeight.w800,
       color: canvas.palette.primary,
     );
