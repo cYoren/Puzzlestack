@@ -13,16 +13,16 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.4.0
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2.23.0
         with:
           channel: 'stable'
           cache: true
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: 'latest'
 
@@ -43,7 +43,7 @@ jobs:
           appdmg macos/installer/appdmg.json build/macos/dmg/puzzle-games-macos.dmg
 
       - name: Upload macOS Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: macos-dmg
           path: build/macos/dmg/puzzle-games-macos.dmg
