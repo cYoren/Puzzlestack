@@ -76,13 +76,14 @@ void main() {
 
     test('the daily pick is deterministic for a date', () {
       final date = DateTime(2026, 11, 10);
-      expect(GameFeed.dailyPick(date).id, GameFeed.dailyPick(date).id);
+      expect(
+          GameFeed.dailyPick(now: date).id, GameFeed.dailyPick(now: date).id);
     });
 
     test('the daily pick changes across days', () {
       final ids = {
         for (var day = 1; day <= 28; day++)
-          GameFeed.dailyPick(DateTime(2026, 11, day)).id,
+          GameFeed.dailyPick(now: DateTime(2026, 11, day)).id,
       };
       expect(ids.length, greaterThan(1));
     });
