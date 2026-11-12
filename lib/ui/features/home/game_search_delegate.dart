@@ -9,13 +9,19 @@ import '../../../utils/design_system.dart';
 class GameSearchDelegate extends SearchDelegate<void> {
   final void Function(GameMetadata game) onSelected;
 
-  GameSearchDelegate({required this.onSelected})
+  /// Games the player has hidden; they are not searchable either.
+  final Set<String> hiddenIds;
+
+  GameSearchDelegate({required this.onSelected, this.hiddenIds = const {}})
       : super(searchFieldLabel: 'Search ${allGamesMetadata.length} puzzles');
 
   List<GameMetadata> _results(BuildContext context) {
     final q = query.trim().toLowerCase();
-    if (q.isEmpty) return allGamesMetadata;
-    return allGamesMetadata.where((g) {
+    final pool = allGamesMetadata
+        .where((g) => !hiddenIds.contains(g.id))
+        .toList(growable: false);
+    if (q.isEmpty) return pool;
+    return pool.where((g) {
       return g.titleGetter(context).toLowerCase().contains(q) ||
           g.category.toLowerCase().contains(q);
     }).toList(growable: false);
@@ -49,7 +55,8 @@ class GameSearchDelegate extends SearchDelegate<void> {
         child: Text(
           'No puzzles match "$query"',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
       );

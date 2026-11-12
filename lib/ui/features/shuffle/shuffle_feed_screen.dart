@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
+import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 
 /// The "I'm bored" mode: a full-screen, vertical, TikTok-style feed of puzzles.
@@ -12,7 +14,7 @@ import '../../../utils/design_system.dart';
 /// shows where you are and a lock toggle, because a few games (2048, mazes)
 /// use their own vertical swipes; locking pauses feed-scrolling so those games
 /// stay fully playable.
-class ShuffleFeedScreen extends StatefulWidget {
+class ShuffleFeedScreen extends ConsumerStatefulWidget {
   /// Optionally start the feed on a specific game (e.g. from a "shuffle this
   /// category" entry point); otherwise the first page is random.
   final String? startGameId;
@@ -24,10 +26,10 @@ class ShuffleFeedScreen extends StatefulWidget {
   const ShuffleFeedScreen({super.key, this.startGameId, this.categoryId});
 
   @override
-  State<ShuffleFeedScreen> createState() => _ShuffleFeedScreenState();
+  ConsumerState<ShuffleFeedScreen> createState() => _ShuffleFeedScreenState();
 }
 
-class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
+class _ShuffleFeedScreenState extends ConsumerState<ShuffleFeedScreen> {
   final PageController _controller = PageController();
   final Random _random = Random();
 
@@ -48,16 +50,22 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
     _order.add(first);
   }
 
-  /// Picks the next random game, honouring an optional category filter and
-  /// avoiding an immediate repeat where possible.
+  /// Picks the next random game, honouring an optional category filter, the
+  /// player's hidden games, and avoiding an immediate repeat where possible.
   GameMetadata _pick({required String? exceptId}) {
+    final hidden = ref.read(userDataNotifierProvider
+        .select((d) => (d.hiddenGameIds ?? const []).toSet()));
     final String? cat = widget.categoryId;
     if (cat == null) {
-      return GameFeed.randomGame(exceptId: exceptId, random: _random);
+      return GameFeed.randomGame(
+          exceptId: exceptId, random: _random, exclude: hidden);
     }
-    final pool = GameCategories.inCategory(cat);
+    final pool = GameCategories.inCategory(cat)
+        .where((g) => !hidden.contains(g.id))
+        .toList(growable: false);
     if (pool.isEmpty) {
-      return GameFeed.randomGame(exceptId: exceptId, random: _random);
+      return GameFeed.randomGame(
+          exceptId: exceptId, random: _random, exclude: hidden);
     }
     if (pool.length == 1 || exceptId == null) {
       return pool[_random.nextInt(pool.length)];
@@ -134,8 +142,7 @@ class _ShuffleFeedScreenState extends State<ShuffleFeedScreen> {
             onClose: () => Navigator.of(context).maybePop(),
             onToggleLock: _toggleLock,
           ),
-          if (_showHint && _swipeEnabled)
-            _SwipeHint(onTap: _nextManually),
+          if (_showHint && _swipeEnabled) _SwipeHint(onTap: _nextManually),
         ],
       ),
     );
@@ -178,9 +185,8 @@ class _TopBar extends StatelessWidget {
               _pill(cat: cat, title: game.titleGetter(context)),
               const Spacer(),
               _circleButton(
-                icon: swipeEnabled
-                    ? Icons.lock_open_rounded
-                    : Icons.lock_rounded,
+                icon:
+                    swipeEnabled ? Icons.lock_open_rounded : Icons.lock_rounded,
                 tooltip: swipeEnabled
                     ? 'Lock to play freely (pauses swipe)'
                     : 'Unlock swipe-for-next',
@@ -284,8 +290,7 @@ class _SwipeHintState extends State<_SwipeHint>
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.55),
-                  borderRadius:
-                      BorderRadius.circular(DesignSystem.radiusFull),
+                  borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

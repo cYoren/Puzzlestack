@@ -1,6 +1,6 @@
 {
   "@@locale": "de",
-  "appTitle": "Puzzlestack",
+  "appTitle": "Puzzle-Spiele",
   "@appTitle": {
     "description": "The title of the application"
   },
@@ -2381,7 +2381,7 @@
       }
     }
   },
-  "snackbarIncorrectSwapped": "Falsch! Vertauschte Elemente sind grün markiert.",
+ "snackbarIncorrectSwapped": "Falsch! Vertauschte Elemente sind grün markiert.",
   "snackbarIncorrectDestination": "Falsch! Das endgültige Ziel war ({x}, {y}).",
   "@snackbarIncorrectDestination": {
     "placeholders": {
@@ -3002,8 +3002,8 @@
   "unhideGame": "Einblenden",
   "kurodokoTitle": "Kurodoko",
   "kurodokoSubtitle": "Platziere schwarze Zellen so, dass Zahlen die genaue Anzahl weißer Zellen sehen.",
-  "kurodokoCongrats": "Jede Zahl sieht genau, was sie sehen soll.",
-  "kurodokoTapHint": "Tippe auf ein Feld, um es zu schwärzen. Nochmal tippen markiert es weiß.",
+  "kurodokoWinTitle": "SCHWARZ GEFÜLLT GELÖST!",
+  "kurodokoWinMessage": "Du hast die Sichtpfade gemeistert und alle schwarzen Zellen isoliert!",
   "subitizingRushTitle": "Mengen-Blitz",
   "subitizingRushSubtitle": "Erkenne sofort die Anzahl aufgeiltreter Punkte ohne zu zählen.",
   "subitizingRushWinTitle": "BLITZSCHNELLE SICHT!",
@@ -3117,19 +3117,5 @@
   "corsiBackwardSpanTitle": "Corsi Rückwärts",
   "corsiBackwardSpanSubtitle": "Beobachte ein sequenzielles räumliches Block-Tippmuster und gib es in exakter umgekehrter Reihenfolge wieder.",
   "corsiBackwardSpanWinTitle": "RÜCKWÄRTS-SPANNE-PROFI!",
-  "corsiBackwardSpanWinMessage": "Außergewöhnliche visuell-räumliche Arbeitsgedächtnismanipulation und umgekehrte Sequenzierung!",
-  "pegsTitle": "Pegs",
-  "pegsSubtitle": "Springe mit einem Stift über seinen Nachbarn und schlage ihn. Einer bleibt übrig.",
-  "pegsCongrats": "Ein Stift übrig. Sauber gelöst.",
-  "galaxiesTitle": "Galaxies",
-  "galaxiesSubtitle": "Give every dot its own symmetric region",
-  "galaxiesCongrats": "Every dot has its own galaxy.",
-  "galaxiesPickDot": "Tap a dot, then tap the cells that belong to it",
-  "galaxiesPaintCells": "Tap cells to paint them, tap a painted cell to clear it",
-  "twiddleTitle": "Twiddle",
-  "twiddleSubtitle": "Drehe Blöcke, bis die Zahlen der Reihe nach stehen.",
-  "twiddleCongrats": "Jede Zahl an ihrem Platz.",
-  "difficultyEasy": "LEICHT",
-  "difficultyMedium": "MITTEL",
-  "difficultyHard": "SCHWER"
+  "corsiBackwardSpanWinMessage": "Außergewöhnliche visuell-räumliche Arbeitsgedächtnismanipulation und umgekehrte Sequenzierung!"
 }

@@ -1,10 +1,16 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
+import '../../../data/game_registry.dart';
+import '../../../providers/game_session_provider.dart';
+import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
+import '../../../utils/haptic_feedback.dart';
 import '../../../utils/navigation_utils.dart';
+import '../../../widgets/super_streak_action.dart';
 import '../../../widgets/tangible.dart';
 import '../shuffle/shuffle_feed_screen.dart';
 import 'category_room_screen.dart';
@@ -13,10 +19,17 @@ import 'game_search_delegate.dart';
 /// The Puzzlestack home: a calm discovery surface instead of a flat list of
 /// three hundred games. Funnels people into the Shuffle feed, surfaces a Daily Pick and a
 /// Quick Play row, and tucks the full catalog into six category rooms.
-class DiscoveryHomeScreen extends StatelessWidget {
+class DiscoveryHomeScreen extends ConsumerWidget {
   const DiscoveryHomeScreen({super.key});
 
-  void _openGame(BuildContext context, GameMetadata game) {
+  void _openGame(BuildContext context, WidgetRef ref, GameMetadata game) {
+    // Home has no shelf of its own; the completion dialog's "next puzzle" should
+    // draw from the whole catalogue.
+    ref.read(gameSessionNotifierProvider.notifier).setSession(
+          gameId: game.id,
+          category: 'ALL',
+          query: '',
+        );
     Navigator.push(
       context,
       CustomPageRoute(page: game.builder(context)),
@@ -41,10 +54,13 @@ class DiscoveryHomeScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
     final daily = GameFeed.dailyPick();
     final quick = GameFeed.quickPlay;
+    final favorites = _favorites(ref);
+    final hidden = ref.watch(
+        userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -52,17 +68,23 @@ class DiscoveryHomeScreen extends StatelessWidget {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(child: _header(context)),
+            SliverToBoxAdapter(child: _header(context, ref, hidden)),
             SliverToBoxAdapter(child: _shuffleHero(context)),
+            if (favorites.isNotEmpty) ...[
+              SliverToBoxAdapter(
+                child: _sectionTitle(context, 'YOUR FAVORITES'),
+              ),
+              SliverToBoxAdapter(child: _favoritesRow(context, ref, favorites)),
+            ],
             SliverToBoxAdapter(
               child: _sectionTitle(context, 'DAILY PICK'),
             ),
-            SliverToBoxAdapter(child: _dailyCard(context, daily)),
+            SliverToBoxAdapter(child: _dailyCard(context, ref, daily)),
             if (quick.isNotEmpty) ...[
               SliverToBoxAdapter(
                 child: _sectionTitle(context, 'QUICK PLAY · UNDER 2 MIN'),
               ),
-              SliverToBoxAdapter(child: _quickRow(context, quick)),
+              SliverToBoxAdapter(child: _quickRow(context, ref, quick)),
             ],
             SliverToBoxAdapter(
               child: _sectionTitle(context, 'EXPLORE BY CATEGORY'),
@@ -77,7 +99,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _header(BuildContext context) {
+  Widget _header(BuildContext context, WidgetRef ref, List<String> hidden) {
     final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -115,6 +137,8 @@ class DiscoveryHomeScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SuperStreakAction(),
+          const SizedBox(width: DesignSystem.spaceSM),
           Material(
             color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.6),
             shape: const CircleBorder(),
@@ -123,7 +147,8 @@ class DiscoveryHomeScreen extends StatelessWidget {
               onTap: () => showSearch(
                 context: context,
                 delegate: GameSearchDelegate(
-                  onSelected: (g) => _openGame(context, g),
+                  hiddenIds: hidden.toSet(),
+                  onSelected: (g) => _openGame(context, ref, g),
                 ),
               ),
               child: const Padding(
@@ -238,12 +263,12 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _dailyCard(BuildContext context, GameMetadata game) {
+  Widget _dailyCard(BuildContext context, WidgetRef ref, GameMetadata game) {
     final cat = GameCategories.info(game.category);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
       child: TangibleContainer(
-        onTap: () => _openGame(context, game),
+        onTap: () => _openGame(context, ref, game),
         padding: const EdgeInsets.all(DesignSystem.spaceMD),
         radius: DesignSystem.radiusLG,
         child: Row(
@@ -295,28 +320,89 @@ class DiscoveryHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _quickRow(BuildContext context, List<GameMetadata> games) {
+  /// Favorited games, in registry order, minus anything hidden. Empty until the
+  /// player stars a game from a category room.
+  List<GameMetadata> _favorites(WidgetRef ref) {
+    final ids = ref.watch(
+        userDataNotifierProvider.select((d) => d.favoriteGameIds ?? const []));
+    if (ids.isEmpty) return const [];
+    final hidden = ref.watch(
+        userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
+    final byId = {for (final g in allGamesMetadata) g.id: g};
+    return [
+      for (final id in ids)
+        if (byId[id] != null && !hidden.contains(id)) byId[id]!,
+    ];
+  }
+
+  Widget _favoritesRow(
+      BuildContext context, WidgetRef ref, List<GameMetadata> games) {
     return SizedBox(
       height: 116,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        padding:
-            const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+        padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
         itemCount: games.length,
         separatorBuilder: (_, __) =>
             const SizedBox(width: DesignSystem.spaceSM),
         itemBuilder: (context, i) {
           final g = games[i];
-          return _quickTile(context, g);
+          return Stack(
+            children: [
+              _quickTile(context, ref, g),
+              Positioned(
+                top: 2,
+                right: 2,
+                child: GestureDetector(
+                  onTap: () {
+                    HapticFeedbackUtil.lightImpact();
+                    ref
+                        .read(userDataNotifierProvider.notifier)
+                        .toggleFavorite(g.id);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Icon(
+                      Icons.close_rounded,
+                      size: 14,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.45),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
         },
       ),
     );
   }
 
-  Widget _quickTile(BuildContext context, GameMetadata game) {
+  Widget _quickRow(
+      BuildContext context, WidgetRef ref, List<GameMetadata> games) {
+    return SizedBox(
+      height: 116,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+        itemCount: games.length,
+        separatorBuilder: (_, __) =>
+            const SizedBox(width: DesignSystem.spaceSM),
+        itemBuilder: (context, i) {
+          final g = games[i];
+          return _quickTile(context, ref, g);
+        },
+      ),
+    );
+  }
+
+  Widget _quickTile(BuildContext context, WidgetRef ref, GameMetadata game) {
     return GestureDetector(
-      onTap: () => _openGame(context, game),
+      onTap: () => _openGame(context, ref, game),
       child: Container(
         width: 104,
         padding: const EdgeInsets.all(DesignSystem.spaceSM),
@@ -352,7 +438,8 @@ class DiscoveryHomeScreen extends StatelessWidget {
     // icon, a count, a label and a tagline. On a 320dp phone the ratio alone
     // gives 90dp and the tile overflows, so take whichever is taller.
     final width = MediaQuery.sizeOf(context).width;
-    final tileWidth = (width - 2 * DesignSystem.spaceLG - DesignSystem.spaceSM) / 2;
+    final tileWidth =
+        (width - 2 * DesignSystem.spaceLG - DesignSystem.spaceSM) / 2;
     final tileHeight = math.max(104.0, tileWidth / 1.5);
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
