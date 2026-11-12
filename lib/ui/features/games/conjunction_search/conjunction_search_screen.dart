@@ -79,11 +79,14 @@ class ConjunctionSearchScreen extends ConsumerWidget {
           ),
         );
       case ShapeType.square:
+        // A square with an 8dp corner radius on a 40dp shape reads as a
+        // rounded blob. The radius now scales with the shape, so the one
+        // square in a field of circles and triangles is unmistakable.
         return Container(
           width: size,
           height: size,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusXS),
+            borderRadius: BorderRadius.circular(size * 0.06),
             color: color,
           ),
         );

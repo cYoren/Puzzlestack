@@ -86,12 +86,20 @@ class SignpostBoard extends GridBoard<SignpostState> {
       );
 
   /// Every cell this one can join itself to, as a drag target.
+  ///
+  /// A cell that already points somewhere can still be dragged: the drag means
+  /// "point here instead", so the old link is lifted before the candidates are
+  /// worked out. Dragging the same cell onto itself is the unlink, which is how
+  /// a wrong arrow is corrected without a trip to the tap gesture.
   @override
   List<PuzzleMove<SignpostState>> movesFor(ElementRef element) {
     if (!isCell(element) || state.isSolved) return const [];
     final from = _index(element);
+    final links = state.links[from] >= 0
+        ? (List<int>.from(state.links)..[from] = -1)
+        : state.links;
     return [
-      for (final to in _engine.candidatesFor(state.puzzle, state.links, from))
+      for (final to in _engine.candidatesFor(state.puzzle, links, from))
         _linkMove(element, from, to),
     ];
   }

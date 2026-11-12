@@ -88,4 +88,17 @@ class SudokuNotifier extends _$SudokuNotifier {
     }
     return SudokuEngine().isCorrect(board, board);
   }
+
+  /// Fills the board with the answer.
+  void solve() {
+    if (!state.hasValue) return;
+    final current = state.value!;
+    if (current.isSolved) return;
+    state = AsyncValue.data(
+      current.copyWith(
+        currentBoard: current.solvedBoard,
+        isSolved: true,
+      ),
+    );
+  }
 }

@@ -323,32 +323,51 @@ class _SpotlightPainter extends CustomPainter {
       canvas.drawRect(Rect.fromLTWH(0, 0, w, h), bgPaint);
 
       if (status == SpotlightTrackStatus.tracking) {
-        // 2. Draw spotlight illumination circle
+        // 2. Draw spotlight illumination circle. The light fades towards its
+        // edge instead of ending on a hard ring, so the target crossing the
+        // boundary does not look like it is being switched on and off.
+        final spot = Offset(spotPos.x * w, spotPos.y * h);
+        final radius = spotlightRadius * w;
         final spotPaint = Paint()
-          ..color = const Color(0xFF1E293B).withValues(alpha: 0.3)
-          ..style = PaintingStyle.fill;
-        canvas.drawCircle(Offset(spotPos.x * w, spotPos.y * h), spotlightRadius * w, spotPaint);
+          ..shader = RadialGradient(
+            colors: [
+              const Color(0xFF1E293B).withValues(alpha: 0.55),
+              const Color(0xFF0B1120).withValues(alpha: 0.25),
+            ],
+          ).createShader(Rect.fromCircle(center: spot, radius: radius));
+        canvas.drawCircle(spot, radius, spotPaint);
 
         final spotBorder = Paint()
-          ..color = Colors.white.withValues(alpha: 0.15)
+          ..color = Colors.white.withValues(alpha: 0.10)
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2.0;
-        canvas.drawCircle(Offset(spotPos.x * w, spotPos.y * h), spotlightRadius * w, spotBorder);
+          ..strokeWidth = 1.5;
+        canvas.drawCircle(spot, radius, spotBorder);
       }
 
-      // 3. Draw object if it falls inside the spotlight circle OR we are in IDLE state (to show target at start)
-      if (status == SpotlightTrackStatus.idle || (status == SpotlightTrackStatus.tracking && isVisible)) {
-        final objPaint = Paint()
+      // 3. Draw the target only when the light is on it. A ring around a core
+      // keeps it legible at any board size, and a short trail shows where it
+      // came from, which is the thing being tracked.
+      if (status == SpotlightTrackStatus.idle ||
+          (status == SpotlightTrackStatus.tracking && isVisible)) {
+        final centre = Offset(objPos.x * w, objPos.y * h);
+        final core = w * 0.016;
+        final ring = w * 0.036;
+
+        final halo = Paint()
+          ..color = DesignSystem.gameCyan.withValues(alpha: 0.22)
+          ..style = PaintingStyle.fill;
+        canvas.drawCircle(centre, ring * 1.5, halo);
+
+        final ringPaint = Paint()
           ..color = DesignSystem.gameCyan
-          ..style = PaintingStyle.fill;
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = w * 0.006;
+        canvas.drawCircle(centre, ring, ringPaint);
 
-        // Glow ring
-        final glowPaint = Paint()
-          ..color = DesignSystem.gameCyan.withValues(alpha: 0.4)
+        final corePaint = Paint()
+          ..color = Colors.white
           ..style = PaintingStyle.fill;
-
-        canvas.drawCircle(Offset(objPos.x * w, objPos.y * h), 16.0, glowPaint);
-        canvas.drawCircle(Offset(objPos.x * w, objPos.y * h), 8.0, objPaint);
+        canvas.drawCircle(centre, core, corePaint);
       }
     } else if (status == SpotlightTrackStatus.successFeedback || status == SpotlightTrackStatus.failFeedback) {
       // Reveal everything in feedback mode

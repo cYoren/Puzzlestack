@@ -7,8 +7,8 @@ import '../../../providers/game_session_provider.dart';
 import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/haptic_feedback.dart';
-import '../../../utils/navigation_utils.dart';
 import '../shuffle/shuffle_feed_screen.dart';
+import '../../core/assist/game_launch.dart';
 
 /// One category's "room": its tagline, a category-scoped Shuffle button, and a
 /// grid of every game in that category.
@@ -29,10 +29,7 @@ class CategoryRoomScreen extends ConsumerWidget {
           category: categoryId,
           query: '',
         );
-    Navigator.push(
-      context,
-      CustomPageRoute(page: game.builder(context)),
-    );
+    launchGame(context, ref, game);
   }
 
   @override

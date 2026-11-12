@@ -91,4 +91,14 @@ class TentsAndTreesNotifier extends _$TentsAndTreesNotifier {
   }
 
   int? get level => _engine.levelOf(state.puzzle);
+
+  /// Drops the answer's tents.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      tents: List<int>.from(state.puzzle.solution),
+      isSolved: true,
+      clearHint: true,
+    );
+  }
 }

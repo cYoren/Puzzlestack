@@ -97,4 +97,19 @@ class LightsOutNotifier extends _$LightsOutNotifier {
     }
     return null;
   }
+
+  /// Presses the answer's set, in one go.
+  void solve() {
+    if (state.isSolved) return;
+    var grid = [...state.grid];
+    for (final index in state.puzzle.solution) {
+      grid = _engine.press(grid, state.puzzle.size, index);
+    }
+    state = state.copyWith(
+      grid: grid,
+      presses: state.presses + state.puzzle.solution.length,
+      isSolved: true,
+      clearHint: true,
+    );
+  }
 }

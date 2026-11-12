@@ -15,6 +15,7 @@ import '../../../widgets/tangible.dart';
 import '../shuffle/shuffle_feed_screen.dart';
 import 'category_room_screen.dart';
 import 'game_search_delegate.dart';
+import '../../core/assist/game_launch.dart';
 
 /// The Puzzlestack home: a calm discovery surface instead of a flat list of
 /// three hundred games. Funnels people into the Shuffle feed, surfaces a Daily Pick and a
@@ -30,10 +31,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
           category: 'ALL',
           query: '',
         );
-    Navigator.push(
-      context,
-      CustomPageRoute(page: game.builder(context)),
-    );
+    launchGame(context, ref, game);
   }
 
   void _openShuffle(BuildContext context, {String? categoryId}) {
@@ -93,6 +91,29 @@ class DiscoveryHomeScreen extends ConsumerWidget {
               child: _sectionTitle(context, 'EXPLORE BY CATEGORY'),
             ),
             _categoryGrid(context),
+            SliverToBoxAdapter(
+              child: _sectionTitle(
+                context,
+                'ALL ${allGamesMetadata.length} PUZZLES',
+              ),
+            ),
+            // One endless list: the builder only makes the rows that are on
+            // screen, so 300 games cost nothing until they are scrolled to.
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: DesignSystem.spaceLG,
+              ),
+              sliver: SliverList.builder(
+                itemCount: allGamesMetadata.length,
+                itemBuilder: (context, index) {
+                  final game = allGamesMetadata[index];
+                  if (hidden.contains(game.id)) {
+                    return const SizedBox.shrink();
+                  }
+                  return _allGamesRow(context, ref, game);
+                },
+              ),
+            ),
             const SliverToBoxAdapter(
               child: SizedBox(height: DesignSystem.spaceXL),
             ),
@@ -524,6 +545,63 @@ class DiscoveryHomeScreen extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _allGamesRow(
+    BuildContext context,
+    WidgetRef ref,
+    GameMetadata game,
+  ) {
+    return InkWell(
+      onTap: () => _openGame(context, ref, game),
+      borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: DesignSystem.spaceSM),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: game.color.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+              ),
+              child: Icon(game.icon, color: game.color, size: 22),
+            ),
+            const SizedBox(width: DesignSystem.spaceMD),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    game.titleGetter(context),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  Text(
+                    game.subtitleGetter(context),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: DesignSystem.fontSize2XS,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.5),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
             ),
           ],
         ),

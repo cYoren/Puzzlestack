@@ -99,12 +99,21 @@ void main() {
       expect(after.links[puzzle.cellOfNumber(1)], puzzle.cellOfNumber(2));
     });
 
-    test('a linked cell has nothing to drag', () {
+    test('a linked cell can be dragged somewhere else', () {
       final puzzle = _puzzle(6);
       final links = List<int>.filled(puzzle.cellCount, -1)
         ..[puzzle.cellOfNumber(1)] = puzzle.cellOfNumber(2);
       final state = _state(puzzle, links: links);
-      expect(SignpostBoard(state: state).movesFor(_where(puzzle, 1)), isEmpty);
+      final board = SignpostBoard(state: state);
+      final moves = board.movesFor(_where(puzzle, 1));
+
+      // The drag means "point here instead": the candidates are worked out
+      // with the old link lifted, so a wrong arrow is corrected in one gesture.
+      expect(moves, isNotEmpty);
+      expect(
+        moves.any((move) => move.target == _where(puzzle, 2)),
+        isTrue,
+      );
     });
   });
 

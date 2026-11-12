@@ -45,10 +45,43 @@ class SlitherlinkScreen extends ConsumerWidget {
     final state = ref.watch(slitherlinkNotifierProvider);
     final notifier = ref.read(slitherlinkNotifierProvider.notifier);
 
+    ref.listen(slitherlinkNotifierProvider, (previous, next) {
+      final before = previous?.conflicts.length ?? 0;
+      if (next.conflicts.length <= before) return;
+      final broken = next.conflicts.last;
+      HapticFeedbackUtil.error();
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 1800),
+            content: Text(
+              'That ${broken.clue} now has ${broken.drawn} lines around it. '
+              'The clue allows exactly ${broken.clue}.',
+            ),
+          ),
+        );
+    });
+
     return GameScaffold(
       title: 'Slitherlink',
       subtitle: 'Tap edges to form a single continuous loop matching cell numbers.',
       actions: [
+        TangibleButton(
+          color: Theme.of(context).colorScheme.surface,
+          shadowColor: Theme.of(context).colorScheme.outline,
+          onTap: () {
+            HapticFeedbackUtil.selection();
+            notifier.hint();
+          },
+          padding: const EdgeInsets.all(12),
+          child: Icon(
+            Icons.lightbulb_outline_rounded,
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+        const SizedBox(width: DesignSystem.spaceSM),
         TangibleButton(
           color: Theme.of(context).colorScheme.surface,
           shadowColor: Theme.of(context).colorScheme.outline,
@@ -66,6 +99,25 @@ class SlitherlinkScreen extends ConsumerWidget {
       ],
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.only(top: DesignSystem.spaceSM),
+            child: Text(
+              state.conflicts.isEmpty
+                  ? 'EVERY CLUE IS STILL HONEST'
+                  : '${state.conflicts.length} CLUE${state.conflicts.length == 1 ? '' : 'S'} BROKEN',
+              style: TextStyle(
+                fontSize: DesignSystem.fontSizeXS,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.2,
+                color: state.conflicts.isEmpty
+                    ? Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.45)
+                    : DesignSystem.error,
+              ),
+            ),
+          ),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
