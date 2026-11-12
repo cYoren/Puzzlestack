@@ -123,8 +123,8 @@ msix_config:
 flutter_launcher_icons:
   image_path: "assets/icon/puzzlestack_icon.png"
   android: true
-  adaptive_icon_background: "#0A0A0A"
-  adaptive_icon_foreground: "assets/icon/puzzlestack_icon.png"
+  adaptive_icon_background: "#EBE6D8"
+  adaptive_icon_foreground: "assets/icon/foreground_1024.png"
   ios: true
   remove_alpha_ios: true
   web:

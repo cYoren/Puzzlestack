@@ -37,30 +37,35 @@ class DiscoveryHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: DesignSystem.paperOf(context),
       body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(child: _header(context)),
-            SliverToBoxAdapter(child: _dealCard(context)),
-            SliverToBoxAdapter(child: _todayCard(context, daily)),
-            if (quick.isNotEmpty) ...[
-              SliverToBoxAdapter(
-                child: _section(
-                    context,
-                    AppLocalizations.of(context)?.quickPlay ??
-                        'Under two minutes'),
-              ),
-              SliverToBoxAdapter(child: _quickRow(context, quick)),
-            ],
-            SliverToBoxAdapter(
-              child: _section(
-                  context, AppLocalizations.of(context)?.rooms ?? 'Six rooms'),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 760),
+            child: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(child: _header(context)),
+                SliverToBoxAdapter(child: _dealCard(context)),
+                SliverToBoxAdapter(child: _todayCard(context, daily)),
+                if (quick.isNotEmpty) ...[
+                  SliverToBoxAdapter(
+                    child: _section(
+                        context,
+                        AppLocalizations.of(context)?.quickPlay ??
+                            'Under two minutes'),
+                  ),
+                  SliverToBoxAdapter(child: _quickRow(context, quick)),
+                ],
+                SliverToBoxAdapter(
+                  child: _section(context,
+                      AppLocalizations.of(context)?.rooms ?? 'Six rooms'),
+                ),
+                _roomGrid(context),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: DesignSystem.spaceXL),
+                ),
+              ],
             ),
-            _roomGrid(context),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: DesignSystem.spaceXL),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -324,16 +329,20 @@ class DiscoveryHomeScreen extends StatelessWidget {
     // 104dp is the height the tile needs to hold a count, a name and a
     // tagline. On a 320dp phone the ratio alone gives 90dp and the tile
     // overflows, so take whichever is taller.
-    final double width = MediaQuery.sizeOf(context).width;
-    final double tileWidth =
-        (width - 2 * DesignSystem.spaceLG - DesignSystem.spaceSM) / 2;
-    final double tileHeight = math.max(92.0, tileWidth / 2.1);
+    final double width = math.min(MediaQuery.sizeOf(context).width, 760);
+    final int columns = width > 620 ? 3 : 2;
+    final double tileWidth = (width -
+            2 * DesignSystem.spaceLG -
+            (columns - 1) * DesignSystem.spaceSM) /
+        columns;
+    // Tall enough for a name, a count and a two-line tagline; never a slab.
+    final double tileHeight = (tileWidth / 2.3).clamp(88.0, 104.0);
 
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
       sliver: SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: columns,
           mainAxisSpacing: DesignSystem.spaceSM,
           crossAxisSpacing: DesignSystem.spaceSM,
           mainAxisExtent: tileHeight,
@@ -360,6 +369,7 @@ class DiscoveryHomeScreen extends StatelessWidget {
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
