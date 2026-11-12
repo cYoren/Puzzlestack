@@ -10,6 +10,8 @@ class SlitherlinkState extends PuzzleState {
     required this.currentHEdges,
     required this.currentVEdges,
     this.isSolved = false,
+    this.conflicts = const [],
+    this.hintEdge,
   });
 
   final SlitherlinkLevel level;
@@ -17,17 +19,29 @@ class SlitherlinkState extends PuzzleState {
   final List<List<bool>> currentVEdges;
   final bool isSolved;
 
+  /// Clues the loop has already broken, recomputed on every move so the board
+  /// can paint them red the moment the line lands.
+  final List<({int row, int col, int drawn, int clue})> conflicts;
+
+  /// The edge the hint is offering, cleared by the next move.
+  final ({bool horizontal, int row, int col})? hintEdge;
+
   SlitherlinkState copyWith({
     SlitherlinkLevel? level,
     List<List<bool>>? currentHEdges,
     List<List<bool>>? currentVEdges,
     bool? isSolved,
+    List<({int row, int col, int drawn, int clue})>? conflicts,
+    ({bool horizontal, int row, int col})? hintEdge,
+    bool clearHint = false,
   }) {
     return SlitherlinkState(
       level: level ?? this.level,
       currentHEdges: currentHEdges ?? this.currentHEdges,
       currentVEdges: currentVEdges ?? this.currentVEdges,
       isSolved: isSolved ?? this.isSolved,
+      conflicts: conflicts ?? this.conflicts,
+      hintEdge: clearHint ? null : (hintEdge ?? this.hintEdge),
     );
   }
 }
@@ -56,6 +70,40 @@ class SlitherlinkNotifier extends _$SlitherlinkNotifier {
         next.currentHEdges,
         next.currentVEdges,
       ),
+      conflicts: _engine.brokenClues(
+        next.level,
+        next.currentHEdges,
+        next.currentVEdges,
+      ),
+      clearHint: true,
+    );
+  }
+
+  /// Offers the first edge of the answer that is still missing.
+  void hint() {
+    if (state.isSolved) return;
+    final found = _engine.missingEdge(
+      state.level,
+      state.currentHEdges,
+      state.currentVEdges,
+    );
+    if (found == null) return;
+    state = state.copyWith(hintEdge: found);
+  }
+
+  /// Draws the answer's loop.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      currentHEdges: [
+        for (final line in state.level.solutionHEdges) List<bool>.from(line),
+      ],
+      currentVEdges: [
+        for (final line in state.level.solutionVEdges) List<bool>.from(line),
+      ],
+      isSolved: true,
+      conflicts: const [],
+      clearHint: true,
     );
   }
 

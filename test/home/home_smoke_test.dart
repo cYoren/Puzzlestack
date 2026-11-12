@@ -50,24 +50,25 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(find.text('DAILY PICK'), findsOneWidget);
 
-      // Scroll the whole page: the category tiles are built lazily, and a
-      // tile that overflows its grid cell only shows up once it exists.
-      for (var i = 0; i < 10; i++) {
+      // Scroll the whole page: the category tiles and the endless all-games
+      // list are built lazily, and a tile that overflows only shows up once it
+      // exists. Each label is recorded when it passes through the viewport —
+      // after 1,500px the page is inside the all-games list, so an assertion
+      // made only at the end would miss the rooms behind it.
+      const labels = ['Logic', 'Math', 'Memory', 'Spatial', 'Attention', 'Word'];
+      final seen = <String>{};
+      for (var i = 0; i < 14; i++) {
+        for (final label in labels) {
+          if (find.text(label).evaluate().isNotEmpty) seen.add(label);
+        }
         await tester.drag(find.byType(CustomScrollView), const Offset(0, -150));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull,
             reason: 'layout broke at scroll step $i, ${width.toInt()}dp');
       }
 
-      for (final label in [
-        'Logic',
-        'Math',
-        'Memory',
-        'Spatial',
-        'Attention',
-        'Word'
-      ]) {
-        expect(find.text(label), findsWidgets,
+      for (final label in labels) {
+        expect(seen, contains(label),
             reason: '$label room is missing at ${width.toInt()}dp');
       }
     });

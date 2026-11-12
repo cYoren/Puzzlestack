@@ -7,6 +7,7 @@ import 'package:window_manager/window_manager.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'data/models/user_data.dart';
 import 'data/models/game_streak.dart';
+import 'data/repositories/game_stats_repository.dart';
 import 'data/repositories/user_repository.dart';
 import 'providers/user_providers.dart';
 import 'providers/theme_provider.dart';
@@ -82,6 +83,10 @@ void main() async {
 
   final userRepository = UserRepository();
   await userRepository.init();
+
+  // Per-game times and the first-play flag. Storage failure is not fatal: the
+  // app falls back to a session without a memory.
+  await GameStatsRepository.instance.init();
 
 
 

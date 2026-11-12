@@ -103,4 +103,13 @@ class NetslideNotifier extends _$NetslideNotifier {
     if (found == null) return;
     state = state.copyWith(hint: found);
   }
+
+  /// Puts the net back together.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      masks: List<int>.from(state.puzzle.solvedMasks),
+      clearHint: true,
+    );
+  }
 }

@@ -37,6 +37,11 @@ Widget _app(Widget child) => ProviderScope(
       child: MaterialApp(
         theme: DesignSystem.lightTheme,
         darkTheme: DesignSystem.darkTheme,
+        // AUDIT_DARK=1 runs the same sweep in the dark theme, which is where a
+        // hardcoded near-black used to disappear.
+        themeMode: Platform.environment['AUDIT_DARK'] == '1'
+            ? ThemeMode.dark
+            : ThemeMode.light,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: child,

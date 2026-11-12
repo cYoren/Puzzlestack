@@ -130,4 +130,19 @@ class PegsNotifier extends _$PegsNotifier {
     }
     return true;
   }
+
+  /// Replays the generator's line, which by construction ends on one peg.
+  void solve() {
+    if (state.isSolved) return;
+    var grid = List<PegCell>.from(state.puzzle.start);
+    for (final jump in state.puzzle.solution) {
+      grid = _engine.apply(grid, jump);
+    }
+    state = state.copyWith(
+      grid: grid,
+      clearSelection: true,
+      clearHint: true,
+      isSolved: _engine.isSolved(grid),
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,6 +65,11 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
   late List<List<bool>> _shaded;
   bool _isSolved = false;
 
+  /// What the player just did wrong, in one line, and the cells it refers to.
+  String? _flash;
+  Set<int> _flashCells = <int>{};
+  Timer? _flashTimer;
+
   final List<Color> _roomColors = [
     DesignSystem.gameBlue.withValues(alpha: 0.15),
     DesignSystem.gamePurple.withValues(alpha: 0.15),
@@ -86,77 +92,162 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
     _generatePuzzle();
   }
 
+  @override
+  void dispose() {
+    _flashTimer?.cancel();
+    super.dispose();
+  }
+
   void _generatePuzzle() {
     _isSolved = false;
     _currentPuzzle = _puzzles[_random.nextInt(_puzzles.length)];
     _shaded = List.generate(_size, (_) => List.generate(_size, (_) => false));
   }
 
-  void _toggleCell(int r, int c) {
-    if (_isSolved) return;
-    HapticFeedbackUtil.lightImpact();
+  /// The size of the shaded domino containing (r, c), or 0 when it is blank.
+  int _groupSizeAt(List<List<bool>> shaded, int r, int c) {
+    if (!shaded[r][c]) return 0;
+    final seen = <Point<int>>{Point(r, c)};
+    final queue = <Point<int>>[Point(r, c)];
+    while (queue.isNotEmpty) {
+      final cell = queue.removeAt(0);
+      for (final next in [
+        Point(cell.x - 1, cell.y),
+        Point(cell.x + 1, cell.y),
+        Point(cell.x, cell.y - 1),
+        Point(cell.x, cell.y + 1),
+      ]) {
+        if (next.x < 0 || next.x >= _size || next.y < 0 || next.y >= _size) {
+          continue;
+        }
+        if (shaded[next.x][next.y] && seen.add(next)) queue.add(next);
+      }
+    }
+    return seen.length;
+  }
+
+  /// Why shading [r, c] would be illegal right now, or null.
+  ///
+  /// Only rules the player can check by looking are pre-empted: a room that
+  /// already has its two, and a domino that would grow to three. The rest —
+  /// exactly two per room, all of it in dominoes — is the win condition.
+  String? _refusalFor(List<List<bool>> next, int r, int c) {
+    var room = 0;
+    for (var rr = 0; rr < _size; rr++) {
+      for (var cc = 0; cc < _size; cc++) {
+        if (next[rr][cc] &&
+            _currentPuzzle.roomIds[rr][cc] == _currentPuzzle.roomIds[r][c]) {
+          room++;
+        }
+      }
+    }
+    if (room > 2) {
+      return 'THAT ROOM ALREADY HAS ITS TWO.';
+    }
+    if (_groupSizeAt(next, r, c) > 2) {
+      return 'A SHADED GROUP IS EXACTLY TWO CELLS — NOT THREE.';
+    }
+    return null;
+  }
+
+  void _showFlash(String message, Set<int> cells) {
+    _flashTimer?.cancel();
     setState(() {
-      _shaded[r][c] = !_shaded[r][c];
-      _checkWinCondition();
+      _flash = message;
+      _flashCells = cells;
+    });
+    _flashTimer = Timer(const Duration(milliseconds: 1800), () {
+      if (!mounted) return;
+      setState(() {
+        _flash = null;
+        _flashCells = <int>{};
+      });
     });
   }
 
+  void _toggleCell(int r, int c) {
+    if (_isSolved) return;
+
+    final next = [
+      for (final row in _shaded) List<bool>.from(row),
+    ];
+    next[r][c] = !next[r][c];
+
+    if (next[r][c]) {
+      final refusal = _refusalFor(next, r, c);
+      if (refusal != null) {
+        HapticFeedbackUtil.error();
+        _showFlash(refusal, {r * _size + c});
+        return;
+      }
+    }
+
+    HapticFeedbackUtil.lightImpact();
+    setState(() {
+      _shaded = next;
+      _flash = null;
+      _flashCells = <int>{};
+    });
+    _checkWinCondition();
+  }
+
+  bool _isComplete(List<List<bool>> shaded) {
+    final counts = List.filled(_currentPuzzle.totalRooms, 0);
+    for (var r = 0; r < _size; r++) {
+      for (var c = 0; c < _size; c++) {
+        if (shaded[r][c]) counts[_currentPuzzle.roomIds[r][c]]++;
+      }
+    }
+    if (counts.any((count) => count != 2)) return false;
+    for (var r = 0; r < _size; r++) {
+      for (var c = 0; c < _size; c++) {
+        if (shaded[r][c] && _groupSizeAt(shaded, r, c) != 2) return false;
+      }
+    }
+    return true;
+  }
+
+  /// Brute force over 4x4, which is fast enough to run on a tap.
+  List<List<bool>>? _answer() {
+    for (var mask = 0; mask < (1 << (_size * _size)); mask++) {
+      final shaded = [
+        for (var r = 0; r < _size; r++)
+          [for (var c = 0; c < _size; c++) (mask & (1 << (r * _size + c))) != 0],
+      ];
+      if (_isComplete(shaded)) return shaded;
+    }
+    return null;
+  }
+
+  void _hint() {
+    if (_isSolved) return;
+    final answer = _answer();
+    if (answer == null) return;
+    for (var r = 0; r < _size; r++) {
+      for (var c = 0; c < _size; c++) {
+        if (answer[r][c] && !_shaded[r][c]) {
+          HapticFeedbackUtil.selection();
+          _showFlash('THIS CELL IS SHADED IN THE ANSWER.', {r * _size + c});
+          return;
+        }
+      }
+    }
+  }
+
+  void _solve() {
+    if (_isSolved) return;
+    final answer = _answer();
+    if (answer == null) return;
+    setState(() {
+      _shaded = answer;
+      _flash = null;
+      _flashCells = <int>{};
+    });
+    _checkWinCondition();
+  }
+
   void _checkWinCondition() {
-    // 1. Check if each room contains exactly 2 shaded cells
-    List<int> roomShadedCounts = List.filled(_currentPuzzle.totalRooms, 0);
-    for (int r = 0; r < _size; r++) {
-      for (int c = 0; c < _size; c++) {
-        if (_shaded[r][c]) {
-          final roomId = _currentPuzzle.roomIds[r][c];
-          roomShadedCounts[roomId]++;
-        }
-      }
-    }
-
-    for (int count in roomShadedCounts) {
-      if (count != 2) return;
-    }
-
-    // 2. Check if shaded cells form exactly size-2 orthogonally connected groups
-    List<List<bool>> visited = List.generate(_size, (_) => List.generate(_size, (_) => false));
-
-    for (int r = 0; r < _size; r++) {
-      for (int c = 0; c < _size; c++) {
-        if (_shaded[r][c] && !visited[r][c]) {
-          // BFS / DFS to find connected component size
-          int compSize = 0;
-          final queue = <Point<int>>[Point(r, c)];
-          visited[r][c] = true;
-
-          while (queue.isNotEmpty) {
-            final curr = queue.removeAt(0);
-            compSize++;
-
-            // Check neighbors
-            final neighbors = [
-              Point(curr.x - 1, curr.y),
-              Point(curr.x + 1, curr.y),
-              Point(curr.x, curr.y - 1),
-              Point(curr.x, curr.y + 1),
-            ];
-
-            for (var n in neighbors) {
-              if (n.x >= 0 && n.x < _size && n.y >= 0 && n.y < _size) {
-                if (_shaded[n.x][n.y] && !visited[n.x][n.y]) {
-                  visited[n.x][n.y] = true;
-                  queue.add(n);
-                }
-              }
-            }
-          }
-
-          if (compSize != 2) {
-            return; // Every black group must be exactly size 2 (a domino)
-          }
-        }
-      }
-    }
-
+    if (!_isComplete(_shaded)) return;
     _isSolved = true;
     _onGameComplete();
   }
@@ -194,6 +285,14 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
       subtitle: L10nGameHelpers.getGameSubtitle(context, 'norinori'),
       actions: [
         IconButton(
+          icon: const Icon(Icons.lightbulb_outline_rounded),
+          onPressed: _hint,
+        ),
+        IconButton(
+          icon: const Icon(Icons.playlist_add_check_rounded),
+          onPressed: _solve,
+        ),
+        IconButton(
           icon: const Icon(Icons.refresh_rounded),
           onPressed: () {
             HapticFeedbackUtil.lightImpact();
@@ -203,10 +302,53 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
           },
         ),
       ],
-      body: Center(
-        child: Container(
-          width: 300,
-          height: 300,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: DesignSystem.spaceLG,
+              vertical: DesignSystem.spaceSM,
+            ),
+            child: Text(
+              'SHADE EXACTLY TWO CELLS IN EVERY ROOM. SHADED CELLS TOUCH IN PAIRS.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: DesignSystem.fontSize2XS,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.0,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.55),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 28,
+            child: AnimatedSwitcher(
+              duration: DesignSystem.durationFast,
+              child: _flash == null
+                  ? const SizedBox.shrink()
+                  : Text(
+                      _flash!,
+                      key: ValueKey(_flash),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: DesignSystem.fontSize2XS,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0.6,
+                        color: DesignSystem.error,
+                      ),
+                    ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 340, maxHeight: 340),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
           decoration: BoxDecoration(
             color: isDark ? DesignSystem.darkSurface : DesignSystem.surface,
             borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
@@ -232,9 +374,17 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
                         child: GestureDetector(
                           onTap: () => _toggleCell(r, c),
                           child: Container(
+                            foregroundDecoration: _flashCells.contains(r * _size + c)
+                                ? BoxDecoration(
+                                    border: Border.all(
+                                      color: DesignSystem.error,
+                                      width: 3,
+                                    ),
+                                  )
+                                : null,
                             decoration: BoxDecoration(
                               color: _shaded[r][c]
-                                  ? Colors.black87
+                                  ? (isDark ? Colors.white : Colors.black87)
                                   : _roomColors[_currentPuzzle.roomIds[r][c] % _roomColors.length],
                               border: Border(
                                 top: BorderSide(
@@ -281,7 +431,12 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
               );
             },
           ),
-        ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

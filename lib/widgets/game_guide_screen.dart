@@ -7,10 +7,15 @@ class GameGuideScreen extends StatelessWidget {
   final String gameId;
   final Color gameColor;
 
+  /// Show a single PLAY button once the rules have been read. Used when the
+  /// guide is thrown up in front of a game the player has never opened.
+  final bool withPlayButton;
+
   const GameGuideScreen({
     super.key,
     required this.gameId,
     required this.gameColor,
+    this.withPlayButton = false,
   });
 
   @override
@@ -111,6 +116,25 @@ class GameGuideScreen extends StatelessWidget {
                         // Section: Strategies & Tips
                         _buildSectionHeader(context, 'Solving Strategies & Tips'),
                         _buildBulletList(context, guide.strategies),
+                        if (withPlayButton) ...[
+                          const SizedBox(height: DesignSystem.spaceLG),
+                          TangibleButton(
+                            color: gameColor,
+                            width: double.infinity,
+                            onTap: () => Navigator.of(context).pop(),
+                            child: Center(
+                              child: Text(
+                                'PLAY',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1.2,
+                                  fontSize: DesignSystem.fontSizeMD,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),

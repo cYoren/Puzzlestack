@@ -76,7 +76,7 @@ class SkyscrapersBoard extends GridBoard<SkyscrapersState> {
         '$value',
         rect,
         color: conflict ? palette.error : palette.ink,
-        fontSize: rect.height * 0.5,
+        fontSize: canvas.fontSizeFor(rect, 0.5),
         weight: FontWeight.w900,
       );
     }
@@ -89,7 +89,7 @@ class SkyscrapersBoard extends GridBoard<SkyscrapersState> {
     final n = state.n;
     final puzzle = state.puzzle;
     final size = math.min(cellWidth, cellHeight);
-    final fontSize = size * 0.42;
+    final fontSize = canvas.size.height * size * 0.42;
 
     // Top and bottom clues, one per column.
     for (var col = 0; col < n; col++) {

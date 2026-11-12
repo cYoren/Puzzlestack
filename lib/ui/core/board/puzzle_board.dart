@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../utils/design_system.dart';
@@ -120,6 +122,13 @@ class BoardHighlight {
 }
 
 /// The house colours, resolved once per frame.
+///
+/// Three of these exist so a board has something to paint *structure* with: a
+/// wall, a blackened cell, a wire, a grid line. Painting those with [ink] is
+/// what made boards either glaring (near-white ink on a dark surface) or
+/// invisible (near-black ink on a dark surface), depending on the theme. The
+/// structure colours are mid-tones in both themes: dark enough on paper, light
+/// enough on a dark surface, and never pure black or pure white.
 class PuzzlePalette {
   const PuzzlePalette({
     required this.bed,
@@ -130,6 +139,8 @@ class PuzzlePalette {
     required this.error,
     required this.success,
     required this.outline,
+    required this.structure,
+    required this.line,
   });
 
   final Color bed;
@@ -140,6 +151,12 @@ class PuzzlePalette {
   final Color error;
   final Color success;
   final Color outline;
+
+  /// Walls, filled cells, pipes: anything that is a solid object on the board.
+  final Color structure;
+
+  /// Cell borders and hairlines. Visible in both themes without shouting.
+  final Color line;
 
   factory PuzzlePalette.of(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
@@ -153,6 +170,10 @@ class PuzzlePalette {
       error: DesignSystem.error,
       success: DesignSystem.success,
       outline: scheme.outline,
+      structure: dark
+          ? const Color(0xFF7C7C8A)
+          : const Color(0xFF2A2A33),
+      line: dark ? const Color(0xFF3E3E4A) : const Color(0xFFC3C8D2),
     );
   }
 }
@@ -188,6 +209,37 @@ class PuzzleCanvas {
 
   Offset toPixelOffset(Offset normalized) =>
       Offset(normalized.dx * size.width, normalized.dy * size.height);
+
+  /// A font size that fits a normalised cell: [fraction] of its height, in dp.
+  ///
+  /// Boards work in normalised coordinates, so a cell's `rect.height` is a
+  /// fraction of the board (0.15, not 40). Using it directly as a font size
+  /// draws a number less than one pixel tall, which is how Futoshiki, Kurodoko,
+  /// Dominosa, Skyscrapers and Twiddle came to look blank.
+  double fontSizeFor(Rect normalized, double fraction) {
+    final px = normalized.height * size.height * fraction;
+    assert(
+      px >= 4.0,
+      'A board font of ${px.toStringAsFixed(2)}dp is too small to read. '
+      'Scale the fraction by the board size (PuzzleCanvas.fontSizeFor).',
+    );
+    return px;
+  }
+
+  /// The same, but bounded by the cell's shorter side, for square-ish text.
+  double fontSizeForSquare(Rect normalized, double fraction) {
+    final px = math.min(
+          normalized.width * size.width,
+          normalized.height * size.height,
+        ) *
+        fraction;
+    assert(
+      px >= 4.0,
+      'A board font of ${px.toStringAsFixed(2)}dp is too small to read. '
+      'Scale the fraction by the board size (PuzzleCanvas.fontSizeForSquare).',
+    );
+    return px;
+  }
 
   bool isLifted(ElementRef element) => highlight.lifted == element;
 

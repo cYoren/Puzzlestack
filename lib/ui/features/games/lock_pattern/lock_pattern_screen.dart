@@ -118,83 +118,91 @@ class _LockPatternScreenState extends ConsumerState<LockPatternScreen> {
             ),
           ),
           _buildTriesIndicator(state),
+          // The board and the answers are one scroll view. They used to be two
+          // fixed panes, so a longer streak pushed the board off the page and
+          // the answers could not be reached at all.
           Expanded(
-            flex: 2,
-            child: _buildHistory(state),
-          ),
-          const Divider(height: 1),
-          Expanded(
-            flex: 4,
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(DesignSystem.spaceXL),
-                  child: Listener(
-                    onPointerDown: (event) =>
-                        _handlePointerEvent(event, state, notifier),
-                    onPointerMove: (event) =>
-                        _handlePointerEvent(event, state, notifier),
-                    onPointerUp: (event) => notifier.submitGuess(),
-                    child: Container(
-                      key: _gridKey,
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius:
-                            BorderRadius.circular(DesignSystem.radiusLG),
-                        boxShadow: [
-                          BoxShadow(
-                            color: colorScheme.outline.withValues(alpha: 0.2),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                DesignSystem.spaceLG,
+                DesignSystem.spaceSM,
+                DesignSystem.spaceLG,
+                DesignSystem.spaceXL,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 320,
+                    child: Padding(
+                      padding: const EdgeInsets.all(DesignSystem.spaceMD),
+                      child: Center(
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Listener(
+                            onPointerDown: (event) =>
+                                _handlePointerEvent(event, state, notifier),
+                            onPointerMove: (event) =>
+                                _handlePointerEvent(event, state, notifier),
+                            onPointerUp: (event) => notifier.submitGuess(),
+                            child: Container(
+                              key: _gridKey,
+                              decoration: BoxDecoration(
+                                color: colorScheme.surface,
+                                borderRadius: BorderRadius.circular(
+                                    DesignSystem.radiusLG),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: colorScheme.outline
+                                        .withValues(alpha: 0.2),
+                                    blurRadius: 20,
+                                    offset: const Offset(0, 10),
+                                  ),
+                                ],
+                                border: Border.all(
+                                    color: colorScheme.outline
+                                        .withValues(alpha: 0.2),
+                                    width: 2),
+                              ),
+                              child: CustomPaint(
+                                painter: _PatternPainter(
+                                  pattern: state.currentGuess,
+                                  color: DesignSystem.primary,
+                                  dotColor: colorScheme.onSurface
+                                      .withValues(alpha: 0.1),
+                                ),
+                                size: Size.infinite,
+                              ),
+                            ),
                           ),
-                        ],
-                        border: Border.all(
-                            color: colorScheme.outline.withValues(alpha: 0.2),
-                            width: 2),
-                      ),
-                      child: CustomPaint(
-                        painter: _PatternPainter(
-                          pattern: state.currentGuess,
-                          color: DesignSystem.primary,
-                          dotColor:
-                              colorScheme.onSurface.withValues(alpha: 0.1),
                         ),
-                        size: Size.infinite,
                       ),
                     ),
                   ),
-                ),
+                  Text(
+                    '${state.currentGuess.length} / ${state.patternLength} DOTS',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
+                      color: state.currentGuess.length == state.patternLength
+                          ? DesignSystem.primary
+                          : colorScheme.onSurface.withValues(alpha: 0.7),
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'DRAW TO GUESS THE PATTERN',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      color: colorScheme.onSurface.withValues(alpha: 0.3),
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                  const SizedBox(height: DesignSystem.spaceLG),
+                  _buildHistory(state),
+                ],
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(DesignSystem.spaceLG, 0,
-                DesignSystem.spaceLG, DesignSystem.spaceXL),
-            child: Column(
-              children: [
-                Text(
-                  '${state.currentGuess.length} / ${state.patternLength} DOTS',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    color: state.currentGuess.length == state.patternLength
-                        ? DesignSystem.primary
-                        : colorScheme.onSurface.withValues(alpha: 0.7),
-                    letterSpacing: 1.0,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'DRAW TO GUESS THE PATTERN',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w900,
-                    color: colorScheme.onSurface.withValues(alpha: 0.3),
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ],
             ),
           ),
         ],
@@ -246,87 +254,104 @@ class _LockPatternScreenState extends ConsumerState<LockPatternScreen> {
       );
     }
 
-    return ListView.separated(
-      padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-      scrollDirection: Axis.horizontal,
-      itemCount: state.guesses.length,
-      separatorBuilder: (context, index) =>
-          const SizedBox(width: DesignSystem.spaceMD),
-      itemBuilder: (context, index) {
-        final guess = state.guesses[index];
-        return _buildGuessCard(guess, index + 1);
-      },
-    );
-  }
-
-  Widget _buildGuessCard(LockPatternGuess guess, int index) {
-    final colorScheme = Theme.of(context).colorScheme;
+    // One row per guess, in the same scroll view as the board: the answers
+    // scroll with the board instead of living in a strip that scrolls sideways
+    // and hides the earlier guesses.
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          '#$index',
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w900,
-            color: colorScheme.onSurface.withValues(alpha: 0.3),
-          ),
-        ),
-        const SizedBox(height: 4),
-        SizedBox(
-          width: 80,
-          height: 80,
-          child: TangibleContainer(
-            padding: const EdgeInsets.all(8),
-            color: colorScheme.surface,
-            child: CustomPaint(
-              painter: _PatternPainter(
-                pattern: guess.pattern,
-                color: colorScheme.onSurface,
-                feedback: guess.feedback,
-                dotRadius: 4,
-                strokeWidth: 3,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ...List.generate(
-              guess.feedback
-                  .where((f) => f == LockPatternDotStatus.correct)
-                  .length,
-              (_) => Container(
-                margin: const EdgeInsets.symmetric(horizontal: 1),
-                width: 6,
-                height: 6,
-                decoration: const BoxDecoration(
-                  color: DesignSystem.success,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            ...List.generate(
-              guess.feedback
-                  .where((f) => f == LockPatternDotStatus.wrongPosition)
-                  .length,
-              (_) => Container(
-                margin: const EdgeInsets.symmetric(horizontal: 1),
-                width: 6,
-                height: 6,
-                decoration: const BoxDecoration(
-                  color: DesignSystem.accentAmber,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-          ],
-        ),
+        for (var index = 0; index < state.guesses.length; index++)
+          _buildGuessRow(state.guesses[index], index + 1),
       ],
     );
   }
+
+  Widget _buildGuessRow(LockPatternGuess guess, int index) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final correct =
+        guess.feedback.where((f) => f == LockPatternDotStatus.correct).length;
+    final misplaced = guess.feedback
+        .where((f) => f == LockPatternDotStatus.wrongPosition)
+        .length;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: DesignSystem.spaceXS),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 32,
+            child: Text(
+              '#$index',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w900,
+                color: colorScheme.onSurface.withValues(alpha: 0.45),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 56,
+            height: 56,
+            child: TangibleContainer(
+              padding: const EdgeInsets.all(6),
+              color: colorScheme.surface,
+              child: CustomPaint(
+                painter: _PatternPainter(
+                  pattern: guess.pattern,
+                  color: colorScheme.onSurface,
+                  feedback: guess.feedback,
+                  dotRadius: 3,
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: DesignSystem.spaceMD),
+          Expanded(
+            child: Text(
+              '$correct RIGHT · $misplaced IN THE WRONG PLACE',
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.4,
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ...List.generate(
+                correct,
+                (_) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 1),
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: DesignSystem.success,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              ...List.generate(
+                misplaced,
+                (_) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 1),
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: DesignSystem.accentAmber,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
 }
 
 class _PatternPainter extends CustomPainter {

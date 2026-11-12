@@ -451,4 +451,122 @@ class AkariEngine {
       params['lit'] as List<List<bool>>,
     );
   }
+
+  // ------------------------------------------------------------- feedback
+
+  /// Every cell that is already wrong: a bulb that sees another bulb, or a
+  /// numbered wall with more bulbs around it than it allows.
+  ///
+  /// Under-filled clues are not errors yet — the player may still be working —
+  /// so only overloads are flagged. The point is to answer "why didn't that
+  /// work?" in the same second as the tap, not to finish the puzzle for them.
+  static Set<int> conflicts(
+    List<List<int>> grid,
+    List<List<bool>> bulbs,
+  ) {
+    final size = grid.length;
+    final bad = <int>{};
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        if (!bulbs[r][c]) continue;
+        var seesAnother = false;
+        for (var j = c + 1; j < size && grid[r][j] == -2; j++) {
+          if (bulbs[r][j]) seesAnother = true;
+        }
+        for (var j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
+          if (bulbs[r][j]) seesAnother = true;
+        }
+        for (var i = r + 1; i < size && grid[i][c] == -2; i++) {
+          if (bulbs[i][c]) seesAnother = true;
+        }
+        for (var i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
+          if (bulbs[i][c]) seesAnother = true;
+        }
+        if (seesAnother) bad.add(r * size + c);
+      }
+    }
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        final value = grid[r][c];
+        if (value < 0) continue;
+        var count = 0;
+        if (r > 0 && bulbs[r - 1][c]) count++;
+        if (r < size - 1 && bulbs[r + 1][c]) count++;
+        if (c > 0 && bulbs[r][c - 1]) count++;
+        if (c < size - 1 && bulbs[r][c + 1]) count++;
+        if (count > value) bad.add(r * size + c);
+      }
+    }
+    return bad;
+  }
+
+  // ---------------------------------------------------------------- solver
+
+  /// A complete bulb placement for [grid], or null when the board has none.
+  ///
+  /// The boards are 5x5 and 6x6 and the walls cut the search down, so a plain
+  /// backtracker with two prunes (no two bulbs in sight, no wall over its
+  /// number) finishes instantly. Used by the solve button and by the tests that
+  /// ask whether a template is a real puzzle at all.
+  static List<List<bool>>? solve(List<List<int>> grid) {
+    final size = grid.length;
+    final bulbs = List.generate(size, (_) => List.filled(size, false));
+    final white = <(int, int)>[];
+    for (var r = 0; r < size; r++) {
+      for (var c = 0; c < size; c++) {
+        if (grid[r][c] == -2) white.add((r, c));
+      }
+    }
+
+    bool seesBulb(int r, int c) {
+      for (var j = c + 1; j < size && grid[r][j] == -2; j++) {
+        if (bulbs[r][j]) return true;
+      }
+      for (var j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
+        if (bulbs[r][j]) return true;
+      }
+      for (var i = r + 1; i < size && grid[i][c] == -2; i++) {
+        if (bulbs[i][c]) return true;
+      }
+      for (var i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
+        if (bulbs[i][c]) return true;
+      }
+      return false;
+    }
+
+    bool wallOver(int r, int c) {
+      var count = 0;
+      if (r > 0 && bulbs[r - 1][c]) count++;
+      if (r < size - 1 && bulbs[r + 1][c]) count++;
+      if (c > 0 && bulbs[r][c - 1]) count++;
+      if (c < size - 1 && bulbs[r][c + 1]) count++;
+      return count > grid[r][c];
+    }
+
+    bool rec(int index) {
+      if (index == white.length) {
+        final lit = calculateLit(grid, bulbs);
+        return checkVictory(grid, bulbs, lit);
+      }
+      if (rec(index + 1)) return true;
+      final (r, c) = white[index];
+      if (seesBulb(r, c)) return false;
+      bulbs[r][c] = true;
+      var ok = true;
+      for (final (dr, dc) in const [(1, 0), (-1, 0), (0, 1), (0, -1)]) {
+        final rr = r + dr;
+        final cc = c + dc;
+        if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
+        if (grid[rr][cc] >= 0 && wallOver(rr, cc)) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok && rec(index + 1)) return true;
+      bulbs[r][c] = false;
+      return false;
+    }
+
+    return rec(0) ? bulbs : null;
+  }
 }

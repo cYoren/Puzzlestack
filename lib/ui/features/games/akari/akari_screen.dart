@@ -7,6 +7,7 @@ import '../../../core/juice/game_scaffold.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
 import '../../../../utils/design_system.dart';
+import '../../../core/board/puzzle_board.dart';
 import 'akari_provider.dart';
 
 class AkariScreen extends ConsumerStatefulWidget {
@@ -75,23 +76,15 @@ class _AkariScreenState extends ConsumerState<AkariScreen> {
         TangibleButton(
           color: colorScheme.surface,
           shadowColor: colorScheme.outline,
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(12),
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text(l10n.howToPlay),
-                content: Text(l10n.akariHowToPlay),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(l10n.gotIt),
-                  ),
-                ],
-              ),
-            );
+            notifier.hint();
           },
-          child: Icon(Icons.help_outline, color: colorScheme.onSurface),
+          child: Icon(
+            Icons.lightbulb_outline_rounded,
+            color: colorScheme.onSurface,
+            size: 20,
+          ),
         ),
       ],
       body: Center(
@@ -124,63 +117,78 @@ class _AkariScreenState extends ConsumerState<AkariScreen> {
   }
 
   Widget _buildCell(AkariState state, AkariNotifier notifier, int r, int c, double size) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+    final palette = PuzzlePalette.of(context);
     final val = state.grid[r][c];
     final isBulb = state.bulbs[r][c];
     final isLit = state.lit[r][c];
+    final isBad = state.conflicts.contains(r * state.grid.length + c);
 
     if (val >= -1) {
-      // Wall
+      // Wall. `onSurface` is near-white in dark mode, which turned every wall
+      // into a lamp; the palette's structure colour is a mid-tone in both
+      // themes, so the grid reads without glaring.
       return Container(
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: colorScheme.onSurface,
-          border: Border.all(
-            color: colorScheme.onSurface.withValues(alpha: 0.1), 
-            width: 0.5,
-          ),
+          color: isBad ? DesignSystem.error : palette.structure,
+          border: Border.all(color: palette.line, width: 0.5),
         ),
         child: val >= 0
             ? Center(
                 child: Text(
                   val.toString(),
                   style: TextStyle(
-                    color: colorScheme.surface,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    color: palette.surface,
+                    fontWeight: FontWeight.w900,
+                    fontSize: size * 0.42,
                   ),
                 ),
               )
             : null,
       );
-    } else {
-      // White cell
-      return GestureDetector(
-        onTap: () => notifier.toggleBulb(r, c),
-        child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            color: isLit 
-                ? DesignSystem.accentAmber.withValues(alpha: 0.3) 
-                : colorScheme.surface,
-            border: Border.all(
-              color: colorScheme.outline.withValues(alpha: 0.3), 
-              width: 0.5,
-            ),
-          ),
-          child: Center(
-            child: isBulb
-                ? const Icon(
-                    Icons.lightbulb,
-                    color: DesignSystem.accentAmber,
-                    size: 28,
-                  )
-                : null,
-          ),
-        ),
-      );
     }
+
+    // White cell.
+    return GestureDetector(
+      onTap: () {
+        notifier.toggleBulb(r, c);
+        if (state.conflicts.contains(r * state.grid.length + c)) {
+          HapticFeedbackUtil.error();
+        }
+      },
+      onLongPress: () {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              duration: const Duration(seconds: 3),
+              content: Text(l10n.akariHowToPlay),
+            ),
+          );
+      },
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: isBad
+              ? DesignSystem.error.withValues(alpha: 0.18)
+              : isLit
+                  ? DesignSystem.accentAmber.withValues(alpha: 0.22)
+                  : palette.surface,
+          border: Border.all(color: palette.line, width: 0.5),
+        ),
+        child: Center(
+          child: isBulb
+              ? Icon(
+                  Icons.lightbulb,
+                  color: isBad ? DesignSystem.error : DesignSystem.accentAmber,
+                  size: size * 0.66,
+                )
+              : null,
+        ),
+      ),
+    );
   }
 }

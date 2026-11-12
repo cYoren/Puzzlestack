@@ -91,4 +91,20 @@ class CubeNotifier extends _$CubeNotifier {
     if (direction == null) return;
     state = state.copyWith(hint: direction);
   }
+
+  /// Rolls the engine's own line to the end of the board.
+  void solve() {
+    if (state.isSolved) return;
+    final line = _engine.solve(state.puzzle, state.position);
+    if (line == null) return;
+    var position = state.position;
+    for (final direction in line) {
+      position = _engine.roll(state.puzzle, position, direction);
+    }
+    state = state.copyWith(
+      position: position,
+      moves: state.moves + line.length,
+      clearHint: true,
+    );
+  }
 }

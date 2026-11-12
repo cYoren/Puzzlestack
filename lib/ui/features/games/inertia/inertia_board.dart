@@ -102,15 +102,15 @@ class InertiaBoard extends GridBoard<InertiaState> {
     final kind = state.puzzle.kindAt(index);
 
     if (kind == CellKind.wall) {
-      canvas.cell(rect, fill: palette.ink.withValues(alpha: 0.82), radius: 4);
+      canvas.cell(rect, fill: palette.structure, radius: 4);
       return;
     }
 
     canvas.cell(
       rect,
       fill: palette.surface,
-      stroke: palette.outline.withValues(alpha: 0.18),
-      strokeWidth: 1,
+      stroke: palette.line,
+      strokeWidth: 1.2,
     );
 
     if (kind == CellKind.mine) {

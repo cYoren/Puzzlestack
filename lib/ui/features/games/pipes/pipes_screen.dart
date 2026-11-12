@@ -15,15 +15,18 @@ import '../../../core/juice/game_scaffold.dart';
 class PipesScreen extends ConsumerWidget {
   const PipesScreen({super.key});
 
+  /// Eight hues with no two close enough to confuse. `accentBerry` and
+  /// `accentAmber` were the same amber, which is exactly how two pipes came to
+  /// look identical.
   static const List<Color> pipeColors = [
-    DesignSystem.primary,
-    DesignSystem.accentBerry,
-    DesignSystem.accentEmerald,
-    DesignSystem.accentAmber,
-    Colors.orange,
-    Colors.purple,
-    Colors.teal,
-    Colors.pink,
+    Color(0xFF4338CA), // indigo
+    Color(0xFF10B981), // emerald
+    Color(0xFFEF4444), // red
+    Color(0xFF06B6D4), // cyan
+    Color(0xFFF59E0B), // amber
+    Color(0xFFA855F7), // purple
+    Color(0xFFEC4899), // pink
+    Color(0xFF84CC16), // lime
   ];
 
   @override

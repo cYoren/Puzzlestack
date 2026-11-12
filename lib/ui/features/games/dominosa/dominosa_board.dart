@@ -145,7 +145,7 @@ class DominosaBoard extends GridBoard<DominosaState> {
       '${state.puzzle.grid[index]}',
       rect,
       color: paired ? palette.primary : palette.ink,
-      fontSize: rect.height * 0.5,
+      fontSize: canvas.fontSizeFor(rect, 0.5),
       weight: FontWeight.w900,
     );
   }

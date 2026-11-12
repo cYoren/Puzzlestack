@@ -95,18 +95,25 @@ class CubeBoard extends GridBoard<CubeState> {
     final painted = state.position.squares[index] == 1;
     final target = state.puzzle.isTarget(index);
 
+    // Three states, three shapes: a blue square is a target, a solid ink square
+    // has been painted, empty is paper. A tint on a tint was why the board read
+    // as one blue wash.
     canvas.cell(
       rect,
-      fill: painted
-          ? palette.primary.withValues(alpha: 0.9)
-          : target
-              ? palette.primary.withValues(alpha: 0.12)
-              : palette.surface,
-      stroke: target && !painted
-          ? palette.primary.withValues(alpha: 0.55)
-          : palette.outline.withValues(alpha: 0.28),
-      strokeWidth: target && !painted ? 2 : 1,
+      fill: target ? palette.primary : palette.surface,
+      stroke: painted ? palette.ink : palette.line,
+      strokeWidth: painted ? 3 : 1.2,
     );
+    if (target && !painted) {
+      canvas.dot(rect.center, rect.width * 0.16, color: palette.surface);
+    }
+    if (painted) {
+      canvas.cell(
+        rect.deflate(rect.width * 0.18),
+        stroke: palette.ink,
+        strokeWidth: 2,
+      );
+    }
   }
 
   @override
@@ -120,9 +127,9 @@ class CubeBoard extends GridBoard<CubeState> {
     // An isometric cube: a top diamond and two side faces. The viewer is to the
     // south-west, so the visible sides are south and west.
     final centre = rect.center;
-    final halfW = rect.width * 0.42;
-    final halfH = rect.height * 0.22;
-    final tall = rect.height * 0.3;
+    final halfW = rect.width * 0.46;
+    final halfH = rect.height * 0.26;
+    final tall = rect.height * 0.30;
 
     final top = Path()
       ..moveTo(centre.dx, centre.dy - halfH - tall)
@@ -153,9 +160,25 @@ class CubeBoard extends GridBoard<CubeState> {
               .withValues(alpha: 1.0);
     }
 
-    canvas.path(left, fill: shade(CubeFace.south, 0.72), stroke: palette.ink.withValues(alpha: 0.35), width: 1.2);
-    canvas.path(right, fill: shade(CubeFace.west, 0.85), stroke: palette.ink.withValues(alpha: 0.35), width: 1.2);
-    canvas.path(top, fill: shade(CubeFace.top, 1.0), stroke: palette.ink.withValues(alpha: 0.35), width: 1.2);
+    final edge = palette.ink.withValues(alpha: 0.75);
+    canvas.path(left, fill: shade(CubeFace.south, 0.72), stroke: edge, width: 1.6);
+    canvas.path(right, fill: shade(CubeFace.west, 0.85), stroke: edge, width: 1.6);
+    canvas.path(top, fill: shade(CubeFace.top, 1.0), stroke: edge, width: 1.6);
+
+    // The bottom face is the one a roll swaps and the answer hangs on, and it
+    // is the face an isometric view cannot show. Paint it as the cube's shadow.
+    final bottom = state.position.faces[CubeFace.bottom] == 1;
+    canvas.cell(
+      Rect.fromCenter(
+        center: Offset(centre.dx, centre.dy + halfH),
+        width: halfW * 0.5,
+        height: halfH * 0.5,
+      ),
+      fill: bottom ? palette.primary : palette.surface,
+      stroke: edge,
+      strokeWidth: 1.4,
+      radius: 4,
+    );
 
     // How many faces are painted, on the cube itself: it belongs to the object,
     // not to a HUD chip.

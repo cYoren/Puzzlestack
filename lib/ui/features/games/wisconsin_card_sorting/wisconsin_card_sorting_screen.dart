@@ -56,6 +56,52 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
     ref.listen(wisconsinCardSortingNotifierProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         _showCompletionDialog(next);
+        return;
+      }
+      if (identical(previous?.lastFeedback, next.lastFeedback) &&
+          !next.ruleChanged) {
+        return;
+      }
+      final messenger = ScaffoldMessenger.of(context)..hideCurrentSnackBar();
+      if (next.ruleChanged) {
+        HapticFeedbackUtil.mediumImpact();
+        messenger.showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 3),
+            backgroundColor: DesignSystem.primary,
+            content: Text(
+              'NEW RULE — SORT BY ${_ruleLabel(next.currentRule)} NOW.',
+              style: const TextStyle(fontWeight: FontWeight.w900),
+            ),
+          ),
+        );
+        return;
+      }
+      if (next.lastFeedback == 'CORRECT') {
+        HapticFeedbackUtil.lightImpact();
+        messenger.showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 900),
+            backgroundColor: DesignSystem.success,
+            content: const Text(
+              'MATCH. KEEP GOING.',
+              style: TextStyle(fontWeight: FontWeight.w900),
+            ),
+          ),
+        );
+      } else if (next.lastFeedback.isNotEmpty) {
+        HapticFeedbackUtil.error();
+        messenger.showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 1600),
+            backgroundColor: DesignSystem.error,
+            content: const Text(
+              'NO MATCH. THAT CARD FITS ON A DIFFERENT ATTRIBUTE — '
+              'COLOR, SHAPE OR NUMBER.',
+              style: TextStyle(fontWeight: FontWeight.w900),
+            ),
+          ),
+        );
       }
     });
 
@@ -96,13 +142,30 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
                         ),
                       ),
                       if (state.lastFeedback.isNotEmpty)
-                        Text(
-                          state.lastFeedback,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900,
-                            color: state.lastFeedback == AppLocalizations.of(context)!.correct ? DesignSystem.success : DesignSystem.error,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              state.lastFeedback,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900,
+                                color: state.lastFeedback == 'CORRECT'
+                                    ? DesignSystem.success
+                                    : DesignSystem.error,
+                              ),
+                            ),
+                            Text(
+                              '${state.consecutiveCorrect}/5 TO THE NEXT RULE',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 0.6,
+                                color: colorScheme.onSurface
+                                    .withValues(alpha: 0.45),
+                              ),
+                            ),
+                          ],
                         ),
                     ],
                   ),
@@ -143,6 +206,12 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
             ),
     );
   }
+
+  String _ruleLabel(WCSAttribute rule) => switch (rule) {
+        WCSAttribute.color => 'COLOR',
+        WCSAttribute.shape => 'SHAPE',
+        WCSAttribute.number => 'NUMBER',
+      };
 }
 
 class _CardWidget extends StatelessWidget {

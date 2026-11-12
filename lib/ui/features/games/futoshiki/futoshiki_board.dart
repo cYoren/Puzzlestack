@@ -77,7 +77,7 @@ class FutoshikiBoard extends GridBoard<FutoshikiState> {
             : given
                 ? palette.ink
                 : palette.primary,
-        fontSize: rect.height * 0.5,
+        fontSize: canvas.fontSizeFor(rect, 0.5),
         weight: FontWeight.w900,
       );
     }
@@ -90,7 +90,7 @@ class FutoshikiBoard extends GridBoard<FutoshikiState> {
     final n = state.n;
     final puzzle = state.puzzle;
     final palette = canvas.palette;
-    final fontSize = cellHeight * 0.42;
+    final fontSize = canvas.size.height * cellHeight * 0.42;
 
     // Horizontal inequalities sit in the gap between two cells of a row.
     for (var row = 0; row < n; row++) {
@@ -107,7 +107,7 @@ class FutoshikiBoard extends GridBoard<FutoshikiState> {
             width: cellWidth * gapFraction,
             height: cellHeight,
           ),
-          color: palette.muted,
+          color: palette.ink.withValues(alpha: 0.8),
           fontSize: fontSize,
           weight: FontWeight.w900,
         );
@@ -129,7 +129,7 @@ class FutoshikiBoard extends GridBoard<FutoshikiState> {
             width: cellWidth,
             height: cellHeight * gapFraction,
           ),
-          color: palette.muted,
+          color: palette.ink.withValues(alpha: 0.8),
           fontSize: fontSize,
           weight: FontWeight.w900,
         );

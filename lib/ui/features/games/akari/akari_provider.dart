@@ -11,12 +11,17 @@ class AkariState {
   final bool isVictory;
   final bool isLoading;
 
+  /// Encoded `row * size + col` cells that are already wrong: two bulbs in
+  /// sight of each other, or a numbered wall with too many bulbs around it.
+  final Set<int> conflicts;
+
   AkariState({
     required this.grid,
     required this.bulbs,
     required this.lit,
     this.isVictory = false,
     this.isLoading = true,
+    this.conflicts = const <int>{},
   });
 
   AkariState copyWith({
@@ -25,6 +30,7 @@ class AkariState {
     IList<IList<bool>>? lit,
     bool? isVictory,
     bool? isLoading,
+    Set<int>? conflicts,
   }) {
     return AkariState(
       grid: grid ?? this.grid,
@@ -32,6 +38,7 @@ class AkariState {
       lit: lit ?? this.lit,
       isVictory: isVictory ?? this.isVictory,
       isLoading: isLoading ?? this.isLoading,
+      conflicts: conflicts ?? this.conflicts,
     );
   }
 }
@@ -82,6 +89,48 @@ class AkariNotifier extends _$AkariNotifier {
       bulbs: bulbs.map((row) => row.lock).toIList(),
       lit: newLit.map((r) => r.lock).toIList(),
       isVictory: isVictory,
+      conflicts: AkariEngine.conflicts(grid, bulbs),
     );
+  }
+
+  /// Places a full, valid answer. Used by the shell's solve button; the board
+  /// still checks the answer against the clues rather than against a key.
+  void solve() {
+    if (state.isVictory || state.isLoading) return;
+    final grid = state.grid.map((row) => row.toList()).toList();
+    final answer = AkariEngine.solve(grid);
+    if (answer == null) return;
+    final lit = AkariEngine.calculateLit(grid, answer);
+    state = state.copyWith(
+      bulbs: answer.map((row) => row.lock).toIList(),
+      lit: lit.map((row) => row.lock).toIList(),
+      isVictory: true,
+      conflicts: const <int>{},
+    );
+  }
+
+  /// Puts one bulb the answer needs, without filling the board. A hint, not a
+  /// solve: it names a bulb and lets the player carry on.
+  void hint() {
+    if (state.isVictory || state.isLoading) return;
+    final grid = state.grid.map((row) => row.toList()).toList();
+    final answer = AkariEngine.solve(grid);
+    if (answer == null) return;
+    final bulbs = state.bulbs.map((row) => row.toList()).toList();
+    for (var r = 0; r < bulbs.length; r++) {
+      for (var c = 0; c < bulbs.length; c++) {
+        if (answer[r][c] && !bulbs[r][c]) {
+          bulbs[r][c] = true;
+          final lit = AkariEngine.calculateLit(grid, bulbs);
+          state = state.copyWith(
+            bulbs: bulbs.map((row) => row.lock).toIList(),
+            lit: lit.map((row) => row.lock).toIList(),
+            isVictory: AkariEngine.checkVictory(grid, bulbs, lit),
+            conflicts: AkariEngine.conflicts(grid, bulbs),
+          );
+          return;
+        }
+      }
+    }
   }
 }
