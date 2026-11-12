@@ -2,6 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:puzzle/l10n/app_localizations.dart';
+import '../../../data/curation.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
 import '../../../providers/user_providers.dart';
@@ -61,7 +63,7 @@ class _ShuffleFeedScreenState extends ConsumerState<ShuffleFeedScreen> {
           exceptId: exceptId, random: _random, exclude: hidden);
     }
     final pool = GameCategories.inCategory(cat)
-        .where((g) => !hidden.contains(g.id))
+        .where((g) => !hidden.contains(g.id) && !feedBlocklist.contains(g.id))
         .toList(growable: false);
     if (pool.isEmpty) {
       return GameFeed.randomGame(
@@ -75,6 +77,38 @@ class _ShuffleFeedScreenState extends ConsumerState<ShuffleFeedScreen> {
       g = pool[_random.nextInt(pool.length)];
     } while (g.id == exceptId);
     return g;
+  }
+
+  /// The reel's two verdicts. Liking a puzzle is what the favourites row and
+  /// the completion dialog's suggestions already read; blocking it takes it out
+  /// of the reel for good, which is the only way a 313-puzzle library turns into
+  /// a feed worth swiping.
+  void _likeCurrent() {
+    final game = _gameAt(_currentIndex);
+    HapticFeedback.mediumImpact();
+    ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
+  }
+
+  void _blockCurrent() {
+    final game = _gameAt(_currentIndex);
+    final l10n = AppLocalizations.of(context)!;
+    HapticFeedback.mediumImpact();
+    ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(l10n.gameHidden),
+        action: SnackBarAction(
+          label: l10n.undo,
+          onPressed: () => ref
+              .read(userDataNotifierProvider.notifier)
+              .toggleHideGame(game.id),
+        ),
+        duration: const Duration(seconds: 4),
+      ),
+    );
+    _nextManually();
   }
 
   @override
@@ -139,6 +173,11 @@ class _ShuffleFeedScreenState extends ConsumerState<ShuffleFeedScreen> {
           _TopBar(
             game: _gameAt(_currentIndex),
             swipeEnabled: _swipeEnabled,
+            isLiked: ref.watch(userDataNotifierProvider.select((d) =>
+                (d.favoriteGameIds ?? const [])
+                    .contains(_gameAt(_currentIndex).id))),
+            onLike: _likeCurrent,
+            onBlock: _blockCurrent,
             onClose: () => Navigator.of(context).maybePop(),
             onToggleLock: _toggleLock,
           ),
@@ -152,12 +191,18 @@ class _ShuffleFeedScreenState extends ConsumerState<ShuffleFeedScreen> {
 class _TopBar extends StatelessWidget {
   final GameMetadata game;
   final bool swipeEnabled;
+  final bool isLiked;
+  final VoidCallback onLike;
+  final VoidCallback onBlock;
   final VoidCallback onClose;
   final VoidCallback onToggleLock;
 
   const _TopBar({
     required this.game,
     required this.swipeEnabled,
+    required this.isLiked,
+    required this.onLike,
+    required this.onBlock,
     required this.onClose,
     required this.onToggleLock,
   });
@@ -185,6 +230,22 @@ class _TopBar extends StatelessWidget {
               _pill(cat: cat, title: game.titleGetter(context)),
               const Spacer(),
               _circleButton(
+                icon: isLiked
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+                tooltip:
+                    isLiked ? 'Remove from favourites' : 'Add to favourites',
+                iconColor: isLiked ? DesignSystem.gameRose : Colors.white,
+                onTap: onLike,
+              ),
+              const SizedBox(width: 4),
+              _circleButton(
+                icon: Icons.visibility_off_rounded,
+                tooltip: 'Not a puzzle: block it from the reel',
+                onTap: onBlock,
+              ),
+              const SizedBox(width: 4),
+              _circleButton(
                 icon:
                     swipeEnabled ? Icons.lock_open_rounded : Icons.lock_rounded,
                 tooltip: swipeEnabled
@@ -203,6 +264,7 @@ class _TopBar extends StatelessWidget {
     required IconData icon,
     required String tooltip,
     required VoidCallback onTap,
+    Color iconColor = Colors.white,
   }) {
     return Tooltip(
       message: tooltip,
@@ -213,8 +275,8 @@ class _TopBar extends StatelessWidget {
           customBorder: const CircleBorder(),
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Icon(icon, color: Colors.white, size: 22),
+            padding: const EdgeInsets.all(7),
+            child: Icon(icon, color: iconColor, size: 22),
           ),
         ),
       ),
@@ -234,7 +296,7 @@ class _TopBar extends StatelessWidget {
           Icon(Icons.shuffle_rounded, color: cat.color, size: 16),
           const SizedBox(width: 6),
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 160),
+            constraints: const BoxConstraints(maxWidth: 96),
             child: Text(
               title.toUpperCase(),
               overflow: TextOverflow.ellipsis,
@@ -286,8 +348,10 @@ class _SwipeHintState extends State<_SwipeHint>
             child: FadeTransition(
               opacity: Tween<double>(begin: 0.45, end: 1.0).animate(_c),
               child: Container(
+                // 320dp phones are 2px too narrow for the hint at 16dp of side
+                // padding, and the label is the one thing here that can shrink.
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.55),
                   borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
@@ -298,13 +362,17 @@ class _SwipeHintState extends State<_SwipeHint>
                     Icon(Icons.keyboard_arrow_up_rounded,
                         color: Colors.white, size: 20),
                     SizedBox(width: 6),
-                    Text(
-                      'SWIPE UP FOR ANOTHER',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: DesignSystem.fontSize2XS,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 1.2,
+                    Flexible(
+                      child: Text(
+                        'SWIPE UP FOR ANOTHER',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: DesignSystem.fontSize2XS,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.2,
+                        ),
                       ),
                     ),
                   ],

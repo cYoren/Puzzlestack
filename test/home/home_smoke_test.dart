@@ -74,6 +74,57 @@ void main() {
     });
   }
 
+  testWidgets('the feed bar fits the narrowest phone', (tester) async {
+    _sizeTo(tester, 320);
+
+    // Five controls now share one 44dp row: exit, title pill, like, block, lock.
+    // 320dp is where they stop fitting, so it is the size that has to pass.
+    await tester.pumpWidget(_app(const ShuffleFeedScreen(startGameId: 'pegs')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(tester.takeException(), isNull);
+    expect(find.byTooltip('Add to favourites'), findsOneWidget);
+    expect(
+        find.byTooltip('Not a puzzle: block it from the reel'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+  });
+
+  testWidgets('blocking from the feed hides that puzzle', (tester) async {
+    _sizeTo(tester, 360);
+
+    final container = ProviderContainer(
+      overrides: [userRepositoryProvider.overrideWithValue(_FakeRepository())],
+    );
+    addTearDown(container.dispose);
+
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          theme: DesignSystem.lightTheme,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const ShuffleFeedScreen(startGameId: 'pegs'),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(container.read(userDataNotifierProvider).hiddenGameIds, isEmpty);
+
+    // No pump after the tap: the handler hides the game and starts the swipe to
+    // the next one, and letting that animation run would build a random game
+    // (and that game's timers) inside this test.
+    await tester.tap(find.byTooltip('Not a puzzle: block it from the reel'));
+    expect(container.read(userDataNotifierProvider).hiddenGameIds,
+        contains('pegs'));
+
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump();
+  });
+
   testWidgets('the shuffle feed opens on a real game', (tester) async {
     _sizeTo(tester, 400);
 
