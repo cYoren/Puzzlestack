@@ -83,7 +83,15 @@ whole app is built from.
 
 ## Motion
 
-- Paging: 380ms, `easeOutCubic`, one page per gesture. No bounce, no overscroll flourishes.
+- **The deal.** A card is not scrolled into place, it is dealt. As you drag, the leaving card
+  lifts, turns about a degree and washes back into the paper; the arriving card rises from below
+  with the same turn the other way and straightens as it lands. The offsets are driven by the
+  page offset, not by a tween, so the card stays 1:1 with the finger — most of the motion
+  happens in the first third of the swipe (ease-out on the distance), then it holds.
+- **Paging:** 380ms, `easeOutCubic`, one page per gesture. No bounce, no overscroll flourishes.
+- The recede is a wash of the bed colour over the card, not an `Opacity` layer: a full-screen
+  `saveLayer` every frame is the one thing that would stutter on a cheap phone.
+- With reduced motion enabled, the card is simply moved.
 - Press: 90ms scale 0.97; the app never waits for choreography (see `PUZZLE_STYLE.md`).
 - Nothing loops. Nothing plays on load. A card that moves means the player learned something.
 
