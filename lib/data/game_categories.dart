@@ -133,12 +133,14 @@ class GameFeed {
 
   /// A deterministic "puzzle of the day": same for everyone on a given date,
   /// changes at local midnight.
-  static GameMetadata dailyPick([DateTime? now]) {
+  static GameMetadata dailyPick(
+      {DateTime? now, Set<String> exclude = const {}}) {
     final date = now ?? DateTime.now();
     final seed = date.year * 10000 + date.month * 100 + date.day;
     // Drawn from the reel pool, so a puzzle we keep out of the feed is never
-    // also the one thing the home screen pushes today.
-    final pool = feedPool();
+    // also the one thing the home screen pushes today. [exclude] carries the
+    // player's own hidden games, which must not come back as the daily pick.
+    final pool = feedPool(exclude: exclude);
     return pool[seed % pool.length];
   }
 
