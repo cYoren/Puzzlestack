@@ -180,26 +180,130 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
               itemBuilder: (context, index) {
                 final GameMetadata game = _gameAt(index);
                 final int epoch = _restartEpochs[index] ?? 0;
-                return _FeedCard(
-                  key: ValueKey('card_${index}_${game.id}_$epoch'),
-                  game: game,
+                // The card is dealt, not scrolled: it lifts off the stack,
+                // turns a degree, and settles as it arrives.
+                return _DealtCard(
+                  controller: _controller,
                   index: index,
-                  deck: _deck,
-                  locked: _locked,
-                  isFirst: index == 0,
-                  showClose: widget.isRoute,
-                  onClose: _close,
-                  onBrowse: widget.onBrowse,
-                  onNext: _next,
-                  onRestart: () => _restart(index),
-                  onToggleLock: _toggleLock,
-                  onGuide: () => _openGuide(context, game),
+                  child: _FeedCard(
+                    key: ValueKey('card_${index}_${game.id}_$epoch'),
+                    game: game,
+                    index: index,
+                    deck: _deck,
+                    locked: _locked,
+                    isFirst: index == 0,
+                    onNext: _next,
+                    onRestart: () => _restart(index),
+                    onToggleLock: _toggleLock,
+                    onGuide: () => _openGuide(context, game),
+                  ),
                 );
               },
             ),
           ),
+          // The wordmark belongs to the deck, not to each card: it stays put
+          // and the cards are dealt underneath it.
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: ColoredBox(
+              color: bed,
+              child: SafeArea(
+                bottom: false,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 560),
+                    child: SizedBox(
+                      height: 48,
+                      child: _TopBar(
+                        showClose: widget.isRoute,
+                        onClose: _close,
+                        onBrowse: widget.onBrowse,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+/// The deal.
+///
+/// A plain PageView slides a page, which reads as scrolling a list. A deck of
+/// cards should be *dealt*: the arriving card starts a little small, a little
+/// low and about a degree off, then straightens and settles as it takes the
+/// table. The leaving card does the same in reverse, so the two never look like
+/// one strip of content.
+///
+/// The curve is applied to the dragged offset, not to a tween, so the gesture
+/// stays 1:1 with the finger: the card is where you put it, it just also
+/// carries its own weight.
+class _DealtCard extends StatelessWidget {
+  const _DealtCard({
+    required this.controller,
+    required this.index,
+    required this.child,
+  });
+
+  final PageController controller;
+  final int index;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool reduced = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    if (reduced) return child;
+
+    return AnimatedBuilder(
+      animation: controller,
+      child: child,
+      builder: (context, built) {
+        double settled = 0;
+        if (controller.hasClients && controller.position.hasContentDimensions) {
+          final double page = controller.page ?? index.toDouble();
+          settled = (index - page).abs().clamp(0.0, 1.0);
+        }
+        if (settled == 0) return built!;
+
+        // Most of the motion happens early in the swipe, then it holds: the
+        // card is already committed to being the next one by half a screen.
+        final double t = Curves.easeOutCubic.transform(settled);
+        final double direction =
+            index > (controller.page ?? index.toDouble()) ? 1.0 : -1.0;
+
+        // Receding into the deck is drawn as a wash of the bed colour rather
+        // than an Opacity layer: a full-screen saveLayer every frame is the one
+        // thing that would stutter on a cheap phone, and the wash looks the same
+        // because the bed behind the card is that colour.
+        final Color bed = DesignSystem.paperOf(context);
+
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0015) // a touch of perspective
+            ..translateByDouble(0.0, 26.0 * direction * t, 0.0, 1.0)
+            ..rotateZ(0.018 * direction * t)
+            ..scaleByDouble(1 - 0.055 * t, 1 - 0.055 * t, 1.0, 1.0),
+          child: Stack(
+            children: [
+              built!,
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: ColoredBox(
+                    color: bed.withValues(alpha: 0.45 * t),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -227,9 +331,6 @@ class _FeedCard extends StatelessWidget {
     required this.deck,
     required this.locked,
     required this.isFirst,
-    required this.showClose,
-    required this.onClose,
-    required this.onBrowse,
     required this.onNext,
     required this.onRestart,
     required this.onToggleLock,
@@ -241,9 +342,6 @@ class _FeedCard extends StatelessWidget {
   final FeedDeck deck;
   final bool locked;
   final bool isFirst;
-  final bool showClose;
-  final VoidCallback onClose;
-  final VoidCallback? onBrowse;
   final VoidCallback onNext;
   final VoidCallback onRestart;
   final VoidCallback onToggleLock;
@@ -257,9 +355,10 @@ class _FeedCard extends StatelessWidget {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
+      // The fixed wordmark bar above owns this space; the card starts under it.
+      padding: EdgeInsets.fromLTRB(
         DesignSystem.spaceMD,
-        0,
+        MediaQuery.paddingOf(context).top + kToolbarHeight,
         DesignSystem.spaceMD,
         22,
       ),
@@ -268,17 +367,6 @@ class _FeedCard extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 560),
           child: Column(
             children: [
-              SafeArea(
-                bottom: false,
-                child: SizedBox(
-                  height: 48,
-                  child: _TopBar(
-                    showClose: showClose,
-                    onClose: onClose,
-                    onBrowse: onBrowse,
-                  ),
-                ),
-              ),
               Expanded(
                 child: DeckCard(
                   clip: true,
