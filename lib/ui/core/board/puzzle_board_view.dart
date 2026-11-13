@@ -58,6 +58,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   late final AnimationController _win = AnimationController(vsync: this);
   late final AnimationController _press =
       AnimationController(vsync: this, duration: BoardMotion.press);
+  late final AnimationController _transition = AnimationController(vsync: this);
 
   Size _size = Size.zero;
   Offset _down = Offset.zero;
@@ -77,16 +78,42 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   List<ElementRef> _celebrating = const [];
   Duration _winStagger = BoardMotion.winStagger;
 
+  S? _transitionFrom;
+  S? _transitionTo;
+
+  bool get _isTransitioning => _transitionFrom != null;
+
   @override
   void didUpdateWidget(covariant PuzzleBoardView<S> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!identical(oldWidget.board.state, widget.board.state) &&
-        _lifted != null) {
+    final changed = !identical(oldWidget.board.state, widget.board.state);
+    if (changed && _lifted != null) {
       // A reset or a new level landed mid-drag; drop the gesture, not the app.
       _clearDrag(notify: false);
     }
+
+    if (changed) {
+      final duration =
+          widget.board.transitionFor(oldWidget.board.state, widget.board.state);
+      if (duration != null && duration > Duration.zero) {
+        _transitionFrom = oldWidget.board.state;
+        _transitionTo = widget.board.state;
+        _transition.duration = duration;
+        _transition.forward(from: 0).whenComplete(() {
+          if (!mounted) return;
+          setState(() {
+            _transitionFrom = null;
+            _transitionTo = null;
+          });
+          // The move is only now visible; the win waits for it.
+          if (widget.board.isSolved) _celebrate();
+        });
+      }
+    }
+
     if (!oldWidget.board.isSolved && widget.board.isSolved) {
-      _celebrate();
+      // A transition is running: the celebration is fired above when it ends.
+      if (!_isTransitioning) _celebrate();
     }
   }
 
@@ -98,6 +125,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     _invalid.dispose();
     _win.dispose();
     _press.dispose();
+    _transition.dispose();
     super.dispose();
   }
 
@@ -357,8 +385,8 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   @override
   Widget build(BuildContext context) {
     final palette = PuzzlePalette.of(context);
-    final listenable =
-        Listenable.merge([_press, _lift, _settle, _zones, _invalid, _win]);
+    final listenable = Listenable.merge(
+        [_press, _lift, _settle, _zones, _invalid, _win, _transition]);
 
     return AspectRatio(
       aspectRatio: 1 / widget.board.aspectRatio,
@@ -384,6 +412,9 @@ class _PuzzleBoardViewState<S extends PuzzleState>
                     board: widget.board,
                     palette: palette,
                     highlight: _highlight,
+                    transitionFrom: _transitionFrom,
+                    transitionTo: _transitionTo,
+                    transitionT: _transition.value,
                   ),
                 ),
               ),
@@ -400,11 +431,17 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
     required this.board,
     required this.palette,
     required this.highlight,
+    this.transitionFrom,
+    this.transitionTo,
+    this.transitionT = 0,
   });
 
   final PuzzleBoard<S> board;
   final PuzzlePalette palette;
   final BoardHighlight highlight;
+  final S? transitionFrom;
+  final S? transitionTo;
+  final double transitionT;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -414,6 +451,13 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
       palette: palette,
       highlight: highlight,
     );
+
+    final from = transitionFrom;
+    final to = transitionTo;
+    if (from != null && to != null) {
+      board.paintTransition(view, from, to, transitionT);
+      return;
+    }
 
     board.paint(view, board.state);
 
@@ -473,5 +517,8 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
   bool shouldRepaint(covariant _BoardPainter<S> oldDelegate) =>
       oldDelegate.board != board ||
       oldDelegate.highlight != highlight ||
-      oldDelegate.palette != palette;
+      oldDelegate.palette != palette ||
+      oldDelegate.transitionFrom != transitionFrom ||
+      oldDelegate.transitionTo != transitionTo ||
+      oldDelegate.transitionT != transitionT;
 }

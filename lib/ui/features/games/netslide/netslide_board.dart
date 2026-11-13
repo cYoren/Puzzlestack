@@ -88,6 +88,7 @@ class NetslideBoard extends GridBoard<NetState> {
             masks: next,
             moves: current.moves + 1,
             clearHint: true,
+            lastSlide: (row: row, index: index, forward: forward),
           );
         },
       );
@@ -168,6 +169,92 @@ class NetslideBoard extends GridBoard<NetState> {
     return null;
   }
 
+  // -------------------------------------------------------------- transition
+
+  @override
+  Duration? transitionFor(NetState from, NetState to) {
+    if (!identical(from.puzzle, to.puzzle)) return null;
+    if (to.lastSlide == null) return null;
+    return const Duration(milliseconds: 240);
+  }
+
+  @override
+  void paintTransition(
+    PuzzleCanvas canvas,
+    NetState from,
+    NetState to,
+    double t,
+  ) {
+    final slide = to.lastSlide;
+    if (slide == null) {
+      paint(canvas, to);
+      return;
+    }
+
+    final eased = Curves.easeInOutCubic.transform(t.clamp(0.0, 1.0));
+    _paintBase(canvas, from);
+
+    // The line that slides: its old tiles are wiped and redrawn shifted, with
+    // the wrapping tile entering from the far edge.
+    final forward = slide.forward;
+    final delta = forward
+        ? (slide.row ? Offset(cellWidth, 0) : Offset(0, cellHeight))
+        : (slide.row ? Offset(-cellWidth, 0) : Offset(0, -cellHeight));
+
+    final gridRect = Rect.fromPoints(
+      cellRect(0, 0).topLeft,
+      cellRect(rows - 1, cols - 1).bottomRight,
+    );
+
+    // Clear the line back to the bed.
+    final palette = canvas.palette;
+    final line = <(int, int)>[];
+    if (slide.row) {
+      for (var col = 0; col < cols; col++) {
+        line.add((slide.index, col));
+      }
+    } else {
+      for (var row = 0; row < rows; row++) {
+        line.add((row, slide.index));
+      }
+    }
+    for (final (row, col) in line) {
+      canvas.cell(cellRect(row, col), fill: palette.surface, stroke: palette.line);
+    }
+
+    canvas.pushClip(gridRect);
+    canvas.pushTranslation(delta * eased);
+    for (final (row, col) in line) {
+      paintCell(canvas, from, row, col);
+    }
+    // The tile that wraps around.
+    final wrap = slide.row
+        ? (slide.index, forward ? cols - 1 : 0)
+        : (forward ? rows - 1 : 0, slide.index);
+    canvas.pushTranslation(
+      slide.row
+          ? Offset(forward ? -cols * cellWidth : cols * cellWidth, 0)
+          : Offset(0, forward ? -rows * cellHeight : rows * cellHeight),
+    );
+    paintCell(canvas, from, wrap.$1, wrap.$2);
+    canvas.pop();
+    canvas.pop();
+    canvas.pop();
+
+    // Walls do not move; draw the line's walls back on top.
+    for (final (row, col) in line) {
+      final rect = cellRect(row, col);
+      if (from.puzzle.hasWall(row * cols + col, NetDirection.east)) {
+        canvas.line(rect.topRight, rect.bottomRight, color: palette.ink, width: 2.5);
+      }
+      if (from.puzzle.hasWall(row * cols + col, NetDirection.south)) {
+        canvas.line(rect.bottomLeft, rect.bottomRight, color: palette.ink, width: 2.5);
+      }
+    }
+
+    _paintControls(canvas, to);
+  }
+
   @override
   void paintCell(PuzzleCanvas canvas, NetState state, int row, int col) {
     final index = row * cols + col;
@@ -204,6 +291,11 @@ class NetslideBoard extends GridBoard<NetState> {
 
   @override
   void paint(PuzzleCanvas canvas, NetState state) {
+    _paintBase(canvas, state);
+    _paintControls(canvas, state);
+  }
+
+  void _paintBase(PuzzleCanvas canvas, NetState state) {
     super.paint(canvas, state);
     final palette = canvas.palette;
 
@@ -230,6 +322,9 @@ class NetslideBoard extends GridBoard<NetState> {
         }
       }
     }
+  }
+
+  void _paintControls(PuzzleCanvas canvas, NetState state) {
 
     for (var row = 0; row < rows; row++) {
       _paintControl(

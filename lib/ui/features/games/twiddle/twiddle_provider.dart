@@ -14,6 +14,7 @@ class TwiddleState extends PuzzleState {
     required this.difficulty,
     this.isSolved = false,
     this.hint,
+    this.lastMove,
   });
 
   final TwiddlePuzzle puzzle;
@@ -24,6 +25,10 @@ class TwiddleState extends PuzzleState {
   /// The turn the hint button is offering, cleared on the next move.
   final TwiddleMove? hint;
 
+  /// The turn that produced this grid, if the change was a turn. The board
+  /// reads it to animate the rotation instead of swapping the numbers.
+  final TwiddleMove? lastMove;
+
   int get size => puzzle.size;
 
   int get block => puzzle.block;
@@ -33,6 +38,8 @@ class TwiddleState extends PuzzleState {
     bool? isSolved,
     TwiddleMove? hint,
     bool clearHint = false,
+    TwiddleMove? lastMove,
+    bool clearLastMove = false,
   }) {
     return TwiddleState(
       puzzle: puzzle,
@@ -40,6 +47,7 @@ class TwiddleState extends PuzzleState {
       difficulty: difficulty,
       isSolved: isSolved ?? this.isSolved,
       hint: clearHint ? null : (hint ?? this.hint),
+      lastMove: clearLastMove ? null : (lastMove ?? this.lastMove),
     );
   }
 }

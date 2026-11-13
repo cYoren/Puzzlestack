@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../core/board/grid_board.dart';
@@ -43,6 +45,7 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
       grid: grid,
       clearHint: true,
       isSolved: engine.isSolved(grid),
+      lastMove: move,
     );
   }
 
@@ -123,6 +126,68 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     final centreRow = corner.$1 + (state.block - 1) / 2;
     final centreCol = corner.$2 + (state.block - 1) / 2;
     return (centreRow - row).abs() + (centreCol - col).abs();
+  }
+
+  // -------------------------------------------------------------- transition
+
+  @override
+  Duration? transitionFor(TwiddleState from, TwiddleState to) {
+    final move = to.lastMove;
+    if (move == null) return null;
+    if (!identical(from.puzzle, to.puzzle)) return null;
+    if (move.row < 0 ||
+        move.col < 0 ||
+        move.row + state.block > state.size ||
+        move.col + state.block > state.size) {
+      return null;
+    }
+    return const Duration(milliseconds: 240);
+  }
+
+  @override
+  void paintTransition(
+    PuzzleCanvas canvas,
+    TwiddleState from,
+    TwiddleState to,
+    double t,
+  ) {
+    final move = to.lastMove;
+    if (move == null) {
+      paint(canvas, to);
+      return;
+    }
+
+    final eased = Curves.easeInOutCubic.transform(t.clamp(0.0, 1.0));
+    // In canvas coordinates (y down) the engine's clockwise turn is a negative
+    // angle. Rotating the old block by this much lands exactly on the new grid.
+    final angle = (move.clockwise ? -1 : 1) * (math.pi / 2) * eased;
+
+    canvas.bed();
+    for (var row = 0; row < rows; row++) {
+      for (var col = 0; col < cols; col++) {
+        final inBlock = row >= move.row &&
+            row < move.row + state.block &&
+            col >= move.col &&
+            col < move.col + state.block;
+        if (inBlock) continue;
+        paintCell(canvas, to, row, col);
+      }
+    }
+
+    final topLeft = cellRect(move.row, move.col);
+    final bottomRight = cellRect(
+      move.row + state.block - 1,
+      move.col + state.block - 1,
+    );
+    final centre = Rect.fromPoints(topLeft.topLeft, bottomRight.bottomRight).center;
+
+    canvas.pushRotation(centre, angle);
+    for (var row = move.row; row < move.row + state.block; row++) {
+      for (var col = move.col; col < move.col + state.block; col++) {
+        paintCell(canvas, from, row, col);
+      }
+    }
+    canvas.pop();
   }
 
   @override

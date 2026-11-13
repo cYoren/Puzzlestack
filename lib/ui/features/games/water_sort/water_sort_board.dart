@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../core/board/puzzle_board.dart';
@@ -134,16 +136,168 @@ class WaterSortBoard extends PuzzleBoard<WaterSortState> {
     }
   }
 
-  void _paintTube(PuzzleCanvas canvas, WaterSortState state, int index) {
+  // -------------------------------------------------------------- transition
+
+  /// The pour that turned [from] into [to], if there was one.
+  ({int from, int to, Color colour, int count})? _pourBetween(
+    WaterSortState from,
+    WaterSortState to,
+  ) {
+    if (from.tubes.length != to.tubes.length) return null;
+    var source = -1;
+    var destination = -1;
+    var count = 0;
+    Color? colour;
+    for (var i = 0; i < from.tubes.length; i++) {
+      final before = from.tubes[i];
+      final after = to.tubes[i];
+      if (after.length < before.length) {
+        source = i;
+        count = before.length - after.length;
+        colour = before.last;
+      } else if (after.length > before.length) {
+        destination = i;
+      }
+    }
+    if (source < 0 || destination < 0 || count <= 0 || colour == null) {
+      return null;
+    }
+    // The board only animates a real pour: the destination gained exactly what
+    // the source lost, in the same colour. A reset or a new level is not a pour,
+    // and a new level can lose and gain the same number of cells by accident.
+    if (to.tubes[source].length + count != from.tubes[source].length) {
+      return null;
+    }
+    if (to.tubes[destination].length !=
+        from.tubes[destination].length + count) {
+      return null;
+    }
+    final poured = from.tubes[source].sublist(from.tubes[source].length - count);
+    final gained = to.tubes[destination].sublist(from.tubes[destination].length);
+    if (poured.length != gained.length) return null;
+    for (var i = 0; i < poured.length; i++) {
+      if (poured[i] != gained[i]) return null;
+    }
+    return (from: source, to: destination, colour: colour, count: count);
+  }
+
+  @override
+  Duration? transitionFor(WaterSortState from, WaterSortState to) {
+    if (_pourBetween(from, to) == null) return null;
+    return const Duration(milliseconds: 360);
+  }
+
+  @override
+  void paintTransition(
+    PuzzleCanvas canvas,
+    WaterSortState from,
+    WaterSortState to,
+    double t,
+  ) {
+    final pour = _pourBetween(from, to);
+    if (pour == null) {
+      paint(canvas, to);
+      return;
+    }
+
+    final eased = Curves.easeInOutCubic.transform(t.clamp(0.0, 1.0));
+    canvas.bed();
+    for (var index = 0; index < to.tubes.length; index++) {
+      var colours = to.tubes[index];
+      var partial = 0.0;
+      Color? partialColour;
+
+      if (index == pour.from) {
+        // The liquid still leaving: the poured amount shrinks to nothing.
+        partialColour = pour.colour;
+        partial = (1 - eased) * pour.count;
+      } else if (index == pour.to) {
+        // The liquid arriving: the poured amount grows from nothing.
+        partialColour = pour.colour;
+        final kept = from.tubes[index].length;
+        colours = to.tubes[index].sublist(0, kept);
+        partial = eased * pour.count;
+      }
+
+      _paintTubeContents(
+        canvas,
+        index,
+        colours,
+        partialUnits: partial,
+        partialColour: partialColour,
+      );
+    }
+
+    _paintStream(canvas, from, pour.from, pour.to, pour.colour, eased);
+  }
+
+  void _paintStream(
+    PuzzleCanvas canvas,
+    WaterSortState state,
+    int source,
+    int destination,
+    Color colour,
+    double t,
+  ) {
+    final arc = math.sin(math.pi * t);
+    if (arc <= 0.02) return;
+    final from = boundsOf(tube(source))!;
+    final to = boundsOf(tube(destination))!;
+    final start = Offset(from.center.dx, from.top + 0.01);
+    final end = Offset(to.center.dx, to.top + 0.01);
+    final lift = math.max(0.06, (start.dx - end.dx).abs() * 0.12 + 0.08);
+
+    final path = Path()
+      ..moveTo(start.dx, start.dy)
+      ..quadraticBezierTo(
+        (start.dx + end.dx) / 2,
+        math.min(start.dy, end.dy) - lift,
+        end.dx,
+        end.dy,
+      );
+
+    canvas.path(
+      path,
+      stroke: colour.withValues(alpha: 0.9),
+      width: from.width * canvas.size.width * 0.16,
+    );
+    canvas.dot(
+      Offset((start.dx + end.dx) / 2,
+          math.min(start.dy, end.dy) - lift * 0.55),
+      from.width * canvas.size.width * 0.06,
+      color: colour.withValues(alpha: 0.9),
+    );
+  }
+
+  void _paintTube(
+    PuzzleCanvas canvas,
+    WaterSortState state,
+    int index,
+  ) {
+    _paintTubeContents(
+      canvas,
+      index,
+      state.tubes[index],
+      selected: state.selectedTubeIndex == index,
+      zone: canvas.highlight.targetAlpha(tube(index)),
+    );
+  }
+
+  /// One tube, with an optional fractional layer on top: the pour animation
+  /// needs a half-full segment, which a list of colours cannot express.
+  void _paintTubeContents(
+    PuzzleCanvas canvas,
+    int index,
+    List<Color> colors, {
+    double partialUnits = 0,
+    Color? partialColour,
+    bool selected = false,
+    double zone = 0,
+  }) {
     final palette = canvas.palette;
     final bounds = boundsOf(tube(index))!;
-    final selected = state.selectedTubeIndex == index;
-    final zone = canvas.highlight.targetAlpha(tube(index));
-    final colors = state.tubes[index];
-
     final widthPx = bounds.width * canvas.size.width;
     final radius = widthPx / 2;
-
     final body = selected ? bounds.translate(0, -0.02) : bounds;
 
     canvas.rrect(
@@ -153,7 +307,7 @@ class WaterSortBoard extends PuzzleBoard<WaterSortState> {
           ? palette.primary.withValues(alpha: 0.35 + 0.65 * zone)
           : selected
               ? palette.primary
-              : palette.outline,
+              : palette.line,
       strokeWidth: selected || zone > 0 ? 2.5 : 1.5,
       topRadius: 4,
       bottomRadius: radius,
@@ -169,6 +323,19 @@ class WaterSortBoard extends PuzzleBoard<WaterSortState> {
         fill: colors[level],
         bottomRadius: isBottom ? radius - 2 : 0,
       );
+    }
+
+    if (partialColour != null && partialUnits > 0) {
+      final top = inner.bottom - colors.length * segment;
+      final height =
+          math.min(segment * partialUnits, inner.height - colors.length * segment);
+      if (height > 0) {
+        canvas.rrect(
+          Rect.fromLTRB(inner.left, top - height, inner.right, top),
+          fill: partialColour,
+          topRadius: 2,
+        );
+      }
     }
 
     if (colors.length == WaterSortEngine.tubeCapacity &&

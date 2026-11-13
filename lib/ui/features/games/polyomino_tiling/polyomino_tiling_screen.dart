@@ -300,8 +300,13 @@ class _PolyominoTilingScreenState extends ConsumerState<PolyominoTilingScreen> {
   }
 
   Widget _buildPieceTray(ColorScheme colorScheme) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    // Wrap, not Row: four 45dp pieces with padding overflow a 320dp phone in
+    // dark mode (the dark border sits on a different measure). A second row is
+    // free; a clipped tray is not.
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: DesignSystem.spaceSM,
+      runSpacing: DesignSystem.spaceSM,
       children: _puzzle.pieces.map((p) {
         final isPlaced = _placedPieceIds.contains(p.id);
         final isSelected = _selectedPieceId == p.id;
