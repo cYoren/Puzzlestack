@@ -73,7 +73,7 @@ void main() {
     });
   }
 
-  testWidgets('the shuffle feed opens on a real game', (tester) async {
+  testWidgets('the deal opens on a real game', (tester) async {
     _sizeTo(tester, 400);
 
     // Pinned to a game on the board contract. Left random, this test opened a
