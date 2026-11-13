@@ -52,18 +52,30 @@ class FeedScreen extends ConsumerStatefulWidget {
   ConsumerState<FeedScreen> createState() => _FeedScreenState();
 }
 
-class _FeedScreenState extends ConsumerState<FeedScreen> {
-  static const Duration _deal = Duration(milliseconds: 380);
-
-  final PageController _controller = PageController();
+class _FeedScreenState extends ConsumerState<FeedScreen>
+    with TickerProviderStateMixin {
   late final FeedDeck _deck;
   late final FeedSession _session;
+  late final AnimationController _settle;
+
+  /// How far the arriving card has turned face up. The next card waits in the
+  /// deck showing its back; when it lands, the back fades and the puzzle is
+  /// already there underneath.
+  late final AnimationController _reveal;
 
   int _index = 0;
-  bool _locked = false;
 
-  /// Bumped per card to force a fresh build (and therefore a fresh board) when
-  /// the player asks for a restart.
+  /// How far the live card has been pulled off the deck, in pixels. Positive is
+  /// up (deal the next card), negative is down (put this one back).
+  double _drag = 0;
+
+  /// Height of one card slot, measured on layout. Every threshold below is a
+  /// fraction of it, so a small phone and a tablet deal the same way.
+  double _slot = 1;
+
+  /// How much of the next card is showing. Kept outside the drag value so the
+  /// deck can settle without the gesture changing.
+  bool _locked = false;
   final Map<int, int> _restartEpochs = {};
 
   @override
@@ -72,6 +84,25 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
     final hidden = ref.read(userDataNotifierProvider
         .select((d) => (d.hiddenGameIds ?? const []).toSet()));
     _deck = FeedDeck(categoryId: widget.categoryId, hidden: hidden);
+
+    _reveal = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 220),
+      value: 1,
+    );
+
+    // The controller works in card heights, not pixels: an AnimationController
+    // is bounded to -1.2..1.2 so a settle never overruns the deck.
+    _settle = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 320),
+      lowerBound: -1.2,
+      upperBound: 1.2,
+    )
+      ..addListener(() => setState(() => _drag = _settle.value * _slot))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) _commit();
+      });
 
     _session = FeedSession(
       next: _next,
@@ -85,7 +116,8 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
   @override
   void dispose() {
     FeedSession.deactivate(_session);
-    _controller.dispose();
+    _reveal.dispose();
+    _settle.dispose();
     super.dispose();
   }
 
@@ -97,10 +129,73 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
     return _deck.gameAt(index);
   }
 
+  // --- The deal ------------------------------------------------------------
+
   void _next() {
-    if (!mounted || !_controller.hasClients) return;
+    if (_settle.isAnimating) return;
+    _animateTo(_slot);
+  }
+
+  /// Animate the live card to [target] pixels off the deck, then commit it.
+  void _animateTo(double target) {
+    if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) {
+      setState(() => _drag = target);
+      _commit();
+      return;
+    }
+    final double from = _drag;
+    _settle
+      ..stop()
+      ..value = from / _slot;
+    _settle.animateTo(
+      target / _slot,
+      duration: Duration(
+        milliseconds: (200 + 160 * (target - from).abs() / _slot).round(),
+      ),
+      curve: Curves.easeOutCubic,
+    );
     HapticFeedbackUtil.lightImpact();
-    _controller.nextPage(duration: _deal, curve: Curves.easeOutCubic);
+  }
+
+  /// The drag ended: deal, go back, or settle. Distance or a throw decides.
+  void _release({required double velocity}) {
+    final bool deal = velocity < -650 || _drag > _slot * 0.16;
+    final bool back = velocity > 650 || _drag < -_slot * 0.16;
+
+    if (deal) {
+      _animateTo(_slot);
+    } else if (back && _index > 0) {
+      _animateTo(-_slot);
+    } else {
+      _animateTo(0);
+    }
+  }
+
+  /// The card landed: adopt the new index and let the deck fall back to rest.
+  void _commit() {
+    final bool forward = _drag >= _slot * 0.5;
+    final bool backward = _drag <= -_slot * 0.5 && _index > 0;
+
+    if (forward) {
+      HapticFeedbackUtil.selectionClick();
+      setState(() {
+        _index += 1;
+        _drag = 0;
+      });
+      _settle.value = 0;
+      _reveal.forward(from: 0);
+    } else if (backward) {
+      HapticFeedbackUtil.selectionClick();
+      setState(() {
+        _index -= 1;
+        _drag = 0;
+      });
+      _settle.value = 0;
+      _reveal.forward(from: 0);
+    } else {
+      setState(() => _drag = 0);
+      _settle.value = 0;
+    }
   }
 
   void _restart(int index) {
@@ -111,11 +206,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
 
   void _close() {
     if (widget.isRoute) Navigator.of(context).maybePop();
-  }
-
-  void _onPageChanged(int index) {
-    HapticFeedbackUtil.selectionClick();
-    setState(() => _index = index);
   }
 
   void _toggleLock() {
@@ -157,170 +247,265 @@ class _FeedScreenState extends ConsumerState<FeedScreen> {
     );
   }
 
+  // --- The stack -----------------------------------------------------------
+
+  /// One card of the deck.
+  ///
+  /// [depth] is where it sits in the stack: 0 is the live slot, 1 and 2 are the
+  /// cards behind it. [advance] (0..1) is how far it has moved one place
+  /// forward, which is what makes the whole stack step up when the live card is
+  /// pulled: the next card slides into the live slot and grows as it does.
+  Widget _card(
+    BuildContext context, {
+    required int index,
+    required int depth,
+    required double advance,
+    bool live = false,
+    bool fromAbove = false,
+  }) {
+    if (index < 0) return const SizedBox.shrink();
+
+    final double a = advance.clamp(0.0, 1.0);
+    final double effDepth = live ? 0.0 : (depth - a).clamp(0.0, 2.0);
+    // The cards behind are inset and dropped, not scaled: a stack peeks out at
+    // the sides and below the front card, the way a deck does on a table.
+    final double inset = live ? 0.0 : 9.0 * effDepth;
+    final double drop = live ? -_drag : (fromAbove ? -13.0 : 13.0) * effDepth;
+    final double rotation = live ? -0.014 * a : 0.010 * a;
+    final double scale = live ? 1 - 0.02 * a : 1.0;
+    final double wash = live ? 0.45 * a : 0.16 * (1 - a);
+
+    // The next card stays face down until the player is committed to it:
+    // building a puzzle behind the live card would start its timer, and showing
+    // its footer through the gap reads as two screens fighting.
+    final bool faceUp = live || a > 0.35;
+
+    final GameMetadata game = _gameAt(index);
+    final Widget content = faceUp
+        ? _FeedCard(
+            key: ValueKey(
+                'card_${index}_${game.id}_${_restartEpochs[index] ?? 0}'),
+            game: game,
+            index: index,
+            deck: _deck,
+            locked: _locked,
+            onNext: _next,
+            onRestart: () => _restart(index),
+            onToggleLock: _toggleLock,
+            onGuide: () => _openGuide(context, game),
+          )
+        : DeckCard(
+            key: ValueKey('back_$index'),
+            padding: EdgeInsets.zero,
+            child: const SizedBox.expand(),
+          );
+
+    return Positioned.fill(
+      // Keyed by slot, not by position: when the deck steps up, the card that
+      // was behind has to keep its game state as it becomes the live one.
+      key: ValueKey('slot_$index'),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: inset),
+        child: IgnorePointer(
+          ignoring: !live,
+          child: Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.0015)
+              ..translateByDouble(0.0, drop, 0.0, 1.0)
+              ..rotateZ(rotation)
+              ..scaleByDouble(scale, scale, 1.0, 1.0),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onVerticalDragUpdate: live && !_locked
+                  ? (details) {
+                      _settle.stop();
+                      setState(() {
+                        _drag = (_drag - details.delta.dy)
+                            .clamp(-_slot * 1.2, _slot * 1.2);
+                      });
+                    }
+                  : null,
+              onVerticalDragEnd: live && !_locked
+                  ? (details) =>
+                      _release(velocity: details.primaryVelocity ?? 0)
+                  : null,
+              child: Stack(
+                children: [
+                  Positioned.fill(child: content),
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: _CardBack(
+                        wash: wash,
+                        reveal: live ? _reveal : null,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color bed = DesignSystem.paperOf(context);
 
     return Scaffold(
       backgroundColor: bed,
-      body: Stack(
-        children: [
-          ScrollConfiguration(
-            // Flutter's default web behaviour refuses to drag with a mouse, so
-            // the feed would only page by wheel on desktop. A deck should deal
-            // the same way with a trackpad, a mouse and a thumb.
-            behavior: const _FeedScrollBehavior(),
-            child: PageView.builder(
-              controller: _controller,
-              scrollDirection: Axis.vertical,
-              physics: _locked
-                  ? const NeverScrollableScrollPhysics()
-                  : const PageScrollPhysics(),
-              onPageChanged: _onPageChanged,
-              itemBuilder: (context, index) {
-                final GameMetadata game = _gameAt(index);
-                final int epoch = _restartEpochs[index] ?? 0;
-                // The card is dealt, not scrolled: it lifts off the stack,
-                // turns a degree, and settles as it arrives.
-                return _DealtCard(
-                  controller: _controller,
-                  index: index,
-                  child: _FeedCard(
-                    key: ValueKey('card_${index}_${game.id}_$epoch'),
-                    game: game,
-                    index: index,
-                    deck: _deck,
-                    locked: _locked,
-                    isFirst: index == 0,
-                    onNext: _next,
-                    onRestart: () => _restart(index),
-                    onToggleLock: _toggleLock,
-                    onGuide: () => _openGuide(context, game),
-                  ),
-                );
-              },
-            ),
-          ),
-          // The wordmark belongs to the deck, not to each card: it stays put
-          // and the cards are dealt underneath it.
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: ColoredBox(
-              color: bed,
-              child: SafeArea(
-                bottom: false,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 560),
-                    child: SizedBox(
-                      height: 48,
-                      child: _TopBar(
-                        showClose: widget.isRoute,
-                        onClose: _close,
-                        onBrowse: widget.onBrowse,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          _slot = (constraints.maxHeight -
+                  MediaQuery.paddingOf(context).top -
+                  kToolbarHeight -
+                  22)
+              .clamp(1.0, 10000.0);
+          final double progress = (_drag / _slot).clamp(-1.0, 1.0);
+          final bool forward = progress >= 0;
+
+          return Listener(
+            onPointerSignal: (event) {
+              if (_locked || _settle.isAnimating) return;
+              if (event is! PointerScrollEvent) return;
+              if (event.scrollDelta.dy > 0) {
+                _animateTo(_slot);
+              } else if (event.scrollDelta.dy < 0 && _index > 0) {
+                _animateTo(-_slot);
+              }
+            },
+            child: Stack(
+              children: [
+                // Painted back to front: the stack, then the live card on top.
+                if (forward) ...[
+                  _card(context,
+                      index: _index + 2, depth: 2, advance: progress),
+                  _card(context,
+                      index: _index + 1, depth: 1, advance: progress),
+                ] else
+                  _card(context,
+                      index: _index - 1,
+                      depth: 1,
+                      advance: -progress,
+                      fromAbove: true),
+                _card(context,
+                    index: _index, depth: 0, advance: progress, live: true),
+                // The wordmark belongs to the deck, not to each card: it stays
+                // put while the cards are dealt underneath it.
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: ColoredBox(
+                    color: bed,
+                    child: SafeArea(
+                      bottom: false,
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 560),
+                          child: SizedBox(
+                            height: kToolbarHeight,
+                            child: _TopBar(
+                              showClose: widget.isRoute,
+                              onClose: _close,
+                              onBrowse: widget.onBrowse,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 }
 
-/// The deal.
+/// The back of a card in the deck: paper, a hairline, and the mark.
 ///
-/// A plain PageView slides a page, which reads as scrolling a list. A deck of
-/// cards should be *dealt*: the arriving card starts a little small, a little
-/// low and about a degree off, then straightens and settles as it takes the
-/// table. The leaving card does the same in reverse, so the two never look like
-/// one strip of content.
-///
-/// The curve is applied to the dragged offset, not to a tween, so the gesture
-/// stays 1:1 with the finger: the card is where you put it, it just also
-/// carries its own weight.
-class _DealtCard extends StatelessWidget {
-  const _DealtCard({
-    required this.controller,
-    required this.index,
-    required this.child,
-  });
+/// It covers the puzzle underneath until the card has landed, which is what
+/// keeps a half-dealt card from showing its footer through the gap. [wash]
+/// pushes background cards away from the eye; [reveal] fades the back off as
+/// the card takes the live slot.
+class _CardBack extends StatelessWidget {
+  const _CardBack({required this.wash, this.reveal});
 
-  final PageController controller;
-  final int index;
-  final Widget child;
+  final double wash;
+  final Animation<double>? reveal;
 
   @override
   Widget build(BuildContext context) {
-    final bool reduced = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
-    if (reduced) return child;
-
-    return AnimatedBuilder(
-      animation: controller,
-      child: child,
-      builder: (context, built) {
-        double settled = 0;
-        if (controller.hasClients && controller.position.hasContentDimensions) {
-          final double page = controller.page ?? index.toDouble();
-          settled = (index - page).abs().clamp(0.0, 1.0);
-        }
-        if (settled == 0) return built!;
-
-        // Most of the motion happens early in the swipe, then it holds: the
-        // card is already committed to being the next one by half a screen.
-        final double t = Curves.easeOutCubic.transform(settled);
-        final double direction =
-            index > (controller.page ?? index.toDouble()) ? 1.0 : -1.0;
-
-        // Receding into the deck is drawn as a wash of the bed colour rather
-        // than an Opacity layer: a full-screen saveLayer every frame is the one
-        // thing that would stutter on a cheap phone, and the wash looks the same
-        // because the bed behind the card is that colour.
-        final Color bed = DesignSystem.paperOf(context);
-
-        return Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.0015) // a touch of perspective
-            ..translateByDouble(0.0, 26.0 * direction * t, 0.0, 1.0)
-            ..rotateZ(0.018 * direction * t)
-            ..scaleByDouble(1 - 0.055 * t, 1 - 0.055 * t, 1.0, 1.0),
-          child: Stack(
-            children: [
-              built!,
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: ColoredBox(
-                    color: bed.withValues(alpha: 0.45 * t),
+    // The same box as a face card, so a card turning over never changes size.
+    final Widget back = Padding(
+      padding: EdgeInsets.fromLTRB(
+        DesignSystem.spaceMD,
+        MediaQuery.paddingOf(context).top + kToolbarHeight,
+        DesignSystem.spaceMD,
+        22,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 560),
+          child: DeckCard(
+            padding: EdgeInsets.zero,
+            // The mark sits low on the back, where the peel uncovers it first.
+            child: Align(
+              alignment: const Alignment(0, 0.42),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Opacity(opacity: 0.22, child: DeckMark(size: 52)),
+                  const SizedBox(height: 8),
+                  Opacity(
+                    opacity: 0.16,
+                    child: Text(
+                      'PUZZLESTACK',
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue',
+                        fontSize: DesignSystem.fontSizeSM,
+                        letterSpacing: 3,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        );
+        ),
+      ),
+    );
+
+    final Widget washed = Stack(
+      children: [
+        Positioned.fill(child: back),
+        if (wash > 0)
+          Positioned.fill(
+            child: ColoredBox(
+              color: DesignSystem.paperOf(context).withValues(alpha: wash),
+            ),
+          ),
+      ],
+    );
+
+    final Animation<double>? fade = reveal;
+    if (fade == null) return washed;
+    return AnimatedBuilder(
+      animation: fade,
+      child: washed,
+      builder: (context, child) {
+        final double visibility = 1 - fade.value;
+        if (visibility <= 0.01) return const SizedBox.shrink();
+        return Opacity(opacity: visibility, child: child);
       },
     );
   }
-}
-
-/// Drag with anything: on a phone that is a thumb, on a laptop it is a mouse.
-class _FeedScrollBehavior extends MaterialScrollBehavior {
-  const _FeedScrollBehavior();
-
-  @override
-  Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.stylus,
-        PointerDeviceKind.trackpad,
-        PointerDeviceKind.invertedStylus,
-        PointerDeviceKind.unknown,
-      };
 }
 
 class _FeedCard extends StatelessWidget {
@@ -330,7 +515,6 @@ class _FeedCard extends StatelessWidget {
     required this.index,
     required this.deck,
     required this.locked,
-    required this.isFirst,
     required this.onNext,
     required this.onRestart,
     required this.onToggleLock,
@@ -341,7 +525,6 @@ class _FeedCard extends StatelessWidget {
   final int index;
   final FeedDeck deck;
   final bool locked;
-  final bool isFirst;
   final VoidCallback onNext;
   final VoidCallback onRestart;
   final VoidCallback onToggleLock;
@@ -372,9 +555,6 @@ class _FeedCard extends StatelessWidget {
                   clip: true,
                   padding: EdgeInsets.zero,
                   lift: isDark ? 0 : 1,
-                  // Two empty cards under the live one: the stack is the promise
-                  // that a swipe has somewhere to go.
-                  pile: 2,
                   child: Column(
                     children: [
                       _cardHeader(context, muted, accent),
