@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../../core/board/grid_board.dart';
@@ -119,11 +121,55 @@ class CubeBoard extends GridBoard<CubeState> {
   @override
   void paint(PuzzleCanvas canvas, CubeState state) {
     super.paint(canvas, state);
-    final palette = canvas.palette;
     final row = _cubeCell ~/ cols;
     final col = _cubeCell % cols;
-    final rect = cellRect(row, col).deflate(0.004);
+    _paintCube(canvas, state, cellRect(row, col).deflate(0.004));
+  }
 
+  // -------------------------------------------------------------- transition
+
+  @override
+  Duration? transitionFor(CubeState from, CubeState to) {
+    if (!identical(from.puzzle, to.puzzle)) return null;
+    if (from.position.cell == to.position.cell) return null;
+    return const Duration(milliseconds: 260);
+  }
+
+  @override
+  void paintTransition(
+    PuzzleCanvas canvas,
+    CubeState from,
+    CubeState to,
+    double t,
+  ) {
+    super.paint(canvas, to);
+
+    final eased = Curves.easeInOutCubic.transform(t.clamp(0.0, 1.0));
+    final start = cellRect(
+      from.position.cell ~/ cols,
+      from.position.cell % cols,
+    ).deflate(0.004);
+    final end = cellRect(
+      to.position.cell ~/ cols,
+      to.position.cell % cols,
+    ).deflate(0.004);
+
+    // A roll, not a teleport: the cube travels between the two squares and
+    // lifts a little over the edge they share.
+    final lerped = Rect.lerp(start, end, eased)!;
+    final lift = math.sin(math.pi * eased) * lerped.height * 0.18;
+    final scale = 1 + math.sin(math.pi * eased) * 0.10;
+    final centre = lerped.center.translate(0, -lift);
+    final size = lerped.size * scale;
+    _paintCube(
+      canvas,
+      to,
+      Rect.fromCenter(center: centre, width: size.width, height: size.height),
+    );
+  }
+
+  void _paintCube(PuzzleCanvas canvas, CubeState state, Rect rect) {
+    final palette = canvas.palette;
     // An isometric cube: a top diamond and two side faces. The viewer is to the
     // south-west, so the visible sides are south and west.
     final centre = rect.center;

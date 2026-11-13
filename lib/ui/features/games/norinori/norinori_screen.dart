@@ -9,13 +9,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
-
-class NorinoriPuzzle {
-  final List<List<int>> roomIds; // 4x4 array of room indexes (e.g. 0 to K)
-  final int totalRooms;
-
-  NorinoriPuzzle({required this.roomIds, required this.totalRooms});
-}
+import 'norinori_engine.dart';
 
 class NorinoriScreen extends ConsumerStatefulWidget {
   const NorinoriScreen({super.key});
@@ -25,41 +19,8 @@ class NorinoriScreen extends ConsumerStatefulWidget {
 }
 
 class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
-  final Random _random = Random();
+  final NorinoriEngine _engine = const NorinoriEngine();
   final int _size = 4;
-
-  final List<NorinoriPuzzle> _puzzles = [
-    // Puzzle 1: 4 rooms
-    NorinoriPuzzle(
-      roomIds: [
-        [0, 0, 1, 1],
-        [0, 2, 2, 1],
-        [3, 3, 2, 2],
-        [3, 3, 2, 2]
-      ],
-      totalRooms: 4,
-    ),
-    // Puzzle 2: 3 rooms
-    NorinoriPuzzle(
-      roomIds: [
-        [0, 0, 0, 1],
-        [0, 2, 1, 1],
-        [2, 2, 2, 1],
-        [2, 2, 1, 1]
-      ],
-      totalRooms: 3,
-    ),
-    // Puzzle 3: 4 rooms
-    NorinoriPuzzle(
-      roomIds: [
-        [0, 0, 0, 1],
-        [3, 3, 1, 1],
-        [3, 3, 2, 2],
-        [3, 3, 2, 2]
-      ],
-      totalRooms: 4,
-    ),
-  ];
 
   late NorinoriPuzzle _currentPuzzle;
   late List<List<bool>> _shaded;
@@ -100,7 +61,7 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
 
   void _generatePuzzle() {
     _isSolved = false;
-    _currentPuzzle = _puzzles[_random.nextInt(_puzzles.length)];
+    _currentPuzzle = _engine.generate(size: _size);
     _shaded = List.generate(_size, (_) => List.generate(_size, (_) => false));
   }
 
@@ -191,33 +152,10 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
     _checkWinCondition();
   }
 
-  bool _isComplete(List<List<bool>> shaded) {
-    final counts = List.filled(_currentPuzzle.totalRooms, 0);
-    for (var r = 0; r < _size; r++) {
-      for (var c = 0; c < _size; c++) {
-        if (shaded[r][c]) counts[_currentPuzzle.roomIds[r][c]]++;
-      }
-    }
-    if (counts.any((count) => count != 2)) return false;
-    for (var r = 0; r < _size; r++) {
-      for (var c = 0; c < _size; c++) {
-        if (shaded[r][c] && _groupSizeAt(shaded, r, c) != 2) return false;
-      }
-    }
-    return true;
-  }
+  bool _isComplete(List<List<bool>> shaded) =>
+      _engine.isValid(_currentPuzzle, shaded);
 
-  /// Brute force over 4x4, which is fast enough to run on a tap.
-  List<List<bool>>? _answer() {
-    for (var mask = 0; mask < (1 << (_size * _size)); mask++) {
-      final shaded = [
-        for (var r = 0; r < _size; r++)
-          [for (var c = 0; c < _size; c++) (mask & (1 << (r * _size + c))) != 0],
-      ];
-      if (_isComplete(shaded)) return shaded;
-    }
-    return null;
-  }
+  List<List<bool>>? _answer() => _engine.solve(_currentPuzzle);
 
   void _hint() {
     if (_isSolved) return;

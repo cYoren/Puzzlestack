@@ -241,6 +241,31 @@ class PuzzleCanvas {
     return px;
   }
 
+  /// Saves the canvas and rotates everything drawn until [pop] around a
+  /// normalised point. Used by a board's own transition paint (a block turn).
+  void pushRotation(Offset normalizedCenter, double radians) {
+    final centre = toPixelOffset(normalizedCenter);
+    canvas.save();
+    canvas.translate(centre.dx, centre.dy);
+    canvas.rotate(radians);
+    canvas.translate(-centre.dx, -centre.dy);
+  }
+
+  /// Translates everything drawn until [pop] by a normalised delta.
+  void pushTranslation(Offset normalizedDelta) {
+    final delta = toPixelOffset(normalizedDelta);
+    canvas.save();
+    canvas.translate(delta.dx, delta.dy);
+  }
+
+  /// Clips everything drawn until [pop] to a normalised rectangle.
+  void pushClip(Rect normalized) {
+    canvas.save();
+    canvas.clipRect(toPixels(normalized));
+  }
+
+  void pop() => canvas.restore();
+
   bool isLifted(ElementRef element) => highlight.lifted == element;
 
   bool isPopping(ElementRef element) => highlight.pops.containsKey(element);
@@ -428,6 +453,22 @@ abstract class PuzzleBoard<S extends PuzzleState> {
   PuzzleMove<S>? tapMove(ElementRef element);
 
   S apply(S state, PuzzleMove<S> move) => move.apply(state);
+
+  /// How long a move from [from] to [to] should be animated, or null for the
+  /// instant frame that every board got before this existed.
+  ///
+  /// A board that returns a duration must also implement [paintTransition].
+  /// The engine runs it after the move lands, paints the in-between frames and
+  /// only then reports the win, so a pour or a turn can be seen before the
+  /// celebration covers it.
+  Duration? transitionFor(S from, S to) => null;
+
+  /// Paints the board part-way between two states.
+  ///
+  /// [t] runs 0..1. The default paints the new state, which is the right
+  /// answer for a board that has no movement to show.
+  void paintTransition(PuzzleCanvas canvas, S from, S to, double t) =>
+      paint(canvas, to);
 
   bool get isSolved;
 

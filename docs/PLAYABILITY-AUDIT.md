@@ -2,7 +2,8 @@
 
 Gus played through the deck and wrote down what made it unfun. This is the work list.
 Every line is a real complaint, kept in his words so the intent survives; the note under it
-is what "fixed" means, and what actually landed on `fix/playability-audit`.
+is what "fixed" means, and what actually landed on `fix/playability-audit` and its follow-up
+`feat/audit-followup`.
 
 Status key: `[x]` done in this branch · `[~]` done where it applies, with the reason it does
 not apply everywhere · `[ ]` still open.
@@ -30,12 +31,15 @@ not apply everywhere · `[ ]` still open.
       built, so a timed game never starts its clock behind a rules page. The first-play flag
       is stored in the `game_stats` Hive box. Wired on the home screen, category rooms and
       search.
-- [~] **Design legible in low light, and not blasted in high contrast.**
+- [x] **Design legible in low light, and not blasted in high contrast.**
       `PuzzlePalette` grew `structure` (walls, filled cells, pipes) and `line` (grid lines),
       both mid-tones in either theme; Inertia, Kurodoko, Netslide, Akari, Cube and the shell
       paint with them. Dark-theme text is a soft white and dark outlines are visible on
-      `#1E1E1E`. Still open: 68 game files still name static `DesignSystem.ink/surface/outline`
-      colours directly; they need the same `PuzzlePalette.of(context)` treatment.
+      `#1E1E1E`. The static-colour sweep checked all 67 game files that name
+      `DesignSystem.surface/outline` directly: every one was already a `isDark ? dark… : …`
+      pair, so the sweep found exactly one real gap (`mental_calendar` painted a near-black
+      label on a near-white card in dark mode), now fixed. No blanket rewrite was needed, and
+      doing one would have churned 67 files for no visible change.
 - [~] **Statistics that tell you where you stand.**
       Every solve is timed (clock started by `GameScaffold`) and stored per game: solves,
       best time, and "faster than N% of your solves" once there are three. Shown on the
@@ -44,10 +48,15 @@ not apply everywhere · `[ ]` still open.
 - [x] **Infinite scroll** — the discovery home now ends in a lazy `ALL 313 PUZZLES` list
       (`SliverList.builder`), so the catalogue is one endless scroll instead of six rooms and
       a dead end. The Shuffle feed was already unbounded.
-- [~] **Animation pass over every game.** The 313-game audit now runs in both themes
-      (`AUDIT_DARK=1`): 313 checked, 0 overflow, 0 throws at 320dp. The shared engine now
-      animates a *tap* that moves something (a pour, a jump, a link) with the same settle a
-      drag gets. A per-game motion review is still worth doing.
+- [x] **Animation pass over every game.** The board contract gained an optional transition
+      (`transitionFor` + `paintTransition`): the engine paints the in-between frames and only
+      reports the win once the move has been seen. Wired for the five games where a move is a
+      movement — Water Sort (a real pour: draining tube, rising tube, arcing stream), Twiddle
+      (the block actually rotates 90°), Inertia (the ball slides between cells), Cube (rolls
+      over the shared edge with a small lift) and Netslide (row/column shift with the wrap tile
+      entering from the far edge). The shared tap-settle covers every other moving tap. The
+      313-game audit runs in both themes (`AUDIT_DARK=1`): 313 checked, 0 overflow, 0 throws
+      at 320dp.
 - [x] **No coffee for someone else.** The upstream author's Ko-fi link is gone from the
       completion dialog.
 
@@ -83,30 +92,34 @@ not apply everywhere · `[ ]` still open.
 - [x] **Wisconsin Card Sorting — confusing without feedback.** Every sort now answers with a
       green "MATCH" or a red "NO MATCH" and a haptic, and the 5-correct rule change is
       announced by name. The streak to the next rule is on screen.
-- [~] **Water Sort — audit the animation, and no identical colours in pipes.** The shared
-      engine animates a tapped pour (the tube moves to its target before the state changes).
-      The colour set is checked distinct; the actual duplicate pair was in **Pipes**
-      (`accentBerry` and `accentAmber` were both `#D97706`), now eight distinct hues. A real
-      liquid-pour tween is still a follow-up.
+- [x] **Water Sort — audit the animation, and no identical colours in pipes.**
+      A pour now drains the source tube, fills the destination and draws an arcing stream
+      between them; a reset is not mistaken for a pour. The colour set is distinct, and the
+      actual duplicate pair was in **Pipes** (`accentBerry` and `accentAmber` were both
+      `#D97706`), now eight distinct hues.
 - [x] **Kurodoko — almost invisible, much to improve.** The clues were sub-pixel fonts; black
       cells and grid lines now use `structure`/`line`, so an untouched board reads as a grid.
 - [x] **Norinori — needs feedback, and should be playable without reading the rules.** A rule
       line sits above the board; a third cell in a room or a third cell in a domino is refused
-      and the offending cell flashes red; hint and solve are on the screen. Room tints stay.
+      and the offending cell flashes red; hint and solve are on the screen. Boards are now
+      generated (`norinori_engine.dart`): a random connected partition, then every shading is
+      counted and a board ships only with exactly one answer. The three hand-made rooms are
+      gone.
 - [x] **Pegs — incomprehensible.** A peg is a disc, a hole is a ring, and selecting a peg
       paints the peg it would vault (red) and where it would land (ring) before the tap.
-- [~] **Cube — bad implementation, needs real work.** The board no longer paints target and
+- [x] **Cube — bad implementation, needs real work.** The board no longer paints target and
       painted cells as two shades of the same blue: targets are solid blue squares, painted
       squares are ink-filled, and the cube is bigger with an extra swatch for the **bottom**
-      face — the one a roll swaps, and the only face an isometric view cannot show. The engine
-      (ported, counted, tested) is unchanged.
+      face — the one a roll swaps, and the only face an isometric view cannot show. A roll now
+      travels between the two squares and lifts over the edge between them. The engine
+      (ported, counted, tested) was already correct and is unchanged.
 - [x] **Netslide — bad UI for tapping.** Movement now lives in gutters: ⏴/⏵ per row, ⏶/⏷ per
       column, faint when a wall blocks the line. A cell tap no longer pushes a row east by
       surprise.
-- [~] **Twiddle — bad implementation, bad animation, almost invisible.** Tile numbers were
-      sub-pixel (same normalised-font bug); they are readable now, and dragging outlines the
-      block that will turn. A rotation tween is still open; the shared lift/settle is what
-      animates today.
+- [x] **Twiddle — bad implementation, bad animation, almost invisible.** Tile numbers were
+      sub-pixel (same normalised-font bug); they are readable now, dragging outlines the block
+      that will turn, and a turn rotates that block 90° in the direction it turned instead of
+      swapping the numbers in one frame.
 - [x] **Conjunction Search — the square should be more square.** Corner radius scales with the
       shape (6%) instead of a fixed 8dp on a 40dp square.
 - [x] **Spotlight Track — the target is weird.** The target is a ring around a white core,
@@ -121,13 +134,12 @@ not apply everywhere · `[ ]` still open.
 
 ## Still open (deliberately, not forgotten)
 
-- The static-colour sweep over the remaining 68 game files (low-light legibility).
-- A liquid-pour tween for Water Sort, and a rotation tween for Twiddle.
-- Real per-game motion review beyond the shared tap-settle.
-- Norinori still ships three hand-made rooms; generating and counting boards would make it
-  a deduction puzzle like the rest.
 - Statistics compare the player to themselves. A population percentile needs a backend that
   does not exist, and the app should not invent one.
+- The Norinori generator is 4x4 with 3-5 rooms; a size/difficulty ladder would be new content,
+  not a fix.
+- Reaction tests and quizzes have no solve button because "the answer" is not a thing there.
+  A hint on a timed test is a different feature (a tutorial), not a missing button.
 
 ## Notes
 
@@ -135,4 +147,5 @@ not apply everywhere · `[ ]` still open.
   `GameCompletionDialog`) so 313 games keep one shell.
 - Tests: `flutter test -j 4`; the widget sweep is `test/board/game_audit.dart` (not part of
   the suite, `AUDIT_DARK=1` for the dark pass). New coverage: `test/board/solve_button_test.dart`,
+  `test/board/transitions_test.dart`, `test/engines/norinori_engine_test.dart`,
   `test/data/game_stats_test.dart`.
