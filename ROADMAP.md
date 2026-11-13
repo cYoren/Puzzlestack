@@ -767,6 +767,26 @@ infos in the developer-only audit tool.
 | **Android + iOS together** | Same version, same copy, same listing assets. | The release build itself. |
 | **SDK skew** | One info-level deprecation (`cacheExtent` → `scrollCacheExtent`) that only clears on a deliberate Flutter upgrade. | An agent, separately. |
 
+### Playability audit
+
+Gus's 30-item playability list lives in [docs/PLAYABILITY-AUDIT.md](docs/PLAYABILITY-AUDIT.md).
+The list is closed and verified by `test/board/solve_button_test.dart`,
+`test/board/transitions_test.dart`, `test/engines/norinori_engine_test.dart`, and the 313-game
+audit in both themes (`AUDIT_DARK=1`).
+
+Its **Still open** section is the handoff for the next agent. Three items are deliberate, not
+loose ends, and none gates the release:
+
+- **Population percentile.** The app compares a player to their own solve history. A global
+  "faster than X%" needs a backend that does not exist; a number invented locally would be a lie.
+- **Solve buttons on timed quizzes.** A reaction test has no answer to fill. A tutorial hint is a
+  new feature, not a missing button.
+- **A Norinori difficulty ladder.** The generator is 4x4 with 3-5 rooms and counts for exactly one
+  answer. Bigger, tiered boards are new content, so they belong in Phase 5, not in a fix.
+
+Figures from the pass: 4,993 tests, and `AUDIT checked=313 overflow=0 threw=0` at 320dp in both
+themes.
+
 Phases 3, 4 and 5 do not gate the release: Phase 4 is closed, the three Tatham ports left in
 Phase 3 are optional, and Phase 5 is new content rather than a fix.
 

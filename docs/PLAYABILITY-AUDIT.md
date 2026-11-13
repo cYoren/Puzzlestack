@@ -132,14 +132,18 @@ not apply everywhere · `[ ]` still open.
 
 ---
 
-## Still open (deliberately, not forgotten)
+## Still open — handoff for the next agent (deliberate, not release blockers)
 
 - Statistics compare the player to themselves. A population percentile needs a backend that
-  does not exist, and the app should not invent one.
+  does not exist, and the app should not invent one. (Would need: an endpoint, a sample, and a
+  privacy answer; out of scope for a fix.)
 - The Norinori generator is 4x4 with 3-5 rooms; a size/difficulty ladder would be new content,
-  not a fix.
+  not a fix. It belongs with the Phase 5 games in ROADMAP.md.
 - Reaction tests and quizzes have no solve button because "the answer" is not a thing there.
   A hint on a timed test is a different feature (a tutorial), not a missing button.
+
+ROADMAP.md → Phase 6 → "Playability audit" repeats this list, so an agent who starts from the
+release plan sees it without opening this file.
 
 ## Notes
 
