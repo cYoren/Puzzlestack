@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/board/grid_board.dart';
@@ -175,6 +176,8 @@ class NetslideBoard extends GridBoard<NetState> {
   Duration? transitionFor(NetState from, NetState to) {
     if (!identical(from.puzzle, to.puzzle)) return null;
     if (to.lastSlide == null) return null;
+    // A hint keeps `lastSlide`; only a changed board is a slide.
+    if (listEquals(from.masks, to.masks)) return null;
     return const Duration(milliseconds: 240);
   }
 

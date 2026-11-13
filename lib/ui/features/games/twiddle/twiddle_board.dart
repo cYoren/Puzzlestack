@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../core/board/grid_board.dart';
@@ -135,6 +137,8 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     final move = to.lastMove;
     if (move == null) return null;
     if (!identical(from.puzzle, to.puzzle)) return null;
+    // A hint or a selection keeps `lastMove`; only a changed grid is a turn.
+    if (listEquals(from.grid, to.grid)) return null;
     if (move.row < 0 ||
         move.col < 0 ||
         move.row + state.block > state.size ||

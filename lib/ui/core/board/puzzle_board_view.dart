@@ -81,6 +81,9 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   S? _transitionFrom;
   S? _transitionTo;
 
+  /// Bumped on every transition so a cancelled ticker cannot clear a newer one.
+  int _transitionToken = 0;
+
   bool get _isTransitioning => _transitionFrom != null;
 
   @override
@@ -99,8 +102,12 @@ class _PuzzleBoardViewState<S extends PuzzleState>
         _transitionFrom = oldWidget.board.state;
         _transitionTo = widget.board.state;
         _transition.duration = duration;
-        _transition.forward(from: 0).whenComplete(() {
-          if (!mounted) return;
+        final token = ++_transitionToken;
+        // `then` (not `whenComplete`) only runs when the controller reached its
+        // end; a transition interrupted by the next move must not clear the new
+        // one or fire a celebration.
+        _transition.forward(from: 0).then((_) {
+          if (!mounted || token != _transitionToken) return;
           setState(() {
             _transitionFrom = null;
             _transitionTo = null;
@@ -108,6 +115,13 @@ class _PuzzleBoardViewState<S extends PuzzleState>
           // The move is only now visible; the win waits for it.
           if (widget.board.isSolved) _celebrate();
         });
+      } else if (_isTransitioning) {
+        // A reset or a new level landed mid-transition: drop it with the state
+        // it belonged to instead of painting the old move over the new board.
+        _transitionToken++;
+        _transition.stop();
+        _transitionFrom = null;
+        _transitionTo = null;
       }
     }
 

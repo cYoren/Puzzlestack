@@ -10,6 +10,7 @@ import 'package:puzzle/ui/features/games/inertia/inertia_provider.dart';
 import 'package:puzzle/ui/features/games/netslide/netslide_board.dart';
 import 'package:puzzle/ui/features/games/netslide/netslide_provider.dart';
 import 'package:puzzle/ui/features/games/twiddle/twiddle_board.dart';
+import 'package:puzzle/ui/features/games/twiddle/twiddle_engine.dart';
 import 'package:puzzle/ui/features/games/twiddle/twiddle_provider.dart';
 import 'package:puzzle/ui/features/games/water_sort/water_sort_board.dart';
 import 'package:puzzle/ui/features/games/water_sort/water_sort_engine.dart';
@@ -87,6 +88,25 @@ void main() {
       return;
     }
     fail('no twiddle move was offered');
+  });
+
+  test('a hint does not replay the last move animation', () {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+
+    final twiddleState = container.read(twiddleNotifierProvider);
+    final twiddleBoard = TwiddleBoard(state: twiddleState);
+    final hinted = twiddleState.copyWith(
+      hint: const TwiddleMove(0, 0, true),
+    );
+    expect(twiddleBoard.transitionFor(twiddleState, hinted), isNull);
+
+    final netState = container.read(netslideNotifierProvider);
+    final netBoard = NetslideBoard(state: netState);
+    final netHinted = netState.copyWith(
+      hint: (row: true, index: 0, forward: true),
+    );
+    expect(netBoard.transitionFor(netState, netHinted), isNull);
   });
 
   test('a netslide slide animates and paints every frame', () {
