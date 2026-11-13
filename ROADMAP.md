@@ -16,11 +16,29 @@ someone can take without reading the rest of this file.
 
 | # | Job | Size | Where |
 | --- | --- | --- | --- |
+| 0 | **Fix the broken content.** Seven games hand a player an unwinnable or unguessable puzzle (letter_bridge is 31/61 broken, word_ladder ships an impossible row, one pangram board cannot be won, lighthouses' fallback board has no solution). 64 jobs, banded, each with the test that must exist. **This blocks release.** | 64 jobs | [CONTENT-AUDIT.md](docs/CONTENT-AUDIT.md) · [tasks](docs/content-audit-tasks.jsonl) |
 | 1 | ~~Port the Tatham puzzles we lack~~ **Done**: Signpost was the twelfth and last on the critical path (2026-11-11). The three still unported are marked optional, below. | — | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
 | 2 | ~~14 classics rebuilt for uniqueness~~ **Done**: six rebuilt, ten skipped by decision (2026-11-11). | — | [Phase 4](#phase-4--rebuild-the-14-classics-we-already-have) |
 | 3 | **Four invariant never ported** (Mosaic, Palisade, Hat, Spectre). | small, then two large | [Phase 5](#phase-5--the-four-invariant-never-ported) |
-| 4 | **Release.** Nothing blocks it: the licence is settled, the copy and the privacy page are done. The screenshots are the last pass, and they need a device. | one pass | [Phase 6](#phase-6--release) |
+| 4 | **Release.** The licence is settled, the copy and the privacy page are done. The screenshots are the last pass and they need a device — but the content audit above is the real blocker: shipping 313 games with seven of them broken is not a release. | one pass | [Phase 6](#phase-6--release) |
 | — | **Optional: three Tatham puzzles** (Black Box, Undead, Tracks). Nice to have, not release blockers, and nothing else in the plan depends on them. | 1.6k–3.5k lines of C each | [Phase 3](#phase-3--port-the-tatham-puzzles-we-lack) |
+
+### The content audit is the map for job 0
+
+[`docs/CONTENT-AUDIT.md`](docs/CONTENT-AUDIT.md) is the reasoning and
+[`docs/content-audit-tasks.jsonl`](docs/content-audit-tasks.jsonl) is the same 64 jobs
+machine-readable, one JSON object per line: `id`, `severity`, `files`, `detail`, `fix`, `verify`
+(the test that must exist), `blocks`, `skill`. Hand a job out from the JSONL, not from prose.
+
+The audit exists because of a measured pattern: **the games that came through the Tatham pipeline
+are tested because that pipeline demanded a counted unique solution; the games written
+content-first were never checked against their own rules.** 112 of 313 games have no test that
+mentions them, and every broken game is in that group. The fix is not more tables — it is making
+each table declare its own invariant and checking it (`content-invariants` in the JSONL).
+
+Two sequencing notes, both in the audit: `feat/deck-feed` edits `game_scaffold.dart`, which the
+title→id fix also edits, so land the deck first; and nonogram's uniqueness work should land before
+the difficulty ladder so the new sizes are gated on it.
 
 Dropping the three optional ports does not shrink the shipping app: 313 games is what the
 store copy is set from, and 316 was only ever what the full Tatham sweep would have reached.
@@ -789,6 +807,12 @@ themes.
 
 Phases 3, 4 and 5 do not gate the release: Phase 4 is closed, the three Tatham ports left in
 Phase 3 are optional, and Phase 5 is new content rather than a fix.
+
+**The content does gate the release.** The 2026-11-13 audit
+([docs/CONTENT-AUDIT.md](docs/CONTENT-AUDIT.md)) found seven games that hand a player an
+unwinnable or unguessable puzzle, and 34 pools thin enough that a player repeats content inside a
+run. Those are not polish; they are the product being wrong. Job 0 in [Open work](#open-work) is
+the list, and it must be cleared before the store build.
 
 ### Decided for after release: the paywall
 
