@@ -4,7 +4,7 @@ Measured against `main` at `e7c2475`, 2026-11-13. Every number here came from a 
 tree, and the rule that produced it is stated with it. Re-run the rule, get the number; if you get
 something else, the tree moved and this file is stale.
 
-This is a **work list, not a report**. 62 jobs in five severity bands. `docs/content-audit-tasks.jsonl`
+This is a **work list, not a report**. 64 jobs in five severity bands. `docs/content-audit-tasks.jsonl`
 is the same list machine-readable, one JSON object per line, so an orchestrator can assign a job
 without pasting prose, and `docs/CONTENT-AUDIT.md` §"Suggested order" says which to take first.
 
@@ -146,7 +146,44 @@ answer. 3 of the 7 sets are affected. 4 sets are clean (`CAT`, `PLAY`, `SING`, `
 **Fix:** replace the non-rhymes; test phoneme tails rather than eyeballing. If a set cannot be filled
 with real rhymes from the app dictionary, drop it — 4 honest sets beat 7 with 3 that lie.
 
-### 7. `chalk_and_talk` — the premise is a lie; the app has no audio at all
+### 7. `one_letter_shift` — the stated rule is false for 24 of 26 puzzles
+
+<sub>job id: `one-letter-shift-rule`</sub>
+
+`one_letter_shift_engine.dart:4`, subtitle in `app_en.arb` (`oneLetterShiftSubtitle`)
+
+The subtitle promises "Transform one word into another with **one letter change**". Measured against
+the table, **24 of 26 pairs are not a one-letter change** — only `BREAD→TREAD` and `TRAIN→BRAIN` are:
+
+```
+HEART → STARE   H/S  E/T  A/A  R/R  T/E    3 positions differ
+PLANE → LEARN   4 positions differ
+STORE → OTHER   4 positions differ
+```
+
+Of the 24, two are pure rotations (`EARTH→HEART`, `SWING→WINGS`) and 22 are plain rearrangements.
+So a player who follows the rule as written changes one letter, is told they are wrong, and has no
+way to know a rearrangement is expected — the only real clue is the hint text.
+
+Two entries carry abandoned working notes, the same tell as `letter_bridge`:
+
+```dart
+{'start': 'STORE', 'end': 'ROSET', 'hint': 'A decorative knot'}, // No, ROSETTE?
+{'start': 'SWING', 'hint': 'To move to and fro', 'end': 'WINGS'}, // No, 5 to 5.
+```
+
+`ROSET` is Scrabble-only (in the app dictionary, not in a standard word list) and the author's own
+comment doubts it. The `SWING` entry is also written with a **different field order**
+(`start, hint, end`) from every other row, so any parser or refactor that assumes one order silently
+drops it.
+
+**Fix:** decide what the game is. Either make every pair a true one-letter change (then the subtitle
+is honest and the puzzle is what it says), or rename it and rewrite the subtitle as "find the word
+hidden in this one's letters". Delete the two abandoned comments, replace `ROSET`, and normalise the
+field order. Test: every pair satisfies the rule the subtitle states, and every row parses with one
+field order.
+
+### 8. `chalk_and_talk` — the premise is a lie; the app has no audio at all
 
 <sub>job id: `chalk-and-talk-audio`</sub>
 
@@ -175,7 +212,7 @@ haptic patterns (`_triggerPitchHaptic`) plus a visual indicator, and is honest a
 Counted as **top-level elements of each literal** (brace/bracket matching with a trailing-comma
 guard, then spot-checked against the file). `target` is how many rounds one run consumes.
 
-### 8. Pools one run consumes
+### 9. Pools one run consumes
 
 <sub>job ids: `pool-tenner-grid` … `pool-chimp-test` (28 jobs, band 2)</sub>
 
@@ -199,24 +236,24 @@ guard, then spot-checked against the file). `target` is how many rounds one run 
 lifetime. `typing_speed` has 8 sentences, so you retype one inside three games, and one of them is
 `"FLUTTER IS A POWERFUL FRAMEWORK FOR APPS"` — a developer placeholder shipped to players.
 
-### 9. Pools in the 10–20 range
+### 10. Pools in the 10–20 range
 
 <sub>job ids: `pool-tenner-grid` … `pool-chimp-test` (28 jobs, band 2)</sub>
 
-`anagram_definition` 10 · `definition_dash` 10 · `homophone_hunt` 11 · `affix_factory` 11 ·
+`anagram_definition` 10 · `definition_dash` 10 · `homophone_hunt` 11 · `affix_factory` 10 ·
 `spoonerism_solver` 11 · `etymon_oddball` 11 · `cognate_catch` 13 · `palindrome_builder` 13 ·
-`portmanteau_split` 15 · `compound_connect` 15 · `oxymoron_hunt` 18 (4 pairs per board → ~4 distinct
+`portmanteau_split` 14 · `compound_connect` 15 · `oxymoron_hunt` 18 (4 pairs per board → ~4 distinct
 boards) · `category_fluency` 5 · `word_grid_connection` 12 categories × 8 words · `word_snake_trail`
 10 · `typoglycemia_decoder` 10 · `chalk_and_talk` 20 · `one_letter_shift` 26 · `word_ladder_step` 8.
 
-### 10. Healthy tables, listed so nobody measures them twice
+### 11. Healthy tables, listed so nobody measures them twice
 
 `context_clues` 200 · `grammar_sort` 130 · `grammar_police` 99 · `semantic_link` 84 ·
 `spelling_sprint` 50 · `memory_palace` 50 · `verbal_analogies` 50 · `semantic_distance` 31 ·
 `silent_letter_search` 28 · `letter_bridge` 61 (30 valid — `letter-bridge-table`) · `word_ladder` 45 puzzles over a
 3,888-word dictionary · `word_ladder_step` is 8 ladders but it is a single-round game.
 
-### 11. `crossword` — board is 7–10 wide, longest word is 6, placer stalls at 8
+### 12. `crossword` — board is 7–10 wide, longest word is 6, placer stalls at 8
 
 <sub>job id: `crossword-supply`</sub>
 
@@ -239,7 +276,7 @@ placer: a 6-letter ceiling cannot build a big grid. 13 words are duplicated, 8 c
 **Fix:** grow the JSON with 7–12 letter entries; un-duplicate; have the placer report its word count
 and retry below the board's expectation.
 
-### 12. `word_search` — 5 boards before every word repeats; 16 words unreachable
+### 13. `word_search` — 5 boards before every word repeats; 16 words unreachable
 
 <sub>job id: `word-search-supply`</sub>
 
@@ -256,7 +293,7 @@ used. `SEA SHELL` also contains a space and would corrupt a grid.
 **Fix:** raise the filter to 10, confirm the generator handles it, fix or drop `SEA SHELL`, then grow
 the list to a few hundred. Cheapest content win in the app — it is a text file.
 
-### 13. `find_word` / `word_scramble` / `missing_vowels` — the dictionary is 74% obscure
+### 14. `find_word` / `word_scramble` / `missing_vowels` — the dictionary is 74% obscure
 
 <sub>job id: `find-word-dictionary`</sub>
 
@@ -283,7 +320,7 @@ parameter these engines carry.
 
 ## Band 3 — Missing: what the catalog promises and does not have
 
-### 14. Six games have no guide, and they are the six newest
+### 15. Six games have no guide, and they are the six newest
 
 <sub>job id: `guides-six-missing`</sub>
 
@@ -314,13 +351,18 @@ bottom face swaps with the square, six blues), `netslide` (slide rows/columns of
 `signpost` (arrows point along a ray, not at a neighbour), `same_game` (tap 2+ connected same-colour
 blocks).
 
-### 15. 56 translation keys missing from every non-English locale
+### 16. 56 translation keys missing from every non-English locale
 
 <sub>job id: `l10n-56-keys`</sub>
 
-All 21 non-English `.arb` files miss the same 56 keys; `de` misses 72.
+All 22 non-English `.arb` files miss the same 56 keys; `de` misses 72.
 
-`app_en.arb` 1,823 keys · every other locale 1,767 · `de` 1,751.
+`app_en.arb` 1,823 keys (non-`@`) · every other locale 1,767 · `de` 1,753.
+
+One extra, found while checking: **`de` carries 2 keys `en` does not have** — `kurodokoWinTitle` and
+`kurodokoWinMessage`. `flutter gen-l10n` generates from `app_en.arb` only (see `papercuts.md`), so
+those two German strings are unreachable: someone translated a key that was never added to English.
+Either add the pair to `app_en.arb` (and every other locale) or delete the German orphans.
 
 They are the titles, subtitles, win text, how-to-play and HUD labels for the twelve newest games:
 
@@ -333,7 +375,7 @@ The exact key list is in `docs/content-audit-tasks.jsonl` (`l10n-56-keys`) so no
 Effect: those twelve show **English** in Portuguese, Spanish, Japanese, Arabic. `flutter gen-l10n`
 falls back silently, so nothing breaks — it just looks unfinished exactly where it is newest.
 
-### 16. Guides are English-only and have no localisation path
+### 17. Guides are English-only and have no localisation path
 
 <sub>job id: `guides-i18n-decision`</sub>
 
@@ -347,7 +389,7 @@ locales — heavy), (b) accept English guides and say so in the store copy, or (
 `objective` + `controls` only (2 fields, ~2 lines each) where comprehension actually fails.
 Recommend (c).
 
-### 17. Four games share a title, and screen→game resolution is by title
+### 18. Four games share a title, and screen→game resolution is by title
 
 <sub>job id: `game-id-resolution`</sub>
 
@@ -375,7 +417,7 @@ copy is only a stopgap — it does not survive the next translation.
 
 ## Band 4 — Structural: one fix, many games
 
-### 18. 215 of 313 games have no difficulty control of any kind
+### 19. 215 of 313 games have no difficulty control of any kind
 
 <sub>job id: `difficulty-ladder`</sub>
 
@@ -410,7 +452,7 @@ already accept one; (2) a 3-tier ladder per classic — `masyu` 4→6→8, `shik
 5→8→12 with `nonogram-uniqueness`'s uniqueness gate, `minesweeper` 8×8/12 · 12×10/25 · 16×12/45; (3) sudoku tiers as
 clue counts 45/35/28 gated on `solvingLevel` from `lib/core/deduction.dart`.
 
-### 19. Difficulty is never remembered
+### 20. Difficulty is never remembered
 
 <sub>job id: `difficulty-persistence`</sub>
 
@@ -418,7 +460,7 @@ clue counts 45/35/28 gated on `solvingLevel` from `lib/core/deduction.dart`.
 default tier on restart; a player who picks Hard is back on Easy next launch. Store the chosen tier
 per game in the existing `game_stats` Hive box beside `hasSeen`.
 
-### 20. Solve/hint covers 20 games
+### 21. Solve/hint covers 20 games
 
 <sub>job id: `hint-coverage-word-games`</sub>
 
@@ -428,7 +470,7 @@ per game in the existing `game_stats` Hive box beside `hasSeen`.
 `word_search`, `word_wheel`) all have a checkable next step and none has a hint. Audit pass, not a
 rewrite.
 
-### 21. `Daily Pick` is not the same for everyone, and it streaks by category
+### 22. `Daily Pick` is not the same for everyone, and it streaks by category
 
 <sub>job id: `daily-pick-determinism`</sub>
 
@@ -445,7 +487,7 @@ rewrite.
 **Fix:** seed a *stable* shuffled order (or hash the id) instead of relying on registry order, and
 draw the daily pick from the full registry so it is genuinely shared.
 
-### 22. The reel has no curation at all
+### 23. The reel has no curation at all
 
 <sub>job id: `curation-list`</sub>
 
@@ -455,7 +497,7 @@ including the 38 one-answer games in `one-answer-games` and the 113 games with n
 keeps typos out of a list that does not exist yet. Deciding the list is a human call (memory:
 "Gus judges the puzzles, not me"); wiring it is done.
 
-### 23. `Quick Play` is 12 games out of 313
+### 24. `Quick Play` is 12 games out of 313
 
 <sub>job id: `quick-play-pool`</sub>
 
@@ -463,7 +505,7 @@ keeps typos out of a list that does not exist yet. Deciding the list is a human 
 covered by 4% of the catalog. The 38 one-answer games (`one-answer-games`) are the natural pool; most are not on
 the list.
 
-### 24. Nothing is persisted about content progress
+### 25. Nothing is persisted about content progress
 
 <sub>job id: `no-content-progress`</sub>
 
@@ -475,14 +517,19 @@ Combine with `pool-* (28 jobs)`: `story_builder` serves the same 3 stories forev
 
 ## Band 5 — Platform, store, and the things that will bite the next agent
 
-### 25. No accessibility at all: 3 `Semantics` in the whole app, none in a game
+### 26. No accessibility at all: 3 `Semantics` in the whole app, none in a game
 
 <sub>job id: `accessibility-boards`</sub>
 
-`grep -rn "Semantics(|semanticLabel" lib` → **3 hits, all inside `lib/widgets/tangible.dart`**
-(some label buttons). **0 of 313 game directories mention `Semantics` or `semanticLabel`.** 150
-screens paint a `CustomPaint` board, and every one is opaque to a screen reader; `PuzzleBoardView`
-passes no semantics for a board or a cell.
+`grep -rn "Semantics(" lib` → **3 occurrences, all in `lib/widgets/tangible.dart`** (they label
+buttons). **0 of 313 game directories mention `Semantics` or `semanticLabel`.**
+
+There is also a `DesignSystem.semanticLabel` helper at `lib/utils/design_system.dart:201` that is
+**defined and never called** — the intent to label things existed and was never wired, which is the
+same story as the guide text.
+
+**50 screen files paint a `CustomPaint` board (150 `CustomPaint` sites)**, and every one is opaque to
+a screen reader; `PuzzleBoardView` passes no semantics for a board or a cell.
 
 `docs/GAME_DEV_GUIDE.md:275` tells contributors to "Add semantics: include `semanticsLabel` on
 interactive elements" — advice the codebase itself does not follow. For an app whose entire premise
@@ -494,7 +541,7 @@ per-cell labels for the 19 board games or an explicit, documented decision that 
 excluded and each such game gets a text alternative. Start with the 19 board games; they share one
 widget.
 
-### 26. Play listing is missing required assets
+### 27. Play listing is missing required assets
 
 <sub>job id: `play-screenshots`</sub>
 
@@ -507,7 +554,7 @@ layout that is not there.
 Play requires at least 2 phone screenshots. `tool/screenshots.sh` exists (1.9 KB) but has not been
 run to produce them.
 
-### 27. iOS has no store metadata whatsoever
+### 28. iOS has no store metadata whatsoever
 
 <sub>job id: `ios-metadata`</sub>
 
@@ -515,7 +562,7 @@ run to produce them.
 `fastlane/Deliverfile`. iOS ships from the same version and copy per `RELEASE.md:124`, but there is
 nothing in the repo to upload. If the App Store release is real, this is the largest gap in it.
 
-### 28. `shorebird.yaml` points at a dead app id, and the updater is not a dependency
+### 29. `shorebird.yaml` points at a dead app id, and the updater is not a dependency
 
 <sub>job id: `shorebird-decision`</sub>
 
@@ -524,7 +571,7 @@ nothing in the repo to upload. If the App Store release is real, this is the lar
 exactly what OTA is for (a dictionary grows, every install gets it without review). Either finish it
 or delete the file; an inert config with a stale id is worse than none.
 
-### 29. The paywall is decided and not built
+### 30. The paywall is decided and not built
 
 <sub>job id: `paywall-decision`</sub>
 
@@ -532,7 +579,7 @@ Memory (2026-11-11): every puzzle playable once, some free forever, gate replays
 first contact. `pubspec.yaml` has **no** `in_app_purchase` / `purchases_flutter`. Nothing exists.
 Not content, listed so nobody re-decides it.
 
-### 30. `pubspec.yaml` is at `1.0.14+15` — coordinate with the open deck PR
+### 31. `pubspec.yaml` is at `1.0.14+15` — coordinate with the open deck PR
 
 <sub>job id: `sequence-deck-pr`</sub>
 
@@ -540,7 +587,7 @@ Not content, listed so nobody re-decides it.
 `game_scaffold.dart`, which `game-id-resolution` also edits. Land the deck first or branch content work from
 `main` and rebase; do not start content work on top of it.
 
-### 31. Docs drift
+### 32. Docs drift
 
 <sub>job id: `docs-drift`</sub>
 
@@ -550,7 +597,7 @@ Not content, listed so nobody re-decides it.
   `_metadata.dart` files" — 313.
 - `ROADMAP.md:25` says the store copy is set from 313, which is true; see `number-313-drift`.
 
-### 32. The number 313 is hardcoded in five places
+### 33. The number 313 is hardcoded in five places
 
 <sub>job id: `number-313-drift`</sub>
 
@@ -560,7 +607,7 @@ Not content, listed so nobody re-decides it.
 registry length matches those files, so it cannot drift and nobody is tempted to delete a thin game
 to make a number tidy.
 
-### 33. 38 games end the run on a single answer
+### 34. 38 games end the run on a single answer
 
 <sub>job id: `one-answer-games`</sub>
 
@@ -581,7 +628,7 @@ For a pool of 10–20 (the pool jobs) that is a 15-second game. Two cheap fixes,
 elsewhere in the codebase: a `targetScore` + next-round loop (`word_surge`, `verbal_analogies`,
 `set_theory_venn` do it), or a timed run over the whole pool (`spelling_sprint`, `grammar_sort`).
 
-### 34. Code that says one thing and does another
+### 35. Code that says one thing and does another
 
 <sub>job id: `code-that-lies`</sub>
 
@@ -614,7 +661,7 @@ Each row is one PR-sized unit. Later rows do not depend on earlier ones except w
 | 5 | Content-invariant test family (`content-invariants` below) | makes 1–4 permanent and sizes everything later |
 | 6 | Title→id resolution (`game-id-resolution`) | fixes guides, assists and *timing* for 4 games |
 | 7 | Six missing guides (`guides-six-missing`) | the last unguided games in the catalog |
-| 8 | 56 l10n keys (`l10n-56-keys`) | one mechanical pass across 21 files |
+| 8 | 56 l10n keys + 2 de orphans (`l10n-56-keys`, `l10n-de-orphan-keys`) | one mechanical pass across 22 files |
 | 9 | `word_search` + `find_word` pools (`word-search-supply`, `find-word-dictionary`) | text files; biggest replay win |
 | 10 | `crossword` data + placer (`crossword-supply`) | needs data before code |
 | 11 | `nonogram` uniqueness (`nonogram-uniqueness`) | the only real solver job in band 1 |
