@@ -137,11 +137,24 @@ class InertiaBoard extends GridBoard<InertiaState> {
   @override
   void paint(PuzzleCanvas canvas, InertiaState state) {
     super.paint(canvas, state);
-    final palette = canvas.palette;
-    final ball = state.position.cell;
-    final rect = cellRect(ball ~/ cols, ball % cols).deflate(0.006);
-    final dead = state.position.exploded;
+    _paintBall(canvas, state, state.position.cell);
 
+    final hint = state.hint;
+    if (hint == null) return;
+    final landing = const InertiaEngine().landing(state.puzzle, state.position, hint);
+    if (landing == null) return;
+    canvas.cell(
+      cellRect(landing ~/ cols, landing % cols).deflate(0.004),
+      stroke: canvas.palette.success,
+      strokeWidth: 2.5,
+      radius: 4,
+    );
+  }
+
+  void _paintBall(PuzzleCanvas canvas, InertiaState state, int cell) {
+    final palette = canvas.palette;
+    final rect = cellRect(cell ~/ cols, cell % cols).deflate(0.006);
+    final dead = state.position.exploded;
     canvas.dot(
       rect.center,
       rect.width * 0.34,
@@ -150,16 +163,44 @@ class InertiaBoard extends GridBoard<InertiaState> {
     if (dead) {
       canvas.ring(rect.center, rect.width * 0.44, color: palette.error, width: 2);
     }
+  }
 
-    final hint = state.hint;
-    if (hint == null) return;
-    final landing = const InertiaEngine().landing(state.puzzle, state.position, hint);
-    if (landing == null) return;
-    canvas.cell(
-      cellRect(landing ~/ cols, landing % cols).deflate(0.004),
-      stroke: palette.success,
-      strokeWidth: 2.5,
-      radius: 4,
+  // -------------------------------------------------------------- transition
+
+  @override
+  Duration? transitionFor(InertiaState from, InertiaState to) {
+    if (!identical(from.puzzle, to.puzzle)) return null;
+    if (from.position.cell == to.position.cell &&
+        from.position.exploded == to.position.exploded) {
+      return null;
+    }
+    return const Duration(milliseconds: 280);
+  }
+
+  @override
+  void paintTransition(
+    PuzzleCanvas canvas,
+    InertiaState from,
+    InertiaState to,
+    double t,
+  ) {
+    super.paint(canvas, to);
+
+    final start = cellRect(from.position.cell ~/ cols, from.position.cell % cols).center;
+    final end = cellRect(to.position.cell ~/ cols, to.position.cell % cols).center;
+    final eased = Curves.easeOutCubic.transform(t.clamp(0.0, 1.0));
+    final centre = Offset.lerp(start, end, eased)!;
+    final palette = canvas.palette;
+    final widthPx = cellRect(0, 0).width;
+    final dead = to.position.exploded;
+
+    canvas.dot(
+      centre,
+      widthPx * 0.34,
+      color: dead ? palette.error : palette.primary,
     );
+    if (dead) {
+      canvas.ring(centre, widthPx * 0.44, color: palette.error, width: 2);
+    }
   }
 }
