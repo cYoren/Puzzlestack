@@ -6,6 +6,7 @@ import '../../../data/game_metadata.dart';
 import '../../../data/repositories/game_stats_repository.dart';
 import '../../../utils/navigation_utils.dart';
 import '../../../widgets/game_guide_screen.dart';
+import '../juice/game_scope.dart';
 
 /// Opens a game, rules first if this is the first time.
 ///
@@ -39,5 +40,13 @@ Future<void> launchGame(
   }
 
   if (!context.mounted) return;
-  Navigator.push(context, CustomPageRoute(page: game.builder(context)));
+  // The id travels with the page: four games share a localised title, and a
+  // screen that resolves to the wrong registry entry gets the wrong guide, the
+  // wrong assists, and a clock that `completeGame` can never stop.
+  Navigator.push(
+    context,
+    CustomPageRoute(
+      page: GameScope(gameId: game.id, child: game.builder(context)),
+    ),
+  );
 }
