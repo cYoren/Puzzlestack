@@ -7,7 +7,7 @@ enum LetterStatus { initial, notInWord, wrongSpot, correctSpot }
 class FindWordEngine {
   static const int maxTries = 6;
   static const int wordLength = 5;
-  static final Map<String, Set<String>> _cachedWords = {};
+  static Set<String>? _cachedWords;
 
   static Set<String> _processWords(String data) {
     return data
@@ -17,9 +17,13 @@ class FindWordEngine {
         .toSet();
   }
 
-  Future<Set<String>> loadWords([String languageCode = 'en']) async {
-    if (_cachedWords.containsKey(languageCode)) return _cachedWords[languageCode]!;
-    
+  /// The word list is English and the asset proves it: this used to take a
+  /// `languageCode` it ignored and cached the one English list under every
+  /// language that asked. Say what it does.
+  Future<Set<String>> loadWords() async {
+    final cached = _cachedWords;
+    if (cached != null) return cached;
+
     try {
       final data = await rootBundle.loadString('assets/find_word_words.txt');
       final words = await compute(_processWords, data);
@@ -27,7 +31,7 @@ class FindWordEngine {
       if (words.isEmpty) {
         return _getFallbackWords();
       }
-      _cachedWords[languageCode] = words;
+      _cachedWords = words;
       return words;
     } catch (e) {
       return _getFallbackWords();

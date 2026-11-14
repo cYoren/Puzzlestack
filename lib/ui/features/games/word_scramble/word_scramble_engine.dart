@@ -16,7 +16,9 @@ class WordScrambleEngine {
         .toList();
   }
 
-  Future<List<String>> loadWords([String languageCode = 'en']) async {
+  /// English only: the shipped word asset is English, and the parameter this
+  /// used to accept was never read.
+  Future<List<String>> loadWords() async {
     if (_cachedWords != null && _cachedWords!.isNotEmpty) {
       return _cachedWords!;
     }
