@@ -15,7 +15,24 @@ Puzzlestack is GPL-3.0.
 | --- | --- | --- |
 | MIT, BSD, Apache-2.0, Unlicense, CC0 | **yes** | keep the copyright notice in `NOTICE` |
 | GPL-3.0, GPL-2.0-or-later, LGPL | **yes** | "or later" must be in the file header; GitHub's label does not say |
-| GPL-2.0-only, AGPL, no licence, non-commercial | **no code** | read for ideas only |
+| AGPL-3.0 | **yes** | GPL-3.0 section 13 allows the combination. The ported files stay AGPL: say so in their header and in `NOTICE`. The app has no server and its source is public, so nothing else changes |
+| No licence file | **yes, through the permission lane** | see below |
+| GPL-2.0-only, non-commercial, proprietary | **permission lane only** | same |
+
+### The permission lane
+
+A repository with no licence is not free to copy: by default its author keeps all rights. It is
+still open to us, two ways, and Gus has said both are in scope (2026-11-14):
+
+1. **Ask.** Gus contacts the author. Port on a branch meanwhile; the PR is labelled
+   `needs-permission` and merges when the reply is recorded in `NOTICE`, the way the upstream
+   author's App Store permission was. To start it, add a row to the table at the end of this
+   file with the repo, the author and what we want.
+2. **Make it new.** Take the idea, the rules and what the code taught you, and write our own
+   implementation with our own boards, look and name. That is a new work and needs nobody's
+   permission. Do not paste their code or their level data into it.
+
+When unsure which applies, do 2. It is always allowed and it usually produces the better card.
 
 - **Rules are free.** A puzzle's rules are not copyrightable. Any type can be rebuilt from its
   rules, whatever the licence of the program you learned it from.
@@ -83,12 +100,21 @@ Mature, well-tested games. Code may be taken where the header says GPL-3.0 or "2
 | **Lichess puzzle database** (database.lichess.org) | the site states CC0; confirm before importing | Millions of rated chess puzzles. A "mate in one" Think card would be new to the Deck. `davecom/chess.dart` (MIT-style) gives move legality. A proposal, not a commitment |
 | **increpare/PuzzleScript** | MIT for the engine | Thousands of small push-block games, each under its own licence. A source of mechanics, not of levels |
 
-## Do not take
+## More, now in scope
 
-- `thomasahle/numberlink` and `lichess-org/lila`: AGPL. Read, do not copy.
-- Repositories with no licence file (for example `begoon/sokoban-maps`, `dimitri/sudoku`).
-- Puzzles from newspapers, KrazyDad, Conceptis, Nikoli's own books, or any puzzle site.
-- Named Sokoban level sets. Sokoban joins the Deck only with generated levels.
+| Source | Licence | What is in it for us |
+| --- | --- | --- |
+| **thomasahle/numberlink** | AGPL-3.0 | Generator and solver for Numberlink (the connect-the-pairs puzzle). Portable directly; brings a type the Deck lacks |
+| **lichess-org/lila** | AGPL-3.0 | Puzzle selection and rating logic, if the chess card happens |
+| **begoon/sokoban-maps** | none: permission lane | 60 Sokoban maps. Ask, or generate our own |
+| **dimitri/sudoku** | none: permission lane | A solver write-up; nothing here we cannot write ourselves |
+| **KDE/katomic**, **palapeli**, **kshisen**, **klickety**, **killbots** | not detected on GitHub; KDE projects carry it in file headers | Atomix-style, jigsaw, Shisen-Sho, Clickomania. Read the headers, then treat as section 3 |
+
+## Still do not take
+
+- Puzzles copied from newspapers, KrazyDad, Conceptis, Nikoli's books or any puzzle site, and
+  named level sets, unless their author has said yes in the permission lane.
+- Anyone's artwork, sounds or renderer.
 
 ## Order
 
@@ -104,4 +130,13 @@ through the bar.
 3. **Nikoli types by offline-proved pools**: Star Battle, LITS, Suguru, Shakashaka first.
 4. **Tetravex and Atomix.**
 5. **Rebuilds from the Archive** (CATALOG.md): Vector Golf first.
-6. **Mate in one**, if the licence check holds and a chess card passes the five-second read.
+6. **Numberlink**, ported from `thomasahle/numberlink`.
+7. **Mate in one**, if the licence check holds and a chess card passes the five-second read.
+
+Anything else an agent finds is welcome: add it to the right table here with its licence, in
+the same PR that uses it.
+
+## Permissions asked
+
+| Repo | Author | What we want | Asked | Answer |
+| --- | --- | --- | --- | --- |
