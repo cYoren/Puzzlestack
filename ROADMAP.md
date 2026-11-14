@@ -127,9 +127,12 @@ Pool jobs for archived games are cancelled. Do not grow a table for a game nobod
 
 ### G. Release
 
+`store-copy` is done (#61): both listings, the web shell, the Pages site and the README lead with
+the feed and carry the visible count (224), and `test/content/registry_test.dart` fails if any of
+them says the registry total again.
+
 | Job | What |
 | --- | --- |
-| `store-copy` | Lead with the feed, not the count: "One good puzzle, then another." The number comes from the registry |
 | `store-shots` | Eight shots, every board mid-solve, the first one the Deal. Play 1080x1920, App Store 1290x2796 |
 | `readme-docs` | README, PUZZLE_STYLE header, GAME_DEV_GUIDE and CONTENT-AUDIT rule 2 brought in line with docs/PRODUCT.md; delete what is finished |
 | `device-pass` | A person plays 50 dealt cards on a cheap Android and an iPhone; every stumble becomes a fix before the build (G6) |
