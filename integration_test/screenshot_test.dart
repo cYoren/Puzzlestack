@@ -103,10 +103,10 @@ void main() {
     await _shoot(binding, tester, '00_deal');
 
     // 2. The stack, one tap away on the bottom bar.
-    await tester.tap(find.text('STACK'));
+    await tester.tap(find.byKey(const ValueKey('tab_stack')));
     await _settle(tester);
     await _shoot(binding, tester, '01_stack');
-    await tester.tap(find.text('DEAL'));
+    await tester.tap(find.byKey(const ValueKey('tab_deal')));
     await _settle(tester);
 
     // 2. Each hero game, pushed programmatically off the home navigator.

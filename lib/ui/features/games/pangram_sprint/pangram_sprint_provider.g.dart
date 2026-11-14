@@ -7,7 +7,7 @@ part of 'pangram_sprint_provider.dart';
 // **************************************************************************
 
 String _$pangramSprintNotifierHash() =>
-    r'c21a93437a834df9675e34e0c2fc6d9d16e3c7aa';
+    r'440525832d0a91b6614d8cf8b9dd477362e6d145';
 
 /// See also [PangramSprintNotifier].
 @ProviderFor(PangramSprintNotifier)

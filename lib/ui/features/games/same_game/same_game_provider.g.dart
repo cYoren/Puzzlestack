@@ -6,7 +6,7 @@ part of 'same_game_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sameGameNotifierHash() => r'8936c65333116e163f7c775bab93810b5b284226';
+String _$sameGameNotifierHash() => r'1fb3665307024d8b153ef9221c75332dcf289ec9';
 
 /// See also [SameGameNotifier].
 @ProviderFor(SameGameNotifier)

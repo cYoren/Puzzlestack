@@ -6,7 +6,7 @@ part of 'lights_out_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$lightsOutNotifierHash() => r'ba7ea87b4b48a85be0f66e2ec3368dc24ad4fe7a';
+String _$lightsOutNotifierHash() => r'53b85e4d053f6cdf16e61d12a24b09a9826a03e8';
 
 /// See also [LightsOutNotifier].
 @ProviderFor(LightsOutNotifier)

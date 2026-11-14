@@ -6,7 +6,7 @@ part of 'signpost_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$signpostNotifierHash() => r'8c9aa7f869fd5fbcacc76054a3c06421466b9474';
+String _$signpostNotifierHash() => r'40129f46e681245669e8c1aeadbc56a530c950fe';
 
 /// See also [SignpostNotifier].
 @ProviderFor(SignpostNotifier)

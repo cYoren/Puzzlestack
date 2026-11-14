@@ -7,7 +7,7 @@ part of 'slitherlink_provider.dart';
 // **************************************************************************
 
 String _$slitherlinkNotifierHash() =>
-    r'1a76d13db46c083fbdbaa05d18e38a7b656bbcaa';
+    r'c5a5ea8aa769f2878a696a3f51432a1d8acfa873';
 
 /// See also [SlitherlinkNotifier].
 @ProviderFor(SlitherlinkNotifier)

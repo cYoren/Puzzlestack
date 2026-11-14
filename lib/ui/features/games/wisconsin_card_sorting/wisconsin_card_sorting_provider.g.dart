@@ -7,7 +7,7 @@ part of 'wisconsin_card_sorting_provider.dart';
 // **************************************************************************
 
 String _$wisconsinCardSortingNotifierHash() =>
-    r'5c43045bf0e6af38bf7a1a8b5e6dcbd5d67cfbf3';
+    r'0f2ac6d6fe8fadf053c2aa2089460c9325428d88';
 
 /// See also [WisconsinCardSortingNotifier].
 @ProviderFor(WisconsinCardSortingNotifier)

@@ -7,7 +7,7 @@ part of 'einstein_riddle_provider.dart';
 // **************************************************************************
 
 String _$einsteinRiddleNotifierHash() =>
-    r'da44a32b9375450fc458a888d275094dd149dee5';
+    r'49f40c5aed9a7262f32877ffa0e061b38812d3a5';
 
 /// See also [EinsteinRiddleNotifier].
 @ProviderFor(EinsteinRiddleNotifier)
