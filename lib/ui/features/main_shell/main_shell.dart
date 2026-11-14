@@ -132,6 +132,10 @@ class _DeckBar extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onSelect;
 
+  /// Stable keys for the three tabs, so a test or a screenshot run can tap a
+  /// room without guessing which 'Deal' label on screen it means.
+  static const List<String> _roomKeys = ['deal', 'stack', 'you'];
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -157,6 +161,7 @@ class _DeckBar extends StatelessWidget {
               for (int i = 0; i < entries.length; i++)
                 Expanded(
                   child: _RoomButton(
+                    key: ValueKey('tab_${_roomKeys[i]}'),
                     entry: entries[i],
                     selected: selectedIndex == i,
                     onTap: () => onSelect(i),
@@ -180,6 +185,7 @@ class _Room {
 
 class _RoomButton extends StatelessWidget {
   const _RoomButton({
+    super.key,
     required this.entry,
     required this.selected,
     required this.onTap,
@@ -246,6 +252,7 @@ class _SideRail extends StatelessWidget {
     ];
 
     return Container(
+      key: const ValueKey('side_rail'),
       width: 96,
       decoration: BoxDecoration(
         color: DesignSystem.cardOf(context),

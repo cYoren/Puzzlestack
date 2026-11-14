@@ -6,7 +6,7 @@ part of 'galaxies_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$galaxiesNotifierHash() => r'79004307da557e966eb0350fdcee70ca6fc9564c';
+String _$galaxiesNotifierHash() => r'7235bc3a826ad57649c5729120c7f8f0f540b022';
 
 /// See also [GalaxiesNotifier].
 @ProviderFor(GalaxiesNotifier)

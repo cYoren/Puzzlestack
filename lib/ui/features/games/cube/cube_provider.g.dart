@@ -6,7 +6,7 @@ part of 'cube_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cubeNotifierHash() => r'f14e3cae4bb2059277c381468d8fa49e2de43f29';
+String _$cubeNotifierHash() => r'b03478e82df3de24ae76ae183e55fd2e0d098cf7';
 
 /// See also [CubeNotifier].
 @ProviderFor(CubeNotifier)
