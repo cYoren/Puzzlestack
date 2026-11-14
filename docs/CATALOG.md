@@ -87,7 +87,8 @@ Notes
   of clues.
 - `wisconsin_card_sorting` is a good hidden-rule game under a bad name. Rename "Rule Finder".
 - `minesweeper` is Deck only with a no-guess generator.
-- `nonogram` is Deck only once `nonogram-uniqueness` lands.
+- `nonogram` proves its deal before it is dealt (`nonogram-uniqueness`, #47): the generator
+  retries up to 500 grids and throws rather than ship one with a second answer.
 
 ## Math (63)
 

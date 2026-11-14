@@ -691,7 +691,7 @@ Each row is one PR-sized unit. Later rows do not depend on earlier ones except w
 | 8 | 56 l10n keys + 2 de orphans (`l10n-56-keys`, `l10n-de-orphan-keys`) | one mechanical pass across 22 files |
 | 9 | `word_search` + `find_word` pools (`word-search-supply`, `find-word-dictionary`) | text files; biggest replay win |
 | 10 | `crossword` data + placer (`crossword-supply`) | needs data before code |
-| 11 | `nonogram` uniqueness (`nonogram-uniqueness`) | the only real solver job in band 1 |
+| 11 | ~~`nonogram` uniqueness (`nonogram-uniqueness`)~~ **done #47** | the only real solver job in band 1 |
 | 12 | Thinnest pools (the 28 `pool-*` jobs) | removes the worst repeats |
 | 13 | Difficulty ladder for the classics (`difficulty-ladder`, `difficulty-persistence`) | the largest single content gain |
 | 14 | One-answer games (`one-answer-games`) | converts 38 15-second games into runs |
