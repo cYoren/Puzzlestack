@@ -2297,7 +2297,7 @@
   "dynamicSalienceTitle": "Dynamic Salience",
   "dynamicSalienceSubtitle": "Find the shape moving with slightly different dynamics.",
   "chalkAndTalkTitle": "Chalk & Talk",
-  "chalkAndTalkSubtitle": "Type words heard in audio while ignoring visual distractors.",
+  "chalkAndTalkSubtitle": "Type the word in the reading panel, not the one chalked on the board.",
   "blinkDetectorTitle": "Blink Detector",
   "blinkDetectorSubtitle": "Tap the grid face that blinks twice in rapid succession.",
   "frequencyTapTitle": "Frequency Tap",

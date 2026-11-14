@@ -15,8 +15,8 @@ class PangramSprintEngine {
       words: ['SPHINX', 'OF', 'BLACK', 'QUARTZ', 'JUDGE', 'MY', 'VOW'],
     ),
     PangramTask(
-      sentence: 'How vexingly quick balthazar bolden jumps gazing',
-      words: ['HOW', 'VEXINGLY', 'QUICK', 'BALTHAZAR', 'BOLDEN', 'JUMPS', 'GAZING'],
+      sentence: 'Glib jocks quiz nymph to vex dwarf',
+      words: ['GLIB', 'JOCKS', 'QUIZ', 'NYMPH', 'TO', 'VEX', 'DWARF'],
     ),
     PangramTask(
       sentence: 'Two driven jocks help fax my big quiz',
@@ -24,8 +24,14 @@ class PangramSprintEngine {
     ),
   ];
 
+  /// Every task, so a test can check each board is winnable.
+  List<PangramTask> get tasks => List.unmodifiable(_tasks);
+
+  /// Deals a board. `isPangram` is the filter, not a comment: a board that
+  /// cannot reach 26 letters is never dealt, because the win check is 26.
   PangramTask getRandomTask() {
-    return _tasks[Random().nextInt(_tasks.length)];
+    final playable = _tasks.where((task) => isPangram(task.sentence)).toList();
+    return playable[Random().nextInt(playable.length)];
   }
 
   bool isPangram(String text) {

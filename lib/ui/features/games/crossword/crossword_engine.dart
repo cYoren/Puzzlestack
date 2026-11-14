@@ -43,7 +43,9 @@ class CrosswordEngine {
     }).toList();
   }
 
-  Future<List<Map<String, String>>> loadData([String languageCode = 'en']) async {
+  /// Clue text is English (assets/crossword_data.json); the parameter this used
+  /// to accept was never read.
+  Future<List<Map<String, String>>> loadData() async {
     try {
       final String response = await rootBundle.loadString('assets/crossword_data.json');
       return await compute(_parseJson, response);

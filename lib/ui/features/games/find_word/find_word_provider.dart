@@ -54,7 +54,10 @@ class FindWordState {
 @riverpod
 class FindWordNotifier extends _$FindWordNotifier {
   final _engine = FindWordEngine();
-  Set<String> _wordList = {};
+
+  /// Guesses are checked against the full list; targets are drawn from the
+  /// curated answer list, so a player is never asked to find "aalii".
+  Set<String> _validGuesses = {};
 
   @override
   FindWordState build() {
@@ -66,8 +69,9 @@ class FindWordNotifier extends _$FindWordNotifier {
   }
 
   Future<void> initGame() async {
-    _wordList = await _engine.loadWords();
-    final target = _engine.getRandomWord(_wordList);
+    _validGuesses = await _engine.loadWords();
+    final answers = await _engine.loadAnswers();
+    final target = _engine.getRandomWord(answers);
     state = FindWordState(
       targetWord: target,
       guesses: [],
@@ -100,7 +104,7 @@ class FindWordNotifier extends _$FindWordNotifier {
     if (state.currentGuess.length != FindWordEngine.wordLength) return;
 
     // Check if word exists in our wordlist
-    if (!_wordList.contains(state.currentGuess)) {
+    if (!_validGuesses.contains(state.currentGuess)) {
       state = state.copyWith(isInvalidGuess: true, shouldShake: true);
       return;
     }

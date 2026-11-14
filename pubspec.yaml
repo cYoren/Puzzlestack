@@ -87,6 +87,7 @@ flutter:
     - assets/chain_words.txt
     - assets/crossword_data.json
     - assets/find_word_words.txt
+    - assets/find_word_answers.txt
     - assets/word_search_words.txt
     - shorebird.yaml
 

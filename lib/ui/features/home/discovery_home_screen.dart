@@ -57,7 +57,10 @@ class DiscoveryHomeScreen extends ConsumerWidget {
     final hidden = ref.watch(
         userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
     final hiddenSet = hidden.toSet();
-    final daily = GameFeed.dailyPick(exclude: hiddenSet);
+    // The daily pick is shared, so it is never drawn from this player's
+    // hidden games; the card is what a hidden game suppresses.
+    final daily = GameFeed.dailyPick();
+    final dailyHidden = GameFeed.dailyPickIsHidden(exclude: hiddenSet);
     final quick = GameFeed.quickPlay
         .where((g) => !hiddenSet.contains(g.id))
         .toList(growable: false);
@@ -77,10 +80,12 @@ class DiscoveryHomeScreen extends ConsumerWidget {
               ),
               SliverToBoxAdapter(child: _favoritesRow(context, ref, favorites)),
             ],
-            SliverToBoxAdapter(
-              child: _sectionTitle(context, 'DAILY PICK'),
-            ),
-            SliverToBoxAdapter(child: _dailyCard(context, ref, daily)),
+            if (!dailyHidden) ...[
+              SliverToBoxAdapter(
+                child: _sectionTitle(context, 'DAILY PICK'),
+              ),
+              SliverToBoxAdapter(child: _dailyCard(context, ref, daily)),
+            ],
             if (quick.isNotEmpty) ...[
               SliverToBoxAdapter(
                 child: _sectionTitle(context, 'QUICK PLAY · UNDER 2 MIN'),

@@ -1,7 +1,6 @@
 class WordLadderEngine {
   // A vast dictionary of common 4-letter English words
   static const Set<String> _dictionary = {
-    'ABBé',
     'ABBR',
     'ABED',
     'ABET',
@@ -198,7 +197,6 @@ class WordLadderEngine {
     'BLAB',
     'BLAH',
     'BLAT',
-    'BLDG',
     'BLED',
     'BLEW',
     'BLIP',
@@ -209,7 +207,6 @@ class WordLadderEngine {
     'BLOW',
     'BLUE',
     'BLUR',
-    'BLVD',
     'BOAR',
     'BOAS',
     'BOAT',
@@ -302,7 +299,6 @@ class WordLadderEngine {
     'CABS',
     'CACY',
     'CADS',
-    'CAFé',
     'CAGE',
     'CAGY',
     'CAKE',
@@ -684,7 +680,6 @@ class WordLadderEngine {
     'EKED',
     'EKES',
     'ELAN',
-    'éLAN',
     'ELDS',
     'ELKS',
     'ELLS',
@@ -701,7 +696,6 @@ class WordLadderEngine {
     'ENUF',
     'ENVY',
     'EONS',
-    'éPéE',
     'EPIC',
     'EPOS',
     'EQUA',
@@ -780,7 +774,6 @@ class WordLadderEngine {
     'FEST',
     'FETA',
     'FETE',
-    'FêTE',
     'FETS',
     'FEUD',
     'FEUS',
@@ -885,7 +878,6 @@ class WordLadderEngine {
     'FROM',
     'FROW',
     'FRUG',
-    'FTPS',
     'FUBS',
     'FUCI',
     'FUCK',
@@ -2400,7 +2392,6 @@ class WordLadderEngine {
     'PROS',
     'PROW',
     'PRUI',
-    'PSST',
     'PTUI',
     'PUBS',
     'PUCE',
@@ -2439,7 +2430,6 @@ class WordLadderEngine {
     'PUTS',
     'PUTT',
     'PUTY',
-    'PWNS',
     'PYAS',
     'PYES',
     'PYRE',
@@ -2618,7 +2608,6 @@ class WordLadderEngine {
     'ROTO',
     'ROTS',
     'ROUE',
-    'ROUé',
     'ROUL',
     'ROUM',
     'ROUP',
@@ -3118,7 +3107,6 @@ class WordLadderEngine {
     'TAWT',
     'TAXA',
     'TAXI',
-    'TBSP',
     'TEAD',
     'TEAK',
     'TEAL',
@@ -3710,7 +3698,6 @@ class WordLadderEngine {
     'XXIX',
     'XXVI',
     'XXXI',
-    'XXXV',
     'XYST',
     'YABS',
     'YACK',
@@ -3931,7 +3918,6 @@ class WordLadderEngine {
     {'start': 'SHOW', 'end': 'TELL'},
     {'start': 'HEAT', 'end': 'COOL'},
     {'start': 'MORE', 'end': 'LESS'},
-    {'start': 'GOOD', 'end': 'EVIL'},
     {'start': 'OPEN', 'end': 'SHUT'},
     {'start': 'ROAD', 'end': 'PATH'},
     {'start': 'MIND', 'end': 'BODY'},
@@ -3944,6 +3930,13 @@ class WordLadderEngine {
     {'start': 'BIRD', 'end': 'SOAR'},
     {'start': 'SAFE', 'end': 'RISK'},
   ];
+
+  /// The shipped ladders. Tests read this; the game picks one at random.
+  List<Map<String, String>> get puzzles => List.unmodifiable(_puzzles);
+
+  /// The shipped dictionary, so a test can BFS the ladders over the same words
+  /// the game accepts.
+  Set<String> get dictionary => _dictionary;
 
   Map<String, String> getRandomPuzzle() {
     return _puzzles[(DateTime.now().millisecondsSinceEpoch % _puzzles.length)];
