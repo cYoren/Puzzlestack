@@ -155,18 +155,26 @@ class SlitherlinkBoard extends PuzzleBoard<SlitherlinkState> {
 
     final cell = canvas.size.width * step;
 
-    // Clues.
+    // Clues. A clue the loop has already broken turns red and gets a ring, so
+    // "no mistakes are shown" is not a thing the board can do any more.
+    final broken = {
+      for (final conflict in state.conflicts) (conflict.row, conflict.col),
+    };
     for (var row = 0; row < size; row++) {
       for (var col = 0; col < size; col++) {
         final clue = state.level.clues[row][col];
         if (clue == null) continue;
         final centre = _vertex(row, col) + Offset(step / 2, step / 2);
+        final isBroken = broken.contains((row, col));
+        if (isBroken) {
+          canvas.ring(centre, step * 0.34, color: palette.error, width: 2);
+        }
         canvas.text(
           '$clue',
           Rect.fromCenter(center: centre, width: step, height: step),
           fontSize: cell * 0.42,
           weight: FontWeight.w900,
-          color: palette.ink.withValues(alpha: 0.85),
+          color: isBroken ? palette.error : palette.ink,
         );
       }
     }
@@ -183,6 +191,15 @@ class SlitherlinkBoard extends PuzzleBoard<SlitherlinkState> {
         canvas.dot(_vertex(row, col), cell * 0.055, color: palette.ink);
       }
     }
+  }
+
+  bool _isHint(ElementRef edge) {
+    final hint = state.hintEdge;
+    if (hint == null) return false;
+    if (hint.horizontal) {
+      return edge.kind == 'edgeH' && edge.a == hint.row && edge.b == hint.col;
+    }
+    return edge.kind == 'edgeV' && edge.a == hint.row && edge.b == hint.col;
   }
 
   void _paintEdge(PuzzleCanvas canvas, ElementRef edge) {
@@ -203,6 +220,7 @@ class SlitherlinkBoard extends PuzzleBoard<SlitherlinkState> {
     final start = vertical ? bounds.topCenter : bounds.centerLeft;
     final end = vertical ? bounds.bottomCenter : bounds.centerRight;
 
+    final hinted = _isHint(edge);
     if (drawn) {
       canvas.line(
         start,
@@ -211,7 +229,14 @@ class SlitherlinkBoard extends PuzzleBoard<SlitherlinkState> {
         width: 3,
       );
     } else {
-      canvas.line(start, end, color: palette.outline, width: 1.5);
+      canvas.line(
+        start,
+        end,
+        color: hinted
+            ? palette.success
+            : palette.line,
+        width: hinted ? 3 : 1.5,
+      );
     }
   }
 

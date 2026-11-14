@@ -97,4 +97,14 @@ class MagnetsNotifier extends _$MagnetsNotifier {
 
   /// The level this board needs, for the HUD.
   int? get level => _engine.levelOf(state.puzzle);
+
+  /// Lays the answer's magnets on the board.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      states: List<int>.from(state.puzzle.solution),
+      isSolved: true,
+      clearHint: true,
+    );
+  }
 }

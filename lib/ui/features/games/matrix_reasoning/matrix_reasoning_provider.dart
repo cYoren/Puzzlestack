@@ -67,7 +67,7 @@ class MatrixReasoningNotifier extends _$MatrixReasoningNotifier {
     final isTrialMode = ref.read(userDataNotifierProvider).isTrialModeEnabled ?? false;
 
     state = MatrixReasoningState(
-      puzzle: _engine.generatePuzzle(),
+      puzzle: _engine.generatePuzzle(level: 0),
       score: 0,
       totalTrials: 0,
       timeLeft: 60,
@@ -109,7 +109,10 @@ class MatrixReasoningNotifier extends _$MatrixReasoningNotifier {
     if (state.isTrialMode && newTotalTrials >= state.targetTrials) {
       state = state.copyWith(isGameOver: true);
     } else {
-      state = state.copyWith(puzzle: _engine.generatePuzzle());
+      // Score is the ladder: the first five are easy, then medium, then hard.
+      state = state.copyWith(
+        puzzle: _engine.generatePuzzle(level: newScore ~/ 5),
+      );
     }
   }
 }

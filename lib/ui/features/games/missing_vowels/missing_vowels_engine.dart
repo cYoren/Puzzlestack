@@ -15,9 +15,13 @@ class MissingVowelsEngine {
         .toList();
   }
 
-  Future<List<String>> loadWords([String languageCode = 'en']) async {
+  /// English only: the shipped word asset is English, and the parameter this
+  /// used to accept was never read.
+  Future<List<String>> loadWords() async {
     try {
-      final data = await rootBundle.loadString('assets/find_word_words.txt');
+      // Curated answers, not the guess-validating list: an obscure word with
+      // its vowels removed is unguessable, not hard.
+      final data = await rootBundle.loadString('assets/find_word_answers.txt');
       return await compute(_processWords, data);
     } catch (e) {
       return ['APPLE', 'BANANA', 'CHERRY', 'ORANGE', 'GRAPES'];

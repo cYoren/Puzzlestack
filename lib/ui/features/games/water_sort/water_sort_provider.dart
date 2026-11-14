@@ -50,4 +50,20 @@ class WaterSortNotifier extends _$WaterSortNotifier {
   void reset() {
     state = WaterSortState(tubes: _engine.generateLevel());
   }
+
+  /// Groups every colour into its own full tube, then leaves the rest empty.
+  void solve() {
+    if (state.isSolved) return;
+    final grouped = <Color, List<Color>>{};
+    for (final tube in state.tubes) {
+      for (final colour in tube) {
+        grouped.putIfAbsent(colour, () => <Color>[]).add(colour);
+      }
+    }
+    final tubes = <List<Color>>[
+      for (final group in grouped.values) group,
+      for (var i = grouped.length; i < state.tubes.length; i++) <Color>[],
+    ];
+    state = WaterSortState(tubes: tubes, isSolved: true);
+  }
 }

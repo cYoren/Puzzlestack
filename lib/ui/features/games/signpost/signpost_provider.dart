@@ -142,4 +142,14 @@ class SignpostNotifier extends _$SignpostNotifier {
     if (found == null) return;
     state = state.copyWith(hint: found, selected: found.from);
   }
+
+  /// Writes the answer's links.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      links: _engine.answerLinks(state.puzzle),
+      clearSelected: true,
+      clearHint: true,
+    );
+  }
 }

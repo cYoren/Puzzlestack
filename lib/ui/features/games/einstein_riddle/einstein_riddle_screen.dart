@@ -140,9 +140,32 @@ class _EinsteinRiddleScreenState extends ConsumerState<EinsteinRiddleScreen> {
                 ...houses.map((house) {
                   final value = state.userSolution[house]![cat] ?? '-';
                   return GestureDetector(
-                    onTap: () => _showPicker(context, _translateCategory(cat, l10n), state.options[cat]!, (val) {
-                      notifier.updateAssignment(house, cat, val);
-                    }),
+                    onTap: () => _showPicker(
+                      context,
+                      _translateCategory(cat, l10n),
+                      state.options[cat]!,
+                      state,
+                      cat,
+                      (val) {
+                        final accepted =
+                            notifier.updateAssignment(house, cat, val);
+                        if (!accepted && context.mounted) {
+                          HapticFeedbackUtil.error();
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              SnackBar(
+                                duration: const Duration(seconds: 2),
+                                content: Text(
+                                  '$val is already in another house. '
+                                  'Each ${_translateCategory(cat, l10n).toLowerCase()} '
+                                  'belongs to exactly one house.',
+                                ),
+                              ),
+                            );
+                        }
+                      },
+                    ),
                     child: _Cell(text: value),
                   );
                 }),
@@ -193,34 +216,76 @@ class _EinsteinRiddleScreenState extends ConsumerState<EinsteinRiddleScreen> {
     );
   }
 
-  void _showPicker(BuildContext context, String title, List<String> options, Function(String) onSelect) {
+  void _showPicker(
+    BuildContext context,
+    String title,
+    List<String> options,
+    EinsteinRiddleState state,
+    String category,
+    Function(String) onSelect,
+  ) {
+    // The sheet used to be a `Column(mainAxisSize: min)` with an `Expanded`
+    // list inside it. An Expanded child in an unbounded column throws, so the
+    // picker never appeared — "doesn't seem to work" was literal.
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (context) {
+        final used = {
+          for (final house in state.userSolution.values)
+            if (house[category] != null) house[category]!,
+        };
         return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              ),
-              const Divider(),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: options.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(options[index]),
-                      onTap: () {
-                        onSelect(options[index]);
-                        Navigator.pop(context);
-                      },
-                    );
-                  },
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.6,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                const Divider(height: 1),
+                Flexible(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: options.length,
+                    itemBuilder: (context, index) {
+                      final option = options[index];
+                      final taken = used.contains(option);
+                      return ListTile(
+                        title: Text(
+                          option,
+                          style: TextStyle(
+                            color: taken
+                                ? Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withValues(alpha: 0.4)
+                                : null,
+                          ),
+                        ),
+                        trailing: taken
+                            ? const Icon(Icons.check, size: 18)
+                            : null,
+                        onTap: () {
+                          onSelect(option);
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

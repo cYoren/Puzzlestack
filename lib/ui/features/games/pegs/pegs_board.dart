@@ -104,33 +104,72 @@ class PegsBoard extends GridBoard<PegsState> {
 
     if (content == PegCell.obstacle) return;
 
+    final centre = rect.center;
+    final radius = rect.shortestSide * 0.30;
     final zone = canvas.highlight.targetAlpha(cell(row, col));
     final hint = state.hint;
+    final selected = state.selected;
     final isHintTarget = hint != null && hint.to == index;
     final isHintSource = hint != null && hint.from == index;
+    final isHintMid = hint != null && hint.mid == index;
 
+    // A peg is a disc, a hole is a ring: the board says which is which before
+    // the first tap, which a coloured square never did.
     if (content == PegCell.hole) {
-      canvas.cell(
-        rect,
-        fill: zone > 0
-            ? palette.primary.withValues(alpha: 0.08 * zone * 2)
-            : palette.surface,
-        stroke: palette.outline.withValues(alpha: 0.35),
-        strokeWidth: 1.5,
+      canvas.cell(rect, fill: palette.surface, stroke: palette.line);
+      canvas.ring(
+        centre,
+        radius * 0.62,
+        color: zone > 0
+            ? palette.primary
+            : palette.ink.withValues(alpha: 0.25),
+        width: zone > 0 ? 2.5 : 1.5,
       );
-      if (isHintTarget) {
-        canvas.dot(rect.center, rect.width * 0.16, color: palette.primary);
+      if (zone > 0 || isHintTarget) {
+        canvas.ring(
+          centre,
+          radius * 0.95,
+          color: palette.primary,
+          width: 2,
+        );
       }
       return;
     }
 
-    canvas.cell(rect, fill: palette.primary);
+    canvas.cell(
+      rect,
+      fill: palette.surface,
+      stroke: palette.line,
+    );
+    canvas.dot(centre, radius, color: palette.primary);
+    canvas.dot(
+      centre.translate(-radius * 0.28, -radius * 0.28),
+      radius * 0.28,
+      color: palette.surface.withValues(alpha: 0.55),
+    );
 
-    if (state.selected == index) {
-      canvas.cell(rect, stroke: palette.ink, strokeWidth: 2.5);
+    // What the selected peg would jump over and where it would land, painted
+    // before the tap so the move is legible.
+    if (selected != null && selected != index) {
+      for (final jump in engine.legalJumps(state.grid, rows, cols)) {
+        if (jump.from != selected) continue;
+        if (jump.mid == index) {
+          canvas.ring(centre, radius * 0.55, color: palette.error, width: 2);
+        }
+        if (jump.to == index) {
+          canvas.ring(centre, radius * 1.05, color: palette.primary, width: 2);
+        }
+      }
+    }
+
+    if (selected == index) {
+      canvas.ring(centre, radius * 1.18, color: palette.ink, width: 2.5);
     }
     if (isHintSource) {
-      canvas.cell(rect, stroke: palette.success, strokeWidth: 2.5);
+      canvas.ring(centre, radius * 1.18, color: palette.success, width: 2.5);
+    }
+    if (isHintMid) {
+      canvas.ring(centre, radius * 0.55, color: palette.error, width: 2);
     }
   }
 
@@ -139,7 +178,7 @@ class PegsBoard extends GridBoard<PegsState> {
     if (!isCell(element)) return;
     final rect = cellRect(element.a, element.b);
     if (_at(element.a, element.b) == PegCell.peg) {
-      canvas.cell(rect, fill: canvas.palette.primary);
+      canvas.dot(rect.center, rect.shortestSide * 0.30, color: canvas.palette.primary);
     }
   }
 }

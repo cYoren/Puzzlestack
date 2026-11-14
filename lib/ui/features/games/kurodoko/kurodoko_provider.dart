@@ -164,4 +164,14 @@ class KurodokoNotifier extends _$KurodokoNotifier {
       clearHint: true,
     );
   }
+
+  /// Blackens the answer's set.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      grid: List<KurodokoCell>.from(state.puzzle.solution),
+      isSolved: true,
+      clearHint: true,
+    );
+  }
 }

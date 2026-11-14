@@ -1,6 +1,6 @@
 # Adding a New Game
 
-This guide explains how to add a new puzzle game to PUZZLE.
+This guide explains how to add a new puzzle game to Puzzlestack.
 
 ## Step 1: Create Game Directory
 
@@ -9,8 +9,15 @@ lib/ui/features/games/your_game/
 ├── your_game_engine.dart      # Pure Dart logic
 ├── your_game_provider.dart    # Riverpod state management
 ├── your_game_screen.dart      # Flutter UI
+├── your_game_board.dart       # Optional: the CustomPaint board, for a grid game
 └── your_game_metadata.dart    # Game registration
 ```
+
+Then, before the game can ship: register it in `lib/data/game_registry.dart`, add guide text to
+`lib/data/game_guides.dart`, add its l10n keys to `lib/l10n/app_en.arb` (and every other
+locale), and add a `test/content/<your_game>_test.dart` that asserts the game's own rule.
+`test/content/registry_test.dart` fails until the guide and the store copy agree with the
+registry.
 
 ## Step 2: Implement the Engine
 

@@ -1,4 +1,9 @@
-// THIS FILE IS AUTO-GENERATED. DO NOT EDIT MANUALLY.
+// How-to-play guides, one per game id.
+//
+// This header used to say the file was generated and not to be edited, but the
+// generator lived under `guide/`, was deleted, and 313 keys cannot be rebuilt
+// from it. Edit by hand. `test/content/guides_test.dart` fails when a registry
+// id has no guide and when a guide key is not a game.
 
 class GameGuide {
   final String title;
@@ -1090,7 +1095,7 @@ const Map<String, GameGuide> gameGuides = {
     controls: "Tap the word pairs that are true cognates.",
     walkthrough: [
       "Step 1: A list of word pairs is presented.",
-      "Step 2: Determine which pairs share an etymological root.",
+      "Step 2: Determine which pairs share both root and meaning.",
       "Step 3: Select the true cognates.",
       "Step 4: Avoid false friends (words that look similar but mean different things).",
     ],
@@ -5131,6 +5136,108 @@ const Map<String, GameGuide> gameGuides = {
       "Solve the top row first, then the left column, then the remaining block. Each step shrinks the area you still have to turn.",
       "A quarter turn moves four tiles at once, so prefer turns that fix two numbers rather than one.",
       "If a turn breaks a tile you already placed, undo it: every turn has an exact opposite.",
+    ],
+  ),
+  "cube": GameGuide(
+    title: "Cube",
+    category: "LOGIC",
+    objective: "Roll the cube over the board until all six of its faces are blue.",
+    controls: "Drag the cube onto a neighbouring square, or tap that square. There is no undo, but every roll can be rolled back by rolling again.",
+    walkthrough: [
+      "Step 1: Read the board first. A blue square paints the face the cube lands on; a white square unpaints one.",
+      "Step 2: Roll onto blue squares early, while most faces are still white.",
+      "Step 3: Watch the bottom face as you roll: it is the one that changes, and the other four edges rotate around it.",
+      "Step 4: Finish when all six faces are blue. The faces counter tracks how many are done.",
+    ],
+    strategies: [
+      "Every roll swaps the bottom face with the square you land on, so a roll is its own inverse. If a roll makes things worse, roll back.",
+      "Plan a route that visits each blue square once rather than crossing the same square twice.",
+      "Work from a corner: a corner only has two exits, so it is the cheapest place to fix a face.",
+    ],
+  ),
+  "inertia": GameGuide(
+    title: "Inertia",
+    category: "LOGIC",
+    objective: "Collect every gem on the board without touching a mine.",
+    controls: "Drag the ball onto the square it would land on, or tap any square in line with it. The ball slides until a wall stops it and cannot stop halfway.",
+    walkthrough: [
+      "Step 1: Find the gems first and the mines second. A route between them is the puzzle.",
+      "Step 2: Move along one direction at a time. Each move ends against a wall, so it always changes your row or your column completely.",
+      "Step 3: Collect the gems one at a time, checking that the stop square is not a mine.",
+      "Step 4: The board is won when the last gem is collected.",
+    ],
+    strategies: [
+      "A move always ends at a wall, so think in terms of which wall you want to end against.",
+      "Mines are only dangerous where you stop, not where you pass. Crossing a mine's row is safe.",
+      "Leave a gem near a dead end for last, so you always have somewhere to go.",
+    ],
+  ),
+  "map": GameGuide(
+    title: "Map",
+    category: "LOGIC",
+    objective: "Colour every region with four colours so that no two regions that share a border share a colour. Any valid colouring wins.",
+    controls: "Tap a region to cycle its colour. A region that clashes with a neighbour glows red.",
+    walkthrough: [
+      "Step 1: Start with the region that has the most neighbours, and give it a colour.",
+      "Step 2: Colour its neighbours with the other colours, one at a time.",
+      "Step 3: Continue outward. A clash is shown immediately, so you can always see what is wrong.",
+      "Step 4: The board is done when every region has a colour and nothing glows.",
+    ],
+    strategies: [
+      "Unlike the other puzzles here, this one has many answers on purpose: any valid four-colouring is correct.",
+      "Regions that touch at a corner are not neighbours. Only a shared border constrains the colour.",
+      "If you get stuck, pick the region with the fewest remaining colours and change it first.",
+    ],
+  ),
+  "netslide": GameGuide(
+    title: "Netslide",
+    category: "LOGIC",
+    objective: "Slide rows and columns until every pipe is joined to a pipe.",
+    controls: "Drag a tile one square along its row or column: the whole line slides round one step. Tiles never rotate. A wall across a line blocks it.",
+    walkthrough: [
+      "Step 1: Find the lines that cannot move. A wall stops its line, so those tiles are already where they will be.",
+      "Step 2: Slide a line that a misplaced tile sits in, and watch where the tile goes.",
+      "Step 3: Work pipe by pipe: join one pair, then keep that join out of the line you slide next.",
+      "Step 4: The board is won when every pipe meets a pipe.",
+    ],
+    strategies: [
+      "A slide moves a whole line, so every tile in that line changes place at once. Count what moves with it.",
+      "Slides come in pairs: sliding the same line back restores the board.",
+      "Leave the line with the fewest tiles until last; it has the least room for mistakes.",
+    ],
+  ),
+  "same_game": GameGuide(
+    title: "Same Game",
+    category: "LOGIC",
+    objective: "Clear the board by removing groups of two or more squares of the same colour.",
+    controls: "Tap a group of two or more connected squares of the same colour to remove it. The squares above fall and the columns close up.",
+    walkthrough: [
+      "Step 1: Look for the colour that covers the most board and start there.",
+      "Step 2: Remove groups that join two other groups of the same colour once they fall together.",
+      "Step 3: Keep the small groups for last; they are the ones that strand single squares.",
+      "Step 4: The board is cleared when no group of two or more is left.",
+    ],
+    strategies: [
+      "A single square can never be removed, so avoid cutting a group down to one.",
+      "Removing a tall group collapses the columns and can merge two groups that were apart.",
+      "Play from the bottom where you can: a collapse changes more of the board than a removal at the top.",
+    ],
+  ),
+  "signpost": GameGuide(
+    title: "Signpost",
+    category: "LOGIC",
+    objective: "Number every cell from 1 to the last so that each cell points at the cell holding the next number.",
+    controls: "Drag a cell onto the cell it points at, or tap one cell and then the other. An arrow turns solid once its cell points somewhere; tapping that cell again takes the link back.",
+    walkthrough: [
+      "Step 1: Start from the given numbers. A given pins down the cell it sits in, and often the arrow into it.",
+      "Step 2: Follow each arrow as far as it can go along its line. The arrow runs along the whole ray, so the cell it means can be any distance away.",
+      "Step 3: An arrow that has only one cell left in its ray is decided for you: link it.",
+      "Step 4: Finish when one chain runs from 1 to the last number with every arrow pointing the way.",
+    ],
+    strategies: [
+      "An arrow never points at a neighbour by default: it points at whatever lies along its line, so look to the end of the ray first.",
+      "Work backwards from the highest given number as well as forwards; both ends are constrained.",
+      "Every cell is used exactly once, so a number you cannot place in one ray is a reason to re-read the others.",
     ],
   ),
 };

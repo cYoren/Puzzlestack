@@ -7097,7 +7097,7 @@ abstract class AppLocalizations {
   /// No description provided for @chalkAndTalkSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Type words heard in audio while ignoring visual distractors.'**
+  /// **'Type the word in the reading panel, not the one chalked on the board.'**
   String get chalkAndTalkSubtitle;
 
   /// No description provided for @blinkDetectorTitle.

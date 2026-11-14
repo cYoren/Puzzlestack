@@ -204,6 +204,39 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     setState(() => _restartEpochs[index] = (_restartEpochs[index] ?? 0) + 1);
   }
 
+  bool _isLiked(GameMetadata game) => ref.watch(userDataNotifierProvider
+      .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
+
+  void _toggleLike(GameMetadata game) {
+    HapticFeedbackUtil.lightImpact();
+    ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
+  }
+
+  /// Blocking removes a game from this player's deal and from the browse
+  /// surfaces. It is undoable from the snackbar, because a stray tap on a phone
+  /// should never cost a game for good.
+  void _block(GameMetadata game) {
+    final l10n = AppLocalizations.of(context);
+    HapticFeedbackUtil.mediumImpact();
+    ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.fromLTRB(24, 0, 24, 88),
+          content: Text(l10n?.gameHidden ?? 'Hidden from the deal'),
+          action: SnackBarAction(
+            label: l10n?.undo ?? 'Undo',
+            onPressed: () => ref
+                .read(userDataNotifierProvider.notifier)
+                .toggleHideGame(game.id),
+          ),
+          duration: const Duration(seconds: 4),
+        ),
+      );
+  }
+
   void _close() {
     if (widget.isRoute) Navigator.of(context).maybePop();
   }
@@ -293,6 +326,9 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
             onRestart: () => _restart(index),
             onToggleLock: _toggleLock,
             onGuide: () => _openGuide(context, game),
+            liked: _isLiked(game),
+            onLike: () => _toggleLike(game),
+            onBlock: () => _block(game),
           )
         : DeckCard(
             key: ValueKey('back_$index'),
@@ -519,6 +555,9 @@ class _FeedCard extends StatelessWidget {
     required this.onRestart,
     required this.onToggleLock,
     required this.onGuide,
+    required this.liked,
+    required this.onLike,
+    required this.onBlock,
   });
 
   final GameMetadata game;
@@ -527,6 +566,9 @@ class _FeedCard extends StatelessWidget {
   final bool locked;
   final VoidCallback onNext;
   final VoidCallback onRestart;
+  final bool liked;
+  final VoidCallback onLike;
+  final VoidCallback onBlock;
   final VoidCallback onToggleLock;
   final VoidCallback onGuide;
 
@@ -701,6 +743,21 @@ class _FeedCard extends StatelessWidget {
               const Spacer(),
               _quietButton(
                 context,
+                icon: liked ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                tooltip: liked ? 'Remove from favourites' : 'Add to favourites',
+                onTap: onLike,
+                tinted: liked,
+              ),
+              const SizedBox(width: 2),
+              _quietButton(
+                context,
+                icon: Icons.visibility_off_outlined,
+                tooltip: 'Not a puzzle: block it from the deal',
+                onTap: onBlock,
+              ),
+              const SizedBox(width: 2),
+              _quietButton(
+                context,
                 icon: locked ? Icons.lock_rounded : Icons.lock_open_rounded,
                 tooltip: locked
                     ? (l10n?.unlockScroll ?? 'Unlock scrolling')
@@ -731,9 +788,11 @@ class _FeedCard extends StatelessWidget {
       child: InkResponse(
         onTap: onTap,
         radius: 24,
+        // Five of these share one row with NEXT on the narrowest phone, so the
+        // width is what the row can spare rather than a round number.
         child: SizedBox(
-          width: 40,
-          height: 40,
+          width: 36,
+          height: 44,
           child: Icon(icon, size: 20, color: tinted ? accent : muted),
         ),
       ),

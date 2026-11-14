@@ -4034,7 +4034,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chalkAndTalkSubtitle =>
-      'Type words heard in audio while ignoring visual distractors.';
+      'Type the word in the reading panel, not the one chalked on the board.';
 
   @override
   String get blinkDetectorTitle => 'Blink Detector';

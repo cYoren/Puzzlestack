@@ -1,3 +1,7 @@
+import 'dart:math' as math;
+
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../core/board/grid_board.dart';
@@ -43,6 +47,7 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
       grid: grid,
       clearHint: true,
       isSolved: engine.isSolved(grid),
+      lastMove: move,
     );
   }
 
@@ -97,6 +102,96 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     if (hint != null) {
       _paintBlockOutline(canvas, hint.row, hint.col, canvas.palette.success);
     }
+
+    // While a tile is being dragged, outline the block that would turn, so the
+    // gesture is "this block rotates" rather than a mystery about which of the
+    // four blocks containing the tile is live.
+    final hover = canvas.highlight.hover;
+    if (hover != null) {
+      final (row, col) = engine
+          .blocksContaining(rows, state.block, hover.a, hover.b)
+          .reduce((a, b) {
+        final da = _centreDistance(a, hover.a, hover.b);
+        final db = _centreDistance(b, hover.a, hover.b);
+        return da <= db ? a : b;
+      });
+      _paintBlockOutline(
+        canvas,
+        row,
+        col,
+        canvas.palette.primary.withValues(alpha: 0.55),
+      );
+    }
+  }
+
+  double _centreDistance((int, int) corner, int row, int col) {
+    final centreRow = corner.$1 + (state.block - 1) / 2;
+    final centreCol = corner.$2 + (state.block - 1) / 2;
+    return (centreRow - row).abs() + (centreCol - col).abs();
+  }
+
+  // -------------------------------------------------------------- transition
+
+  @override
+  Duration? transitionFor(TwiddleState from, TwiddleState to) {
+    final move = to.lastMove;
+    if (move == null) return null;
+    if (!identical(from.puzzle, to.puzzle)) return null;
+    // A hint or a selection keeps `lastMove`; only a changed grid is a turn.
+    if (listEquals(from.grid, to.grid)) return null;
+    if (move.row < 0 ||
+        move.col < 0 ||
+        move.row + state.block > state.size ||
+        move.col + state.block > state.size) {
+      return null;
+    }
+    return const Duration(milliseconds: 240);
+  }
+
+  @override
+  void paintTransition(
+    PuzzleCanvas canvas,
+    TwiddleState from,
+    TwiddleState to,
+    double t,
+  ) {
+    final move = to.lastMove;
+    if (move == null) {
+      paint(canvas, to);
+      return;
+    }
+
+    final eased = Curves.easeInOutCubic.transform(t.clamp(0.0, 1.0));
+    // In canvas coordinates (y down) the engine's clockwise turn is a negative
+    // angle. Rotating the old block by this much lands exactly on the new grid.
+    final angle = (move.clockwise ? -1 : 1) * (math.pi / 2) * eased;
+
+    canvas.bed();
+    for (var row = 0; row < rows; row++) {
+      for (var col = 0; col < cols; col++) {
+        final inBlock = row >= move.row &&
+            row < move.row + state.block &&
+            col >= move.col &&
+            col < move.col + state.block;
+        if (inBlock) continue;
+        paintCell(canvas, to, row, col);
+      }
+    }
+
+    final topLeft = cellRect(move.row, move.col);
+    final bottomRight = cellRect(
+      move.row + state.block - 1,
+      move.col + state.block - 1,
+    );
+    final centre = Rect.fromPoints(topLeft.topLeft, bottomRight.bottomRight).center;
+
+    canvas.pushRotation(centre, angle);
+    for (var row = move.row; row < move.row + state.block; row++) {
+      for (var col = move.col; col < move.col + state.block; col++) {
+        paintCell(canvas, from, row, col);
+      }
+    }
+    canvas.pop();
   }
 
   @override
@@ -122,7 +217,7 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     canvas.text(
       '${_tileAt(row, col)}',
       rect,
-      fontSize: rect.height * 0.42,
+      fontSize: canvas.fontSizeFor(rect, 0.42),
       weight: FontWeight.w800,
       color: correct ? palette.primary : palette.ink,
     );
@@ -145,7 +240,7 @@ class TwiddleBoard extends GridBoard<TwiddleState> {
     canvas.text(
       '${_tileAt(element.a, element.b)}',
       rect,
-      fontSize: rect.height * 0.42,
+      fontSize: canvas.fontSizeFor(rect, 0.42),
       weight: FontWeight.w800,
       color: canvas.palette.primary,
     );

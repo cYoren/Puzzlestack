@@ -88,4 +88,12 @@ class MapNotifier extends _$MapNotifier {
   }
 
   bool get isSolved => _engine.isSolved(state.puzzle, state.colours);
+
+  /// Paints the stored four-colouring.
+  void solve() {
+    state = state.copyWith(
+      colours: List<int>.from(state.puzzle.solution),
+      clearHint: true,
+    );
+  }
 }

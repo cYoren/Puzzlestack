@@ -58,7 +58,7 @@ class SpoonerismSolverNotifier extends _$SpoonerismSolverNotifier {
     state = SpoonerismSolverState(
       spoonerism: task.spoonerism,
       original: task.original,
-      options: task.options..shuffle(),
+      options: _engine.getOptions(task),
       isLoading: false,
     );
   }

@@ -79,7 +79,51 @@ class CategoryFluencyEngine {
       "bassoon", "contrabassoon", "soprano saxophone", "alto saxophone", "tenor saxophone", "baritone saxophone", 
       "cornet", "flugelhorn", "euphonium", "sousaphone", "tin whistle", "ocarina", "pan pipes", "didgeridoo", "theremin"
     }),
+    Category(name: "Vegetables", items: {
+      "carrot", "potato", "onion", "garlic", "lettuce", "spinach", "kale", "cabbage", "broccoli", "cauliflower",
+      "pea", "bean", "lentil", "chickpea", "corn", "pepper", "tomato", "cucumber", "zucchini", "pumpkin",
+      "squash", "beet", "radish", "turnip", "parsnip", "celery", "asparagus", "artichoke", "eggplant", "okra",
+      "leek", "shallot", "sweet potato", "yam", "cassava", "fennel", "endive", "arugula", "chard", "sprout",
+      "mushroom", "ginger", "horseradish", "watercress", "bok choy", "snow pea", "runner bean", "broad bean"
+    }),
+    Category(name: "Vehicles", items: {
+      "car", "truck", "bus", "van", "bicycle", "motorcycle", "scooter", "train", "tram", "subway",
+      "boat", "ship", "ferry", "canoe", "kayak", "raft", "sailboat", "yacht", "submarine", "airplane",
+      "helicopter", "glider", "balloon", "rocket", "shuttle", "sled", "sleigh", "tractor", "tanker", "lorry",
+      "pickup", "wagon", "carriage", "ambulance", "fire engine", "police car", "taxi", "limousine", "trolley", "tramway",
+      "skateboard", "rollerblade", "segway", "hovercraft", "gondola", "rickshaw", "chariot", "wheelbarrow"
+    }),
+    Category(name: "Sports", items: {
+      "soccer", "football", "basketball", "baseball", "tennis", "golf", "hockey", "cricket", "rugby", "volleyball",
+      "badminton", "table tennis", "squash", "handball", "netball", "cycling", "running", "swimming", "rowing", "sailing",
+      "boxing", "wrestling", "judo", "karate", "fencing", "archery", "shooting", "gymnastics", "skating", "skiing",
+      "snowboarding", "surfing", "climbing", "marathon", "triathlon", "decathlon", "polo", "lacrosse", "curling", "darts",
+      "bowling", "billiards", "snooker", "chess", "sumo", "taekwondo", "weightlifting", "motor racing"
+    }),
+    Category(name: "Occupations", items: {
+      "doctor", "nurse", "teacher", "lawyer", "judge", "engineer", "architect", "farmer", "baker", "chef",
+      "waiter", "barber", "dentist", "plumber", "electrician", "carpenter", "painter", "mechanic", "pilot", "sailor",
+      "soldier", "police officer", "firefighter", "paramedic", "surgeon", "pharmacist", "veterinarian", "scientist", "chemist", "physicist",
+      "accountant", "banker", "economist", "journalist", "editor", "writer", "poet", "actor", "singer", "dancer",
+      "photographer", "designer", "programmer", "librarian", "postman", "tailor", "florist", "butcher"
+    }),
+    Category(name: "Weather", items: {
+      "rain", "snow", "sleet", "hail", "fog", "mist", "storm", "thunder", "lightning", "wind",
+      "breeze", "gale", "hurricane", "tornado", "cyclone", "drizzle", "shower", "downpour", "flood", "drought",
+      "heatwave", "frost", "blizzard", "cloud", "sunshine", "rainbow", "dew", "ice", "squall", "typhoon",
+      "monsoon", "snowfall", "haze", "smog", "chill", "warmth", "humidity", "pressure", "front", "overcast"
+    }),
+    Category(name: "Kitchen Utensils", items: {
+      "fork", "knife", "spoon", "plate", "bowl", "cup", "mug", "glass", "pan", "pot",
+      "kettle", "whisk", "spatula", "ladle", "grater", "peeler", "strainer", "colander", "chopping board", "rolling pin",
+      "tongs", "scissors", "opener", "corkscrew", "thermometer", "scale", "measuring cup", "sieve", "blender", "toaster",
+      "oven", "stove", "fridge", "freezer", "microwave", "dishwasher", "sink", "tap", "tray", "jar",
+      "bottle", "can", "lid", "napkin", "apron", "mitt", "skewer", "mortar"
+    }),
   ];
+
+  /// Every category, so a test can count them without a run.
+  List<Category> get categories => List.unmodifiable(_categories);
 
   Category getRandomCategory() {
     return _categories[_random.nextInt(_categories.length)];

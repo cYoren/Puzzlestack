@@ -14,6 +14,7 @@ class NetState extends PuzzleState {
     required this.difficulty,
     this.moves = 0,
     this.hint,
+    this.lastSlide,
   });
 
   final NetPuzzle puzzle;
@@ -24,6 +25,9 @@ class NetState extends PuzzleState {
   final NetDifficulty difficulty;
   final int moves;
   final ({bool row, int index, bool forward})? hint;
+
+  /// The slide that produced this board, for the transition paint.
+  final ({bool row, int index, bool forward})? lastSlide;
 
   int get rows => puzzle.rows;
 
@@ -36,6 +40,8 @@ class NetState extends PuzzleState {
     int? moves,
     ({bool row, int index, bool forward})? hint,
     bool clearHint = false,
+    ({bool row, int index, bool forward})? lastSlide,
+    bool clearLastSlide = false,
   }) =>
       NetState(
         puzzle: puzzle,
@@ -43,6 +49,8 @@ class NetState extends PuzzleState {
         difficulty: difficulty,
         moves: moves ?? this.moves,
         hint: clearHint ? null : (hint ?? this.hint),
+        lastSlide:
+            clearLastSlide ? null : (lastSlide ?? this.lastSlide),
       );
 }
 
@@ -80,7 +88,12 @@ class NetslideNotifier extends _$NetslideNotifier {
       forward: forward,
     );
     if (next == null) return false;
-    state = state.copyWith(masks: next, moves: state.moves + 1, clearHint: true);
+    state = state.copyWith(
+      masks: next,
+      moves: state.moves + 1,
+      clearHint: true,
+      lastSlide: (row: row, index: index, forward: forward),
+    );
     return true;
   }
 
@@ -102,5 +115,14 @@ class NetslideNotifier extends _$NetslideNotifier {
     final found = _engine.hint(state.puzzle, state.masks);
     if (found == null) return;
     state = state.copyWith(hint: found);
+  }
+
+  /// Puts the net back together.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      masks: List<int>.from(state.puzzle.solvedMasks),
+      clearHint: true,
+    );
   }
 }
