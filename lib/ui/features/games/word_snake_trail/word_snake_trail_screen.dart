@@ -17,13 +17,129 @@ class WordSnakeTrailScreen extends ConsumerStatefulWidget {
   ConsumerState<WordSnakeTrailScreen> createState() => _WordSnakeTrailScreenState();
 }
 
+/// The words a trail can spell.
+///
+/// A cell can be used once per attempt, so a word with a repeated letter
+/// (BOOK, RIVER, GREEN) cannot be traced even though the generator will place
+/// it. Ten words meant the tenth puzzle was the first one again.
+final List<String> wordSnakePool = [
+  'BLUE',
+  'ROSE',
+  'PINE',
+  'DESK',
+  'STAR',
+  'FISH',
+  'PLAN',
+  'WIND',
+  'GOLD',
+  'LION',
+  'LAMP',
+  'MINT',
+  'SAND',
+  'WOLF',
+  'CAKE',
+  'FROG',
+  'MILK',
+  'RING',
+  'MAZE',
+  'QUIZ',
+  'JUMP',
+  'WAVE',
+  'LEAF',
+  'RAIN',
+  'SNOW',
+  'BOAT',
+  'SHIP',
+  'KING',
+  'PARK',
+  'LANE',
+  'ROPE',
+  'VASE',
+  'HARP',
+  'DRUM',
+  'TIGER',
+  'CLOUD',
+  'MELON',
+  'BRAIN',
+  'HOUSE',
+  'WATER',
+  'SUGAR',
+  'MUSIC',
+  'NIGHT',
+  'LIGHT',
+  'STONE',
+  'HORSE',
+  'BREAD',
+  'CHAIR',
+  'DREAM',
+  'OCEAN',
+  'PLANT',
+  'SMILE',
+  'MONEY',
+  'YOUTH',
+  'WORLD',
+  'TEACH',
+];
+
+/// The board is `wordSnakeGridSize` square, so no word may be longer than the
+/// number of cells a single trail can walk.
+const int wordSnakeGridSize = 4;
+
+/// A trail of [length] cells on a [gridSize] square board, one cell per letter
+/// and never the same cell twice.
+///
+/// Depth-first with backtracking, so it always completes: the random walk this
+/// replaced could corner itself on a 4x4 board (four steps into a corner) and
+/// then had to reuse a cell, which put two of one letter on the board and left
+/// the player tracing a word that could not be traced.
+List<Point<int>> buildWordSnakeTrail({
+  required int gridSize,
+  required int length,
+  Random? random,
+}) {
+  final rng = random ?? Random();
+  final cells = gridSize * gridSize;
+  final wanted = length > cells ? cells : length;
+  for (var attempt = 0; attempt < 40; attempt++) {
+    final start = Point(rng.nextInt(gridSize), rng.nextInt(gridSize));
+    final trail = <Point<int>>[start];
+    if (_extendTrail(trail, wanted, gridSize, rng)) return trail;
+  }
+  // With room on the board this is unreachable; a straight walk along the top
+  // row is the fallback so the screen always has a trail to draw.
+  return [for (var x = 0; x < wanted; x++) Point(x % gridSize, x ~/ gridSize)];
+}
+
+bool _extendTrail(
+  List<Point<int>> trail,
+  int length,
+  int gridSize,
+  Random rng,
+) {
+  if (trail.length == length) return true;
+  final last = trail.last;
+  final options = <Point<int>>[];
+  if (last.x > 0) options.add(Point(last.x - 1, last.y));
+  if (last.x < gridSize - 1) options.add(Point(last.x + 1, last.y));
+  if (last.y > 0) options.add(Point(last.x, last.y - 1));
+  if (last.y < gridSize - 1) options.add(Point(last.x, last.y + 1));
+  options.shuffle(rng);
+  for (final next in options) {
+    if (trail.contains(next)) continue;
+    trail.add(next);
+    if (_extendTrail(trail, length, gridSize, rng)) return true;
+    trail.removeLast();
+  }
+  return false;
+}
+
 class _WordSnakeTrailScreenState extends ConsumerState<WordSnakeTrailScreen> {
   final Random _random = Random();
   int _score = 0;
   final int _targetScore = 3;
   bool _isGameOver = false;
 
-  final int _gridSize = 4;
+  int get _gridSize => wordSnakeGridSize;
   late List<List<String>> _grid;
 
   // The secret word trail (sequential cell coordinates)
@@ -31,9 +147,7 @@ class _WordSnakeTrailScreenState extends ConsumerState<WordSnakeTrailScreen> {
   late String _secretWord;
   final List<Point<int>> _userTrail = [];
 
-  final List<String> _wordsPool = [
-    'BLUE', 'ROSE', 'PINE', 'DESK', 'STAR', 'FISH', 'PLAN', 'WIND', 'GOLD', 'LION'
-  ];
+  List<String> get _wordsPool => wordSnakePool;
 
   @override
   void initState() {
@@ -50,29 +164,17 @@ class _WordSnakeTrailScreenState extends ConsumerState<WordSnakeTrailScreen> {
       return String.fromCharCode(65 + _random.nextInt(26)); // Random A-Z
     }));
 
-    // Inject secret word trail sequence of cells (random walk)
-    int cx = _random.nextInt(_gridSize);
-    int cy = _random.nextInt(_gridSize);
-    _secretTrail = [Point(cx, cy)];
-    _grid[cy][cx] = _secretWord[0];
-
-    for (int i = 1; i < _secretWord.length; i++) {
-      final neighbors = <Point<int>>[];
-      if (cx > 0) neighbors.add(Point(cx - 1, cy));
-      if (cx < _gridSize - 1) neighbors.add(Point(cx + 1, cy));
-      if (cy > 0) neighbors.add(Point(cx, cy - 1));
-      if (cy < _gridSize - 1) neighbors.add(Point(cx, cy + 1));
-
-      // Exclude already visited coordinates in secret trail if possible
-      final unvisited = neighbors.where((pt) => !_secretTrail.contains(pt)).toList();
-      final targetPoint = unvisited.isNotEmpty
-          ? unvisited[_random.nextInt(unvisited.length)]
-          : neighbors[_random.nextInt(neighbors.length)];
-
-      cx = targetPoint.x;
-      cy = targetPoint.y;
-      _secretTrail.add(targetPoint);
-      _grid[cy][cx] = _secretWord[i];
+    // A trail of exactly one cell per letter, built by depth-first search so
+    // it always completes. The random walk this replaced could corner itself
+    // (a 4x4 board traps a walk at a corner after four steps) and then place
+    // the same letter on a cell twice, which made the word unsolvable.
+    _secretTrail = buildWordSnakeTrail(
+      gridSize: _gridSize,
+      length: _secretWord.length,
+      random: _random,
+    );
+    for (var i = 0; i < _secretWord.length; i++) {
+      _grid[_secretTrail[i].y][_secretTrail[i].x] = _secretWord[i];
     }
   }
 

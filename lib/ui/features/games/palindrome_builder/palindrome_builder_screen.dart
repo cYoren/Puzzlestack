@@ -30,7 +30,14 @@ class _PalindromeBuilderScreenState extends ConsumerState<PalindromeBuilderScree
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.palindromeBuilderTitle.toUpperCase(),
-        message: l10n.wordFoundMessage(ref.read(palindromeBuilderNotifierProvider).display.replaceAll('..', ref.read(palindromeBuilderNotifierProvider).solution)),
+        // The gap is however many letters the answer has: one dot each, so a
+        // single `replaceAll('..')` only ever filled a two-letter gap.
+        message: l10n.wordFoundMessage(
+          ref
+              .read(palindromeBuilderNotifierProvider)
+              .display
+              .replaceAll(RegExp(r'\.+'), ref.read(palindromeBuilderNotifierProvider).solution),
+        ),
         onPlayAgain: () {
           ref.read(palindromeBuilderNotifierProvider.notifier).initGame();
           Navigator.pop(context);

@@ -18,6 +18,44 @@ class RoomItem {
   RoomItem({required this.icon, required this.label, required this.color});
 }
 
+/// Objects that can appear in the room. A round places five and swaps one for
+/// a sixth, so eight objects meant the same eight forever; a label and an icon
+/// are both unique, because the swap picks by icon.
+final List<RoomItem> roomInspectorObjects = [
+  RoomItem(icon: Icons.chair_rounded, label: 'CHAIR', color: DesignSystem.gameBlue),
+  RoomItem(icon: Icons.bed_rounded, label: 'BED', color: DesignSystem.gameGreen),
+  RoomItem(icon: Icons.tv_rounded, label: 'TV', color: DesignSystem.gamePurple),
+  RoomItem(icon: Icons.light_rounded, label: 'LAMP', color: DesignSystem.gameOrange),
+  RoomItem(icon: Icons.local_florist_rounded, label: 'PLANT', color: Colors.teal),
+  RoomItem(icon: Icons.kitchen_rounded, label: 'FRIDGE', color: Colors.blueGrey),
+  RoomItem(icon: Icons.table_restaurant_rounded, label: 'TABLE', color: Colors.brown),
+  RoomItem(icon: Icons.computer_rounded, label: 'DESK', color: Colors.indigo),
+  RoomItem(icon: Icons.access_time_rounded, label: 'CLOCK', color: Colors.amber),
+  RoomItem(icon: Icons.smartphone_rounded, label: 'PHONE', color: Colors.cyan),
+  RoomItem(icon: Icons.menu_book_rounded, label: 'BOOK', color: Colors.deepOrange),
+  RoomItem(icon: Icons.local_cafe_rounded, label: 'CUP', color: Colors.lime),
+  RoomItem(icon: Icons.vpn_key_rounded, label: 'KEY', color: Colors.pink),
+  RoomItem(icon: Icons.inventory_2_rounded, label: 'BOX', color: DesignSystem.gameBlue),
+  RoomItem(icon: Icons.shopping_basket_rounded, label: 'BASKET', color: DesignSystem.gameGreen),
+  RoomItem(icon: Icons.checkroom_rounded, label: 'COAT', color: DesignSystem.gamePurple),
+  RoomItem(icon: Icons.microwave_rounded, label: 'MICROWAVE', color: DesignSystem.gameOrange),
+  RoomItem(icon: Icons.local_laundry_service_rounded, label: 'WASHER', color: Colors.teal),
+  RoomItem(icon: Icons.speaker_rounded, label: 'SPEAKER', color: Colors.blueGrey),
+  RoomItem(icon: Icons.backpack_rounded, label: 'BAG', color: Colors.brown),
+  RoomItem(icon: Icons.brush_rounded, label: 'BRUSH', color: Colors.indigo),
+  RoomItem(icon: Icons.calculate_rounded, label: 'CALCULATOR', color: Colors.amber),
+  RoomItem(icon: Icons.weekend_rounded, label: 'SOFA', color: Colors.cyan),
+  RoomItem(icon: Icons.window_rounded, label: 'WINDOW', color: Colors.deepOrange),
+  RoomItem(icon: Icons.sports_esports_rounded, label: 'CONSOLE', color: Colors.lime),
+  RoomItem(icon: Icons.radio_rounded, label: 'RADIO', color: Colors.pink),
+  RoomItem(icon: Icons.water_drop_rounded, label: 'JUG', color: DesignSystem.gameBlue),
+  RoomItem(icon: Icons.toys_rounded, label: 'TOY', color: DesignSystem.gameGreen),
+  RoomItem(icon: Icons.local_bar_rounded, label: 'BOTTLE', color: DesignSystem.gamePurple),
+  RoomItem(icon: Icons.air_rounded, label: 'FAN', color: DesignSystem.gameOrange),
+];
+
+/// Every object, so a test can check the labels and icons are distinct.
+
 class RoomInspectorScreen extends ConsumerStatefulWidget {
   const RoomInspectorScreen({super.key});
 
@@ -42,16 +80,7 @@ class _RoomInspectorScreenState extends ConsumerState<RoomInspectorScreen> {
   late RoomItem _originalItem;
   late RoomItem _newItem;
 
-  final List<RoomItem> _roomPool = [
-    RoomItem(icon: Icons.chair_rounded, label: 'CHAIR', color: DesignSystem.gameBlue),
-    RoomItem(icon: Icons.bed_rounded, label: 'BED', color: DesignSystem.gameGreen),
-    RoomItem(icon: Icons.tv_rounded, label: 'TV', color: DesignSystem.gamePurple),
-    RoomItem(icon: Icons.light_rounded, label: 'LAMP', color: DesignSystem.gameOrange),
-    RoomItem(icon: Icons.local_florist_rounded, label: 'PLANT', color: Colors.teal),
-    RoomItem(icon: Icons.kitchen_rounded, label: 'FRIDGE', color: Colors.blueGrey),
-    RoomItem(icon: Icons.table_restaurant_rounded, label: 'TABLE', color: Colors.brown),
-    RoomItem(icon: Icons.computer_rounded, label: 'DESK', color: Colors.indigo),
-  ];
+  List<RoomItem> get _roomPool => roomInspectorObjects;
 
   @override
   void initState() {
