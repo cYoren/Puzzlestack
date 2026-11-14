@@ -41,13 +41,37 @@ merged; say which job id in the PR title.
 
 ### B. The Deck
 
+No game's tier changes in the machine pass: a verdict that needs play stays where CATALOG.md put
+it. Triage that moves an id writes the reason in that room's Notes.
+
 | Job | What | Depends on |
 | --- | --- | --- |
 | `deck-allowlist` | `lib/data/curation.dart`: replace `feedBlocklist` with one tier per game (`deck`, `library`, `archive`), seeded from CATALOG.md. `GameFeed.feedPool` = Deck minus hidden; every list, search and count reads visible games only. Add `kind` (think, word, snap), `family`, `origin` tag and archive `reason` to `GameMetadata`. Test: ids are real, tiers and tags match CATALOG.md, G1 | `land-deck` |
-| `triage-logic` `triage-math` `triage-memory` `triage-attention` `triage-word` `triage-spatial` | Play every game in the room against the bar. Confirm or move each id in CATALOG.md with a one-line reason, mark it verified. Six PRs. Fix nothing here; open a fix job per game that needs one | `deck-allowlist` |
+| `triage-logic` `triage-math` `triage-memory` `triage-attention` `triage-word` `triage-spatial` | Play every game in the room against the bar. Confirm or move each id in CATALOG.md with a one-line reason, mark it verified. Six PRs. Fix nothing here; open a fix job per game that needs one. **The machine half is done for all six; the play list is what remains** (see B2) | `deck-allowlist` |
 | `merge-families` | Fold each `merge` line: add the absorbed game as a mode of the keeper only if it plays differently, then archive it with reason `twin`. One PR per room | its `triage-*` |
 | `archive` | Set `tier: archive` on the Archive lists. Archived games stay in the repo, compile and keep their tests, and appear nowhere in the app: not in rooms, search, the deal, the daily, counts or store copy. Nothing is deleted | all `triage-*` |
-| `plain-names` | Titles, subtitles and goal lines in `app_en.arb` for every kept game: plain words, sentence case, 60 characters. No lab names, no ALL CAPS | `retire` |
+| `plain-names` | Titles, subtitles and goal lines in `app_en.arb` for every kept game: plain words, sentence case, 60 characters. No lab names, no ALL CAPS. The ids are in each room's triage report (`plain-names`) | the machine `triage-*` |
+
+### B2. Triage: the half a machine can do is done
+
+Done, all six rooms (`docs/TRIAGE-<ROOM>.md`; `python3 tool/triage_room.py <room>`). Every
+game was checked for what a machine can decide: layout at 320dp in both themes, whether the
+generator proves its deal, whether it has a rule test, whether it has a guide, whether it can
+be played by tap alone, whether undo and restart exist, whether the title shouts. **The list is
+in the room docs, not here.** The checks that need a person (1 there is a decision, 3 five-second
+read, 4 about a minute) are `needs-play` in all six.
+
+What the machine pass leaves as real work, by job:
+
+| Job | Games | Where |
+| --- | --- | --- |
+| `uniqueness` | 111 | Logic 34, Math 19, Word 26, Spatial 32: the generator does not prove the deal is winnable |
+| `plain-names` | 84 | Logic 23, Math 13, Memory 24, Attention 13, Word 3, Spatial 8: ALL CAPS or lab vocabulary |
+| `rule-tests` | 79 | Logic 8, Math 22, Memory 16, Attention 19, Word 5, Spatial 9: no test against the game's own rule (G3) |
+| `feed-size` | 2 | Attention: `ghost_tap`, `rhythm_master` have no pool |
+
+**The play pass is still owed: 224 games** (139 Deck + 85 Library; the archive is not played).
+It needs hands and eyes, not an agent reading code. Each room's report ends with the list.
 
 ### C. Cards that work in a feed
 
@@ -88,7 +112,8 @@ where the detail for the first two and for `accessibility-boards` lives. The res
 | `word-wheel-curated` | Hand-made wheels; no generated ones from the wide dictionary |
 | `minesweeper-no-guess` | First tap opens an area and the board is solvable without a guess |
 | `accessibility-boards` | Semantics on the board contract |
-| `untested-sweep` | A test against its own rule for every kept game that has none (G3) |
+| `untested-sweep` (the triage reports call it `rule-tests`) | A test against its own rule for every kept game that has none (G3). The ids are in each room's triage report |
+| `uniqueness` | Every generator the triage marks `unproven` proves its deal: one answer where the genre implies one, always winnable elsewhere. `lib/core/deduction.dart` has the tools |
 | `l10n-kept-games` | Missing keys for kept games in the 22 other locales; guides translate `objective` and `controls` only |
 
 Pool jobs for archived games are cancelled. Do not grow a table for a game nobody can open.
