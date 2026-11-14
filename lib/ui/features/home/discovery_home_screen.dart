@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
-import '../../../data/game_registry.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../providers/game_session_provider.dart';
 import '../../../providers/user_providers.dart';
@@ -46,7 +45,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
     if (ids.isEmpty) return const [];
     final hidden = ref.watch(
         userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
-    final byId = {for (final g in allGamesMetadata) g.id: g};
+    final byId = {for (final g in GameCategories.visible) g.id: g};
     return [
       for (final id in ids)
         if (byId[id] != null && !hidden.contains(id)) byId[id]!,
@@ -170,7 +169,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
   /// The one place the whole deck is offered as a thing to do: a stack of
   /// cards with the count on it. Tapping deals a full-screen hand.
   Widget _dealCard(BuildContext context, WidgetRef ref) {
-    final int total = allGamesMetadata.length;
+    final int total = GameCategories.deck.length;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         DesignSystem.spaceLG,
