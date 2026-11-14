@@ -15,7 +15,9 @@ class MissingVowelsEngine {
         .toList();
   }
 
-  Future<List<String>> loadWords([String languageCode = 'en']) async {
+  /// English only: the shipped word asset is English, and the parameter this
+  /// used to accept was never read.
+  Future<List<String>> loadWords() async {
     try {
       final data = await rootBundle.loadString('assets/find_word_words.txt');
       return await compute(_processWords, data);
