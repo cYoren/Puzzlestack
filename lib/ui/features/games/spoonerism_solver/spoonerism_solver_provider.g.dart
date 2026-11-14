@@ -7,7 +7,7 @@ part of 'spoonerism_solver_provider.dart';
 // **************************************************************************
 
 String _$spoonerismSolverNotifierHash() =>
-    r'e7d53f22edd39b0968370d01479187fb2887075e';
+    r'c70b410d9a9b21e4dd8cf4619bce2cdbd54dd0f3';
 
 /// See also [SpoonerismSolverNotifier].
 @ProviderFor(SpoonerismSolverNotifier)

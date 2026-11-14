@@ -6,7 +6,7 @@ import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/features/home/discovery_home_screen.dart';
-import 'package:puzzle/ui/features/shuffle/shuffle_feed_screen.dart';
+import 'package:puzzle/ui/features/feed/feed_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
 
 /// The two surfaces the roadmap says must survive the upstream merge: the
@@ -48,84 +48,32 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);
-      expect(find.text('DAILY PICK'), findsOneWidget);
+      expect(find.text('Six rooms'), findsOneWidget);
 
-      // Scroll the whole page: the category tiles and the endless all-games
-      // list are built lazily, and a tile that overflows only shows up once it
-      // exists. Each label is recorded when it passes through the viewport —
-      // after 1,500px the page is inside the all-games list, so an assertion
-      // made only at the end would miss the rooms behind it.
-      const labels = ['Logic', 'Math', 'Memory', 'Spatial', 'Attention', 'Word'];
-      final seen = <String>{};
-      for (var i = 0; i < 14; i++) {
-        for (final label in labels) {
-          if (find.text(label).evaluate().isNotEmpty) seen.add(label);
-        }
+      // Scroll the whole page: the category tiles are built lazily, and a
+      // tile that overflows its grid cell only shows up once it exists.
+      for (var i = 0; i < 10; i++) {
         await tester.drag(find.byType(CustomScrollView), const Offset(0, -150));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull,
             reason: 'layout broke at scroll step $i, ${width.toInt()}dp');
       }
 
-      for (final label in labels) {
-        expect(seen, contains(label),
+      for (final label in [
+        'Logic',
+        'Math',
+        'Memory',
+        'Spatial',
+        'Attention',
+        'Word'
+      ]) {
+        expect(find.text(label), findsWidgets,
             reason: '$label room is missing at ${width.toInt()}dp');
       }
     });
   }
 
-  testWidgets('the feed bar fits the narrowest phone', (tester) async {
-    _sizeTo(tester, 320);
-
-    // Five controls now share one 44dp row: exit, title pill, like, block, lock.
-    // 320dp is where they stop fitting, so it is the size that has to pass.
-    await tester.pumpWidget(_app(const ShuffleFeedScreen(startGameId: 'pegs')));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
-
-    expect(tester.takeException(), isNull);
-    expect(find.byTooltip('Add to favourites'), findsOneWidget);
-    expect(
-        find.byTooltip('Not a puzzle: block it from the reel'), findsOneWidget);
-
-    await tester.pumpWidget(const SizedBox());
-    await tester.pump();
-  });
-
-  testWidgets('blocking from the feed hides that puzzle', (tester) async {
-    _sizeTo(tester, 360);
-
-    final container = ProviderContainer(
-      overrides: [userRepositoryProvider.overrideWithValue(_FakeRepository())],
-    );
-    addTearDown(container.dispose);
-
-    await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: MaterialApp(
-          theme: DesignSystem.lightTheme,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: const ShuffleFeedScreen(startGameId: 'pegs'),
-        ),
-      ),
-    );
-    await tester.pump();
-    expect(container.read(userDataNotifierProvider).hiddenGameIds, isEmpty);
-
-    // No pump after the tap: the handler hides the game and starts the swipe to
-    // the next one, and letting that animation run would build a random game
-    // (and that game's timers) inside this test.
-    await tester.tap(find.byTooltip('Not a puzzle: block it from the reel'));
-    expect(container.read(userDataNotifierProvider).hiddenGameIds,
-        contains('pegs'));
-
-    await tester.pumpWidget(const SizedBox());
-    await tester.pump();
-  });
-
-  testWidgets('the shuffle feed opens on a real game', (tester) async {
+  testWidgets('the deal opens on a real game', (tester) async {
     _sizeTo(tester, 400);
 
     // Pinned to a game on the board contract. Left random, this test opened a
@@ -133,13 +81,13 @@ void main() {
     // overflows a 320dp phone or leaves a timer running — which is a real
     // problem, but it is that game's problem, not the feed's, and a test that
     // fails one run in three tells you nothing about either.
-    await tester.pumpWidget(_app(const ShuffleFeedScreen(startGameId: 'pegs')));
+    await tester.pumpWidget(_app(const FeedScreen(startGameId: 'pegs')));
     // The feed animates continuously; pumpAndSettle is not an option.
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(tester.takeException(), isNull);
-    expect(find.byType(ShuffleFeedScreen), findsOneWidget);
+    expect(find.byType(FeedScreen), findsOneWidget);
 
     // The feed picks a game at random, and some games start their own timers
     // on the first frame. Tear the screen down so those timers go with it

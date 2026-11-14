@@ -7097,7 +7097,7 @@ abstract class AppLocalizations {
   /// No description provided for @chalkAndTalkSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Type words heard in audio while ignoring visual distractors.'**
+  /// **'Type the word in the reading panel, not the one chalked on the board.'**
   String get chalkAndTalkSubtitle;
 
   /// No description provided for @blinkDetectorTitle.
@@ -11078,6 +11078,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'HARD'**
   String get difficultyHard;
+
+  /// No description provided for @navDeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Deal'**
+  String get navDeal;
+
+  /// No description provided for @navStack.
+  ///
+  /// In en, this message translates to:
+  /// **'Stack'**
+  String get navStack;
+
+  /// No description provided for @navYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get navYou;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @nextPuzzle.
+  ///
+  /// In en, this message translates to:
+  /// **'Next puzzle'**
+  String get nextPuzzle;
+
+  /// No description provided for @restartPuzzle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restartPuzzle;
+
+  /// No description provided for @lockScroll.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock scrolling'**
+  String get lockScroll;
+
+  /// No description provided for @unlockScroll.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock scrolling'**
+  String get unlockScroll;
+
+  /// No description provided for @feedScrollLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll locked. Tap the lock to deal again.'**
+  String get feedScrollLocked;
+
+  /// No description provided for @dealTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The deal'**
+  String get dealTitle;
+
+  /// No description provided for @dealSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Every puzzle, one card at a time.'**
+  String get dealSubtitle;
+
+  /// No description provided for @yourCards.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cards'**
+  String get yourCards;
+
+  /// No description provided for @todaysCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s card'**
+  String get todaysCard;
+
+  /// No description provided for @quickPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Under two minutes'**
+  String get quickPlay;
+
+  /// No description provided for @rooms.
+  ///
+  /// In en, this message translates to:
+  /// **'Six rooms'**
+  String get rooms;
+
+  /// No description provided for @puzzles.
+  ///
+  /// In en, this message translates to:
+  /// **'puzzles'**
+  String get puzzles;
+
+  /// No description provided for @shuffleCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Deal this room'**
+  String get shuffleCategory;
+
+  /// No description provided for @deckProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{position} of {total}'**
+  String deckProgress(String position, String total);
 }
 
 class _AppLocalizationsDelegate

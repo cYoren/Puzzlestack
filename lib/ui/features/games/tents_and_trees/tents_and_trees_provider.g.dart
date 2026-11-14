@@ -7,7 +7,7 @@ part of 'tents_and_trees_provider.dart';
 // **************************************************************************
 
 String _$tentsAndTreesNotifierHash() =>
-    r'984c7a6c0a3b02a5f1656fbcad9a716f39c9a786';
+    r'357d921f24ed7d7ab0465522e047371ca7100197';
 
 /// See also [TentsAndTreesNotifier].
 @ProviderFor(TentsAndTreesNotifier)
