@@ -100,6 +100,79 @@ Mature, well-tested games. Code may be taken where the header says GPL-3.0 or "2
 | **Lichess puzzle database** (database.lichess.org) | the site states CC0; confirm before importing | Millions of rated chess puzzles. A "mate in one" Think card would be new to the Deck. `davecom/chess.dart` (MIT-style) gives move legality. A proposal, not a commitment |
 | **increpare/PuzzleScript** | MIT for the engine | Thousands of small push-block games, each under its own licence. A source of mechanics, not of levels |
 
+## 5. New card types, and where each comes from
+
+Second sweep, 2026-11-14. Organised by what the Deck gains, because that is how to choose.
+The first five are the ones to build first: each is a kind of card the Deck does not have,
+reads in five seconds, and has a generator or a large open supply behind it.
+
+### Build these first
+
+| Card | What the player does | Source | Licence |
+| --- | --- | --- | --- |
+| **Line panels** | Draw one line from the start dot to the exit so every symbol on the panel is satisfied (separate the colours, pass every dot, outline the shape) | `sigma144/witness-randomizer` (a generator for every symbol type), `jbzdarkid/witness-puzzles` (editor and solver, now at `jbzdarkid/jbzdarkid.github.io`) | MIT, BSD-3-Clause |
+| **Picture nonograms** | A 5x5 to 10x10 nonogram that reveals a real picture when solved, which is the payoff random grids lack | Rasterise open icon sets, keep only boards the solver proves unique: `google/material-design-icons` (Apache-2.0), `googlefonts/noto-emoji` (OFL-1.1), `twitter/twemoji` (MIT code, CC BY 4.0 art: attribute). Solvers: `Izaron/Nonograms`, `tsionyx/nonogrid` | MIT |
+| **Push boxes** | Sokoban on a 10x10 board | `google-deepmind/boxoban-levels`: generated levels in three difficulty sets, so no authored level sets are needed. `mpSchrader/gym-sokoban` generates more | Apache-2.0, MIT |
+| **Linjat** | Cover every dot with straight lines of the right length; made for a phone, generated, graded | `jsnell/linjat` | MIT |
+| **Rule grids** | See two or three before-and-after grids, work out the rule, paint the answer | `fchollet/ARC-AGI`, `arcprize/ARC-AGI-2`: hand-pick the small, clean tasks (10x10 or less) | Apache-2.0 |
+
+Use our own names. "Line panels" must not be called after the game it comes from, and Sokoban
+is "Push boxes" unless the name is confirmed free to use.
+
+### More logic and number cards
+
+| Card or use | Source | Licence |
+| --- | --- | --- |
+| **Numberlink** (connect the pairs, fill the grid), plus Walls and extended Undead, Unequal and Solo | `SteffenBauer/sgtpuzzles-extended`: `flow.c walls.c solo_plus.c undead_plus.c unequal_plus.c` on Tatham's framework. Prefer `flow.c` to the AGPL Numberlink repo: same puzzle, simpler licence, same porting pipeline | MIT (Tatham's text) |
+| Tap-only controls for every Tatham puzzle | `SteffenBauer/PocketPuzzles` (e-reader port), `medmunds/puzzles-web` (PWA) | MIT text, MIT |
+| **Dungeon walls**: place walls from row and column counts so every monster sits in a dead end and the treasure in a room | `halfburnttoast/Dungeon-Cross` for the rules; generate our own boards | GPL-2.0, check headers |
+| **Hex mines**: hexagonal Minesweeper where every step is deducible | `oprypin/sixcells` (level format, player); generate our own | GPL-3.0 |
+| **Hexalate**: rotate hex tiles until touching colours match | `gottcode/hexalate` | GPL-3.0 |
+| **Clue grid**: the Einstein puzzle as an icon grid instead of a wall of text. Rebuilds `einstein_riddle` into a Deck card | `lksj/einstein-puzzle` (Sherlock-style), `murfffi/zebra4j` (generator with unique answers) | GPL-2.0 check headers, LGPL-3.0 |
+| **Knights and knaves**: who is lying. Rebuilds `logical_syllogisms` | `dmackinnon1/inspectorCraig` (generators for Smullyan-style puzzles) | none: permission lane |
+| **Matrix patterns**, generated. Makes `matrix_reasoning` a Deck run | `WellyZhang/RAVEN` | GPL-3.0 |
+| **Queens / Star Battle** with hints in plain words | `gitars/queens-generator` | MIT |
+| Bridges generator and solver, second opinion | `erthium/hashiwokakero` | GPL-3.0 |
+| No-guess Minesweeper, second reference | `lucasnlm/antimine-android` | GPL-3.0 |
+| Peg solitaire boards | `gottcode/peg-e` | GPL-3.0 |
+| Cipher puzzles beyond the substitution cryptogram | `ruppde/crypto_puzzles` | GPL-3.0 |
+
+### Difficulty and hints
+
+The Library's tiers and every hint should come from how a person solves, not from grid size.
+
+| Use | Source | Licence |
+| --- | --- | --- |
+| Rate a puzzle by the hardest technique it needs; generate to a requested level | `emieks/pencil-puzzles` | MIT |
+| Sudoku: name the next technique for a hint, and grade a board | `SudokuMonster/SukakuExplainer`, `PseudoFish/Hodoku` | LGPL-2.1, GPL-3.0 |
+| Sudoku: fast generation | `t-dillon/tdoku` | BSD-2-Clause |
+| Explain a step as a rule ("this cell must be lit because...") | `Bram-Hub/LEGUP` | GPL-3.0 |
+| 100+ solvers on OR-Tools and 41k collected boards over 130 types | `SmilingWayne/puzzlekit` and its dataset repo. The solvers are ours to use; the boards were collected from puzzle sites, so use them to test our solvers and do not ship them | MIT for the code |
+
+### Word cards
+
+| Card or use | Source | Licence |
+| --- | --- | --- |
+| **Word grid** (Boggle-style, find words by adjacent letters) | `gottcode/tanglet`; `lexica/lexica` | GPL-3.0; GPL-3 and Apache-2.0 files |
+| **Connectagram**: unscramble words laid out as a crossword | `gottcode/connectagram` | GPL-3.0 |
+| **Hive**: make words from seven letters, one compulsory | `ConorSheehan1/spelling-bee`, `philshem/open-spelling-bee` | MIT |
+| Guess-the-word in 80+ languages | `lynn/hello-wordl` (MIT); `Hugo0/wordle` (word data licensed per language: check each) | MIT, mixed |
+| Crossword layout from a word list | `MichaelWehar/Crossword-Layout-Generator`, `riverrun/genxword`; fill words from `Crossword-Nexus/collaborative-word-list` | MIT, GPL-3.0, MIT |
+| Rhymes and homophones from pronunciation, not spelling | `cmusphinx/cmudict` | BSD-style |
+| Word ladders over a connected graph of common words | `charlesreid1/five-letter-words` (Knuth's 5,757) | MIT |
+| Portuguese word lists, for the second Word language | `fserb/pt-br`, `pythonprobr/palavras` | MIT, MPL-2.0 |
+| German word list | `enz/german-wordlist` | CC0 |
+
+### Siblings worth studying
+
+Not for code. For how someone else answered the same questions.
+
+- `lendl/quiet-grid` (GPL-3.0): a privacy-first logic puzzle app for Android, no ads, no
+  account. The closest thing to us on the store.
+- `brain-workshop/brainworkshop` (GPL-2.0): the reference n-back, and how it keeps a lab task
+  playable for years.
+- `loethen/freefocusgames` (no licence): lab tasks presented as games.
+
 ## More, now in scope
 
 | Source | Licence | What is in it for us |
@@ -126,12 +199,14 @@ through the bar.
 
 1. **The thirteen unreleased Tatham-framework puzzles**, starting with Boats, Ascent and
    Seismic. Same pipeline as the ports already done, so the cheapest good puzzles available.
-2. **Tatham's remaining five**: Mosaic, Palisade, Black Box, Undead, Tracks.
-3. **Nikoli types by offline-proved pools**: Star Battle, LITS, Suguru, Shakashaka first.
-4. **Tetravex and Atomix.**
-5. **Rebuilds from the Archive** (CATALOG.md): Vector Golf first.
-6. **Numberlink**, ported from `thomasahle/numberlink`.
-7. **Mate in one**, if the licence check holds and a chess card passes the five-second read.
+2. **The five new card types** in section 5: Line panels, Picture nonograms, Push boxes,
+   Linjat, Rule grids. These are what make the Deck unlike any other puzzle app.
+3. **Tatham's remaining five**: Mosaic, Palisade, Black Box, Undead, Tracks.
+4. **Nikoli types by offline-proved pools**: Star Battle, LITS, Suguru, Shakashaka first.
+5. **Tetravex, Atomix, Hexalate, Dungeon walls, Hex mines.**
+6. **Rebuilds from the Archive** (CATALOG.md): Vector Golf, Clue grid, Knights and knaves.
+7. **Numberlink**, ported from `flow.c` in `SteffenBauer/sgtpuzzles-extended`.
+8. **Mate in one**, if the licence check holds and a chess card passes the five-second read.
 
 Anything else an agent finds is welcome: add it to the right table here with its licence, in
 the same PR that uses it.
