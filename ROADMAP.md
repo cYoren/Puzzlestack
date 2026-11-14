@@ -235,8 +235,9 @@ the stale list. What the merge actually took:
 - **one registry.** `game_registry.dart` (304 `_metadata.dart` files, localized titles,
   popularity) replaces our `game_catalog.dart` and upstream's legacy `game_data.dart`. Both
   are deleted, along with the five home widgets only the old upstream home used;
-- **the guides**: 305 entries in `game_guides.dart`, now reachable from the info button on
-  every game screen instead of only from a tile we no longer render;
+- **the guides**: 313 entries in `game_guides.dart`, one per registered game and no orphans
+  (`test/content/registry_test.dart`), reachable from the info button on every game screen
+  instead of only from a tile we no longer render;
 - our branding survived the merge: bundle ids, store links, brand colours, the discovery home
   and the Shuffle feed. Upstream's `app_de.arb` was invalid JSON on their main; fixed here.
 
@@ -687,7 +688,7 @@ needing 14–20. The hint is exact and free: the presses still to make are `solu
 so it reveals one press, not the answer.
 
 Same bar as Phase 3. This phase adds no games and is the most valuable one in the document:
-it is the difference between "307 puzzles" and "307 puzzles that are actually correct".
+it is the difference between "313 puzzles" and "313 puzzles that are actually correct".
 
 ### Landed: every game fits a phone
 

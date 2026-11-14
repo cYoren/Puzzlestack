@@ -2,14 +2,20 @@
 
 ## What is canonical
 
+Nothing under `screenshots/` is tracked: it is all output of `tool/screenshots.sh` and is
+regenerable. The images that ship live where each store reads them:
+
 | Path | What it is |
 |------|-----------|
-| `aso-refresh/final/ios/` | **Ships to the App Store.** 8 images, 1290×2796, no alpha. |
-| `aso-refresh/final/play/` | **Ships to Google Play.** The same 8 shots at 1080×1920. |
-| `aso-refresh/framed/` | Intermediate: the raw capture pasted into the device frame. Safe to delete. |
-| `raw/` | Raw device captures. Regenerated on every capture run. |
+| `fastlane/metadata/android/en-US/images/phoneScreenshots/1–8.png` | **Ships to Google Play.** 1080×1920, no alpha. |
+| `fastlane/screenshots/en-US/1–8.png` | **Ships to the App Store.** 1290×2796, no alpha. `deliver`'s default path. |
+| `screenshots/aso-refresh/final/play/` | Same eight shots at 1080×1920, as the composer writes them. |
+| `screenshots/aso-refresh/final/ios/` | Same eight shots at 1290×2796. |
+| `screenshots/aso-refresh/framed/` | Intermediate: the raw capture pasted into the device frame. Safe to delete. |
+| `screenshots/raw/` | Raw device captures. Regenerated on every capture run.
 
-Anything else under `screenshots/` is not canonical.
+`test/content/store_images_test.dart` fails if either shipped set is missing, the wrong size, or
+if the two listings disagree about the number of games.
 
 ## Two canvases, because the stores disagree
 

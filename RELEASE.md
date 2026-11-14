@@ -89,7 +89,9 @@ contains the updater.
 
 ## Store listing
 
-Listing text and imagery live in `fastlane/metadata/android/en-US/`:
+Listing text and imagery live in two places, one per store.
+
+Google Play — `fastlane/metadata/android/en-US/`:
 
 - `title.txt` (max 30 chars), `short_description.txt` (max 80),
   `full_description.txt` (max 4000)
@@ -98,16 +100,30 @@ Listing text and imagery live in `fastlane/metadata/android/en-US/`:
   app's own fonts and palette, so it never drifts from the product
 - `images/phoneScreenshots/1–8.png` (1080×1920)
 
+App Store — `fastlane/metadata/ios/en-US/` and `fastlane/screenshots/en-US/`:
+
+- `name.txt` (30), `subtitle.txt` (30), `keywords.txt` (100, comma-separated, no spaces),
+  `promotional_text.txt` (170), `description.txt` (4000), `support_url.txt`,
+  `marketing_url.txt`, `privacy_url.txt`, `copyright.txt`
+- `fastlane/screenshots/en-US/1–8.png` at 1290×2796, which is what `deliver` reads by default
+
 Regenerate screenshots after any UI change:
 
 ```bash
-tool/screenshots.sh emulator-5554
+tool/screenshots.sh emulator-5554      # an emulator id or a simulator UDID
 ```
 
-Then copy `screenshots/aso-refresh/final/play/*.png` into `phoneScreenshots/`, numbered
-`1.png`–`8.png` (Play accepts at most 8). The App Store set is
-`screenshots/aso-refresh/final/ios/` at 1290×2796. Two canvases, because Play refuses an aspect
-past 2:1 and 1290×2796 is 2.17:1.
+The script writes raw captures to `screenshots/raw/` and composes both canvases with
+`tool/compose_house_style.py`: `screenshots/aso-refresh/final/play/` at 1080×1920 and
+`screenshots/aso-refresh/final/ios/` at 1290×2796. Copy the Play set into
+`images/phoneScreenshots/` and the App Store set into `fastlane/screenshots/en-US/`, numbered
+`1.png`–`8.png` (Play accepts at most 8). Two canvases, because Play refuses an aspect past
+2:1 and 1290×2796 is 2.17:1; the App Store set is composed from the same raw captures, which
+stretches the Android pixels about 2.5%, so a simulator capture is preferable when one is at
+hand.
+
+`test/content/store_images_test.dart` fails if either set is missing, the wrong size, or the
+two listings disagree about the number of games.
 
 ## Legal pages
 
@@ -130,8 +146,12 @@ version, same copy.
 
 ## Still open
 
-- **Store screenshots.** Removed on 2026-11-11 because the old set said MINDSTACK and 161.
-  Recapture with `tool/screenshots.sh` and restage both sets.
+- **Store screenshots, eyes needed.** Captured on 2026-11-13 with `tool/screenshots.sh` on an
+  Android 15 emulator (`emulator-5554`, wm size 1080×1920) and composed into both canvases:
+  eight Play shots at 1080×1920 and eight App Store shots at 1290×2796. Sizes, existence and
+  the "313" in both descriptions are asserted in `test/content/store_images_test.dart`, but
+  nobody has looked at the pictures: glance at the eight before uploading, and recapture the
+  App Store set on a simulator when one is at hand.
 - **Play Data Safety form.** The answers above are verified against the source and ready to
   enter; the console step is the one thing that cannot be done from the repo.
 - **Shorebird `app_id`.** Still the pre-rename id. Harmless while no shipped build bundles the
