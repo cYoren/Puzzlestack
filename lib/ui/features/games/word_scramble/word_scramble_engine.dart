@@ -16,13 +16,17 @@ class WordScrambleEngine {
         .toList();
   }
 
-  Future<List<String>> loadWords([String languageCode = 'en']) async {
+  /// English only: the shipped word asset is English, and the parameter this
+  /// used to accept was never read.
+  Future<List<String>> loadWords() async {
     if (_cachedWords != null && _cachedWords!.isNotEmpty) {
       return _cachedWords!;
     }
 
     try {
-      final data = await rootBundle.loadString('assets/find_word_words.txt');
+      // Curated answers, not the guess-validating list: a scrambled "aalii"
+      // is not a puzzle, it is a spelling test of a word nobody knows.
+      final data = await rootBundle.loadString('assets/find_word_answers.txt');
       _cachedWords = await compute(_processWords, data);
       
       if (_cachedWords!.isEmpty) {

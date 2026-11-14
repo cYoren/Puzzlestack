@@ -1,6 +1,8 @@
 import 'dart:math';
 
 class CryptogramEngine {
+  /// Quotes to encode. A run consumes one, so the pool is deliberately longer
+  /// than a session: six quotes meant the third cryptogram was a repeat.
   final List<String> _quotes = [
     "DREAM BIG AND DARE TO FAIL",
     "STAY HUNGRY STAY FOOLISH",
@@ -8,7 +10,28 @@ class CryptogramEngine {
     "THE ONLY WAY TO DO GREAT WORK IS TO LOVE WHAT YOU DO",
     "BE THE CHANGE YOU WISH TO SEE IN THE WORLD",
     "WHATEVER YOU ARE BE A GOOD ONE",
+    "THE JOURNEY OF A THOUSAND MILES BEGINS WITH ONE STEP",
+    "A PENNY SAVED IS A PENNY EARNED",
+    "WHERE THERE IS A WILL THERE IS A WAY",
+    "ACTIONS SPEAK LOUDER THAN WORDS",
+    "HONESTY IS THE BEST POLICY",
+    "EVERY CLOUD HAS A SILVER LINING",
+    "TIME AND TIDE WAIT FOR NO MAN",
+    "THE EARLY BIRD CATCHES THE WORM",
+    "ALWAYS LOOK BEFORE YOU LEAP",
+    "TOO MANY COOKS SPOIL THE BROTH",
+    "STRIKE WHILE THE IRON IS HOT",
+    "A ROLLING STONE GATHERS NO MOSS",
+    "ROME WAS NOT BUILT IN A DAY",
+    "ALL THAT GLITTERS IS NOT GOLD",
+    "SLOW AND STEADY WINS THE RACE",
+    "SIMPLICITY IS THE ULTIMATE SOPHISTICATION",
+    "THE BEST WAY TO PREDICT THE FUTURE IS TO CREATE IT",
+    "NOTHING VENTURED NOTHING GAINED",
   ];
+
+  /// Every quote, so a test can hold the pool to the letters the cipher needs.
+  List<String> get quotes => List.unmodifiable(_quotes);
 
   Map<String, dynamic> generatePuzzle() {
     final random = Random();

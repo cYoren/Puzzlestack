@@ -11,6 +11,45 @@ import 'package:puzzle/widgets/tangible.dart';
 import '../../../core/juice/game_scaffold.dart';
 import '../../../../widgets/game_hud.dart';
 
+/// Sentences to scramble. A run scrambles one, so ten sentences was ten
+/// rounds; the old ten were also all about typoglycemia itself, which is
+/// filler dressed as content -- and one of them cited a study that this app
+/// cannot point to.
+final List<String> typoglycemiaSentences = [
+  'The library opens at nine in the morning and closes at six.',
+  'A gentle breeze moved the curtains across the open window.',
+  'Fresh bread smells better than anything else in the kitchen.',
+  'The train to the coast leaves from the second platform.',
+  'She keeps a small notebook in her coat pocket.',
+  'Our neighbours painted their front door dark green last spring.',
+  'The river runs slowly past the old stone bridge.',
+  'He learned to play the guitar during a long winter indoors.',
+  'A good map turns a strange city into a friendly one.',
+  'The museum is free on the first Sunday of each month.',
+  'Two cats slept on the warm tiles beside the kitchen stove.',
+  'The recipe needs four eggs, a cup of flour and a pinch of salt.',
+  'Thunder rolled over the hills long before the rain arrived.',
+  'A narrow path leads from the harbour up to the lighthouse.',
+  'The clock in the hallway has been slow for many years.',
+  'Bees return to the same flowers every morning in summer.',
+  'He wrote the address on the envelope and posted it.',
+  'The garden hedge hides a small wooden gate at the back.',
+  'Cold water tastes better after a long walk in the sun.',
+  'A row of lamps lit the long street all the way to the square.',
+  'The bookshop on the corner sells old maps and postcards.',
+  'She planted tomatoes along the south wall of the house.',
+  'The ferry crosses the bay twice every hour in winter.',
+  'A single star appeared above the rooftops before dark.',
+  'The children built a long tunnel through the sand.',
+  'My grandfather kept every letter he ever received.',
+  'The bakery sells out of cinnamon rolls before noon.',
+  'Rain had washed the dust from the leaves overnight.',
+  'The workshop smells of sawdust, oil and fresh coffee.',
+  'Every window in the old house faces the morning sun.',
+];
+
+/// Every sentence, so a test can check the pool is prose and not a claim.
+
 class TypoglycemiaDecoderScreen extends ConsumerStatefulWidget {
   const TypoglycemiaDecoderScreen({super.key});
 
@@ -19,18 +58,7 @@ class TypoglycemiaDecoderScreen extends ConsumerStatefulWidget {
 }
 
 class _TypoglycemiaDecoderScreenState extends ConsumerState<TypoglycemiaDecoderScreen> {
-  final List<String> _sentencePool = [
-    "According to research at Cambridge University, the order of letters doesn't matter.",
-    "The only important thing is that the first and last letter be in the right place.",
-    "This is because the human mind does not read every letter by itself, but the word as a whole.",
-    "A scrambled sentence is easy to read if the first and last letters are correct.",
-    "Your brain can decode spelling mistakes and jumbled text without much effort.",
-    "Reading typoglycemia text exercises your cognitive processing speed and vocabulary.",
-    "Cognitive training helps improve focus, memory, and spatial reasoning skills.",
-    "Solving puzzles every day keeps the brain active and sharpens concentration.",
-    "Scientific studies show that reading jumbled words is a natural brain behavior.",
-    "You are currently training your brain with these interactive mini-games.",
-  ];
+  List<String> get _sentencePool => typoglycemiaSentences;
 
   late String _currentScrambled;
   late List<String> _currentOptions;

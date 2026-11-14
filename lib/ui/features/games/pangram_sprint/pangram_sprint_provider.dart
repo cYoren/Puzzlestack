@@ -93,9 +93,14 @@ class PangramSprintNotifier extends _$PangramSprintNotifier {
 
   void _updateState(List<String> available, List<String> selected) {
     final currentSentence = selected.join(' ');
-    final letters = currentSentence.toLowerCase().replaceAll(RegExp(r'[^a-z]'), '').split('').toSet();
-    
-    final isWon = letters.length == 26;
+    final letters = currentSentence
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z]'), '')
+        .split('')
+        .toSet();
+
+    // One rule, one place: the same test that filters the boards.
+    final isWon = _engine.isPangram(currentSentence);
     
     state = state.copyWith(
       availableWords: available,

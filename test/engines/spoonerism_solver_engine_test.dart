@@ -25,14 +25,14 @@ void main() {
         expect(task.original.isNotEmpty, isTrue);
       });
 
-      test('task has exactly 3 options', () {
+      test('a puzzle has exactly 3 options, including the answer', () {
+        // Options are drawn from the other rows now, so they belong to the
+        // puzzle rather than to the task.
         final task = engine.getRandomTask();
-        expect(task.options.length, 3);
-      });
-
-      test('task original is among the options', () {
-        final task = engine.getRandomTask();
-        expect(task.options.contains(task.original), isTrue);
+        final options = engine.getOptions(task);
+        expect(options.length, 3);
+        expect(options.contains(task.original), isTrue);
+        expect(options.contains(task.spoonerism), isFalse);
       });
 
       test('returns different tasks on multiple calls (probabilistic)', () {
