@@ -84,13 +84,17 @@ void main() {
         // but not guaranteed, so we just check if any exist
       });
 
-      test('generates different puzzles', () {
-        final p1 = engine.generatePuzzle(size: 4);
-        final p2 = engine.generatePuzzle(size: 4);
-        final s1 = (p1['solution'] as List<List<int>>).toString();
-        final s2 = (p2['solution'] as List<List<int>>).toString();
-        // Very unlikely to be identical
-        expect(s1, isNot(equals(s2)));
+      test('generates a variety of puzzles', () {
+        // Two draws compared against each other fail one run in a few hundred,
+        // because a 4x4 KenKen has only so many solution grids. Eight draws and
+        // "more than one distinct" tests the claim the screen actually makes.
+        final seen = <String>{
+          for (var i = 0; i < 8; i++)
+            (engine.generatePuzzle(size: 4)['solution'] as List<List<int>>)
+                .toString(),
+        };
+        expect(seen.length, greaterThan(1),
+            reason: 'every 4x4 board is the same solution');
       });
     });
   });
