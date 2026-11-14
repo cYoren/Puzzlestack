@@ -72,6 +72,11 @@ sudoku <- alphabet_sudoku
 ```
 
 Notes
+- **Machine pass done, play pass pending** (`docs/TRIAGE-LOGIC.md`, 2026-11-14; regenerate with
+  `python3 tool/triage_room.py logic`). Layout at 320dp is clean in both themes for all 52.
+  What the machine found: 34 games generate without proving a unique answer, 23 titles shout
+  (ALL CAPS), 8 have no rule test, the guide behind `?` is missing on 39. Those are four jobs,
+  not fifty-two: `uniqueness`, `plain-names`, `rule-tests`, `card-teaches`.
 - `matrix_reasoning` and `einstein_riddle` are promotion candidates: both are real puzzles, the
   first needs a run of rounds, the second needs a 3-house feed size that reads without a wall
   of clues.
