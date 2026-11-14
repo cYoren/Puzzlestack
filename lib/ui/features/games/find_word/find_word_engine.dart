@@ -7,7 +7,8 @@ enum LetterStatus { initial, notInWord, wrongSpot, correctSpot }
 class FindWordEngine {
   static const int maxTries = 6;
   static const int wordLength = 5;
-  static Set<String>? _cachedWords;
+  static final Map<String, Set<String>> _cachedWords = {};
+  static Set<String>? _cachedAnswers;
 
   static Set<String> _processWords(String data) {
     return data
@@ -17,13 +18,34 @@ class FindWordEngine {
         .toSet();
   }
 
-  /// The word list is English and the asset proves it: this used to take a
-  /// `languageCode` it ignored and cached the one English list under every
-  /// language that asked. Say what it does.
-  Future<Set<String>> loadWords() async {
-    final cached = _cachedWords;
+  /// The words a target can be drawn from.
+  ///
+  /// `find_word_words.txt` is a guess validator: 14,855 five-letter strings of
+  /// which three quarters are words nobody has seen. The first ten a player
+  /// could be handed were aahed aalii aapas aargh aarti abaca abaci aback
+  /// abacs abaft. Fine for "is this a word", useless for "guess this word".
+  /// Targets come from the curated list instead, and every entry there is also
+  /// in the full list, so a target can always be typed back in as a guess.
+  Future<Set<String>> loadAnswers() async {
+    final cached = _cachedAnswers;
     if (cached != null) return cached;
+    try {
+      final data =
+          await rootBundle.loadString('assets/find_word_answers.txt');
+      final answers = await compute(_processWords, data);
+      if (answers.isEmpty) return _getFallbackWords();
+      return _cachedAnswers = answers;
+    } catch (e) {
+      return _getFallbackWords();
+    }
+  }
 
+  /// Every five-letter string a guess may be. English only: the asset is
+  /// English, and this used to take a `languageCode` it never read.
+  Future<Set<String>> loadWords() async {
+    final cached = _cachedWords['en'];
+    if (cached != null) return cached;
+    
     try {
       final data = await rootBundle.loadString('assets/find_word_words.txt');
       final words = await compute(_processWords, data);
@@ -31,7 +53,7 @@ class FindWordEngine {
       if (words.isEmpty) {
         return _getFallbackWords();
       }
-      _cachedWords = words;
+      _cachedWords['en'] = words;
       return words;
     } catch (e) {
       return _getFallbackWords();
