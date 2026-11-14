@@ -25,8 +25,8 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
     'BALL', 'BOOK', 'CUP', 'KEY', 'LAMP', 'DOOR', 'WIND', 'FIRE', 'ROAD', 'SHIP'
   ];
 
-  late String _voiceWord;  // Word the user "hears" (represented visually as a speaker + subtitle later, or text clue here)
-  late String _visualWord; // Word shown on the blackboard (the distractor)
+  late String _readWord;   // The word printed in the reading panel: the answer.
+  late String _boardWord;  // The word chalked on the board: the distractor.
 
   int _score = 0;
   final int _targetScore = 5;
@@ -41,15 +41,15 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
   void _generatePuzzle() {
     _textController.clear();
     // Choose two distinct words
-    final voiceIdx = _random.nextInt(_words.length);
-    int visualIdx = _random.nextInt(_words.length);
-    while (visualIdx == voiceIdx) {
-      visualIdx = _random.nextInt(_words.length);
+    final readIdx = _random.nextInt(_words.length);
+    int boardIdx = _random.nextInt(_words.length);
+    while (boardIdx == readIdx) {
+      boardIdx = _random.nextInt(_words.length);
     }
 
     setState(() {
-      _voiceWord = _words[voiceIdx];
-      _visualWord = _words[visualIdx];
+      _readWord = _words[readIdx];
+      _boardWord = _words[boardIdx];
     });
   }
 
@@ -57,7 +57,7 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
     if (_isGameOver) return;
 
     final entry = _textController.text.trim().toUpperCase();
-    if (entry == _voiceWord) {
+    if (entry == _readWord) {
       _score++;
       HapticFeedbackUtil.success();
       if (_score >= _targetScore) {
@@ -147,7 +147,8 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
                 ),
               ),
               const SizedBox(height: 30),
-              // Heard/Voice Cue indicator (simulating what the user "hears")
+              // Reading panel: the word to type. It is read, not heard — the
+              // app has no audio, and the copy no longer pretends otherwise.
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -159,10 +160,10 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
                   fit: BoxFit.scaleDown,
                   child: Row(                mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.volume_up_rounded, color: Colors.blue, size: 28),
+                    const Icon(Icons.menu_book_rounded, color: Colors.blue, size: 28),
                     const SizedBox(width: 12),
                     Text(
-                      'YOU HEAR:  "$_voiceWord"',
+                      'READ:  "$_readWord"',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w900,
@@ -193,7 +194,7 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  _visualWord,
+                  _boardWord,
                   style: const TextStyle(
                     fontFamily: 'Courier',
                     fontSize: 48,
@@ -215,7 +216,7 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, letterSpacing: 2.0),
                   decoration: InputDecoration(
-                    hintText: 'TYPE THE HEARD WORD',
+                    hintText: 'TYPE THE WORD IN THE PANEL',
                     hintStyle: const TextStyle(fontSize: 14, letterSpacing: 1.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
