@@ -3,23 +3,29 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/data/game_categories.dart';
 import 'package:puzzle/data/game_metadata.dart';
+import 'package:puzzle/data/game_profiles.dart';
 import 'package:puzzle/data/game_registry.dart';
 import 'package:puzzle/ui/features/feed/feed_deck.dart';
 
 /// The feed's promise is that every card is new until the deck runs out, and
 /// that the counter on the card is true. Both are properties of the order, not
 /// of the screen, so they are tested here without a widget tree.
+///
+/// "The deck" means the Deal (`deckIds`, from `docs/CATALOG.md`), not the registry:
+/// archived games are in the repo and never on a card.
 void main() {
-  const int total = 313;
+  final int total = deckIds.length;
 
-  test('the pool is the whole registry when no category is given', () {
+  test('the pool is the whole deal when no category is given', () {
     final deck = FeedDeck(random: Random(7));
     expect(deck.deckSize, total);
+    expect(total, lessThan(allGamesMetadata.length));
   });
 
   test('a category deck deals only from that category', () {
     final deck = FeedDeck(categoryId: 'LOGIC', random: Random(7));
-    final expected = GameCategories.countIn('LOGIC');
+    final expected =
+        GameCategories.deck.where((g) => g.category == 'LOGIC').length;
     expect(deck.deckSize, expected);
 
     final seen = <String>{};
@@ -64,7 +70,7 @@ void main() {
   });
 
   test('hidden games are dropped before the first deal', () {
-    final hidden = {allGamesMetadata[0].id, allGamesMetadata[1].id};
+    final hidden = {GameCategories.deck[0].id, GameCategories.deck[1].id};
     final deck = FeedDeck(hidden: hidden, random: Random(2));
 
     expect(deck.deckSize, total - hidden.length);
@@ -73,8 +79,8 @@ void main() {
     }
   });
 
-  test('hiding everything falls back to the whole registry', () {
-    final all = allGamesMetadata.map((g) => g.id).toSet();
+  test('hiding everything falls back to the whole deal', () {
+    final all = deckIds.toSet();
     final deck = FeedDeck(hidden: all, random: Random(2));
 
     expect(deck.deckSize, total, reason: 'a preference cannot empty the app');

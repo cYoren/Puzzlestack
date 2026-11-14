@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/data/game_categories.dart';
 import 'package:puzzle/data/game_metadata.dart';
+import 'package:puzzle/data/game_profiles.dart';
 import 'package:puzzle/data/game_registry.dart';
 
 /// "Puzzle of the day" has to be the same puzzle for everyone, and it has to
@@ -46,7 +47,7 @@ void main() {
   });
 
   test('every game is reachable as a daily pick', () {
-    final pool = allGamesMetadata.length;
+    final pool = deckIds.length;
     final seen = <String>{};
     // Two catalogue-lengths of days, because the draw is a fixed stride through
     // a fixed order: every id comes up exactly once per lap.
@@ -79,9 +80,9 @@ void main() {
     expect(second, first);
   });
 
-  test('the pick is a registry game', () {
+  test('the pick is a deal game', () {
     final game = GameFeed.dailyPick(now: DateTime(2026, 12, 25));
     expect(game, isA<GameMetadata>());
-    expect(allGamesMetadata.any((g) => g.id == game.id), isTrue);
+    expect(deckIds, contains(game.id));
   });
 }

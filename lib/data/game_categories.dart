@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../utils/design_system.dart';
-import 'curation.dart';
 import 'game_metadata.dart';
+import 'game_profiles.dart';
 import 'game_registry.dart';
 
 /// Metadata for one of the six game categories ("rooms").
@@ -79,12 +79,25 @@ class GameCategories {
   static CategoryInfo info(String id) =>
       all.firstWhere((c) => c.id == id, orElse: () => all.first);
 
+  /// A room shows the games a player can open: the deal and the library.
+  /// Archived games stay in the repo and out of every list.
   static List<GameMetadata> inCategory(String id) => allGamesMetadata
-      .where((game) => game.category == id)
+      .where((game) => game.category == id && visibleIds.contains(game.id))
       .toList(growable: false);
 
-  static int countIn(String id) =>
-      allGamesMetadata.where((game) => game.category == id).length;
+  static int countIn(String id) => allGamesMetadata
+      .where((game) => game.category == id && visibleIds.contains(game.id))
+      .length;
+
+  /// Every game a player can open, across all rooms.
+  static List<GameMetadata> get visible => allGamesMetadata
+      .where((game) => visibleIds.contains(game.id))
+      .toList(growable: false);
+
+  /// Every game in the deal.
+  static List<GameMetadata> get deck => allGamesMetadata
+      .where((game) => deckIds.contains(game.id))
+      .toList(growable: false);
 }
 
 /// Derived feeds over the one registry. Pure functions, no state.
@@ -97,13 +110,13 @@ class GameFeed {
 
   static GameMetadata? find(String id) => _byId[id];
 
-  /// The games that fit in under two minutes: reflex and stroop drills, plus
-  /// the one-answer games, which load a single task and end on the answer.
+  /// The games that fit in under two minutes.
   ///
-  /// This row used to list twelve ids, so "under 2 min" was promised by 4% of
-  /// the catalogue while 38 games ended the run on one answer. Unknown ids are
-  /// skipped, so a retired game cannot break the home screen, and
-  /// `test/content/quick_play_test.dart` keeps the list honest.
+  /// Two sources, both in this one predicate: every `snap` card in the deal (the
+  /// reflex and tap games, 15-40 seconds by the bar), plus the short think and word
+  /// cards listed below. A list alone could not keep the promise as the catalog
+  /// moves, and a kind alone would leave out the one-answer word cards.
+  /// `test/content/quick_play_test.dart` keeps it honest.
   static const List<String> _quickPlayIds = [
     // Reflex and speed drills.
     'reflex_tap',
@@ -149,25 +162,28 @@ class GameFeed {
     'word_scramble',
   ];
 
-  static List<GameMetadata> get quickPlay => _quickPlayIds
-      .map(find)
-      .whereType<GameMetadata>()
-      .where((g) => !feedBlocklist.contains(g.id))
+  static List<GameMetadata> get quickPlay => GameCategories.deck
+      .where((g) =>
+          profileOf(g.id)?.kind == CardKind.snap ||
+          _quickPlayIds.contains(g.id))
       .toList(growable: false);
 
-  /// The pool the reel draws from: the registry minus the hand-curated blocklist
-  /// (see `data/curation.dart`) minus [exclude] (the player's own hidden games).
-  /// Never empty: a blocklist that covers everything would otherwise hand the
-  /// feed a dead stream, so an empty pool falls back to the whole registry.
+  /// The pool the deal draws from: the Deck (see `data/game_profiles.dart`, generated
+  /// from `docs/CATALOG.md`) minus [exclude], the player's own hidden games.
+  ///
+  /// Never empty: a player who hid everything would otherwise be handed a dead
+  /// stream, so an empty pool falls back to the whole deal.
   static List<GameMetadata> feedPool({Set<String> exclude = const {}}) {
     final pool = allGamesMetadata
-        .where((g) => !feedBlocklist.contains(g.id) && !exclude.contains(g.id))
+        .where((g) => deckIds.contains(g.id) && !exclude.contains(g.id))
         .toList(growable: false);
-    return pool.isEmpty ? allGamesMetadata : pool;
+    if (pool.isNotEmpty) return pool;
+    final deck = GameCategories.deck;
+    return deck.isEmpty ? allGamesMetadata : deck;
   }
 
   /// A deterministic "puzzle of the day": same for everyone on a given date,
-  /// changes at local midnight.
+  /// changes at local midnight, always drawn from the deal.
   ///
   /// Two rules earn the word "everyone". The order is fixed by a hash of the id
   /// rather than by registry order, because the registry is grouped by category
@@ -177,7 +193,7 @@ class GameFeed {
   /// hid today's game is served no card that day (`dailyPickIsHidden`), which is
   /// the display's business, not the selection's.
   static GameMetadata dailyPick({DateTime? now}) {
-    final order = _hashOrderedRegistry();
+    final order = _hashOrderedDeal();
     return order[_dayNumber(now ?? DateTime.now()) % order.length];
   }
 
@@ -194,18 +210,45 @@ class GameFeed {
       .difference(DateTime.utc(1970))
       .inDays;
 
-  /// The registry in a stable, category-blind order: FNV-1a over the id, then
-  /// the id itself to break ties. Deterministic across runs and platforms, so
-  /// every copy of the app computes the same order.
-  static List<GameMetadata> _hashOrderedRegistry() {
+  /// The deal in a stable order that also spreads the rooms, for the daily.
+  ///
+  /// Consecutive days read consecutive entries here, so this order decides what a week
+  /// of dailies looks like. Sorting by a hash of the id alone was category-blind and let
+  /// four LOGIC days run together; indexing the registry was worse (23 MATH days, the bug
+  /// #49 fixed). Round-robin by position collapses at the tail, where the small rooms have
+  /// run out and the biggest one takes every remaining day.
+  ///
+  /// So each room's own games are spread evenly over the whole lap by their fraction of
+  /// that room (`(i + 0.5) / count`), and the lap is the merge of those room schedules.
+  /// A room with 44 of 139 cards lands about every third day across the entire lap, never
+  /// in a block, and the order is deterministic across runs and platforms: every copy of
+  /// the app computes the same order, so everyone gets the same daily.
+  static List<GameMetadata> _hashOrderedDeal() {
     final seen = _hashOrder;
     if (seen != null) return seen;
-    final ordered = List<GameMetadata>.from(allGamesMetadata)
+
+    final keyed = <MapEntry<double, GameMetadata>>[];
+    final rooms = GameCategories.deck.map((g) => g.category).toSet().toList()
       ..sort((a, b) {
-        final byHash = _fnv1a(a.id).compareTo(_fnv1a(b.id));
-        return byHash != 0 ? byHash : a.id.compareTo(b.id);
+        final byHash = _fnv1a(a).compareTo(_fnv1a(b));
+        return byHash != 0 ? byHash : a.compareTo(b);
       });
-    return _hashOrder = List<GameMetadata>.unmodifiable(ordered);
+    for (final room in rooms) {
+      final games = GameCategories.deck.where((g) => g.category == room).toList()
+        ..sort((a, b) {
+          final byHash = _fnv1a(a.id).compareTo(_fnv1a(b.id));
+          return byHash != 0 ? byHash : a.id.compareTo(b.id);
+        });
+      for (var i = 0; i < games.length; i++) {
+        keyed.add(MapEntry((i + 0.5) / games.length, games[i]));
+      }
+    }
+    keyed.sort((a, b) {
+      final byKey = a.key.compareTo(b.key);
+      return byKey != 0 ? byKey : a.value.id.compareTo(b.value.id);
+    });
+    return _hashOrder = List<GameMetadata>.unmodifiable(
+        keyed.map((entry) => entry.value));
   }
 
   static List<GameMetadata>? _hashOrder;
