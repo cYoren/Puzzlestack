@@ -1,0 +1,89 @@
+Bram-Hub_LEGUP	https://github.com/Bram-Hub/LEGUP.git	448413841d5ebe3f66d2ebdc557ca8d32823b1f1	GPL-3.0	explain a solving step as a rule
+ConorSheehan1_spelling-bee	https://github.com/ConorSheehan1/spelling-bee.git	56e0e1a4e5eaa2fafdb5c98de90d97679772802f	MIT	Hive: make words from seven letters
+Crossword-Nexus_collaborative-word-list	https://github.com/Crossword-Nexus/collaborative-word-list.git	b51b2ad6876c1dc3f9df212e1ed8535fc9e4770a	MIT	fill words for crosswords
+Enigma-Game_Enigma	https://github.com/Enigma-Game/Enigma.git	6f0c51b26cc013cb6c935046d7d1e6a20bea4179	GPL-2.0-or-later	marble puzzle ideas only: the levels are authored content
+GNOME_atomix	https://gitlab.gnome.org/GNOME/atomix.git	a135504eaa112ee560ca678ee311dc563cc001c9	GPL-2.0-or-later	Atomix: slide atoms until they form the molecule
+GNOME_five-or-more	https://github.com/GNOME/five-or-more.git	3ab38fec52dfa58acb4791f5d1564759e8fa2658	LGPL-2.0-or-later	reference for same_game
+GNOME_gnome-klotski	https://github.com/GNOME/gnome-klotski.git	9ad01368116a8673571554131c39f8bd97d42df4	GPL-3.0-or-later	Klotski's classic layouts
+GNOME_gnome-mines	https://github.com/GNOME/gnome-mines.git	c6d92db76ea89a1949e03e06c162ef5de72e04b4	GPL-3.0-or-later	second opinion on minesweeper
+GNOME_gnome-sudoku	https://github.com/GNOME/gnome-sudoku.git	6eb04b4c836263bc3ff8b5a338285c436fd9130b	GPL-3.0-or-later	graded Sudoku generation for the clue tiers
+GNOME_gnome-taquin	https://github.com/GNOME/gnome-taquin.git	976a09db5ed3b58cf70711aa5f5640f1b077ed25	GPL-3.0-or-later	second opinion on sliding puzzles
+GNOME_gnome-tetravex	https://github.com/GNOME/gnome-tetravex.git	95c138b00025ada20a0f4c9a63e800cfd4372d42	LGPL-2.0-or-later	Tetravex: edge-matching tiles, a type the Deck lacks
+GNOME_hitori	https://gitlab.gnome.org/GNOME/hitori.git	94cefada12cffcab93af6a15ba21cce3d6a3615e	GPL-2.0-or-later	second opinion on hitori
+GNOME_lightsoff	https://github.com/GNOME/lightsoff.git	6e1606fa9a4f72b6beab00c8e6cab7416d029f46	LGPL-2.0-or-later	reference for lights_out
+GNOME_swell-foop	https://github.com/GNOME/swell-foop.git	be83f038e4198262a062f385ba9882b3cac38d3b	LGPL-2.0-or-later	reference for same_game
+Hugo0_wordle	https://github.com/Hugo0/wordle.git	7b2466fcb43d0313c8a1dcacdb98819a8d18e5db	MIT	guess-the-word; word data licensed per language
+Izaron_Nonograms	https://github.com/Izaron/Nonograms.git	a867083d11976ce1afa06550dbf3f4220b8b6e5b	MIT	nonogram solver
+KDE_knetwalk	https://github.com/KDE/knetwalk.git	08ff65d476afdbfdf682141500a76e2ad7023b62	GPL-2.0-or-later	a pipes game
+KDE_ksudoku	https://github.com/KDE/ksudoku.git	22b4006485e405cd7011df3fb6aad8e3fad912f7	GPL-2.0-or-later	Sudoku variants
+KDE_kubrick	https://github.com/KDE/kubrick.git	b113e1c2388363c030843f0ee070769d7041d5ac	GPL-2.0-or-later	a cube
+KDE_picmi	https://github.com/KDE/picmi.git	ba591463dd0a30bdc6a52188413638394b75617a	GPL-2.0-or-later	a Nonogram
+MichaelWehar_Crossword-Layout-Generator	https://github.com/MichaelWehar/Crossword-Layout-Generator.git	ff5ff36b223da58ca0d039c06ab29a8b91b32a94	MIT	crossword layout from a word list
+PseudoFish_Hodoku	https://github.com/PseudoFish/Hodoku.git	c37fe90bf1da7a95485d8f32a79060fa27dae47b	GPL-3.0	Sudoku grading and hints
+SmilingWayne_puzzlekit	https://github.com/SmilingWayne/puzzlekit.git	9ef8ebbb262039401d72e37af0d23f9c9b46a5b0	MIT	100+ solvers over 130 types; their boards are not shippable
+SteffenBauer_PocketPuzzles	https://github.com/SteffenBauer/PocketPuzzles.git	8cb6d0054153da261337a2944185f3d17c6ab6bf	MIT	tap-only controls for Tatham puzzles
+SteffenBauer_sgtpuzzles-extended	https://github.com/SteffenBauer/sgtpuzzles-extended.git	aaba49f620c5e598c37b25f3f23792db958e4afc	MIT	flow.c, walls.c and friends on Tatham's framework
+SudokuMonster_SukakuExplainer	https://github.com/SudokuMonster/SukakuExplainer.git	362854eea4e983017726d406ac9ee8a28909bcc7	LGPL-2.1	name the next Sudoku technique for a hint
+WellyZhang_RAVEN	https://github.com/WellyZhang/RAVEN.git	77927ba3fe26485f66f2d6698909175a347eb059	GPL-3.0	matrix patterns, generated
+arcprize_ARC-AGI-2	https://github.com/arcprize/ARC-AGI-2.git	f3283f727488ad98fe575ea6a5ac981e4a188e49	Apache-2.0	Rule grids tasks, second set
+begoon_sokoban-maps	https://github.com/begoon/sokoban-maps.git	7aacdd777e383c172fd1879b31999748d12404f1	none: permission lane	60 Sokoban maps (permission lane)
+boxoban	https://github.com/google-deepmind/boxoban-levels.git	78011d8c86ad423bfb2e1005012393b4c3c24409	Apache-2.0	generated Sokoban levels in three difficulty sets, for Push boxes
+brain-workshop_brainworkshop	https://github.com/brain-workshop/brainworkshop.git	3476f724eb623b6e39605bd7a7e3df245787e73a	GPL-2.0-or-later	study: the reference n-back
+century-arcade_xd	https://github.com/century-arcade/xd.git	9b6d3381f3410df06723111fa41c0b3e2c44b0b1	MIT	crossword corpus tooling; the clues are not ours to ship
+charlesreid1_five-letter-words	https://github.com/charlesreid1/five-letter-words.git	0b8e26034d231177455bf952ed3c132798b9f217	MIT	Knuth's 5,757 five-letter words, a connected graph
+chrisboyle_sgtpuzzles	https://github.com/chrisboyle/sgtpuzzles.git	d1e10eb57dd80af4999e698a9ab31f546e9a0b9d	MIT	Android port of Tatham's collection: how each puzzle was made thumb-usable
+cmusphinx_cmudict	https://github.com/cmusphinx/cmudict.git	74790861f652b15e4ac49015a90074ad62a27690	BSD-2-Clause (CMU)	rhymes and homophones from pronunciation, not spelling
+davecom_chess.dart	https://github.com/davecom/chess.dart.git	6f9e93ba7ac70d982eaaf38d8115c547b52ebef3	MIT	chess move legality, if the chess card happens
+dimitri_sudoku	https://github.com/dimitri/sudoku.git	f71352458f1491482d69cc2799edc7d02e1e2e52	none: permission lane	Sudoku solver write-up (permission lane)
+dmackinnon1_inspectorCraig	https://github.com/dmackinnon1/inspectorCraig.git	db370e9cb4b1248bd276ace827e605ffa48cbb84	none: permission lane	Knights and knaves generators
+dwyl_english-words	https://github.com/dwyl/english-words.git	20f5cc9b3f0ccc8ce45d814c532b7c2031bba31c	Unlicense	479k words: validator of last resort, too wide for answers
+emieks_pencil-puzzles	https://github.com/emieks/pencil-puzzles.git	5339049b842ff30819c9509845b965ca789aa492	MIT	rate a puzzle by its hardest technique, generate to a level
+enz_german-wordlist	https://github.com/enz/german-wordlist.git	1071d87d9535b57b80ec076c699f2578a28ee9dc	CC0-1.0	German word list
+erthium_hashiwokakero	https://github.com/erthium/hashiwokakero.git	2a566964925e39abee60693f9d310c91bc4ef849	GPL-3.0	Bridges generator and solver, second opinion
+fchollet_ARC-AGI	https://github.com/fchollet/ARC-AGI.git	399030444e0ab0cc8b4e199870fb20b863846f34	Apache-2.0	Rule grids tasks; hand-pick the small clean ones
+fserb_pt-br	https://github.com/fserb/pt-br.git	93ba2a6f3b2f85262fba72df09d448c6bb2fa50a	MIT	Portuguese word list
+gabrielecirulli_2048	https://github.com/gabrielecirulli/2048.git	478b6ec346e3787f589e4af751378d06ded4cbbc	MIT	reference behaviour for game_2048
+gitars_queens-generator	https://github.com/gitars/queens-generator.git	74bdd520eff149384afa3dd4c055b44e64ce0394	MIT	Queens / Star Battle generator
+google_material-design-icons	https://github.com/google/material-design-icons.git	10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7	Apache-2.0	picture nonogram source art (assets: --no-checkout)
+googlefonts_noto-emoji	https://github.com/googlefonts/noto-emoji.git	99701e07d3d1fe1bdbcdb14964547f0fd592966f	OFL-1.1	picture nonogram source art (assets: --no-checkout)
+gottcode_connectagram	https://github.com/gottcode/connectagram.git	7f47019e36e2cb479d0dc6fdb5fe47abd937ab86	GPL-3.0	Connectagram: unscramble words laid out as a crossword
+gottcode_hexalate	https://github.com/gottcode/hexalate.git	1b8b3b9c0650516f2b910b5b609eb35f2a5374bc	GPL-3.0	Hexalate: rotate hex tiles until colours match
+gottcode_peg-e	https://github.com/gottcode/peg-e.git	49b5d466f644db2ad8752a3ebd059bbdfa17df0d	GPL-3.0	peg solitaire boards
+gottcode_tanglet	https://github.com/gottcode/tanglet.git	501706a8c4f2c26ec0bbd94c1a91cacfefa063ba	GPL-3.0	Word grid: find words among adjacent letters
+halfburnttoast_Dungeon-Cross	https://github.com/halfburnttoast/Dungeon-Cross.git	2abaa08e797d67230b784a70c422bea4c473a4c6	LGPL-2.0-or-later	Dungeon walls: the rules, generate our own boards
+hermitdave_FrequencyWords	https://github.com/hermitdave/FrequencyWords.git	525f9b560de45753a5ea01069454e72e9aa541c6	MIT	frequency lists for languages beyond English
+increpare_PuzzleScript	https://github.com/increpare/PuzzleScript.git	e5a9c5a2ece44c2fce3a838414bb2a9a5554db5e	MIT	push-block mechanics ideas, not levels
+jbzdarkid_witness-puzzles	https://github.com/jbzdarkid/witness-puzzles.git	1df3750a0d6d91b3bc8899b9f0750605125b0bdf	BSD	Line panels: editor and solver
+jsnell_linjat	https://github.com/jsnell/linjat.git	915d2db10bbecc0f8342be043d3a1a0389088616	MIT	Linjat: generated, graded, made for a phone
+kevinychen_nikoli-puzzle-solver	https://github.com/kevinychen/nikoli-puzzle-solver.git	b02b4015339331bdf369398f871aaa2d12885b96	MIT	solvers for 100+ types with unique-answer checking
+lendl_quiet-grid	https://github.com/lendl/quiet-grid.git	75aba674e59b05e4af931252bb24c3447ac87251	GPL-3.0	study: privacy-first logic puzzle app, no ads, no account
+lexica_lexica	https://github.com/lexica/lexica.git	4a71963b78e359677a054f0e924b3d1c9fefbc9a	GPL-3.0 (game) + Apache-2.0 (dictionary)	Word grid, plus a dictionary trie
+lichess-org_lila	https://github.com/lichess-org/lila.git	4a427ef69b93816aac87e0df59b44f38ea2e49fe	AGPL-3.0	puzzle selection and rating, if the chess card happens (assets: --no-checkout)
+lksj_einstein-puzzle	https://github.com/lksj/einstein-puzzle.git	db34f7a51c174095dda31f54ecbbd4f1a325e16a	LGPL-2.0-or-later	Clue grid as an icon grid instead of a wall of text
+loethen_freefocusgames	https://github.com/loethen/freefocusgames.git	5f82e124f0f91360f435103b632f0ffd906f5ddb	none: permission lane	study: lab tasks presented as games
+lucasnlm_antimine-android	https://github.com/lucasnlm/antimine-android.git	86400370a7b7bd8e27ccc6520065c6b68d64b8f2	GPL-3.0	no-guess Minesweeper, second reference
+lynn_hello-wordl	https://github.com/lynn/hello-wordl.git	835db051e78d0dba4e38bc4b19ae5560b8efbbc3	MIT	guess-the-word in 80+ languages
+medmunds_puzzles-web	https://github.com/medmunds/puzzles-web.git	28b1b76e4f8282d1e4e8931fa141f7026e5300aa	MIT	tap-only controls for Tatham puzzles
+mpSchrader_gym-sokoban	https://github.com/mpSchrader/gym-sokoban.git	8e06e44e8bf3bb8bc73eeb1e7f0354508ce3fc89	MIT	generates more Push boxes levels
+murfffi_zebra4j	https://github.com/murfffi/zebra4j.git	b03c86d2fb58d62d47dbfb06adbf2f8eb341b14b	LGPL-3.0	Clue grid generator with unique answers
+obijywk_grilops	https://github.com/obijywk/grilops.git	18a664122a1964aac70cc97cc622ba1787ea3e10	MIT	grid-logic solver library, for writing a prover in a few lines
+oprypin_sixcells	https://github.com/oprypin/sixcells.git	ab014c73cb4a0828bcab8c9aaf4d5a1564280b75	GPL-3.0	Hex mines: level format and player
+philshem_open-spelling-bee	https://github.com/philshem/open-spelling-bee.git	ee10f53e86d61e10d91ddbbbcd10b8f0f1906e05	MIT	Hive word data
+puzzles-unreleased	https://github.com/x-sheep/puzzles-unreleased.git	b09e5a752d6461fead2a8f9e2900ed3eea8e4019	MIT	thirteen more puzzles on the same framework: Boats, Ascent, Seismic and the rest
+pythonprobr_palavras	https://github.com/pythonprobr/palavras.git	775e1c656d5a5654788d096042905e23c527a3f2	MPL-2.0	Portuguese word list
+riverrun_genxword	https://github.com/riverrun/genxword.git	5442cb3e32f784c8cc6a3cfc0c8fbc0679b680f2	GPL-3.0	crossword layout
+robx_pzprjs	https://github.com/robx/pzprjs.git	ba714a265515a4ac30d4e889c77c86aef802b5d1	MIT	188 Nikoli types: rules and answer checking, the catalogue for new types
+ruppde_crypto_puzzles	https://github.com/ruppde/crypto_puzzles.git	415592383265f2b9dd9f42f000e6aad5f1a1a958	GPL-3.0	cipher puzzles beyond the substitution cryptogram
+rush	https://github.com/fogleman/rush.git	3e3b8396891d1802b30cb3129ae31fdedb319480	MIT	sliding-car solver, generator and graded board database for block_escape
+semiexp_cspuz	https://github.com/semiexp/cspuz.git	53b97cbfcbaa2921de95b3fbd6cd2df3c5b3efca	MIT	constraint solver built for pencil puzzles
+shlomif_PySolFC	https://github.com/shlomif/PySolFC.git	6f9658d06201cbb8762ba756b857f482ddbfa65f	GPL-3.0	solitaire rules (not now)
+shlomif_fc-solve	https://github.com/shlomif/fc-solve.git	9e55e0a3f7cfbd7d07fc64daf09d956c59ecbe8b	MIT	solitaire solver (not now)
+sigma144_witness-randomizer	https://github.com/sigma144/witness-randomizer.git	2f6b08da579b1755992c8e1faa73c6d67b502267	MIT	Line panels: a generator for every symbol type
+swaroopg92_penpa-edit	https://github.com/swaroopg92/penpa-edit.git	34e3fe97804e518288870b70d919e7e76ee18b4d	MIT	puzzle editor, to draw and check a board by hand
+t-dillon_tdoku	https://github.com/t-dillon/tdoku.git	af426180dc53aef89b82868e7b3fdfcf42165654	BSD	fast Sudoku generation
+tatham-c	https://git.tartarus.org/simon/puzzles.git	616da16f25da428ccda805536209095bd062676e	MIT	Simon Tatham's Portable Puzzle Collection: the Logic room's base, and the no-guess Mines generator
+thomasahle_numberlink	https://github.com/thomasahle/numberlink.git	541c30cf23db90d6c1b874c8ab6d1b8d8054a401	AGPL-3.0	Numberlink generator and solver (connect the pairs)
+tsionyx_nonogrid	https://github.com/tsionyx/nonogrid.git	aaf7f9a4f70352dbc65fb21f6335995d796f8476	MIT	nonogram solver
+twitter_twemoji	https://github.com/twitter/twemoji.git	bad3bceeafc901ace42a3dfe0421db6388daafb9	MIT + CC-BY-4.0	picture nonogram source art (CC BY 4.0: attribute) (assets: --no-checkout)
+wordlist	https://github.com/en-wl/wordlist.git	1e5b7d3a72f47a71da5d28686c1dd4b397178485	permissive, own notice (SCOWL)	English words in size tiers; answer lists come from the small tiers
+wordnik_wordlist	https://github.com/wordnik/wordlist.git	46e6215d0f90356afe9c8ba4be347e7e98cb425c	MIT	a word list made for games: the guess validator
