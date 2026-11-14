@@ -18,6 +18,33 @@ Two rules for whoever picks these up:
 
 ---
 
+## Status — 2026-11-13
+
+The bands below are the work list as measured at `e7c2475`; this table is what has landed since,
+so a reader can tell an open job from a fixed one. Every landed row shipped with the test the
+job asked for, in `test/content/`.
+
+| Job | PR | What changed |
+| --- | --- | --- |
+| `letter-bridge-table`, `word-ladder-unreachable`, `pangram-unwinnable`, `lighthouses-dead-fallback`, `nonogram-uniqueness`, `rhyme-master-nonrhymes`, `one-letter-shift-rule`, `chalk-and-talk-audio` | #47 | All eight band-1 defects. Seven got data or a generator that respects the rule; `chalk_and_talk` was reframed, because the app has no audio at all and the screen said YOU HEAR. |
+| `content-invariants`, `guides-six-missing`, `game-id-resolution`, `number-313-drift` | #48 | The invariant family in `test/content/`; the six missing guides; `GameScope` so the shell resolves a game by id rather than by its localised title (four pairs collide, and those games recorded no time at all); the five store files are now held to the registry length. |
+| `daily-pick-determinism`, `quick-play-pool`, `code-that-lies` | #49 | The daily pick is a hash order over the whole registry, so it no longer runs 23 MATH days in a row or depends on who is asking; quick play went from 12 games to 40; four engines lost a `languageCode` they never read. |
+| `word-search-supply`, `find-word-dictionary`, `typing-speed-phrases`, `pool-word-surge`, `pool-cryptogram`, `pool-category-fluency` | #50 | 800 word-search words (was 105, with 16 unreachable), a curated 3,913-word answer list for `find_word` and friends, 46 typing phrases (one of the eight used to be about Flutter), 60 word-surge pairs, 24 cryptogram quotes, 11 categories. |
+| `play-screenshots`, `ios-metadata` | #51 | Eight Play screenshots at 1080×1920 and eight App Store screenshots at 1290×2796, captured with `tool/screenshots.sh` on an emulator; `fastlane/metadata/ios/en-US/` exists for the first time. Sizes and the game count are asserted in `test/content/store_images_test.dart`. |
+
+Two rows in the pool band are **not** thin content and should not be "fixed": `pool-tenner-grid`
+and `pool-chimp-test` generate their boards, so the "2 baked items" and "1 baked item" the counter
+reported are list literals, not puzzles. Re-run the counter with a generated-board exclusion before
+working the rest of that band.
+
+Still open, in the order this document suggests: the other 25 `pool-*` rows (verify each against
+the same false-positive risk first), `crossword-supply`, `difficulty-ladder` +
+`difficulty-persistence`, `one-answer-games`, `accessibility-boards`, `curation-list`,
+`no-content-progress`, `hint-coverage-word-games`, `l10n-56-keys` + `l10n-de-orphan-keys`,
+`shorebird-decision`, `paywall-decision`, and the 112 games with no test at all.
+
+---
+
 ## 0. The failure pattern, in one paragraph
 
 313 games, 229 test files, and **112 games with no test that mentions them (36%)**. The games that

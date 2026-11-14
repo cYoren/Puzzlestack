@@ -1,0 +1,1 @@
+puzzle,brain,logic,sudoku,nonogram,crossword,word,memory,attention,iq,offline,minimal
