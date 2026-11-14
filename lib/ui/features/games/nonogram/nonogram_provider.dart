@@ -36,7 +36,10 @@ class NonogramState {
 
 @riverpod
 class NonogramNotifier extends _$NonogramNotifier {
-  static const int defaultSize = 8; // Increased for more challenge
+  /// The size a board opens at. Nothing can change it yet, so it is a constant
+  /// rather than a setting: the difficulty ladder (`difficulty-ladder`) is what
+  /// will pass a size in here.
+  static const int defaultSize = 8;
 
   @override
   Future<NonogramState> build() async {

@@ -6,11 +6,11 @@ import '../../../utils/design_system.dart';
 import '../../../widgets/tangible.dart';
 import '../../../data/game_guides.dart';
 import '../../../data/game_metadata.dart';
-import '../../../data/game_registry.dart';
 import '../../../widgets/game_guide_screen.dart';
 import '../../../providers/user_providers.dart';
 import '../../../utils/game_clock.dart';
 import '../assist/game_assist.dart';
+import 'game_scope.dart';
 
 class GameScaffold extends ConsumerStatefulWidget {
   final String title;
@@ -58,25 +58,12 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
     });
   }
 
-  /// The registry entry behind this screen, matched on the title it shows.
-  ///
-  /// Screens do not pass their id to the shell (there are 313 of them), so the
-  /// title is the key. A miss is not an error: a screen that is not registered
-  /// simply gets no assist buttons.
+  /// The registry entry behind this screen, by the id [launchGame] put in the
+  /// scope, and by the displayed title only when there is no scope.
   GameMetadata? _resolveGame(BuildContext context) {
     if (_resolvedGame != null) return _resolvedGame;
-    final title = widget.title.toUpperCase();
-    for (final game in allGamesMetadata) {
-      try {
-        if (game.titleGetter(context).toUpperCase() == title) {
-          _resolvedGame = game;
-          return game;
-        }
-      } catch (_) {
-        // A game whose title needs localisation it does not have; skip it.
-      }
-    }
-    return null;
+    _resolvedGame = resolveGame(context, title: widget.title);
+    return _resolvedGame;
   }
 
   @override

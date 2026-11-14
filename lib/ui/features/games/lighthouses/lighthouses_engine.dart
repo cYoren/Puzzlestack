@@ -19,7 +19,9 @@ class LighthousesEngine {
         int r = _random.nextInt(size);
         int c = _random.nextInt(size);
         if (clues[r][c] == null) {
-          clues[r][c] = 0; // Placeholder
+          // The count is filled in after the ships are placed; 0 only marks
+          // this cell as a lighthouse until then.
+          clues[r][c] = 0;
           lighthouseCount++;
         }
       }
@@ -74,17 +76,31 @@ class LighthousesEngine {
       }
     }
 
-    // Fallback
-    return {
-      'clues': [
-        [null, null, null, null, 1],
-        [null, 2, null, null, null],
-        [null, null, null, 1, null],
-        [2, null, null, null, null],
-        [null, null, 2, null, null],
-      ],
-    };
+    // Fallback. The old board here was hand-written and had no solution at
+    // all, which made the safety net the only certainly-broken path in the
+    // game. This one was found by the same solver that checks generation and
+    // has exactly one answer: test/content/lighthouses_test.dart replays it.
+    return fallbackBoard();
   }
+
+  /// The board served when generation gives up. Exactly one answer, same rules
+  /// as a generated board.
+  static const List<List<int?>> fallbackClues = [
+    [null, null, 4, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, 2],
+    [1, null, null, null, null],
+    [2, null, null, null, 2],
+  ];
+
+  Map<String, dynamic> fallbackBoard() => {
+        'clues': [for (final row in fallbackClues) List<int?>.from(row)],
+      };
+
+  /// Whether this clue grid pins down exactly one set of ships. Public so the
+  /// fallback can be held to the same bar as a generated board.
+  bool hasUniqueSolution(List<List<int?>> clues, int size) =>
+      _hasUniqueSolution(clues, size);
 
   bool _canPlaceShip(int r, int c, List<List<int?>> clues, List<List<bool>> ships, int size) {
     for (int dr = -1; dr <= 1; dr++) {
