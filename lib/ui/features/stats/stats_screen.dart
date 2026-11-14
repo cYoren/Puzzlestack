@@ -7,7 +7,9 @@ import 'package:puzzle/data/game_registry.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/features/home/widgets/daily_progress_banner.dart';
 import 'package:puzzle/utils/design_system.dart';
+import 'package:puzzle/widgets/deck.dart';
 import 'package:puzzle/widgets/tangible.dart';
+import 'package:puzzle/ui/features/main_shell/main_shell.dart';
 
 class Achievement {
   final String title;
@@ -27,67 +29,67 @@ class StatsScreen extends ConsumerWidget {
   const StatsScreen({super.key});
 
   static List<Achievement> getAchievements(AppLocalizations l10n) => [
-    Achievement(
-      title: l10n.achievementSeeker,
-      description: l10n.achievementSeekerDesc,
-      requiredXp: 100,
-      icon: Icons.search_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementApprentice,
-      description: l10n.achievementApprenticeDesc,
-      requiredXp: 1000,
-      icon: Icons.school_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementStrategist,
-      description: l10n.achievementStrategistDesc,
-      requiredXp: 5000,
-      icon: Icons.psychology_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementElite,
-      description: l10n.achievementEliteDesc,
-      requiredXp: 10000,
-      icon: Icons.military_tech_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementVeteran,
-      description: l10n.achievementVeteranDesc,
-      requiredXp: 25000,
-      icon: Icons.shield_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementMaster,
-      description: l10n.achievementMasterDesc,
-      requiredXp: 50000,
-      icon: Icons.workspace_premium_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementGrandmaster,
-      description: l10n.achievementGrandmasterDesc,
-      requiredXp: 100000,
-      icon: Icons.diamond_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementLegend,
-      description: l10n.achievementLegendDesc,
-      requiredXp: 250000,
-      icon: Icons.auto_awesome_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementMythic,
-      description: l10n.achievementMythicDesc,
-      requiredXp: 500000,
-      icon: Icons.vignette_rounded,
-    ),
-    Achievement(
-      title: l10n.achievementEternal,
-      description: l10n.achievementEternalDesc,
-      requiredXp: 1000000,
-      icon: Icons.all_inclusive_rounded,
-    ),
-  ];
+        Achievement(
+          title: l10n.achievementSeeker,
+          description: l10n.achievementSeekerDesc,
+          requiredXp: 100,
+          icon: Icons.search_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementApprentice,
+          description: l10n.achievementApprenticeDesc,
+          requiredXp: 1000,
+          icon: Icons.school_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementStrategist,
+          description: l10n.achievementStrategistDesc,
+          requiredXp: 5000,
+          icon: Icons.psychology_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementElite,
+          description: l10n.achievementEliteDesc,
+          requiredXp: 10000,
+          icon: Icons.military_tech_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementVeteran,
+          description: l10n.achievementVeteranDesc,
+          requiredXp: 25000,
+          icon: Icons.shield_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementMaster,
+          description: l10n.achievementMasterDesc,
+          requiredXp: 50000,
+          icon: Icons.workspace_premium_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementGrandmaster,
+          description: l10n.achievementGrandmasterDesc,
+          requiredXp: 100000,
+          icon: Icons.diamond_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementLegend,
+          description: l10n.achievementLegendDesc,
+          requiredXp: 250000,
+          icon: Icons.auto_awesome_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementMythic,
+          description: l10n.achievementMythicDesc,
+          requiredXp: 500000,
+          icon: Icons.vignette_rounded,
+        ),
+        Achievement(
+          title: l10n.achievementEternal,
+          description: l10n.achievementEternalDesc,
+          requiredXp: 1000000,
+          icon: Icons.all_inclusive_rounded,
+        ),
+      ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -111,12 +113,23 @@ class StatsScreen extends ConsumerWidget {
                   elevation: 0,
                   scrolledUnderElevation: 0,
                   centerTitle: true,
-                    title: Text(
-                      l10n.statsTitle,
-                      style: theme.textTheme.displaySmall?.copyWith(
-                        letterSpacing: 2.0,
+                  title: Text(
+                    l10n.statsTitle,
+                    style: theme.textTheme.displaySmall?.copyWith(
+                      letterSpacing: 2.0,
+                    ),
+                  ),
+                  actions: [
+                    IconButton(
+                      tooltip: l10n.settings,
+                      onPressed: () => openSettings(context),
+                      icon: Icon(
+                        Icons.tune_rounded,
+                        size: 20,
+                        color: DesignSystem.muted(context),
                       ),
                     ),
+                  ],
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(
@@ -138,17 +151,20 @@ class StatsScreen extends ConsumerWidget {
                           return Text(
                             l10n.statsAchievements,
                             style: theme.textTheme.displaySmall?.copyWith(
-                              fontSize: DesignSystem.fontSizeLG,
-                              color: theme.colorScheme.primary,
-                              letterSpacing: 1.5,
+                              fontSize: DesignSystem.fontSizeXL,
+                              color: theme.colorScheme.onSurface,
+                              letterSpacing: 0.6,
                             ),
                           );
                         }
                         if (index == 7) return const SizedBox(height: DesignSystem.spaceMD);
                         final achievementIndex = index - 8;
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: DesignSystem.spaceMD),
-                          child: _AchievementCard(achievement: achievements[achievementIndex], l10n: l10n),
+                          padding: const EdgeInsets.only(
+                              bottom: DesignSystem.spaceMD),
+                          child: _AchievementCard(
+                              achievement: achievements[achievementIndex],
+                              l10n: l10n),
                         );
                       },
                       childCount: 8 + achievements.length,
@@ -173,7 +189,7 @@ class _UserStatsCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final userData = ref.watch(userDataNotifierProvider);
     final notifier = ref.read(userDataNotifierProvider.notifier);
-    
+
     final level = userData.level;
     final xp = userData.xp;
     final currentLevelXp = notifier.xpForLevel(level);
@@ -188,88 +204,74 @@ class _UserStatsCard extends ConsumerWidget {
         const SizedBox(height: DesignSystem.spaceMD),
         const DailyProgressBanner(),
         const SizedBox(height: DesignSystem.spaceMD),
-        TangibleContainer(
-          color: DesignSystem.primary,
+        DeckCard(
           padding: const EdgeInsets.all(DesignSystem.spaceLG),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.statsLevel(level),
-                        style: theme.textTheme.displayLarge?.copyWith(
-                          fontSize: 42,
-                          color: Colors.white,
-                          letterSpacing: 1.0,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.statsLevel(level).toUpperCase(),
+                          style: theme.textTheme.displayLarge?.copyWith(
+                            fontSize: 40,
+                            height: 0.95,
+                            color: theme.colorScheme.onSurface,
+                            letterSpacing: 0.5,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        l10n.statsMaintainStreak,
-                        style: theme.textTheme.labelMedium?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white.withValues(alpha: 0.8),
-                          letterSpacing: 0.5,
+                        const SizedBox(height: 6),
+                        Text(
+                          l10n.statsMaintainStreak,
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: DesignSystem.muted(context),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
-                    ),
-                    child: const Icon(
-                      Icons.workspace_premium_rounded,
-                      size: 36,
-                      color: Colors.white,
-                    ),
+                  Icon(
+                    Icons.workspace_premium_rounded,
+                    size: 26,
+                    color: DesignSystem.muted(context),
                   ),
                 ],
               ),
-              const SizedBox(height: DesignSystem.spaceXL),
-              Stack(
-                children: [
-                  Container(
-                    height: 16,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(8),
+              const SizedBox(height: DesignSystem.spaceLG),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 6,
+                      width: double.infinity,
+                      color: DesignSystem.hairline(context),
                     ),
-                  ),
-                  FractionallySizedBox(
-                    widthFactor: progress.clamp(0.0, 1.0),
-                    child: Container(
-                      height: 16,
-                      decoration: BoxDecoration(
-                        color: DesignSystem.accentAmber,
-                        borderRadius: BorderRadius.circular(8),
+                    FractionallySizedBox(
+                      widthFactor: progress.clamp(0.0, 1.0),
+                      child: Container(
+                        height: 6,
+                        color: DesignSystem.accent(context),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    l10n.statsPercentToLevel((progress * 100).toInt(), level + 1),
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      fontFamily: 'Bebas Neue',
-                      fontSize: DesignSystem.fontSizeSM,
-                      color: Colors.white.withValues(alpha: 0.9),
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 10),
+              Text(
+                l10n.statsPercentToLevel((progress * 100).toInt(), level + 1),
+                style: theme.textTheme.labelLarge?.copyWith(
+                  fontFamily: 'Bebas Neue',
+                  fontSize: DesignSystem.fontSizeSM,
+                  color: DesignSystem.muted(context),
+                  letterSpacing: 1.0,
+                ),
               ),
             ],
           ),
@@ -308,17 +310,16 @@ class _StreakTracker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final userData = ref.watch(userDataNotifierProvider);
     final superStreak = userData.superStreak ?? 0;
     final lastDate = userData.lastSuperStreakDate;
-    
+
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final currentWeekday = now.weekday;
     final mondayOfThisWeek = today.subtract(Duration(days: currentWeekday - 1));
 
-    return TangibleContainer(
+    return DeckCard(
       padding: const EdgeInsets.all(DesignSystem.spaceMD),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -327,24 +328,30 @@ class _StreakTracker extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                l10n.statsWeeklyActivity,
-                style: theme.textTheme.displaySmall?.copyWith(
-                  fontSize: DesignSystem.fontSizeMD,
-                  color: colorScheme.onSurface.withValues(alpha: 0.6),
-                  letterSpacing: 1.0,
+                l10n.statsWeeklyActivity.toUpperCase(),
+                style: theme.textTheme.labelMedium?.copyWith(
+                  fontSize: DesignSystem.fontSizeXS,
+                  fontWeight: FontWeight.w600,
+                  color: DesignSystem.muted(context),
+                  letterSpacing: 0.8,
                 ),
               ),
               Row(
                 children: [
-                  const Icon(Icons.local_fire_department_rounded,
-                      color: DesignSystem.gameOrange, size: 20),
+                  Icon(Icons.local_fire_department_rounded,
+                      color: superStreak > 0
+                          ? DesignSystem.accent(context)
+                          : DesignSystem.hairline(context),
+                      size: 18),
                   const SizedBox(width: 4),
                   Text(
-                    l10n.statsDayStreak(superStreak),
+                    l10n.statsDayStreak(superStreak).toUpperCase(),
                     style: theme.textTheme.displaySmall?.copyWith(
                       fontSize: DesignSystem.fontSizeMD,
-                      color: DesignSystem.gameOrange,
-                      letterSpacing: 0.5,
+                      color: superStreak > 0
+                          ? DesignSystem.accent(context)
+                          : DesignSystem.muted(context),
+                      letterSpacing: 0.4,
                     ),
                   ),
                 ],
@@ -381,30 +388,30 @@ class _StreakTracker extends ConsumerWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: isSolved
-                            ? DesignSystem.gameOrange
-                            : (isToday
-                                ? colorScheme.primary.withValues(alpha: 0.1)
-                                : colorScheme.onSurface.withValues(alpha: 0.05)),
+                            ? DesignSystem.accent(context)
+                            : DesignSystem.cardOf(context),
                         borderRadius:
                             BorderRadius.circular(DesignSystem.radiusSM),
-                        border: isToday && !isSolved
-                            ? Border.all(color: colorScheme.primary, width: 2)
-                            : null,
+                        border: Border.all(
+                          color: isToday
+                              ? DesignSystem.accent(context)
+                              : DesignSystem.hairline(context),
+                          width: 1,
+                        ),
                       ),
                       child: Center(
                         child: isSolved
-                            ? const Icon(Icons.check_rounded,
-                                color: Colors.white, size: 20)
+                            ? Icon(Icons.check_rounded,
+                                color: DesignSystem.onAccent(context), size: 18)
                             : Text(
                                 dayLabel,
                                 style: TextStyle(
                                   fontFamily: 'Geist',
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 12,
                                   color: isToday
-                                      ? colorScheme.primary
-                                      : colorScheme.onSurface
-                                          .withValues(alpha: 0.3),
+                                      ? DesignSystem.accent(context)
+                                      : DesignSystem.muted(context),
                                 ),
                               ),
                       ),
@@ -431,37 +438,30 @@ class _CognitiveProfileCard extends ConsumerWidget {
 
     final totalStats = ref.watch(categoryStatsProvider);
     final solvedStatsMap = ref.watch(solvedStatsProvider);
-    
-    final categories = totalStats.keys.where((k) => k != 'ALL').toList()..sort();
 
-    final categoryColors = {
-      'LOGIC': DesignSystem.gameTeal,
-      'MATH': DesignSystem.gameAmber,
-      'MEMORY': DesignSystem.gameRose,
-      'SPATIAL': DesignSystem.gameIndigo,
-      'ATTENTION': DesignSystem.gamePurple,
-      'WORD': DesignSystem.gameGreen,
-    };
+    final categories = totalStats.keys.where((k) => k != 'ALL').toList()
+      ..sort();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n.statsCognitiveProfile,
+          l10n.statsCognitiveProfile.toUpperCase(),
           style: theme.textTheme.displaySmall?.copyWith(
-            fontSize: DesignSystem.fontSizeLG,
-            color: colorScheme.primary,
-            letterSpacing: 1.5,
+            fontSize: DesignSystem.fontSizeXL,
+            color: colorScheme.onSurface,
+            letterSpacing: 0.6,
           ),
         ),
         const SizedBox(height: DesignSystem.spaceMD),
-        TangibleContainer(
+        DeckCard(
           padding: const EdgeInsets.all(DesignSystem.spaceMD),
           child: Column(
             children: categories.map((cat) {
               final solved = solvedStatsMap[cat] ?? 0;
               final total = totalStats[cat] ?? 1;
-              final color = categoryColors[cat] ?? DesignSystem.primary;
+              // One colour for every room: the bar is progress, not identity.
+              final color = DesignSystem.accent(context);
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: DesignSystem.spaceMD),
@@ -506,45 +506,34 @@ class _CategoryProgressItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              category,
+              category[0] + category.substring(1).toLowerCase(),
               style: theme.textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.w900,
-                color: colorScheme.onSurface.withValues(alpha: 0.7),
-                letterSpacing: 0.5,
+                fontWeight: FontWeight.w600,
+                fontSize: DesignSystem.fontSizeXS,
+                color: colorScheme.onSurface,
+                letterSpacing: 0.2,
               ),
             ),
-            Text(
-              '$solved / $total',
-              style: theme.textTheme.displaySmall?.copyWith(
-                fontSize: DesignSystem.fontSizeSM,
-                color: color,
-                letterSpacing: 1.0,
-              ),
-            ),
+            DeckNumber('$solved / $total',
+                size: 16, color: DesignSystem.muted(context)),
           ],
         ),
-        const SizedBox(height: 8),
-        Stack(
-          children: [
-            Container(
-              height: 10,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(5),
+        const SizedBox(height: 6),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
+          child: Stack(
+            children: [
+              Container(
+                height: 4,
+                width: double.infinity,
+                color: DesignSystem.hairline(context),
               ),
-            ),
-            FractionallySizedBox(
-              widthFactor: progress,
-              child: Container(
-                height: 10,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(5),
-                ),
+              FractionallySizedBox(
+                widthFactor: progress,
+                child: Container(height: 4, color: color),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -567,9 +556,8 @@ class _SmallStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
-    return TangibleContainer(
+    return DeckCard(
       padding: const EdgeInsets.all(DesignSystem.spaceMD),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -577,26 +565,20 @@ class _SmallStatCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 18, color: color),
-              const SizedBox(width: 8),
+              Icon(icon, size: 16, color: DesignSystem.muted(context)),
+              const SizedBox(width: 6),
               Text(
-                label,
+                label.toUpperCase(),
                 style: theme.textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.w900,
-                  color: colorScheme.onSurface.withValues(alpha: 0.5),
-                  letterSpacing: 0.5,
+                  fontWeight: FontWeight.w600,
+                  color: DesignSystem.muted(context),
+                  letterSpacing: 0.6,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: theme.textTheme.displayMedium?.copyWith(
-              fontSize: 32,
-              letterSpacing: 1.0,
-            ),
-          ),
+          const SizedBox(height: 6),
+          DeckNumber(value, size: 34),
         ],
       ),
     );
@@ -616,31 +598,24 @@ class _AchievementCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return TangibleContainer(
+    final Color accent = DesignSystem.accent(context);
+    return DeckCard(
       padding: const EdgeInsets.all(DesignSystem.spaceMD),
       child: Row(
         children: [
           Container(
-            width: 60,
-            height: 60,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
-              color: isUnlocked
-                  ? DesignSystem.accentAmber.withValues(alpha: 0.2)
-                  : colorScheme.onSurface.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.circular(DesignSystem.radiusSM),
+              shape: BoxShape.circle,
               border: Border.all(
-                color: isUnlocked
-                    ? DesignSystem.accentAmber.withValues(alpha: 0.3)
-                    : Colors.transparent,
-                width: 1.5,
+                color: isUnlocked ? accent : DesignSystem.hairline(context),
               ),
             ),
             child: Icon(
               achievement.icon,
-              size: 32,
-              color: isUnlocked
-                  ? DesignSystem.accentAmber
-                  : colorScheme.onSurface.withValues(alpha: 0.1),
+              size: 22,
+              color: isUnlocked ? accent : DesignSystem.muted(context),
             ),
           ),
           const SizedBox(width: DesignSystem.spaceMD),
@@ -649,13 +624,13 @@ class _AchievementCard extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  achievement.title,
+                  achievement.title.toUpperCase(),
                   style: theme.textTheme.displaySmall?.copyWith(
                     fontSize: DesignSystem.fontSizeLG,
                     color: isUnlocked
                         ? colorScheme.onSurface
-                        : colorScheme.onSurface.withValues(alpha: 0.3),
-                    letterSpacing: 1.5,
+                        : colorScheme.onSurface.withValues(alpha: 0.35),
+                    letterSpacing: 0.6,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -673,11 +648,7 @@ class _AchievementCard extends ConsumerWidget {
             ),
           ),
           if (isUnlocked)
-            const Icon(
-              Icons.check_circle_rounded,
-              size: 32,
-              color: DesignSystem.success,
-            )
+            Icon(Icons.check_rounded, size: 20, color: accent)
           else
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),

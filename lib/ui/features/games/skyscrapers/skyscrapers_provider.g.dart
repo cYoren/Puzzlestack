@@ -7,7 +7,7 @@ part of 'skyscrapers_provider.dart';
 // **************************************************************************
 
 String _$skyscrapersNotifierHash() =>
-    r'58484f5c9e043a3114715b29c97e307aa8526ec4';
+    r'792e5ec1984379bb4c08546a3c4221496e48a556';
 
 /// See also [SkyscrapersNotifier].
 @ProviderFor(SkyscrapersNotifier)

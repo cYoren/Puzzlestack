@@ -6,7 +6,7 @@ part of 'netslide_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$netslideNotifierHash() => r'64f13e73e0eddecbc283b278fc04781436221807';
+String _$netslideNotifierHash() => r'd5274497f6b08e60243d82001485fed8f3da30bd';
 
 /// See also [NetslideNotifier].
 @ProviderFor(NetslideNotifier)

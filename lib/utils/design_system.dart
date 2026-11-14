@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class DesignSystem {
   // --- Elegant Typographic System (Scale) ---
   static const double fontSizeHero = 36.0;
-  static const double fontSize3XL  = 28.0;
-  static const double fontSize2XL  = 24.0;
-  static const double fontSizeXL   = 20.0;
-  static const double fontSizeLG   = 18.0;
-  static const double fontSizeMD   = 16.0;
-  static const double fontSizeSM   = 14.0;
-  static const double fontSizeXS   = 13.0;
-  static const double fontSize2XS  = 12.0;
+  static const double fontSize3XL = 28.0;
+  static const double fontSize2XL = 24.0;
+  static const double fontSizeXL = 20.0;
+  static const double fontSizeLG = 18.0;
+  static const double fontSizeMD = 16.0;
+  static const double fontSizeSM = 14.0;
+  static const double fontSizeXS = 13.0;
+  static const double fontSize2XS = 12.0;
 
   // --- Strict Spacing Grid ---
   static const double spaceXS = 6.0;
@@ -33,7 +33,8 @@ class DesignSystem {
   // Deep indigo + amber, matching the app icon's cascading-card mark.
   static const Color primary = Color(0xFF4338CA); // Indigo 700
   static const Color primaryShadow = Color(0xFF3730A3); // Indigo 800
-  static const Color accentBerry = Color(0xFFD97706); // Amber 600 (brand accent, was pink)
+  static const Color accentBerry =
+      Color(0xFFD97706); // Amber 600 (brand accent, was pink)
   static const Color accentEmerald = Color(0xFF10B981);
   static const Color accentAmber = Color(0xFFD97706);
   static const Color accentTeal = Color(0xFF0D9488);
@@ -41,37 +42,106 @@ class DesignSystem {
   static const Color error = Color(0xFFEF4444);
   static const Color warning = Color(0xFFF59E0B);
 
+  // --- The deck -------------------------------------------------------------
+  // Puzzlestack is a deck of paper puzzle cards. The bed is warm paper, the
+  // card is lighter paper, everything is drawn in ink, and exactly one colour
+  // is allowed on top: indigo, and only where something is live (selection,
+  // progress, a primary action). No pastel tiles, no per-category hues.
+  static const Color paper = Color(0xFFEBE6D8);
+  static const Color card = Color(0xFFFFFEFB);
+  static const Color hair = Color(0xFFD8D1BE);
+  static const Color cardInk = Color(0xFF14130E);
+  static const Color cardMuted = Color(0xFF6B6659);
+  static const Color signal = primary;
+  static const Color solved = Color(0xFF0F7A5A);
+
+  static const Color paperDark = Color(0xFF08080A);
+  static const Color cardDark = Color(0xFF141416);
+  static const Color hairDark = Color(0xFF26262A);
+  static const Color cardInkDark = Color(0xFFF1EFE7);
+  static const Color cardMutedDark = Color(0xFF9C988C);
+  static const Color signalDark = Color(0xFF9C97FF);
+  static const Color solvedDark = Color(0xFF34D399);
+
+  /// Card shadow: a real offset plus a soft blur, never a coloured halo.
+  static List<BoxShadow> deckShadow(Brightness brightness, {double lift = 1}) {
+    if (brightness == Brightness.dark) return const [];
+    return [
+      BoxShadow(
+        color: const Color(0xFF3A3423).withValues(alpha: 0.10 * lift),
+        offset: Offset(0, 2 * lift),
+        blurRadius: 4 * lift,
+      ),
+      BoxShadow(
+        color: const Color(0xFF3A3423).withValues(alpha: 0.07 * lift),
+        offset: Offset(0, 12 * lift),
+        blurRadius: 28 * lift,
+      ),
+    ];
+  }
+
   // --- Light Theme Colors ---
-  static const Color background = Color(0xFFF8FAFC);
-  static const Color surface = Color(0xFFFCFBF4);
-  static const Color ink = Color(0xFF0F172A);
-  static const Color inkSlate = Color(0xFF334155);
-  static const Color outline = Color(0xFFE2E8F0);
-  static const Color outlineVariant = Color(0xFFCBD5E1);
+  static const Color background = paper;
+  static const Color surface = card;
+  static const Color ink = cardInk;
+  static const Color inkSlate = cardMuted;
+  static const Color outline = hair;
+  static const Color outlineVariant = Color(0xFFC9C1AD);
 
   // --- Dark Theme Colors (AMOLED Optimized) ---
-  static const Color darkBackground = Color(0xFF121212);
-  static const Color darkSurface = Color(0xFF1E1E1E);
-  static const Color darkInk = Color(0xFFE4E4EA); // soft white: pure white glares
-  static const Color darkInkSlate = Color(0xFFA8B0BF);
-  static const Color darkOutline = Color(0xFF3E3E4A); // visible on #1E1E1E
-  static const Color darkOutlineVariant = Color(0xFF52525E);
+  static const Color darkBackground = paperDark;
+  static const Color darkSurface = cardDark;
+  static const Color darkInk = cardInkDark;
+  static const Color darkInkSlate = cardMutedDark;
+  static const Color darkOutline = hairDark;
+  static const Color darkOutlineVariant = Color(0xFF3A3A3F);
+
+  static bool _isDark(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark;
+
+  /// The single live colour for the current brightness.
+  static Color accent(BuildContext context) =>
+      _isDark(context) ? signalDark : signal;
+
+  /// Text and glyphs that sit on the live colour.
+  static Color onAccent(BuildContext context) =>
+      _isDark(context) ? const Color(0xFF0B0A1A) : Colors.white;
+
+  static Color muted(BuildContext context) =>
+      _isDark(context) ? cardMutedDark : cardMuted;
+
+  static Color hairline(BuildContext context) =>
+      _isDark(context) ? hairDark : hair;
+
+  static Color paperOf(BuildContext context) =>
+      _isDark(context) ? paperDark : paper;
+
+  static Color cardOf(BuildContext context) =>
+      _isDark(context) ? cardDark : card;
 
   // --- Responsive Breakpoints ---
   static const double mobileMax = 600;
   static const double tabletMax = 1024;
   static const double desktopMax = 1440;
 
-  static bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < mobileMax;
+  static bool isMobile(BuildContext context) =>
+      MediaQuery.of(context).size.width < mobileMax;
   static bool isTablet(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return width >= mobileMax && width < tabletMax;
   }
-  static bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width >= tabletMax;
 
-  static double responsiveWidth(BuildContext context, {double mobile = 1.0, double tablet = 0.8, double desktop = 0.6}) {
+  static bool isDesktop(BuildContext context) =>
+      MediaQuery.of(context).size.width >= tabletMax;
+
+  static double responsiveWidth(BuildContext context,
+      {double mobile = 1.0, double tablet = 0.8, double desktop = 0.6}) {
     final width = MediaQuery.of(context).size.width;
-    final factor = width >= tabletMax ? desktop : width >= mobileMax ? tablet : mobile;
+    final factor = width >= tabletMax
+        ? desktop
+        : width >= mobileMax
+            ? tablet
+            : mobile;
     return width * factor;
   }
 
@@ -111,8 +181,8 @@ class DesignSystem {
       scaffoldBackgroundColor: bgColor,
       colorScheme: isDark
           ? ColorScheme.dark(
-              primary: primary,
-              onPrimary: Colors.white,
+              primary: signalDark,
+              onPrimary: const Color(0xFF0B0A1A),
               secondary: accentBerry,
               onSecondary: Colors.white,
               surface: surfColor,
@@ -121,9 +191,14 @@ class DesignSystem {
               onError: Colors.white,
               outline: outColor,
               outlineVariant: outVarColor,
+              surfaceContainerLowest: paperDark,
+              surfaceContainerLow: cardDark,
+              surfaceContainer: cardDark,
+              surfaceContainerHigh: const Color(0xFF1C1C1F),
+              surfaceContainerHighest: const Color(0xFF242428),
             )
           : ColorScheme.light(
-              primary: primary,
+              primary: signal,
               onPrimary: Colors.white,
               secondary: accentBerry,
               onSecondary: Colors.white,
@@ -133,6 +208,11 @@ class DesignSystem {
               onError: Colors.white,
               outline: outColor,
               outlineVariant: outVarColor,
+              surfaceContainerLowest: card,
+              surfaceContainerLow: card,
+              surfaceContainer: const Color(0xFFF7F3E9),
+              surfaceContainerHigh: const Color(0xFFEBE5D6),
+              surfaceContainerHighest: const Color(0xFFE3DBC8),
             ),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -149,21 +229,111 @@ class DesignSystem {
         ),
       ),
       textTheme: TextTheme(
-        displayLarge: TextStyle(fontFamily: 'Bebas Neue', fontSize: fontSizeHero, fontWeight: FontWeight.w700, letterSpacing: 1.0, color: mainInk, height: 1.15),
-        displayMedium: TextStyle(fontFamily: 'Bebas Neue', fontSize: fontSize3XL, fontWeight: FontWeight.w700, letterSpacing: 0.8, color: mainInk, height: 1.15),
-        displaySmall: TextStyle(fontFamily: 'Bebas Neue', fontSize: fontSize2XL, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: mainInk, height: 1.2),
-        headlineLarge: TextStyle(fontFamily: 'Bebas Neue', fontSize: fontSize3XL, fontWeight: FontWeight.w700, letterSpacing: 0.8, color: mainInk, height: 1.2),
-        headlineMedium: TextStyle(fontFamily: 'Bebas Neue', fontSize: fontSize2XL, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: mainInk, height: 1.25),
-        headlineSmall: TextStyle(fontFamily: 'Bebas Neue', fontSize: fontSizeXL, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: mainInk, height: 1.25),
-        titleLarge: TextStyle(fontFamily: 'Geist', fontSize: fontSizeXL, fontWeight: FontWeight.w700, letterSpacing: 0.2, color: mainInk, height: 1.25),
-        titleMedium: TextStyle(fontFamily: 'Geist', fontSize: fontSizeLG, fontWeight: FontWeight.w600, letterSpacing: 0.15, color: mainInk, height: 1.3),
-        titleSmall: TextStyle(fontFamily: 'Geist', fontSize: fontSizeMD, fontWeight: FontWeight.w600, letterSpacing: 0.15, color: mainInk, height: 1.3),
-        bodyLarge: TextStyle(fontFamily: 'Geist', fontSize: fontSizeLG, fontWeight: FontWeight.w500, color: subInk, letterSpacing: 0.15, height: 1.55),
-        bodyMedium: TextStyle(fontFamily: 'Geist', fontSize: fontSizeMD, fontWeight: FontWeight.w500, color: subInk, letterSpacing: 0.15, height: 1.6),
-        bodySmall: TextStyle(fontFamily: 'Geist', fontSize: fontSizeSM, fontWeight: FontWeight.w400, color: subInk, letterSpacing: 0.15, height: 1.6),
-        labelLarge: TextStyle(fontFamily: 'Geist', fontSize: fontSizeSM, fontWeight: FontWeight.w700, letterSpacing: 0.5, color: mainInk, height: 1.2),
-        labelMedium: TextStyle(fontFamily: 'Geist', fontSize: fontSizeXS, fontWeight: FontWeight.w700, letterSpacing: 0.3, color: mainInk, height: 1.2),
-        labelSmall: TextStyle(fontFamily: 'Geist', fontSize: fontSize2XS, fontWeight: FontWeight.w600, letterSpacing: 0.2, color: mainInk, height: 1.2),
+        displayLarge: TextStyle(
+            fontFamily: 'Bebas Neue',
+            fontSize: fontSizeHero,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.0,
+            color: mainInk,
+            height: 1.15),
+        displayMedium: TextStyle(
+            fontFamily: 'Bebas Neue',
+            fontSize: fontSize3XL,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.8,
+            color: mainInk,
+            height: 1.15),
+        displaySmall: TextStyle(
+            fontFamily: 'Bebas Neue',
+            fontSize: fontSize2XL,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.6,
+            color: mainInk,
+            height: 1.2),
+        headlineLarge: TextStyle(
+            fontFamily: 'Bebas Neue',
+            fontSize: fontSize3XL,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.8,
+            color: mainInk,
+            height: 1.2),
+        headlineMedium: TextStyle(
+            fontFamily: 'Bebas Neue',
+            fontSize: fontSize2XL,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.6,
+            color: mainInk,
+            height: 1.25),
+        headlineSmall: TextStyle(
+            fontFamily: 'Bebas Neue',
+            fontSize: fontSizeXL,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.6,
+            color: mainInk,
+            height: 1.25),
+        titleLarge: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeXL,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.2,
+            color: mainInk,
+            height: 1.25),
+        titleMedium: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeLG,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.15,
+            color: mainInk,
+            height: 1.3),
+        titleSmall: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeMD,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.15,
+            color: mainInk,
+            height: 1.3),
+        bodyLarge: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeLG,
+            fontWeight: FontWeight.w500,
+            color: subInk,
+            letterSpacing: 0.15,
+            height: 1.55),
+        bodyMedium: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeMD,
+            fontWeight: FontWeight.w500,
+            color: subInk,
+            letterSpacing: 0.15,
+            height: 1.6),
+        bodySmall: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeSM,
+            fontWeight: FontWeight.w400,
+            color: subInk,
+            letterSpacing: 0.15,
+            height: 1.6),
+        labelLarge: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeSM,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.5,
+            color: mainInk,
+            height: 1.2),
+        labelMedium: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSizeXS,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.3,
+            color: mainInk,
+            height: 1.2),
+        labelSmall: TextStyle(
+            fontFamily: 'Geist',
+            fontSize: fontSize2XS,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.2,
+            color: mainInk,
+            height: 1.2),
       ),
       iconTheme: IconThemeData(color: mainInk, size: 24),
     );

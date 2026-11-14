@@ -6,7 +6,7 @@ part of 'inertia_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$inertiaNotifierHash() => r'b262029b73b118a1e792c49620d22b1397181f0f';
+String _$inertiaNotifierHash() => r'c4794b0564a7f6e167097c7cc59a6d76012600df';
 
 /// See also [InertiaNotifier].
 @ProviderFor(InertiaNotifier)

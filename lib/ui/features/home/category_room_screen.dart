@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:puzzle/l10n/app_localizations.dart';
+
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/game_session_provider.dart';
 import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/haptic_feedback.dart';
-import '../shuffle/shuffle_feed_screen.dart';
+import '../../../widgets/deck.dart';
 import '../../core/assist/game_launch.dart';
+import '../feed/feed_screen.dart';
 
-/// One category's "room": its tagline, a category-scoped Shuffle button, and a
-/// grid of every game in that category.
+/// One room of the stack: every puzzle in a category, filed as cards.
 ///
-/// Each tile carries a star (favourite) and a long-press (hide). Both are the
-/// only ways the rest of the app learns about a game: the home screen shows a
-/// favourites row, and hidden games drop out of every browse surface.
+/// The deal this room offers is the same feed as everywhere else, scoped to the
+/// category, so a room is never a dead end that drops you back into a list.
 class CategoryRoomScreen extends ConsumerWidget {
-  final String categoryId;
-
   const CategoryRoomScreen({super.key, required this.categoryId});
 
+  final String categoryId;
+
   void _openGame(BuildContext context, WidgetRef ref, GameMetadata game) {
-    // Tells the completion dialog which shelf the player is browsing, so "next
-    // puzzle" stays inside this category instead of jumping anywhere.
+    HapticFeedbackUtil.selectionClick();
+    // Tells the result card which shelf the player is browsing, so "next" stays
+    // inside this room instead of jumping anywhere.
     ref.read(gameSessionNotifierProvider.notifier).setSession(
           gameId: game.id,
           category: categoryId,
@@ -34,38 +35,25 @@ class CategoryRoomScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cat = GameCategories.info(categoryId);
-    final hidden = ref.watch(
+    final CategoryInfo cat = GameCategories.info(categoryId);
+    final List<String> hidden = ref.watch(
         userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
-    final games = GameCategories.inCategory(categoryId)
+    final List<GameMetadata> games = GameCategories.inCategory(categoryId)
         .where((g) => !hidden.contains(g.id))
         .toList(growable: false);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          cat.label.toUpperCase(),
-          style: const TextStyle(
-            fontFamily: 'Bebas Neue',
-            letterSpacing: 1.0,
-          ),
-        ),
-      ),
+      backgroundColor: DesignSystem.paperOf(context),
       body: SafeArea(
-        top: false,
+        bottom: false,
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(
-                child: _shuffleBanner(context, cat, games.length)),
+            SliverToBoxAdapter(child: _header(context, cat, games.length)),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(
                 DesignSystem.spaceLG,
-                DesignSystem.spaceMD,
+                DesignSystem.spaceSM,
                 DesignSystem.spaceLG,
                 DesignSystem.spaceXL,
               ),
@@ -74,10 +62,11 @@ class CategoryRoomScreen extends ConsumerWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: DesignSystem.spaceSM,
                   crossAxisSpacing: DesignSystem.spaceSM,
-                  childAspectRatio: 1.15,
+                  mainAxisExtent: 96,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, i) => _gameTile(context, ref, games[i]),
+                  (context, i) =>
+                      _gameTile(context, ref, games[i], i + 1),
                   childCount: games.length,
                 ),
               ),
@@ -88,69 +77,101 @@ class CategoryRoomScreen extends ConsumerWidget {
     );
   }
 
-  Widget _shuffleBanner(BuildContext context, CategoryInfo cat, int count) {
+  Widget _header(BuildContext context, CategoryInfo cat, int count) {
+    final l10n = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         DesignSystem.spaceLG,
         DesignSystem.spaceSM,
         DesignSystem.spaceLG,
-        0,
+        DesignSystem.spaceMD,
       ),
-      child: GestureDetector(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ShuffleFeedScreen(categoryId: categoryId),
-            fullscreenDialog: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              InkResponse(
+                onTap: () => Navigator.of(context).maybePop(),
+                radius: 24,
+                child: SizedBox(
+                  width: 44,
+                  height: 44,
+                  child: Icon(Icons.arrow_back_rounded,
+                      size: 20, color: DesignSystem.muted(context)),
+                ),
+              ),
+              const Spacer(),
+              DeckNumber('$count',
+                  size: 22, color: DesignSystem.muted(context)),
+            ],
           ),
-        ),
+          const SizedBox(height: DesignSystem.spaceSM),
+          Text(
+            cat.label.toUpperCase(),
+            style: TextStyle(
+              fontFamily: 'Bebas Neue',
+              fontSize: DesignSystem.fontSizeHero + 8,
+              height: 0.9,
+              letterSpacing: 0.5,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            cat.tagline,
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeSM,
+              height: 1.3,
+              color: DesignSystem.muted(context),
+            ),
+          ),
+          const SizedBox(height: DesignSystem.spaceMD),
+          _dealRow(context, cat, l10n),
+        ],
+      ),
+    );
+  }
+
+  Widget _dealRow(
+      BuildContext context, CategoryInfo cat, AppLocalizations? l10n) {
+    return Semantics(
+      button: true,
+      label: l10n?.shuffleCategory ?? 'Deal this room',
+      child: GestureDetector(
+        onTap: () {
+          HapticFeedbackUtil.mediumImpact();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => FeedScreen(categoryId: categoryId, isRoute: true),
+            ),
+          );
+        },
+        behavior: HitTestBehavior.opaque,
         child: Container(
-          padding: const EdgeInsets.all(DesignSystem.spaceMD),
+          height: 46,
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           decoration: BoxDecoration(
-            color: cat.color.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
-            border: Border.all(color: cat.color.withValues(alpha: 0.28)),
+            color: DesignSystem.accent(context),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
           ),
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: cat.color.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(Icons.shuffle_rounded, color: cat.color, size: 24),
-              ),
-              const SizedBox(width: DesignSystem.spaceMD),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Shuffle ${cat.label}',
-                      style: TextStyle(
-                        fontSize: DesignSystem.fontSizeLG,
-                        fontWeight: FontWeight.w800,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
-                    Text(
-                      '$count games · ${cat.tagline}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: DesignSystem.fontSizeSM,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withValues(alpha: 0.55),
-                      ),
-                    ),
-                  ],
+              Text(
+                (l10n?.shuffleCategory ?? 'Deal this room').toUpperCase(),
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue',
+                  fontSize: DesignSystem.fontSizeLG,
+                  letterSpacing: 1.2,
+                  height: 1,
+                  color: DesignSystem.onAccent(context),
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, color: cat.color),
+              const SizedBox(width: 8),
+              Icon(Icons.arrow_downward_rounded,
+                  size: 18, color: DesignSystem.onAccent(context)),
             ],
           ),
         ),
@@ -158,48 +179,52 @@ class CategoryRoomScreen extends ConsumerWidget {
     );
   }
 
-  Widget _gameTile(BuildContext context, WidgetRef ref, GameMetadata game) {
-    final isFavorite = ref.watch(userDataNotifierProvider
+  Widget _gameTile(BuildContext context, WidgetRef ref, GameMetadata game,
+      int position) {
+    final bool isFavorite = ref.watch(userDataNotifierProvider
         .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
-    return GestureDetector(
+    return DeckCard(
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      radius: 16,
       onTap: () => _openGame(context, ref, game),
       onLongPress: () => _hideGame(context, ref, game),
-      child: Container(
-        padding: const EdgeInsets.all(DesignSystem.spaceMD),
-        decoration: BoxDecoration(
-          color: game.color.withValues(alpha: 0.10),
-          borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
-          border: Border.all(color: game.color.withValues(alpha: 0.20)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(game.icon, color: game.color, size: 30),
-                _favoriteStar(context, ref, game, isFavorite),
-              ],
-            ),
-            Text(
-              game.titleGetter(context),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: DesignSystem.fontSizeMD,
-                fontWeight: FontWeight.w700,
-                color: Theme.of(context).colorScheme.onSurface,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(game.icon, size: 18, color: DesignSystem.muted(context)),
+              const Spacer(),
+              _favoriteStar(context, ref, game, isFavorite),
+              const SizedBox(width: 6),
+              DeckNumber(
+                position.toString().padLeft(2, '0'),
+                size: 16,
+                color: DesignSystem.hairline(context),
               ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            game.titleGetter(context),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: DesignSystem.fontSizeSM,
+              height: 1.2,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  /// The star sits inside the tile, so it needs its own hit target that does not
-  /// fall through to the tile's onTap and open the game.
+  /// The star and the long-press are the only two things the rest of the app
+  /// learns from a room: the stack shows a favourites row, and hidden games
+  /// drop out of every browse surface.
   Widget _favoriteStar(
       BuildContext context, WidgetRef ref, GameMetadata game, bool isFavorite) {
     return GestureDetector(
@@ -208,15 +233,12 @@ class CategoryRoomScreen extends ConsumerWidget {
         HapticFeedbackUtil.lightImpact();
         ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
       },
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8, bottom: 8),
-        child: Icon(
-          isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
-          size: 20,
-          color: isFavorite
-              ? game.color
-              : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.28),
-        ),
+      child: Icon(
+        isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
+        size: 18,
+        color: isFavorite
+            ? DesignSystem.accent(context)
+            : DesignSystem.hairline(context),
       ),
     );
   }
