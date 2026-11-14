@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/data/game_categories.dart';
+import 'package:puzzle/data/game_profiles.dart';
 import 'package:puzzle/data/game_registry.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 
@@ -25,14 +26,17 @@ void main() {
       }
     });
 
-    test('every room has games, and the rooms add up to the registry', () {
+    test('every room has games, and the rooms add up to the visible registry', () {
       var total = 0;
       for (final category in GameCategories.all) {
         final count = GameCategories.countIn(category.id);
         expect(count, greaterThan(0), reason: '${category.id} is empty');
         total += count;
       }
-      expect(total, allGamesMetadata.length);
+      // Archived games are in the registry and in no room: `docs/CATALOG.md` gives
+      // every id exactly one verdict, and the rooms show the ones a player can open.
+      expect(total, visibleIds.length);
+      expect(visibleIds.length, lessThan(allGamesMetadata.length));
     });
 
     test('every game builds a screen', () {
@@ -97,11 +101,10 @@ void main() {
       }
     });
 
-    test('shuffledOrder is a permutation of the registry', () {
+    test('shuffledOrder is a permutation of the deal', () {
       final order = GameFeed.shuffledOrder(random: Random(3));
-      expect(order, hasLength(allGamesMetadata.length));
-      expect(order.map((g) => g.id).toSet(),
-          allGamesMetadata.map((g) => g.id).toSet());
+      expect(order, hasLength(deckIds.length));
+      expect(order.map((g) => g.id).toSet(), deckIds);
     });
 
     test('inCategory returns only that category', () {

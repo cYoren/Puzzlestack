@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
-import '../../../data/game_registry.dart';
 import '../../../utils/design_system.dart';
 
 /// Search across the whole registry by title or category. Returns the chosen game
@@ -13,11 +12,16 @@ class GameSearchDelegate extends SearchDelegate<void> {
   final Set<String> hiddenIds;
 
   GameSearchDelegate({required this.onSelected, this.hiddenIds = const {}})
-      : super(searchFieldLabel: 'Search ${allGamesMetadata.length} puzzles');
+      : super(
+            searchFieldLabel:
+                'Search ${GameCategories.visible.length} puzzles');
+
+  /// Only what a player can open: archived games are in the registry, not the app.
+  static List<GameMetadata> get _pool => GameCategories.visible;
 
   List<GameMetadata> _results(BuildContext context) {
     final q = query.trim().toLowerCase();
-    final pool = allGamesMetadata
+    final pool = _pool
         .where((g) => !hiddenIds.contains(g.id))
         .toList(growable: false);
     if (q.isEmpty) return pool;

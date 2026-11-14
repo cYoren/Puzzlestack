@@ -40,6 +40,12 @@ is `puzzle`. Notes list the exceptions. Triage corrects the tag along with the t
 
 When triage moves an id, add one line under the room's **Notes** saying why.
 
+**The code copy.** `lib/data/game_profiles.dart` is generated from this file by
+`tool/gen_game_profiles.py` and is what the app reads (tier, kind, origin, family, archive
+reason). Edit this document, run the script, commit both. `test/content/game_profiles_test.dart`
+parses this file again and fails if the two disagree, so a verdict cannot live here and not in
+the app.
+
 ## Logic (53)
 
 The strongest room and the core of the Deck. Nearly all are unique-solution puzzles from the
