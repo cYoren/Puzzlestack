@@ -45,15 +45,13 @@ app.*.map.json
 /android/app/release
 
 # Store screenshots.
-# The composed final sets ARE tracked — they are the images that ship to the App Store and
-# Google Play, and a future agent must be able to find them without re-running a capture.
-# Raw captures and the framed intermediates are regenerable build artifacts and stay ignored.
-# See screenshots/README.md for which paths are canonical.
+# The images that ship live where the stores read them, and only there:
+#   fastlane/metadata/android/en-US/images/phoneScreenshots/   Google Play
+#   fastlane/screenshots/en-US/                                App Store (fastlane deliver)
+# Everything under screenshots/ is output of tool/screenshots.sh and is regenerable, so only
+# its README is tracked. See screenshots/README.md.
 /screenshots/*
 !/screenshots/README.md
-!/screenshots/aso-refresh/
-/screenshots/aso-refresh/*
-!/screenshots/aso-refresh/final/
 /_frame_preview.png
 
 
