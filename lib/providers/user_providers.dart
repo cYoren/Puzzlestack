@@ -5,6 +5,9 @@ import '../data/models/user_data.dart';
 import '../data/models/game_streak.dart';
 import '../data/repositories/user_repository.dart';
 import '../core/review_prompt_service.dart';
+import '../utils/game_clock.dart';
+import '../utils/game_assist_state.dart';
+import 'game_stats_provider.dart';
 
 part 'user_providers.g.dart';
 
@@ -180,6 +183,23 @@ class GameStreakNotifier extends _$GameStreakNotifier {
   }
 
   Future<bool> completeGame(String gameId, {int xpAmount = 20}) async {
+    // Timing and the solve-for-me flag are read before the streak's own early
+    // return: a second solve on the same day still counts as a solve, even
+    // though it cannot extend a streak that is already safe.
+    final assisted = GameAssist.consumeAssisted(gameId);
+    final elapsed = GameClock.stop(gameId);
+    if (elapsed != null) {
+      unawaited(
+        ref
+            .read(gameStatsProvider.notifier)
+            .record(gameId, elapsed, assisted: assisted),
+      );
+    }
+    // A fresh board starts now, so the next solve is timed on its own.
+    GameClock.start(gameId);
+
+    if (assisted) return true;
+
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 

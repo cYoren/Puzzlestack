@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/game_providers.dart';
+import 'package:puzzle/providers/game_stats_provider.dart';
+import 'package:puzzle/data/game_registry.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/features/home/widgets/daily_progress_banner.dart';
 import 'package:puzzle/utils/design_system.dart';
 import 'package:puzzle/widgets/deck.dart';
+import 'package:puzzle/widgets/tangible.dart';
 import 'package:puzzle/ui/features/main_shell/main_shell.dart';
 
 class Achievement {
@@ -139,13 +142,12 @@ class StatsScreen extends ConsumerWidget {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         if (index == 0) return _UserStatsCard(l10n: l10n);
-                        if (index == 1)
-                          return const SizedBox(height: DesignSystem.spaceXL);
-                        if (index == 2)
-                          return _CognitiveProfileCard(l10n: l10n);
-                        if (index == 3)
-                          return const SizedBox(height: DesignSystem.spaceXL);
-                        if (index == 4) {
+                        if (index == 1) return const SizedBox(height: DesignSystem.spaceXL);
+                        if (index == 2) return _CognitiveProfileCard(l10n: l10n);
+                        if (index == 3) return const SizedBox(height: DesignSystem.spaceXL);
+                        if (index == 4) return const _PaceCard();
+                        if (index == 5) return const SizedBox(height: DesignSystem.spaceXL);
+                        if (index == 6) {
                           return Text(
                             l10n.statsAchievements,
                             style: theme.textTheme.displaySmall?.copyWith(
@@ -155,9 +157,8 @@ class StatsScreen extends ConsumerWidget {
                             ),
                           );
                         }
-                        if (index == 5)
-                          return const SizedBox(height: DesignSystem.spaceMD);
-                        final achievementIndex = index - 6;
+                        if (index == 7) return const SizedBox(height: DesignSystem.spaceMD);
+                        final achievementIndex = index - 8;
                         return Padding(
                           padding: const EdgeInsets.only(
                               bottom: DesignSystem.spaceMD),
@@ -166,7 +167,7 @@ class StatsScreen extends ConsumerWidget {
                               l10n: l10n),
                         );
                       },
-                      childCount: 6 + achievements.length,
+                      childCount: 8 + achievements.length,
                     ),
                   ),
                 ),
@@ -669,5 +670,116 @@ class _AchievementCard extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+/// The player's own record, per game.
+///
+/// Times are local and they are the only population the app can honestly
+/// compare against, so the line says "your solves", not "players".
+class _PaceCard extends ConsumerWidget {
+  const _PaceCard();
+
+  static String _formatTime(int milliseconds) {
+    final seconds = (milliseconds / 1000).round();
+    if (seconds < 60) return '${seconds}s';
+    final minutes = seconds ~/ 60;
+    final rest = (seconds % 60).toString().padLeft(2, '0');
+    return '${minutes}m $rest';
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final stats = ref.watch(gameStatsProvider);
+    final entries = stats.entries.where((e) => e.value.solves > 0).toList()
+      ..sort((a, b) => b.value.solves.compareTo(a.value.solves));
+    if (entries.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'YOUR PACE',
+          style: theme.textTheme.displaySmall?.copyWith(
+            fontSize: DesignSystem.fontSizeLG,
+            color: theme.colorScheme.primary,
+            letterSpacing: 1.5,
+          ),
+        ),
+        const SizedBox(height: DesignSystem.spaceMD),
+        TangibleContainer(
+          padding: const EdgeInsets.symmetric(
+            horizontal: DesignSystem.spaceMD,
+            vertical: DesignSystem.spaceXS,
+          ),
+          child: Column(
+            children: [
+              for (final entry in entries.take(8)) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _titleFor(context, entry.key),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleSmall,
+                        ),
+                      ),
+                      const SizedBox(width: DesignSystem.spaceSM),
+                      Text(
+                        '${entry.value.solves}x',
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(width: DesignSystem.spaceMD),
+                      Text(
+                        _formatTime(entry.value.bestMs ?? 0),
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: DesignSystem.primary,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      if (entry.value.fasterThan != null) ...[
+                        const SizedBox(width: DesignSystem.spaceMD),
+                        Text(
+                          'FASTER THAN ${entry.value.fasterThan}%',
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                if (entry.key != entries.take(8).last.key)
+                  Divider(
+                    height: 1,
+                    color: theme.colorScheme.outline.withValues(alpha: 0.25),
+                  ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _titleFor(BuildContext context, String gameId) {
+    for (final game in allGamesMetadata) {
+      if (game.id == gameId) {
+        try {
+          return game.titleGetter(context);
+        } catch (_) {
+          break;
+        }
+      }
+    }
+    return gameId.replaceAll('_', ' ');
   }
 }

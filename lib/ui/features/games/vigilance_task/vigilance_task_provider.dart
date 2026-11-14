@@ -16,6 +16,9 @@ class VigilanceState {
   final int totalSteps;
   final bool hasRespondedToCurrentSkip;
 
+  /// The position that was skipped on a skip tick, for the face to mark.
+  final int? skippedPosition;
+
   VigilanceState({
     this.currentPosition = 0,
     this.lastWasSkip = false,
@@ -25,6 +28,7 @@ class VigilanceState {
     this.falseAlarms = 0,
     this.totalSteps = 0,
     this.hasRespondedToCurrentSkip = false,
+    this.skippedPosition,
   });
 
   VigilanceState copyWith({
@@ -36,6 +40,8 @@ class VigilanceState {
     int? falseAlarms,
     int? totalSteps,
     bool? hasRespondedToCurrentSkip,
+    int? skippedPosition,
+    bool clearSkipped = false,
   }) {
     return VigilanceState(
       currentPosition: currentPosition ?? this.currentPosition,
@@ -46,6 +52,8 @@ class VigilanceState {
       falseAlarms: falseAlarms ?? this.falseAlarms,
       totalSteps: totalSteps ?? this.totalSteps,
       hasRespondedToCurrentSkip: hasRespondedToCurrentSkip ?? this.hasRespondedToCurrentSkip,
+      skippedPosition:
+          clearSkipped ? null : (skippedPosition ?? this.skippedPosition),
     );
   }
 }
@@ -83,6 +91,10 @@ class VigilanceNotifier extends _$VigilanceNotifier {
 
       final isSkip = _engine.shouldSkip();
       final nextPos = _engine.getNextPosition(state.currentPosition, isSkip);
+      // The position the marker jumped over, so the face can mark it red.
+      final skipped = isSkip
+          ? (state.currentPosition + 1) % _engine.totalPositions
+          : null;
 
       state = state.copyWith(
         currentPosition: nextPos,
@@ -90,6 +102,8 @@ class VigilanceNotifier extends _$VigilanceNotifier {
         totalSteps: state.totalSteps + 1,
         misses: newMisses,
         hasRespondedToCurrentSkip: false,
+        skippedPosition: skipped,
+        clearSkipped: skipped == null,
       );
     });
   }
@@ -102,11 +116,15 @@ class VigilanceNotifier extends _$VigilanceNotifier {
         hits: state.hits + 1,
         hasRespondedToCurrentSkip: true,
       );
-    } else {
-      state = state.copyWith(
-        falseAlarms: state.falseAlarms + 1,
-      );
+      return;
     }
+    // One tap per tick. Without this, an impatient triple-tap counted as
+    // three false alarms and the score made no sense.
+    if (state.hasRespondedToCurrentSkip) return;
+    state = state.copyWith(
+      falseAlarms: state.falseAlarms + 1,
+      hasRespondedToCurrentSkip: true,
+    );
   }
 
   void _endGame() {

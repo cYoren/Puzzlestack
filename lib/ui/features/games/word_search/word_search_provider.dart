@@ -52,7 +52,10 @@ class WordSearchNotifier extends _$WordSearchNotifier {
       final List<String> allWords = response
           .split('\n')
           .map((w) => w.trim().toUpperCase())
-          .where((w) => w.length >= 4 && w.length <= 8) // Limit word length for better grid fit
+          // The board is 10x10, so a 10-letter word fits exactly once per
+          // line. The old 4..8 cap silently dropped every 9- and 10-letter
+          // entry in the asset, which made a third of the list unreachable.
+          .where((w) => w.length >= 4 && w.length <= 10)
           .toList();
 
       if (allWords.isNotEmpty) {

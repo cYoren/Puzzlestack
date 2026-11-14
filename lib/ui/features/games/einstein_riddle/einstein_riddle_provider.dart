@@ -79,17 +79,27 @@ class EinsteinRiddleNotifier extends _$EinsteinRiddleNotifier {
     );
   }
 
-  void updateAssignment(String house, String category, String value) {
-    if (state.isVictory) return;
+  /// Assigns [value] to [house]'s [category].
+  ///
+  /// Returns false when the value is already used in that category, because in
+  /// this puzzle every value belongs to exactly one house. The old version
+  /// accepted the duplicate silently and then refused to win, with nothing on
+  /// screen to explain why.
+  bool updateAssignment(String house, String category, String value) {
+    if (state.isVictory) return false;
+    for (final entry in state.userSolution.entries) {
+      if (entry.key != house && entry.value[category] == value) return false;
+    }
 
     final newUserSolution = Map<String, Map<String, String>>.from(
       state.userSolution.map((k, v) => MapEntry(k, Map<String, String>.from(v)))
     );
-    
+
     newUserSolution[house]![category] = value;
-    
+
     state = state.copyWith(userSolution: newUserSolution);
     _checkVictory();
+    return true;
   }
 
   void _checkVictory() {

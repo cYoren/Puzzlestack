@@ -7,6 +7,8 @@ import '../data/game_metadata.dart';
 import '../data/game_registry.dart';
 import '../ui/features/feed/feed_session.dart';
 import '../utils/design_system.dart';
+import '../utils/game_clock.dart';
+import '../providers/game_stats_provider.dart';
 import '../utils/haptic_feedback.dart';
 import '../utils/navigation_utils.dart';
 import '../providers/game_providers.dart';
@@ -201,6 +203,20 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
     }
   }
 
+  /// "Faster than 62% of your solves", when there is enough history to say it.
+  ///
+  /// It is deliberately this player's own record. A percentile invented from a
+  /// population we cannot see would be a nice number and a lie.
+  String? _paceLine() {
+    final gameId = GameClock.lastGameId;
+    if (gameId == null) return null;
+    final stat = ref.read(gameStatsProvider)[gameId];
+    if (stat == null) return null;
+    final percentile = stat.fasterThan;
+    if (percentile == null) return null;
+    return 'FASTER THAN $percentile% OF YOUR SOLVES (${stat.solves} TIMED)';
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!mounted) return const SizedBox.shrink();
@@ -371,6 +387,18 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
                   fontSize: 13.5,
                 ),
               ),
+              if (_paceLine() case final pace?) ...[
+                const SizedBox(height: DesignSystem.spaceSM),
+                Text(
+                  pace,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: DesignSystem.primary,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.4,
+                  ),
+                ),
+              ],
               const SizedBox(height: DesignSystem.spaceLG),
               if (next != null && !isSameGame)
                 Row(
@@ -664,36 +692,6 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: DesignSystem.spaceMD),
-              InkWell(
-                onTap: () => _launchUrl('https://ko-fi.com/sidhant947'),
-                borderRadius: BorderRadius.circular(DesignSystem.radiusXS),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.local_cafe_rounded,
-                        size: 14,
-                        color: DesignSystem.accentAmber,
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'BUY ME A COFFEE',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w800,
-                          color: colorScheme.onSurface.withValues(alpha: 0.7),
-                          letterSpacing: 0.8,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ],
           ),

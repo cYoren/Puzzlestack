@@ -58,6 +58,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   late final AnimationController _win = AnimationController(vsync: this);
   late final AnimationController _press =
       AnimationController(vsync: this, duration: BoardMotion.press);
+  late final AnimationController _transition = AnimationController(vsync: this);
 
   Size _size = Size.zero;
   Offset _down = Offset.zero;
@@ -77,16 +78,56 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   List<ElementRef> _celebrating = const [];
   Duration _winStagger = BoardMotion.winStagger;
 
+  S? _transitionFrom;
+  S? _transitionTo;
+
+  /// Bumped on every transition so a cancelled ticker cannot clear a newer one.
+  int _transitionToken = 0;
+
+  bool get _isTransitioning => _transitionFrom != null;
+
   @override
   void didUpdateWidget(covariant PuzzleBoardView<S> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!identical(oldWidget.board.state, widget.board.state) &&
-        _lifted != null) {
+    final changed = !identical(oldWidget.board.state, widget.board.state);
+    if (changed && _lifted != null) {
       // A reset or a new level landed mid-drag; drop the gesture, not the app.
       _clearDrag(notify: false);
     }
+
+    if (changed) {
+      final duration =
+          widget.board.transitionFor(oldWidget.board.state, widget.board.state);
+      if (duration != null && duration > Duration.zero) {
+        _transitionFrom = oldWidget.board.state;
+        _transitionTo = widget.board.state;
+        _transition.duration = duration;
+        final token = ++_transitionToken;
+        // `then` (not `whenComplete`) only runs when the controller reached its
+        // end; a transition interrupted by the next move must not clear the new
+        // one or fire a celebration.
+        _transition.forward(from: 0).then((_) {
+          if (!mounted || token != _transitionToken) return;
+          setState(() {
+            _transitionFrom = null;
+            _transitionTo = null;
+          });
+          // The move is only now visible; the win waits for it.
+          if (widget.board.isSolved) _celebrate();
+        });
+      } else if (_isTransitioning) {
+        // A reset or a new level landed mid-transition: drop it with the state
+        // it belonged to instead of painting the old move over the new board.
+        _transitionToken++;
+        _transition.stop();
+        _transitionFrom = null;
+        _transitionTo = null;
+      }
+    }
+
     if (!oldWidget.board.isSolved && widget.board.isSolved) {
-      _celebrate();
+      // A transition is running: the celebration is fired above when it ends.
+      if (!_isTransitioning) _celebrate();
     }
   }
 
@@ -98,6 +139,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     _invalid.dispose();
     _win.dispose();
     _press.dispose();
+    _transition.dispose();
     super.dispose();
   }
 
@@ -170,8 +212,10 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     setState(() {
       _pressed = null;
       _lifted = element;
-      _grab = details.localPosition;
-      _pointer = details.localPosition;
+      // Grab from where the finger went down, not where the pan crossed its
+      // slop: using the pan start made every lifted cell jump by ~18dp.
+      _grab = _down;
+      _pointer = _down;
       _targets = targets;
       _hover = null;
     });
@@ -302,7 +346,31 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       return;
     }
     emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
-    widget.onMove(move);
+
+    // A tap that moves something somewhere gets the same settle a drag does.
+    // Without it a pour, a jump or a link happened in one frame, which read as
+    // the board flickering rather than the move being made.
+    final target = move.target;
+    final bounds = target == null ? null : widget.board.boundsOf(target);
+    final origin = widget.board.boundsOf(move.source);
+    if (target == null || bounds == null || origin == null) {
+      widget.onMove(move);
+      return;
+    }
+    final delta = bounds.center - origin.center;
+    setState(() {
+      _lifted = move.source;
+      _grab = Offset.zero;
+      _pointer = Offset.zero;
+      _pending = move;
+      _settling = true;
+      _settleFrom = Offset.zero;
+      _settleTo = Offset(delta.dx * _size.width, delta.dy * _size.height);
+    });
+    _settle.value = 0;
+    _settle
+        .animateWith(SpringSimulation(BoardMotion.snapSpring, 0, 1, 0))
+        .whenCompleteOrCancel(_commit);
   }
 
   // -------------------------------------------------------------------- win
@@ -331,8 +399,8 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   @override
   Widget build(BuildContext context) {
     final palette = PuzzlePalette.of(context);
-    final listenable =
-        Listenable.merge([_press, _lift, _settle, _zones, _invalid, _win]);
+    final listenable = Listenable.merge(
+        [_press, _lift, _settle, _zones, _invalid, _win, _transition]);
 
     return AspectRatio(
       aspectRatio: 1 / widget.board.aspectRatio,
@@ -358,6 +426,9 @@ class _PuzzleBoardViewState<S extends PuzzleState>
                     board: widget.board,
                     palette: palette,
                     highlight: _highlight,
+                    transitionFrom: _transitionFrom,
+                    transitionTo: _transitionTo,
+                    transitionT: _transition.value,
                   ),
                 ),
               ),
@@ -374,11 +445,17 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
     required this.board,
     required this.palette,
     required this.highlight,
+    this.transitionFrom,
+    this.transitionTo,
+    this.transitionT = 0,
   });
 
   final PuzzleBoard<S> board;
   final PuzzlePalette palette;
   final BoardHighlight highlight;
+  final S? transitionFrom;
+  final S? transitionTo;
+  final double transitionT;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -388,6 +465,13 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
       palette: palette,
       highlight: highlight,
     );
+
+    final from = transitionFrom;
+    final to = transitionTo;
+    if (from != null && to != null) {
+      board.paintTransition(view, from, to, transitionT);
+      return;
+    }
 
     board.paint(view, board.state);
 
@@ -447,5 +531,8 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
   bool shouldRepaint(covariant _BoardPainter<S> oldDelegate) =>
       oldDelegate.board != board ||
       oldDelegate.highlight != highlight ||
-      oldDelegate.palette != palette;
+      oldDelegate.palette != palette ||
+      oldDelegate.transitionFrom != transitionFrom ||
+      oldDelegate.transitionTo != transitionTo ||
+      oldDelegate.transitionT != transitionT;
 }

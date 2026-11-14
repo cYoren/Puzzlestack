@@ -77,12 +77,12 @@ class KurodokoBoard extends GridBoard<KurodokoState> {
     final palette = canvas.palette;
 
     final (fill, stroke) = switch (colour) {
-      KurodokoCell.black => (palette.ink, null),
-      KurodokoCell.white => (palette.surface, palette.outline),
-      KurodokoCell.unknown => (palette.bed, null),
+      KurodokoCell.black => (palette.structure, palette.structure),
+      KurodokoCell.white => (palette.surface, palette.line),
+      KurodokoCell.unknown => (palette.surface, palette.line),
     };
 
-    canvas.cell(rect, fill: fill, stroke: stroke);
+    canvas.cell(rect, fill: fill, stroke: stroke, strokeWidth: 1.4);
 
     // A cell marked white gets a small dot rather than a number: it is the
     // player's note, and it should not compete with the clues.
@@ -98,8 +98,8 @@ class KurodokoBoard extends GridBoard<KurodokoState> {
       canvas.text(
         '$clue',
         rect,
-        color: colour == KurodokoCell.black ? palette.surface : palette.ink,
-        fontSize: rect.shortestSide * 0.62,
+        color: palette.ink,
+        fontSize: canvas.fontSizeForSquare(rect, 0.62),
       );
     }
 

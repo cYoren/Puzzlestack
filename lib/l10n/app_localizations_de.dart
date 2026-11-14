@@ -9,7 +9,7 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get appTitle => 'Puzzlestack';
+  String get appTitle => 'Puzzle-Spiele';
 
   @override
   String get home => 'Start';
@@ -5892,11 +5892,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Platziere schwarze Zellen so, dass Zahlen die genaue Anzahl weißer Zellen sehen.';
 
   @override
-  String get kurodokoCongrats => 'Jede Zahl sieht genau, was sie sehen soll.';
+  String get kurodokoCongrats => 'Every number sees exactly what it should.';
 
   @override
   String get kurodokoTapHint =>
-      'Tippe auf ein Feld, um es zu schwärzen. Nochmal tippen markiert es weiß.';
+      'Tap a cell to blacken it, tap again to mark it white.';
 
   @override
   String get subitizingRushTitle => 'Mengen-Blitz';
@@ -6302,10 +6302,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pegsSubtitle =>
-      'Springe mit einem Stift über seinen Nachbarn und schlage ihn. Einer bleibt übrig.';
+      'Jump a peg over its neighbour to capture it. Leave one standing.';
 
   @override
-  String get pegsCongrats => 'Ein Stift übrig. Sauber gelöst.';
+  String get pegsCongrats => 'One peg left. That is a clean board.';
 
   @override
   String get lightsOutPresses => 'Presses';
@@ -6350,20 +6350,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get twiddleTitle => 'Twiddle';
 
   @override
-  String get twiddleSubtitle =>
-      'Drehe Blöcke, bis die Zahlen der Reihe nach stehen.';
+  String get twiddleSubtitle => 'Turn blocks until the numbers run in order.';
 
   @override
-  String get twiddleCongrats => 'Jede Zahl an ihrem Platz.';
+  String get twiddleCongrats => 'Every number in its place.';
 
   @override
-  String get difficultyEasy => 'LEICHT';
+  String get difficultyEasy => 'EASY';
 
   @override
-  String get difficultyMedium => 'MITTEL';
+  String get difficultyMedium => 'MEDIUM';
 
   @override
-  String get difficultyHard => 'SCHWER';
+  String get difficultyHard => 'HARD';
 
   @override
   String get navDeal => 'Deal';

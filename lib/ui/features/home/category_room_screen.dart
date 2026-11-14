@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../providers/game_session_provider.dart';
+import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/haptic_feedback.dart';
-import '../../../utils/navigation_utils.dart';
 import '../../../widgets/deck.dart';
+import '../../core/assist/game_launch.dart';
 import '../feed/feed_screen.dart';
 
 /// One room of the stack: every puzzle in a category, filed as cards.
 ///
 /// The deal this room offers is the same feed as everywhere else, scoped to the
 /// category, so a room is never a dead end that drops you back into a list.
-class CategoryRoomScreen extends StatelessWidget {
+class CategoryRoomScreen extends ConsumerWidget {
   const CategoryRoomScreen({super.key, required this.categoryId});
 
   final String categoryId;
 
-  void _openGame(BuildContext context, GameMetadata game) {
+  void _openGame(BuildContext context, WidgetRef ref, GameMetadata game) {
     HapticFeedbackUtil.selectionClick();
-    Navigator.push(context, CustomPageRoute(page: game.builder(context)));
+    // Tells the result card which shelf the player is browsing, so "next" stays
+    // inside this room instead of jumping anywhere.
+    ref.read(gameSessionNotifierProvider.notifier).setSession(
+          gameId: game.id,
+          category: categoryId,
+          query: '',
+        );
+    launchGame(context, ref, game);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final CategoryInfo cat = GameCategories.info(categoryId);
-    final List<GameMetadata> games = GameCategories.inCategory(categoryId);
+    final List<String> hidden = ref.watch(
+        userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
+    final List<GameMetadata> games = GameCategories.inCategory(categoryId)
+        .where((g) => !hidden.contains(g.id))
+        .toList(growable: false);
 
     return Scaffold(
       backgroundColor: DesignSystem.paperOf(context),
@@ -51,7 +65,8 @@ class CategoryRoomScreen extends StatelessWidget {
                   mainAxisExtent: 96,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, i) => _gameTile(context, games[i], i + 1),
+                  (context, i) =>
+                      _gameTile(context, ref, games[i], i + 1),
                   childCount: games.length,
                 ),
               ),
@@ -164,11 +179,15 @@ class CategoryRoomScreen extends StatelessWidget {
     );
   }
 
-  Widget _gameTile(BuildContext context, GameMetadata game, int position) {
+  Widget _gameTile(BuildContext context, WidgetRef ref, GameMetadata game,
+      int position) {
+    final bool isFavorite = ref.watch(userDataNotifierProvider
+        .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
     return DeckCard(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
       radius: 16,
-      onTap: () => _openGame(context, game),
+      onTap: () => _openGame(context, ref, game),
+      onLongPress: () => _hideGame(context, ref, game),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -177,6 +196,8 @@ class CategoryRoomScreen extends StatelessWidget {
             children: [
               Icon(game.icon, size: 18, color: DesignSystem.muted(context)),
               const Spacer(),
+              _favoriteStar(context, ref, game, isFavorite),
+              const SizedBox(width: 6),
               DeckNumber(
                 position.toString().padLeft(2, '0'),
                 size: 16,
@@ -197,6 +218,47 @@ class CategoryRoomScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  /// The star and the long-press are the only two things the rest of the app
+  /// learns from a room: the stack shows a favourites row, and hidden games
+  /// drop out of every browse surface.
+  Widget _favoriteStar(
+      BuildContext context, WidgetRef ref, GameMetadata game, bool isFavorite) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        HapticFeedbackUtil.lightImpact();
+        ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
+      },
+      child: Icon(
+        isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
+        size: 18,
+        color: isFavorite
+            ? DesignSystem.accent(context)
+            : DesignSystem.hairline(context),
+      ),
+    );
+  }
+
+  void _hideGame(BuildContext context, WidgetRef ref, GameMetadata game) {
+    final l10n = AppLocalizations.of(context)!;
+    HapticFeedbackUtil.mediumImpact();
+    ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text(l10n.gameHidden),
+        action: SnackBarAction(
+          label: l10n.undo,
+          onPressed: () => ref
+              .read(userDataNotifierProvider.notifier)
+              .toggleHideGame(game.id),
+        ),
+        duration: const Duration(seconds: 4),
       ),
     );
   }

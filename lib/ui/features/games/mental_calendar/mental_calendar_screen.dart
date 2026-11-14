@@ -110,10 +110,13 @@ class MentalCalendarScreen extends ConsumerWidget {
               width: 140,
               child: TangibleButton(
                 onTap: () => ref.read(mentalCalendarNotifierProvider.notifier).submitAnswer(dayIndex),
-                color: DesignSystem.surface,
+                color: Theme.of(context).colorScheme.surface,
                 child: Text(
                   days[index],
-                  style: const TextStyle(color: DesignSystem.ink, fontSize: 16),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 16,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

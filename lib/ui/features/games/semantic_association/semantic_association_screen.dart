@@ -16,6 +16,65 @@ class SemanticAssociationPuzzle {
   SemanticAssociationPuzzle({required this.clues, required this.answer});
 }
 
+/// Three clues, one answer. A run draws one puzzle, so eight puzzles was the
+/// whole game: the ninth round was the first one again.
+final List<SemanticAssociationPuzzle> semanticAssociationPool = [
+  SemanticAssociationPuzzle(clues: ['Swiss', 'Cottage', 'Cake'], answer: 'CHEESE'),
+  SemanticAssociationPuzzle(clues: ['Time', 'Bandit', 'Wrist'], answer: 'WATCH'),
+  SemanticAssociationPuzzle(clues: ['Spade', 'Heart', 'House'], answer: 'CARD'),
+  SemanticAssociationPuzzle(clues: ['Electric', 'Guitar', 'Wire'], answer: 'CABLE'),
+  SemanticAssociationPuzzle(clues: ['Foot', 'Tennis', 'Snow'], answer: 'SHOE'),
+  SemanticAssociationPuzzle(clues: ['Paper', 'Source', 'Light'], answer: 'PLATE'),
+  SemanticAssociationPuzzle(clues: ['Water', 'River', 'Blood'], answer: 'BANK'),
+  SemanticAssociationPuzzle(clues: ['Cracker', 'Nap', 'Cheese'], answer: 'JACK'),
+  SemanticAssociationPuzzle(clues: ['Full', 'Honey', 'Landing'], answer: 'MOON'),
+  SemanticAssociationPuzzle(clues: ['Rock', 'Fish', 'Fall'], answer: 'STAR'),
+  SemanticAssociationPuzzle(clues: ['Cane', 'Cube', 'Brown'], answer: 'SUGAR'),
+  SemanticAssociationPuzzle(clues: ['Quake', 'Worm', 'Day'], answer: 'EARTH'),
+  SemanticAssociationPuzzle(clues: ['House', 'Thumb', 'Light'], answer: 'GREEN'),
+  SemanticAssociationPuzzle(clues: ['Shoe', 'Fly', 'Radish'], answer: 'HORSE'),
+  SemanticAssociationPuzzle(clues: ['Wood', 'Escape', 'Works'], answer: 'FIRE'),
+  SemanticAssociationPuzzle(clues: ['Fall', 'Colour', 'Proof'], answer: 'WATER'),
+  SemanticAssociationPuzzle(clues: ['House', 'Year', 'Bulb'], answer: 'LIGHT'),
+  SemanticAssociationPuzzle(clues: ['Case', 'Mark', 'Shelf'], answer: 'BOOK'),
+  SemanticAssociationPuzzle(clues: ['Brush', 'Paste', 'Fairy'], answer: 'TOOTH'),
+  SemanticAssociationPuzzle(clues: ['Ball', 'Man', 'Fall'], answer: 'SNOW'),
+  SemanticAssociationPuzzle(clues: ['Box', 'Paper', 'Castle'], answer: 'SAND'),
+  SemanticAssociationPuzzle(clues: ['Board', 'Hole', 'Stone'], answer: 'KEY'),
+  SemanticAssociationPuzzle(clues: ['Nail', 'Print', 'Food'], answer: 'FINGER'),
+  SemanticAssociationPuzzle(clues: ['Shake', 'Maid', 'Way'], answer: 'MILK'),
+  SemanticAssociationPuzzle(clues: ['Bag', 'Writing', 'Made'], answer: 'HAND'),
+  SemanticAssociationPuzzle(clues: ['Bow', 'Coat', 'Drop'], answer: 'RAIN'),
+  SemanticAssociationPuzzle(clues: ['Burn', 'Set', 'Glasses'], answer: 'SUN'),
+  SemanticAssociationPuzzle(clues: ['Mare', 'Fall', 'Life'], answer: 'NIGHT'),
+  SemanticAssociationPuzzle(clues: ['Line', 'Light', 'Band'], answer: 'HEAD'),
+  SemanticAssociationPuzzle(clues: ['Boat', 'Guard', 'Time'], answer: 'LIFE'),
+  SemanticAssociationPuzzle(clues: ['Mill', 'Shield', 'Breaker'], answer: 'WIND'),
+  SemanticAssociationPuzzle(clues: ['Dream', 'Break', 'Light'], answer: 'DAY'),
+  SemanticAssociationPuzzle(clues: ['Ball', 'Note', 'Print'], answer: 'FOOT'),
+  SemanticAssociationPuzzle(clues: ['Heart', 'Tooth', 'Corn'], answer: 'SWEET'),
+  SemanticAssociationPuzzle(clues: ['Made', 'Work', 'Land'], answer: 'HOME'),
+  SemanticAssociationPuzzle(clues: ['Hat', 'Line', 'Pooper'], answer: 'PARTY'),
+  SemanticAssociationPuzzle(clues: ['Hold', 'Keeper', 'Boat'], answer: 'HOUSE'),
+  SemanticAssociationPuzzle(clues: ['Yard', 'Wreck', 'Shape'], answer: 'SHIP'),
+  SemanticAssociationPuzzle(clues: ['Room', 'Walk', 'Bill'], answer: 'BOARD'),
+  SemanticAssociationPuzzle(clues: ['Cake', 'Board', 'Holder'], answer: 'CUP'),
+  SemanticAssociationPuzzle(clues: ['Back', 'Cut', 'Clip'], answer: 'PAPER'),
+  SemanticAssociationPuzzle(clues: ['Paper', 'Nut', 'Flower'], answer: 'WALL'),
+  SemanticAssociationPuzzle(clues: ['Mate', 'Work', 'Spirit'], answer: 'TEAM'),
+  SemanticAssociationPuzzle(clues: ['Beat', 'Break', 'Burn'], answer: 'HEART'),
+  SemanticAssociationPuzzle(clues: ['Brow', 'Lash', 'Sight'], answer: 'EYE'),
+  SemanticAssociationPuzzle(clues: ['Line', 'Table', 'Zone'], answer: 'TIME'),
+  SemanticAssociationPuzzle(clues: ['Apple', 'Cone', 'Needle'], answer: 'PINE'),
+  SemanticAssociationPuzzle(clues: ['Sauce', 'Tree', 'Pie'], answer: 'APPLE'),
+  SemanticAssociationPuzzle(clues: ['Fish', 'Smith', 'Rush'], answer: 'GOLD'),
+  SemanticAssociationPuzzle(clues: ['Mark', 'Slide', 'Lord'], answer: 'LAND'),
+  SemanticAssociationPuzzle(clues: ['Food', 'Shell', 'Side'], answer: 'SEA'),
+  SemanticAssociationPuzzle(clues: ['Room', 'Time', 'Spread'], answer: 'BED'),
+  SemanticAssociationPuzzle(clues: ['Chair', 'Barrow', 'Base'], answer: 'WHEEL'),
+  SemanticAssociationPuzzle(clues: ['House', 'Bath', 'Seed'], answer: 'BIRD'),
+];
+
 class SemanticAssociationScreen extends ConsumerStatefulWidget {
   const SemanticAssociationScreen({super.key});
 
@@ -27,16 +86,7 @@ class _SemanticAssociationScreenState extends ConsumerState<SemanticAssociationS
   final Random _random = Random();
   final TextEditingController _controller = TextEditingController();
 
-  final List<SemanticAssociationPuzzle> _puzzlePool = [
-    SemanticAssociationPuzzle(clues: ['Swiss', 'Cottage', 'Cake'], answer: 'CHEESE'),
-    SemanticAssociationPuzzle(clues: ['Time', 'Bandit', 'Wrist'], answer: 'WATCH'),
-    SemanticAssociationPuzzle(clues: ['Spade', 'Heart', 'House'], answer: 'CARD'),
-    SemanticAssociationPuzzle(clues: ['Electric', 'Guitar', 'Wire'], answer: 'CABLE'),
-    SemanticAssociationPuzzle(clues: ['Foot', 'Tennis', 'Snow'], answer: 'SHOE'),
-    SemanticAssociationPuzzle(clues: ['Paper', 'Source', 'Light'], answer: 'PLATE'),
-    SemanticAssociationPuzzle(clues: ['Water', 'River', 'Blood'], answer: 'BANK'),
-    SemanticAssociationPuzzle(clues: ['Cracker', 'Nap', 'Cheese'], answer: 'JACK'),
-  ];
+  List<SemanticAssociationPuzzle> get _puzzlePool => semanticAssociationPool;
 
   late SemanticAssociationPuzzle _currentPuzzle;
   int _score = 0;

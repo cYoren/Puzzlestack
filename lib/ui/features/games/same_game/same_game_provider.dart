@@ -112,4 +112,16 @@ class SameGameNotifier extends _$SameGameNotifier {
     state = state.copyWith(hint: groups.first);
     return groups.first;
   }
+
+  /// Clears the board by removing every group that is left.
+  void solve() {
+    if (state.isSolved) return;
+    final grid = List<int>.filled(state.grid.length, 0);
+    state = state.copyWith(
+      grid: grid,
+      isSolved: true,
+      isStuck: false,
+      clearHint: true,
+    );
+  }
 }

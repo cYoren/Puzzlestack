@@ -151,6 +151,7 @@ class DeckCard extends StatelessWidget {
     this.pile = 0,
     this.color,
     this.onTap,
+    this.onLongPress,
     this.lift = 1,
     this.clip = false,
   });
@@ -161,6 +162,7 @@ class DeckCard extends StatelessWidget {
   final int pile;
   final Color? color;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final double lift;
   final bool clip;
 
@@ -211,11 +213,12 @@ class DeckCard extends StatelessWidget {
       );
     }
 
-    if (onTap == null) return content;
+    if (onTap == null && onLongPress == null) return content;
     return Semantics(
       button: true,
       child: GestureDetector(
         onTap: onTap,
+        onLongPress: onLongPress,
         behavior: HitTestBehavior.opaque,
         child: content,
       ),

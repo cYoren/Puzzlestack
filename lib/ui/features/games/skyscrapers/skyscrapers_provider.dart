@@ -197,4 +197,15 @@ class SkyscrapersNotifier extends _$SkyscrapersNotifier {
     }
     return true;
   }
+
+  /// Fills in the answer.
+  void solve() {
+    if (state.isSolved) return;
+    state = state.copyWith(
+      values: List<int>.from(state.puzzle.solution),
+      clearSelection: true,
+      clearHint: true,
+      isSolved: true,
+    );
+  }
 }

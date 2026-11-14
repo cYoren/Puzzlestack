@@ -2,7 +2,6 @@ import 'dart:math';
 
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
-import '../../../data/game_registry.dart';
 
 /// The order the feed deals puzzles in.
 ///
@@ -43,13 +42,14 @@ class FeedDeck {
   final Map<int, GameMetadata> _dealt = {};
 
   List<GameMetadata> _buildPool() {
-    final List<GameMetadata> source = categoryId == null
-        ? allGamesMetadata
-        : GameCategories.inCategory(categoryId!).toList(growable: false);
-    final List<GameMetadata> filtered =
-        source.where((g) => !_hidden.contains(g.id)).toList(growable: false);
+    // One decider for what the deal may serve: the curated pool, minus the
+    // games this player hid. A category room scopes it, it does not bypass it.
+    final List<GameMetadata> source = GameFeed.feedPool(exclude: _hidden);
+    final List<GameMetadata> filtered = categoryId == null
+        ? source
+        : source.where((g) => g.category == categoryId).toList(growable: false);
     // Hiding is a preference, not a way to empty the app.
-    return filtered.isEmpty ? allGamesMetadata : filtered;
+    return filtered.isEmpty ? GameFeed.feedPool() : filtered;
   }
 
   /// The size of one full pass, for the "n / total" counter.

@@ -401,4 +401,75 @@ class SlitherlinkEngine {
 
     return visitedEdges == totalActiveEdges;
   }
+
+  // ------------------------------------------------------------------ checks
+
+  /// How many drawn edges surround cell ([row], [col]).
+  int drawnAround(
+    SlitherlinkLevel level,
+    List<List<bool>> hEdges,
+    List<List<bool>> vEdges,
+    int row,
+    int col,
+  ) {
+    var count = 0;
+    if (hEdges[row][col]) count++;
+    if (hEdges[row + 1][col]) count++;
+    if (vEdges[row][col]) count++;
+    if (vEdges[row][col + 1]) count++;
+    return count;
+  }
+
+  /// Every clue that the loop already breaks: too many lines around it, or a
+  /// line drawn where the clue forbids one.
+  ///
+  /// Only over-drawing is reported. A clue with too few lines is not a mistake
+  /// yet — the player may still be drawing — so it is not painted red. A line
+  /// that runs the wrong way is a mistake immediately.
+  List<({int row, int col, int drawn, int clue})> brokenClues(
+    SlitherlinkLevel level,
+    List<List<bool>> hEdges,
+    List<List<bool>> vEdges,
+  ) {
+    final broken = <({int row, int col, int drawn, int clue})>[];
+    for (var row = 0; row < level.size; row++) {
+      for (var col = 0; col < level.size; col++) {
+        final clue = level.clues[row][col];
+        if (clue == null) continue;
+        final drawn = drawnAround(level, hEdges, vEdges, row, col);
+        if (drawn > clue) {
+          broken.add((row: row, col: col, drawn: drawn, clue: clue));
+        }
+      }
+    }
+    return broken;
+  }
+
+  /// An edge the answer needs that is not drawn yet, for the hint.
+  ///
+  /// The answer is unique, so any missing edge from it is a step the player
+  /// still has to take. It is a peek at the answer, and that is what a hint
+  /// button means here; the rules-only alternative was a solver this puzzle
+  /// does not have.
+  ({bool horizontal, int row, int col})? missingEdge(
+    SlitherlinkLevel level,
+    List<List<bool>> hEdges,
+    List<List<bool>> vEdges,
+  ) {
+    for (var row = 0; row <= level.size; row++) {
+      for (var col = 0; col < level.size; col++) {
+        if (level.solutionHEdges[row][col] && !hEdges[row][col]) {
+          return (horizontal: true, row: row, col: col);
+        }
+      }
+    }
+    for (var row = 0; row < level.size; row++) {
+      for (var col = 0; col <= level.size; col++) {
+        if (level.solutionVEdges[row][col] && !vEdges[row][col]) {
+          return (horizontal: false, row: row, col: col);
+        }
+      }
+    }
+    return null;
+  }
 }

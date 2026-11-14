@@ -17,6 +17,48 @@ class WordConnectionCategory {
   WordConnectionCategory({required this.title, required this.words, required this.color});
 }
 
+/// Four categories of four make a board, so twelve categories was three
+/// boards before a repeat. A word belongs to exactly one category: if two
+/// could take ORANGE, the board has two right answers.
+final List<WordConnectionCategory> wordGridCategories = [
+  WordConnectionCategory(title: 'FRUITS', words: ['APPLE', 'PEAR', 'PEACH', 'PLUM', 'BANANA', 'CHERRY', 'GRAPE', 'LEMON'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'PLANETS', words: ['MARS', 'VENUS', 'SATURN', 'JUPITER', 'URANUS', 'NEPTUNE', 'MERCURY', 'EARTH'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'FURNITURE', words: ['DESK', 'CHAIR', 'SOFA', 'BED', 'TABLE', 'CABINET', 'DRESSER', 'BENCH'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'METALS', words: ['GOLD', 'SILVER', 'IRON', 'COPPER', 'BRONZE', 'PLATINUM', 'ZINC', 'LEAD'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'ANIMALS', words: ['LION', 'TIGER', 'PANDA', 'ZEBRA', 'HIPPO', 'KOALA', 'MONKEY', 'RABBIT'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'COLORS', words: ['RED', 'BLUE', 'GREEN', 'YELLOW', 'PURPLE', 'PINK', 'BROWN', 'TEAL'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'VEHICLES', words: ['CAR', 'BUS', 'TRAIN', 'PLANE', 'BOAT', 'TRUCK', 'BIKE', 'SUBWAY'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'WEATHER', words: ['RAIN', 'SNOW', 'WIND', 'CLOUD', 'STORM', 'FOG', 'HAIL', 'THUNDER'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'JOBS', words: ['DOCTOR', 'NURSE', 'TEACHER', 'CHEF', 'PILOT', 'ARTIST', 'WRITER', 'ACTOR'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'CLOTHES', words: ['SHIRT', 'PANTS', 'JACKET', 'DRESS', 'SOCKS', 'HAT', 'COAT', 'SCARF'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'KITCHEN', words: ['SPOON', 'FORK', 'KNIFE', 'PLATE', 'BOWL', 'CUP', 'PAN', 'POT'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'OCEAN', words: ['SHARK', 'WHALE', 'DOLPHIN', 'OCTOPUS', 'CRAB', 'CORAL', 'SHELL', 'SEAL'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'BIRDS', words: ['EAGLE', 'ROBIN', 'SPARROW', 'OWL', 'HAWK', 'PENGUIN', 'PARROT', 'SWAN'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'TREES', words: ['OAK', 'PINE', 'MAPLE', 'BIRCH', 'CEDAR', 'WILLOW', 'ELM', 'ASH'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'SPORTS', words: ['TENNIS', 'GOLF', 'RUGBY', 'HOCKEY', 'BOXING', 'BADMINTON', 'SKIING', 'ROWING'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'INSTRUMENTS', words: ['PIANO', 'VIOLIN', 'DRUM', 'FLUTE', 'CELLO', 'TRUMPET', 'HARP', 'BANJO'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'FLOWERS', words: ['ROSE', 'TULIP', 'DAISY', 'LILY', 'ORCHID', 'VIOLET', 'PEONY', 'IRIS'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'BODY', words: ['ELBOW', 'KNEE', 'SHOULDER', 'ANKLE', 'WRIST', 'THUMB', 'HEEL', 'SPINE'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'GEMS', words: ['RUBY', 'EMERALD', 'SAPPHIRE', 'DIAMOND', 'OPAL', 'TOPAZ', 'JADE', 'PEARL'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'SPICES', words: ['PEPPER', 'CUMIN', 'PAPRIKA', 'GINGER', 'TURMERIC', 'OREGANO', 'BASIL', 'THYME'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'COUNTRIES', words: ['BRAZIL', 'CANADA', 'JAPAN', 'KENYA', 'NORWAY', 'CHILE', 'EGYPT', 'INDIA'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'LANGUAGES', words: ['FRENCH', 'GERMAN', 'SPANISH', 'ITALIAN', 'ARABIC', 'HINDI', 'SWAHILI', 'TURKISH'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'TOOLS', words: ['HAMMER', 'WRENCH', 'CHISEL', 'PLIERS', 'DRILL', 'SAW', 'FILE', 'CLAMP'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'FABRICS', words: ['COTTON', 'WOOL', 'SILK', 'LINEN', 'DENIM', 'LACE', 'VELVET', 'SATIN'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'DRINKS', words: ['COFFEE', 'TEA', 'JUICE', 'WATER', 'MILK', 'SODA', 'CIDER', 'COCOA'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'DESSERTS', words: ['CAKE', 'PIE', 'TART', 'PUDDING', 'COOKIE', 'BROWNIE', 'SORBET', 'TRIFLE'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'FEELINGS', words: ['ANGER', 'JOY', 'FEAR', 'PRIDE', 'ENVY', 'GRIEF', 'HOPE', 'SHAME'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'SCHOOL', words: ['PENCIL', 'ERASER', 'RULER', 'CHALK', 'BOARD', 'NOTEBOOK', 'CRAYON', 'GLOBE'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'SEASONS', words: ['SPRING', 'SUMMER', 'AUTUMN', 'WINTER'], color: DesignSystem.gameGreen),
+  WordConnectionCategory(title: 'MONTHS', words: ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST'], color: DesignSystem.gameBlue),
+  WordConnectionCategory(title: 'WEEKDAYS', words: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'], color: DesignSystem.gamePurple),
+  WordConnectionCategory(title: 'INSECTS', words: ['BEETLE', 'ANT', 'BEE', 'WASP', 'MOTH', 'CRICKET', 'LOCUST', 'TERMITE'], color: DesignSystem.gameOrange),
+  WordConnectionCategory(title: 'VEGETABLES', words: ['CARROT', 'ONION', 'POTATO', 'CABBAGE', 'SPINACH', 'TOMATO', 'CELERY', 'RADISH'], color: DesignSystem.gameGreen),
+];
+
+/// Every category, so a test can check the words are a group and the groups
+/// do not overlap.
+
 class WordGridConnectionScreen extends ConsumerStatefulWidget {
   const WordGridConnectionScreen({super.key});
 
@@ -27,20 +69,7 @@ class WordGridConnectionScreen extends ConsumerStatefulWidget {
 class _WordGridConnectionScreenState extends ConsumerState<WordGridConnectionScreen> {
   final Random _random = Random();
 
-  final List<WordConnectionCategory> _categoryPool = [
-    WordConnectionCategory(title: 'FRUITS', words: ['APPLE', 'PEAR', 'PEACH', 'PLUM', 'ORANGE', 'BANANA', 'CHERRY', 'GRAPE'], color: DesignSystem.gameGreen),
-    WordConnectionCategory(title: 'PLANETS', words: ['MARS', 'VENUS', 'SATURN', 'JUPITER', 'URANUS', 'NEPTUNE', 'MERCURY', 'EARTH'], color: DesignSystem.gameBlue),
-    WordConnectionCategory(title: 'FURNITURE', words: ['DESK', 'CHAIR', 'SOFA', 'BED', 'TABLE', 'CABINET', 'DRESSER', 'BENCH'], color: DesignSystem.gamePurple),
-    WordConnectionCategory(title: 'METALS', words: ['GOLD', 'SILVER', 'IRON', 'COPPER', 'BRONZE', 'PLATINUM', 'ZINC', 'LEAD'], color: DesignSystem.gameOrange),
-    WordConnectionCategory(title: 'ANIMALS', words: ['LION', 'TIGER', 'PANDA', 'ZEBRA', 'HIPPO', 'KOALA', 'MONKEY', 'RABBIT'], color: DesignSystem.gameGreen),
-    WordConnectionCategory(title: 'COLORS', words: ['RED', 'BLUE', 'GREEN', 'YELLOW', 'ORANGE', 'PURPLE', 'PINK', 'BROWN'], color: DesignSystem.gameBlue),
-    WordConnectionCategory(title: 'VEHICLES', words: ['CAR', 'BUS', 'TRAIN', 'PLANE', 'BOAT', 'TRUCK', 'BIKE', 'SUBWAY'], color: DesignSystem.gamePurple),
-    WordConnectionCategory(title: 'WEATHER', words: ['RAIN', 'SNOW', 'WIND', 'CLOUD', 'STORM', 'SUNNY', 'FOG', 'HAIL'], color: DesignSystem.gameOrange),
-    WordConnectionCategory(title: 'JOBS', words: ['DOCTOR', 'NURSE', 'TEACHER', 'CHEF', 'PILOT', 'ARTIST', 'WRITER', 'ACTOR'], color: DesignSystem.gameGreen),
-    WordConnectionCategory(title: 'CLOTHES', words: ['SHIRT', 'PANTS', 'JACKET', 'DRESS', 'SHOES', 'SOCKS', 'HAT', 'COAT'], color: DesignSystem.gameBlue),
-    WordConnectionCategory(title: 'KITCHEN', words: ['SPOON', 'FORK', 'KNIFE', 'PLATE', 'BOWL', 'CUP', 'PAN', 'POT'], color: DesignSystem.gamePurple),
-    WordConnectionCategory(title: 'OCEAN', words: ['SHARK', 'WHALE', 'DOLPHIN', 'OCTOPUS', 'CRAB', 'FISH', 'CORAL', 'SHELL'], color: DesignSystem.gameOrange),
-  ];
+  List<WordConnectionCategory> get _categoryPool => wordGridCategories;
 
   late List<WordConnectionCategory> _activeCategories;
 

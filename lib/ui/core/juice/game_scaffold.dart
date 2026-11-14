@@ -5,10 +5,13 @@ import 'dart:math' as math;
 import '../../../utils/design_system.dart';
 import '../../../widgets/tangible.dart';
 import '../../../data/game_guides.dart';
-import '../../../data/game_registry.dart';
+import '../../../data/game_metadata.dart';
 import '../../../widgets/game_guide_screen.dart';
 import '../../../providers/user_providers.dart';
 import '../../features/feed/feed_session.dart';
+import '../../../utils/game_clock.dart';
+import '../assist/game_assist.dart';
+import 'game_scope.dart';
 
 class GameScaffold extends ConsumerStatefulWidget {
   final String title;
@@ -38,6 +41,31 @@ class GameScaffold extends ConsumerStatefulWidget {
 
 class _GameScaffoldState extends ConsumerState<GameScaffold> {
   bool _wakelockActive = false;
+
+  /// Resolved once. The registry has 313 entries and `titleGetter` needs a
+  /// localisation lookup each time, so doing it on every rebuild would be a
+  /// small tax on every frame of a drag.
+  GameMetadata? _resolvedGame;
+
+  @override
+  void initState() {
+    super.initState();
+    // The one place every game is timed from. `completeGame` reads this clock,
+    // so 313 screens get a personal best without one line each.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final game = _resolveGame(context);
+      if (game != null) GameClock.start(game.id);
+    });
+  }
+
+  /// The registry entry behind this screen, by the id [launchGame] put in the
+  /// scope, and by the displayed title only when there is no scope.
+  GameMetadata? _resolveGame(BuildContext context) {
+    if (_resolvedGame != null) return _resolvedGame;
+    _resolvedGame = resolveGame(context, title: widget.title);
+    return _resolvedGame;
+  }
 
   @override
   void dispose() {
@@ -183,6 +211,11 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
               ),
             ),
           ),
+          // The screen's own controls. `actions` used to be accepted and then
+          // dropped on the floor, which is why hint and reset buttons existed
+          // in every game and appeared in none.
+          ...?widget.actions,
+          ..._assistButtons(context),
           // Info / Help button: always shown for every game!
           const SizedBox(width: DesignSystem.spaceSM),
           TangibleButton(
@@ -201,27 +234,81 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
     );
   }
 
+  /// Hint and solve for the games that can offer them.
+  ///
+  /// Hint names one step the rules can prove. Solve fills in the answer, behind
+  /// a confirmation that says it will not count.
+  List<Widget> _assistButtons(BuildContext context) {
+    final game = _resolveGame(context);
+    if (game == null) return const [];
+    final actions = gameAssistFor(game.id, ref);
+    if (actions == null || actions.isEmpty) return const [];
+
+    final colorScheme = Theme.of(context).colorScheme;
+    // Solve only: every board that has a hint already puts its own lightbulb
+    // in `actions`, which the shell now renders. Two hint buttons in a 320dp
+    // app bar was the alternative, and it overflowed by 18px.
+    if (actions.onSolve == null) return const [];
+    return [
+      TangibleButton(
+        color: Colors.transparent,
+        drawBorder: false,
+        onTap: () => _confirmSolve(game, actions),
+        padding: const EdgeInsets.all(10),
+        child: Icon(
+          Icons.playlist_add_check_rounded,
+          color: colorScheme.onSurface,
+          size: 22,
+        ),
+      ),
+    ];
+  }
+
+  Future<void> _confirmSolve(
+    GameMetadata game,
+    GameAssistActions actions,
+  ) async {
+    final solve = actions.onSolve;
+    if (solve == null) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('SOLVE THIS BOARD?'),
+        content: const Text(
+          'The answer will be filled in. A solve for you still finishes the '
+          'puzzle, but it does not earn XP and does not extend a streak.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('KEEP PLAYING'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('SOLVE'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    GameAssist.markAssisted(game.id);
+    solve();
+  }
+
   void _showDefaultHelpDialog(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     // Resolve detailed descriptive subtitle
     String? resolvedSubtitle = widget.subtitle;
-    String? gameId;
-    Color? gameColor;
-    try {
-      final matchingGame = allGamesMetadata.firstWhere(
-        (g) =>
-            g.titleGetter(context).toUpperCase() == widget.title.toUpperCase(),
-      );
-      gameId = matchingGame.id;
-      gameColor = matchingGame.color;
+    final matchingGame = _resolveGame(context);
+    final gameId = matchingGame?.id;
+    final gameColor = matchingGame?.color;
+    if (matchingGame != null) {
       if (resolvedSubtitle == null ||
           resolvedSubtitle.toUpperCase() == widget.title.toUpperCase()) {
         resolvedSubtitle = matchingGame.subtitleGetter(context);
       }
-    } catch (_) {
-      // Fallback
     }
 
     // Every game ships a written guide. When the title resolves to a game that
@@ -231,7 +318,7 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
         context,
         MaterialPageRoute(
           builder: (_) => GameGuideScreen(
-            gameId: gameId!,
+            gameId: gameId,
             gameColor: gameColor ?? colorScheme.primary,
           ),
         ),

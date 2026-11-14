@@ -145,4 +145,20 @@ class DominosaNotifier extends _$DominosaNotifier {
       return;
     }
   }
+
+  /// Fills in the answer. Used by the shell's solve button: it is not a move,
+  /// so it never pretends to be one.
+  void solve() {
+    if (state.isSolved) return;
+    final partner = state.puzzle.partner;
+    final placed = <int, int>{
+      for (var cell = 0; cell < partner.length; cell++) cell: partner[cell],
+    };
+    state = state.copyWith(
+      placed: placed,
+      clearSelection: true,
+      clearHint: true,
+      isSolved: true,
+    );
+  }
 }

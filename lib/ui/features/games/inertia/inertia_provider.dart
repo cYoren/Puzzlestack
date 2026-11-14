@@ -99,4 +99,20 @@ class InertiaNotifier extends _$InertiaNotifier {
     if (direction == null) return;
     state = state.copyWith(hint: direction);
   }
+
+  /// Slides along the engine's own line from where the ball is now.
+  void solve() {
+    if (state.isSolved) return;
+    final line = _engine.solve(state.puzzle);
+    if (line == null) return;
+    var position = state.position;
+    for (final direction in line) {
+      position = _engine.move(state.puzzle, position, direction);
+    }
+    state = state.copyWith(
+      position: position,
+      moves: state.moves + line.length,
+      clearHint: true,
+    );
+  }
 }
