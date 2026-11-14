@@ -5,7 +5,10 @@ implementations with generators and solvers that already prove one answer. Port 
 The bar a port must pass is [PUZZLE-BAR.md](PUZZLE-BAR.md); pinned commits and attributions go
 in [REFERENCE.md](../REFERENCE.md) and `NOTICE` as before.
 
-Licences below were read from each repository on 2026-11-14. Check again at the commit you pin.
+Licences below were read from each repository on 2026-11-14, then read again from the licence
+file at the commit we pinned; where they disagreed the file won and
+[REFERENCE.md](../REFERENCE.md) says so. Every source named here is pinned there, with its
+commit and the licence at that commit.
 
 ## What we may take
 
@@ -80,11 +83,11 @@ Mature, well-tested games. Code may be taken where the header says GPL-3.0 or "2
 | Source | Licence on GitHub | What is in it for us |
 | --- | --- | --- |
 | **GNOME/gnome-sudoku** | GPL-3.0 | Graded Sudoku generation, for the Library's clue tiers |
-| **GNOME/gnome-mines**, **hitori**, **gnome-taquin**, **gnome-klotski** | GPL-3.0 | Second opinions on games we have; Klotski's classic layouts |
-| **GNOME/gnome-tetravex** | GPL-2.0, "or later" in headers | **Tetravex**: edge-matching tiles. A type we lack, and a good card at 3x3 |
-| **GNOME/atomix** | GPL-2.0, check headers | **Atomix**: slide atoms until they form the molecule. A type we lack |
-| **GNOME/swell-foop**, **lightsoff**, **five-or-more** | GPL-2.0, check headers | References for `same_game` and `lights_out` |
-| **KDE/ksudoku**, **picmi**, **knetwalk**, **kubrick** | GPL-2.0, check headers | Sudoku variants, a Nonogram, a pipes game, a cube |
+| **GNOME/gnome-mines**, **hitori**, **gnome-taquin**, **gnome-klotski** | GPL-3.0 (hitori is on gitlab.gnome.org, not GitHub) | Second opinions on games we have; Klotski's classic layouts |
+| **GNOME/gnome-tetravex** | **LGPL-2.0-or-later** (the file, not the label) | **Tetravex**: edge-matching tiles. A type we lack, and a good card at 3x3 |
+| **GNOME/atomix** | GPL-2.0-or-later (gitlab.gnome.org) | **Atomix**: slide atoms until they form the molecule. A type we lack |
+| **GNOME/swell-foop**, **lightsoff**, **five-or-more** | **LGPL-2.0-or-later** | References for `same_game` and `lights_out` |
+| **KDE/ksudoku**, **picmi**, **knetwalk**, **kubrick** | GPL-2.0-**or-later** (`LICENSES/GPL-2.0-or-later.txt`) | Sudoku variants, a Nonogram, a pipes game, a cube |
 | **Enigma-Game/Enigma** | GPL-2.0, "or later" in headers | Hundreds of marble puzzles. Ideas only: the levels are authored content |
 | **shlomif/PySolFC**, **shlomif/fc-solve** | GPL-3.0, MIT | Solitaire rules and a solver. Not now: card solitaire is a different app |
 
@@ -125,10 +128,10 @@ is "Push boxes" unless the name is confirmed free to use.
 | --- | --- | --- |
 | **Numberlink** (connect the pairs, fill the grid), plus Walls and extended Undead, Unequal and Solo | `SteffenBauer/sgtpuzzles-extended`: `flow.c walls.c solo_plus.c undead_plus.c unequal_plus.c` on Tatham's framework. Prefer `flow.c` to the AGPL Numberlink repo: same puzzle, simpler licence, same porting pipeline | MIT (Tatham's text) |
 | Tap-only controls for every Tatham puzzle | `SteffenBauer/PocketPuzzles` (e-reader port), `medmunds/puzzles-web` (PWA) | MIT text, MIT |
-| **Dungeon walls**: place walls from row and column counts so every monster sits in a dead end and the treasure in a room | `halfburnttoast/Dungeon-Cross` for the rules; generate our own boards | GPL-2.0, check headers |
+| **Dungeon walls**: place walls from row and column counts so every monster sits in a dead end and the treasure in a room | `halfburnttoast/Dungeon-Cross` for the rules; generate our own boards | LGPL-2.0-or-later |
 | **Hex mines**: hexagonal Minesweeper where every step is deducible | `oprypin/sixcells` (level format, player); generate our own | GPL-3.0 |
 | **Hexalate**: rotate hex tiles until touching colours match | `gottcode/hexalate` | GPL-3.0 |
-| **Clue grid**: the Einstein puzzle as an icon grid instead of a wall of text. Rebuilds `einstein_riddle` into a Deck card | `lksj/einstein-puzzle` (Sherlock-style), `murfffi/zebra4j` (generator with unique answers) | GPL-2.0 check headers, LGPL-3.0 |
+| **Clue grid**: the Einstein puzzle as an icon grid instead of a wall of text. Rebuilds `einstein_riddle` into a Deck card | `lksj/einstein-puzzle` (Sherlock-style), `murfffi/zebra4j` (generator with unique answers) | LGPL-2.0-or-later, LGPL-3.0 |
 | **Knights and knaves**: who is lying. Rebuilds `logical_syllogisms` | `dmackinnon1/inspectorCraig` (generators for Smullyan-style puzzles) | none: permission lane |
 | **Matrix patterns**, generated. Makes `matrix_reasoning` a Deck run | `WellyZhang/RAVEN` | GPL-3.0 |
 | **Queens / Star Battle** with hints in plain words | `gitars/queens-generator` | MIT |
