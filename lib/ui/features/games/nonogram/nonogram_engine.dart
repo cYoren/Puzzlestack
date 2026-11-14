@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'nonogram_model.dart';
+
 class NonogramPuzzle {
   final List<List<int>> rowClues;
   final List<List<int>> colClues;
@@ -13,34 +15,42 @@ class NonogramPuzzle {
 class NonogramEngine {
   final Random _random = Random();
 
+  /// Proposes a random picture, derives the clues, and ships the board only
+  /// when the clues pin down exactly one answer.
+  ///
+  /// Without the count, roughly one 8x8 board in five had more than one
+  /// answer: the win check compares clues, so a player could "finish" a picture
+  /// the generator never drew, and the house rule ("every puzzle has exactly
+  /// one solution") was simply false. The count uses the same line solver a
+  /// player reasons with (`nonogram_model.dart`).
   NonogramPuzzle generatePuzzle(int size) {
-    // 1. Generate a random grid
-    // For a better experience, we can weight it towards being filled
-    final List<List<bool>> solution = List.generate(
-      size,
-      (_) => List.generate(size, (_) => _random.nextDouble() > 0.45),
-    );
+    for (var attempt = 0; attempt < 500; attempt++) {
+      final List<List<bool>> solution = List.generate(
+        size,
+        (_) => List.generate(size, (_) => _random.nextDouble() > 0.45),
+      );
 
-    // 2. Generate row clues
-    final List<List<int>> rowClues = [];
-    for (int r = 0; r < size; r++) {
-      rowClues.add(_calculateClues(solution[r]));
-    }
+      final List<List<int>> rowClues = [
+        for (int r = 0; r < size; r++) _calculateClues(solution[r]),
+      ];
+      final List<List<int>> colClues = [
+        for (int c = 0; c < size; c++)
+          _calculateClues([for (int r = 0; r < size; r++) solution[r][c]]),
+      ];
 
-    // 3. Generate col clues
-    final List<List<int>> colClues = [];
-    for (int c = 0; c < size; c++) {
-      final List<bool> column = [];
-      for (int r = 0; r < size; r++) {
-        column.add(solution[r][c]);
+      final count = countNonogramSolutions(
+        rowClues: rowClues,
+        colClues: colClues,
+      );
+      if (count.truncated) {
+        // A count we did not finish proves nothing; try another board.
+        continue;
       }
-      colClues.add(_calculateClues(column));
+      if (count.isUnique) {
+        return NonogramPuzzle(rowClues: rowClues, colClues: colClues);
+      }
     }
-
-    return NonogramPuzzle(
-      rowClues: rowClues,
-      colClues: colClues,
-    );
+    throw StateError('no unique nonogram after 500 attempts at $size');
   }
 
   List<int> _calculateClues(List<bool> line) {
