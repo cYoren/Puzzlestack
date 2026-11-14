@@ -48,6 +48,7 @@ test in `main`; they are named here so a reader does not start them again.
 | `deck-allowlist` | `lib/data/game_profiles.dart`, generated from CATALOG.md by `tool/gen_game_profiles.py`; `GameFeed.feedPool` is the Deck minus hidden | `test/content/game_profiles_test.dart` re-parses the catalog; G1 |
 | `archive` | `visibleIds` in the profile map; rooms, search, counts and the deal read it | `test/content/game_profiles_test.dart` (rooms, counts and search skip the archive), `test/content/feed_pool_test.dart` |
 | `nonogram-uniqueness` | `nonogram_model.dart` is the board as a deduction problem; the generator retries up to 500 deals and throws rather than ship an ambiguous grid | `test/content/nonogram_test.dart`, and the Logic triage reads `nonogram` as `pass` |
+| `minesweeper-no-guess` | `MinesweeperEngine.isSolvableWithoutGuess` plays out the deduction a player has from the first tap; the deal is accepted only if that finishes the board, so no deal can need a guess | `test/engines/minesweeper_engine_test.dart`: thirty deals at each of the app's four sizes, and a solver that answers no when the boards are not fair |
 
 ### B. The Deck
 
@@ -117,7 +118,6 @@ where the detail for the first two and for `accessibility-boards` lives. The res
 | --- | --- |
 | `crossword-supply` | A 5x5 mini with clues written for it, and enough of them |
 | `word-wheel-curated` | Hand-made wheels; no generated ones from the wide dictionary |
-| `minesweeper-no-guess` | First tap opens an area and the board is solvable without a guess |
 | `accessibility-boards` | Semantics on the board contract |
 | `untested-sweep` (the triage reports call it `rule-tests`) | A test against its own rule for every kept game that has none (G3). The ids are in each room's triage report |
 | `uniqueness` | Every generator the triage marks `unproven` proves its deal: one answer where the genre implies one, always winnable elsewhere. `lib/core/deduction.dart` has the tools |

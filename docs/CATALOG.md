@@ -86,7 +86,8 @@ Notes
   first needs a run of rounds, the second needs a 3-house feed size that reads without a wall
   of clues.
 - `wisconsin_card_sorting` is a good hidden-rule game under a bad name. Rename "Rule Finder".
-- `minesweeper` is Deck only with a no-guess generator.
+- `minesweeper` deals a board that is provably finishable by deduction (`minesweeper-no-guess`):
+  the first tap is mine-free, and the deal is accepted only if reading the numbers finishes it.
 - `nonogram` proves its deal before it is dealt (`nonogram-uniqueness`, #47): the generator
   retries up to 500 grids and throws rather than ship one with a second answer.
 

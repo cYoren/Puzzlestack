@@ -68,7 +68,7 @@ light and `AUDIT_DARK=1`:
 | `map` | MAP | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
 | `masyu` | Masyu Loop | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
 | `matrix_reasoning` | Matrix Reasoning | library | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `minesweeper` | Minesweeper | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `minesweeper` | Minesweeper | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `netslide` | NETSLIDE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
 | `nonogram` | Nonogram | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `norinori` | Norinori | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
@@ -100,7 +100,7 @@ PUZZLE-BAR.md's working procedure keeps fixes out of the triage PR: each of thes
 its own change with its own test. Grouped by the job that fixes it, because the fix is
 usually one mechanism and not N edits.
 
-- **`uniqueness` — the generator must prove its deal (check 2)** — 34: `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `map`, `masyu`, `matrix_reasoning`, `minesweeper`, `netslide`, `path_finder`, `pegs`, `pipes`, `same_game`, `shikaku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
+- **`uniqueness` — the generator must prove its deal (check 2)** — 33: `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `map`, `masyu`, `matrix_reasoning`, `netslide`, `path_finder`, `pegs`, `pipes`, `same_game`, `shikaku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
 - **`plain-names` — sentence case, no lab vocabulary (check 9)** — 23: `binary_puzzle`, `block_escape`, `bridges`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `hitori`, `inertia`, `kakuro`, `lighthouses`, `lights_out`, `magnets`, `map`, `netslide`, `nurikabe`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `wisconsin_card_sorting`
 - **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 8: `gokigen_naname`, `kakurasu_sums`, `masyu`, `shikaku`, `tapa`, `tenner_grid`, `triplets_logic`, `yajilin`
 
@@ -109,7 +109,7 @@ solution does not show it is the only one, but it does mean the deal is not unwi
 
 - winnable, not unique (18): `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `heyawake`, `hitori`, `inertia`, `map`, `netslide`, `pegs`, `pipes`, `same_game`, `tangle_fix`, `tower_of_london`, `twiddle`, `water_sort`
 
-- neither proven (16): `gokigen_naname`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `masyu`, `matrix_reasoning`, `minesweeper`, `path_finder`, `shikaku`, `symbol_logic`, `tapa`, `tenner_grid`, `triplets_logic`, `wisconsin_card_sorting`, `yajilin`
+- neither proven (15): `gokigen_naname`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `masyu`, `matrix_reasoning`, `path_finder`, `shikaku`, `symbol_logic`, `tapa`, `tenner_grid`, `triplets_logic`, `wisconsin_card_sorting`, `yajilin`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.
