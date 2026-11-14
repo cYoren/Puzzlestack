@@ -1,16 +1,19 @@
-Puzzlestack is a vertical-feed suite of 313 minimalist brain puzzles: logic, math, memory, spatial, attention and word games, in one calm app.
+Puzzlestack is a feed of real puzzles. Open it and you are already playing: swipe up and the next one is dealt.
 
-THREE WAYS IN
-- Shuffle: a full-screen vertical feed. Swipe up and drop straight into a fresh puzzle.
-- Daily Pick: one puzzle a day, the same for everyone.
-- The catalog: 313 games in six rooms (Logic 53, Math 63, Memory 54, Spatial 38, Attention 54, Word 51).
+One good puzzle, then another. Each card is fair, each one is made to be finished, and none of them is filler. 224 puzzles across six rooms: logic, math, memory, spatial, attention and word.
 
-WHY IT FEELS DIFFERENT
-- A discovery home instead of a wall of 313 icons: a Shuffle hero, a Daily Pick, quick games under two minutes, and the full catalog tucked into six rooms.
-- Every board works with one finger, and the newer ones let you drag as well.
+THE DEAL
+- A vertical feed of puzzle cards. Swipe up for the next one, or stay on the one that has you.
+- The same puzzles in six rooms when you want to choose instead of be dealt to: Logic, Math, Memory, Spatial, Attention, Word.
+- Every board works with one finger; the newer ones take a drag as well.
 - Offline. No ads. No account. Nothing tracked.
 
+WHY IT FEELS DIFFERENT
+- One card, one screen, one decision. The rules are a tap away, never a wall of text before the first move.
+- Nothing is a timer where a puzzle should be thought about.
+- Your own times and your streak, against yourself only. No leaderboards, no invented percentiles.
+
 HIGHLIGHTS
-Sudoku, Nonogram, Slitherlink, Kakuro, Minesweeper, Water Sort, 2048, KenKen, Dominosa, Skyscrapers, Futoshiki, Magnets, Tents & Trees, Galaxies, Signpost, N-Back, Corsi Blocks, Schulte Table, Stroop, Crossword, Word Search, Word Ladder.
+Sudoku, Nonogram, Slitherlink, Kakuro, Minesweeper, Water Sort, 2048, KenKen, Dominosa, Skyscrapers, Futoshiki, Magnets, Tents & Trees, Galaxies, Signpost, Hitori, Akari, Nurikabe, Tapa, Yajilin, Crossword, Word Search, Word Ladder, Word Wheel.
 
 Two minutes or an hour, there is a board for it.

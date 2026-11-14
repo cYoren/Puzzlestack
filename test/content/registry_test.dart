@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/data/game_guides.dart';
+import 'package:puzzle/data/game_profiles.dart';
 import 'package:puzzle/data/game_registry.dart';
 
 /// The catalog is the product, and until this test existed nothing checked it
@@ -42,24 +43,47 @@ void main() {
     }
   });
 
-  test('every store file says the number of games there are', () {
-    final count = ids.length.toString();
-    const files = [
+  test('every store file says the number of games a player can open', () {
+    // The registry is not the number the player sees: the archive is hidden, and the store
+    // page, the web shell, the Pages site and the README are about what a player can open.
+    // This used to require the registry total, which is how the copy ended up advertising
+    // 89 games the app no longer deals.
+    final visible = visibleIds.length.toString();
+    final total = '${allGamesMetadata.length}';
+    // Files that must carry the number, and the one that must not carry the archived total
+    // but has no room for a number (the App Store name is 30 characters).
+    const withCount = [
       'README.md',
       'fastlane/metadata/android/en-US/title.txt',
+      'fastlane/metadata/android/en-US/short_description.txt',
       'fastlane/metadata/android/en-US/full_description.txt',
+      'fastlane/metadata/ios/en-US/subtitle.txt',
+      'fastlane/metadata/ios/en-US/promotional_text.txt',
+      'fastlane/metadata/ios/en-US/description.txt',
       'docs/index.html',
       'web/manifest.json',
+      'web/index.html',
     ];
-    final wrong = <String>[];
-    for (final path in files) {
+    const noStaleCount = ['fastlane/metadata/ios/en-US/name.txt', ...withCount];
+    final missing = <String>[];
+    final archived = <String>[];
+    for (final path in withCount) {
       final text = File(path).readAsStringSync();
-      if (!RegExp('\\b$count\\b').hasMatch(text)) {
-        wrong.add('$path does not say $count');
+      if (!RegExp('\\b$visible\\b').hasMatch(text)) {
+        missing.add('$path does not say $visible');
       }
     }
-    expect(wrong, isEmpty,
-        reason: 'adding or removing a game means updating the copy:\n'
-            '${wrong.join('\n')}');
+    for (final path in noStaleCount) {
+      final text = File(path).readAsStringSync();
+      if (visible != total && RegExp('\\b$total\\b').hasMatch(text)) {
+        archived.add('$path still says $total, which counts the archive');
+      }
+    }
+    expect(missing, isEmpty,
+        reason: 'the copy must say how many games a player can open:\n'
+            '${missing.join('\n')}');
+    expect(archived, isEmpty,
+        reason: 'the count in the copy is the visible one, not the registry:\n'
+            '${archived.join('\n')}');
   });
 }

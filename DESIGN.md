@@ -33,7 +33,7 @@ look like six different apps. Indigo on an inactive element is a bug.
 
 Two faces, two jobs:
 
-- **Bebas Neue** — display only. Card indices (`042 / 313`), counts, game titles in the feed,
+- **Bebas Neue** — display only. Card indices (`042 / 224`), counts, game titles in the feed,
   section headings, the wordmark. Never body copy, never a button label longer than three words.
 - **Geist** — everything else, including buttons and prose. Body 13–16, muted for secondary.
 
@@ -55,7 +55,7 @@ Every surface is a card from `lib/widgets/deck.dart`:
   no coloured halo, no inner glow, no gradient.
 - `pile: n` draws empty cards behind it. That is how the stack reads: the deal shows two cards
   under the live one, so the swipe has somewhere to go.
-- A puzzle card has a **header** (category, then `042 / 313` in tabular Bebas), a **body** (the
+- A puzzle card has a **header** (category, then `042 / 224` in tabular Bebas), a **body** (the
   game, playable in place) and a **footer** (title, one-line subtitle, restart / guide / lock,
   and the one primary action: `NEXT`).
 
