@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/data/game_profiles.dart';
 
 /// A store listing is content too, and it was the one part of the product with
 /// nothing in the repo: Play had no phone screenshots at all, and iOS had no
@@ -74,18 +75,20 @@ void main() {
     }
   });
 
-  test('the two listings say the same number of games', () {
-    // Adding a game means updating both stores; the count is the one number
-    // that must never disagree between them.
+  test('the two listings say the same number of games, and it is the visible one', () {
+    // Adding or archiving a game means updating both stores; the count is the one number
+    // that must never disagree between them, and it is the number a player can open, not
+    // the registry total (which includes the archive).
     final android =
         File('fastlane/metadata/android/en-US/full_description.txt')
             .readAsStringSync();
     final ios =
         File('fastlane/metadata/ios/en-US/description.txt').readAsStringSync();
-    final androidCount = RegExp(r'\b(\d{3}) minimalist').firstMatch(android);
-    final iosCount = RegExp(r'\b(\d{3}) minimalist').firstMatch(ios);
+    final androidCount = RegExp(r'\b(\d+) puzzles\b').firstMatch(android);
+    final iosCount = RegExp(r'\b(\d+) puzzles\b').firstMatch(ios);
     expect(androidCount, isNotNull);
     expect(iosCount, isNotNull);
     expect(iosCount!.group(1), androidCount!.group(1));
+    expect(androidCount.group(1), '${visibleIds.length}');
   });
 }

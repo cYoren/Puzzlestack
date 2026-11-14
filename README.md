@@ -1,13 +1,13 @@
 # Puzzlestack
 
-A cross-platform suite of **313 minimalist brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
+A cross-platform suite of **224 playable brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
 
 Two ideas sit at the heart of Puzzlestack:
 
 1. **The deal.** The app opens on a puzzle, not on a menu. One full-screen card, playable
    where it lands; swipe up and the next card is dealt. The deck is a real shuffled pass over
-   all 313 puzzles, so nothing repeats until the bag is empty and the counter on the card
-   (`042 / 313`) is true. Solving a card offers one thing: the next card.
+   every playable puzzle, so nothing repeats until the bag is empty and the counter on the card
+   (`042 / 224`) is true. Solving a card offers one thing: the next card.
 2. **The stack.** When you know what you want, the second room files every puzzle by
    category: six rooms, today's card, a row for when you have two minutes, and search.
 
@@ -16,14 +16,14 @@ live colour (indigo) that only appears where something is active. See [DESIGN.md
 
 ---
 
-## The 313 games, by category
+## The 224 games, by category
 
-- **Logic (53):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies and more.
-- **Math (63):** 2048, KenKen, Magic Squares, Prime Hunter, Fraction Match, Quick Math, Sum Pyramid and more.
-- **Memory (54):** Memory Matrix, Corsi Blocks, N-Back, Memory Palace, Digit Span, Face/Name and more.
-- **Spatial (38):** Mental Rotation, Paper Folding, Cube Net Fold, Classic Maze, Mirror Image and more.
-- **Attention (54):** Stroop, Flanker, Schulte Table, Trail Making, Go/No-Go, Visual Search and more.
-- **Word (51):** Find Word, Crossword, Word Search, Word Ladder, Cryptogram, Word Scramble and more.
+- **Logic (52):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies and more.
+- **Math (44):** 2048, KenKen, Magic Squares, Prime Hunter, Fraction Match, Quick Math, Sum Pyramid and more.
+- **Memory (29):** Memory Matrix, Corsi Blocks, N-Back, Memory Palace, Digit Span, Face/Name and more.
+- **Spatial (31):** Mental Rotation, Paper Folding, Cube Net Fold, Classic Maze, Mirror Image and more.
+- **Attention (27):** Stroop, Flanker, Schulte Table, Trail Making, Go/No-Go, Visual Search and more.
+- **Word (41):** Find Word, Crossword, Word Search, Word Ladder, Cryptogram, Word Scramble and more.
 
 ## Architecture
 
