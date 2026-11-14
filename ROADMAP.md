@@ -18,7 +18,7 @@ What those phases taught is in [papercuts.md](papercuts.md).
 | --- | --- | --- |
 | G1 | The Deck holds at least 100 verified games, and no room is more than 40% of it | `test/curation_test.dart` |
 | G2 | Every Deck game passes the ten checks | its row in `docs/CATALOG.md` is marked verified, with a PR |
-| G3 | Every registry game has a test against its own rule (today 112 have none) | `test/content/` plus a registry sweep that fails on an untested id |
+| G3 | Every kept game has a test against its own rule (79 have none today: each room's `rule-tests` list in `docs/TRIAGE-*`) | `test/content/` plus a registry sweep that fails on an untested id |
 | G4 | No game can be dealt unwinnable, or with two answers where one is implied | generator and pool tests |
 | G5 | Every Deck game has a feed size with a measured median of 30 to 120 s | timings in the PR; size table in code |
 | G6 | Cold start to a playable card under 2 s; the deal holds 60 fps on a low-end Android | device pass, recorded in the release PR |
@@ -32,12 +32,22 @@ What those phases taught is in [papercuts.md](papercuts.md).
 In order. A job is one PR unless it says otherwise. Take the first job whose dependencies are
 merged; say which job id in the PR title.
 
-### A. Land what is open
+### A. Landed: nothing is open here
 
-| Job | What | Depends on |
+`land-fixes` merged #47 to #53 in that order (the eight band-1 content defects, the shell
+resolving a game by id, the selection fixes, the pools, the release assets). `land-deck` merged
+#40 rebased on top: the deck look, the real deal, and `DESIGN.md`. Both are in `main`.
+
+### A2. Already done, so nobody re-opens it
+
+Three jobs that older sections of this file still described as open. Each has its code and its
+test in `main`; they are named here so a reader does not start them again.
+
+| Job | Where it landed | The proof |
 | --- | --- | --- |
-| `land-fixes` | Review and merge #47, #48, #49, #50, #52, #51, in that order | none |
-| `land-deck` | Rebase #40 (the deck look and the real feed) on main, resolve, merge. `DESIGN.md` arrives with it | `land-fixes` |
+| `deck-allowlist` | `lib/data/game_profiles.dart`, generated from CATALOG.md by `tool/gen_game_profiles.py`; `GameFeed.feedPool` is the Deck minus hidden | `test/content/game_profiles_test.dart` re-parses the catalog; G1 |
+| `archive` | `visibleIds` in the profile map; rooms, search, counts and the deal read it | `test/content/game_profiles_test.dart` (rooms, counts and search skip the archive), `test/content/feed_pool_test.dart` |
+| `nonogram-uniqueness` | `nonogram_model.dart` is the board as a deduction problem; the generator retries up to 500 deals and throws rather than ship an ambiguous grid | `test/content/nonogram_test.dart`, and the Logic triage reads `nonogram` as `pass` |
 
 ### B. The Deck
 
@@ -46,10 +56,8 @@ it. Triage that moves an id writes the reason in that room's Notes.
 
 | Job | What | Depends on |
 | --- | --- | --- |
-| `deck-allowlist` | `lib/data/curation.dart`: replace `feedBlocklist` with one tier per game (`deck`, `library`, `archive`), seeded from CATALOG.md. `GameFeed.feedPool` = Deck minus hidden; every list, search and count reads visible games only. Add `kind` (think, word, snap), `family`, `origin` tag and archive `reason` to `GameMetadata`. Test: ids are real, tiers and tags match CATALOG.md, G1 | `land-deck` |
 | `triage-logic` `triage-math` `triage-memory` `triage-attention` `triage-word` `triage-spatial` | Play every game in the room against the bar. Confirm or move each id in CATALOG.md with a one-line reason, mark it verified. Six PRs. Fix nothing here; open a fix job per game that needs one. **The machine half is done for all six; the play list is what remains** (see B2) | `deck-allowlist` |
 | `merge-families` | Fold each `merge` line: add the absorbed game as a mode of the keeper only if it plays differently, then archive it with reason `twin`. One PR per room | its `triage-*` |
-| `archive` | Set `tier: archive` on the Archive lists. Archived games stay in the repo, compile and keep their tests, and appear nowhere in the app: not in rooms, search, the deal, the daily, counts or store copy. Nothing is deleted | all `triage-*` |
 | `plain-names` | Titles, subtitles and goal lines in `app_en.arb` for every kept game: plain words, sentence case, 60 characters. No lab names, no ALL CAPS. The ids are in each room's triage report (`plain-names`) | the machine `triage-*` |
 
 ### B2. Triage: the half a machine can do is done
@@ -107,7 +115,6 @@ where the detail for the first two and for `accessibility-boards` lives. The res
 
 | Job | What |
 | --- | --- |
-| `nonogram-uniqueness` | Nonogram proves one answer before it is dealt |
 | `crossword-supply` | A 5x5 mini with clues written for it, and enough of them |
 | `word-wheel-curated` | Hand-made wheels; no generated ones from the wide dictionary |
 | `minesweeper-no-guess` | First tap opens an area and the board is solvable without a guess |
