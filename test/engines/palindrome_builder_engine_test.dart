@@ -33,7 +33,9 @@ void main() {
       test('all tasks produce valid palindromes', () {
         for (int i = 0; i < 50; i++) {
           final task = engine.getRandomTask();
-          final word = task.incomplete.replaceFirst('__', task.solution).replaceFirst('_', task.solution);
+          // One underscore per missing letter, so the whole run is the gap.
+          final word =
+              task.incomplete.replaceFirst(RegExp(r'_+'), task.solution);
           final reversed = word.split('').reversed.join('');
           expect(word, equals(reversed), reason: '$word is not a palindrome');
         }
