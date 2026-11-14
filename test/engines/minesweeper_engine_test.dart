@@ -110,7 +110,9 @@ void main() {
                 for (int dc = -1; dc <= 1; dc++) {
                   int nr = r + dr, nc = c + dc;
                   if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
-                    if (board[nr][nc].state == CellState.revealed) foundRevealed = true;
+                    if (board[nr][nc].state == CellState.revealed) {
+                      foundRevealed = true;
+                    }
                   }
                 }
               }
@@ -146,10 +148,93 @@ void main() {
       });
     });
 
+    group('the first tap is always fair', () {
+      // The guarantee the deck depends on: from the first tap on, a player who only reads the
+      // numbers never has to guess. Checked by replaying that reasoning on the dealt board, so
+      // this fails if the generator starts dealing ambiguous boards again.
+      for (final spec in [
+        (rows: 5, cols: 5, mines: 5),
+        (rows: 6, cols: 6, mines: 5),
+        (rows: 8, cols: 8, mines: 10),
+        (rows: 10, cols: 8, mines: 12),
+      ]) {
+        test('${spec.rows}x${spec.cols} with ${spec.mines} mines, thirty deals',
+            () {
+          final engine = MinesweeperEngine(
+            rows: spec.rows,
+            cols: spec.cols,
+            mineCount: spec.mines,
+          );
+          final startRow = spec.rows ~/ 2;
+          final startCol = spec.cols ~/ 2;
+          for (var deal = 0; deal < 30; deal++) {
+            final board =
+                engine.generateBoard(startRow: startRow, startCol: startCol);
+            expect(
+              engine.isSolvableWithoutGuess(board, startRow, startCol),
+              isTrue,
+              reason: 'deal $deal at ${spec.rows}x${spec.cols} needs a guess',
+            );
+          }
+        });
+      }
+
+      test('the first tap opens an area, not one cell', () {
+        final engine = MinesweeperEngine(rows: 6, cols: 6, mineCount: 5);
+        for (var deal = 0; deal < 20; deal++) {
+          final board = engine.generateBoard(startRow: 3, startCol: 3);
+          final opened = engine.revealEmptyCells(board, 3, 3);
+          final revealed = opened
+              .expand((row) => row)
+              .where((cell) => cell.state == CellState.revealed)
+              .length;
+          expect(revealed, greaterThanOrEqualTo(9),
+              reason:
+                  'the 3x3 around the first tap is mine-free, so it all opens');
+        }
+      });
+
+      test('the solver is not a rubber stamp', () {
+        // A solver that answers yes to everything would pass the guarantee above. This shows it
+        // answers no: the same size with the start block left unprotected deals guessing
+        // boards most of the time.
+        final engine = MinesweeperEngine(rows: 8, cols: 8, mineCount: 10);
+        var unsolvable = 0;
+        for (var deal = 0; deal < 40; deal++) {
+          final board = engine.generateBoard();
+          if (!engine.isSolvableWithoutGuess(board, 3, 3)) unsolvable++;
+        }
+        expect(unsolvable, greaterThan(0));
+      });
+
+      test('a tap with no room around it is refused', () {
+        final engine = MinesweeperEngine(rows: 3, cols: 3, mineCount: 8);
+        expect(
+          () => engine.generateBoard(startRow: 1, startCol: 1),
+          throwsArgumentError,
+        );
+      });
+
+      test('a density with no fair deal is refused, not dealt', () {
+        // Over half the board mined: nothing a player can deduce finishes that, so the engine
+        // says so instead of dealing a game that needs luck. The sizes the app deals (5x5 up
+        // to 10x8) are far below this and are covered by the group above.
+        final engine = MinesweeperEngine(rows: 16, cols: 12, mineCount: 90);
+        expect(
+          () => engine.generateBoard(startRow: 8, startCol: 6),
+          throwsStateError,
+        );
+      });
+    });
+
     group('MinesweeperCell', () {
       test('copyWith preserves fields', () {
         final cell = MinesweeperCell(
-          row: 1, col: 2, isMine: true, neighborMines: 3, state: CellState.hidden,
+          row: 1,
+          col: 2,
+          isMine: true,
+          neighborMines: 3,
+          state: CellState.hidden,
         );
         final copy = cell.copyWith(state: CellState.revealed);
         expect(copy.row, equals(1));

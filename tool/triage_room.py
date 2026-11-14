@@ -90,7 +90,10 @@ DEDUCTION = re.compile(r"core/deduction\.dart")
 # `_countSolutions(puzzle) == 1`, `hasUniqueSolution`, `solutionCount`, `countSolutions`.
 UNIQUE = re.compile(
     r"countSolutions|solutionCount|hasUniqueSolution|uniqueSolution|isUnique|"
-    r"generateUnique|solveUnique|_isUnique|oneSolution|solutions\.length == 1"
+    r"generateUnique|solveUnique|_isUnique|oneSolution|solutions\.length == 1|"
+    # Not a uniqueness proof: a proof that the deal is finishable by deduction, which is what
+    # a solitaire game like minesweeper needs (`isSolvableWithoutGuess`).
+    r"isSolvableWithoutGuess|solvableWithoutGuess"
 )
 # Chrome the shared scaffold provides, so a screen does not repeat it.
 SCAFFOLD = re.compile(r"GameScaffold\(")
