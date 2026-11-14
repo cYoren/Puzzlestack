@@ -4,7 +4,7 @@ What a game must be to be dealt in the feed. This is the gate for the Deck, the 
 agent fixing or adding a game, and the checklist for review. Direction: [PRODUCT.md](PRODUCT.md).
 
 **It supersedes** the rule in `CONTENT-AUDIT.md` that a game is never deleted. A game that
-cannot reach the Library floor below is merged or retired.
+cannot reach the Library floor below is archived: hidden from the app, kept in the repo.
 
 ## Tiers
 
@@ -12,7 +12,28 @@ cannot reach the Library floor below is merged or retired.
 | --- | --- | --- |
 | **Deck** | the feed, Daily Five, the Library | all ten checks |
 | **Library** | its room and search only | the Library floor |
-| **Retired** | nowhere; removed from the registry | n/a |
+| **Archive** | nowhere in the app; code, tests and strings stay in the repo | it compiles and its tests pass |
+
+Nothing is deleted. An archived game is raw material: it can come back as a mode of another
+game, be rebuilt into a real puzzle, or stay on the shelf. It costs a compile and nothing else.
+
+## Tags
+
+Every game carries one **origin** tag, so an agent can find the lab tasks and worksheets in
+one query, whatever tier they are in.
+
+| Tag | Meaning |
+| --- | --- |
+| `puzzle` | has a solution reached by reasoning, or is a real game with decisions |
+| `lab` | a cognitive psychology task (span, Stroop, n-back, cueing) |
+| `worksheet` | school arithmetic or coursework with a timer |
+| `quiz` | pick-one questions about knowledge or vocabulary |
+
+Archived games also carry a **reason**: `twin` (absorbed by a keeper), `no-game` (no decision
+to make), `broken-concept` (cannot work in this app, for example needs audio).
+
+A `lab`, `worksheet` or `quiz` game may be in the Deck only as a Snap or Word card that passes
+all ten checks. Most will not; that is what the tag is for.
 
 The verdict for each of the 313 is in [CATALOG.md](CATALOG.md). `lib/data/curation.dart` is
 the code copy of the Deck list and a test keeps the two honest.
@@ -52,7 +73,7 @@ Each is yes or no. Nine out of ten is Library.
 
 ## The Library floor
 
-A game stays in the registry only if all of these hold:
+A game stays visible in the app only if all of these hold; otherwise it is archived:
 
 - it can always be won or finished (check 8, last sentence);
 - it has a test against its own rule (check 10);

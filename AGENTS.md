@@ -10,7 +10,8 @@ next card dealt better, not to make the catalog bigger.
 3. [ROADMAP.md](ROADMAP.md): the release gate and the ordered jobs. Take the first job whose
    dependencies are merged.
 4. Then only what the job touches:
-   - a game's tier: [docs/CATALOG.md](docs/CATALOG.md)
+   - a game's tier and tags: [docs/CATALOG.md](docs/CATALOG.md)
+   - where to take puzzle ideas, generators and word lists from: [docs/SOURCES.md](docs/SOURCES.md)
    - feed behaviour: [docs/FEED.md](docs/FEED.md)
    - look and motion of surfaces: `DESIGN.md`
    - look and feel of boards: [PUZZLE_STYLE.md](PUZZLE_STYLE.md)
@@ -25,7 +26,9 @@ your PR.
 ## Hard rules
 
 - **Never add a game to the Deck without showing the ten checks in the PR.**
-- **Never grow, pad or keep a game to hold a count.** Merge twins, retire filler.
+- **Never grow, pad or keep a game to hold a count.** Merge twins, archive filler.
+- **Never delete a game's code.** A game that leaves the app is archived: hidden, tagged, still
+  in the repo and still compiling, so it can be rebuilt into a real puzzle later.
 - **Never ship a board that can be unwinnable or have two answers.** Prove it in a test.
 - **Every fix carries the test that would have caught it.**
 - **One mechanism, not N edits.** If you are about to make the same change in many game

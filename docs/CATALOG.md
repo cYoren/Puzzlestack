@@ -6,10 +6,10 @@ All 313 registry ids, each in exactly one list. Tiers and the checks behind them
 **This is a first pass (2026-11-14), made from ids, subtitles and the two audits, not from
 playing each game.** Nothing here is final until its room's triage job
 (`triage-<room>` in [ROADMAP.md](../ROADMAP.md)) has played the game and confirmed or moved it.
-A game leaves Retire if play shows a real decision in it. A game leaves Deck if it fails any
+A game leaves the Archive if play shows a real decision in it. A game leaves Deck if it fails any
 of the ten checks.
 
-| | Deck | Library | Merged away | Retire | Total |
+| | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
 | Logic | 44 | 8 | 1 | 0 | 53 |
 | Math | 19 | 25 | 10 | 9 | 63 |
@@ -19,8 +19,8 @@ of the ten checks.
 | Spatial | 22 | 9 | 6 | 1 | 38 |
 | **All** | **139** | **85** | **57** | **32** | **313** |
 
-Registry after merges and retirements: **224**. The store copy takes its number from the
-registry, never from this file.
+Visible in the app after this pass: **224**. The other 89 are archived: hidden, tagged, still in
+the repo. The store copy takes its number from the visible registry, never from this file.
 
 ## Format
 
@@ -29,9 +29,14 @@ Each room has four blocks. Ids are separated by spaces.
 - `deck` is dealt in the feed once verified.
 - `library` stays in its room only.
 - `merge` lines read `keeper <- absorbed absorbed`. The keeper gains the absorbed game as a
-  mode only if it plays differently; otherwise the absorbed game is simply deleted. The keeper
+  mode only if it plays differently; either way the absorbed game is then archived with reason `twin`. The keeper
   is also listed under `deck` or `library`.
-- `retire` is removed from the registry.
+- `archive` is hidden from the app and kept in the repo, reason `no-game` unless a note says
+  otherwise.
+
+**Origin tags** (see PUZZLE-BAR.md) by default: every Memory and Attention game is `lab`; Math
+`library` and `archive` games are `worksheet`; Word `library` games are `quiz`; everything else
+is `puzzle`. Notes list the exceptions. Triage corrects the tag along with the tier.
 
 When triage moves an id, add one line under the room's **Notes** saying why.
 
@@ -57,7 +62,7 @@ triplets_logic wisconsin_card_sorting
 sudoku <- alphabet_sudoku
 ```
 
-```retire
+```archive
 ```
 
 Notes
@@ -98,7 +103,7 @@ prime_hunter <- prime_gap_hunt
 percentage_peak <- percentage_shopping
 ```
 
-```retire
+```archive
 binary_matrix_rank binomial_match graph_coordinate_plot matrix_multiplier
 matrix_multiplier_match pythagorean_triple_builder radical_roots vector_dot_product
 vektor_vector
@@ -107,7 +112,7 @@ vektor_vector
 Notes
 - `quick_math` is the one arithmetic sprint in the Deck, as a Snap card. The other sprints are
   Library.
-- The Retire list is coursework (linear algebra, binomials, radicals). Nobody opens a puzzle
+- The Archive list is coursework (linear algebra, binomials, radicals). Nobody opens a puzzle
   feed to multiply matrices.
 
 ## Memory (54)
@@ -140,7 +145,7 @@ associative_pairs <- word_pair_associate_memory word_association_recall relation
 story_builder <- narrative_recall
 ```
 
-```retire
+```archive
 distractor_matrix dual_coding dual_task_memory feature_matrix_recall sopt source_monitoring
 sternberg_task temporal_order visual_statistical_learning
 ```
@@ -177,7 +182,7 @@ letter_cancellation <- d2_attention
 reflex_tap <- choice_reaction_time
 ```
 
-```retire
+```archive
 chalk_and_talk dual_mirror dynamic_salience focus_tunnel navon_hierarchical odd_even_flash
 peripheral_focus posner_spatial_cueing temporal_order_judgment vigilance_task
 visual_crowding_acuity
@@ -185,7 +190,7 @@ visual_crowding_acuity
 
 Notes
 - `chalk_and_talk` was reframed because the app has no audio; a listening game without sound
-  is not a game.
+  is not a game. Reason `broken-concept`; it returns if sound ships.
 - `vigilance_task` is boring by design. That is the task.
 - Plain names: "Colour Clash" (Stroop), "Number Hunt" (Schulte), "Connect in Order" (Trail
   Making), "Track the Dots", "Spot the Change".
@@ -218,7 +223,7 @@ etymology_origin <- etymon_oddball
 definition_dash <- vocabulary_builder
 ```
 
-```retire
+```archive
 letter_frequency_scan typing_speed
 ```
 
@@ -253,7 +258,7 @@ cube_net_fold <- complex_folding_nets box_completion
 mental_rotation <- wireframe_3d_rotation odd_rotation
 ```
 
-```retire
+```archive
 vector_grid_alignment
 ```
 
@@ -261,12 +266,26 @@ Notes
 - `laser_link` and `mirror_maze` may be one puzzle. Triage decides.
 - `mirror_tracing` and `trace_path` are motor tasks; Library unless play says otherwise.
 
+## Rebuilds from the Archive
+
+Archived games are material. These are the ones with a real puzzle inside; each is a rebuild
+job after 1.1.0, and each comes back through the bar like a new game.
+
+| Archived | Could become |
+| --- | --- |
+| `vektor_vector`, `vector_dot_product` | **Vector Golf**: a few arrows, reach the target point by choosing and scaling them. Already close to a puzzle |
+| `binary_matrix_rank` | a Lights Out variant: toggle rows to clear the grid (the same XOR arithmetic, as a board) |
+| `graph_coordinate_plot` | a coordinate hunt: deduce hidden points from distance clues |
+| `pythagorean_triple_builder`, `radical_roots` | number-fit puzzles: place given lengths so every triangle closes |
+| `matrix_multiplier*`, `binomial_match` | nothing found yet; stay archived |
+| `navon_hierarchical` | a round type inside Colour Clash (big letter made of small letters) |
+| `sternberg_task`, `sopt`, `dnms` and the span twins | round types inside one Memory run, so the run varies |
+| `posner_spatial_cueing`, `vigilance_task`, `visual_crowding_acuity` | nothing; these measure, they do not play |
+| `chalk_and_talk` | a listening game, once sound exists |
+| `typing_speed` | a Word Snap card only if the text is itself a puzzle (type the sentence with its vowels missing) |
+
 ## What the Deck still lacks
 
-Add only these, and only after the triage is done. Each fills a gap the lists above leave.
-
-- **Tatham's remaining three**: Black Box, Undead, Tracks (notes in ROADMAP.md).
-- **Mosaic and Palisade**, small ports. Hat and Spectre are a showpiece, later.
-- **A connections-style grouping puzzle** (sort 16 words into four groups), if
-  `word_grid_connection` is not already that.
-- **A spelling-hive puzzle** with hand-made hives, if `pangram_sprint` is not already that.
+New puzzles come from [SOURCES.md](SOURCES.md), which lists the open-source collections we may
+port from and the order to take them in. Add a game only after the triage is done, and only
+when it brings a puzzle idea the Deck does not have.

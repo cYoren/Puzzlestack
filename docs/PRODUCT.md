@@ -45,9 +45,10 @@ enforced both. The second is right. The first is the problem.
 
 1. **The Deck is opt-in.** A game is dealt in the feed only after it passes
    [the bar](PUZZLE-BAR.md). The Deck is an allowlist. Everything else is Library or gone.
-2. **Quality sets the number.** Twins are merged, lab tasks and worksheets are retired, and
-   the store copy says whatever the registry then holds. First pass: 313 becomes about 224,
-   with about 139 Deck candidates. See [CATALOG.md](CATALOG.md).
+2. **Quality sets the number.** Twins are merged, lab tasks and worksheets are tagged and
+   archived (hidden from the app, kept in the repo as material to rebuild into real puzzles),
+   and the store copy counts only what a player can open. First pass: 313 becomes about 224
+   visible, with about 139 Deck candidates. See [CATALOG.md](CATALOG.md).
 3. **A card is about a minute.** Every Deck game has a feed size that a first-timer solves in
    30 to 120 seconds. Full sizes and hard tiers live in the Library.
 4. **The card teaches itself.** No rules page before play. A goal line a stranger understands,
@@ -126,4 +127,4 @@ Defaults are chosen; work proceeds on them. Say so to change one.
 | Decision | Default |
 | --- | --- |
 | Plus price and shape | US$4.99 once; 3 picks and 3 hints a day free |
-| Retiring games | the Retire list in CATALOG.md goes, after an archive tag |
+| Archived games | hidden and tagged, never deleted (Gus, 2026-11-14) |

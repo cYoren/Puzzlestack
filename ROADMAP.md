@@ -22,8 +22,8 @@ What those phases taught is in [papercuts.md](papercuts.md).
 | G4 | No game can be dealt unwinnable, or with two answers where one is implied | generator and pool tests |
 | G5 | Every Deck game has a feed size with a measured median of 30 to 120 s | timings in the PR; size table in code |
 | G6 | Cold start to a playable card under 2 s; the deal holds 60 fps on a low-end Android | device pass, recorded in the release PR |
-| G7 | Every registry game lays out at 320dp in both themes with no overflow | the existing audit run (`AUDIT_DARK=1` too) |
-| G8 | Store copy, screenshots and in-app counts all read from the registry | `registry_test` |
+| G7 | Every visible game lays out at 320dp in both themes with no overflow | the existing audit run (`AUDIT_DARK=1` too) |
+| G8 | Store copy, screenshots and in-app counts all read the visible count from the registry | `registry_test` |
 | G9 | Plus can be bought, restored and refunded-then-revoked on both stores | sandbox purchase on each |
 | G10 | Zero open PRs older than the release branch | `gh pr list` |
 
@@ -43,10 +43,10 @@ merged; say which job id in the PR title.
 
 | Job | What | Depends on |
 | --- | --- | --- |
-| `deck-allowlist` | `lib/data/curation.dart`: replace `feedBlocklist` with `deckIds`, seeded from the Deck lists in CATALOG.md. `GameFeed.feedPool` = Deck minus hidden. Add `kind` (think, word, snap) and `family` to `GameMetadata`. Test: ids are real, Deck matches CATALOG.md, G1 | `land-deck` |
+| `deck-allowlist` | `lib/data/curation.dart`: replace `feedBlocklist` with one tier per game (`deck`, `library`, `archive`), seeded from CATALOG.md. `GameFeed.feedPool` = Deck minus hidden; every list, search and count reads visible games only. Add `kind` (think, word, snap), `family`, `origin` tag and archive `reason` to `GameMetadata`. Test: ids are real, tiers and tags match CATALOG.md, G1 | `land-deck` |
 | `triage-logic` `triage-math` `triage-memory` `triage-attention` `triage-word` `triage-spatial` | Play every game in the room against the bar. Confirm or move each id in CATALOG.md with a one-line reason, mark it verified. Six PRs. Fix nothing here; open a fix job per game that needs one | `deck-allowlist` |
-| `merge-families` | Fold each `merge` line: add the absorbed game as a mode of the keeper only if it plays differently, then delete it. One PR per room | its `triage-*` |
-| `retire` | Tag `archive/pre-retire`, then remove the Retire list from the registry with its screens, l10n keys, guides and tests | all `triage-*` |
+| `merge-families` | Fold each `merge` line: add the absorbed game as a mode of the keeper only if it plays differently, then archive it with reason `twin`. One PR per room | its `triage-*` |
+| `archive` | Set `tier: archive` on the Archive lists. Archived games stay in the repo, compile and keep their tests, and appear nowhere in the app: not in rooms, search, the deal, the daily, counts or store copy. Nothing is deleted | all `triage-*` |
 | `plain-names` | Titles, subtitles and goal lines in `app_en.arb` for every kept game: plain words, sentence case, 60 characters. No lab names, no ALL CAPS | `retire` |
 
 ### C. Cards that work in a feed
@@ -91,8 +91,7 @@ where the detail for the first two and for `accessibility-boards` lives. The res
 | `untested-sweep` | A test against its own rule for every kept game that has none (G3) |
 | `l10n-kept-games` | Missing keys for kept games in the 22 other locales; guides translate `objective` and `controls` only |
 
-Pool jobs for games on the Retire or merged-away lists are cancelled. Do not grow a table for a
-game that is leaving.
+Pool jobs for archived games are cancelled. Do not grow a table for a game nobody can open.
 
 ### G. Release
 
@@ -109,10 +108,11 @@ game that is leaving.
 Not started until the release is out. In this order.
 
 1. **Sound**: five sounds for the five verbs, off by default.
-2. **The Deck's gaps** (CATALOG.md, last section): Black Box, Undead, Tracks, Mosaic, Palisade,
-   then Hat and Spectre.
-3. **Word content in a second language** (Portuguese first), curated, so Word cards deal there.
-4. **Web**: the Deal as a playable page, as the store listing's best advert.
+2. **New puzzles from open sources**, in the order set in [docs/SOURCES.md](docs/SOURCES.md):
+   Tatham's remaining and unreleased puzzles first, then Nikoli types proven by a solver.
+3. **Rebuilds from the Archive**: the candidates listed at the end of CATALOG.md.
+4. **Word content in a second language** (Portuguese first), curated, so Word cards deal there.
+5. **Web**: the Deal as a playable page, as the store listing's best advert.
 
 Notes kept from the old roadmap for the three optional Tatham ports, all of which need
 `lib/core/deduction.dart`: Black Box needs half-cell ray entry and deflection or it collapses
@@ -125,8 +125,10 @@ Galaxies, Kurodoko.
 1. **The Deck is earned.** A game is dealt only after its PR shows the ten checks. Adding an
    id to `deckIds` without that is a revert.
 2. **Fair or gone.** A game that can be dealt unwinnable, or with two answers, is fixed with a
-   test, moved out of the Deck the same day, or retired.
-3. **Quality sets the count.** Never keep, pad or add a game to hold a number.
+   test, moved out of the Deck the same day, or archived.
+3. **Quality sets the count.** Never keep, pad or add a game to hold a number. The count is
+   the games a player can open; archived games are not in it.
+   **Nothing is deleted.** A game that leaves the app is archived, tagged, and stays in the repo.
 4. **One mechanism, not N.** Feed size, kind, hints, the result line: each lives in one place
    that every game uses. A change that edits 100 screens the same way is the wrong change.
 5. **No puzzle owns its gestures.** Input through the board contract, haptics through the five
@@ -136,6 +138,6 @@ Galaxies, Kurodoko.
    and never a lab name.
 8. **The registry is the source of truth** for what exists and for every number in copy.
 9. **Upstream still merges.** A new upstream game enters as Library and is triaged like any
-   other; a retired game stays retired.
+   other; an archived game stays archived until a rebuild PR passes the bar.
 10. **One job per branch, one PR per job**, in its own worktree, with before and after in the
     PR. Nothing is pushed to `main`.
