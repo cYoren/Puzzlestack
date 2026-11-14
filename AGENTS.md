@@ -16,6 +16,9 @@ next card dealt better, not to make the catalog bigger.
    - look and motion of surfaces: `DESIGN.md`
    - look and feel of boards: [PUZZLE_STYLE.md](PUZZLE_STYLE.md)
    - known content defects: [docs/CONTENT-AUDIT.md](docs/CONTENT-AUDIT.md) and its JSONL
+   - what each game owes, room by room: [docs/TRIAGE-LOGIC.md](docs/TRIAGE-LOGIC.md) and its five
+     siblings (`python3 tool/triage_room.py <room>` regenerates one); the tier per game is
+     [docs/CATALOG.md](docs/CATALOG.md)
    - how a game is wired: [docs/GAME_DEV_GUIDE.md](docs/GAME_DEV_GUIDE.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
    - traps on this codebase and this machine: [papercuts.md](papercuts.md)
    - release mechanics: [RELEASE.md](RELEASE.md)

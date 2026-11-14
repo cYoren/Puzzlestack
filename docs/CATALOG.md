@@ -6,8 +6,12 @@ All 313 registry ids, each in exactly one list. Tiers and the checks behind them
 **This is a first pass (2026-11-14), made from ids, subtitles and the two audits, not from
 playing each game.** Nothing here is final until its room's triage job
 (`triage-<room>` in [ROADMAP.md](../ROADMAP.md)) has played the game and confirmed or moved it.
-A game leaves the Archive if play shows a real decision in it. A game leaves Deck if it fails any
-of the ten checks.
+The half of that job a machine can do is written per room: [docs/TRIAGE-LOGIC.md](TRIAGE-LOGIC.md),
+[TRIAGE-MATH.md](TRIAGE-MATH.md), [TRIAGE-MEMORY.md](TRIAGE-MEMORY.md),
+[TRIAGE-ATTENTION.md](TRIAGE-ATTENTION.md), [TRIAGE-WORD.md](TRIAGE-WORD.md),
+[TRIAGE-SPATIAL.md](TRIAGE-SPATIAL.md). They list what each generator, test, guide and title owes;
+they do not move a game. A game leaves the Archive if play shows a real decision in it. A game
+leaves Deck if it fails any of the ten checks.
 
 | | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
@@ -74,9 +78,10 @@ sudoku <- alphabet_sudoku
 Notes
 - **Machine pass done, play pass pending** (`docs/TRIAGE-LOGIC.md`, 2026-11-14; regenerate with
   `python3 tool/triage_room.py logic`). Layout at 320dp is clean in both themes for all 52.
-  What the machine found: 34 games generate without proving a unique answer, 23 titles shout
-  (ALL CAPS), 8 have no rule test, the guide behind `?` is missing on 39. Those are four jobs,
-  not fifty-two: `uniqueness`, `plain-names`, `rule-tests`, `card-teaches`.
+  What the machine found: 34 games generate without proving their deal (one answer, or always
+  winnable), 23 titles shout (ALL CAPS), 8 have no rule test. Every game has a guide; the card's
+  own goal line is still `card-teaches`, which is one job for every room at once. So three jobs
+  here, not fifty-two.
 - `matrix_reasoning` and `einstein_riddle` are promotion candidates: both are real puzzles, the
   first needs a run of rounds, the second needs a 3-house feed size that reads without a wall
   of clues.
@@ -121,6 +126,10 @@ vektor_vector
 ```
 
 Notes
+- **Machine pass done, play pass pending** (`docs/TRIAGE-MATH.md`). Layout clean at 320dp in both
+  themes for all 53. The machine found 19 Deck generators that do not prove their deal, 22 games
+  with no rule test, 13 shouting titles. The other 34 are worksheets: the answer is the drill's
+  own, so check 2 there is judged by playing, not by a uniqueness proof.
 - `quick_math` is the one arithmetic sprint in the Deck, as a Snap card. The other sprints are
   Library.
 - The Archive list is coursework (linear algebra, binomials, radicals). Nobody opens a puzzle
@@ -162,6 +171,9 @@ sternberg_task temporal_order visual_statistical_learning
 ```
 
 Notes
+- **Machine pass done, play pass pending** (`docs/TRIAGE-MEMORY.md`). Layout clean at 320dp in both
+  themes for all 38. 24 titles shout or use lab vocabulary, 16 games have no rule test. Every game
+  here is a lab task, so check 2 is fair-by-play: no generator owes a uniqueness proof.
 - Every Memory card is a Snap card. Every kept game needs a plain name: "Digit Span",
   "Match After a Pause", "Span".
 
@@ -200,6 +212,9 @@ visual_crowding_acuity
 ```
 
 Notes
+- **Machine pass done, play pass pending** (`docs/TRIAGE-ATTENTION.md`). Layout clean at 320dp in
+  both themes for all 38. 19 games have no rule test, 13 shout, and `ghost_tap` and `rhythm_master`
+  have no pool to stay fresh. All 38 are lab tasks: check 2 is fair-by-play.
 - `chalk_and_talk` was reframed because the app has no audio; a listening game without sound
   is not a game. Reason `broken-concept`; it returns if sound ships.
 - `vigilance_task` is boring by design. That is the task.
@@ -239,6 +254,10 @@ letter_frequency_scan typing_speed
 ```
 
 Notes
+- **Machine pass done, play pass pending** (`docs/TRIAGE-WORD.md`). Layout clean at 320dp in both
+  themes for all 43. 26 puzzle generators do not prove their deal, 5 games have no rule test
+  (`cognate_catch`, `conundrum_anagram`, `letter_grid_swapper`, `missing_vowels`, `word_wheel`),
+  3 shout. The 17 quiz cards are fair-by-play, not uniqueness.
 - `find_word` and `word_mastermind` look like the same guess-the-word game. Triage decides
   whether one absorbs the other.
 - `crossword` is Deck only as a 5x5 mini with a clue set written for it (`crossword-supply`).
@@ -274,6 +293,9 @@ vector_grid_alignment
 ```
 
 Notes
+- **Machine pass done, play pass pending** (`docs/TRIAGE-SPATIAL.md`). Layout clean at 320dp in both
+  themes for all 32. All 32 generators are unproven (a deal can be unsolvable or ambiguous), 9 games
+  have no rule test, 8 shout.
 - `laser_link` and `mirror_maze` may be one puzzle. Triage decides.
 - `mirror_tracing` and `trace_path` are motor tasks; Library unless play says otherwise.
 
