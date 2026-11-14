@@ -4,47 +4,67 @@
 # Everything here is outside the repository on purpose: it is material to port from and to test
 # against, not the product. Every clone is pinned to a commit, so a port written today still
 # matches its source tomorrow, and the licence of each one is recorded in REFERENCE.md.
+#
+# The pins themselves live in tool/reference-pins.tsv (dir, url, commit, licence, what it is
+# for), one line per source named in docs/SOURCES.md. Adding a source means adding a line
+# there and a row in REFERENCE.md, in the same PR that uses it.
+#
+#   tool/fetch-reference.sh              # code sources (default)
+#   tool/fetch-reference.sh --assets     # also the image-heavy asset repos, un-checked-out
+#   tool/fetch-reference.sh --check      # only report what is present and at which commit
 set -euo pipefail
 
 REF="${PUZZLESTACK_REFERENCE:-$HOME/Projects/puzzlestack-reference}"
+PINS="$(cd "$(dirname "$0")" && pwd)/reference-pins.tsv"
+MODE="${1:-}"
 mkdir -p "$REF"
 
-# fetch <dir> <url> <commit> <what to print afterwards>
-fetch() {
-  local dir="$1" url="$2" commit="$3" note="$4"
-  if [ -d "$REF/$dir/.git" ]; then
-    echo "$dir already present at $REF/$dir"
-    git -C "$REF/$dir" fetch -q origin || true
-  else
-    echo "cloning $dir"
-    git clone -q "$url" "$REF/$dir"
+fail=0
+while IFS=$'\t' read -r dir url commit licence purpose; do
+  [ -z "$dir" ] && continue
+  # The four image-heavy sources are pinned but not checked out: they are art, fetched one file
+  # at a time when a picture nonogram is built, and cloning them whole costs gigabytes.
+  assets=0
+  case "$purpose" in *"assets: --no-checkout"*) assets=1 ;; esac
+
+  if [ "$MODE" = "--check" ]; then
+    if [ -d "$REF/$dir/.git" ]; then
+      now=$(git -C "$REF/$dir" rev-parse HEAD 2>/dev/null || echo none)
+      [ "$now" = "$commit" ] && mark=ok || mark="OFF PIN"
+      printf '%-42s %s %s\n' "$dir" "${now:0:10}" "$mark"
+    else
+      printf '%-42s missing\n' "$dir"
+    fi
+    continue
   fi
-  git -C "$REF/$dir" checkout -q "$commit"
-  echo "$dir at $(git -C "$REF/$dir" rev-parse --short HEAD)  ($note)"
-}
 
-# Tatham's Portable Puzzle Collection. MIT. The Logic room's base, and the source of the
-# no-guess Mines generator.
-fetch tatham-c https://git.tartarus.org/simon/puzzles.git \
-  616da16f25da428ccda805536209095bd062676e "$(ls "$REF/tatham-c"/*.c 2>/dev/null | wc -l) .c files"
+  if [ "$assets" = 1 ] && [ "$MODE" != "--assets" ]; then
+    continue
+  fi
 
-# The thirteen puzzles that never made it into the collection, on the same framework. MIT.
-fetch puzzles-unreleased https://github.com/x-sheep/puzzles-unreleased.git \
-  b09e5a752d6461fead2a8f9e2900ed3eea8e4019 "$(ls "$REF/puzzles-unreleased"/*.c 2>/dev/null | wc -l) .c files"
+  if [ ! -d "$REF/$dir/.git" ]; then
+    if [ "$assets" = 1 ]; then
+      # No checkout: the tree is present and pinned, the blobs come on demand.
+      git clone -q --depth 1 --filter=blob:none --no-checkout "$url" "$REF/$dir"
+    else
+      git clone -q --depth 1 "$url" "$REF/$dir"
+    fi
+  fi
+  if ! git -C "$REF/$dir" cat-file -e "$commit^{commit}" 2>/dev/null; then
+    # A shallow clone of the default branch may not contain an older pin.
+    git -C "$REF/$dir" fetch -q --depth 1 origin "$commit" || true
+  fi
+  if git -C "$REF/$dir" checkout -q "$commit" 2>/dev/null; then
+    printf '%-42s %s  %-24s %s\n' "$dir" "${commit:0:10}" "$licence" "$purpose"
+  else
+    printf '%-42s CANNOT CHECK OUT %s\n' "$dir" "${commit:0:10}"
+    fail=1
+  fi
+done < "$PINS"
 
-# SCOWL: English word lists in size tiers. Answer lists come from the small tiers, which is the
-# fix for answers nobody has heard of. Permissive, with its own notice.
-fetch wordlist https://github.com/en-wl/wordlist.git \
-  1e5b7d3a72f47a71da5d28686c1dd4b397178485 "$(ls "$REF/wordlist/data" 2>/dev/null | wc -l) data files"
-
-# A solver, generator and graded database of sliding-car boards for block_escape. MIT.
-fetch rush https://github.com/fogleman/rush.git \
-  3e3b8396891d1802b30cb3129ae31fdedb319480 "Rush board database"
-
-# Generated Sokoban levels in three difficulty sets, so no authored level set is needed.
-# Apache-2.0.
-fetch boxoban https://github.com/google-deepmind/boxoban-levels.git \
-  78011d8c86ad423bfb2e1005012393b4c3c24409 "$(du -sh "$REF/boxoban" 2>/dev/null | cut -f1) of levels"
+if [ "$MODE" = "--check" ]; then
+  exit 0
+fi
 
 if [ -d "$REF/invariant" ]; then
   echo "invariant present at $REF/invariant ($(ls "$REF/invariant/INVARIANT/puzzles" | wc -l) puzzles)"
@@ -60,3 +80,5 @@ and extract it to $REF/invariant. Read-only reference, no licence declared: see
 REFERENCE.md before copying anything from it.
 EOF
 fi
+
+exit "$fail"
