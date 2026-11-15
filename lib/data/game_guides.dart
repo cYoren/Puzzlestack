@@ -27,7 +27,8 @@ const Map<String, GameGuide> gameGuides = {
   "vector_dot_product": GameGuide(
     title: "Vector Dot Product",
     category: "MATH",
-    objective: "Calculate the algebraic inner product of two 2D vectors: u • v = (u_x * v_x) + (u_y * v_y).",
+    objective:
+        "Calculate the algebraic inner product of two 2D vectors: u • v = (u_x * v_x) + (u_y * v_y).",
     controls: "Tap the correct scalar dot product answer.",
     walkthrough: [
       "Step 1: Multiply the corresponding X components (u_x * v_x).",
@@ -42,7 +43,8 @@ const Map<String, GameGuide> gameGuides = {
   "stroop_number_size": GameGuide(
     title: "Size-Congruity Stroop",
     category: "ATTENTION",
-    objective: "Rapidly select which number is larger, focusing strictly on either its numerical value or physical font size as instructed.",
+    objective:
+        "Rapidly select which number is larger, focusing strictly on either its numerical value or physical font size as instructed.",
     controls: "Tap LEFT or RIGHT.",
     walkthrough: [
       "Step 1: Read the prompt instruction banner (NUMERICAL vs PHYSICAL SIZE).",
@@ -57,7 +59,8 @@ const Map<String, GameGuide> gameGuides = {
   "word_ladder_step": GameGuide(
     title: "Word Ladder",
     category: "WORD",
-    objective: "Find the bridge word that transitions between start and end words changing only 1 letter at each step.",
+    objective:
+        "Find the bridge word that transitions between start and end words changing only 1 letter at each step.",
     controls: "Tap the valid transition word from the choices.",
     walkthrough: [
       "Step 1: Compare start and end words to see which letters differ.",
@@ -72,7 +75,8 @@ const Map<String, GameGuide> gameGuides = {
   "corsi_backward_span": GameGuide(
     title: "Corsi Backward Span",
     category: "MEMORY",
-    objective: "Observe a sequence of spatial block flashes and tap the blocks in exact reverse (backward) order.",
+    objective:
+        "Observe a sequence of spatial block flashes and tap the blocks in exact reverse (backward) order.",
     controls: "Tap the spatial blocks on screen in reverse sequence.",
     walkthrough: [
       "Step 1: Watch the illuminated blocks in sequential order.",
@@ -87,7 +91,8 @@ const Map<String, GameGuide> gameGuides = {
   "ab_reversal_oddball": GameGuide(
     title: "A-B Rule Reversal",
     category: "ATTENTION",
-    objective: "Respond to target stimuli and switch response rules immediately when the target reverses.",
+    objective:
+        "Respond to target stimuli and switch response rules immediately when the target reverses.",
     controls: "Tap TARGET or NON-TARGET.",
     walkthrough: [
       "Step 1: Check the active target rule banner at the top.",
@@ -102,8 +107,10 @@ const Map<String, GameGuide> gameGuides = {
   "conundrum_anagram": GameGuide(
     title: "9-Letter Conundrum",
     category: "WORD",
-    objective: "Unscramble all 9 letter tiles into a single valid English word.",
-    controls: "Tap letter tiles in order to spell the word; tap BACKSPACE to undo.",
+    objective:
+        "Unscramble all 9 letter tiles into a single valid English word.",
+    controls:
+        "Tap letter tiles in order to spell the word; tap BACKSPACE to undo.",
     walkthrough: [
       "Step 1: Scan the scrambled 9-letter pool.",
       "Step 2: Look for common prefixes (DIS-, UN-) and suffixes (-ING, -TION, -FUL).",
@@ -117,7 +124,8 @@ const Map<String, GameGuide> gameGuides = {
   "binary_matrix_rank": GameGuide(
     title: "Matrix Rank (GF2)",
     category: "MATH",
-    objective: "Determine the linear algebraic rank (1, 2, or 3) of a 3x3 binary matrix modulo 2.",
+    objective:
+        "Determine the linear algebraic rank (1, 2, or 3) of a 3x3 binary matrix modulo 2.",
     controls: "Tap RANK 1, RANK 2, or RANK 3.",
     walkthrough: [
       "Step 1: Inspect the row vectors of the 3x3 binary matrix.",
@@ -132,8 +140,10 @@ const Map<String, GameGuide> gameGuides = {
   "visual_crowding_acuity": GameGuide(
     title: "Visual Crowding",
     category: "ATTENTION",
-    objective: "Discriminate the gap orientation of the central Landolt ring in the presence of flanking distractor rings.",
-    controls: "Tap the directional arrow matching the center gap orientation (UP, DOWN, LEFT, RIGHT).",
+    objective:
+        "Discriminate the gap orientation of the central Landolt ring in the presence of flanking distractor rings.",
+    controls:
+        "Tap the directional arrow matching the center gap orientation (UP, DOWN, LEFT, RIGHT).",
     walkthrough: [
       "Step 1: Focus your attention strictly on the center Landolt ring.",
       "Step 2: Filter out the interference from the adjacent flanking rings.",
@@ -147,7 +157,8 @@ const Map<String, GameGuide> gameGuides = {
   "probe_digit_span": GameGuide(
     title: "Probe Digit Recall",
     category: "MEMORY",
-    objective: "Observe a rapid stream of random digits and recall the number that immediately followed the probe digit.",
+    objective:
+        "Observe a rapid stream of random digits and recall the number that immediately followed the probe digit.",
     controls: "Tap the digit on the on-screen keypad.",
     walkthrough: [
       "Step 1: Attend carefully to the sequential number stream.",
@@ -162,7 +173,8 @@ const Map<String, GameGuide> gameGuides = {
   "pythagorean_triple_builder": GameGuide(
     title: "Pythagorean Triples",
     category: "MATH",
-    objective: "Calculate the missing side length in integer right triangles using a² + b² = c².",
+    objective:
+        "Calculate the missing side length in integer right triangles using a² + b² = c².",
     controls: "Tap the correct missing integer value from the options.",
     walkthrough: [
       "Step 1: Identify given legs (a, b) and hypotenuse (c).",
@@ -177,7 +189,8 @@ const Map<String, GameGuide> gameGuides = {
   "visual_search_conjunction": GameGuide(
     title: "Conjunction Search",
     category: "ATTENTION",
-    objective: "Determine whether the target shape (Red Square) is present among color/shape conjunction distractors.",
+    objective:
+        "Determine whether the target shape (Red Square) is present among color/shape conjunction distractors.",
     controls: "Tap PRESENT or ABSENT.",
     walkthrough: [
       "Step 1: Keep both feature dimensions (Red + Square) in mind.",
@@ -192,7 +205,8 @@ const Map<String, GameGuide> gameGuides = {
   "wireframe_3d_rotation": GameGuide(
     title: "3D Wireframe Rotation",
     category: "SPATIAL",
-    objective: "Identify the correctly rotated 3D wireframe geometric solid after a yaw angular rotation.",
+    objective:
+        "Identify the correctly rotated 3D wireframe geometric solid after a yaw angular rotation.",
     controls: "Tap the matching rotated wireframe option.",
     walkthrough: [
       "Step 1: Observe the original 3D wireframe orientation.",
@@ -207,7 +221,8 @@ const Map<String, GameGuide> gameGuides = {
   "word_pair_associate_memory": GameGuide(
     title: "Word Pair Memory",
     category: "MEMORY",
-    objective: "Study paired associations and pick the exact partner word when prompted with a cue.",
+    objective:
+        "Study paired associations and pick the exact partner word when prompted with a cue.",
     controls: "Tap the matching target word among choices.",
     walkthrough: [
       "Step 1: Memorize pairs during the countdown (e.g. 'DOCTOR - HOSPITAL').",
@@ -222,7 +237,8 @@ const Map<String, GameGuide> gameGuides = {
   "hitori": GameGuide(
     title: "Hitori",
     category: "LOGIC",
-    objective: "Shade duplicate numbers in the grid such that no row or column contains repeats among unshaded cells, black cells don't touch orthogonally, and unshaded cells remain connected.",
+    objective:
+        "Shade duplicate numbers in the grid such that no row or column contains repeats among unshaded cells, black cells don't touch orthogonally, and unshaded cells remain connected.",
     controls: "Tap a cell once to shade (black), tap twice to circle (safe).",
     walkthrough: [
       "Step 1: Locate rows and columns with duplicate numbers.",
@@ -237,7 +253,8 @@ const Map<String, GameGuide> gameGuides = {
   "modular_clock_arithmetic": GameGuide(
     title: "Clock Modulo 12",
     category: "MATH",
-    objective: "Calculate cyclical time increments under modulo 12 modular arithmetic.",
+    objective:
+        "Calculate cyclical time increments under modulo 12 modular arithmetic.",
     controls: "Tap the button corresponding to the future hour.",
     walkthrough: [
       "Step 1: Check the starting time on the analog clock.",
@@ -252,7 +269,8 @@ const Map<String, GameGuide> gameGuides = {
   "temporal_order_judgment": GameGuide(
     title: "Temporal Order",
     category: "ATTENTION",
-    objective: "Judge which of two brief peripheral circle flashes occurred first.",
+    objective:
+        "Judge which of two brief peripheral circle flashes occurred first.",
     controls: "Tap LEFT FIRST or RIGHT FIRST.",
     walkthrough: [
       "Step 1: Focus on the center '+' crosshair.",
@@ -267,8 +285,10 @@ const Map<String, GameGuide> gameGuides = {
   "polyomino_tiling": GameGuide(
     title: "Polyomino Tiling",
     category: "SPATIAL",
-    objective: "Arrange and rotate tetromino pieces to tile the 4x4 board completely without overlaps.",
-    controls: "Tap a piece to select, tap ROTATE, then tap a grid cell to place.",
+    objective:
+        "Arrange and rotate tetromino pieces to tile the 4x4 board completely without overlaps.",
+    controls:
+        "Tap a piece to select, tap ROTATE, then tap a grid cell to place.",
     walkthrough: [
       "Step 1: Select a piece from the tray.",
       "Step 2: Rotate if necessary to fit the empty board space.",
@@ -282,8 +302,10 @@ const Map<String, GameGuide> gameGuides = {
   "yajilin": GameGuide(
     title: "Yajilin",
     category: "LOGIC",
-    objective: "Draw a single closed loop through unshaded cells and shade cells black according to directional arrow clue counts without adjacent black cells.",
-    controls: "Tap cells to draw loop segments; double tap to toggle black shading.",
+    objective:
+        "Draw a single closed loop through unshaded cells and shade cells black according to directional arrow clue counts without adjacent black cells.",
+    controls:
+        "Tap cells to draw loop segments; double tap to toggle black shading.",
     walkthrough: [
       "Step 1: Check arrow clues indicating the exact number of black cells in that direction.",
       "Step 2: Ensure no two black cells touch orthogonally.",
@@ -297,8 +319,10 @@ const Map<String, GameGuide> gameGuides = {
   "algebraic_inequality_solver": GameGuide(
     title: "Inequality Solver",
     category: "MATH",
-    objective: "Rapidly isolate the variable and solve linear single-step and two-step inequalities.",
-    controls: "Tap the correct simplified inequality expression from the choices.",
+    objective:
+        "Rapidly isolate the variable and solve linear single-step and two-step inequalities.",
+    controls:
+        "Tap the correct simplified inequality expression from the choices.",
     walkthrough: [
       "Step 1: Inspect the algebraic expression (e.g. 3x + 5 < 17).",
       "Step 2: Subtract constant terms and divide by the coefficient of x.",
@@ -312,7 +336,8 @@ const Map<String, GameGuide> gameGuides = {
   "attentional_blink_probe": GameGuide(
     title: "Attentional Blink",
     category: "ATTENTION",
-    objective: "Detect whether a second probe letter ('X') appeared during rapid serial visual presentation after the primary target.",
+    objective:
+        "Detect whether a second probe letter ('X') appeared during rapid serial visual presentation after the primary target.",
     controls: "Tap YES or NO after the stream finishes.",
     walkthrough: [
       "Step 1: Focus on the fast-flashing stream of alphanumeric items.",
@@ -327,7 +352,8 @@ const Map<String, GameGuide> gameGuides = {
   "masyu": GameGuide(
     title: "Masyu",
     category: "LOGIC",
-    objective: "Draw a single non-intersecting loop passing through every circle. Pass straight through white circles and turn in adjacent cells; turn at 90° on black circles and go straight through adjacent cells.",
+    objective:
+        "Draw a single non-intersecting loop passing through every circle. Pass straight through white circles and turn in adjacent cells; turn at 90° on black circles and go straight through adjacent cells.",
     controls: "Tap and drag or tap adjacent dots to draw/erase loop segments.",
     walkthrough: [
       "Step 1: Check pearl positions; white pearls require a straight pass-through, black pearls require an immediate 90° corner.",
@@ -342,7 +368,8 @@ const Map<String, GameGuide> gameGuides = {
   "prime_gap_hunt": GameGuide(
     title: "Prime Gap Hunt",
     category: "MATH",
-    objective: "Calculate the exact arithmetic difference between pairs of consecutive prime numbers.",
+    objective:
+        "Calculate the exact arithmetic difference between pairs of consecutive prime numbers.",
     controls: "Tap the correct prime gap number button.",
     walkthrough: [
       "Step 1: Inspect the two consecutive prime numbers displayed on the cards.",
@@ -357,8 +384,10 @@ const Map<String, GameGuide> gameGuides = {
   "heyawake": GameGuide(
     title: "Heyawake",
     category: "LOGIC",
-    objective: "Paint cells black or white in rectangular rooms according to numeric room constraints.",
-    controls: "Tap an empty cell once to paint black, tap twice to mark with a green dot.",
+    objective:
+        "Paint cells black or white in rectangular rooms according to numeric room constraints.",
+    controls:
+        "Tap an empty cell once to paint black, tap twice to mark with a green dot.",
     walkthrough: [
       "Step 1: Check rooms with numbers; each specifies the exact count of black cells inside that room.",
       "Step 2: Ensure no two black cells touch orthogonally.",
@@ -372,8 +401,10 @@ const Map<String, GameGuide> gameGuides = {
   "set_theory_venn": GameGuide(
     title: "Set Theory Venn",
     category: "MATH",
-    objective: "Select the correct regions of the Venn diagram matching the given set theory formula.",
-    controls: "Tap regions of the Venn diagram or the outside space to select them, then tap SUBMIT.",
+    objective:
+        "Select the correct regions of the Venn diagram matching the given set theory formula.",
+    controls:
+        "Tap regions of the Venn diagram or the outside space to select them, then tap SUBMIT.",
     walkthrough: [
       "Step 1: Read the set expression (e.g., A ∩ B, A ∪ B, A \\ B, (A ∪ B)').",
       "Step 2: Identify whether the formula targets only A, only B, the intersection, or the outer universe.",
@@ -388,7 +419,8 @@ const Map<String, GameGuide> gameGuides = {
   "navon_hierarchical": GameGuide(
     title: "Navon Hierarchical",
     category: "ATTENTION",
-    objective: "Identify the requested letter level (Global large letter vs Local small constituent letters) under rapid rule changes.",
+    objective:
+        "Identify the requested letter level (Global large letter vs Local small constituent letters) under rapid rule changes.",
     controls: "Tap the matching letter button from the choices.",
     walkthrough: [
       "Step 1: Check the prompt rule: Global (Large shape) or Local (Small elements).",
@@ -403,8 +435,10 @@ const Map<String, GameGuide> gameGuides = {
   "tapa": GameGuide(
     title: "Tapa",
     category: "LOGIC",
-    objective: "Paint a continuous black wall such that all clue numbers indicate consecutive wall blocks around each cell, with no 2x2 black squares.",
-    controls: "Tap an empty cell once to mark as wall, tap twice to mark with a red dot.",
+    objective:
+        "Paint a continuous black wall such that all clue numbers indicate consecutive wall blocks around each cell, with no 2x2 black squares.",
+    controls:
+        "Tap an empty cell once to mark as wall, tap twice to mark with a red dot.",
     walkthrough: [
       "Step 1: Check numbered cells; each number indicates the length of consecutive shaded blocks surrounding it.",
       "Step 2: Ensure all black wall cells form a single connected network.",
@@ -419,8 +453,10 @@ const Map<String, GameGuide> gameGuides = {
   "exponent_tower": GameGuide(
     title: "Exponent Tower",
     category: "MATH",
-    objective: "Calculate powers and stack exponential expressions in ascending order from smallest to largest.",
-    controls: "Tap available power blocks to add them to your tower; tap placed blocks to remove them.",
+    objective:
+        "Calculate powers and stack exponential expressions in ascending order from smallest to largest.",
+    controls:
+        "Tap available power blocks to add them to your tower; tap placed blocks to remove them.",
     walkthrough: [
       "Step 1: Calculate the numerical value of each base raised to its exponent.",
       "Step 2: Tap the smallest power first to form the base of the tower.",
@@ -434,7 +470,8 @@ const Map<String, GameGuide> gameGuides = {
   "posner_spatial_cueing": GameGuide(
     title: "Spatial Cueing",
     category: "ATTENTION",
-    objective: "React as quickly and accurately as possible when a target appears on the left or right side of the screen.",
+    objective:
+        "React as quickly and accurately as possible when a target appears on the left or right side of the screen.",
     controls: "Tap LEFT or RIGHT button matching the target position.",
     walkthrough: [
       "Step 1: Keep your focus locked on the central '+' fixation cross.",
@@ -449,7 +486,8 @@ const Map<String, GameGuide> gameGuides = {
   "gear_train_direction": GameGuide(
     title: "Gear Train",
     category: "SPATIAL",
-    objective: "Determine whether the target '?' gear will rotate clockwise or counter-clockwise.",
+    objective:
+        "Determine whether the target '?' gear will rotate clockwise or counter-clockwise.",
     controls: "Tap CLOCKWISE or COUNTER-CW.",
     walkthrough: [
       "Step 1: Observe the driving gear rotation direction indicated by the animated arrow.",
@@ -464,7 +502,8 @@ const Map<String, GameGuide> gameGuides = {
   "continuous_paired_associate": GameGuide(
     title: "Paired Associate",
     category: "MEMORY",
-    objective: "Learn pairs of abstract symbols and select the correct matching partner when queried.",
+    objective:
+        "Learn pairs of abstract symbols and select the correct matching partner when queried.",
     controls: "Tap the symbol button that was paired with the prompt symbol.",
     walkthrough: [
       "Step 1: Study the symbol associations during the countdown study phase.",
@@ -479,8 +518,10 @@ const Map<String, GameGuide> gameGuides = {
   "kurodoko": GameGuide(
     title: "Kurodoko",
     category: "LOGIC",
-    objective: "Blacken cells until every numbered cell sees exactly as many white cells as its number says, counting across and down through itself.",
-    controls: "Tap a cell to blacken it, tap it again to mark it white, and a third time to clear it. Numbers cannot be changed.",
+    objective:
+        "Blacken cells until every numbered cell sees exactly as many white cells as its number says, counting across and down through itself.",
+    controls:
+        "Tap a cell to blacken it, tap it again to mark it white, and a third time to clear it. Numbers cannot be changed.",
     walkthrough: [
       "Step 1: A number counts the white cells in an unbroken line through it, across plus down, with the cell itself counted once.",
       "Step 2: Start with a clue whose number is larger than the room around it. The cells it must reach have to be white.",
@@ -497,7 +538,8 @@ const Map<String, GameGuide> gameGuides = {
   "subitizing_rush": GameGuide(
     title: "Subitizing Rush",
     category: "ATTENTION",
-    objective: "Instantly identify the quantity of briefly flashed dots without sequential counting.",
+    objective:
+        "Instantly identify the quantity of briefly flashed dots without sequential counting.",
     controls: "Tap the matching number button.",
     walkthrough: [
       "Step 1: Focus your gaze on the center of the canvas.",
@@ -512,7 +554,8 @@ const Map<String, GameGuide> gameGuides = {
   "action_sequence_recall": GameGuide(
     title: "Action Recall",
     category: "MEMORY",
-    objective: "Observe a sequence of character gesture animations and repeat them in the exact order they were shown.",
+    objective:
+        "Observe a sequence of character gesture animations and repeat them in the exact order they were shown.",
     controls: "Tap the corresponding action buttons to replay the sequence.",
     walkthrough: [
       "Observe: Watch the character execute a sequence of animation gestures (e.g. waving, jumping, bowing).",
@@ -528,8 +571,10 @@ const Map<String, GameGuide> gameGuides = {
   "affix_factory": GameGuide(
     title: "Affix Factory",
     category: "WORD",
-    objective: "Select the correct prefix or suffix that attaches to a given base word to form a new valid word.",
-    controls: "Tap the correct affix button from the multiple-choice options provided.",
+    objective:
+        "Select the correct prefix or suffix that attaches to a given base word to form a new valid word.",
+    controls:
+        "Tap the correct affix button from the multiple-choice options provided.",
     walkthrough: [
       "Step 1: Read the base word displayed in the center of the screen.",
       "Step 2: Look at the multiple-choice affix options (e.g., 'un-', '-ly', 're-').",
@@ -545,8 +590,10 @@ const Map<String, GameGuide> gameGuides = {
   "akari": GameGuide(
     title: "Akari",
     category: "LOGIC",
-    objective: "Place lightbulbs to illuminate every empty cell in the grid without any two lightbulbs shining on each other.",
-    controls: "Tap an empty cell to place a lightbulb. Tap a placed lightbulb to remove it.",
+    objective:
+        "Place lightbulbs to illuminate every empty cell in the grid without any two lightbulbs shining on each other.",
+    controls:
+        "Tap an empty cell to place a lightbulb. Tap a placed lightbulb to remove it.",
     walkthrough: [
       "Step 1: Look for black cells with numbers. The number indicates exactly how many lightbulbs must be placed adjacent (top, bottom, left, right) to that cell.",
       "Step 2: Place lightbulbs around numbered cells where the placement is forced (e.g., a '4' needs a bulb on all four sides).",
@@ -563,8 +610,10 @@ const Map<String, GameGuide> gameGuides = {
   "algebraic_balance": GameGuide(
     title: "Algebraic Balance",
     category: "MATH",
-    objective: "Deduce the numerical value of a specific target shape by analyzing visual balance scale equations.",
-    controls: "Use the virtual number pad to enter your calculated value, then tap the submit button.",
+    objective:
+        "Deduce the numerical value of a specific target shape by analyzing visual balance scale equations.",
+    controls:
+        "Use the virtual number pad to enter your calculated value, then tap the submit button.",
     walkthrough: [
       "Step 1: Examine the balance scales showing different shapes balancing out a target weight or each other.",
       "Step 2: Treat the scales as algebraic equations (e.g., 2 Triangles + 1 Circle = 15).",
@@ -581,8 +630,10 @@ const Map<String, GameGuide> gameGuides = {
   "alphabet_sudoku": GameGuide(
     title: "Alphabet Sudoku",
     category: "LOGIC",
-    objective: "Fill a 4x4 grid with four distinct letters such that no letter repeats in any row, column, or 2x2 subgrid.",
-    controls: "Tap an empty grid cell, then tap a letter from the selection bar below to fill the cell.",
+    objective:
+        "Fill a 4x4 grid with four distinct letters such that no letter repeats in any row, column, or 2x2 subgrid.",
+    controls:
+        "Tap an empty grid cell, then tap a letter from the selection bar below to fill the cell.",
     walkthrough: [
       "Step 1: Analyze the partially filled 4x4 grid and the set of four target letters.",
       "Step 2: Look for a row, column, or 2x2 block that is only missing one letter and fill it in.",
@@ -598,8 +649,10 @@ const Map<String, GameGuide> gameGuides = {
   "anagram_definition": GameGuide(
     title: "Anagram Definition",
     category: "WORD",
-    objective: "Unscramble a given set of letters to form a word that matches the provided dictionary definition.",
-    controls: "Tap the scrambled letters in the correct order to spell the word. Tap entered letters to remove them, or use the clear button.",
+    objective:
+        "Unscramble a given set of letters to form a word that matches the provided dictionary definition.",
+    controls:
+        "Tap the scrambled letters in the correct order to spell the word. Tap entered letters to remove them, or use the clear button.",
     walkthrough: [
       "Step 1: Read the provided definition carefully to understand the target word's meaning.",
       "Step 2: Look at the scrambled letter tiles below the definition.",
@@ -616,8 +669,10 @@ const Map<String, GameGuide> gameGuides = {
   "angle_finder": GameGuide(
     title: "Angle Finder",
     category: "SPATIAL",
-    objective: "Estimate and recreate a target angle by adjusting a movable protractor arm.",
-    controls: "Drag the slider at the bottom of the screen to adjust the angle of the movable arm.",
+    objective:
+        "Estimate and recreate a target angle by adjusting a movable protractor arm.",
+    controls:
+        "Drag the slider at the bottom of the screen to adjust the angle of the movable arm.",
     walkthrough: [
       "Step 1: Look at the target angle value (e.g., 45°, 120°) displayed on the screen.",
       "Step 2: Visualize what that angle looks like relative to a 90° right angle or 180° straight line.",
@@ -634,8 +689,10 @@ const Map<String, GameGuide> gameGuides = {
   "area_perimeter_match": GameGuide(
     title: "Area Perimeter Match",
     category: "MATH",
-    objective: "Adjust the dimensions of a rectangle until its area and perimeter match the given target values.",
-    controls: "Tap the '+' and '-' buttons on the sides of the rectangle to increase or decrease its width and height.",
+    objective:
+        "Adjust the dimensions of a rectangle until its area and perimeter match the given target values.",
+    controls:
+        "Tap the '+' and '-' buttons on the sides of the rectangle to increase or decrease its width and height.",
     walkthrough: [
       "Step 1: Note the Target Area (Width × Height) and Target Perimeter (2 × (Width + Height)).",
       "Step 2: Observe the current dimensions of the rectangle on the screen.",
@@ -652,8 +709,10 @@ const Map<String, GameGuide> gameGuides = {
   "arithmetic_chain": GameGuide(
     title: "Arithmetic Chain",
     category: "MATH",
-    objective: "Keep a running total in your head as a sequence of arithmetic operations is displayed, and calculate the final result.",
-    controls: "Use the virtual number pad to enter your final calculated answer, then tap submit.",
+    objective:
+        "Keep a running total in your head as a sequence of arithmetic operations is displayed, and calculate the final result.",
+    controls:
+        "Use the virtual number pad to enter your final calculated answer, then tap submit.",
     walkthrough: [
       "Step 1: Memorize the starting number shown on the screen.",
       "Step 2: Watch as a sequence of mathematical operations (e.g., '+ 3', '× 2', '- 4') appears.",
@@ -669,8 +728,10 @@ const Map<String, GameGuide> gameGuides = {
   "associative_pairs": GameGuide(
     title: "Associative Pairs",
     category: "MEMORY",
-    objective: "Memorize the associations between specific colors and shapes, and accurately recall them when tested.",
-    controls: "Tap the correct answer from the multiple-choice options provided during the recall phase.",
+    objective:
+        "Memorize the associations between specific colors and shapes, and accurately recall them when tested.",
+    controls:
+        "Tap the correct answer from the multiple-choice options provided during the recall phase.",
     walkthrough: [
       "Step 1: Watch the screen as pairs of colors and shapes are presented one by one during the memorization phase.",
       "Step 2: Create a mental link between the shape and the color (e.g., 'Teal Square').",
@@ -686,8 +747,10 @@ const Map<String, GameGuide> gameGuides = {
   "attentional_blink": GameGuide(
     title: "Attentional Blink",
     category: "ATTENTION",
-    objective: "Identify the two numbers that briefly appear within a rapid, continuous sequence of letters.",
-    controls: "Use the keyboard to type the first and second target numbers you spotted, then submit.",
+    objective:
+        "Identify the two numbers that briefly appear within a rapid, continuous sequence of letters.",
+    controls:
+        "Use the keyboard to type the first and second target numbers you spotted, then submit.",
     walkthrough: [
       "Step 1: Fixate your eyes on the center of the screen as a rapid stream of letters flashes by.",
       "Step 2: Stay alert and look for the first number (Target 1) hidden among the letters.",
@@ -703,8 +766,10 @@ const Map<String, GameGuide> gameGuides = {
   "balance_scale": GameGuide(
     title: "Balance Scale",
     category: "MATH",
-    objective: "Deduce the numerical weight of a target item based on visual balance scale equations.",
-    controls: "Use the virtual number pad to type your calculated answer, then tap the checkmark submit button.",
+    objective:
+        "Deduce the numerical weight of a target item based on visual balance scale equations.",
+    controls:
+        "Use the virtual number pad to type your calculated answer, then tap the checkmark submit button.",
     walkthrough: [
       "Step 1: Review the balance scales displayed on the screen. Each scale represents a mathematical equation.",
       "Step 2: Identify the known weight values (usually represented by standard numbers or shapes you can calculate).",
@@ -721,8 +786,10 @@ const Map<String, GameGuide> gameGuides = {
   "base_conversion_run": GameGuide(
     title: "Base Conversion Run",
     category: "MATH",
-    objective: "Convert a given number from its starting numeral base (e.g., Binary, Hex) into a target base.",
-    controls: "Tap the correct converted number from the four multiple-choice options.",
+    objective:
+        "Convert a given number from its starting numeral base (e.g., Binary, Hex) into a target base.",
+    controls:
+        "Tap the correct converted number from the four multiple-choice options.",
     walkthrough: [
       "Step 1: Look at the top card to see the starting number and its base (e.g., Binary, Octal, Decimal, Hexadecimal).",
       "Step 2: Note the target base you need to convert the number into.",
@@ -738,8 +805,10 @@ const Map<String, GameGuide> gameGuides = {
   "base_shift": GameGuide(
     title: "Base Shift",
     category: "MATH",
-    objective: "Solve an arithmetic expression involving numbers in different bases and input the correct decimal result.",
-    controls: "Tap the text field to open the keyboard, type your calculated numerical answer, and tap the submit button.",
+    objective:
+        "Solve an arithmetic expression involving numbers in different bases and input the correct decimal result.",
+    controls:
+        "Tap the text field to open the keyboard, type your calculated numerical answer, and tap the submit button.",
     walkthrough: [
       "Step 1: Read the arithmetic expression provided on the screen.",
       "Step 2: The expression will involve numbers in various bases (indicated by prefixes like '0x' for Hex or '0b' for Binary).",
@@ -756,8 +825,10 @@ const Map<String, GameGuide> gameGuides = {
   "binary_code": GameGuide(
     title: "Binary Code",
     category: "MATH",
-    objective: "Rapidly translate 4-bit binary strings into their standard decimal integer values.",
-    controls: "Tap the correct decimal number from the 2x2 grid of multiple-choice options.",
+    objective:
+        "Rapidly translate 4-bit binary strings into their standard decimal integer values.",
+    controls:
+        "Tap the correct decimal number from the 2x2 grid of multiple-choice options.",
     walkthrough: [
       "Step 1: Look at the 4-bit binary string (e.g., '1011') displayed in the center of the screen.",
       "Step 2: Calculate the decimal value by summing the powers of 2 (8, 4, 2, 1) where a '1' is present.",
@@ -773,8 +844,10 @@ const Map<String, GameGuide> gameGuides = {
   "binary_puzzle": GameGuide(
     title: "Binary Puzzle",
     category: "LOGIC",
-    objective: "Fill the grid with 0s and 1s such that no three identical numbers are adjacent, each row and column has an equal number of 0s and 1s, and all rows and columns are unique.",
-    controls: "Tap an empty or modifiable cell to toggle its value between empty, 0, and 1.",
+    objective:
+        "Fill the grid with 0s and 1s such that no three identical numbers are adjacent, each row and column has an equal number of 0s and 1s, and all rows and columns are unique.",
+    controls:
+        "Tap an empty or modifiable cell to toggle its value between empty, 0, and 1.",
     walkthrough: [
       "Step 1: Examine the grid for fixed starting numbers.",
       "Step 2: Look for pairs of identical numbers (e.g., '1-1'). The cells on either side must be the opposite number (e.g., '0-1-1-0').",
@@ -792,8 +865,10 @@ const Map<String, GameGuide> gameGuides = {
   "binary_scale_balance": GameGuide(
     title: "Binary Scale Balance",
     category: "MATH",
-    objective: "Select the correct combination of binary weight blocks to perfectly match the target weight on the scale.",
-    controls: "Tap the binary weight blocks (32, 16, 8, 4, 2, 1) to toggle them on or off, then tap the 'BALANCED?' button to submit.",
+    objective:
+        "Select the correct combination of binary weight blocks to perfectly match the target weight on the scale.",
+    controls:
+        "Tap the binary weight blocks (32, 16, 8, 4, 2, 1) to toggle them on or off, then tap the 'BALANCED?' button to submit.",
     walkthrough: [
       "Step 1: Check the Target weight required to balance the scale.",
       "Step 2: Look at the available binary weight blocks.",
@@ -810,8 +885,10 @@ const Map<String, GameGuide> gameGuides = {
   "binomial_match": GameGuide(
     title: "Binomial Match",
     category: "MATH",
-    objective: "Identify the correct factored form of a given quadratic expression.",
-    controls: "Tap the correct factored binomial pair from the multiple-choice list.",
+    objective:
+        "Identify the correct factored form of a given quadratic expression.",
+    controls:
+        "Tap the correct factored binomial pair from the multiple-choice list.",
     walkthrough: [
       "Step 1: Look at the expanded quadratic expression (e.g., x² + 5x + 6) displayed in the center.",
       "Step 2: Determine which two numbers multiply to equal the constant term (c) and add to equal the coefficient of the middle term (b).",
@@ -827,8 +904,10 @@ const Map<String, GameGuide> gameGuides = {
   "blink_detector": GameGuide(
     title: "Blink Detector",
     category: "ATTENTION",
-    objective: "Identify the target face in a grid that blinks twice, while ignoring distractor faces that blink only once.",
-    controls: "Observe the grid, then tap the face that exhibited the double-blink behavior.",
+    objective:
+        "Identify the target face in a grid that blinks twice, while ignoring distractor faces that blink only once.",
+    controls:
+        "Observe the grid, then tap the face that exhibited the double-blink behavior.",
     walkthrough: [
       "Step 1: Watch the grid of faces carefully.",
       "Step 2: Various faces will randomly blink once to distract you.",
@@ -845,8 +924,10 @@ const Map<String, GameGuide> gameGuides = {
   "block_count_3d": GameGuide(
     title: "Block Count 3D",
     category: "SPATIAL",
-    objective: "Determine the total number of individual cubes that make up a complex 3D block structure.",
-    controls: "Drag your finger across the 3D viewport to rotate the structure. Use the virtual numpad to enter your count and tap submit.",
+    objective:
+        "Determine the total number of individual cubes that make up a complex 3D block structure.",
+    controls:
+        "Drag your finger across the 3D viewport to rotate the structure. Use the virtual numpad to enter your count and tap submit.",
     walkthrough: [
       "Step 1: Examine the 3D block structure displayed on the screen.",
       "Step 2: Drag to rotate the model and view it from different angles to ensure you don'''t miss hidden blocks.",
@@ -863,8 +944,10 @@ const Map<String, GameGuide> gameGuides = {
   "block_escape": GameGuide(
     title: "Block Escape",
     category: "LOGIC",
-    objective: "Clear a path to slide the target block out of the exit on the right side of the board.",
-    controls: "Drag blocks along their horizontal or vertical axis to move them into empty spaces.",
+    objective:
+        "Clear a path to slide the target block out of the exit on the right side of the board.",
+    controls:
+        "Drag blocks along their horizontal or vertical axis to move them into empty spaces.",
     walkthrough: [
       "Step 1: Identify the distinct target block (usually colored differently) that needs to reach the exit on the right.",
       "Step 2: Locate the blocks obstructing the target block's path to the exit.",
@@ -880,8 +963,10 @@ const Map<String, GameGuide> gameGuides = {
   "block_stacking_physics": GameGuide(
     title: "Stacking Physics",
     category: "SPATIAL",
-    objective: "Stack moving blocks on top of each other as high as possible by timing your drops perfectly.",
-    controls: "Tap anywhere on the screen to drop the currently moving active block.",
+    objective:
+        "Stack moving blocks on top of each other as high as possible by timing your drops perfectly.",
+    controls:
+        "Tap anywhere on the screen to drop the currently moving active block.",
     walkthrough: [
       "Step 1: Watch the active block slide back and forth across the top of the stack.",
       "Step 2: Time your tap so the active block aligns perfectly with the block below it.",
@@ -898,8 +983,10 @@ const Map<String, GameGuide> gameGuides = {
   "box_completion": GameGuide(
     title: "Box Completion",
     category: "SPATIAL",
-    objective: "Determine which 3D cube is formed by folding a given 2D net with numbers on it.",
-    controls: "Tap the correct 3D cube from the multiple-choice options provided.",
+    objective:
+        "Determine which 3D cube is formed by folding a given 2D net with numbers on it.",
+    controls:
+        "Tap the correct 3D cube from the multiple-choice options provided.",
     walkthrough: [
       "Step 1: Analyze the 2D cross-shaped net containing numbers on its faces.",
       "Step 2: Mentally fold the net into a 3D cube in your mind.",
@@ -916,8 +1003,10 @@ const Map<String, GameGuide> gameGuides = {
   "bridges": GameGuide(
     title: "Bridges",
     category: "LOGIC",
-    objective: "Connect all islands into a single continuous network with bridges, ensuring each island has exactly the number of bridges indicated by its number.",
-    controls: "Tap an island to select it, then tap an adjacent island to draw a bridge. Tap again to upgrade to a double bridge, or tap a third time to remove the connection.",
+    objective:
+        "Connect all islands into a single continuous network with bridges, ensuring each island has exactly the number of bridges indicated by its number.",
+    controls:
+        "Tap an island to select it, then tap an adjacent island to draw a bridge. Tap again to upgrade to a double bridge, or tap a third time to remove the connection.",
     walkthrough: [
       "Step 1: Review the numbered islands on the grid.",
       "Step 2: Tap an island to select it, then tap an orthogonal (up, down, left, right) island to connect them with a bridge.",
@@ -934,8 +1023,10 @@ const Map<String, GameGuide> gameGuides = {
   "calculation_sprint": GameGuide(
     title: "Calculation Sprint",
     category: "MATH",
-    objective: "Solve as many math equations as possible before the time runs out.",
-    controls: "Tap the correct answer from the 2x2 grid of multiple-choice options.",
+    objective:
+        "Solve as many math equations as possible before the time runs out.",
+    controls:
+        "Tap the correct answer from the 2x2 grid of multiple-choice options.",
     walkthrough: [
       "Step 1: Tap start to begin the countdown timer.",
       "Step 2: Read the math equation presented in the center of the screen.",
@@ -952,8 +1043,10 @@ const Map<String, GameGuide> gameGuides = {
   "card_counting_memory": GameGuide(
     title: "Card Counting",
     category: "MEMORY",
-    objective: "Memorize a sequence of dealt playing cards and accurately recall how many cards of a specific suit appeared.",
-    controls: "Tap the correct numerical count from the multiple-choice options during the recall phase.",
+    objective:
+        "Memorize a sequence of dealt playing cards and accurately recall how many cards of a specific suit appeared.",
+    controls:
+        "Tap the correct numerical count from the multiple-choice options during the recall phase.",
     walkthrough: [
       "Step 1: Tap start to begin dealing.",
       "Step 2: Watch closely as 5 playing cards are dealt sequentially onto the screen.",
@@ -970,8 +1063,10 @@ const Map<String, GameGuide> gameGuides = {
   "category_fluency": GameGuide(
     title: "Category Fluency",
     category: "WORD",
-    objective: "Type as many words as possible that fit the given category before the time runs out.",
-    controls: "Use the keyboard to type a word into the text field, then tap the send icon or press submit on the keyboard.",
+    objective:
+        "Type as many words as possible that fit the given category before the time runs out.",
+    controls:
+        "Use the keyboard to type a word into the text field, then tap the send icon or press submit on the keyboard.",
     walkthrough: [
       "Step 1: Read the category prompt (e.g., '''Animals''', '''Fruits''') at the top of the screen.",
       "Step 2: Tap the text input field to open your keyboard.",
@@ -988,8 +1083,10 @@ const Map<String, GameGuide> gameGuides = {
   "chain_reaction": GameGuide(
     title: "Chain Reaction",
     category: "WORD",
-    objective: "Build the longest word chain possible by entering words that start with the last two letters of the previous word.",
-    controls: "Use the keyboard to type a word into the text field, then tap the add icon or press submit on the keyboard.",
+    objective:
+        "Build the longest word chain possible by entering words that start with the last two letters of the previous word.",
+    controls:
+        "Use the keyboard to type a word into the text field, then tap the add icon or press submit on the keyboard.",
     walkthrough: [
       "Step 1: Look at the last word currently at the bottom of the chain.",
       "Step 2: Identify the last two letters of that word, which are highlighted.",
@@ -1006,8 +1103,10 @@ const Map<String, GameGuide> gameGuides = {
   "chalk_and_talk": GameGuide(
     title: "Chalk and Talk",
     category: "ATTENTION",
-    objective: "Listen to the spoken word and type it correctly, ignoring the visually distracting word written on the chalkboard.",
-    controls: "Tap the text field to open the keyboard and type the heard word. Tap '''Submit''' to confirm.",
+    objective:
+        "Listen to the spoken word and type it correctly, ignoring the visually distracting word written on the chalkboard.",
+    controls:
+        "Tap the text field to open the keyboard and type the heard word. Tap '''Submit''' to confirm.",
     walkthrough: [
       "Step 1: The game presents a '''heard''' voice word and a visual distractor word on the chalkboard.",
       "Step 2: Ignore the visual word.",
@@ -1023,7 +1122,8 @@ const Map<String, GameGuide> gameGuides = {
   "change_blindness": GameGuide(
     title: "Change Blindness",
     category: "ATTENTION",
-    objective: "Identify the single difference between two alternating images before the time runs out.",
+    objective:
+        "Identify the single difference between two alternating images before the time runs out.",
     controls: "Tap the area on the image where you spot the change.",
     walkthrough: [
       "Step 1: The screen flashes between two nearly identical images.",
@@ -1040,7 +1140,8 @@ const Map<String, GameGuide> gameGuides = {
   "chimp_test": GameGuide(
     title: "Chimp Test",
     category: "MEMORY",
-    objective: "Memorize the positions of numbers and tap them in sequential order after they are hidden.",
+    objective:
+        "Memorize the positions of numbers and tap them in sequential order after they are hidden.",
     controls: "Tap the hidden squares in the correct numerical order.",
     walkthrough: [
       "Step 1: A grid of numbers is briefly displayed on the screen.",
@@ -1057,8 +1158,10 @@ const Map<String, GameGuide> gameGuides = {
   "choice_reaction_time": GameGuide(
     title: "Choice Reaction Time",
     category: "SPEED",
-    objective: "React as quickly as possible to a visual stimulus by selecting the correct corresponding option.",
-    controls: "Tap the correct button (e.g., left or right) that matches the stimulus shown.",
+    objective:
+        "React as quickly as possible to a visual stimulus by selecting the correct corresponding option.",
+    controls:
+        "Tap the correct button (e.g., left or right) that matches the stimulus shown.",
     walkthrough: [
       "Step 1: Wait for a shape or directional cue to appear on screen.",
       "Step 2: Instantly identify which side or button it corresponds to.",
@@ -1074,8 +1177,10 @@ const Map<String, GameGuide> gameGuides = {
   "classic_maze": GameGuide(
     title: "Classic Maze",
     category: "LOGIC",
-    objective: "Navigate from the starting position to the goal through a complex maze.",
-    controls: "Swipe in the direction you want to move the character, or use directional buttons.",
+    objective:
+        "Navigate from the starting position to the goal through a complex maze.",
+    controls:
+        "Swipe in the direction you want to move the character, or use directional buttons.",
     walkthrough: [
       "Step 1: Locate your starting point and the end goal.",
       "Step 2: Swipe up, down, left, or right to move.",
@@ -1091,7 +1196,8 @@ const Map<String, GameGuide> gameGuides = {
   "cognate_catch": GameGuide(
     title: "Cognate Catch",
     category: "WORD",
-    objective: "Identify words that are cognates (share a similar origin and meaning) across different languages.",
+    objective:
+        "Identify words that are cognates (share a similar origin and meaning) across different languages.",
     controls: "Tap the word pairs that are true cognates.",
     walkthrough: [
       "Step 1: A list of word pairs is presented.",
@@ -1108,8 +1214,10 @@ const Map<String, GameGuide> gameGuides = {
   "collatz": GameGuide(
     title: "Collatz",
     category: "MATH",
-    objective: "Apply the Collatz conjecture rules to reach the number 1 from a given starting number.",
-    controls: "Tap the corresponding math operation button (e.g., '''n/2''' or '''3n+1''').",
+    objective:
+        "Apply the Collatz conjecture rules to reach the number 1 from a given starting number.",
+    controls:
+        "Tap the corresponding math operation button (e.g., '''n/2''' or '''3n+1''').",
     walkthrough: [
       "Step 1: You are given a starting integer.",
       "Step 2: If it's even, divide it by 2.",
@@ -1125,8 +1233,10 @@ const Map<String, GameGuide> gameGuides = {
   "color_flood": GameGuide(
     title: "Color Flood",
     category: "LOGIC",
-    objective: "Flood the entire grid with a single color within the allowed number of moves.",
-    controls: "Tap the color buttons at the bottom to change the color of your growing cluster.",
+    objective:
+        "Flood the entire grid with a single color within the allowed number of moves.",
+    controls:
+        "Tap the color buttons at the bottom to change the color of your growing cluster.",
     walkthrough: [
       "Step 1: Start from the top-left corner tile.",
       "Step 2: Choose a color that matches adjacent tiles to absorb them.",
@@ -1142,7 +1252,8 @@ const Map<String, GameGuide> gameGuides = {
   "color_match": GameGuide(
     title: "Color Match",
     category: "ATTENTION",
-    objective: "Determine if the meaning of the word matches the ink color it is written in.",
+    objective:
+        "Determine if the meaning of the word matches the ink color it is written in.",
     controls: "Tap '''Yes''' if it matches, or '''No''' if it doesn'''t.",
     walkthrough: [
       "Step 1: A word describing a color appears on screen.",
@@ -1159,7 +1270,8 @@ const Map<String, GameGuide> gameGuides = {
   "color_maze_nav": GameGuide(
     title: "Color Maze Nav",
     category: "LOGIC",
-    objective: "Navigate the maze by following a specific sequence of colored tiles.",
+    objective:
+        "Navigate the maze by following a specific sequence of colored tiles.",
     controls: "Swipe to move your character to an adjacent valid tile.",
     walkthrough: [
       "Step 1: Observe the required color sequence shown at the top.",
@@ -1176,7 +1288,8 @@ const Map<String, GameGuide> gameGuides = {
   "color_word_match_up": GameGuide(
     title: "Color Word Match Up",
     category: "ATTENTION",
-    objective: "Match the ink color of the top word with the meaning of the bottom word.",
+    objective:
+        "Match the ink color of the top word with the meaning of the bottom word.",
     controls: "Tap '''Match''' or '''Mismatch''' based on the conditions.",
     walkthrough: [
       "Step 1: Two words are displayed on the screen.",
@@ -1193,7 +1306,8 @@ const Map<String, GameGuide> gameGuides = {
   "common_denominator": GameGuide(
     title: "Common Denominator",
     category: "MATH",
-    objective: "Find the lowest common denominator (LCD) for a given set of fractions.",
+    objective:
+        "Find the lowest common denominator (LCD) for a given set of fractions.",
     controls: "Type or select the correct number and submit.",
     walkthrough: [
       "Step 1: A set of fractions is displayed.",
@@ -1210,7 +1324,8 @@ const Map<String, GameGuide> gameGuides = {
   "compass_maze": GameGuide(
     title: "Compass Maze",
     category: "LOGIC",
-    objective: "Navigate a grid where you can only move in the directions indicated by the current tile's compass.",
+    objective:
+        "Navigate a grid where you can only move in the directions indicated by the current tile's compass.",
     controls: "Tap an adjacent tile in a valid direction to move.",
     walkthrough: [
       "Step 1: Look at the compass arrows on your current tile.",
@@ -1227,7 +1342,8 @@ const Map<String, GameGuide> gameGuides = {
   "complex_folding_nets": GameGuide(
     title: "Complex Folding Nets",
     category: "SPATIAL",
-    objective: "Determine which 3D shape can be formed by folding the provided 2D net.",
+    objective:
+        "Determine which 3D shape can be formed by folding the provided 2D net.",
     controls: "Tap the correct 3D shape option.",
     walkthrough: [
       "Step 1: Analyze the unfolded 2D shape (net).",
@@ -1245,7 +1361,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Compound Connect",
     category: "WORD",
     objective: "Connect two words to form a valid compound word.",
-    controls: "Tap a word from the first list, then tap a word from the second list.",
+    controls:
+        "Tap a word from the first list, then tap a word from the second list.",
     walkthrough: [
       "Step 1: Look at the provided word fragments.",
       "Step 2: Identify pairs that combine to make a real compound word.",
@@ -1261,7 +1378,8 @@ const Map<String, GameGuide> gameGuides = {
   "conjunction_search": GameGuide(
     title: "Conjunction Search",
     category: "ATTENTION",
-    objective: "Find the specific target item that combines two distinct features among distractors.",
+    objective:
+        "Find the specific target item that combines two distinct features among distractors.",
     controls: "Tap the correct target item on the screen.",
     walkthrough: [
       "Step 1: The game tells you what to find (e.g., '''Red Square''').",
@@ -1295,7 +1413,8 @@ const Map<String, GameGuide> gameGuides = {
   "context_clues": GameGuide(
     title: "Context Clues",
     category: "WORD",
-    objective: "Determine the meaning of a missing word based on the surrounding sentence context.",
+    objective:
+        "Determine the meaning of a missing word based on the surrounding sentence context.",
     controls: "Select the best word from the multiple-choice options.",
     walkthrough: [
       "Step 1: Read the sentence with the blank space.",
@@ -1312,8 +1431,10 @@ const Map<String, GameGuide> gameGuides = {
   "continuous_recognition": GameGuide(
     title: "Continuous Recognition",
     category: "MEMORY",
-    objective: "Determine if the currently shown image has appeared before in the sequence.",
-    controls: "Tap '''New''' if it's the first time seeing it, or '''Old''' if you've seen it before.",
+    objective:
+        "Determine if the currently shown image has appeared before in the sequence.",
+    controls:
+        "Tap '''New''' if it's the first time seeing it, or '''Old''' if you've seen it before.",
     walkthrough: [
       "Step 1: Images will appear on screen one by one.",
       "Step 2: For each image, decide if it's a new item or a repeat.",
@@ -1329,7 +1450,8 @@ const Map<String, GameGuide> gameGuides = {
   "corsi_blocks": GameGuide(
     title: "Corsi Blocks",
     category: "MEMORY",
-    objective: "Memorize and reproduce a sequence of tapped blocks in the exact order.",
+    objective:
+        "Memorize and reproduce a sequence of tapped blocks in the exact order.",
     controls: "Tap the blocks in the sequence they lit up.",
     walkthrough: [
       "Step 1: Watch the blocks carefully as they light up one by one.",
@@ -1346,7 +1468,8 @@ const Map<String, GameGuide> gameGuides = {
   "countdown_math": GameGuide(
     title: "Countdown Math",
     category: "MATH",
-    objective: "Use the provided numbers and basic arithmetic operators to reach a target number before time runs out.",
+    objective:
+        "Use the provided numbers and basic arithmetic operators to reach a target number before time runs out.",
     controls: "Tap numbers and operators to build your equation.",
     walkthrough: [
       "Step 1: You are given a target number and a set of starting numbers.",
@@ -1363,8 +1486,10 @@ const Map<String, GameGuide> gameGuides = {
   "crown": GameGuide(
     title: "Crown",
     category: "LOGIC",
-    objective: "Place crowns on the grid so that no two share the same row, column, or colored region, and they don't touch diagonally.",
-    controls: "Tap empty cells to place or remove a crown. Long press to mark with an X.",
+    objective:
+        "Place crowns on the grid so that no two share the same row, column, or colored region, and they don't touch diagonally.",
+    controls:
+        "Tap empty cells to place or remove a crown. Long press to mark with an X.",
     walkthrough: [
       "Step 1: Analyze the colored regions on the grid.",
       "Step 2: Place one crown in each region, row, and column.",
@@ -1380,7 +1505,8 @@ const Map<String, GameGuide> gameGuides = {
   "crypto_arithmetic": GameGuide(
     title: "Crypto Arithmetic",
     category: "LOGIC",
-    objective: "Deduce which digit corresponds to each letter to make the math equation true.",
+    objective:
+        "Deduce which digit corresponds to each letter to make the math equation true.",
     controls: "Tap a letter and use the number pad to assign it a digit.",
     walkthrough: [
       "Step 1: Look at the letter-based equation (e.g., AB + A = BCC).",
@@ -1398,7 +1524,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Cryptogram",
     category: "WORD",
     objective: "Decode the encrypted message by substituting letters.",
-    controls: "Tap a coded letter and assign it a real letter from the keyboard.",
+    controls:
+        "Tap a coded letter and assign it a real letter from the keyboard.",
     walkthrough: [
       "Step 1: Analyze the coded phrase and letter frequencies.",
       "Step 2: Guess common letters like E, T, or A.",
@@ -1414,8 +1541,10 @@ const Map<String, GameGuide> gameGuides = {
   "cube_net_fold": GameGuide(
     title: "Cube Net Fold",
     category: "SPATIAL",
-    objective: "Identify which 3D cube configuration matches the unfolded 2D net shown.",
-    controls: "Tap on the correct 3D cube option (A, B, or C) at the bottom of the screen, then tap SUBMIT CHOICE.",
+    objective:
+        "Identify which 3D cube configuration matches the unfolded 2D net shown.",
+    controls:
+        "Tap on the correct 3D cube option (A, B, or C) at the bottom of the screen, then tap SUBMIT CHOICE.",
     walkthrough: [
       "Step 1: Observe the colors on the unfolded 2D cross-shaped net.",
       "Step 2: Visualize how the net folds into a 3D cube.",
@@ -1431,8 +1560,10 @@ const Map<String, GameGuide> gameGuides = {
   "d2_attention": GameGuide(
     title: "D2 Attention",
     category: "ATTENTION",
-    objective: "Find and select all instances of the letter 'd' that have exactly two dashes.",
-    controls: "Tap the tiles to select or deselect them, then tap SUBMIT BOARD when you have found all targets.",
+    objective:
+        "Find and select all instances of the letter 'd' that have exactly two dashes.",
+    controls:
+        "Tap the tiles to select or deselect them, then tap SUBMIT BOARD when you have found all targets.",
     walkthrough: [
       "Step 1: Scan the 4x4 grid of letters ('d' and 'p').",
       "Step 2: Identify the letter 'd's that have exactly two dashes (either 2 above, 2 below, or 1 above and 1 below).",
@@ -1449,8 +1580,10 @@ const Map<String, GameGuide> gameGuides = {
   "definition_dash": GameGuide(
     title: "Definition Dash",
     category: "WORD",
-    objective: "Match the displayed vocabulary word with its correct definition.",
-    controls: "Tap on the definition button that corresponds to the meaning of the given word.",
+    objective:
+        "Match the displayed vocabulary word with its correct definition.",
+    controls:
+        "Tap on the definition button that corresponds to the meaning of the given word.",
     walkthrough: [
       "Step 1: Read the target word shown in the large colored box.",
       "Step 2: Read through the four definition options provided below.",
@@ -1466,8 +1599,10 @@ const Map<String, GameGuide> gameGuides = {
   "delayed_match_sample": GameGuide(
     title: "Delayed Match Sample",
     category: "MEMORY",
-    objective: "Remember a target pattern or image, wait through a delay, and then identify it among distractors.",
-    controls: "Observe the sample, wait for the delay to end, and tap the matching option.",
+    objective:
+        "Remember a target pattern or image, wait through a delay, and then identify it among distractors.",
+    controls:
+        "Observe the sample, wait for the delay to end, and tap the matching option.",
     walkthrough: [
       "Step 1: A sample image or pattern will be shown briefly on the screen.",
       "Step 2: The screen will go blank or show a distraction for a delay period.",
@@ -1484,7 +1619,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Reverse Digit Span",
     category: "MEMORY",
     objective: "Remember a sequence of digits and enter them in reverse order.",
-    controls: "Watch the digits appear, then use the on-screen keypad to enter them backwards.",
+    controls:
+        "Watch the digits appear, then use the on-screen keypad to enter them backwards.",
     walkthrough: [
       "Step 1: Watch the sequence of digits shown one by one.",
       "Step 2: Wait for the sequence to complete.",
@@ -1501,7 +1637,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Digit Swap Equation",
     category: "MATH",
     objective: "Fix an incorrect mathematical equation by swapping two digits.",
-    controls: "Tap two digits to swap their positions and make the equation true.",
+    controls:
+        "Tap two digits to swap their positions and make the equation true.",
     walkthrough: [
       "Step 1: Examine the incorrect equation presented.",
       "Step 2: Calculate the current results of the left and right sides.",
@@ -1517,8 +1654,10 @@ const Map<String, GameGuide> gameGuides = {
   "directions_recall": GameGuide(
     title: "Directions Recall",
     category: "MEMORY",
-    objective: "Memorize a sequence of directional arrows and reproduce the sequence.",
-    controls: "Watch the arrows appear, then tap the corresponding directional buttons in the correct order.",
+    objective:
+        "Memorize a sequence of directional arrows and reproduce the sequence.",
+    controls:
+        "Watch the arrows appear, then tap the corresponding directional buttons in the correct order.",
     walkthrough: [
       "Step 1: Observe the sequence of arrows (Up, Down, Left, Right) shown on screen.",
       "Step 2: Wait for the sequence to finish displaying.",
@@ -1534,7 +1673,8 @@ const Map<String, GameGuide> gameGuides = {
   "distractor_matrix": GameGuide(
     title: "Distractor Matrix",
     category: "ATTENTION",
-    objective: "Locate specific target shapes/symbols hidden among visually similar distractors.",
+    objective:
+        "Locate specific target shapes/symbols hidden among visually similar distractors.",
     controls: "Tap all the target symbols in the matrix.",
     walkthrough: [
       "Step 1: Note the target symbol shown at the start of the round.",
@@ -1551,8 +1691,10 @@ const Map<String, GameGuide> gameGuides = {
   "divided_attention": GameGuide(
     title: "Divided Attention",
     category: "ATTENTION",
-    objective: "Perform two different tasks simultaneously without letting either fail.",
-    controls: "Use left-side controls for one task and right-side controls for the other.",
+    objective:
+        "Perform two different tasks simultaneously without letting either fail.",
+    controls:
+        "Use left-side controls for one task and right-side controls for the other.",
     walkthrough: [
       "Step 1: Understand the requirements of Task A (e.g., sorting shapes).",
       "Step 2: Understand the requirements of Task B (e.g., dodging obstacles).",
@@ -1568,8 +1710,10 @@ const Map<String, GameGuide> gameGuides = {
   "divisibility_dash": GameGuide(
     title: "Divisibility Dash",
     category: "MATH",
-    objective: "Identify numbers that are divisible by a given target number within a time limit.",
-    controls: "Tap the falling or appearing numbers that are cleanly divisible by the target.",
+    objective:
+        "Identify numbers that are divisible by a given target number within a time limit.",
+    controls:
+        "Tap the falling or appearing numbers that are cleanly divisible by the target.",
     walkthrough: [
       "Step 1: Note the target divisor shown at the top of the screen.",
       "Step 2: Watch numbers appear on the board.",
@@ -1585,8 +1729,10 @@ const Map<String, GameGuide> gameGuides = {
   "dnms": GameGuide(
     title: "Delayed Non-Match to Sample",
     category: "MEMORY",
-    objective: "Choose the novel object that was NOT shown in the previous sample. Score 12 or more to win.",
-    controls: "Observe the sample, wait, and then tap the new/different object.",
+    objective:
+        "Choose the novel object that was NOT shown in the previous sample. Score 12 or more to win.",
+    controls:
+        "Observe the sample, wait, and then tap the new/different object.",
     walkthrough: [
       "Step 1: Look at the sample object presented on screen.",
       "Step 2: Wait for the screen to clear during the delay period.",
@@ -1603,7 +1749,8 @@ const Map<String, GameGuide> gameGuides = {
   "dominosa": GameGuide(
     title: "Dominosa",
     category: "LOGIC",
-    objective: "Reconstruct a set of dominoes by pairing adjacent numbers on a grid.",
+    objective:
+        "Reconstruct a set of dominoes by pairing adjacent numbers on a grid.",
     controls: "Tap and drag between adjacent numbers to form a domino.",
     walkthrough: [
       "Step 1: Look at the grid of numbers.",
@@ -1620,8 +1767,10 @@ const Map<String, GameGuide> gameGuides = {
   "double_n_back": GameGuide(
     title: "Double N-Back",
     category: "MEMORY",
-    objective: "Simultaneously track auditory and visual stimuli, indicating when the current stimulus matches the one from 'N' steps back.",
-    controls: "Tap the 'Position Match' or 'Audio Match' buttons when appropriate.",
+    objective:
+        "Simultaneously track auditory and visual stimuli, indicating when the current stimulus matches the one from 'N' steps back.",
+    controls:
+        "Tap the 'Position Match' or 'Audio Match' buttons when appropriate.",
     walkthrough: [
       "Step 1: Note the current N level (e.g., N=2 means comparing to 2 steps ago).",
       "Step 2: A sequence of squares will appear in different grid positions while letters are spoken.",
@@ -1637,8 +1786,10 @@ const Map<String, GameGuide> gameGuides = {
   "double_trouble": GameGuide(
     title: "Double Trouble",
     category: "FLEXIBILITY",
-    objective: "Manage two simultaneous mini-games by tapping targets on both sides of the screen.",
-    controls: "Tap the falling apples on the left and the growing bubbles on the right.",
+    objective:
+        "Manage two simultaneous mini-games by tapping targets on both sides of the screen.",
+    controls:
+        "Tap the falling apples on the left and the growing bubbles on the right.",
     walkthrough: [
       "Step 1: On the left side, tap falling green apples to score points before they reach the bottom.",
       "Step 2: Avoid tapping red apples, as they deduct points.",
@@ -1654,8 +1805,10 @@ const Map<String, GameGuide> gameGuides = {
   "dual_coding": GameGuide(
     title: "Dual Coding",
     category: "MEMORY",
-    objective: "Memorize pairs of distinct visual images and descriptive words.",
-    controls: "Study the pairs, then select the correct matching word or image during the test phase.",
+    objective:
+        "Memorize pairs of distinct visual images and descriptive words.",
+    controls:
+        "Study the pairs, then select the correct matching word or image during the test phase.",
     walkthrough: [
       "Step 1: A sequence of image-word pairs will be presented.",
       "Step 2: Focus on creating a mental link between the image and the word.",
@@ -1671,8 +1824,10 @@ const Map<String, GameGuide> gameGuides = {
   "dual_mirror": GameGuide(
     title: "Dual Mirror",
     category: "SPATIAL",
-    objective: "Control two objects moving in opposite directions to reach their respective targets.",
-    controls: "Swipe or drag to move. One object follows your finger, the other moves inversely.",
+    objective:
+        "Control two objects moving in opposite directions to reach their respective targets.",
+    controls:
+        "Swipe or drag to move. One object follows your finger, the other moves inversely.",
     walkthrough: [
       "Step 1: Identify your primary cursor and the mirrored cursor.",
       "Step 2: Identify the two target zones.",
@@ -1688,8 +1843,10 @@ const Map<String, GameGuide> gameGuides = {
   "dual_task_memory": GameGuide(
     title: "Dual Task Memory",
     category: "MEMORY",
-    objective: "Memorize a set of items while simultaneously performing a secondary distracting task.",
-    controls: "Study items, interact with the distractor task via tapping, then recall the initial items.",
+    objective:
+        "Memorize a set of items while simultaneously performing a secondary distracting task.",
+    controls:
+        "Study items, interact with the distractor task via tapping, then recall the initial items.",
     walkthrough: [
       "Step 1: Memorize the sequence or set of target items shown.",
       "Step 2: Complete the active distractor task (e.g., solving simple math or tapping moving objects).",
@@ -1705,7 +1862,8 @@ const Map<String, GameGuide> gameGuides = {
   "dynamic_salience": GameGuide(
     title: "Dynamic Salience",
     category: "ATTENTION",
-    objective: "Track specific targets as they move among visually similar distractors.",
+    objective:
+        "Track specific targets as they move among visually similar distractors.",
     controls: "Watch the targets move, then tap them once they stop.",
     walkthrough: [
       "Step 1: At the start, several items will briefly flash or highlight as your targets.",
@@ -1722,8 +1880,10 @@ const Map<String, GameGuide> gameGuides = {
   "einstein_riddle": GameGuide(
     title: "Einstein's Riddle",
     category: "LOGIC",
-    objective: "Use a set of clues to deduce the attributes belonging to different subjects on a grid.",
-    controls: "Tap grid cells to mark them as true (check) or false (cross) based on the clues.",
+    objective:
+        "Use a set of clues to deduce the attributes belonging to different subjects on a grid.",
+    controls:
+        "Tap grid cells to mark them as true (check) or false (cross) based on the clues.",
     walkthrough: [
       "Step 1: Read the list of available logical clues.",
       "Step 2: Cross-reference attributes on the logic grid.",
@@ -1739,7 +1899,8 @@ const Map<String, GameGuide> gameGuides = {
   "etymology_origin": GameGuide(
     title: "Etymology Origin",
     category: "WORD",
-    objective: "Determine the correct historical language origin (e.g., Latin, Greek, Old English) of the given word.",
+    objective:
+        "Determine the correct historical language origin (e.g., Latin, Greek, Old English) of the given word.",
     controls: "Tap the button corresponding to the correct language origin.",
     walkthrough: [
       "Step 1: Read the target vocabulary word.",
@@ -1756,7 +1917,8 @@ const Map<String, GameGuide> gameGuides = {
   "etymon_oddball": GameGuide(
     title: "Etymon Oddball",
     category: "WORD",
-    objective: "Identify the word in a list that does not share the same etymological root as the others.",
+    objective:
+        "Identify the word in a list that does not share the same etymological root as the others.",
     controls: "Tap the word that is the odd one out.",
     walkthrough: [
       "Step 1: Examine the list of provided words.",
@@ -1773,8 +1935,10 @@ const Map<String, GameGuide> gameGuides = {
   "event_timeline_memory": GameGuide(
     title: "Event Timeline Memory",
     category: "MEMORY",
-    objective: "Memorize a sequence of historical or fictitious events and their dates, then place them in chronological order.",
-    controls: "Drag and drop the event cards into the correct chronological sequence.",
+    objective:
+        "Memorize a sequence of historical or fictitious events and their dates, then place them in chronological order.",
+    controls:
+        "Drag and drop the event cards into the correct chronological sequence.",
     walkthrough: [
       "Step 1: Study the list of events and their corresponding dates or timestamps.",
       "Step 2: Once the study phase ends, the events will be shuffled and dates hidden.",
@@ -1790,8 +1954,10 @@ const Map<String, GameGuide> gameGuides = {
   "face_name_association": GameGuide(
     title: "Face Name Association",
     category: "MEMORY",
-    objective: "Memorize the names associated with different faces and recall them during the test phase.",
-    controls: "Study the faces and names, then type or select the correct name when shown a face.",
+    objective:
+        "Memorize the names associated with different faces and recall them during the test phase.",
+    controls:
+        "Study the faces and names, then type or select the correct name when shown a face.",
     walkthrough: [
       "Step 1: A series of faces will be shown, each paired with a name.",
       "Step 2: Memorize the association between the facial features and the name.",
@@ -1807,8 +1973,10 @@ const Map<String, GameGuide> gameGuides = {
   "face_trait_association": GameGuide(
     title: "Face Trait Association",
     category: "MEMORY",
-    objective: "Memorize personal traits (e.g., occupation, hobby) associated with different faces.",
-    controls: "Study the faces and traits, then select the correct trait when tested.",
+    objective:
+        "Memorize personal traits (e.g., occupation, hobby) associated with different faces.",
+    controls:
+        "Study the faces and traits, then select the correct trait when tested.",
     walkthrough: [
       "Step 1: Faces will appear alongside specific traits or facts.",
       "Step 2: Memorize which trait belongs to which person.",
@@ -1824,8 +1992,10 @@ const Map<String, GameGuide> gameGuides = {
   "fact_binder": GameGuide(
     title: "Fact Binder",
     category: "MEMORY",
-    objective: "Memorize interconnected sets of facts about various subjects and answer questions about them.",
-    controls: "Read the fact sheets, then tap the correct answers to multiple-choice questions.",
+    objective:
+        "Memorize interconnected sets of facts about various subjects and answer questions about them.",
+    controls:
+        "Read the fact sheets, then tap the correct answers to multiple-choice questions.",
     walkthrough: [
       "Step 1: Study the presented information containing multiple facts linked to a central subject.",
       "Step 2: Try to build a comprehensive mental model of the information.",
@@ -1841,7 +2011,8 @@ const Map<String, GameGuide> gameGuides = {
   "factor_finder": GameGuide(
     title: "Factor Finder",
     category: "MATH",
-    objective: "Identify all the prime factors or regular factors of a given target number.",
+    objective:
+        "Identify all the prime factors or regular factors of a given target number.",
     controls: "Tap the correct number bubbles that are factors of the target.",
     walkthrough: [
       "Step 1: Look at the large target number displayed on the screen.",
@@ -1858,8 +2029,10 @@ const Map<String, GameGuide> gameGuides = {
   "feature_matrix_recall": GameGuide(
     title: "Feature Matrix Recall",
     category: "MEMORY",
-    objective: "Memorize a grid containing symbols with specific features (color, shape, pattern) and reconstruct it.",
-    controls: "Study the grid, then reconstruct it by selecting the correct features for each empty cell.",
+    objective:
+        "Memorize a grid containing symbols with specific features (color, shape, pattern) and reconstruct it.",
+    controls:
+        "Study the grid, then reconstruct it by selecting the correct features for each empty cell.",
     walkthrough: [
       "Step 1: A matrix filled with complex symbols (varying in shape, color, and pattern) is shown.",
       "Step 2: Memorize the exact position and features of each symbol.",
@@ -1875,8 +2048,10 @@ const Map<String, GameGuide> gameGuides = {
   "fibonacci_merge": GameGuide(
     title: "Fibonacci Merge",
     category: "MATH",
-    objective: "Slide tiles on a grid to merge consecutive Fibonacci numbers and reach the highest possible number.",
-    controls: "Swipe up, down, left, or right to move all tiles in that direction.",
+    objective:
+        "Slide tiles on a grid to merge consecutive Fibonacci numbers and reach the highest possible number.",
+    controls:
+        "Swipe up, down, left, or right to move all tiles in that direction.",
     walkthrough: [
       "Step 1: Swipe the grid to move all tiles in the chosen direction.",
       "Step 2: When two consecutive Fibonacci numbers (e.g., 2 and 3, or 5 and 8) collide, they merge into the next Fibonacci number (e.g., 5, 13).",
@@ -1892,7 +2067,8 @@ const Map<String, GameGuide> gameGuides = {
   "fillomino": GameGuide(
     title: "Fillomino",
     category: "LOGIC",
-    objective: "Divide the grid into polyominoes of matching sizes. Two polyominoes of the same size cannot touch share an edge.",
+    objective:
+        "Divide the grid into polyominoes of matching sizes. Two polyominoes of the same size cannot touch share an edge.",
     controls: "Tap cells to cycle through numbers from 1 to 9.",
     walkthrough: [
       "Step 1: Examine the starting numbers on the grid.",
@@ -1911,7 +2087,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Find Word",
     category: "WORD",
     objective: "Locate the target word in a grid of scrambled letters.",
-    controls: "Drag across letters horizontally, vertically, or diagonally to spell the word.",
+    controls:
+        "Drag across letters horizontally, vertically, or diagonally to spell the word.",
     walkthrough: [
       "Step 1: Look at the target word shown at the top.",
       "Step 2: Scan the grid for the starting letter of the word.",
@@ -1927,8 +2104,10 @@ const Map<String, GameGuide> gameGuides = {
   "flanker_test": GameGuide(
     title: "Flanker Test",
     category: "ATTENTION",
-    objective: "Quickly identify the direction of the central arrow while ignoring the flanking arrows.",
-    controls: "Tap the left or right button depending on the center arrow's direction.",
+    objective:
+        "Quickly identify the direction of the central arrow while ignoring the flanking arrows.",
+    controls:
+        "Tap the left or right button depending on the center arrow's direction.",
     walkthrough: [
       "Step 1: A row of arrows appears on screen (e.g., <<><<).",
       "Step 2: Focus only on the central arrow (the middle one).",
@@ -1944,7 +2123,8 @@ const Map<String, GameGuide> gameGuides = {
   "focus_tunnel": GameGuide(
     title: "Focus Tunnel",
     category: "ATTENTION",
-    objective: "Track and follow a target object as it moves through a complex visual tunnel.",
+    objective:
+        "Track and follow a target object as it moves through a complex visual tunnel.",
     controls: "Use the joystick or swipe to steer and track the object.",
     walkthrough: [
       "Step 1: Watch the target object highlighted at the start.",
@@ -1961,8 +2141,10 @@ const Map<String, GameGuide> gameGuides = {
   "fraction_match": GameGuide(
     title: "Fraction Match",
     category: "MATH",
-    objective: "Match equivalent fractions or match fraction values to their visual representation.",
-    controls: "Tap the matching fraction cards or drop them into matching slots.",
+    objective:
+        "Match equivalent fractions or match fraction values to their visual representation.",
+    controls:
+        "Tap the matching fraction cards or drop them into matching slots.",
     walkthrough: [
       "Step 1: Look at the fraction representation shown (visual pie or numerical).",
       "Step 2: Find the matching card with the equivalent value (e.g., 2/4 matches 1/2).",
@@ -1995,7 +2177,8 @@ const Map<String, GameGuide> gameGuides = {
   "fractional_pizza": GameGuide(
     title: "Fractional Pizza",
     category: "MATH",
-    objective: "Serve the correct amount of pizza slices based on fractional orders.",
+    objective:
+        "Serve the correct amount of pizza slices based on fractional orders.",
     controls: "Tap to cut or select the requested number of pizza slices.",
     walkthrough: [
       "Step 1: Read the order (e.g., '1/2 of an 8-slice pizza' or '3/4 of a 12-slice pizza').",
@@ -2012,8 +2195,10 @@ const Map<String, GameGuide> gameGuides = {
   "frequency_tap": GameGuide(
     title: "Frequency Tap",
     category: "Math & Logic",
-    objective: "Compare the pulse rates of two light panels and identify which one matches the target frequency (e.g., 1.5Hz).",
-    controls: "Tap the left or right panel that corresponds to the correct frequency.",
+    objective:
+        "Compare the pulse rates of two light panels and identify which one matches the target frequency (e.g., 1.5Hz).",
+    controls:
+        "Tap the left or right panel that corresponds to the correct frequency.",
     walkthrough: [
       "Step 1: Read the target frequency at the top of the screen.",
       "Step 2: Observe the pulsing speeds of the 'A' and 'B' panels.",
@@ -2029,8 +2214,10 @@ const Map<String, GameGuide> gameGuides = {
   "futoshiki": GameGuide(
     title: "Futoshiki",
     category: "Math & Logic",
-    objective: "Fill the grid with numbers such that each row and column contains unique numbers, while respecting the inequality signs (<, >) between cells.",
-    controls: "Tap a cell to select it, then use the numpad at the bottom to enter a number. Use the erase button to clear a cell.",
+    objective:
+        "Fill the grid with numbers such that each row and column contains unique numbers, while respecting the inequality signs (<, >) between cells.",
+    controls:
+        "Tap a cell to select it, then use the numpad at the bottom to enter a number. Use the erase button to clear a cell.",
     walkthrough: [
       "Step 1: Look for inequality signs between adjacent cells.",
       "Step 2: Find rows or columns with missing numbers and use the signs to deduce the values.",
@@ -2047,7 +2234,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "2048",
     category: "Math & Logic",
     objective: "Combine tiles with the same numbers to reach the 2048 tile.",
-    controls: "Swipe up, down, left, or right anywhere on the screen to slide all tiles in that direction.",
+    controls:
+        "Swipe up, down, left, or right anywhere on the screen to slide all tiles in that direction.",
     walkthrough: [
       "Step 1: Swipe to move all tiles in a single direction.",
       "Step 2: When two tiles with the same number touch, they merge into one tile with double the value.",
@@ -2063,7 +2251,8 @@ const Map<String, GameGuide> gameGuides = {
   "gear_rotation": GameGuide(
     title: "Gear Rotation",
     category: "Visual Spatial",
-    objective: "Determine the rotation direction of the final gear in a sequence, given the starting gear's direction.",
+    objective:
+        "Determine the rotation direction of the final gear in a sequence, given the starting gear's direction.",
     controls: "Tap the 'CLOCKWISE' or 'COUNTER-CLOCKWISE' button.",
     walkthrough: [
       "Step 1: Observe the chain of interconnected gears.",
@@ -2080,7 +2269,8 @@ const Map<String, GameGuide> gameGuides = {
   "ghost_tap": GameGuide(
     title: "Ghost Tap",
     category: "Focus & Attention",
-    objective: "Tap the screen at the exact moment an invisible pulsing radar peaks.",
+    objective:
+        "Tap the screen at the exact moment an invisible pulsing radar peaks.",
     controls: "Tap anywhere on the screen.",
     walkthrough: [
       "Step 1: Watch the pulsing circle expand and contract.",
@@ -2097,8 +2287,10 @@ const Map<String, GameGuide> gameGuides = {
   "gokigen_naname": GameGuide(
     title: "Gokigen Naname",
     category: "Math & Logic",
-    objective: "Draw a diagonal line in every cell so that the lines meeting at each intersection match the number clue, without forming any closed loops.",
-    controls: "Tap a cell to toggle the direction of its diagonal line (forward slash or backslash).",
+    objective:
+        "Draw a diagonal line in every cell so that the lines meeting at each intersection match the number clue, without forming any closed loops.",
+    controls:
+        "Tap a cell to toggle the direction of its diagonal line (forward slash or backslash).",
     walkthrough: [
       "Step 1: Look at the numbered circles at the grid intersections.",
       "Step 2: A number indicates exactly how many diagonal lines must connect to that circle.",
@@ -2114,8 +2306,10 @@ const Map<String, GameGuide> gameGuides = {
   "go_no_go": GameGuide(
     title: "Go No Go",
     category: "Focus & Attention",
-    objective: "Quickly tap the screen when a 'Go' symbol appears, and do NOT tap when a 'No Go' symbol appears.",
-    controls: "Tap anywhere on the screen for 'Go'. Refrain from tapping for 'No Go'.",
+    objective:
+        "Quickly tap the screen when a 'Go' symbol appears, and do NOT tap when a 'No Go' symbol appears.",
+    controls:
+        "Tap anywhere on the screen for 'Go'. Refrain from tapping for 'No Go'.",
     walkthrough: [
       "Step 1: Wait for a symbol to appear on the screen.",
       "Step 2: If the symbol is a 'Go' (green/play icon), tap the screen as fast as possible.",
@@ -2131,7 +2325,8 @@ const Map<String, GameGuide> gameGuides = {
   "grammar_police": GameGuide(
     title: "Grammar Police",
     category: "Language",
-    objective: "Determine whether a displayed sentence is grammatically correct or incorrect.",
+    objective:
+        "Determine whether a displayed sentence is grammatically correct or incorrect.",
     controls: "Tap the 'CORRECT' or 'INCORRECT' button.",
     walkthrough: [
       "Step 1: Read the sentence presented on the screen carefully.",
@@ -2148,8 +2343,10 @@ const Map<String, GameGuide> gameGuides = {
   "grammar_sort": GameGuide(
     title: "Grammar Sort",
     category: "Language",
-    objective: "Categorize words into their correct parts of speech (Noun, Verb, or Adjective) before time runs out.",
-    controls: "Tap the 'NOUN', 'VERB', or 'ADJECTIVE' button that corresponds to the displayed word.",
+    objective:
+        "Categorize words into their correct parts of speech (Noun, Verb, or Adjective) before time runs out.",
+    controls:
+        "Tap the 'NOUN', 'VERB', or 'ADJECTIVE' button that corresponds to the displayed word.",
     walkthrough: [
       "Step 1: Look at the word displayed in the center of the screen.",
       "Step 2: Determine if it represents a person/place/thing (Noun), an action (Verb), or a description (Adjective).",
@@ -2165,8 +2362,10 @@ const Map<String, GameGuide> gameGuides = {
   "graph_coordinate_plot": GameGuide(
     title: "Coordinate Plot",
     category: "Math & Logic",
-    objective: "Solve a linear equation for a given x-value and plot the resulting (x, y) point on the coordinate graph.",
-    controls: "Tap a location on the grid to place a point, then tap 'SUBMIT POINT'.",
+    objective:
+        "Solve a linear equation for a given x-value and plot the resulting (x, y) point on the coordinate graph.",
+    controls:
+        "Tap a location on the grid to place a point, then tap 'SUBMIT POINT'.",
     walkthrough: [
       "Step 1: Read the equation (e.g., y = 2x - 1) and the target x-value.",
       "Step 2: Calculate the corresponding y-value.",
@@ -2182,7 +2381,8 @@ const Map<String, GameGuide> gameGuides = {
   "grid_displacement": GameGuide(
     title: "Grid Displacement",
     category: "Memory",
-    objective: "Memorize the positions of icons in a 3x3 grid, and then identify which two icons swapped places after the grid was hidden.",
+    objective:
+        "Memorize the positions of icons in a 3x3 grid, and then identify which two icons swapped places after the grid was hidden.",
     controls: "Tap the two cells that contain the swapped icons.",
     walkthrough: [
       "Step 1: Study the 3x3 grid of icons during the memorization phase.",
@@ -2199,7 +2399,8 @@ const Map<String, GameGuide> gameGuides = {
   "grocery_list": GameGuide(
     title: "Grocery List",
     category: "Memory",
-    objective: "Memorize a list of grocery items and their categories, then correctly identify the category for a specific item during the testing phase.",
+    objective:
+        "Memorize a list of grocery items and their categories, then correctly identify the category for a specific item during the testing phase.",
     controls: "Tap the correct category button from the options provided.",
     walkthrough: [
       "Step 1: Review the list of items and their categories during the memorization phase.",
@@ -2216,7 +2417,8 @@ const Map<String, GameGuide> gameGuides = {
   "homophone_hunt": GameGuide(
     title: "Homophone Hunt",
     category: "Language",
-    objective: "Select the correct homophone (words that sound the same but have different meanings/spellings) to complete the sentence.",
+    objective:
+        "Select the correct homophone (words that sound the same but have different meanings/spellings) to complete the sentence.",
     controls: "Tap the button with the correctly spelled word.",
     walkthrough: [
       "Step 1: Read the sentence with the missing word.",
@@ -2233,8 +2435,10 @@ const Map<String, GameGuide> gameGuides = {
   "hue_sort": GameGuide(
     title: "Hue Sort",
     category: "Visual Spatial",
-    objective: "Rearrange the color tiles to form a perfect, seamless gradient, using the fixed tiles as anchors.",
-    controls: "Tap one tile to select it, then tap another tile to swap their positions.",
+    objective:
+        "Rearrange the color tiles to form a perfect, seamless gradient, using the fixed tiles as anchors.",
+    controls:
+        "Tap one tile to select it, then tap another tile to swap their positions.",
     walkthrough: [
       "Step 1: Identify the fixed tiles marked with a small dot; these cannot be moved.",
       "Step 2: Look at the color difference between the fixed tiles to understand the direction of the gradient.",
@@ -2250,7 +2454,8 @@ const Map<String, GameGuide> gameGuides = {
   "inequality_balance_ops": GameGuide(
     title: "Inequality Balance Ops",
     category: "Math & Logic",
-    objective: "Evaluate two mathematical expressions and determine the correct inequality or equality relationship between them.",
+    objective:
+        "Evaluate two mathematical expressions and determine the correct inequality or equality relationship between them.",
     controls: "Tap the '<', '=', or '>' button.",
     walkthrough: [
       "Step 1: Calculate the value of the mathematical expression on the left.",
@@ -2267,7 +2472,8 @@ const Map<String, GameGuide> gameGuides = {
   "inequality_dash": GameGuide(
     title: "Inequality Dash",
     category: "Math & Logic",
-    objective: "Quickly determine the relationship (<, =, >) between two simple mathematical expressions before time runs out.",
+    objective:
+        "Quickly determine the relationship (<, =, >) between two simple mathematical expressions before time runs out.",
     controls: "Tap the '<', '=', or '>' button.",
     walkthrough: [
       "Step 1: Look at the 'LEFT' and 'RIGHT' formulas.",
@@ -2284,8 +2490,10 @@ const Map<String, GameGuide> gameGuides = {
   "interlock_puzzle": GameGuide(
     title: "Interlock Puzzle",
     category: "Visual Spatial",
-    objective: "Determine if two 3D block shapes will fit together perfectly to form a solid cube/prism.",
-    controls: "Drag on the screen to rotate the 3D shapes. Tap 'YES' or 'NO' to submit your answer.",
+    objective:
+        "Determine if two 3D block shapes will fit together perfectly to form a solid cube/prism.",
+    controls:
+        "Drag on the screen to rotate the 3D shapes. Tap 'YES' or 'NO' to submit your answer.",
     walkthrough: [
       "Step 1: Examine 'Shape A' and 'Shape B'.",
       "Step 2: Drag your finger across the screen to rotate both shapes and view them from all angles.",
@@ -2301,7 +2509,8 @@ const Map<String, GameGuide> gameGuides = {
   "kakurasu_sums": GameGuide(
     title: "Kakurasu Sums",
     category: "Math & Logic",
-    objective: "Shade cells in a grid so that the sum of the weights of the shaded cells matches the target sums for each row and column.",
+    objective:
+        "Shade cells in a grid so that the sum of the weights of the shaded cells matches the target sums for each row and column.",
     controls: "Tap a cell to toggle its shaded state.",
     walkthrough: [
       "Step 1: Note the weights (1, 2, 3, 4...) located on the top and left edges of the grid.",
@@ -2318,8 +2527,10 @@ const Map<String, GameGuide> gameGuides = {
   "kakuro": GameGuide(
     title: "Kakuro",
     category: "Math & Logic",
-    objective: "Fill the white cells with digits 1-9 so that the sum of each contiguous horizontal/vertical block matches its clue, without repeating any digit within a block.",
-    controls: "Tap a white cell to select it, then tap a number on the keypad to enter it. Use the backspace button to clear a cell.",
+    objective:
+        "Fill the white cells with digits 1-9 so that the sum of each contiguous horizontal/vertical block matches its clue, without repeating any digit within a block.",
+    controls:
+        "Tap a white cell to select it, then tap a number on the keypad to enter it. Use the backspace button to clear a cell.",
     walkthrough: [
       "Step 1: Find a clue block (number with a diagonal line).",
       "Step 2: The top-right number is the target sum for the horizontal block to its right. The bottom-left is for the vertical block below it.",
@@ -2335,8 +2546,10 @@ const Map<String, GameGuide> gameGuides = {
   "kenken": GameGuide(
     title: "KenKen",
     category: "Math & Logic",
-    objective: "Fill the grid with numbers 1 to N (grid size) without repeating in any row or column, such that the numbers in each outlined 'cage' achieve the target value using the specified math operation.",
-    controls: "Tap a cell to select it, then tap a number on the numpad. Use the backspace icon to clear.",
+    objective:
+        "Fill the grid with numbers 1 to N (grid size) without repeating in any row or column, such that the numbers in each outlined 'cage' achieve the target value using the specified math operation.",
+    controls:
+        "Tap a cell to select it, then tap a number on the numpad. Use the backspace icon to clear.",
     walkthrough: [
       "Step 1: Look at the cages (heavily outlined areas) and their target clues (e.g., '3+', '12x').",
       "Step 2: Find single-cell cages, which require no math and give you free numbers.",
@@ -2352,8 +2565,10 @@ const Map<String, GameGuide> gameGuides = {
   "klotski": GameGuide(
     title: "Klotski",
     category: "SPATIAL",
-    objective: "Move the 2x2 HERO block to the escape zone at the bottom middle of the board by sliding blocks out of the way.",
-    controls: "Tap a block to select it, then tap the directional arrows that appear on it, or swipe the block to move it into an empty space.",
+    objective:
+        "Move the 2x2 HERO block to the escape zone at the bottom middle of the board by sliding blocks out of the way.",
+    controls:
+        "Tap a block to select it, then tap the directional arrows that appear on it, or swipe the block to move it into an empty space.",
     walkthrough: [
       "Step 1: Identify the 2x2 HERO block.",
       "Step 2: Move the smaller blocks around to clear a path downward.",
@@ -2368,8 +2583,10 @@ const Map<String, GameGuide> gameGuides = {
   "laser_link": GameGuide(
     title: "Laser Link",
     category: "LOGIC",
-    objective: "Place mirrors to reflect the laser from the source so that it hits all the target positions.",
-    controls: "Tap on empty cells in the grid to cycle through mirror types (forward slash '/' or backslash '\\').",
+    objective:
+        "Place mirrors to reflect the laser from the source so that it hits all the target positions.",
+    controls:
+        "Tap on empty cells in the grid to cycle through mirror types (forward slash '/' or backslash '\\').",
     walkthrough: [
       "Step 1: Observe the laser source position and its initial direction.",
       "Step 2: Note the target positions the laser must reach.",
@@ -2384,7 +2601,8 @@ const Map<String, GameGuide> gameGuides = {
   "letter_bridge": GameGuide(
     title: "Letter Bridge",
     category: "WORD",
-    objective: "Find the single letter that forms a valid word when added to the end of the first word, and also forms a valid word when added to the beginning of the second word.",
+    objective:
+        "Find the single letter that forms a valid word when added to the end of the first word, and also forms a valid word when added to the beginning of the second word.",
     controls: "Type or select the correct bridge letter to fill in the blank.",
     walkthrough: [
       "Step 1: Read the first word and the second word presented on screen.",
@@ -2400,7 +2618,8 @@ const Map<String, GameGuide> gameGuides = {
   "letter_cancellation": GameGuide(
     title: "Letter Cancellation",
     category: "ATTENTION",
-    objective: "Find and select all instances of the target letter from the grid while ignoring distractions.",
+    objective:
+        "Find and select all instances of the target letter from the grid while ignoring distractions.",
     controls: "Tap on the tiles containing the target letter to select them.",
     walkthrough: [
       "Step 1: Identify the target letter you need to find at the start.",
@@ -2416,8 +2635,10 @@ const Map<String, GameGuide> gameGuides = {
   "letter_frequency_scan": GameGuide(
     title: "Letter Frequency Scan",
     category: "ATTENTION",
-    objective: "Count exactly how many times a specific target letter appears in the given paragraph of text.",
-    controls: "Enter the correct count of the target letter using the number pad.",
+    objective:
+        "Count exactly how many times a specific target letter appears in the given paragraph of text.",
+    controls:
+        "Enter the correct count of the target letter using the number pad.",
     walkthrough: [
       "Step 1: Read the target letter you need to count.",
       "Step 2: Scan through the paragraph and count every instance of the letter.",
@@ -2432,8 +2653,10 @@ const Map<String, GameGuide> gameGuides = {
   "letter_grid_swapper": GameGuide(
     title: "Letter Grid Swapper",
     category: "WORD",
-    objective: "Rearrange the letters in the 3x3 grid by swapping adjacent tiles to form the three target words horizontally.",
-    controls: "Tap a tile to select it, then tap an adjacent tile to swap their positions.",
+    objective:
+        "Rearrange the letters in the 3x3 grid by swapping adjacent tiles to form the three target words horizontally.",
+    controls:
+        "Tap a tile to select it, then tap an adjacent tile to swap their positions.",
     walkthrough: [
       "Step 1: Look at the three TARGET WORDS displayed at the top.",
       "Step 2: Find the letters for the first word and move them to the top row.",
@@ -2448,7 +2671,8 @@ const Map<String, GameGuide> gameGuides = {
   "lighthouses": GameGuide(
     title: "Lighthouses",
     category: "LOGIC",
-    objective: "Place ships in the grid so that each lighthouse points to the correct number of ships in its row and column.",
+    objective:
+        "Place ships in the grid so that each lighthouse points to the correct number of ships in its row and column.",
     controls: "Tap grid cells to place or remove ships.",
     walkthrough: [
       "Step 1: Look at the numbers on each lighthouse.",
@@ -2464,8 +2688,10 @@ const Map<String, GameGuide> gameGuides = {
   "lights_out": GameGuide(
     title: "Lights Out",
     category: "LOGIC",
-    objective: "Turn off all the lights on the grid. Tapping a light toggles its state and the state of adjacent lights.",
-    controls: "Tap a tile to toggle it and its immediate neighbors (up, down, left, right).",
+    objective:
+        "Turn off all the lights on the grid. Tapping a light toggles its state and the state of adjacent lights.",
+    controls:
+        "Tap a tile to toggle it and its immediate neighbors (up, down, left, right).",
     walkthrough: [
       "Step 1: Observe the initial pattern of lit and unlit tiles.",
       "Step 2: Tap a tile to turn it off, noting how it flips its neighbors.",
@@ -2480,7 +2706,8 @@ const Map<String, GameGuide> gameGuides = {
   "lock_pattern": GameGuide(
     title: "Lock Pattern",
     category: "MEMORY",
-    objective: "Memorize and recreate the displayed lock pattern by connecting the dots in the correct order.",
+    objective:
+        "Memorize and recreate the displayed lock pattern by connecting the dots in the correct order.",
     controls: "Drag your finger across the dots to draw the pattern.",
     walkthrough: [
       "Step 1: Watch the pattern being drawn on the grid.",
@@ -2496,7 +2723,8 @@ const Map<String, GameGuide> gameGuides = {
   "logical_syllogisms": GameGuide(
     title: "Logical Syllogisms",
     category: "LOGIC",
-    objective: "Determine if a conclusion logically follows from the given premises.",
+    objective:
+        "Determine if a conclusion logically follows from the given premises.",
     controls: "Tap 'Valid' or 'Invalid' based on your deduction.",
     walkthrough: [
       "Step 1: Read the provided statements carefully.",
@@ -2512,7 +2740,8 @@ const Map<String, GameGuide> gameGuides = {
   "magic_squares": GameGuide(
     title: "Magic Squares",
     category: "MATH",
-    objective: "Fill the grid with numbers so that every row, column, and diagonal adds up to the same target sum.",
+    objective:
+        "Fill the grid with numbers so that every row, column, and diagonal adds up to the same target sum.",
     controls: "Tap an empty cell and select a number to place it.",
     walkthrough: [
       "Step 1: Check the required target sum.",
@@ -2528,7 +2757,8 @@ const Map<String, GameGuide> gameGuides = {
   "magnets": GameGuide(
     title: "Magnets",
     category: "LOGIC",
-    objective: "Place domino-shaped magnets (with + and - poles) so they satisfy the row/column count constraints and identical poles do not touch.",
+    objective:
+        "Place domino-shaped magnets (with + and - poles) so they satisfy the row/column count constraints and identical poles do not touch.",
     controls: "Tap cells to toggle between +, -, and empty.",
     walkthrough: [
       "Step 1: Check the numbers at the edges of the grid indicating how many + and - poles are in each row/column.",
@@ -2544,8 +2774,10 @@ const Map<String, GameGuide> gameGuides = {
   "mandala_recall": GameGuide(
     title: "Mandala Recall",
     category: "MEMORY",
-    objective: "Memorize the colors of the mandala pattern and recreate it from memory.",
-    controls: "Tap a color from the palette, then tap the mandala sections to paint them.",
+    objective:
+        "Memorize the colors of the mandala pattern and recreate it from memory.",
+    controls:
+        "Tap a color from the palette, then tap the mandala sections to paint them.",
     walkthrough: [
       "Step 1: Study the colored mandala carefully during the memorization phase.",
       "Step 2: Once the colors disappear, select a color from the bottom palette.",
@@ -2560,7 +2792,8 @@ const Map<String, GameGuide> gameGuides = {
   "math_guess": GameGuide(
     title: "Math Guess",
     category: "MATH",
-    objective: "Guess the hidden mathematical equation within the given number of tries, using color hints for correct numbers and operators.",
+    objective:
+        "Guess the hidden mathematical equation within the given number of tries, using color hints for correct numbers and operators.",
     controls: "Use the on-screen keyboard to type an equation and tap submit.",
     walkthrough: [
       "Step 1: Enter a valid equation that equals the target number.",
@@ -2576,8 +2809,10 @@ const Map<String, GameGuide> gameGuides = {
   "math_maze": GameGuide(
     title: "Math Maze",
     category: "MATH",
-    objective: "Navigate through the maze by moving to adjacent cells that satisfy the mathematical condition or target value.",
-    controls: "Swipe or tap adjacent cells to move your character through the maze.",
+    objective:
+        "Navigate through the maze by moving to adjacent cells that satisfy the mathematical condition or target value.",
+    controls:
+        "Swipe or tap adjacent cells to move your character through the maze.",
     walkthrough: [
       "Step 1: Note the starting value and the mathematical rule for the maze.",
       "Step 2: Calculate the results of moving to adjacent cells.",
@@ -2592,8 +2827,10 @@ const Map<String, GameGuide> gameGuides = {
   "math_path": GameGuide(
     title: "Math Path",
     category: "MATH",
-    objective: "Find a path of numbers and operators that evaluates to the target result.",
-    controls: "Swipe across adjacent tiles to form a valid mathematical expression.",
+    objective:
+        "Find a path of numbers and operators that evaluates to the target result.",
+    controls:
+        "Swipe across adjacent tiles to form a valid mathematical expression.",
     walkthrough: [
       "Step 1: Look at the target number you need to reach.",
       "Step 2: Find a starting number on the grid.",
@@ -2608,7 +2845,8 @@ const Map<String, GameGuide> gameGuides = {
   "matrix_multiplier": GameGuide(
     title: "Matrix Multiplier",
     category: "MATH",
-    objective: "Perform matrix multiplication to calculate the correct resulting matrix.",
+    objective:
+        "Perform matrix multiplication to calculate the correct resulting matrix.",
     controls: "Tap the result cells and enter the calculated numbers.",
     walkthrough: [
       "Step 1: Look at the two matrices to be multiplied.",
@@ -2625,7 +2863,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Matrix Multiplier Match",
     category: "MATH",
     objective: "Match pairs of matrices with their correct multiplied result.",
-    controls: "Tap a matrix expression and then tap its corresponding result to match them.",
+    controls:
+        "Tap a matrix expression and then tap its corresponding result to match them.",
     walkthrough: [
       "Step 1: View the list of matrix pairs and the list of results.",
       "Step 2: Quickly estimate or calculate the multiplication of one pair.",
@@ -2640,8 +2879,10 @@ const Map<String, GameGuide> gameGuides = {
   "matrix_reasoning": GameGuide(
     title: "Matrix Reasoning",
     category: "LOGIC",
-    objective: "Identify the missing pattern in the visual matrix from the given choices.",
-    controls: "Tap the correct visual pattern from the options below the matrix.",
+    objective:
+        "Identify the missing pattern in the visual matrix from the given choices.",
+    controls:
+        "Tap the correct visual pattern from the options below the matrix.",
     walkthrough: [
       "Step 1: Observe the 3x3 grid of patterns with one missing piece.",
       "Step 2: Find the logical rule governing the rows and columns (e.g., rotation, addition).",
@@ -2656,8 +2897,10 @@ const Map<String, GameGuide> gameGuides = {
   "maze_nav_3d": GameGuide(
     title: "3D Maze Navigation",
     category: "SPATIAL",
-    objective: "Navigate through a 3D maze to find the exit from a first-person perspective.",
-    controls: "Use the on-screen directional buttons or swipe to move forward, backward, and turn.",
+    objective:
+        "Navigate through a 3D maze to find the exit from a first-person perspective.",
+    controls:
+        "Use the on-screen directional buttons or swipe to move forward, backward, and turn.",
     walkthrough: [
       "Step 1: Look around to orient yourself in the 3D environment.",
       "Step 2: Move forward through the corridors.",
@@ -2672,7 +2915,8 @@ const Map<String, GameGuide> gameGuides = {
   "memory_matrix": GameGuide(
     title: "Memory Matrix",
     category: "MEMORY",
-    objective: "Memorize the highlighted tiles and tap them after they are hidden.",
+    objective:
+        "Memorize the highlighted tiles and tap them after they are hidden.",
     controls: "Tap the tiles you remember were highlighted.",
     walkthrough: [
       "Step 1: Watch the grid as certain tiles light up.",
@@ -2688,8 +2932,10 @@ const Map<String, GameGuide> gameGuides = {
   "memory_palace": GameGuide(
     title: "Memory Palace",
     category: "MEMORY",
-    objective: "Associate items with specific locations in a room and recall them later.",
-    controls: "Tap the locations in the room and select the correct item from the list.",
+    objective:
+        "Associate items with specific locations in a room and recall them later.",
+    controls:
+        "Tap the locations in the room and select the correct item from the list.",
     walkthrough: [
       "Step 1: Observe the items placed at various locations in the room.",
       "Step 2: Create a mental story linking the item to the location.",
@@ -2704,7 +2950,8 @@ const Map<String, GameGuide> gameGuides = {
   "mental_abacus": GameGuide(
     title: "Mental Abacus",
     category: "MATH",
-    objective: "Perform calculations by visualizing an abacus and moving its beads mentally.",
+    objective:
+        "Perform calculations by visualizing an abacus and moving its beads mentally.",
     controls: "Enter the final calculated number using the keypad.",
     walkthrough: [
       "Step 1: Read the sequence of numbers to add or subtract.",
@@ -2736,7 +2983,8 @@ const Map<String, GameGuide> gameGuides = {
   "mental_mapping": GameGuide(
     title: "Mental Mapping",
     category: "SPATIAL",
-    objective: "Follow a series of directional instructions mentally and identify the final location on a map.",
+    objective:
+        "Follow a series of directional instructions mentally and identify the final location on a map.",
     controls: "Tap the final destination cell on the grid.",
     walkthrough: [
       "Step 1: Note your starting position on the grid.",
@@ -2752,7 +3000,8 @@ const Map<String, GameGuide> gameGuides = {
   "mental_rotation": GameGuide(
     title: "Mental Rotation",
     category: "SPATIAL",
-    objective: "Determine if two 3D shapes are identical but rotated, or mirror images.",
+    objective:
+        "Determine if two 3D shapes are identical but rotated, or mirror images.",
     controls: "Tap 'Match' or 'Different' based on your spatial visualization.",
     walkthrough: [
       "Step 1: Look at the primary 3D block structure.",
@@ -2768,7 +3017,8 @@ const Map<String, GameGuide> gameGuides = {
   "minesweeper": GameGuide(
     title: "Minesweeper",
     category: "LOGIC",
-    objective: "Clear the board without detonating any hidden mines, using numbered clues that indicate adjacent mines.",
+    objective:
+        "Clear the board without detonating any hidden mines, using numbered clues that indicate adjacent mines.",
     controls: "Tap a tile to reveal it. Long-press to flag a suspected mine.",
     walkthrough: [
       "Step 1: Tap a random tile to open up a starting area.",
@@ -2784,8 +3034,10 @@ const Map<String, GameGuide> gameGuides = {
   "mirror_image": GameGuide(
     title: "Mirror Image",
     category: "SPATIAL",
-    objective: "Identify the exact mirror reflection of the presented shape or image.",
-    controls: "Tap the correct reflection from the list of multiple-choice options.",
+    objective:
+        "Identify the exact mirror reflection of the presented shape or image.",
+    controls:
+        "Tap the correct reflection from the list of multiple-choice options.",
     walkthrough: [
       "Step 1: Carefully observe the target image presented at the start.",
       "Step 2: Examine the multiple-choice options presented.",
@@ -2801,7 +3053,8 @@ const Map<String, GameGuide> gameGuides = {
   "mirror_maze": GameGuide(
     title: "Mirror Maze",
     category: "SPATIAL",
-    objective: "Navigate a laser or light beam through a maze to the target by placing mirrors.",
+    objective:
+        "Navigate a laser or light beam through a maze to the target by placing mirrors.",
     controls: "Tap grid cells to place or rotate mirrors to deflect the path.",
     walkthrough: [
       "Step 1: Identify the starting point of the beam and the final target.",
@@ -2818,8 +3071,10 @@ const Map<String, GameGuide> gameGuides = {
   "mirror_tracing": GameGuide(
     title: "Mirror Tracing",
     category: "SPATIAL",
-    objective: "Trace a given shape as accurately as possible while your input is mirrored.",
-    controls: "Drag your finger across the screen to draw; your strokes will appear mirrored.",
+    objective:
+        "Trace a given shape as accurately as possible while your input is mirrored.",
+    controls:
+        "Drag your finger across the screen to draw; your strokes will appear mirrored.",
     walkthrough: [
       "Step 1: Look at the dotted outline of the shape you need to trace.",
       "Step 2: Place your finger on the starting point.",
@@ -2835,8 +3090,10 @@ const Map<String, GameGuide> gameGuides = {
   "missing_operator": GameGuide(
     title: "Missing Operator",
     category: "MATH",
-    objective: "Fill in the missing mathematical operators to make the given equation correct.",
-    controls: "Tap an empty operator slot, then tap the desired operator (+, -, ×, ÷).",
+    objective:
+        "Fill in the missing mathematical operators to make the given equation correct.",
+    controls:
+        "Tap an empty operator slot, then tap the desired operator (+, -, ×, ÷).",
     walkthrough: [
       "Step 1: Analyze the given numbers and the target result of the equation.",
       "Step 2: Estimate which operations will get you closer to the target.",
@@ -2886,7 +3143,8 @@ const Map<String, GameGuide> gameGuides = {
   "modulo_path": GameGuide(
     title: "Modulo Path",
     category: "MATH",
-    objective: "Find a continuous path through a grid where adjacent numbers satisfy a specific modulo rule.",
+    objective:
+        "Find a continuous path through a grid where adjacent numbers satisfy a specific modulo rule.",
     controls: "Tap or drag across adjacent grid cells to form a valid path.",
     walkthrough: [
       "Step 1: Note the target modulo rule required for the path.",
@@ -2903,8 +3161,10 @@ const Map<String, GameGuide> gameGuides = {
   "multiple_object_tracking": GameGuide(
     title: "Multiple Object Tracking",
     category: "ATTENTION",
-    objective: "Keep track of specific target objects as they move randomly among identical distractors.",
-    controls: "Tap the objects you believe were the original targets after they stop moving.",
+    objective:
+        "Keep track of specific target objects as they move randomly among identical distractors.",
+    controls:
+        "Tap the objects you believe were the original targets after they stop moving.",
     walkthrough: [
       "Step 1: Memorize the items that are briefly highlighted at the start.",
       "Step 2: Keep your eyes focused on those targets as all items begin to move.",
@@ -2920,8 +3180,10 @@ const Map<String, GameGuide> gameGuides = {
   "multi_track_counter": GameGuide(
     title: "Multi Track Counter",
     category: "ATTENTION",
-    objective: "Keep simultaneous counts of different types of objects appearing on screen.",
-    controls: "Tap the respective plus/minus buttons or input the final counts for each category.",
+    objective:
+        "Keep simultaneous counts of different types of objects appearing on screen.",
+    controls:
+        "Tap the respective plus/minus buttons or input the final counts for each category.",
     walkthrough: [
       "Step 1: Observe the different categories of objects you need to track.",
       "Step 2: As objects appear and disappear, update your mental tally for each.",
@@ -2937,8 +3199,10 @@ const Map<String, GameGuide> gameGuides = {
   "narrative_recall": GameGuide(
     title: "Narrative Recall",
     category: "MEMORY",
-    objective: "Read a short story and correctly answer questions about specific details.",
-    controls: "Tap the correct answer from the multiple-choice options provided.",
+    objective:
+        "Read a short story and correctly answer questions about specific details.",
+    controls:
+        "Tap the correct answer from the multiple-choice options provided.",
     walkthrough: [
       "Step 1: Read the provided narrative carefully within the given time limit.",
       "Step 2: Try to memorize key details like names, numbers, colors, and sequence of events.",
@@ -2954,7 +3218,8 @@ const Map<String, GameGuide> gameGuides = {
   "n_back": GameGuide(
     title: "N-Back",
     category: "MEMORY",
-    objective: "Indicate whether the current item matches the item presented 'N' steps previously.",
+    objective:
+        "Indicate whether the current item matches the item presented 'N' steps previously.",
     controls: "Tap 'Match' or 'No Match' as each item appears.",
     walkthrough: [
       "Step 1: Note the 'N' level for the current game (e.g., 2-back means matching the item 2 steps ago).",
@@ -2971,8 +3236,10 @@ const Map<String, GameGuide> gameGuides = {
   "negative_space_detection": GameGuide(
     title: "Negative Space Detection",
     category: "SPATIAL",
-    objective: "Identify the hidden shape or letter formed by the negative space between objects.",
-    controls: "Tap the correct answer from the options, or type the identified shape.",
+    objective:
+        "Identify the hidden shape or letter formed by the negative space between objects.",
+    controls:
+        "Tap the correct answer from the options, or type the identified shape.",
     walkthrough: [
       "Step 1: Look at the complex image presented on the screen.",
       "Step 2: Shift your focus from the solid objects to the empty background spaces.",
@@ -2988,8 +3255,10 @@ const Map<String, GameGuide> gameGuides = {
   "nonogram": GameGuide(
     title: "Nonogram",
     category: "LOGIC",
-    objective: "Fill in a grid based on numerical clues to reveal a hidden pixel art picture.",
-    controls: "Tap a cell to fill it, tap again to mark it as empty (X), or long-press to drag.",
+    objective:
+        "Fill in a grid based on numerical clues to reveal a hidden pixel art picture.",
+    controls:
+        "Tap a cell to fill it, tap again to mark it as empty (X), or long-press to drag.",
     walkthrough: [
       "Step 1: Look at the numbers at the beginning of each row and column. They indicate consecutive filled cells.",
       "Step 2: Use intersecting clues to deduce which cells must be filled.",
@@ -3005,8 +3274,10 @@ const Map<String, GameGuide> gameGuides = {
   "norinori": GameGuide(
     title: "Norinori",
     category: "LOGIC",
-    objective: "Shade exactly two cells in every defined region, ensuring no shaded cells touch diagonally or share borders in groups larger than two.",
-    controls: "Tap cells to toggle their shaded state, or mark them as definitively empty.",
+    objective:
+        "Shade exactly two cells in every defined region, ensuring no shaded cells touch diagonally or share borders in groups larger than two.",
+    controls:
+        "Tap cells to toggle their shaded state, or mark them as definitively empty.",
     walkthrough: [
       "Step 1: Look at the grid divided into boldly outlined regions.",
       "Step 2: Shade exactly two cells per region.",
@@ -3022,8 +3293,10 @@ const Map<String, GameGuide> gameGuides = {
   "number_bonds": GameGuide(
     title: "Number Bonds",
     category: "MATH",
-    objective: "Complete the number bonds by finding the missing part that adds up to the given whole.",
-    controls: "Tap the missing node and use the number pad to input the correct value.",
+    objective:
+        "Complete the number bonds by finding the missing part that adds up to the given whole.",
+    controls:
+        "Tap the missing node and use the number pad to input the correct value.",
     walkthrough: [
       "Step 1: Look at the central 'whole' number and the connected 'part' numbers.",
       "Step 2: Subtract the known parts from the whole to find the missing value.",
@@ -3039,8 +3312,10 @@ const Map<String, GameGuide> gameGuides = {
   "numerical_estimation": GameGuide(
     title: "Numerical Estimation",
     category: "MATH",
-    objective: "Estimate the number of items or the result of a complex calculation without exact counting.",
-    controls: "Select the closest estimate from a list, or adjust a slider to your guessed value.",
+    objective:
+        "Estimate the number of items or the result of a complex calculation without exact counting.",
+    controls:
+        "Select the closest estimate from a list, or adjust a slider to your guessed value.",
     walkthrough: [
       "Step 1: A large group of items or a complex math problem appears briefly.",
       "Step 2: Make a quick mental approximation of the quantity or answer.",
@@ -3056,7 +3331,8 @@ const Map<String, GameGuide> gameGuides = {
   "nurikabe": GameGuide(
     title: "Nurikabe",
     category: "LOGIC",
-    objective: "Create 'islands' of white cells containing exactly one number, surrounded by a continuous 'river' of black cells.",
+    objective:
+        "Create 'islands' of white cells containing exactly one number, surrounded by a continuous 'river' of black cells.",
     controls: "Tap cells to mark them as black (river) or white (island).",
     walkthrough: [
       "Step 1: Look at the grid containing numbers. Each number is part of exactly one island of that exact size.",
@@ -3073,7 +3349,8 @@ const Map<String, GameGuide> gameGuides = {
   "object_displacement": GameGuide(
     title: "Object Displacement",
     category: "MEMORY",
-    objective: "Identify which object was moved or swapped after the screen briefly goes blank.",
+    objective:
+        "Identify which object was moved or swapped after the screen briefly goes blank.",
     controls: "Tap on the object that has changed its position.",
     walkthrough: [
       "Step 1: Memorize the layout and position of all objects on the screen.",
@@ -3090,7 +3367,8 @@ const Map<String, GameGuide> gameGuides = {
   "object_shuffle": GameGuide(
     title: "Object Shuffle",
     category: "MEMORY",
-    objective: "Track a hidden target object as it is shuffled rapidly among identical containers.",
+    objective:
+        "Track a hidden target object as it is shuffled rapidly among identical containers.",
     controls: "Tap the container holding the target after the shuffling stops.",
     walkthrough: [
       "Step 1: Watch carefully as the target object is placed under one of the containers.",
@@ -3124,7 +3402,8 @@ const Map<String, GameGuide> gameGuides = {
   "odd_one_out": GameGuide(
     title: "Odd One Out",
     category: "ATTENTION",
-    objective: "Identify the single object that does not share the common characteristics of the rest.",
+    objective:
+        "Identify the single object that does not share the common characteristics of the rest.",
     controls: "Tap the odd object out from the given grid.",
     walkthrough: [
       "Step 1: Scan the array of shapes, symbols, or images.",
@@ -3141,8 +3420,10 @@ const Map<String, GameGuide> gameGuides = {
   "odd_rotation": GameGuide(
     title: "Odd Rotation",
     category: "SPATIAL",
-    objective: "Find the object that is a mirrored version, not just a rotated version, of the others.",
-    controls: "Tap the object that cannot be rotated to match the target shape.",
+    objective:
+        "Find the object that is a mirrored version, not just a rotated version, of the others.",
+    controls:
+        "Tap the object that cannot be rotated to match the target shape.",
     walkthrough: [
       "Step 1: Observe the reference shape and the multiple choices.",
       "Step 2: Mentally rotate each choice to align with the reference shape.",
@@ -3158,7 +3439,8 @@ const Map<String, GameGuide> gameGuides = {
   "one_letter_shift": GameGuide(
     title: "One Letter Shift",
     category: "WORD",
-    objective: "Transform one word into another by changing exactly one letter at a time, creating valid words at each step.",
+    objective:
+        "Transform one word into another by changing exactly one letter at a time, creating valid words at each step.",
     controls: "Use the keyboard to type the next valid word in the sequence.",
     walkthrough: [
       "Step 1: Look at your starting word and the target final word.",
@@ -3175,8 +3457,10 @@ const Map<String, GameGuide> gameGuides = {
   "operation_span": GameGuide(
     title: "Operation Span",
     category: "MEMORY",
-    objective: "Solve simple math problems while simultaneously remembering a sequence of letters or words.",
-    controls: "Answer True/False for the math equation, then input the memorized sequence at the end.",
+    objective:
+        "Solve simple math problems while simultaneously remembering a sequence of letters or words.",
+    controls:
+        "Answer True/False for the math equation, then input the memorized sequence at the end.",
     walkthrough: [
       "Step 1: An equation will appear; determine if it is correct and tap True or False.",
       "Step 2: Immediately after, a letter or word will appear briefly. Memorize it.",
@@ -3192,7 +3476,8 @@ const Map<String, GameGuide> gameGuides = {
   "orbit_tap": GameGuide(
     title: "Orbit Tap",
     category: "ATTENTION",
-    objective: "Tap the screen exactly when a moving object aligns with a target zone on its orbit.",
+    objective:
+        "Tap the screen exactly when a moving object aligns with a target zone on its orbit.",
     controls: "Tap anywhere on the screen to trigger the action.",
     walkthrough: [
       "Step 1: Watch the object traveling along its orbital path.",
@@ -3209,7 +3494,8 @@ const Map<String, GameGuide> gameGuides = {
   "oxymoron_hunt": GameGuide(
     title: "Oxymoron Hunt",
     category: "WORD",
-    objective: "Identify the oxymoron (a phrase containing contradictory terms) from a list of phrases.",
+    objective:
+        "Identify the oxymoron (a phrase containing contradictory terms) from a list of phrases.",
     controls: "Tap the phrase that constitutes an oxymoron.",
     walkthrough: [
       "Step 1: Read through all the provided phrases carefully.",
@@ -3226,7 +3512,8 @@ const Map<String, GameGuide> gameGuides = {
   "palindrome_builder": GameGuide(
     title: "Palindrome Builder",
     category: "WORD",
-    objective: "Construct a valid palindrome (a word that reads the same forwards and backwards) using given letter tiles.",
+    objective:
+        "Construct a valid palindrome (a word that reads the same forwards and backwards) using given letter tiles.",
     controls: "Tap or drag letters into the correct slots to form the word.",
     walkthrough: [
       "Step 1: Review the available letter tiles.",
@@ -3243,7 +3530,8 @@ const Map<String, GameGuide> gameGuides = {
   "pangram_sprint": GameGuide(
     title: "Pangram Sprint",
     category: "WORD",
-    objective: "Identify missing letters or assemble a pangram (a sentence containing every letter of the alphabet).",
+    objective:
+        "Identify missing letters or assemble a pangram (a sentence containing every letter of the alphabet).",
     controls: "Type the missing letters or drag words into order.",
     walkthrough: [
       "Step 1: Read the incomplete sentence provided on screen.",
@@ -3260,7 +3548,8 @@ const Map<String, GameGuide> gameGuides = {
   "paper_folding": GameGuide(
     title: "Paper Folding",
     category: "SPATIAL",
-    objective: "Determine the final pattern of holes after a folded piece of paper is punched and unfolded.",
+    objective:
+        "Determine the final pattern of holes after a folded piece of paper is punched and unfolded.",
     controls: "Tap on the correct result grid out of the 4 options provided.",
     walkthrough: [
       "Step 1: Observe the folding sequence indicated by the arrows.",
@@ -3277,8 +3566,10 @@ const Map<String, GameGuide> gameGuides = {
   "path_finder": GameGuide(
     title: "Path Finder",
     category: "LOGIC",
-    objective: "Trace a continuous path of a specific length from the start point to the exit point without overlapping.",
-    controls: "Drag your finger across the grid to draw the path from start to finish.",
+    objective:
+        "Trace a continuous path of a specific length from the start point to the exit point without overlapping.",
+    controls:
+        "Drag your finger across the grid to draw the path from start to finish.",
     walkthrough: [
       "Step 1: Identify the start (S) and exit (E) points on the grid.",
       "Step 2: Note the required step length provided in the hint.",
@@ -3294,7 +3585,8 @@ const Map<String, GameGuide> gameGuides = {
   "path_intersect": GameGuide(
     title: "Path Intersect",
     category: "SPATIAL",
-    objective: "Identify the exact grid coordinate where two overlapping colored paths intersect.",
+    objective:
+        "Identify the exact grid coordinate where two overlapping colored paths intersect.",
     controls: "Tap the specific cell on the grid where the paths cross.",
     walkthrough: [
       "Step 1: Observe the two different colored paths drawn on the screen.",
@@ -3311,8 +3603,10 @@ const Map<String, GameGuide> gameGuides = {
   "path_recall": GameGuide(
     title: "Path Recall",
     category: "MEMORY",
-    objective: "Remember a path shown briefly on a grid and recreate it exactly from memory.",
-    controls: "Tap the grid cells in the correct sequence to reconstruct the path.",
+    objective:
+        "Remember a path shown briefly on a grid and recreate it exactly from memory.",
+    controls:
+        "Tap the grid cells in the correct sequence to reconstruct the path.",
     walkthrough: [
       "Step 1: Watch carefully as a path is highlighted on the grid.",
       "Step 2: Wait for the path to disappear and the grid to clear.",
@@ -3328,7 +3622,8 @@ const Map<String, GameGuide> gameGuides = {
   "pattern_sequence_draw": GameGuide(
     title: "Pattern Sequence Draw",
     category: "MEMORY",
-    objective: "Observe a sequence of connected lines being drawn between nodes and replicate the exact pattern.",
+    objective:
+        "Observe a sequence of connected lines being drawn between nodes and replicate the exact pattern.",
     controls: "Drag your finger to connect the nodes in the correct order.",
     walkthrough: [
       "Step 1: Watch the nodes light up and lines connect in a specific order.",
@@ -3345,7 +3640,8 @@ const Map<String, GameGuide> gameGuides = {
   "percentage_peak": GameGuide(
     title: "Percentage Peak",
     category: "MATH",
-    objective: "Calculate or estimate percentages to identify the highest resulting value among multiple options.",
+    objective:
+        "Calculate or estimate percentages to identify the highest resulting value among multiple options.",
     controls: "Tap the option that represents the largest calculated amount.",
     walkthrough: [
       "Step 1: Read the percentage expressions presented on the screen.",
@@ -3362,7 +3658,8 @@ const Map<String, GameGuide> gameGuides = {
   "percentage_shopping": GameGuide(
     title: "Percentage Shopping",
     category: "MATH",
-    objective: "Calculate the final price of items by correctly applying percentage discounts or markups.",
+    objective:
+        "Calculate the final price of items by correctly applying percentage discounts or markups.",
     controls: "Select the correct final price from the options provided.",
     walkthrough: [
       "Step 1: Note the original price of the item and the discount percentage.",
@@ -3379,7 +3676,8 @@ const Map<String, GameGuide> gameGuides = {
   "peripheral_focus": GameGuide(
     title: "Peripheral Focus",
     category: "ATTENTION",
-    objective: "Keep your central focus steady while quickly identifying targets appearing in your peripheral vision.",
+    objective:
+        "Keep your central focus steady while quickly identifying targets appearing in your peripheral vision.",
     controls: "Tap the screen in the quadrant where the target appears.",
     walkthrough: [
       "Step 1: Fixate your eyes on the central fixation point.",
@@ -3396,7 +3694,8 @@ const Map<String, GameGuide> gameGuides = {
   "perspective_shift_view": GameGuide(
     title: "Perspective Shift View",
     category: "SPATIAL",
-    objective: "Identify how a 3D block structure looks when viewed from a different specific angle.",
+    objective:
+        "Identify how a 3D block structure looks when viewed from a different specific angle.",
     controls: "Tap the 2D projection that matches the requested viewing angle.",
     walkthrough: [
       "Step 1: Examine the 3D block structure shown in the center.",
@@ -3413,8 +3712,10 @@ const Map<String, GameGuide> gameGuides = {
   "perspective_taking": GameGuide(
     title: "Perspective Taking",
     category: "SPATIAL",
-    objective: "Determine the left/right orientation or spatial layout from the viewpoint of an avatar in the scene.",
-    controls: "Select the correct direction or object layout based on the avatar's perspective.",
+    objective:
+        "Determine the left/right orientation or spatial layout from the viewpoint of an avatar in the scene.",
+    controls:
+        "Select the correct direction or object layout based on the avatar's perspective.",
     walkthrough: [
       "Step 1: Observe the avatar's position and the direction they are facing.",
       "Step 2: Note the target object in relation to the avatar.",
@@ -3430,7 +3731,8 @@ const Map<String, GameGuide> gameGuides = {
   "phonetic_guess": GameGuide(
     title: "Phonetic Guess",
     category: "WORD",
-    objective: "Decipher the correct English word based on its phonetic spelling or pronunciation text.",
+    objective:
+        "Decipher the correct English word based on its phonetic spelling or pronunciation text.",
     controls: "Type or select the correctly spelled word.",
     walkthrough: [
       "Step 1: Read the phonetic spelling provided on the screen.",
@@ -3447,8 +3749,10 @@ const Map<String, GameGuide> gameGuides = {
   "pipes": GameGuide(
     title: "Pipes",
     category: "LOGIC",
-    objective: "Rotate pipe segments to create a continuous, unbroken flow from the start point to the end point.",
-    controls: "Tap on individual pipe tiles to rotate them 90 degrees clockwise.",
+    objective:
+        "Rotate pipe segments to create a continuous, unbroken flow from the start point to the end point.",
+    controls:
+        "Tap on individual pipe tiles to rotate them 90 degrees clockwise.",
     walkthrough: [
       "Step 1: Identify the start and end points of the pipeline.",
       "Step 2: Tap pieces to align them towards adjacent tiles.",
@@ -3465,7 +3769,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Pixel Mimic",
     category: "SPATIAL",
     objective: "Recreate a specific pixel art pattern exactly on a blank grid.",
-    controls: "Tap cells on your grid to toggle their color to match the target.",
+    controls:
+        "Tap cells on your grid to toggle their color to match the target.",
     walkthrough: [
       "Step 1: Study the target pixel pattern shown at the top.",
       "Step 2: Tap the corresponding cells on your empty grid below.",
@@ -3481,7 +3786,8 @@ const Map<String, GameGuide> gameGuides = {
   "portmanteau_split": GameGuide(
     title: "Portmanteau Split",
     category: "WORD",
-    objective: "Identify the two original root words that were combined to form the given portmanteau word.",
+    objective:
+        "Identify the two original root words that were combined to form the given portmanteau word.",
     controls: "Select the two correct words from the provided list.",
     walkthrough: [
       "Step 1: Read the given portmanteau word (e.g., 'Brunch').",
@@ -3498,7 +3804,8 @@ const Map<String, GameGuide> gameGuides = {
   "prime_factor_trees": GameGuide(
     title: "Prime Factor Trees",
     category: "MATH",
-    objective: "Break down a composite number into its prime factors by completing a branching tree diagram.",
+    objective:
+        "Break down a composite number into its prime factors by completing a branching tree diagram.",
     controls: "Tap empty nodes and select the correct prime factors.",
     walkthrough: [
       "Step 1: Look at the main number at the top of the tree.",
@@ -3515,7 +3822,8 @@ const Map<String, GameGuide> gameGuides = {
   "prime_hunter": GameGuide(
     title: "Prime Hunter",
     category: "MATH",
-    objective: "Identify and select all the prime numbers from a grid before the timer runs out.",
+    objective:
+        "Identify and select all the prime numbers from a grid before the timer runs out.",
     controls: "Tap the numbers you believe are prime to collect them.",
     walkthrough: [
       "Step 1: Scan the grid of numbers presented.",
@@ -3532,8 +3840,10 @@ const Map<String, GameGuide> gameGuides = {
   "quick_math": GameGuide(
     title: "Quick Math",
     category: "MATH",
-    objective: "Solve a series of basic arithmetic equations as quickly as possible.",
-    controls: "Tap the correct answer from the choices or use the keypad to type it.",
+    objective:
+        "Solve a series of basic arithmetic equations as quickly as possible.",
+    controls:
+        "Tap the correct answer from the choices or use the keypad to type it.",
     walkthrough: [
       "Step 1: An equation appears on the screen.",
       "Step 2: Perform the calculation in your head rapidly.",
@@ -3549,8 +3859,10 @@ const Map<String, GameGuide> gameGuides = {
   "radical_roots": GameGuide(
     title: "Radical Roots",
     category: "MATH",
-    objective: "Calculate the square or cube roots of given numbers, or simplify radical expressions.",
-    controls: "Select the correct numerical answer or simplified form from the options.",
+    objective:
+        "Calculate the square or cube roots of given numbers, or simplify radical expressions.",
+    controls:
+        "Select the correct numerical answer or simplified form from the options.",
     walkthrough: [
       "Step 1: Read the radical expression shown on screen.",
       "Step 2: Determine the root value or simplify the expression.",
@@ -3566,8 +3878,10 @@ const Map<String, GameGuide> gameGuides = {
   "reading_span": GameGuide(
     title: "Reading Span",
     category: "MEMORY",
-    objective: "Read sentences, determine their logical validity, and remember the final word of each sentence.",
-    controls: "Tap True/False for sentences, then select the remembered words in order.",
+    objective:
+        "Read sentences, determine their logical validity, and remember the final word of each sentence.",
+    controls:
+        "Tap True/False for sentences, then select the remembered words in order.",
     walkthrough: [
       "Step 1: Read the sentence presented and tap True if it makes sense, False if it doesn't.",
       "Step 2: Memorize the very last word of that sentence.",
@@ -3583,7 +3897,8 @@ const Map<String, GameGuide> gameGuides = {
   "reflex_tap": GameGuide(
     title: "Reflex Tap",
     category: "ATTENTION",
-    objective: "Test your reaction time by tapping the screen the instant a specific visual cue appears.",
+    objective:
+        "Test your reaction time by tapping the screen the instant a specific visual cue appears.",
     controls: "Tap anywhere on the screen as fast as possible when prompted.",
     walkthrough: [
       "Step 1: Wait for the screen or indicator to change color/state.",
@@ -3600,7 +3915,8 @@ const Map<String, GameGuide> gameGuides = {
   "relational_memory": GameGuide(
     title: "Relational Memory",
     category: "MEMORY",
-    objective: "Remember the specific pairings or relationships between different items presented.",
+    objective:
+        "Remember the specific pairings or relationships between different items presented.",
     controls: "Tap the correct item that completes the pair when prompted.",
     walkthrough: [
       "Step 1: Observe a series of paired items (e.g., a specific object in a specific location).",
@@ -3617,8 +3933,10 @@ const Map<String, GameGuide> gameGuides = {
   "reverse_stroop": GameGuide(
     title: "Reverse Stroop",
     category: "ATTENTION",
-    objective: "Identify the written word itself while ignoring the contradictory ink color it is printed in.",
-    controls: "Tap the button that corresponds to the text of the word, not the color.",
+    objective:
+        "Identify the written word itself while ignoring the contradictory ink color it is printed in.",
+    controls:
+        "Tap the button that corresponds to the text of the word, not the color.",
     walkthrough: [
       "Step 1: A color word (e.g., 'BLUE') appears on screen in a different ink color (e.g., red ink).",
       "Step 2: Suppress the urge to select the ink color.",
@@ -3634,7 +3952,8 @@ const Map<String, GameGuide> gameGuides = {
   "rhyme_master": GameGuide(
     title: "Rhyme Master",
     category: "WORD",
-    objective: "Identify words that rhyme with a given target word from a selection of options.",
+    objective:
+        "Identify words that rhyme with a given target word from a selection of options.",
     controls: "Tap the word that rhymes with the target.",
     walkthrough: [
       "Step 1: Read the target word at the top of the screen.",
@@ -3651,7 +3970,8 @@ const Map<String, GameGuide> gameGuides = {
   "rhythm_master": GameGuide(
     title: "Rhythm Master",
     category: "MEMORY",
-    objective: "Listen to a rhythm sequence and tap it back with accurate timing.",
+    objective:
+        "Listen to a rhythm sequence and tap it back with accurate timing.",
     controls: "Tap the designated button in sync with the memorized rhythm.",
     walkthrough: [
       "Step 1: Listen closely to the auditory rhythm played.",
@@ -3668,7 +3988,8 @@ const Map<String, GameGuide> gameGuides = {
   "roman_arithmetic": GameGuide(
     title: "Roman Arithmetic",
     category: "MATH",
-    objective: "Solve arithmetic problems presented entirely in Roman numerals.",
+    objective:
+        "Solve arithmetic problems presented entirely in Roman numerals.",
     controls: "Tap the correct Roman numeral answer from the choices provided.",
     walkthrough: [
       "Step 1: Read the mathematical equation in Roman numerals.",
@@ -3685,7 +4006,8 @@ const Map<String, GameGuide> gameGuides = {
   "room_inspector": GameGuide(
     title: "Room Inspector",
     category: "ATTENTION",
-    objective: "Memorize the layout and objects in a room, then identify what changed after a brief transition.",
+    objective:
+        "Memorize the layout and objects in a room, then identify what changed after a brief transition.",
     controls: "Tap the objects that were added, removed, or altered.",
     walkthrough: [
       "Step 1: Scan the room carefully during the observation phase.",
@@ -3702,8 +4024,10 @@ const Map<String, GameGuide> gameGuides = {
   "rotating_maze": GameGuide(
     title: "Rotating Maze",
     category: "SPATIAL",
-    objective: "Navigate a ball through a maze to the exit by rotating the entire maze structure.",
-    controls: "Tap the left or right rotation buttons (or drag) to tilt the maze.",
+    objective:
+        "Navigate a ball through a maze to the exit by rotating the entire maze structure.",
+    controls:
+        "Tap the left or right rotation buttons (or drag) to tilt the maze.",
     walkthrough: [
       "Step 1: Observe the ball's current position and the location of the exit.",
       "Step 2: Plan a path through the corridors.",
@@ -3719,7 +4043,8 @@ const Map<String, GameGuide> gameGuides = {
   "rule_switcher": GameGuide(
     title: "Rule Switcher",
     category: "ATTENTION",
-    objective: "Sort items based on a rule that dynamically changes (e.g., sorting by color, then switching to shape).",
+    objective:
+        "Sort items based on a rule that dynamically changes (e.g., sorting by color, then switching to shape).",
     controls: "Tap the correct target pile based on the currently active rule.",
     walkthrough: [
       "Step 1: Look at the active sorting rule displayed on screen.",
@@ -3736,8 +4061,10 @@ const Map<String, GameGuide> gameGuides = {
   "running_memory_span": GameGuide(
     title: "Running Memory Span",
     category: "MEMORY",
-    objective: "Recall the last N items of a sequence after the presentation stops.",
-    controls: "Tap the items in the order they were presented at the end of the sequence.",
+    objective:
+        "Recall the last N items of a sequence after the presentation stops.",
+    controls:
+        "Tap the items in the order they were presented at the end of the sequence.",
     walkthrough: [
       "Step 1: Watch the sequence of items presented one by one.",
       "Step 2: Note that the sequence may stop at any time.",
@@ -3753,7 +4080,8 @@ const Map<String, GameGuide> gameGuides = {
   "schulte_table": GameGuide(
     title: "Schulte Table",
     category: "ATTENTION",
-    objective: "Find and tap all the numbers in the grid in ascending order as fast as possible.",
+    objective:
+        "Find and tap all the numbers in the grid in ascending order as fast as possible.",
     controls: "Tap the numbers on the grid in order, starting from 1.",
     walkthrough: [
       "Step 1: A 5x5 grid of randomly placed numbers (1-25) is presented.",
@@ -3770,8 +4098,10 @@ const Map<String, GameGuide> gameGuides = {
   "sdmt": GameGuide(
     title: "Symbol Digit Modalities",
     category: "ATTENTION",
-    objective: "Match the correct digit to the presented symbol based on the provided key within the time limit.",
-    controls: "Tap the number on the numpad that corresponds to the displayed symbol.",
+    objective:
+        "Match the correct digit to the presented symbol based on the provided key within the time limit.",
+    controls:
+        "Tap the number on the numpad that corresponds to the displayed symbol.",
     walkthrough: [
       "Step 1: Review the key at the top pairing symbols with digits 1-9.",
       "Step 2: Look at the large target symbol presented in the center.",
@@ -3787,8 +4117,10 @@ const Map<String, GameGuide> gameGuides = {
   "semantic_association": GameGuide(
     title: "Semantic Association",
     category: "WORD",
-    objective: "Identify the word that is most closely related to the given target words.",
-    controls: "Tap the word option that forms the strongest semantic connection.",
+    objective:
+        "Identify the word that is most closely related to the given target words.",
+    controls:
+        "Tap the word option that forms the strongest semantic connection.",
     walkthrough: [
       "Step 1: Read the provided target words or concepts.",
       "Step 2: Evaluate the given options for semantic relevance.",
@@ -3804,8 +4136,10 @@ const Map<String, GameGuide> gameGuides = {
   "semantic_distance": GameGuide(
     title: "Semantic Distance",
     category: "WORD",
-    objective: "Uncover the secret target word by guessing related words and tracking their semantic distance.",
-    controls: "Type your word guess in the input box and tap send or press enter.",
+    objective:
+        "Uncover the secret target word by guessing related words and tracking their semantic distance.",
+    controls:
+        "Type your word guess in the input box and tap send or press enter.",
     walkthrough: [
       "Step 1: Type any guess word into the text field and submit.",
       "Step 2: Review the semantic distance score returned for your guess.",
@@ -3821,8 +4155,10 @@ const Map<String, GameGuide> gameGuides = {
   "semantic_link": GameGuide(
     title: "Semantic Link",
     category: "WORD",
-    objective: "Form a chain of words where each word shares a meaningful connection with the preceding one.",
-    controls: "Tap the next logical word in the sequence from the available options.",
+    objective:
+        "Form a chain of words where each word shares a meaningful connection with the preceding one.",
+    controls:
+        "Tap the next logical word in the sequence from the available options.",
     walkthrough: [
       "Step 1: Start with the initial target word.",
       "Step 2: Select a word from the options that is semantically linked to it.",
@@ -3838,8 +4174,10 @@ const Map<String, GameGuide> gameGuides = {
   "sentence_unscramble": GameGuide(
     title: "Sentence Unscramble",
     category: "WORD",
-    objective: "Rearrange the jumbled words to form a grammatically correct and meaningful sentence.",
-    controls: "Drag and drop the words into the correct order, or tap them sequentially.",
+    objective:
+        "Rearrange the jumbled words to form a grammatically correct and meaningful sentence.",
+    controls:
+        "Drag and drop the words into the correct order, or tap them sequentially.",
     walkthrough: [
       "Step 1: Read all the jumbled words provided on the screen.",
       "Step 2: Identify the subject, verb, and object of the sentence.",
@@ -3855,8 +4193,10 @@ const Map<String, GameGuide> gameGuides = {
   "sequence_sleuth": GameGuide(
     title: "Sequence Sleuth",
     category: "LOGIC",
-    objective: "Identify the underlying pattern in a sequence of numbers or symbols and determine the missing element.",
-    controls: "Tap or enter the correct missing element to complete the sequence.",
+    objective:
+        "Identify the underlying pattern in a sequence of numbers or symbols and determine the missing element.",
+    controls:
+        "Tap or enter the correct missing element to complete the sequence.",
     walkthrough: [
       "Step 1: Examine the provided sequence of items.",
       "Step 2: Determine the rule governing the progression (e.g., +2, x3, alternating shapes).",
@@ -3889,8 +4229,10 @@ const Map<String, GameGuide> gameGuides = {
   "shadow_pivot": GameGuide(
     title: "Shadow Pivot",
     category: "SPATIAL",
-    objective: "Identify the correct 3D object or orientation based on its projected 2D shadow.",
-    controls: "Swipe to rotate the object or tap to select the matching shadow.",
+    objective:
+        "Identify the correct 3D object or orientation based on its projected 2D shadow.",
+    controls:
+        "Swipe to rotate the object or tap to select the matching shadow.",
     walkthrough: [
       "Step 1: Observe the 2D shadow cast on the wall.",
       "Step 2: Examine the 3D objects available.",
@@ -3906,7 +4248,8 @@ const Map<String, GameGuide> gameGuides = {
   "shape_shifter": GameGuide(
     title: "Shape Shifter",
     category: "SPATIAL",
-    objective: "Track a shape as it undergoes various transformations and identify the final result.",
+    objective:
+        "Track a shape as it undergoes various transformations and identify the final result.",
     controls: "Tap the correct final shape from the given options.",
     walkthrough: [
       "Step 1: Memorize the initial shape, color, and orientation.",
@@ -3923,8 +4266,10 @@ const Map<String, GameGuide> gameGuides = {
   "shell_game": GameGuide(
     title: "Shell Game",
     category: "ATTENTION",
-    objective: "Keep your eye on the container hiding the target object as they are rapidly shuffled.",
-    controls: "Tap the container you believe holds the target object once they stop moving.",
+    objective:
+        "Keep your eye on the container hiding the target object as they are rapidly shuffled.",
+    controls:
+        "Tap the container you believe holds the target object once they stop moving.",
     walkthrough: [
       "Step 1: Note which container holds the target object before they cover it.",
       "Step 2: Follow that specific container with your eyes as they shuffle around.",
@@ -3940,7 +4285,8 @@ const Map<String, GameGuide> gameGuides = {
   "shikaku": GameGuide(
     title: "Shikaku",
     category: "LOGIC",
-    objective: "Divide the grid into rectangles such that each contains exactly one number, and its area equals that number.",
+    objective:
+        "Divide the grid into rectangles such that each contains exactly one number, and its area equals that number.",
     controls: "Drag across the grid cells to draw rectangles.",
     walkthrough: [
       "Step 1: Look at the numbers scattered across the grid.",
@@ -3957,8 +4303,10 @@ const Map<String, GameGuide> gameGuides = {
   "silent_letter_search": GameGuide(
     title: "Silent Letter Search",
     category: "WORD",
-    objective: "Identify words containing silent letters or pinpoint the specific silent letter within a word.",
-    controls: "Tap the word with a silent letter, or tap the specific letter itself.",
+    objective:
+        "Identify words containing silent letters or pinpoint the specific silent letter within a word.",
+    controls:
+        "Tap the word with a silent letter, or tap the specific letter itself.",
     walkthrough: [
       "Step 1: Analyze the presented word or list of words.",
       "Step 2: Pronounce the words in your head to check phonetic spelling.",
@@ -3991,7 +4339,8 @@ const Map<String, GameGuide> gameGuides = {
   "silhouette_match_ortho": GameGuide(
     title: "Ortho Silhouette",
     category: "SPATIAL",
-    objective: "Match the correct orthographic projection (top, front, side view) to the 3D object.",
+    objective:
+        "Match the correct orthographic projection (top, front, side view) to the 3D object.",
     controls: "Tap the correct 2D projection from the choices.",
     walkthrough: [
       "Step 1: Examine the 3D object and the requested view direction (e.g., 'Top View').",
@@ -4009,7 +4358,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Simon Command",
     category: "MEMORY",
     objective: "Follow the instructions only when preceded by 'Simon says'.",
-    controls: "Tap the correct action button, or refrain from tapping if it's a trick.",
+    controls:
+        "Tap the correct action button, or refrain from tapping if it's a trick.",
     walkthrough: [
       "Step 1: Read or listen to the command given on screen.",
       "Step 2: Check if the command starts with 'Simon says'.",
@@ -4042,7 +4392,8 @@ const Map<String, GameGuide> gameGuides = {
   "skyscrapers": GameGuide(
     title: "Skyscrapers",
     category: "LOGIC",
-    objective: "Place numbers 1 to N in the grid so no number repeats in any row or column, while satisfying the visibility clues.",
+    objective:
+        "Place numbers 1 to N in the grid so no number repeats in any row or column, while satisfying the visibility clues.",
     controls: "Tap a cell and select a number from the dial or pad.",
     walkthrough: [
       "Step 1: Look at the clues on the edges of the grid indicating how many 'skyscrapers' are visible.",
@@ -4059,7 +4410,8 @@ const Map<String, GameGuide> gameGuides = {
   "slide_puzzle": GameGuide(
     title: "Slide Puzzle",
     category: "SPATIAL",
-    objective: "Rearrange the scrambled tiles to form the complete picture or numerical order.",
+    objective:
+        "Rearrange the scrambled tiles to form the complete picture or numerical order.",
     controls: "Tap or swipe a tile adjacent to the empty space to slide it.",
     walkthrough: [
       "Step 1: Examine the scrambled grid and locate the single empty space.",
@@ -4076,7 +4428,8 @@ const Map<String, GameGuide> gameGuides = {
   "slitherlink": GameGuide(
     title: "Slitherlink",
     category: "LOGIC",
-    objective: "Connect adjacent dots to form a single continuous loop without crossings or branches.",
+    objective:
+        "Connect adjacent dots to form a single continuous loop without crossings or branches.",
     controls: "Tap the edges between dots to draw or remove a line.",
     walkthrough: [
       "Step 1: Look at the numbers inside the cells.",
@@ -4093,7 +4446,8 @@ const Map<String, GameGuide> gameGuides = {
   "sopt": GameGuide(
     title: "Subject-Ordered Pointing",
     category: "MEMORY",
-    objective: "Select a different item on every trial until all items have been chosen once.",
+    objective:
+        "Select a different item on every trial until all items have been chosen once.",
     controls: "Tap an item from the grid.",
     walkthrough: [
       "Step 1: A grid of objects is displayed.",
@@ -4110,7 +4464,8 @@ const Map<String, GameGuide> gameGuides = {
   "source_monitoring": GameGuide(
     title: "Source Monitoring",
     category: "MEMORY",
-    objective: "Recall not just the information, but the exact source (who, where, or how it was presented).",
+    objective:
+        "Recall not just the information, but the exact source (who, where, or how it was presented).",
     controls: "Tap the correct source corresponding to the presented item.",
     walkthrough: [
       "Step 1: During the learning phase, observe items and note their source (e.g., red box vs blue box).",
@@ -4127,8 +4482,10 @@ const Map<String, GameGuide> gameGuides = {
   "spatial_cabinet_memory": GameGuide(
     title: "Spatial Cabinet",
     category: "MEMORY",
-    objective: "Memorize the locations of various objects within a grid or cabinet and recall them accurately.",
-    controls: "Tap the compartments to reveal or place objects based on your memory.",
+    objective:
+        "Memorize the locations of various objects within a grid or cabinet and recall them accurately.",
+    controls:
+        "Tap the compartments to reveal or place objects based on your memory.",
     walkthrough: [
       "Step 1: Observe the cabinet as doors open to reveal objects inside.",
       "Step 2: Memorize which object belongs in which compartment.",
@@ -4144,7 +4501,8 @@ const Map<String, GameGuide> gameGuides = {
   "spatial_conflict": GameGuide(
     title: "Spatial Conflict",
     category: "SPATIAL",
-    objective: "Respond to the direction of an arrow while ignoring its conflicting spatial position.",
+    objective:
+        "Respond to the direction of an arrow while ignoring its conflicting spatial position.",
     controls: "Tap the button corresponding to the arrow's direction.",
     walkthrough: [
       "Step 1: An arrow will appear on the screen.",
@@ -4161,8 +4519,10 @@ const Map<String, GameGuide> gameGuides = {
   "spelling_sprint": GameGuide(
     title: "Spelling Sprint",
     category: "WORD",
-    objective: "Rapidly identify whether the presented word is spelled correctly or incorrectly.",
-    controls: "Swipe or tap the appropriate button for 'Correct' or 'Incorrect'.",
+    objective:
+        "Rapidly identify whether the presented word is spelled correctly or incorrectly.",
+    controls:
+        "Swipe or tap the appropriate button for 'Correct' or 'Incorrect'.",
     walkthrough: [
       "Step 1: A word flashes on the screen.",
       "Step 2: Quickly analyze its spelling.",
@@ -4195,7 +4555,8 @@ const Map<String, GameGuide> gameGuides = {
   "spotlight_track": GameGuide(
     title: "Spotlight Track",
     category: "ATTENTION",
-    objective: "Keep track of multiple moving targets in the dark as they are briefly illuminated.",
+    objective:
+        "Keep track of multiple moving targets in the dark as they are briefly illuminated.",
     controls: "Tap the locations of the targets after they stop moving.",
     walkthrough: [
       "Step 1: The targets are highlighted at the beginning.",
@@ -4212,8 +4573,10 @@ const Map<String, GameGuide> gameGuides = {
   "staircase_memory": GameGuide(
     title: "Staircase Memory",
     category: "MEMORY",
-    objective: "Memorize the sequence of highlighted icons on a grid, then correctly select those exact icons from a grid of options in any order to reconstruct the set.",
-    controls: "Tap the icons in the bottom grid that were shown in the top sequence.",
+    objective:
+        "Memorize the sequence of highlighted icons on a grid, then correctly select those exact icons from a grid of options in any order to reconstruct the set.",
+    controls:
+        "Tap the icons in the bottom grid that were shown in the top sequence.",
     walkthrough: [
       "Step 1: Watch the sequence of icons being highlighted.",
       "Step 2: Look at the grid of icon options provided.",
@@ -4228,8 +4591,10 @@ const Map<String, GameGuide> gameGuides = {
   "sternberg_task": GameGuide(
     title: "Sternberg Task",
     category: "MEMORY",
-    objective: "Memorize a short sequence of letters shown briefly, then determine if a single probe letter appeared in that sequence.",
-    controls: "Tap the YES button if the probe letter was in the sequence, or the NO button if it was not.",
+    objective:
+        "Memorize a short sequence of letters shown briefly, then determine if a single probe letter appeared in that sequence.",
+    controls:
+        "Tap the YES button if the probe letter was in the sequence, or the NO button if it was not.",
     walkthrough: [
       "Step 1: Memorize the set of letters displayed on the screen.",
       "Step 2: Wait for the sequence to disappear and a single probe letter to appear.",
@@ -4244,8 +4609,10 @@ const Map<String, GameGuide> gameGuides = {
   "stop_signal": GameGuide(
     title: "Stop Signal",
     category: "ATTENTION",
-    objective: "Quickly tap the arrow button that matches the direction of the large green arrow, UNLESS the arrow turns red, in which case you must do nothing and wait.",
-    controls: "Tap the left arrow button if the green arrow points left, or the right arrow button if it points right. Do not tap anything if the arrow is red.",
+    objective:
+        "Quickly tap the arrow button that matches the direction of the large green arrow, UNLESS the arrow turns red, in which case you must do nothing and wait.",
+    controls:
+        "Tap the left arrow button if the green arrow points left, or the right arrow button if it points right. Do not tap anything if the arrow is red.",
     walkthrough: [
       "Step 1: Wait for a large green arrow to appear on the screen.",
       "Step 2: Quickly tap the corresponding left or right button.",
@@ -4260,8 +4627,10 @@ const Map<String, GameGuide> gameGuides = {
   "story_builder": GameGuide(
     title: "Story Builder",
     category: "MEMORY",
-    objective: "Reconstruct a scrambled story by selecting the sentences in their correct chronological order.",
-    controls: "Tap the sentence cards in the order they should appear to build the story.",
+    objective:
+        "Reconstruct a scrambled story by selecting the sentences in their correct chronological order.",
+    controls:
+        "Tap the sentence cards in the order they should appear to build the story.",
     walkthrough: [
       "Step 1: Read all the scattered sentence fragments carefully.",
       "Step 2: Identify the sentence that logically starts the story and tap it.",
@@ -4276,8 +4645,10 @@ const Map<String, GameGuide> gameGuides = {
   "stroop_test": GameGuide(
     title: "Stroop Test",
     category: "ATTENTION",
-    objective: "Identify the ink color of the text displayed, ignoring the actual word written (which may spell a conflicting color).",
-    controls: "Tap the button containing the name of the ink color, ignoring the word itself.",
+    objective:
+        "Identify the ink color of the text displayed, ignoring the actual word written (which may spell a conflicting color).",
+    controls:
+        "Tap the button containing the name of the ink color, ignoring the word itself.",
     walkthrough: [
       "Step 1: Look at the colored word displayed in the center of the screen.",
       "Step 2: Ignore what the word says, and identify the actual ink color it is drawn in.",
@@ -4292,8 +4663,10 @@ const Map<String, GameGuide> gameGuides = {
   "sudoku": GameGuide(
     title: "Sudoku",
     category: "LOGIC",
-    objective: "Fill the 9x9 grid so that every row, column, and 3x3 box contains the digits 1 through 9 exactly once without any duplicates.",
-    controls: "Tap an empty cell on the grid to select it, then tap a number from the bottom keypad to fill it. Tap the selected cell again or the clear button to erase a number.",
+    objective:
+        "Fill the 9x9 grid so that every row, column, and 3x3 box contains the digits 1 through 9 exactly once without any duplicates.",
+    controls:
+        "Tap an empty cell on the grid to select it, then tap a number from the bottom keypad to fill it. Tap the selected cell again or the clear button to erase a number.",
     walkthrough: [
       "Step 1: Scan the grid for rows, columns, or 3x3 boxes that are almost full.",
       "Step 2: Tap an empty cell in one of those areas.",
@@ -4308,8 +4681,10 @@ const Map<String, GameGuide> gameGuides = {
   "sum_pyramid": GameGuide(
     title: "Sum Pyramid",
     category: "MATH",
-    objective: "Fill in the empty blocks of the pyramid such that every block's number is the exact sum of the two blocks directly beneath it.",
-    controls: "Tap an empty block in the pyramid to select it, then use the number pad to enter the correct value. Tap the backspace button to clear a mistake.",
+    objective:
+        "Fill in the empty blocks of the pyramid such that every block's number is the exact sum of the two blocks directly beneath it.",
+    controls:
+        "Tap an empty block in the pyramid to select it, then use the number pad to enter the correct value. Tap the backspace button to clear a mistake.",
     walkthrough: [
       "Step 1: Look for an empty block that has both blocks beneath it filled, or a filled block with one empty block beneath it.",
       "Step 2: Tap the empty block to select it.",
@@ -4324,8 +4699,10 @@ const Map<String, GameGuide> gameGuides = {
   "sum_snake": GameGuide(
     title: "Sum Snake",
     category: "MATH",
-    objective: "Trace a continuous, non-overlapping path through the grid of numbers so that the sum of the numbers on the path exactly equals the target value.",
-    controls: "Tap and drag across adjacent grid cells (horizontally, vertically, or diagonally) to draw your path. Release to submit.",
+    objective:
+        "Trace a continuous, non-overlapping path through the grid of numbers so that the sum of the numbers on the path exactly equals the target value.",
+    controls:
+        "Tap and drag across adjacent grid cells (horizontally, vertically, or diagonally) to draw your path. Release to submit.",
     walkthrough: [
       "Step 1: Note the target sum required at the top of the screen.",
       "Step 2: Find a starting number on the grid.",
@@ -4340,8 +4717,10 @@ const Map<String, GameGuide> gameGuides = {
   "switch_task": GameGuide(
     title: "Switch Task",
     category: "ATTENTION",
-    objective: "Match the central symbol to one of the options based on the current active rule (either matching by COLOR or matching by SHAPE), which changes dynamically.",
-    controls: "Tap the option button (left or right) that matches the central symbol according to the current rule displayed at the top.",
+    objective:
+        "Match the central symbol to one of the options based on the current active rule (either matching by COLOR or matching by SHAPE), which changes dynamically.",
+    controls:
+        "Tap the option button (left or right) that matches the central symbol according to the current rule displayed at the top.",
     walkthrough: [
       "Step 1: Read the current rule at the top of the screen (MATCH COLOR or MATCH SHAPE).",
       "Step 2: Observe the central symbol and its properties.",
@@ -4356,8 +4735,10 @@ const Map<String, GameGuide> gameGuides = {
   "syllable_stack": GameGuide(
     title: "Syllable Stack",
     category: "WORD",
-    objective: "Combine the scattered syllables in the correct order to form complete, valid words.",
-    controls: "Tap the syllable blocks in the correct sequence to build a word. Tap the undo button to remove the last selected syllable.",
+    objective:
+        "Combine the scattered syllables in the correct order to form complete, valid words.",
+    controls:
+        "Tap the syllable blocks in the correct sequence to build a word. Tap the undo button to remove the last selected syllable.",
     walkthrough: [
       "Step 1: Look at the available syllables scattered on the screen.",
       "Step 2: Try to identify familiar word beginnings or endings.",
@@ -4372,8 +4753,10 @@ const Map<String, GameGuide> gameGuides = {
   "symbol_digit_assoc": GameGuide(
     title: "Symbol Digit Assoc",
     category: "MEMORY",
-    objective: "Memorize the association between 9 unique symbols and the digits 1-9, then correctly translate a sequence of challenge symbols into their corresponding digits using a keypad.",
-    controls: "During the recall phase, tap a symbol box to select it, then tap the number pad to input the corresponding digit. Tap the clear button to erase an entry, and submit when finished.",
+    objective:
+        "Memorize the association between 9 unique symbols and the digits 1-9, then correctly translate a sequence of challenge symbols into their corresponding digits using a keypad.",
+    controls:
+        "During the recall phase, tap a symbol box to select it, then tap the number pad to input the corresponding digit. Tap the clear button to erase an entry, and submit when finished.",
     walkthrough: [
       "Step 1: Study the association key showing which symbol equals which digit.",
       "Step 2: Tap Start Translating to hide the key and begin the test.",
@@ -4388,7 +4771,8 @@ const Map<String, GameGuide> gameGuides = {
   "symbolic_flanker": GameGuide(
     title: "Symbolic Flanker",
     category: "ATTENTION",
-    objective: "Identify the center symbol in a row of five symbols, ignoring the flanking symbols on either side, which may be the same or different.",
+    objective:
+        "Identify the center symbol in a row of five symbols, ignoring the flanking symbols on either side, which may be the same or different.",
     controls: "Tap the button corresponding to the center symbol.",
     walkthrough: [
       "Step 1: A row of five symbols will appear on the screen.",
@@ -4404,8 +4788,10 @@ const Map<String, GameGuide> gameGuides = {
   "symbol_logic": GameGuide(
     title: "Symbol Logic",
     category: "LOGIC",
-    objective: "Deduce the numerical value of different symbols based on a series of visual equations, then calculate and input the answer for the final question.",
-    controls: "Use the number pad to type your answer for the final equation. Tap the clear button to erase, and the checkmark button to submit your guess.",
+    objective:
+        "Deduce the numerical value of different symbols based on a series of visual equations, then calculate and input the answer for the final question.",
+    controls:
+        "Use the number pad to type your answer for the final equation. Tap the clear button to erase, and the checkmark button to submit your guess.",
     walkthrough: [
       "Step 1: Look at the first equation to determine the value of the first symbol (e.g., A + A = X).",
       "Step 2: Use that value in the next equation to solve for the second symbol.",
@@ -4420,8 +4806,10 @@ const Map<String, GameGuide> gameGuides = {
   "symmetry": GameGuide(
     title: "Symmetry",
     category: "SPATIAL",
-    objective: "Complete the symmetrical pattern by toggling cells on the right half of the grid so that it perfectly mirrors the pre-filled left half.",
-    controls: "Tap or drag across the empty cells on the right side of the grid to toggle them on or off to match the reflection.",
+    objective:
+        "Complete the symmetrical pattern by toggling cells on the right half of the grid so that it perfectly mirrors the pre-filled left half.",
+    controls:
+        "Tap or drag across the empty cells on the right side of the grid to toggle them on or off to match the reflection.",
     walkthrough: [
       "Step 1: Observe the pattern of filled cells on the left side of the grid.",
       "Step 2: Imagine a vertical mirror line down the center of the grid.",
@@ -4436,8 +4824,10 @@ const Map<String, GameGuide> gameGuides = {
   "symmetry_span": GameGuide(
     title: "Symmetry Span",
     category: "MEMORY",
-    objective: "Alternate between judging whether patterns are symmetrical and memorizing the location of red cells in a 4x4 grid, then recall the entire sequence of red cell locations in order.",
-    controls: "Tap YES or NO to judge symmetry. During recall, tap the cells on the 4x4 grid in the exact order the red cells appeared.",
+    objective:
+        "Alternate between judging whether patterns are symmetrical and memorizing the location of red cells in a 4x4 grid, then recall the entire sequence of red cell locations in order.",
+    controls:
+        "Tap YES or NO to judge symmetry. During recall, tap the cells on the 4x4 grid in the exact order the red cells appeared.",
     walkthrough: [
       "Step 1: Memorize the position of the red cell on the grid.",
       "Step 2: Judge whether the next displayed matrix is symmetrical by tapping YES or NO.",
@@ -4452,8 +4842,10 @@ const Map<String, GameGuide> gameGuides = {
   "tangle_fix": GameGuide(
     title: "Tangle Fix",
     category: "LOGIC",
-    objective: "Untangle the graph by moving the nodes so that none of the connecting lines cross each other.",
-    controls: "Tap and hold a node, then drag it around the screen to reposition it and untangle the connected lines.",
+    objective:
+        "Untangle the graph by moving the nodes so that none of the connecting lines cross each other.",
+    controls:
+        "Tap and hold a node, then drag it around the screen to reposition it and untangle the connected lines.",
     walkthrough: [
       "Step 1: Look at the tangled web of nodes and intersecting lines.",
       "Step 2: Identify lines that are crossing (highlighted in red).",
@@ -4468,8 +4860,10 @@ const Map<String, GameGuide> gameGuides = {
   "tangram": GameGuide(
     title: "Tangram",
     category: "SPATIAL",
-    objective: "Completely fill the target outline on the grid by placing and rotating all the provided tangram pieces without any overlap.",
-    controls: "Tap a piece in the dock to select it, double-tap to rotate it, and tap a cell on the grid to place the piece's pivot point.",
+    objective:
+        "Completely fill the target outline on the grid by placing and rotating all the provided tangram pieces without any overlap.",
+    controls:
+        "Tap a piece in the dock to select it, double-tap to rotate it, and tap a cell on the grid to place the piece's pivot point.",
     walkthrough: [
       "Step 1: Observe the target outline on the main grid.",
       "Step 2: Tap a piece in the dock to select it.",
@@ -4484,8 +4878,10 @@ const Map<String, GameGuide> gameGuides = {
   "target_10": GameGuide(
     title: "Target 10",
     category: "MATH",
-    objective: "Select a combination of number tiles from the 5x5 grid whose sum equals exactly 10.",
-    controls: "Tap the tiles on the grid to select or deselect them and add their values to your current selection sum.",
+    objective:
+        "Select a combination of number tiles from the 5x5 grid whose sum equals exactly 10.",
+    controls:
+        "Tap the tiles on the grid to select or deselect them and add their values to your current selection sum.",
     walkthrough: [
       "Step 1: Look at the numbers available on the 5x5 grid.",
       "Step 2: Tap a number to start your selection.",
@@ -4500,8 +4896,10 @@ const Map<String, GameGuide> gameGuides = {
   "target_number": GameGuide(
     title: "Target Number",
     category: "MATH",
-    objective: "Use the provided numbers and mathematical operators to construct an expression that evaluates exactly to the target number.",
-    controls: "Tap the number tiles and operator buttons to build your expression. Tap the undo button to remove the last input, or refresh to clear entirely.",
+    objective:
+        "Use the provided numbers and mathematical operators to construct an expression that evaluates exactly to the target number.",
+    controls:
+        "Tap the number tiles and operator buttons to build your expression. Tap the undo button to remove the last input, or refresh to clear entirely.",
     walkthrough: [
       "Step 1: Note the target number at the top of the screen.",
       "Step 2: Look at the available number tiles.",
@@ -4516,8 +4914,10 @@ const Map<String, GameGuide> gameGuides = {
   "temporal_order": GameGuide(
     title: "Temporal Order",
     category: "MEMORY",
-    objective: "Memorize a sequence of icons presented one by one, then answer queries about which of two given icons appeared earlier or later in the sequence.",
-    controls: "Tap the button corresponding to the icon that answers the query.",
+    objective:
+        "Memorize a sequence of icons presented one by one, then answer queries about which of two given icons appeared earlier or later in the sequence.",
+    controls:
+        "Tap the button corresponding to the icon that answers the query.",
     walkthrough: [
       "Step 1: Watch carefully as a series of icons is shown one at a time.",
       "Step 2: Read the query to see if you need to identify the EARLIER or LATER item.",
@@ -4532,8 +4932,10 @@ const Map<String, GameGuide> gameGuides = {
   "tenner_grid": GameGuide(
     title: "Tenner Grid",
     category: "LOGIC",
-    objective: "Fill the grid so that each row contains the digits 0-9 exactly once, each column's sum matches the target number below it, and no adjacent cells (even diagonally) contain the same digit.",
-    controls: "Tap an empty cell on the grid to select it, then tap a number from the keypad below to fill it in.",
+    objective:
+        "Fill the grid so that each row contains the digits 0-9 exactly once, each column's sum matches the target number below it, and no adjacent cells (even diagonally) contain the same digit.",
+    controls:
+        "Tap an empty cell on the grid to select it, then tap a number from the keypad below to fill it in.",
     walkthrough: [
       "Step 1: Tap an empty cell in the grid.",
       "Step 2: Look at the column sum target and the other numbers in that column.",
@@ -4545,11 +4947,53 @@ const Map<String, GameGuide> gameGuides = {
       "Pay close attention to the rule that same numbers cannot touch diagonally.",
     ],
   ),
+  "abcd": GameGuide(
+    title: "ABCD",
+    category: "LOGIC",
+    objective: "Write one letter in every cell so that each row and column holds exactly the number of each letter printed beside it, and no two identical letters touch along an edge.",
+    controls: "Tap a cell to cycle its letter: empty, then A, B, C, D, and back to empty. The hint button fills one cell the counts prove.",
+    walkthrough: [
+      "Step 1: Read one row's clue as four digits in alphabet order. On a five-cell row, `2111` means two As, one B, one C and one D.",
+      "Step 2: When a clue digit is met, that letter cannot appear again in the line. When the cells left in a line equal the counts still owed, those cells are fixed.",
+      "Step 3: Two identical letters may not share an edge, so a letter in a cell rules itself out of the cells above, below, left and right.",
+      "Step 4: Work the tightest line first: a line with a 0 or a line whose counts are almost used up is where the next certain letter is.",
+      "Step 5: The grid is finished when every cell holds a letter and every clue digit is met; a letter touching its twin is shown in red.",
+    ],
+    strategies: [
+      "A row whose clue has a 0 removes that letter from the whole row at once.",
+      "If a letter's count in a line equals the number of free cells, every free cell of that line is that letter.",
+      "Alternate thinking: a run of cells that can hold a letter at most every other cell bounds that letter's count. When the bound equals the clue, the alternation is forced.",
+      "Column and row clues cross, so a letter forced in a row very often fixes a cell in a column too. Sweep both directions each time you place one.",
+    ],
+  ),
+  "boats": GameGuide(
+    title: "Boats",
+    category: "LOGIC",
+    objective:
+        "Place the whole fleet: every boat is a straight run of boat cells, no two boats touch even at a corner, and the counts outside the grid say how many boat cells each row and column holds.",
+    controls:
+        "Tap a cell to cycle it through boat cell, water, and untouched. No dragging is needed.",
+    walkthrough: [
+      "Step 1: Read the numbers along the top and the left. A 0 empties that whole row or column, so tap every cell in it to water.",
+      "Step 2: Mark boat cells with the longest boat first. A run of four needs four cells in a line, so a line that cannot hold four anywhere is not part of it.",
+      "Step 3: Once a row or column has all the boat cells its count asks for, tap the rest of that line to water.",
+      "Step 4: Two boat cells that touch at a corner are a mistake even when both runs have the right length. Water one of them.",
+      "Step 5: The strip under the board crosses a boat off when you have marked a complete one. The board is finished when every boat is crossed off and the counts are met.",
+    ],
+    strategies: [
+      "Whenever a cell has boat cells on both a row neighbour and a column neighbour, it cannot be a boat: a boat is a straight run, so it would have to bend.",
+      "A boat cell rules out all four cells diagonally beside it, not just the four it touches.",
+      "If a line's count is only just satisfied by the cells still open, every one of them is a boat.",
+      "Count the fleet, not just the lines: when the remaining lengths cannot fit in a gap, that gap is water.",
+    ],
+  ),
   "tents_and_trees": GameGuide(
     title: "Tents And Trees",
     category: "LOGIC",
-    objective: "Place tents in the grid so that every tree is paired with exactly one adjacent tent, no two tents touch each other (even diagonally), and the tent counts match the row and column clues.",
-    controls: "Tap an empty cell to place a tent, tap again to cycle to grass (empty), or tap again to clear.",
+    objective:
+        "Place tents in the grid so that every tree is paired with exactly one adjacent tent, no two tents touch each other (even diagonally), and the tent counts match the row and column clues.",
+    controls:
+        "Tap an empty cell to place a tent, tap again to cycle to grass (empty), or tap again to clear.",
     walkthrough: [
       "Step 1: Look at the row and column clues indicating how many tents belong in each line.",
       "Step 2: Find trees and tap adjacent empty cells to place tents next to them.",
@@ -4564,8 +5008,10 @@ const Map<String, GameGuide> gameGuides = {
   "topology": GameGuide(
     title: "Topology",
     category: "SPATIAL",
-    objective: "Determine if two displayed characters or shapes are topologically equivalent, meaning one can be stretched or deformed into the other without tearing or merging holes.",
-    controls: "Tap the YES button if they are topologically equivalent, or the NO button if they are not.",
+    objective:
+        "Determine if two displayed characters or shapes are topologically equivalent, meaning one can be stretched or deformed into the other without tearing or merging holes.",
+    controls:
+        "Tap the YES button if they are topologically equivalent, or the NO button if they are not.",
     walkthrough: [
       "Step 1: Look at the two shapes or characters presented on the screen.",
       "Step 2: Count the number of holes (closed loops) in each shape.",
@@ -4580,8 +5026,10 @@ const Map<String, GameGuide> gameGuides = {
   "tower_of_london": GameGuide(
     title: "Tower Of London",
     category: "LOGIC",
-    objective: "Move the colored beads between the three pegs to match the target configuration in the minimum number of moves, adhering to the height capacity of each peg.",
-    controls: "Tap a peg to select the top bead, then tap another peg to move the bead there.",
+    objective:
+        "Move the colored beads between the three pegs to match the target configuration in the minimum number of moves, adhering to the height capacity of each peg.",
+    controls:
+        "Tap a peg to select the top bead, then tap another peg to move the bead there.",
     walkthrough: [
       "Step 1: Compare the current layout of beads on the bottom pegs to the target configuration on the top pegs.",
       "Step 2: Tap the peg holding the bead you want to move.",
@@ -4596,8 +5044,10 @@ const Map<String, GameGuide> gameGuides = {
   "trace_path": GameGuide(
     title: "Trace Path",
     category: "SPATIAL",
-    objective: "Carefully trace the drawn path from the start point to the end point, staying as close to the line as possible to achieve high accuracy.",
-    controls: "Tap and hold on the starting marker, then drag your finger along the path to the ending marker.",
+    objective:
+        "Carefully trace the drawn path from the start point to the end point, staying as close to the line as possible to achieve high accuracy.",
+    controls:
+        "Tap and hold on the starting marker, then drag your finger along the path to the ending marker.",
     walkthrough: [
       "Step 1: Locate the starting marker of the target path.",
       "Step 2: Press and hold your finger on the start marker.",
@@ -4612,7 +5062,8 @@ const Map<String, GameGuide> gameGuides = {
   "trail_making": GameGuide(
     title: "Trail Making",
     category: "ATTENTION",
-    objective: "Connect the numbered or lettered circles in the correct sequential order as quickly as possible.",
+    objective:
+        "Connect the numbered or lettered circles in the correct sequential order as quickly as possible.",
     controls: "Tap the circles in the correct sequence.",
     walkthrough: [
       "Step 1: Find the first circle in the sequence and tap it.",
@@ -4628,8 +5079,10 @@ const Map<String, GameGuide> gameGuides = {
   "triplets_logic": GameGuide(
     title: "Triplets Logic",
     category: "LOGIC",
-    objective: "Fill a 6x6 grid with three types of shapes so that every row and column has exactly two of each shape, and no three identical shapes appear consecutively in any row or column.",
-    controls: "Tap a shape tool to select it, then tap an empty cell on the grid to paint that shape. Tap a filled cell with the same tool to clear it.",
+    objective:
+        "Fill a 6x6 grid with three types of shapes so that every row and column has exactly two of each shape, and no three identical shapes appear consecutively in any row or column.",
+    controls:
+        "Tap a shape tool to select it, then tap an empty cell on the grid to paint that shape. Tap a filled cell with the same tool to clear it.",
     walkthrough: [
       "Step 1: Select a shape from the tool menu below the grid.",
       "Step 2: Tap an empty cell to place the selected shape.",
@@ -4644,8 +5097,10 @@ const Map<String, GameGuide> gameGuides = {
   "typing_speed": GameGuide(
     title: "Typing Speed",
     category: "WORD",
-    objective: "Type the displayed phrase exactly as it appears as quickly and accurately as possible to test your Words Per Minute (WPM).",
-    controls: "Use the on-screen keyboard to type the target phrase into the text field.",
+    objective:
+        "Type the displayed phrase exactly as it appears as quickly and accurately as possible to test your Words Per Minute (WPM).",
+    controls:
+        "Use the on-screen keyboard to type the target phrase into the text field.",
     walkthrough: [
       "Step 1: Read the target phrase displayed in the center of the screen.",
       "Step 2: Tap the text input field to bring up the keyboard.",
@@ -4660,8 +5115,10 @@ const Map<String, GameGuide> gameGuides = {
   "typoglycemia_decoder": GameGuide(
     title: "Typoglycemia",
     category: "WORD",
-    objective: "Decipher and read words whose inner letters are scrambled, keeping only the first and last letters correct.",
-    controls: "Type the correct unscrambled word or select it from multiple choices.",
+    objective:
+        "Decipher and read words whose inner letters are scrambled, keeping only the first and last letters correct.",
+    controls:
+        "Type the correct unscrambled word or select it from multiple choices.",
     walkthrough: [
       "Step 1: A word is displayed with scrambled inner letters (e.g. 'Tpyolgcyemia').",
       "Step 2: Look at the first and last letters to grasp the word skeleton.",
@@ -4677,7 +5134,8 @@ const Map<String, GameGuide> gameGuides = {
   "unit_converter_pro": GameGuide(
     title: "Unit Converter Pro",
     category: "MATH",
-    objective: "Convert values between different units of measurement (e.g. Celsius to Fahrenheit, meters to feet).",
+    objective:
+        "Convert values between different units of measurement (e.g. Celsius to Fahrenheit, meters to feet).",
     controls: "Enter the converted value on the number pad and submit.",
     walkthrough: [
       "Step 1: Note the starting value, its unit, and the target unit of measurement.",
@@ -4694,7 +5152,8 @@ const Map<String, GameGuide> gameGuides = {
   "vector_grid_alignment": GameGuide(
     title: "Vector Grid Alignment",
     category: "SPATIAL",
-    objective: "Align the vectors on the grid to point in the same direction or create a specific vector flow field.",
+    objective:
+        "Align the vectors on the grid to point in the same direction or create a specific vector flow field.",
     controls: "Tap or drag vectors to rotate and change their direction.",
     walkthrough: [
       "Step 1: Observe the target direction or pattern required.",
@@ -4711,8 +5170,10 @@ const Map<String, GameGuide> gameGuides = {
   "vektor_vector": GameGuide(
     title: "Vector Vektor",
     category: "MATH",
-    objective: "Perform vector operations (addition, subtraction, scaling) on the coordinate plane.",
-    controls: "Drag the vector arrow ends to match the resulting calculated vector.",
+    objective:
+        "Perform vector operations (addition, subtraction, scaling) on the coordinate plane.",
+    controls:
+        "Drag the vector arrow ends to match the resulting calculated vector.",
     walkthrough: [
       "Step 1: Note the mathematical vector equation (e.g. A + B or 2A).",
       "Step 2: Add or multiply components of the starting vectors.",
@@ -4728,7 +5189,8 @@ const Map<String, GameGuide> gameGuides = {
   "venn_numbers": GameGuide(
     title: "Venn Numbers",
     category: "LOGIC",
-    objective: "Place numbers into the correct intersections of a Venn diagram according to numerical properties.",
+    objective:
+        "Place numbers into the correct intersections of a Venn diagram according to numerical properties.",
     controls: "Drag and drop the number tokens into the Venn diagram sections.",
     walkthrough: [
       "Step 1: Read the property tags for each circle (e.g. 'Prime', 'Even', 'Multiple of 3').",
@@ -4745,7 +5207,8 @@ const Map<String, GameGuide> gameGuides = {
   "verbal_analogies": GameGuide(
     title: "Verbal Analogies",
     category: "WORD",
-    objective: "Complete the word relationship analogy (e.g. Hot is to Cold as Up is to ...).",
+    objective:
+        "Complete the word relationship analogy (e.g. Hot is to Cold as Up is to ...).",
     controls: "Tap the correct word option to complete the analogy.",
     walkthrough: [
       "Step 1: Read the starting analogy relationship (A is to B).",
@@ -4762,7 +5225,8 @@ const Map<String, GameGuide> gameGuides = {
   "vigilance_task": GameGuide(
     title: "Vigilance Task",
     category: "ATTENTION",
-    objective: "Maintain attention over a long duration and react only to rare target signals while ignoring frequent distractors.",
+    objective:
+        "Maintain attention over a long duration and react only to rare target signals while ignoring frequent distractors.",
     controls: "Tap the screen only when the rare target signal appears.",
     walkthrough: [
       "Step 1: Observe the frequent distractor signals flashing.",
@@ -4779,7 +5243,8 @@ const Map<String, GameGuide> gameGuides = {
   "visual_search": GameGuide(
     title: "Visual Search",
     category: "ATTENTION",
-    objective: "Find the unique target symbol among a dense array of similar distractors.",
+    objective:
+        "Find the unique target symbol among a dense array of similar distractors.",
     controls: "Tap the target symbol in the grid.",
     walkthrough: [
       "Step 1: Read the target description or symbol layout to look for.",
@@ -4796,8 +5261,10 @@ const Map<String, GameGuide> gameGuides = {
   "visual_statistical_learning": GameGuide(
     title: "Visual Statistical Learning",
     category: "MEMORY",
-    objective: "Identify patterns and statistical pairings in a stream of visual shapes.",
-    controls: "Tap the options that represent matching sequences or pairs that appeared together.",
+    objective:
+        "Identify patterns and statistical pairings in a stream of visual shapes.",
+    controls:
+        "Tap the options that represent matching sequences or pairs that appeared together.",
     walkthrough: [
       "Step 1: Watch the stream of shapes appear sequentially on screen.",
       "Step 2: Inner-logical shapes always appear together in pairs or triplets.",
@@ -4813,7 +5280,8 @@ const Map<String, GameGuide> gameGuides = {
   "vocabulary_builder": GameGuide(
     title: "Vocabulary Builder",
     category: "WORD",
-    objective: "Select the correct synonym or antonym for the given vocabulary word.",
+    objective:
+        "Select the correct synonym or antonym for the given vocabulary word.",
     controls: "Tap the correct word option from the list.",
     walkthrough: [
       "Step 1: Read the target word and the requested relation (synonym or antonym).",
@@ -4830,7 +5298,8 @@ const Map<String, GameGuide> gameGuides = {
   "vowel_reconstruct": GameGuide(
     title: "Vowel Reconstruct",
     category: "WORD",
-    objective: "Fill in the missing vowels of a word based on the remaining consonants and a semantic category.",
+    objective:
+        "Fill in the missing vowels of a word based on the remaining consonants and a semantic category.",
     controls: "Tap the vowels in the correct sequence to complete the word.",
     walkthrough: [
       "Step 1: Note the category clue at the top.",
@@ -4847,8 +5316,10 @@ const Map<String, GameGuide> gameGuides = {
   "water_sort": GameGuide(
     title: "Water Sort",
     category: "LOGIC",
-    objective: "Sort the colored water in the test tubes until each tube contains only one color.",
-    controls: "Tap a tube to select it, then tap another tube to pour the top layer of water.",
+    objective:
+        "Sort the colored water in the test tubes until each tube contains only one color.",
+    controls:
+        "Tap a tube to select it, then tap another tube to pour the top layer of water.",
     walkthrough: [
       "Step 1: Look at the mixed color layers in the tubes.",
       "Step 2: Tap a tube with the top color you want to pour.",
@@ -4864,7 +5335,8 @@ const Map<String, GameGuide> gameGuides = {
   "wisconsin_card_sorting": GameGuide(
     title: "Wisconsin Card Sorting",
     category: "LOGIC",
-    objective: "Deduce the hidden rule for sorting cards (by color, shape, or number) based on correctness feedback, and adapt when the rule changes.",
+    objective:
+        "Deduce the hidden rule for sorting cards (by color, shape, or number) based on correctness feedback, and adapt when the rule changes.",
     controls: "Tap one of the four piles to place your card.",
     walkthrough: [
       "Step 1: Look at the card to be sorted at the bottom.",
@@ -4881,8 +5353,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_association_recall": GameGuide(
     title: "Word Association Recall",
     category: "MEMORY",
-    objective: "The objective is to memorize pairs of associated words and later correctly recall which word was paired with a given target word.",
-    controls: "In the study phase, tap 'NEXT PAIR' or 'START RECALL' to proceed. In the recall phase, tap the correct word from the multiple-choice list.",
+    objective:
+        "The objective is to memorize pairs of associated words and later correctly recall which word was paired with a given target word.",
+    controls:
+        "In the study phase, tap 'NEXT PAIR' or 'START RECALL' to proceed. In the recall phase, tap the correct word from the multiple-choice list.",
     walkthrough: [
       "Step 1: In the study phase, look at the two words presented side-by-side and memorize their pairing.",
       "Step 2: Tap 'NEXT PAIR' to view the next set, until you finish all 5 pairs and tap 'START RECALL'.",
@@ -4897,8 +5371,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_grid_connection": GameGuide(
     title: "Word Grid Connection",
     category: "WORD",
-    objective: "The objective is to group a 16-word grid into four categories of four related words each, within a limited number of tries.",
-    controls: "Tap to select or deselect exactly 4 words from the grid. Once 4 are selected, tap the 'Submit Group' button that appears at the bottom.",
+    objective:
+        "The objective is to group a 16-word grid into four categories of four related words each, within a limited number of tries.",
+    controls:
+        "Tap to select or deselect exactly 4 words from the grid. Once 4 are selected, tap the 'Submit Group' button that appears at the bottom.",
     walkthrough: [
       "Step 1: Scan the 16 scrambled words in the grid to find potential connections or themes.",
       "Step 2: Tap on exactly 4 words that you believe belong to the same category.",
@@ -4913,8 +5389,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_ladder": GameGuide(
     title: "Word Ladder",
     category: "WORD",
-    objective: "The objective is to transform the start word into the end word by changing only one letter at a time, where each intermediate step must be a valid word.",
-    controls: "Use the on-screen keyboard to type a word that changes exactly one letter from the previous word. Press ENTER to submit or DEL to correct mistakes.",
+    objective:
+        "The objective is to transform the start word into the end word by changing only one letter at a time, where each intermediate step must be a valid word.",
+    controls:
+        "Use the on-screen keyboard to type a word that changes exactly one letter from the previous word. Press ENTER to submit or DEL to correct mistakes.",
     walkthrough: [
       "Step 1: Look at the START word and END word displayed at the top.",
       "Step 2: Use the keyboard to enter a new valid word that differs from the current bottom word of the ladder by exactly one letter.",
@@ -4929,8 +5407,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_mastermind": GameGuide(
     title: "Word Mastermind",
     category: "WORD",
-    objective: "The objective is to guess the hidden 4-letter target word by entering guesses and using the Bulls (B) and Cows (C) feedback.",
-    controls: "Use the on-screen keyboard to type a 4-letter guess and press ENTER to submit.",
+    objective:
+        "The objective is to guess the hidden 4-letter target word by entering guesses and using the Bulls (B) and Cows (C) feedback.",
+    controls:
+        "Use the on-screen keyboard to type a 4-letter guess and press ENTER to submit.",
     walkthrough: [
       "Step 1: Enter a 4-letter starting word using the keyboard and press ENTER.",
       "Step 2: Review the feedback provided next to your guess: 'B' indicates a Bull (correct letter in the correct position), and 'C' indicates a Cow (correct letter but in the wrong position).",
@@ -4945,8 +5425,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_scramble": GameGuide(
     title: "Word Scramble",
     category: "WORD",
-    objective: "The objective is to unscramble the letters to find the correct target word.",
-    controls: "Tap the scrambled letter buttons to spell the word. Use the backspace button to correct mistakes, the refresh button to clear, and SUBMIT to check your answer.",
+    objective:
+        "The objective is to unscramble the letters to find the correct target word.",
+    controls:
+        "Tap the scrambled letter buttons to spell the word. Use the backspace button to correct mistakes, the refresh button to clear, and SUBMIT to check your answer.",
     walkthrough: [
       "Step 1: Look at the scrambled letters displayed at the top of the screen.",
       "Step 2: Mentally rearrange the letters to figure out the original word.",
@@ -4961,8 +5443,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_search": GameGuide(
     title: "Word Search",
     category: "WORD",
-    objective: "The objective is to find all the listed words hidden within the grid of letters.",
-    controls: "Drag your finger across the letters in the grid (horizontally, vertically, or diagonally) to highlight and select a word.",
+    objective:
+        "The objective is to find all the listed words hidden within the grid of letters.",
+    controls:
+        "Drag your finger across the letters in the grid (horizontally, vertically, or diagonally) to highlight and select a word.",
     walkthrough: [
       "Step 1: Review the 'WORDS TO FIND' list at the bottom of the screen.",
       "Step 2: Scan the letter grid above to locate the first letter of one of the words.",
@@ -4977,8 +5461,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_snake_trail": GameGuide(
     title: "Word Snake Trail",
     category: "WORD",
-    objective: "The objective is to trace the continuous path of a hidden word within a grid of letters.",
-    controls: "Tap the adjacent letter cells one by one starting from the first letter to trace the complete word path.",
+    objective:
+        "The objective is to trace the continuous path of a hidden word within a grid of letters.",
+    controls:
+        "Tap the adjacent letter cells one by one starting from the first letter to trace the complete word path.",
     walkthrough: [
       "Step 1: Read the TARGET WORD displayed at the top of the screen.",
       "Step 2: Locate the starting letter of the word in the 4x4 grid.",
@@ -4993,8 +5479,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_surge": GameGuide(
     title: "Word Surge",
     category: "WORD",
-    objective: "The objective is to rapidly identify synonyms or antonyms for the given target words to reach the target score before the timer runs out.",
-    controls: "Tap the correct option button from the four choices displayed in the grid.",
+    objective:
+        "The objective is to rapidly identify synonyms or antonyms for the given target words to reach the target score before the timer runs out.",
+    controls:
+        "Tap the correct option button from the four choices displayed in the grid.",
     walkthrough: [
       "Step 1: Look at the prompt to see if you need a SYNONYM or ANTONYM.",
       "Step 2: Read the large target word in the center of the screen.",
@@ -5009,8 +5497,10 @@ const Map<String, GameGuide> gameGuides = {
   "word_wheel": GameGuide(
     title: "Word Wheel",
     category: "WORD",
-    objective: "The objective is to find valid words using the provided letters, where each word must include the central letter.",
-    controls: "Tap the letter buttons to spell a word, use the backspace button to correct mistakes, and tap the SUBMIT button to enter your guess.",
+    objective:
+        "The objective is to find valid words using the provided letters, where each word must include the central letter.",
+    controls:
+        "Tap the letter buttons to spell a word, use the backspace button to correct mistakes, and tap the SUBMIT button to enter your guess.",
     walkthrough: [
       "Step 1: Look at the letter wheel, paying special attention to the central letter.",
       "Step 2: Spell out a word using the provided letters (minimum 3 letters) by tapping the letter buttons. The word MUST contain the central letter.",
@@ -5025,8 +5515,10 @@ const Map<String, GameGuide> gameGuides = {
   "counting_sheep": GameGuide(
     title: "Counting Sheep",
     category: "ATTENTION",
-    objective: "The objective is to accurately count the number of sheep that move across the screen and submit the correct total.",
-    controls: "Tap a difficulty level to start. Watch the sheep pass, then use the keyboard to type the number and tap 'SUBMIT ANSWER'.",
+    objective:
+        "The objective is to accurately count the number of sheep that move across the screen and submit the correct total.",
+    controls:
+        "Tap a difficulty level to start. Watch the sheep pass, then use the keyboard to type the number and tap 'SUBMIT ANSWER'.",
     walkthrough: [
       "Step 1: Select a difficulty level (Easy, Medium, or Hard) to start the game.",
       "Step 2: Pay close attention to the screen and count the sheep emojis as they move across from left to right.",
@@ -5041,8 +5533,10 @@ const Map<String, GameGuide> gameGuides = {
   "counting_span": GameGuide(
     title: "Counting Span",
     category: "MEMORY",
-    objective: "The objective is to correctly count the target items in each sequence of screens and then recall all those counts in the exact order they appeared.",
-    controls: "Tap the number button corresponding to your count during the counting phase. Later, use the number pad to enter the sequence of counts during the recall phase.",
+    objective:
+        "The objective is to correctly count the target items in each sequence of screens and then recall all those counts in the exact order they appeared.",
+    controls:
+        "Tap the number button corresponding to your count during the counting phase. Later, use the number pad to enter the sequence of counts during the recall phase.",
     walkthrough: [
       "Step 1: During the counting phase, look at the screen and count ONLY the specified target objects.",
       "Step 2: Tap the correct number button from the options at the bottom of the screen.",
@@ -5057,8 +5551,10 @@ const Map<String, GameGuide> gameGuides = {
   "cross_section_slice": GameGuide(
     title: "Cross Section Slice",
     category: "SPATIAL",
-    objective: "The objective is to correctly identify the 2D shape that results from slicing a 3D solid with a plane.",
-    controls: "Tap the button corresponding to the correct 2D shape at the bottom of the screen.",
+    objective:
+        "The objective is to correctly identify the 2D shape that results from slicing a 3D solid with a plane.",
+    controls:
+        "Tap the button corresponding to the correct 2D shape at the bottom of the screen.",
     walkthrough: [
       "Step 1: Observe the 3D solid and the highlighted plane slicing through it in the main view area.",
       "Step 2: Mentally visualize the 2D cross-section shape created exactly where the plane intersects the solid.",
@@ -5073,8 +5569,10 @@ const Map<String, GameGuide> gameGuides = {
   "crossword": GameGuide(
     title: "Crossword",
     category: "WORD",
-    objective: "The objective is to fill the entire grid with the correct words based on the provided clues.",
-    controls: "Tap a cell in the grid to select it and view its clue. Use the on-screen keyboard to enter letters. Tap the cell again to switch between Across and Down clues.",
+    objective:
+        "The objective is to fill the entire grid with the correct words based on the provided clues.",
+    controls:
+        "Tap a cell in the grid to select it and view its clue. Use the on-screen keyboard to enter letters. Tap the cell again to switch between Across and Down clues.",
     walkthrough: [
       "Step 1: Tap on an empty square in the crossword grid. This highlights the word (Across or Down) and displays its corresponding clue below the grid.",
       "Step 2: Read the clue and use the on-screen keyboard to type the answer. The selection will automatically advance to the next letter.",
@@ -5089,8 +5587,10 @@ const Map<String, GameGuide> gameGuides = {
   "galaxies": GameGuide(
     title: "Galaxies",
     category: "LOGIC",
-    objective: "Split the board into regions, one per dot. Every region must be symmetric about its own dot, and no region may hold two dots.",
-    controls: "Tap a dot to pick it up, then tap the cells that belong to it. Or drag the dot onto a cell. Painting a cell also paints the cell it reflects onto. Tap a painted cell with no dot picked to clear it. The hint button shows one cell the rules can prove.",
+    objective:
+        "Split the board into regions, one per dot. Every region must be symmetric about its own dot, and no region may hold two dots.",
+    controls:
+        "Tap a dot to pick it up, then tap the cells that belong to it. Or drag the dot onto a cell. Painting a cell also paints the cell it reflects onto. Tap a painted cell with no dot picked to clear it. The hint button shows one cell the rules can prove.",
     walkthrough: [
       "Step 1: Tap a dot to pick it up. The dot you picked is ringed.",
       "Step 2: Tap a cell near that dot. Its mirror image about the dot is painted at the same time, so the region stays symmetric.",
@@ -5107,8 +5607,10 @@ const Map<String, GameGuide> gameGuides = {
   "pegs": GameGuide(
     title: "Pegs",
     category: "LOGIC",
-    objective: "Clear the board until a single peg is left. Every jump captures the peg it hops over.",
-    controls: "Drag a peg onto the square it should land on. Or tap a peg to pick it up and tap the landing square. The hint button shows one jump.",
+    objective:
+        "Clear the board until a single peg is left. Every jump captures the peg it hops over.",
+    controls:
+        "Drag a peg onto the square it should land on. Or tap a peg to pick it up and tap the landing square. The hint button shows one jump.",
     walkthrough: [
       "Step 1: Look for a peg with an empty square exactly two cells away and a peg between them. That is a jump.",
       "Step 2: Drag that peg onto the empty square. The peg it jumped over is removed.",
@@ -5124,8 +5626,10 @@ const Map<String, GameGuide> gameGuides = {
   "twiddle": GameGuide(
     title: "Twiddle",
     category: "LOGIC",
-    objective: "Turn blocks of tiles until the numbers run in order from the top left.",
-    controls: "Drag a tile onto the square the turn would move it to. Or tap a tile to turn the block around it clockwise. The hint button outlines a block worth turning.",
+    objective:
+        "Turn blocks of tiles until the numbers run in order from the top left.",
+    controls:
+        "Drag a tile onto the square the turn would move it to. Or tap a tile to turn the block around it clockwise. The hint button outlines a block worth turning.",
     walkthrough: [
       "Step 1: Find the tile numbered 1 and turn the block that contains it until it sits in the top left corner.",
       "Step 2: Do the same for 2, then 3, working along the top row without disturbing what you have already placed.",
@@ -5141,8 +5645,10 @@ const Map<String, GameGuide> gameGuides = {
   "cube": GameGuide(
     title: "Cube",
     category: "LOGIC",
-    objective: "Roll the cube over the board until all six of its faces are blue.",
-    controls: "Drag the cube onto a neighbouring square, or tap that square. There is no undo, but every roll can be rolled back by rolling again.",
+    objective:
+        "Roll the cube over the board until all six of its faces are blue.",
+    controls:
+        "Drag the cube onto a neighbouring square, or tap that square. There is no undo, but every roll can be rolled back by rolling again.",
     walkthrough: [
       "Step 1: Read the board first. A blue square paints the face the cube lands on; a white square unpaints one.",
       "Step 2: Roll onto blue squares early, while most faces are still white.",
@@ -5159,7 +5665,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Inertia",
     category: "LOGIC",
     objective: "Collect every gem on the board without touching a mine.",
-    controls: "Drag the ball onto the square it would land on, or tap any square in line with it. The ball slides until a wall stops it and cannot stop halfway.",
+    controls:
+        "Drag the ball onto the square it would land on, or tap any square in line with it. The ball slides until a wall stops it and cannot stop halfway.",
     walkthrough: [
       "Step 1: Find the gems first and the mines second. A route between them is the puzzle.",
       "Step 2: Move along one direction at a time. Each move ends against a wall, so it always changes your row or your column completely.",
@@ -5175,8 +5682,10 @@ const Map<String, GameGuide> gameGuides = {
   "map": GameGuide(
     title: "Map",
     category: "LOGIC",
-    objective: "Colour every region with four colours so that no two regions that share a border share a colour. Any valid colouring wins.",
-    controls: "Tap a region to cycle its colour. A region that clashes with a neighbour glows red.",
+    objective:
+        "Colour every region with four colours so that no two regions that share a border share a colour. Any valid colouring wins.",
+    controls:
+        "Tap a region to cycle its colour. A region that clashes with a neighbour glows red.",
     walkthrough: [
       "Step 1: Start with the region that has the most neighbours, and give it a colour.",
       "Step 2: Colour its neighbours with the other colours, one at a time.",
@@ -5193,7 +5702,8 @@ const Map<String, GameGuide> gameGuides = {
     title: "Netslide",
     category: "LOGIC",
     objective: "Slide rows and columns until every pipe is joined to a pipe.",
-    controls: "Drag a tile one square along its row or column: the whole line slides round one step. Tiles never rotate. A wall across a line blocks it.",
+    controls:
+        "Drag a tile one square along its row or column: the whole line slides round one step. Tiles never rotate. A wall across a line blocks it.",
     walkthrough: [
       "Step 1: Find the lines that cannot move. A wall stops its line, so those tiles are already where they will be.",
       "Step 2: Slide a line that a misplaced tile sits in, and watch where the tile goes.",
@@ -5209,8 +5719,10 @@ const Map<String, GameGuide> gameGuides = {
   "same_game": GameGuide(
     title: "Same Game",
     category: "LOGIC",
-    objective: "Clear the board by removing groups of two or more squares of the same colour.",
-    controls: "Tap a group of two or more connected squares of the same colour to remove it. The squares above fall and the columns close up.",
+    objective:
+        "Clear the board by removing groups of two or more squares of the same colour.",
+    controls:
+        "Tap a group of two or more connected squares of the same colour to remove it. The squares above fall and the columns close up.",
     walkthrough: [
       "Step 1: Look for the colour that covers the most board and start there.",
       "Step 2: Remove groups that join two other groups of the same colour once they fall together.",
@@ -5226,8 +5738,10 @@ const Map<String, GameGuide> gameGuides = {
   "signpost": GameGuide(
     title: "Signpost",
     category: "LOGIC",
-    objective: "Number every cell from 1 to the last so that each cell points at the cell holding the next number.",
-    controls: "Drag a cell onto the cell it points at, or tap one cell and then the other. An arrow turns solid once its cell points somewhere; tapping that cell again takes the link back.",
+    objective:
+        "Number every cell from 1 to the last so that each cell points at the cell holding the next number.",
+    controls:
+        "Drag a cell onto the cell it points at, or tap one cell and then the other. An arrow turns solid once its cell points somewhere; tapping that cell again takes the link back.",
     walkthrough: [
       "Step 1: Start from the given numbers. A given pins down the cell it sits in, and often the arrow into it.",
       "Step 2: Follow each arrow as far as it can go along its line. The arrow runs along the whole ray, so the cell it means can be any distance away.",

@@ -55,9 +55,10 @@ class GameProfile {
   final ArchiveReason? reason;
 }
 
-/// 313 games: 89 archive, 139 deck, 85 library.
+/// 315 games: 89 archive, 139 deck, 87 library.
 const Map<String, GameProfile> gameProfiles = {
   'ab_reversal_oddball': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'rule_switcher', reason: ArchiveReason.twin),
+  'abcd': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'action_sequence_recall': GameProfile(tier: GameTier.library, kind: CardKind.snap, origin: GameOrigin.lab),
   'affix_factory': GameProfile(tier: GameTier.library, kind: CardKind.word, origin: GameOrigin.quiz),
   'akari': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
@@ -83,6 +84,7 @@ const Map<String, GameProfile> gameProfiles = {
   'block_count_3d': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'block_escape': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'block_stacking_physics': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
+  'boats': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'box_completion': GameProfile(tier: GameTier.archive, kind: CardKind.think, origin: GameOrigin.puzzle, family: 'cube_net_fold', reason: ArchiveReason.twin),
   'bridges': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'calculation_sprint': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.worksheet),

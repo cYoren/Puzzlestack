@@ -202,6 +202,10 @@ through the bar.
 
 1. **The thirteen unreleased Tatham-framework puzzles**, starting with Boats, Ascent and
    Seismic. Same pipeline as the ports already done, so the cheapest good puzzles available.
+   **Landed:** `boats` (Battleships) and `abcd` (ABC-Kombi), both proven by a Dart solver rather
+   than by the C one, so the app never needs the C tree. **Next in this list:** `seismic`
+   (Ripple Effect), then `ascent` (Hidato), `clusters`, `sticks`, `subsets`, `mathrax`, `rome`,
+   `salad`, `spokes`, `bricks`, `crossing`.
 2. **The five new card types** in section 5: Line panels, Picture nonograms, Push boxes,
    Linjat, Rule grids. These are what make the Deck unlike any other puzzle app.
 3. **Tatham's remaining five**: Mosaic, Palisade, Black Box, Undead, Tracks.

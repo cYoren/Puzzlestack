@@ -103,6 +103,25 @@ class YourGameNotifier extends _$YourGameNotifier {
 }
 ```
 
+## Step 4a: Paint through the shared marks, and scaffold the screen
+
+Two shared layers exist so that a design rework is one edit, not forty. Use both; a new board and
+screen that hand-roll their own drawing or their own `Column` of paddings is the thing these
+exist to stop.
+
+- **`lib/ui/core/board/puzzle_marks.dart`** — `PuzzleMarks(canvas)` gives the house vocabulary for
+  anything drawn inside a cell: `tile` (an empty cell), `block` (a solid object, with `join` so a
+  run of them reads as one body), `dotMark`, `crossMark`, `ringMark`, `hatch`, `band`, `arrow`,
+  `label` (numbers and letters), `hint` (the ring that points at a proved cell). Colours come from
+  `MarkRole`, never from a raw `Color`, so light, AMOLED dark and any future palette land in one
+  file. A board supplies the arrangement; the mark supplies the look.
+- **`lib/ui/features/games/shared/board_game_scaffold.dart`** — `BoardGameScaffold(title,
+  subtitle, board, actions, hud, toolbar, footer)`, plus `GameStat` for a number chip,
+  `BoardGameChipRow` for a size or difficulty row, and `BoardGameActions` for hint + reset. A game
+  screen becomes about forty lines: read the provider, hand the board in, wire `onSolved`.
+
+Both are additive: the older boards keep their own paint and chrome until someone touches them.
+
 ## Step 5: Build the Screen
 
 Use `GameScaffold` and `ConsumerStatefulWidget`:
