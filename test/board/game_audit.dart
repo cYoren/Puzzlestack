@@ -83,6 +83,12 @@ void main() {
       ? allGamesMetadata
       : allGamesMetadata.where((g) => only.contains(g.id)).toList();
 
+  // An id that names no card audits nothing and reports `checked=0 overflow=0`,
+  // which reads exactly like a clean room. A typo must fail, not reassure.
+  final unknown = only == null
+      ? const <String>{}
+      : only.difference({for (final game in allGamesMetadata) game.id});
+
   tearDownAll(() {
     // ignore: avoid_print
     print('AUDIT checked=${_checked.length} '
@@ -146,6 +152,8 @@ void main() {
   // a test that runs before the sweep passes for the wrong reason, and that is
   // exactly how this assertion was first written.
   test('no card overflows and none throws', () {
+    expect(unknown, isEmpty,
+        reason: 'AUDIT_ONLY named ids that are not games: $unknown');
     expect(_checked, hasLength(games.length),
         reason: 'the sweep did not reach every card');
     expect(_overflowed, isEmpty, reason: 'overflowing cards: $_overflowed');
