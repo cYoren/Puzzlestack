@@ -66,11 +66,23 @@ class SeismicNotifier extends _$SeismicNotifier {
   @override
   SeismicState build() => _newPuzzle(SeismicSize.medium);
 
-  SeismicState _newPuzzle(SeismicSize size) => SeismicState(
-        puzzle: _engine.generate(size),
-        values: List<int>.filled(size.cellCount, kSeismicBlank),
-        size: size,
-      );
+  /// The printed numbers are part of the board the player is working on, not a
+  /// separate layer: they are seeded into the values, because the win test asks
+  /// whether every cell holds its digit. A clue that lives only in the puzzle
+  /// would be invisible to `isSolved` and impossible to complete around.
+  SeismicState _newPuzzle(SeismicSize size) {
+    final puzzle = _engine.generate(size);
+    return SeismicState(
+      puzzle: puzzle,
+      values: [
+        for (var cell = 0; cell < size.cellCount; cell++)
+          puzzle.given(cell) == kSeismicNoClue
+              ? kSeismicBlank
+              : puzzle.given(cell),
+      ],
+      size: size,
+    );
+  }
 
   void newGame() => state = _newPuzzle(state.size);
 

@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/ascent/ascent_engine.dart';
 import 'package:puzzle/ui/features/games/ascent/ascent_model.dart';
+import 'package:puzzle/ui/features/games/ascent/ascent_provider.dart';
 
 const engine = AscentEngine();
 
@@ -104,6 +106,29 @@ void main() {
       ).run();
       expect(found.solutions, 1);
       expect(found.forced, puzzle.solution);
+    });
+    test('the clues are on the board, not hidden behind it', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final state = container.read(ascentNotifierProvider);
+      final shown = state.values.where((v) => v != kAscentBlank).length;
+      expect(shown, state.puzzle.clueCount());
+      expect(shown, greaterThan(0));
+    });
+
+    test('a board can be finished by playing it', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(ascentNotifierProvider.notifier);
+      final puzzle = container.read(ascentNotifierProvider).puzzle;
+      // Numbers go on in order, so walk the answer in order and tap the cell
+      // that holds each one the player has to write.
+      for (var number = 1; number <= puzzle.maxNumber; number++) {
+        final cell = puzzle.cellOf(puzzle.solution, number)!;
+        if (puzzle.given(cell) != kAscentNoClue) continue;
+        notifier.tap(cell);
+      }
+      expect(container.read(ascentNotifierProvider).isSolved, isTrue);
     });
   });
 }
