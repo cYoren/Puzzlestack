@@ -160,7 +160,8 @@ class BoatsEngine {
   // ------------------------------------------------------------------- rules
 
   /// True when the player's marks are a legal fleet.
-  bool isSolved(BoatsPuzzle puzzle, List<int> marks) => puzzle.isLegal(marks);
+  bool isSolved(BoatsPuzzle puzzle, List<int> marks) =>
+      puzzle.isSolvedMarks(marks);
 
   /// The rule level the clues need, or null when a guess is needed.
   int? levelOf(BoatsPuzzle puzzle) =>
@@ -171,6 +172,11 @@ class BoatsEngine {
       rate(BoatsModel.fresh(puzzle), boatsRules, limit: limit).solutions;
 
   /// A cell the rules can prove, for the hint.
+  ///
+  /// The value is in the *player's* vocabulary ([kMarkShip]/[kMarkWater]), so
+  /// the caller can drop it straight into its marks. Comparing a proof in the
+  /// answer vocabulary against marks in the player vocabulary is exactly the
+  /// `0`-means-two-things mistake this file keeps a comment about.
   ({int cell, int value})? hint(BoatsPuzzle puzzle, List<int> marks) {
     final model = BoatsModel.fresh(puzzle);
     if (!deduce(model, boatsRules).consistent) return null;
@@ -178,12 +184,10 @@ class BoatsEngine {
       final value = model.valueAt(cell);
       if (value == 0) continue;
       final shouldBeShip = value == kRegularShip;
-      final isShip = marks[cell] == kBoatShip;
-      if (shouldBeShip == isShip && marks[cell] != 0) continue;
-      // A cell the player has not touched is still worth pointing at, but only
-      // when the rules really decided it.
+      final isShip = marks[cell] == kMarkShip;
+      if (shouldBeShip == isShip && marks[cell] != kMarkEmpty) continue;
       if (shouldBeShip != isShip) {
-        return (cell: cell, value: shouldBeShip ? kBoatShip : kBoatWater);
+        return (cell: cell, value: shouldBeShip ? kMarkShip : kMarkWater);
       }
     }
     return null;

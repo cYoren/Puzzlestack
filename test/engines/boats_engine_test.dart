@@ -127,9 +127,87 @@ void main() {
         final marks = List<int>.filled(puzzle.cellCount, 0);
         final found = engine.hint(puzzle, marks);
         expect(found, isNotNull, reason: 'a fair board always has a step');
-        expect(found!.value, puzzle.solution[found.cell],
+        // The hint speaks the player's vocabulary, so the answer has to be
+        // translated before it can be compared.
+        expect(found!.value, markOfSolution(puzzle.solution[found.cell]),
             reason: 'the hint must be true of the one answer');
       }
+    });
+
+    test('untouched is its own state, not water', () {
+      // The bug this pins: `kBoatWater` was 0, the player's untouched mark was
+      // 0, so tapping cycled 0 -> 1 -> 0, the board drew a water dot on every
+      // cell and a dealt board looked finished. Three states need three values.
+      expect(kMarkEmpty, isNot(kMarkWater));
+      expect(kMarkEmpty, isNot(kMarkShip));
+      expect(kMarkWater, isNot(kMarkShip));
+    });
+
+    test('a tap cycles untouched, boat, water and back', () {
+      var mark = kMarkEmpty;
+      mark = nextMark(mark);
+      expect(mark, kMarkShip);
+      mark = nextMark(mark);
+      expect(mark, kMarkWater);
+      mark = nextMark(mark);
+      expect(mark, kMarkEmpty);
+    });
+
+    test('a dealt board with nothing marked is not solved', () {
+      // With untouched == water this was true only by accident; with the two
+      // separate it is the check that the board does not ship pre-solved.
+      final puzzle = engine.generate(BoatsSize.small, random: Random(10));
+      expect(
+        puzzle.isSolvedMarks(List<int>.filled(puzzle.cellCount, kMarkEmpty)),
+        isFalse,
+      );
+      expect(
+        puzzle.isSolvedMarks(List<int>.filled(puzzle.cellCount, kMarkWater)),
+        isFalse,
+      );
+    });
+
+    test('one marked boat crosses off one required boat', () {
+      // The fleet has two boats of length 3, so the strip used to cross both
+      // chips off the moment the player marked one of them.
+      final rows = BoatsSize.small.rows;
+      final cols = BoatsSize.small.cols;
+      final marks = List<int>.filled(rows * cols, kMarkEmpty);
+      // One length-3 boat across the top-left corner.
+      marks[0] = kMarkShip;
+      marks[1] = kMarkShip;
+      marks[2] = kMarkShip;
+
+      expect(markedBoatLengths(marks, rows: rows, cols: cols), [3]);
+      expect(
+        crossedOffFleet(marks, BoatsSize.small.fleet, rows: rows, cols: cols),
+        [true, false, false],
+        reason: 'one 3-boat crosses off one of the two length-3 chips',
+      );
+
+      // A second marked 3-boat crosses off the second chip, and only it.
+      marks[rows] = kMarkShip;
+      marks[rows + 1] = kMarkShip;
+      marks[rows + 2] = kMarkShip;
+      expect(
+        crossedOffFleet(marks, BoatsSize.small.fleet, rows: rows, cols: cols),
+        [true, true, false],
+      );
+    });
+
+    test('a marked run of the wrong length crosses nothing off', () {
+      final rows = BoatsSize.small.rows;
+      final cols = BoatsSize.small.cols;
+      final marks = List<int>.filled(rows * cols, kMarkEmpty);
+      // Four cells is not a boat in a 3-3-2 fleet.
+      for (var col = 0; col < 4; col++) {
+        marks[col] = kMarkShip;
+      }
+      expect(markedBoatLengths(marks, rows: rows, cols: cols), [4]);
+      expect(
+        crossedOffFleet(marks, BoatsSize.small.fleet, rows: rows, cols: cols),
+        [false, false, false],
+      );
     });
 
     test('the model never reports progress it did not make', () {
