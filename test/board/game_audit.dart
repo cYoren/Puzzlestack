@@ -83,14 +83,6 @@ void main() {
       ? allGamesMetadata
       : allGamesMetadata.where((g) => only.contains(g.id)).toList();
 
-  // The summary prints either way, then the assertion decides. A green run of
-  // this file means every card was pumped and none of them broke, which is what
-  // "AUDIT checked=N overflow=0 threw=0" has to mean to be worth running.
-  test('no card overflows and none throws', () {
-    expect(_overflowed, isEmpty, reason: 'overflowing cards: $_overflowed');
-    expect(_threw, isEmpty, reason: 'cards that threw: $_threw');
-  });
-
   tearDownAll(() {
     // ignore: avoid_print
     print('AUDIT checked=${_checked.length} '
@@ -149,4 +141,14 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
     });
   }
+  // Registered after the loop, so it runs after every card has been pumped. The
+  // coverage assertion is what stops this from silently checking an empty map:
+  // a test that runs before the sweep passes for the wrong reason, and that is
+  // exactly how this assertion was first written.
+  test('no card overflows and none throws', () {
+    expect(_checked, hasLength(games.length),
+        reason: 'the sweep did not reach every card');
+    expect(_overflowed, isEmpty, reason: 'overflowing cards: $_overflowed');
+    expect(_threw, isEmpty, reason: 'cards that threw: $_threw');
+  });
 }
