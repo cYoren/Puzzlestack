@@ -5035,19 +5035,19 @@ const Map<String, GameGuide> gameGuides = {
     title: "Ripple Effect",
     category: "LOGIC",
     objective:
-        "Fill every shape with the numbers 1 to its size, once each, so that two equal numbers in a line are as many cells apart as the number says.",
+        "Fill every shape with the numbers 1 to its size, once each, so that two equal numbers in a line have at least that many cells between them.",
     controls:
         "Tap a cell to select it, then tap a number to write it. Tap the same number again, or the eraser, to clear the cell. The hint button writes one number the clues prove.",
     walkthrough: [
       "Step 1: Look at the shapes, not at the numbers. A shape with four cells holds 1, 2, 3 and 4 exactly once.",
-      "Step 2: Read the ripple rule as a no-entry zone: a 1 keeps another 1 out of the cells beside it, a 3 keeps another 3 out of the two cells either side.",
-      "Step 3: Start with the biggest number in the smallest shape. On a straight run of four cells, a 4 in the middle leaves no room for another 4 on that line.",
+      "Step 2: Read the ripple rule as a no-entry zone as wide as the number: a 1 keeps another 1 out of the four cells beside it, a 3 keeps another 3 out of the three cells either side, because two 3s need three cells between them.",
+      "Step 3: Count the room a number needs, not just the cells next to it. On a line of six cells a 3 in the second cell can only meet another 3 in the last, because it needs three cells of gap.",
       "Step 4: When a shape has only one cell left that can hold a number, that cell is it. Write it and the ripple clears its neighbours.",
       "Step 5: The board is finished when every cell holds a number and no digit sits too close to its twin. A number that breaks the ripple shows in red.",
     ],
     strategies: [
       "A 1 is the most useful clue on the board: it rules out its four orthogonal neighbours everywhere, and a shape of size one is simply that number.",
-      "Count the room a digit has along a line, not just beside it. Two 3s need three cells of distance, so a line of five cells cannot hold two 3s at all.",
+      "Count the room a digit has along a line, not just beside it: two equal digits need one more cell of gap than the digit itself, so a 2 needs two cells between it and its twin and a 4 needs four.",
       "Cross off by shape and by line at once: a digit placed in a shape is gone from that shape everywhere, even in cells far away.",
       "The largest region's size is the highest digit on the board. Nothing above it exists, so a cell in a smaller shape can never take it.",
     ],

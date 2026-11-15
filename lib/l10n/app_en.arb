@@ -804,7 +804,7 @@
   "boatsWinTitle": "FLEET FOUND!",
   "boatsWinMessage": "Every boat placed and nothing touching.",
   "seismicTitle": "Ripple Effect",
-  "seismicSubtitle": "Fill every shape with the numbers 1 to its size. The same number twice in a line needs a gap as wide as itself.",
+  "seismicSubtitle": "Fill every shape with the numbers 1 to its size. Two equal numbers in a line need that many cells between them.",
   "seismicClues": "Clues",
   "seismicDepth": "Depth",
   "seismicWinTitle": "RIPPLE SETTLED!",

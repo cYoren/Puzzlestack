@@ -1677,7 +1677,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get seismicSubtitle =>
-      'Fill every shape with the numbers 1 to its size. The same number twice in a line needs a gap as wide as itself.';
+      'Fill every shape with the numbers 1 to its size. Two equal numbers in a line need that many cells between them.';
 
   @override
   String get seismicClues => 'Clues';
