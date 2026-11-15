@@ -14,10 +14,21 @@ lib/ui/features/games/your_game/
 ```
 
 Then, before the game can ship: register it in `lib/data/game_registry.dart`, add guide text to
-`lib/data/game_guides.dart`, add its l10n keys to `lib/l10n/app_en.arb` (and every other
-locale), and add a `test/content/<your_game>_test.dart` that asserts the game's own rule.
+`lib/data/game_guides.dart`, add its keys to `lib/l10n/app_en.arb`, and add a
+`test/content/<your_game>_test.dart` that asserts the game's own rule.
 `test/content/registry_test.dart` fails until the guide and the store copy agree with the
 registry.
+
+**English is the source locale.** Add keys to `app_en.arb` and run `flutter gen-l10n`; every other
+locale falls back to English for a key it does not have, so a new game does not open six
+translation jobs. Do not hand-edit a generated `app_localizations_*.dart`.
+
+**A new game enters as Library**, never as a Deck card (see PRODUCT.md: the Deck is the fixed
+front of the product, the Library is where new work lands). Three files then have to agree with
+`docs/CATALOG.md`, or `registry_test` fails: the catalog row, `lib/data/game_profiles.dart`
+(regenerate with `python3 tool/gen_game_profiles.py`), and the visible count — which lives in
+`README.md`, `docs/index.html`, `web/index.html`, `web/manifest.json`, six
+`fastlane/metadata/*/en-US/*.txt`, and `docs/CATALOG.md`.
 
 ## Step 2: Implement the Engine
 
@@ -124,73 +135,89 @@ Both are additive: the older boards keep their own paint and chrome until someon
 
 ## Step 5: Build the Screen
 
-Use `GameScaffold` and `ConsumerStatefulWidget`:
+A board game screen is a `ConsumerWidget` of about forty lines: read the provider, hand the board
+to `BoardGameScaffold`, wire `onSolved`. Nothing else — no gesture, no padding stack, no colour.
 
 ```dart
 // your_game_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:puzzle/l10n/app_localizations.dart';
-import 'package:puzzle/providers/user_providers.dart';
-import 'package:puzzle/utils/haptic_feedback.dart';
-import 'package:puzzle/widgets/game_completion_dialog.dart';
-import '../../../core/juice/game_scaffold.dart';
+
+import '../../../../l10n/app_localizations.dart';
+import '../../../../providers/user_providers.dart';
+import '../../../../widgets/game_completion_dialog.dart';
+import '../../../core/board/puzzle_board_view.dart';
+import '../shared/board_game_scaffold.dart';
+import 'your_game_board.dart';
 import 'your_game_provider.dart';
 
-class YourGameScreen extends ConsumerStatefulWidget {
+class YourGameScreen extends ConsumerWidget {
   const YourGameScreen({super.key});
 
-  @override
-  ConsumerState<YourGameScreen> createState() => _YourGameScreenState();
-}
+  Future<void> _onSolved(BuildContext context, WidgetRef ref, YourGameNotifier notifier) async {
+    final l10n = AppLocalizations.of(context)!;
+    await ref.read(gameStreakNotifierProvider.notifier).completeGame('your_game', xpAmount: 30);
+    if (!context.mounted) return;
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => GameCompletionDialog(
+        title: l10n.yourGameWinTitle,
+        message: l10n.yourGameWinMessage,
+        onHome: () {
+          Navigator.of(dialogContext).pop();
+          Navigator.of(dialogContext).pop();
+        },
+        onPlayAgain: () {
+          notifier.newGame();
+          Navigator.of(dialogContext).pop();
+        },
+      ),
+    );
+  }
 
-class _YourGameScreenState extends ConsumerState<YourGameScreen> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(yourGameNotifierProvider);
     final notifier = ref.read(yourGameNotifierProvider.notifier);
 
-    // Listen for win condition
-    ref.listen(yourGameNotifierProvider, (previous, next) {
-      if (next.isSolved && !(previous?.isSolved ?? false)) {
-        _onGameComplete();
-      }
-    });
-
-    return GameScaffold(
-      title: l10n.yourGameTitle.toUpperCase(),
+    return BoardGameScaffold(
+      // The title as written, in sentence case. No toUpperCase: shouting is not a style.
+      title: l10n.yourGameTitle,
       subtitle: l10n.yourGameSubtitle,
-      actions: [
-        // Reset button
+      actions: [BoardGameActions(onHint: notifier.hint, onReset: notifier.newGame)],
+      toolbar: BoardGameChipRow(
+        chips: [
+          for (final size in YourGameSize.values)
+            BoardGameChip(
+              label: size.label,
+              selected: state.size == size,
+              onTap: () => notifier.setSize(size),
+            ),
+        ],
+      ),
+      hud: [
+        GameStat(
+          label: l10n.yourGameProgress.toUpperCase(),
+          value: '${state.placed}',
+          color: DesignSystem.primary,
+        ),
       ],
-      body: _buildGameBody(state, notifier),
-    );
-  }
-
-  void _onGameComplete() async {
-    HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('your_game');
-    if (!mounted) return;
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => GameCompletionDialog(
-        title: AppLocalizations.of(context)!.wellDone.toUpperCase(),
-        message: AppLocalizations.of(context)!.completed,
-        onHome: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        },
-        onPlayAgain: () {
-          ref.read(yourGameNotifierProvider.notifier).resetGame();
-          Navigator.of(context).pop();
-        },
+      // A move is data, not a callback: the board says what can happen, the
+      // view draws it, the notifier decides. `isSolved` comes from the state.
+      board: PuzzleBoardView<YourGameState>(
+        board: YourGameBoard(state: state),
+        onMove: (move) => notifier.tap(move.source),
+        onSolved: () => _onSolved(context, ref, notifier),
       ),
     );
   }
 }
 ```
+
+A hint applies its value — it never just outlines a cell. Anyone who taps hint twice must not get
+the same outline twice, so the proved value goes into the state through the ordinary move path.
 
 ## Step 6: Create Metadata
 
@@ -252,6 +279,15 @@ Add entries to `lib/l10n/app_en.arb`:
 
 ## Step 9: Add Tests
 
+Two files, and the second is the one that catches a wrong game.
+
+1. `test/engines/your_game_engine_test.dart` — the deal is legal, its answer is legal, the clues are
+   on the board (not hidden behind it), the clues pin down exactly one answer, the clues can be
+   finished without guessing (`rate(model, rules).verdict == PuzzleVerdict.solved`), a hint writes a
+   value the answer agrees with, and a board can be finished through the ordinary input path.
+2. `test/content/your_game_test.dart` — the content rule: every dealt board obeys the game's own
+   rule, and the clue set is exactly what the rule says it is.
+
 Create `test/engines/your_game_engine_test.dart`:
 
 ```dart
@@ -282,22 +318,35 @@ void main() {
 ## Step 10: Run Verification
 
 ```bash
-# Run tests
-flutter test test/engines/your_game_engine_test.dart
-
-# Run analyzer
-flutter analyze
-
-# Build runner for generated code
-dart run build_runner build --delete-conflicting-outputs
+flutter analyze                                            # must be clean
+TMPDIR=$HOME/.cache/tmp flutter test -j 4                  # the whole suite, one at a time
+TMPDIR=$HOME/.cache/tmp AUDIT_ONLY=your_game flutter test test/board/game_audit.dart
+TMPDIR=$HOME/.cache/tmp AUDIT_ONLY=your_game AUDIT_DARK=1 flutter test test/board/game_audit.dart
 ```
+
+The audit mounts the board at phone size in both themes, prints
+`AUDIT checked=1 overflow=0 threw=0` per theme and then **fails** if either count is not zero. It is
+the only check that sees a board that builds and cannot be held; read the printed line too, because
+it is the record of what was pumped.
+
+`TMPDIR` is not optional: the default temp directory on a sandboxed Linux box makes the test runner
+fail in ways that look like test failures. One `flutter test` at a time, `-j 4`.
+
+If the game has Riverpod providers, regenerate their `.g.dart` with
+`dart run build_runner build --delete-conflicting-outputs` (the repo commits them; a provider whose
+`.g.dart` is stale fails at compile time, not at runtime).
 
 ## Best Practices
 
-1. **Keep engine pure**: No Flutter dependencies in `*_engine.dart`
-2. **Use Freezed**: For immutable state models
-3. **Use code-gen**: For Riverpod providers (`@riverpod`)
-4. **Add haptics**: Call `HapticFeedbackUtil` on user interactions
-5. **Add semantics**: Include `semanticsLabel` on interactive elements
-6. **Handle errors**: Use try/catch in provider methods
-7. **Add tests**: Cover engine logic with unit tests
+1. **Keep the engine pure**: no Flutter dependencies in `*_engine.dart`, so the generator and its
+   proof can run in a plain Dart test.
+2. **Use Freezed**: for immutable state models.
+3. **Use code-gen**: for Riverpod providers (`@riverpod`), and commit the generated `.g.dart`.
+4. **Add haptics**: call `HapticFeedbackUtil` on user interactions.
+5. **Add semantics**: include `semanticsLabel` on interactive elements.
+6. **Handle errors**: use try/catch in provider methods.
+7. **Add tests**: cover the engine, and the content rule, with tests that would fail on a broken deal.
+8. **Never let `0` mean two things.** A blank, an empty cell, "no clue" and "no value" are
+   different states; a sentinel that doubles as an answer is a bug that hides in the win test.
+9. **Never ship a game the generator cannot prove.** Retry, and throw rather than deal an unproved
+   board: a wrong board is worse than a missing one.

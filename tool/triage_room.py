@@ -10,8 +10,8 @@ What this can decide, it decides. What needs a person at the board, it marks
 Checks that are mechanical here:
 
 - **6 it is this app**: a mounted board at 320dp, light and dark, with no overflow and no
-  thrown exception. That evidence comes from `test/board/game_audit.dart`, which already
-  pumps every game at 320dp; the numbers it prints for this room are pasted in.
+  thrown exception. That evidence comes from `test/board/game_audit.dart`; this script runs
+  it with this room's ids (`AUDIT_ONLY=...`) and pastes in what it prints, once per theme.
 - **9 honest name**: the title and subtitle a stranger reads, checked against the lab
   vocabulary the bar lists as slop.
 - **10 tested against its own rule**: a test file for the game that asserts something
@@ -47,7 +47,9 @@ answers by playing, and they stay `needs-play` in the report.
 from __future__ import annotations
 
 import json
+import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -463,23 +465,68 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
     return "\n".join(lines)
 
 
+def run_audit(report: dict) -> dict:
+    """Mount this room's cards and return the audit line for each theme.
+
+    It used to read `/tmp/audit_light.log`, which meant every room's evidence
+    section claimed whatever the last whole-catalogue sweep had printed - 52
+    cards, in all six rooms. Evidence that is copied is not evidence.
+    """
+    ids = ",".join(sorted(report["games"]))
+    lines = {}
+    clean = True
+    for mode, env_extra in (
+        # The light pass sets the variable rather than leaving it out: a shell
+        # that already exports AUDIT_DARK=1 would otherwise make both passes dark
+        # and the report claim two.
+        ("light", {"AUDIT_DARK": "0"}),
+        ("dark", {"AUDIT_DARK": "1"}),
+    ):
+        env = {**os.environ, "TMPDIR": str(Path.home() / ".cache" / "tmp"),
+               "AUDIT_ONLY": ids, **env_extra}
+        try:
+            done = subprocess.run(
+                ["flutter", "test", "test/board/game_audit.dart"],
+                cwd=REPO, env=env, capture_output=True, text=True, timeout=1200,
+            )
+        except (OSError, subprocess.SubprocessError) as error:
+            lines[mode] = f"audit did not run: {error}"
+            continue
+        found = re.search(r"^AUDIT checked=.*$", done.stdout, re.M)
+        # `checked=` must be the number of cards asked for, or the sweep skipped
+        # something and its zero means nothing.
+        asked = len(ids.split(","))
+        covered = found and re.search(r"checked=(\d+)", found.group(0))
+        if done.returncode == 0 and covered and int(covered.group(1)) == asked:
+            lines[mode] = found.group(0)
+            continue
+        # A sweep that did not pass must not be published as if it had: the whole
+        # point of running it per room is that the number is about this room.
+        clean = False
+        lines[mode] = (
+            found.group(0) + " (audit failed)"
+            if found
+            else f"audit failed (exit {done.returncode}, no summary)"
+        )
+    return lines, clean
+
+
 def main() -> int:
     room_key = (sys.argv[1] if len(sys.argv) > 1 else "logic").lower()
     if room_key not in ROOMS:
         raise SystemExit(f"rooms: {', '.join(ROOMS)}")
-    report = triage(room_key)
-    audit = {}
-    for mode, path in (
-        ("light", Path("/tmp/audit_light.log")),
-        ("dark", Path("/tmp/audit_dark.log")),
-    ):
-        if path.exists():
-            found = re.search(r"^AUDIT checked=.*$", path.read_text(), re.M)
-            if found:
-                audit[mode] = found.group(0)
+    # Ids first, then the sweep, then the verdicts: a room whose cards overflow
+    # must not render "audit-clean" for every card, which is what happens when the
+    # verdicts are decided before the audit runs.
+    probe = triage(room_key, audit_clean=False)
+    audit, clean = run_audit(probe)
+    report = triage(room_key, audit_clean=clean)
     out = REPO / "docs" / f"TRIAGE-{report['room'].upper()}.md"
     out.write_text(render(report, audit))
     print(f"wrote {out.relative_to(REPO)}")
+    if not clean:
+        print("check 6 FAILED: see the evidence section", file=sys.stderr)
+        return 1
     return 0
 
 

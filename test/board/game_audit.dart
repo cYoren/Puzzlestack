@@ -4,9 +4,11 @@
 ///
 /// It pumps every game in the registry at 320dp and counts the ones that
 /// overflow or throw. The file is deliberately not named `_test.dart` so it
-/// stays out of the suite: it reports a number rather than asserting one, and
-/// the number is currently bad enough that a red suite would only say what this
-/// already says. Run it after a batch of fixes to see whether the count moved.
+/// stays out of the suite - it is a sweep, not a unit test, and 318 pumps is
+/// not something to pay for on every change. It still **fails** when a board
+/// overflows or throws: the count is asserted at the end, because a check that
+/// only prints a number is a check nobody reads. Run it on a batch, and on a
+/// game you just touched (below).
 ///
 /// One game at a time, with the full dump (file and line of the offending
 /// widget):
@@ -81,6 +83,12 @@ void main() {
       ? allGamesMetadata
       : allGamesMetadata.where((g) => only.contains(g.id)).toList();
 
+  // An id that names no card audits nothing and reports `checked=0 overflow=0`,
+  // which reads exactly like a clean room. A typo must fail, not reassure.
+  final unknown = only == null
+      ? const <String>{}
+      : only.difference({for (final game in allGamesMetadata) game.id});
+
   tearDownAll(() {
     // ignore: avoid_print
     print('AUDIT checked=${_checked.length} '
@@ -139,4 +147,16 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
     });
   }
+  // Registered after the loop, so it runs after every card has been pumped. The
+  // coverage assertion is what stops this from silently checking an empty map:
+  // a test that runs before the sweep passes for the wrong reason, and that is
+  // exactly how this assertion was first written.
+  test('no card overflows and none throws', () {
+    expect(unknown, isEmpty,
+        reason: 'AUDIT_ONLY named ids that are not games: $unknown');
+    expect(_checked, hasLength(games.length),
+        reason: 'the sweep did not reach every card');
+    expect(_overflowed, isEmpty, reason: 'overflowing cards: $_overflowed');
+    expect(_threw, isEmpty, reason: 'cards that threw: $_threw');
+  });
 }

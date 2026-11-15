@@ -18,7 +18,7 @@ live colour (indigo) that only appears where something is active. See [DESIGN.md
 
 ## The 229 games, by category
 
-- **Logic (57):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies and more.
+- **Logic (57):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies, Ripple Effect and more.
 - **Math (44):** 2048, KenKen, Magic Squares, Prime Hunter, Fraction Match, Quick Math, Sum Pyramid and more.
 - **Memory (29):** Memory Matrix, Corsi Blocks, N-Back, Memory Palace, Digit Span, Face/Name and more.
 - **Spatial (31):** Mental Rotation, Paper Folding, Cube Net Fold, Classic Maze, Mirror Image and more.
@@ -35,6 +35,7 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
   surface is built from. `tool/icon.py` renders the same mark as the app icon
   (`dart run flutter_launcher_icons` writes the platform sets).
 - **Board contract (Phase 1):** `lib/ui/core/board/` — one `PuzzleBoard` interface, one drag engine, five motion moves, five verbs. A puzzle is rules, geometry and paint; it owns no gestures.
+- **Screen chrome (Phase 1):** `lib/ui/features/games/shared/board_game_scaffold.dart` — `BoardGameScaffold` with a board slot, hint/reset actions, a chip row and number chips. A board game screen is about forty lines.
 - **Discovery layer:**
   - `lib/data/game_categories.dart` — the six rooms, plus derived feeds (quick play, deterministic daily pick, shuffle order).
   - `lib/ui/features/feed/feed_screen.dart` — the deal: one card per screen, swipe up.
