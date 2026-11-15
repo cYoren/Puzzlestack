@@ -39,7 +39,8 @@ class NetslideBoard extends GridBoard<NetState> {
   static const String colKind = 'colSlide';
 
   /// `b` is 1 for the positive direction (east/south) and 0 for the negative.
-  ElementRef rowSlide(int row, bool east) => ElementRef(rowKind, row, east ? 1 : 0);
+  ElementRef rowSlide(int row, bool east) =>
+      ElementRef(rowKind, row, east ? 1 : 0);
 
   ElementRef colSlide(int col, bool south) =>
       ElementRef(colKind, col, south ? 1 : 0);
@@ -57,7 +58,8 @@ class NetslideBoard extends GridBoard<NetState> {
         ],
       ];
 
-  bool _canSlide({required bool row, required int index, required bool forward}) =>
+  bool _canSlide(
+          {required bool row, required int index, required bool forward}) =>
       const NetEngine().slide(
         state.puzzle,
         state.masks,
@@ -222,7 +224,8 @@ class NetslideBoard extends GridBoard<NetState> {
       }
     }
     for (final (row, col) in line) {
-      canvas.cell(cellRect(row, col), fill: palette.surface, stroke: palette.line);
+      canvas.cell(cellRect(row, col),
+          fill: palette.surface, stroke: palette.line);
     }
 
     canvas.pushClip(gridRect);
@@ -248,10 +251,12 @@ class NetslideBoard extends GridBoard<NetState> {
     for (final (row, col) in line) {
       final rect = cellRect(row, col);
       if (from.puzzle.hasWall(row * cols + col, NetDirection.east)) {
-        canvas.line(rect.topRight, rect.bottomRight, color: palette.ink, width: 2.5);
+        canvas.line(rect.topRight, rect.bottomRight,
+            color: palette.ink, width: 2.5);
       }
       if (from.puzzle.hasWall(row * cols + col, NetDirection.south)) {
-        canvas.line(rect.bottomLeft, rect.bottomRight, color: palette.ink, width: 2.5);
+        canvas.line(rect.bottomLeft, rect.bottomRight,
+            color: palette.ink, width: 2.5);
       }
     }
 
@@ -289,7 +294,7 @@ class NetslideBoard extends GridBoard<NetState> {
     if (mask & NetBits.south != 0) {
       canvas.line(centre, rect.bottomCenter, color: wire, width: 3);
     }
-    canvas.dot(centre, rect.width * 0.08, color: wire);
+    canvas.dot(centre, canvas.radiusFor(rect, 0.08), color: wire);
   }
 
   @override
@@ -328,7 +333,6 @@ class NetslideBoard extends GridBoard<NetState> {
   }
 
   void _paintControls(PuzzleCanvas canvas, NetState state) {
-
     for (var row = 0; row < rows; row++) {
       _paintControl(
         canvas,
@@ -410,7 +414,8 @@ class NetslideBoard extends GridBoard<NetState> {
         canvas,
         element,
         east: element.b == 1,
-        enabled: _canSlide(row: true, index: element.a, forward: element.b == 1),
+        enabled:
+            _canSlide(row: true, index: element.a, forward: element.b == 1),
       );
       return;
     }

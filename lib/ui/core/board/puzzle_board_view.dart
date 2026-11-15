@@ -154,7 +154,8 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     if (_settling) {
       return Offset.lerp(_settleFrom, _settleTo, _settle.value) ?? _settleTo;
     }
-    final rise = -BoardMotion.fingerOffset * _lift.value.clamp(0.0, 1.5).toDouble();
+    final rise =
+        -BoardMotion.fingerOffset * _lift.value.clamp(0.0, 1.5).toDouble();
     return _pointer - _grab + Offset(0, rise);
   }
 
@@ -168,8 +169,8 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       final elapsed = _win.value * duration.inMilliseconds;
       final stagger = _winStagger.inMilliseconds;
       for (var i = 0; i < _celebrating.length; i++) {
-        final progress = (elapsed - i * stagger) /
-            BoardMotion.winCell.inMilliseconds;
+        final progress =
+            (elapsed - i * stagger) / BoardMotion.winCell.inMilliseconds;
         if (progress > 0 && progress < 1) {
           pops[_celebrating[i]] = progress;
         }
@@ -265,7 +266,8 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     setState(() => _settling = true);
 
     if (hover != null) {
-      final origin = widget.board.boundsOf(lifted)?.center ?? hover.bounds.center;
+      final origin =
+          widget.board.boundsOf(lifted)?.center ?? hover.bounds.center;
       final delta = hover.bounds.center - origin;
       _settleFrom = current;
       _settleTo = Offset(delta.dx * _size.width, delta.dy * _size.height);
@@ -483,12 +485,18 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
 
     final lifted = highlight.lifted;
     if (lifted != null) {
-      _transformed(canvas, view, lifted, highlight.liftScale,
-          highlight.liftOffset, () => board.paintElement(view, board.state, lifted));
+      _transformed(
+          canvas,
+          view,
+          lifted,
+          highlight.liftScale,
+          highlight.liftOffset,
+          () => board.paintElement(view, board.state, lifted));
 
       // The refused drop: a red wash over the element on its way home.
       if (highlight.invalidOpacity > 0) {
-        final rect = view.toPixels(board.boundsOf(lifted)!)
+        final rect = view
+            .toPixels(board.boundsOf(lifted)!)
             .translate(highlight.liftOffset.dx, highlight.liftOffset.dy);
         final pulse = math.sin(math.pi * highlight.invalidOpacity);
         canvas.drawRRect(

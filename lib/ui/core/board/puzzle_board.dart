@@ -170,9 +170,7 @@ class PuzzlePalette {
       error: DesignSystem.error,
       success: DesignSystem.success,
       outline: scheme.outline,
-      structure: dark
-          ? const Color(0xFF7C7C8A)
-          : const Color(0xFF2A2A33),
+      structure: dark ? const Color(0xFF7C7C8A) : const Color(0xFF2A2A33),
       line: dark ? const Color(0xFF3E3E4A) : const Color(0xFFC3C8D2),
     );
   }
@@ -357,6 +355,22 @@ class PuzzleCanvas {
     );
   }
 
+  /// A radius in pixels from a normalised rectangle.
+  ///
+  /// [dot] and [ring] take a **pixel** radius, because a stroke width is in dp
+  /// and a radius straight from a board's normalised geometry is not. Six
+  /// boards passed a normalised number here and drew sub-pixel dots: invisible
+  /// marks that no layout test can see. Use this instead of multiplying by
+  /// hand, so the conversion lives in one place.
+  double radiusFor(Rect normalized, double fraction) =>
+      math.min(
+        normalized.width * size.width,
+        normalized.height * size.height,
+      ) *
+      fraction;
+
+  /// Fills a circle. [radius] is in pixels — use [radiusFor] for a fraction of
+  /// a cell.
   void dot(Offset center, double radius, {Color? color}) {
     canvas.drawCircle(
       toPixelOffset(center),
@@ -365,6 +379,7 @@ class PuzzleCanvas {
     );
   }
 
+  /// Strokes a circle. [radius] is in pixels, [width] in dp.
   void ring(Offset center, double radius, {Color? color, double width = 1.5}) {
     canvas.drawCircle(
       toPixelOffset(center),

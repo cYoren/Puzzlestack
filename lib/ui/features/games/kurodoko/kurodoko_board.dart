@@ -89,7 +89,7 @@ class KurodokoBoard extends GridBoard<KurodokoState> {
     if (colour == KurodokoCell.white && clue == 0) {
       canvas.dot(
         rect.center,
-        rect.shortestSide * 0.09,
+        canvas.radiusFor(rect, 0.09),
         color: palette.muted,
       );
     }
