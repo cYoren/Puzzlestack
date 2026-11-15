@@ -4950,8 +4950,10 @@ const Map<String, GameGuide> gameGuides = {
   "abcd": GameGuide(
     title: "ABCD",
     category: "LOGIC",
-    objective: "Write one letter in every cell so that each row and column holds exactly the number of each letter printed beside it, and no two identical letters touch along an edge.",
-    controls: "Tap a cell to cycle its letter: empty, then A, B, C, D, and back to empty. The hint button fills one cell the counts prove.",
+    objective:
+        "Write one letter in every cell so that each row and column holds exactly the number of each letter printed beside it, and no two identical letters touch along an edge.",
+    controls:
+        "Tap a cell to cycle its letter: empty, then A, B, C, D, and back to empty. The hint button fills one cell the counts prove.",
     walkthrough: [
       "Step 1: Read one row's clue as four digits in alphabet order. On a five-cell row, `2111` means two As, one B, one C and one D.",
       "Step 2: When a clue digit is met, that letter cannot appear again in the line. When the cells left in a line equal the counts still owed, those cells are fixed.",
@@ -4985,6 +4987,69 @@ const Map<String, GameGuide> gameGuides = {
       "A boat cell rules out all four cells diagonally beside it, not just the four it touches.",
       "If a line's count is only just satisfied by the cells still open, every one of them is a boat.",
       "Count the fleet, not just the lines: when the remaining lengths cannot fit in a gap, that gap is water.",
+    ],
+  ),
+  "ascent": GameGuide(
+    title: "Number Path",
+    category: "LOGIC",
+    objective:
+        "Place 1 to the last number on the grid, once each, so that every number touches the one before it and the one after it, along an edge or a corner.",
+    controls:
+        "Tap an empty cell to write the next number. Tap a number you wrote to clear it. The hint button writes one number the printed clues prove.",
+    walkthrough: [
+      "Step 1: Find the 1. The cell that holds it touches the 2, so an isolated corner with one way in usually fixes its neighbour.",
+      "Step 2: Work from both ends. The lowest and highest printed numbers fix their own neighbours, and the walk closes in from the middle.",
+      "Step 3: A number only ever moves one cell, so a cell with eight neighbours can hold anything, and a corner cell can only hold numbers whose neighbours are near.",
+      "Step 4: When a printed number has only one free cell beside it, the number after it goes there. Write it; that closes one more door.",
+      "Step 5: The board is finished when every number is on it and every step touches the step before. A number out of reach shows in red.",
+    ],
+    strategies: [
+      "Count room, not hope: if the next number has nowhere to go from a cell, that cell cannot hold this one.",
+      "A cell that touches only one empty cell is the end of the path from that side, which pins both of its neighbours.",
+      "Long printed runs already laid out are free deductions: every gap between two printed numbers is a mini path with fixed ends.",
+      "When the grid fills up, the last few numbers place themselves: the cells left are the numbers left, in order.",
+    ],
+  ),
+  "clusters": GameGuide(
+    title: "Clusters",
+    category: "LOGIC",
+    objective:
+        "Colour every cell one of two colours, so that a dotted cell has exactly one neighbour of its colour and a cell without a dot has at least two.",
+    controls:
+        "Tap a cell to cycle it: empty, then one colour, then the other, then empty again. A dotted cell is fixed and does not change.",
+    walkthrough: [
+      "Step 1: Read a dot as a small puzzle of its own. The dot already shows the colour of its cell, so that cell is done, and exactly one of its neighbours shares it.",
+      "Step 2: A corner cell without a dot has only two neighbours, so both of them must be its colour. That is the strongest start on the board.",
+      "Step 3: Count neighbours, not patterns. A cell needs two of its colour, so when one neighbour is the other colour and one is empty, the empty one is decided.",
+      "Step 4: A dotted cell with no same-coloured neighbour yet needs its one from the cells still open. When only one is open, that one takes the colour.",
+      "Step 5: The board is finished when every cell is coloured, every dot has exactly one neighbour of its colour, and every plain cell has two. A cell that cannot reach its count shows in red.",
+    ],
+    strategies: [
+      "Work from the corners inward: a corner without a dot forces both of its neighbours, which then forces the next ring.",
+      "A dot with one neighbour already its colour rules out that colour for every other neighbour, which is often the fastest way to place an edge.",
+      "Two colours are symmetrical, so a mistake is not local: a cell that cannot reach two neighbours of its colour usually means the cell two steps away is wrong.",
+      "An edge cell has three neighbours, so it needs two of its own colour: one of the three is the odd one out, and the dot tells you which.",
+    ],
+  ),
+  "seismic": GameGuide(
+    title: "Ripple Effect",
+    category: "LOGIC",
+    objective:
+        "Fill every shape with the numbers 1 to its size, once each, so that two equal numbers in a line have at least that many cells between them.",
+    controls:
+        "Tap a cell to select it, then tap a number to write it. Tap the same number again, or the eraser, to clear the cell. The hint button writes one number the clues prove.",
+    walkthrough: [
+      "Step 1: Look at the shapes, not at the numbers. A shape with four cells holds 1, 2, 3 and 4 exactly once.",
+      "Step 2: Read the ripple rule as a no-entry zone as wide as the number: a 1 keeps another 1 out of the four cells beside it, a 3 keeps another 3 out of the three cells either side, because two 3s need three cells between them.",
+      "Step 3: Count the room a number needs, not just the cells next to it. On a line of six cells a 3 in the second cell can only meet another 3 in the last, because it needs three cells of gap.",
+      "Step 4: When a shape has only one cell left that can hold a number, that cell is it. Write it and the ripple clears its neighbours.",
+      "Step 5: The board is finished when every cell holds a number and no digit sits too close to its twin. A number that breaks the ripple shows in red.",
+    ],
+    strategies: [
+      "A 1 is the most useful clue on the board: it rules out its four orthogonal neighbours everywhere, and a shape of size one is simply that number.",
+      "Count the room a digit has along a line, not just beside it: two equal digits need one more cell of gap than the digit itself, so a 2 needs two cells between it and its twin and a 4 needs four.",
+      "Cross off by shape and by line at once: a digit placed in a shape is gone from that shape everywhere, even in cells far away.",
+      "The largest region's size is the highest digit on the board. Nothing above it exists, so a cell in a smaller shape can never take it.",
     ],
   ),
   "tents_and_trees": GameGuide(

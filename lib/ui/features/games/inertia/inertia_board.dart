@@ -114,8 +114,10 @@ class InertiaBoard extends GridBoard<InertiaState> {
     );
 
     if (kind == CellKind.mine) {
-      canvas.dot(rect.center, rect.width * 0.24, color: palette.error);
-      canvas.ring(rect.center, rect.width * 0.34, color: palette.error, width: 1.6);
+      canvas.dot(rect.center, canvas.radiusFor(rect, 0.24),
+          color: palette.error);
+      canvas.ring(rect.center, canvas.radiusFor(rect, 0.34),
+          color: palette.error, width: 1.6);
       return;
     }
 
@@ -141,7 +143,8 @@ class InertiaBoard extends GridBoard<InertiaState> {
 
     final hint = state.hint;
     if (hint == null) return;
-    final landing = const InertiaEngine().landing(state.puzzle, state.position, hint);
+    final landing =
+        const InertiaEngine().landing(state.puzzle, state.position, hint);
     if (landing == null) return;
     canvas.cell(
       cellRect(landing ~/ cols, landing % cols).deflate(0.004),
@@ -157,11 +160,12 @@ class InertiaBoard extends GridBoard<InertiaState> {
     final dead = state.position.exploded;
     canvas.dot(
       rect.center,
-      rect.width * 0.34,
+      canvas.radiusFor(rect, 0.34),
       color: dead ? palette.error : palette.primary,
     );
     if (dead) {
-      canvas.ring(rect.center, rect.width * 0.44, color: palette.error, width: 2);
+      canvas.ring(rect.center, canvas.radiusFor(rect, 0.44),
+          color: palette.error, width: 2);
     }
   }
 
@@ -186,21 +190,24 @@ class InertiaBoard extends GridBoard<InertiaState> {
   ) {
     super.paint(canvas, to);
 
-    final start = cellRect(from.position.cell ~/ cols, from.position.cell % cols).center;
-    final end = cellRect(to.position.cell ~/ cols, to.position.cell % cols).center;
+    final start =
+        cellRect(from.position.cell ~/ cols, from.position.cell % cols).center;
+    final end =
+        cellRect(to.position.cell ~/ cols, to.position.cell % cols).center;
     final eased = Curves.easeOutCubic.transform(t.clamp(0.0, 1.0));
     final centre = Offset.lerp(start, end, eased)!;
     final palette = canvas.palette;
-    final widthPx = cellRect(0, 0).width;
+    final ball = cellRect(0, 0);
     final dead = to.position.exploded;
 
     canvas.dot(
       centre,
-      widthPx * 0.34,
+      canvas.radiusFor(ball, 0.34),
       color: dead ? palette.error : palette.primary,
     );
     if (dead) {
-      canvas.ring(centre, widthPx * 0.44, color: palette.error, width: 2);
+      canvas.ring(centre, canvas.radiusFor(ball, 0.44),
+          color: palette.error, width: 2);
     }
   }
 }

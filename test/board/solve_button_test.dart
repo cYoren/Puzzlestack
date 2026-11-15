@@ -18,12 +18,36 @@ import 'package:puzzle/ui/features/games/slitherlink/slitherlink_provider.dart';
 import 'package:puzzle/ui/features/games/sudoku/sudoku_provider.dart';
 import 'package:puzzle/ui/features/games/tents_and_trees/tents_and_trees_provider.dart';
 import 'package:puzzle/ui/features/games/twiddle/twiddle_provider.dart';
+import 'package:puzzle/ui/features/games/ascent/ascent_provider.dart';
+import 'package:puzzle/ui/features/games/clusters/clusters_provider.dart';
+import 'package:puzzle/ui/features/games/seismic/seismic_provider.dart';
 import 'package:puzzle/ui/features/games/water_sort/water_sort_provider.dart';
 
 /// The solve button is a promise: it fills in a board that the game then calls
 /// solved. If a `solve()` drifts out of step with its own win check, this test
 /// says so before a player does.
 void main() {
+  test('seismic solve finishes the board', () {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    container.read(seismicNotifierProvider.notifier).solve();
+    expect(container.read(seismicNotifierProvider).isSolved, isTrue);
+  });
+
+  test('ascent solve finishes the board', () {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    container.read(ascentNotifierProvider.notifier).solve();
+    expect(container.read(ascentNotifierProvider).isSolved, isTrue);
+  });
+
+  test('clusters solve finishes the board', () {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    container.read(clustersNotifierProvider.notifier).solve();
+    expect(container.read(clustersNotifierProvider).isSolved, isTrue);
+  });
+
   test('signpost solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
