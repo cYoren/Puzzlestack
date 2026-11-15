@@ -100,7 +100,7 @@ void main() {
       final puzzle = engine.generate(AscentSize.medium, random: Random(51));
       final found = AscentSearch(
         puzzle: puzzle,
-        masks: AscentModel.fresh(puzzle).masks,
+        domains: AscentModel.fresh(puzzle).domains,
         limit: 1,
         budget: 200000,
       ).run();

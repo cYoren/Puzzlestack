@@ -40,13 +40,15 @@ class CubeBoard extends GridBoard<CubeState> {
     return null;
   }
 
-  PuzzleMove<CubeState> _rollMove(ElementRef from, int to, CubeDirection direction) {
+  PuzzleMove<CubeState> _rollMove(
+      ElementRef from, int to, CubeDirection direction) {
     return PuzzleMove<CubeState>(
       kind: MoveKind.place,
       source: from,
       target: cell(to ~/ cols, to % cols),
       apply: (current) => current.copyWith(
-        position: const CubeEngine().roll(current.puzzle, current.position, direction),
+        position: const CubeEngine()
+            .roll(current.puzzle, current.position, direction),
         moves: current.moves + 1,
         clearHint: true,
       ),
@@ -85,7 +87,8 @@ class CubeBoard extends GridBoard<CubeState> {
     if (index == _cubeCell) return null;
     final direction = _directionTo(_cubeCell, index);
     if (direction == null) return null;
-    return _rollMove(cell(_cubeCell ~/ cols, _cubeCell % cols), index, direction);
+    return _rollMove(
+        cell(_cubeCell ~/ cols, _cubeCell % cols), index, direction);
   }
 
   @override
@@ -107,7 +110,8 @@ class CubeBoard extends GridBoard<CubeState> {
       strokeWidth: painted ? 3 : 1.2,
     );
     if (target && !painted) {
-      canvas.dot(rect.center, rect.width * 0.16, color: palette.surface);
+      canvas.dot(rect.center, canvas.radiusFor(rect, 0.16),
+          color: palette.surface);
     }
     if (painted) {
       canvas.cell(
@@ -207,8 +211,10 @@ class CubeBoard extends GridBoard<CubeState> {
     }
 
     final edge = palette.ink.withValues(alpha: 0.75);
-    canvas.path(left, fill: shade(CubeFace.south, 0.72), stroke: edge, width: 1.6);
-    canvas.path(right, fill: shade(CubeFace.west, 0.85), stroke: edge, width: 1.6);
+    canvas.path(left,
+        fill: shade(CubeFace.south, 0.72), stroke: edge, width: 1.6);
+    canvas.path(right,
+        fill: shade(CubeFace.west, 0.85), stroke: edge, width: 1.6);
     canvas.path(top, fill: shade(CubeFace.top, 1.0), stroke: edge, width: 1.6);
 
     // The bottom face is the one a roll swaps and the answer hangs on, and it

@@ -1,7 +1,7 @@
 /// Ascent as a deduction board.
 ///
-/// A cell's mask says which numbers could still sit there. Placing a number is
-/// the whole propagation, and it is three statements at once:
+/// A cell's domain says which numbers could still sit there. Placing a number
+/// is the whole propagation, and it is three statements at once:
 ///
 ///  * the number is used up, so no other cell can hold it;
 ///  * the number before it can only sit in a cell that touches this one;
@@ -16,33 +16,20 @@ library;
 import '../../../../core/deduction.dart';
 import 'ascent_puzzle.dart';
 
-/// The bit for [number] (1..49). A 7x7 board needs 49 bits, which fits in the
-/// 64-bit integer Dart gives us on every platform Flutter targets.
-int ascentBit(int number) => 1 << (number - 1);
-
-/// The number of a single-bit mask.
-int ascentNumber(int bit) => bit.bitLength;
-
-int _popCount(int mask) {
-  var count = 0;
-  while (mask != 0) {
-    mask &= mask - 1;
-    count++;
-  }
-  return count;
-}
-
 class AscentModel implements DeductionModel<AscentModel> {
   AscentModel({
     required this.puzzle,
-    required this.masks,
+    required this.domains,
     this.broken = false,
   });
 
   factory AscentModel.fresh(AscentPuzzle puzzle) {
     final model = AscentModel(
       puzzle: puzzle,
-      masks: List<int>.filled(puzzle.cellCount, (1 << puzzle.maxNumber) - 1),
+      domains: [
+        for (var cell = 0; cell < puzzle.cellCount; cell++)
+          {for (var number = 1; number <= puzzle.maxNumber; number++) number},
+      ],
     );
     for (var cell = 0; cell < puzzle.cellCount; cell++) {
       final clue = puzzle.given(cell);
@@ -54,8 +41,13 @@ class AscentModel implements DeductionModel<AscentModel> {
 
   final AscentPuzzle puzzle;
 
-  /// Per cell, the numbers it can still hold. A decided cell is a single bit.
-  final List<int> masks;
+  /// Per cell, the numbers it can still hold.
+  ///
+  /// A set, not a bitmask: a 7x7 board has 49 numbers and Dart's web build
+  /// truncates integer bitwise operations to 32 bits. A bitmask would silently
+  /// lose every number above 32 on the web target, which makes the larger
+  /// boards unsolvable there and only there.
+  final List<Set<int>> domains;
 
   /// Set when the printed numbers contradict each other.
   bool broken;
@@ -65,40 +57,43 @@ class AscentModel implements DeductionModel<AscentModel> {
   int get maxNumber => puzzle.maxNumber;
 
   @override
-  AscentModel copy() =>
-      AscentModel(puzzle: puzzle, masks: [...masks], broken: broken);
+  AscentModel copy() => AscentModel(
+        puzzle: puzzle,
+        domains: [
+          for (final domain in domains) {...domain}
+        ],
+        broken: broken,
+      );
 
   @override
-  bool get isComplete => !broken && masks.every((mask) => _popCount(mask) == 1);
+  bool get isComplete =>
+      !broken && domains.every((domain) => domain.length == 1);
 
   @override
   Choice? get choice {
     var best = -1;
     var bestCount = 99;
-    for (var cell = 0; cell < masks.length; cell++) {
-      final count = _popCount(masks[cell]);
+    for (var cell = 0; cell < domains.length; cell++) {
+      final count = domains[cell].length;
       if (count <= 1 || count >= bestCount) continue;
       best = cell;
       bestCount = count;
     }
     if (best < 0) return null;
-    return Choice(best, [
-      for (var number = 1; number <= maxNumber; number++)
-        if (masks[best] & ascentBit(number) != 0) ascentBit(number),
-    ]);
+    return Choice(best, domains[best].toList()..sort());
   }
 
   @override
   AscentModel assume(int slot, int value) {
     final next = copy();
-    if (next.set(slot, ascentNumber(value)) < 0) next.broken = true;
+    if (next.set(slot, value) < 0) next.broken = true;
     return next;
   }
 
   /// The number a decided cell holds, or 0 when it is still open.
   int numberAt(int cell) {
-    final mask = masks[cell];
-    return _popCount(mask) == 1 ? ascentNumber(mask) : 0;
+    final domain = domains[cell];
+    return domain.length == 1 ? domain.first : 0;
   }
 
   /// Places [number] at [cell] and propagates it. 1 when that was news, 0 when
@@ -108,38 +103,37 @@ class AscentModel implements DeductionModel<AscentModel> {
   /// a cell narrowed by elimination has never told its neighbours anything:
   /// "decided" and "propagated" are two different states.
   int set(int cell, int number) {
-    final bit = ascentBit(number);
-    final mask = masks[cell];
-    if (mask & bit == 0) return -1;
+    final domain = domains[cell];
+    if (!domain.contains(number)) return -1;
 
-    masks[cell] = bit;
-    var news = mask == bit ? 0 : 1;
+    var news = domain.length == 1 ? 0 : 1;
+    domains[cell] = {number};
 
     // The number is used up.
     for (var other = 0; other < cellCount; other++) {
       if (other == cell) continue;
-      final changed = _remove(other, bit);
+      final changed = _remove(other, number);
       if (changed < 0) return -1;
       news += changed;
     }
 
     // Its neighbours in the path must touch it.
-    final around = puzzle.neighboursOf(cell);
-    final touching = {for (final other in around) other, cell};
+    final touching = {
+      for (final other in puzzle.neighboursOf(cell)) other,
+      cell,
+    };
     if (number > 1) {
-      final before = ascentBit(number - 1);
       for (var other = 0; other < cellCount; other++) {
         if (touching.contains(other)) continue;
-        final changed = _remove(other, before);
+        final changed = _remove(other, number - 1);
         if (changed < 0) return -1;
         news += changed;
       }
     }
     if (number < maxNumber) {
-      final after = ascentBit(number + 1);
       for (var other = 0; other < cellCount; other++) {
         if (touching.contains(other)) continue;
-        final changed = _remove(other, after);
+        final changed = _remove(other, number + 1);
         if (changed < 0) return -1;
         news += changed;
       }
@@ -147,28 +141,24 @@ class AscentModel implements DeductionModel<AscentModel> {
     return news;
   }
 
-  int _remove(int cell, int bit) {
-    final mask = masks[cell];
-    if (mask & bit == 0) return 0;
-    if (mask == bit) return -1;
-    masks[cell] = mask & ~bit;
+  int _remove(int cell, int number) {
+    final domain = domains[cell];
+    if (!domain.contains(number)) return 0;
+    if (domain.length == 1) return -1;
+    domain.remove(number);
     return 1;
   }
 
   /// Removes [number] from [cell], for a rule that has proved it impossible.
-  int eliminate(int cell, int number) => _remove(cell, ascentBit(number));
+  int eliminate(int cell, int number) => _remove(cell, number);
 
   /// The numbers a cell can still hold, in order.
-  List<int> candidates(int cell) => [
-        for (var number = 1; number <= maxNumber; number++)
-          if (masks[cell] & ascentBit(number) != 0) number,
-      ];
+  List<int> candidates(int cell) => domains[cell].toList()..sort();
 
   /// True when some cell touching [cell] could still hold [number].
   bool neighbourCanTake(int cell, int number) {
-    final bit = ascentBit(number);
     for (final other in puzzle.neighboursOf(cell)) {
-      if (masks[other] & bit != 0) return true;
+      if (domains[other].contains(number)) return true;
     }
     return false;
   }
@@ -189,10 +179,10 @@ class AscentSingles implements DeductionRule<AscentModel> {
     if (model.broken) return -1;
     var news = 0;
     for (var cell = 0; cell < model.cellCount; cell++) {
-      final mask = model.masks[cell];
-      if (mask == 0) return -1;
-      if (_popCount(mask) != 1) continue;
-      final settled = model.set(cell, ascentNumber(mask));
+      final domain = model.domains[cell];
+      if (domain.isEmpty) return -1;
+      if (domain.length != 1) continue;
+      final settled = model.set(cell, domain.first);
       if (settled < 0) return -1;
       news += settled;
     }
@@ -215,11 +205,10 @@ class AscentHiddenSingles implements DeductionRule<AscentModel> {
     if (model.broken) return -1;
     var news = 0;
     for (var number = 1; number <= model.maxNumber; number++) {
-      final bit = ascentBit(number);
       int? only;
       var places = 0;
       for (var cell = 0; cell < model.cellCount; cell++) {
-        if (model.masks[cell] & bit == 0) continue;
+        if (!model.domains[cell].contains(number)) continue;
         places++;
         only = cell;
         if (places > 1) break;
@@ -274,7 +263,7 @@ class AscentPathRoom implements DeductionRule<AscentModel> {
   }
 }
 
-/// The result of counting the paths a set of masks allows.
+/// The result of counting the paths a set of domains allows.
 class AscentCount {
   const AscentCount({
     required this.solutions,
@@ -295,30 +284,38 @@ class AscentCount {
 class AscentSearch {
   AscentSearch({
     required this.puzzle,
-    required List<int> masks,
+    required List<Set<int>> domains,
     this.limit = 2,
     this.budget = 40000,
-  }) : masks = List<int>.from(masks);
+  }) : domains = [
+          for (final domain in domains) {...domain}
+        ];
 
   final AscentPuzzle puzzle;
-  final List<int> masks;
+
+  /// The starting domains, by cell. Copied, so the caller keeps its own.
+  final List<Set<int>> domains;
+
   final int limit;
   final int budget;
 
   int _nodes = 0;
   int _solutions = 0;
   bool _truncated = false;
-  late List<int> _seen;
+  late List<Set<int>> _seen;
 
   AscentCount run() {
-    _seen = List<int>.filled(puzzle.cellCount, 0);
-    _search(AscentModel(puzzle: puzzle, masks: masks));
+    _seen = [for (var cell = 0; cell < puzzle.cellCount; cell++) <int>{}];
+    _search(AscentModel(
+      puzzle: puzzle,
+      domains: [
+        for (final domain in domains) {...domain}
+      ],
+    ));
     final forced = List<int>.filled(puzzle.cellCount, 0);
     if (!_truncated && _solutions > 0) {
       for (var cell = 0; cell < puzzle.cellCount; cell++) {
-        if (_popCount(_seen[cell]) == 1) {
-          forced[cell] = ascentNumber(_seen[cell]);
-        }
+        if (_seen[cell].length == 1) forced[cell] = _seen[cell].first;
       }
     }
     return AscentCount(
@@ -340,7 +337,7 @@ class AscentSearch {
     if (model.isComplete) {
       _solutions++;
       for (var cell = 0; cell < model.cellCount; cell++) {
-        _seen[cell] |= model.masks[cell];
+        _seen[cell].addAll(model.domains[cell]);
       }
       return;
     }
@@ -369,7 +366,7 @@ class AscentForced implements DeductionRule<AscentModel> {
     if (model.broken) return -1;
     final count = AscentSearch(
       puzzle: model.puzzle,
-      masks: model.masks,
+      domains: model.domains,
       limit: 4096,
       budget: 40000,
     ).run();
@@ -380,7 +377,7 @@ class AscentForced implements DeductionRule<AscentModel> {
     for (var cell = 0; cell < model.cellCount; cell++) {
       final number = count.forced[cell];
       if (number == 0) continue;
-      if (_popCount(model.masks[cell]) == 1) continue;
+      if (model.domains[cell].length == 1) continue;
       final settled = model.set(cell, number);
       if (settled < 0) return -1;
       news += settled;
