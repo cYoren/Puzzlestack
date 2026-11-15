@@ -34,8 +34,8 @@ by playing.
 **Check 6 evidence.** `AUDIT_ONLY=<room ids> flutter test test/board/game_audit.dart`,
 light and `AUDIT_DARK=1`:
 
-- light: `AUDIT checked=52 overflow=0 threw=0`
-- dark: `AUDIT checked=52 overflow=0 threw=0`
+- light: `AUDIT checked=57 overflow=0 threw=0`
+- dark: `AUDIT checked=57 overflow=0 threw=0`
 
 ## Per game
 

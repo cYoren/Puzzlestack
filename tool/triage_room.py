@@ -10,8 +10,8 @@ What this can decide, it decides. What needs a person at the board, it marks
 Checks that are mechanical here:
 
 - **6 it is this app**: a mounted board at 320dp, light and dark, with no overflow and no
-  thrown exception. That evidence comes from `test/board/game_audit.dart`, which already
-  pumps every game at 320dp; the numbers it prints for this room are pasted in.
+  thrown exception. That evidence comes from `test/board/game_audit.dart`; this script runs
+  it with this room's ids (`AUDIT_ONLY=...`) and pastes in what it prints, once per theme.
 - **9 honest name**: the title and subtitle a stranger reads, checked against the lab
   vocabulary the bar lists as slop.
 - **10 tested against its own rule**: a test file for the game that asserts something
@@ -47,7 +47,9 @@ answers by playing, and they stay `needs-play` in the report.
 from __future__ import annotations
 
 import json
+import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -463,20 +465,43 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
     return "\n".join(lines)
 
 
+def run_audit(report: dict) -> dict:
+    """Mount this room's cards and return the audit line for each theme.
+
+    It used to read `/tmp/audit_light.log`, which meant every room's evidence
+    section claimed whatever the last whole-catalogue sweep had printed - 52
+    cards, in all six rooms. Evidence that is copied is not evidence.
+    """
+    ids = ",".join(sorted(report["games"]))
+    lines = {}
+    for mode, env_extra in (
+        ("light", {}),
+        ("dark", {"AUDIT_DARK": "1"}),
+    ):
+        env = {**os.environ, "TMPDIR": str(Path.home() / ".cache" / "tmp"),
+               "AUDIT_ONLY": ids, **env_extra}
+        try:
+            done = subprocess.run(
+                ["flutter", "test", "test/board/game_audit.dart"],
+                cwd=REPO, env=env, capture_output=True, text=True, timeout=1200,
+            )
+        except (OSError, subprocess.SubprocessError) as error:
+            lines[mode] = f"audit did not run: {error}"
+            continue
+        found = re.search(r"^AUDIT checked=.*$", done.stdout, re.M)
+        if found:
+            lines[mode] = found.group(0)
+        else:
+            lines[mode] = "audit printed no summary (see the run above)"
+    return lines
+
+
 def main() -> int:
     room_key = (sys.argv[1] if len(sys.argv) > 1 else "logic").lower()
     if room_key not in ROOMS:
         raise SystemExit(f"rooms: {', '.join(ROOMS)}")
     report = triage(room_key)
-    audit = {}
-    for mode, path in (
-        ("light", Path("/tmp/audit_light.log")),
-        ("dark", Path("/tmp/audit_dark.log")),
-    ):
-        if path.exists():
-            found = re.search(r"^AUDIT checked=.*$", path.read_text(), re.M)
-            if found:
-                audit[mode] = found.group(0)
+    audit = run_audit(report)
     out = REPO / "docs" / f"TRIAGE-{report['room'].upper()}.md"
     out.write_text(render(report, audit))
     print(f"wrote {out.relative_to(REPO)}")
