@@ -3080,6 +3080,78 @@ abstract class AppLocalizations {
   /// **'Complete the pattern in the 3x3 grid'**
   String get matrixReasoningSubtitle;
 
+  /// No description provided for @abcdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ABCD'**
+  String get abcdTitle;
+
+  /// No description provided for @abcdSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a letter in every cell. The digits on the edge count each letter in that row or column.'**
+  String get abcdSubtitle;
+
+  /// No description provided for @abcdFilled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cells'**
+  String get abcdFilled;
+
+  /// No description provided for @abcdDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get abcdDepth;
+
+  /// No description provided for @abcdWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY CELL LETTERED!'**
+  String get abcdWinTitle;
+
+  /// No description provided for @abcdWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every count met, no two identical letters touching.'**
+  String get abcdWinMessage;
+
+  /// No description provided for @boatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Boats'**
+  String get boatsTitle;
+
+  /// No description provided for @boatsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the hidden fleet. The counts outside say how many boat cells each row and column holds.'**
+  String get boatsSubtitle;
+
+  /// No description provided for @boatsShipsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Boat cells'**
+  String get boatsShipsFound;
+
+  /// No description provided for @boatsDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get boatsDepth;
+
+  /// No description provided for @boatsWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'FLEET FOUND!'**
+  String get boatsWinTitle;
+
+  /// No description provided for @boatsWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every boat placed and nothing touching.'**
+  String get boatsWinMessage;
+
   /// No description provided for @tentsAndTreesTitle.
   ///
   /// In en, this message translates to:

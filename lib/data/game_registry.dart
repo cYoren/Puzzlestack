@@ -185,6 +185,8 @@ import '../ui/features/games/word_ladder/word_ladder_metadata.dart';
 import '../ui/features/games/slide_puzzle/slide_puzzle_metadata.dart';
 import '../ui/features/games/pipes/pipes_metadata.dart';
 import '../ui/features/games/block_escape/block_escape_metadata.dart';
+import '../ui/features/games/abcd/abcd_metadata.dart';
+import '../ui/features/games/boats/boats_metadata.dart';
 import '../ui/features/games/tents_and_trees/tents_and_trees_metadata.dart';
 import '../ui/features/games/find_word/find_word_metadata.dart';
 import '../ui/features/games/crossword/crossword_metadata.dart';
@@ -493,6 +495,8 @@ List<GameMetadata> _buildGameList() {
     slidePuzzleMetadata,
     pipesMetadata,
     blockEscapeMetadata,
+    abcdMetadata,
+    boatsMetadata,
     tentsAndTreesMetadata,
     findWordMetadata,
     crosswordMetadata,

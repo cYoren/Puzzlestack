@@ -1,13 +1,13 @@
 # Puzzlestack
 
-A cross-platform suite of **224 playable brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
+A cross-platform suite of **226 playable brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
 
 Two ideas sit at the heart of Puzzlestack:
 
 1. **The deal.** The app opens on a puzzle, not on a menu. One full-screen card, playable
    where it lands; swipe up and the next card is dealt. The deck is a real shuffled pass over
    every playable puzzle, so nothing repeats until the bag is empty and the counter on the card
-   (`042 / 224`) is true. Solving a card offers one thing: the next card.
+   (`042 / 226`) is true. Solving a card offers one thing: the next card.
 2. **The stack.** When you know what you want, the second room files every puzzle by
    category: six rooms, today's card, a row for when you have two minutes, and search.
 
@@ -16,7 +16,7 @@ live colour (indigo) that only appears where something is active. See [DESIGN.md
 
 ---
 
-## The 224 games, by category
+## The 226 games, by category
 
 - **Logic (52):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies and more.
 - **Math (44):** 2048, KenKen, Magic Squares, Prime Hunter, Fraction Match, Quick Math, Sum Pyramid and more.

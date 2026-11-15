@@ -1684,6 +1684,45 @@ class AppLocalizationsTa extends AppLocalizations {
       '3x3 கட்டத்தில் அமைப்பைப் பூர்த்தி செய்யவும்';
 
   @override
+  String get abcdTitle => 'ABCD';
+
+  @override
+  String get abcdSubtitle =>
+      'Write a letter in every cell. The digits on the edge count each letter in that row or column.';
+
+  @override
+  String get abcdFilled => 'Cells';
+
+  @override
+  String get abcdDepth => 'Depth';
+
+  @override
+  String get abcdWinTitle => 'EVERY CELL LETTERED!';
+
+  @override
+  String get abcdWinMessage =>
+      'Every count met, no two identical letters touching.';
+
+  @override
+  String get boatsTitle => 'Boats';
+
+  @override
+  String get boatsSubtitle =>
+      'Find the hidden fleet. The counts outside say how many boat cells each row and column holds.';
+
+  @override
+  String get boatsShipsFound => 'Boat cells';
+
+  @override
+  String get boatsDepth => 'Depth';
+
+  @override
+  String get boatsWinTitle => 'FLEET FOUND!';
+
+  @override
+  String get boatsWinMessage => 'Every boat placed and nothing touching.';
+
+  @override
   String get tentsAndTreesTitle => 'கூடாரங்கள் & மரங்கள்';
 
   @override
