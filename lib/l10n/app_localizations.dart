@@ -3152,6 +3152,114 @@ abstract class AppLocalizations {
   /// **'Every boat placed and nothing touching.'**
   String get boatsWinMessage;
 
+  /// No description provided for @seismicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ripple Effect'**
+  String get seismicTitle;
+
+  /// No description provided for @seismicSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill every shape with the numbers 1 to its size. The same number twice in a line needs a gap as wide as itself.'**
+  String get seismicSubtitle;
+
+  /// No description provided for @seismicClues.
+  ///
+  /// In en, this message translates to:
+  /// **'Clues'**
+  String get seismicClues;
+
+  /// No description provided for @seismicDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get seismicDepth;
+
+  /// No description provided for @seismicWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'RIPPLE SETTLED!'**
+  String get seismicWinTitle;
+
+  /// No description provided for @seismicWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every shape holds 1 to its size, with no two numbers too close.'**
+  String get seismicWinMessage;
+
+  /// No description provided for @ascentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Number Path'**
+  String get ascentTitle;
+
+  /// No description provided for @ascentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Place 1 to the last number once each. Every number touches the one before it, along an edge or a corner.'**
+  String get ascentSubtitle;
+
+  /// No description provided for @ascentNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get ascentNext;
+
+  /// No description provided for @ascentDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get ascentDepth;
+
+  /// No description provided for @ascentWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PATH COMPLETE!'**
+  String get ascentWinTitle;
+
+  /// No description provided for @ascentWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'One number per cell, every step touching the one before it.'**
+  String get ascentWinMessage;
+
+  /// No description provided for @clustersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clusters'**
+  String get clustersTitle;
+
+  /// No description provided for @clustersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill the grid with two colours. A dot marks a cell with exactly one neighbour of its colour; every other cell needs two.'**
+  String get clustersSubtitle;
+
+  /// No description provided for @clustersDots.
+  ///
+  /// In en, this message translates to:
+  /// **'Dots'**
+  String get clustersDots;
+
+  /// No description provided for @clustersDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get clustersDepth;
+
+  /// No description provided for @clustersWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'CLUSTERS SETTLED!'**
+  String get clustersWinTitle;
+
+  /// No description provided for @clustersWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Two colours, every dot true, every cluster of two or more.'**
+  String get clustersWinMessage;
+
   /// No description provided for @tentsAndTreesTitle.
   ///
   /// In en, this message translates to:

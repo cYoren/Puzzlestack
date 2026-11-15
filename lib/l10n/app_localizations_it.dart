@@ -1705,6 +1705,66 @@ class AppLocalizationsIt extends AppLocalizations {
   String get boatsWinMessage => 'Every boat placed and nothing touching.';
 
   @override
+  String get seismicTitle => 'Ripple Effect';
+
+  @override
+  String get seismicSubtitle =>
+      'Fill every shape with the numbers 1 to its size. The same number twice in a line needs a gap as wide as itself.';
+
+  @override
+  String get seismicClues => 'Clues';
+
+  @override
+  String get seismicDepth => 'Depth';
+
+  @override
+  String get seismicWinTitle => 'RIPPLE SETTLED!';
+
+  @override
+  String get seismicWinMessage =>
+      'Every shape holds 1 to its size, with no two numbers too close.';
+
+  @override
+  String get ascentTitle => 'Number Path';
+
+  @override
+  String get ascentSubtitle =>
+      'Place 1 to the last number once each. Every number touches the one before it, along an edge or a corner.';
+
+  @override
+  String get ascentNext => 'Next';
+
+  @override
+  String get ascentDepth => 'Depth';
+
+  @override
+  String get ascentWinTitle => 'PATH COMPLETE!';
+
+  @override
+  String get ascentWinMessage =>
+      'One number per cell, every step touching the one before it.';
+
+  @override
+  String get clustersTitle => 'Clusters';
+
+  @override
+  String get clustersSubtitle =>
+      'Fill the grid with two colours. A dot marks a cell with exactly one neighbour of its colour; every other cell needs two.';
+
+  @override
+  String get clustersDots => 'Dots';
+
+  @override
+  String get clustersDepth => 'Depth';
+
+  @override
+  String get clustersWinTitle => 'CLUSTERS SETTLED!';
+
+  @override
+  String get clustersWinMessage =>
+      'Two colours, every dot true, every cluster of two or more.';
+
+  @override
   String get tentsAndTreesTitle => 'Tende e Alberi';
 
   @override
