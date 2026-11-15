@@ -324,9 +324,10 @@ TMPDIR=$HOME/.cache/tmp AUDIT_ONLY=your_game flutter test test/board/game_audit.
 TMPDIR=$HOME/.cache/tmp AUDIT_ONLY=your_game AUDIT_DARK=1 flutter test test/board/game_audit.dart
 ```
 
-The audit mounts the board at phone size in both themes and fails on an overflow or a thrown
-build: `AUDIT checked=1 overflow=0 threw=0` per theme. It is the only check that sees a board that
-builds and cannot be held.
+The audit mounts the board at phone size in both themes, prints
+`AUDIT checked=1 overflow=0 threw=0` per theme and then **fails** if either count is not zero. It is
+the only check that sees a board that builds and cannot be held; read the printed line too, because
+it is the record of what was pumped.
 
 `TMPDIR` is not optional: the default temp directory on a sandboxed Linux box makes the test runner
 fail in ways that look like test failures. One `flutter test` at a time, `-j 4`.
