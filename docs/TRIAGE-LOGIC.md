@@ -23,13 +23,13 @@ by playing.
 
 | | Deck | Library | Archive |
 | --- | --- | --- | --- |
-| Games | 44 | 8 | 0 |
+| Games | 44 | 13 | 0 |
 
 **Origin tags** in this room, which is what the uniqueness column above turns on:
 
 | Origin | Games |
 | --- | --- |
-| puzzle | 52 |
+| puzzle | 57 |
 
 **Check 6 evidence.** `AUDIT_ONLY=<room ids> flutter test test/board/game_audit.dart`,
 light and `AUDIT_DARK=1`:
@@ -41,10 +41,14 @@ light and `AUDIT_DARK=1`:
 
 | Game | Title | Tier | 2 fair | 5 fresh | 6 app | 7 tap | 8 ends | 9 name | 10 rule |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `abcd` | ABCD | library | pass | pass | audit-clean | pass | pass | shouting | pass |
 | `akari` | Akari | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
+| `ascent` | Number Path | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `binary_puzzle` | BINARY PUZZLE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
 | `block_escape` | BLOCK ESCAPE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `boats` | Boats | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `bridges` | BRIDGES | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
+| `clusters` | Clusters | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `color_flood` | Color Flood | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `crown` | CROWN | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
 | `cube` | CUBE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
@@ -77,6 +81,7 @@ light and `AUDIT_DARK=1`:
 | `pegs` | Pegs | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `pipes` | Pipes | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `same_game` | Same Game | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `seismic` | Ripple Effect | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `shikaku` | Shikaku | deck | unproven | pass | audit-clean | pass | pass | shouting | fail |
 | `signpost` | SIGNPOST | deck | pass | pass | audit-clean | pass | pass | shouting | pass |
 | `skyscrapers` | SKYSCRAPERS | deck | pass | pass | audit-clean | pass | pass | shouting | pass |
@@ -101,7 +106,7 @@ its own change with its own test. Grouped by the job that fixes it, because the 
 usually one mechanism and not N edits.
 
 - **`uniqueness` — the generator must prove its deal (check 2)** — 33: `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `map`, `masyu`, `matrix_reasoning`, `netslide`, `path_finder`, `pegs`, `pipes`, `same_game`, `shikaku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
-- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 23: `binary_puzzle`, `block_escape`, `bridges`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `hitori`, `inertia`, `kakuro`, `lighthouses`, `lights_out`, `magnets`, `map`, `netslide`, `nurikabe`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `wisconsin_card_sorting`
+- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 24: `abcd`, `binary_puzzle`, `block_escape`, `bridges`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `hitori`, `inertia`, `kakuro`, `lighthouses`, `lights_out`, `magnets`, `map`, `netslide`, `nurikabe`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `wisconsin_card_sorting`
 - **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 8: `gokigen_naname`, `kakurasu_sums`, `masyu`, `shikaku`, `tapa`, `tenner_grid`, `triplets_logic`, `yajilin`
 
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
@@ -116,7 +121,7 @@ own goal line is still owed to `card-teaches` (check 3), for the room as a whole
 
 ## What the play pass has to answer
 
-52 games. Play five times at phone size, write the first thing that
+57 games. Play five times at phone size, write the first thing that
 confused you, then confirm or move the id in `docs/CATALOG.md` with one line of reason:
 
-`akari`, `binary_puzzle`, `block_escape`, `bridges`, `color_flood`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `galaxies`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `kurodoko`, `lighthouses`, `lights_out`, `lock_pattern`, `logical_syllogisms`, `magnets`, `map`, `masyu`, `matrix_reasoning`, `minesweeper`, `netslide`, `nonogram`, `norinori`, `nurikabe`, `path_finder`, `pegs`, `pipes`, `same_game`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `sudoku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tents_and_trees`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
+`abcd`, `akari`, `ascent`, `binary_puzzle`, `block_escape`, `boats`, `bridges`, `clusters`, `color_flood`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `galaxies`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `kurodoko`, `lighthouses`, `lights_out`, `lock_pattern`, `logical_syllogisms`, `magnets`, `map`, `masyu`, `matrix_reasoning`, `minesweeper`, `netslide`, `nonogram`, `norinori`, `nurikabe`, `path_finder`, `pegs`, `pipes`, `same_game`, `seismic`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `sudoku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tents_and_trees`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`

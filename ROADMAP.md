@@ -74,12 +74,12 @@ What the machine pass leaves as real work, by job:
 
 | Job | Games | Where |
 | --- | --- | --- |
-| `uniqueness` | 111 | Logic 34, Math 19, Word 26, Spatial 32: the generator does not prove the deal is winnable |
-| `plain-names` | 84 | Logic 23, Math 13, Memory 24, Attention 13, Word 3, Spatial 8: ALL CAPS or lab vocabulary |
+| `uniqueness` | 110 | Logic 33, Math 19, Word 26, Spatial 32: the generator does not prove the deal is winnable |
+| `plain-names` | 85 | Logic 24, Math 13, Memory 24, Attention 13, Word 3, Spatial 8: ALL CAPS or lab vocabulary |
 | `rule-tests` | 79 | Logic 8, Math 22, Memory 16, Attention 19, Word 5, Spatial 9: no test against the game's own rule (G3) |
 | `feed-size` | 2 | Attention: `ghost_tap`, `rhythm_master` have no pool |
 
-**The play pass is still owed: 224 games** (139 Deck + 85 Library; the archive is not played).
+**The play pass is still owed: 229 games** (139 Deck + 90 Library; the archive is not played).
 It needs hands and eyes, not an agent reading code. Each room's report ends with the list.
 
 ### C. Cards that work in a feed
@@ -128,7 +128,7 @@ Pool jobs for archived games are cancelled. Do not grow a table for a game nobod
 ### G. Release
 
 `store-copy` is done (#61): both listings, the web shell, the Pages site and the README lead with
-the feed and carry the visible count (224), and `test/content/registry_test.dart` fails if any of
+the feed and carry the visible count (229), and `test/content/registry_test.dart` fails if any of
 them says the registry total again.
 
 | Job | What |

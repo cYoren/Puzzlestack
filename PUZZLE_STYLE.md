@@ -1,26 +1,19 @@
 # The Puzzlestack house style
 
-304 puzzles have to feel like one app. Today they share colours and fonts and nothing else.
+One app, not 229 games that happen to share a font. This is the gate every port and every
+rebuild passes, and the look a card is held to before it is dealt.
 
-Measured on the current tree:
+**What is in place.** The contract is real code, not a proposal: `lib/ui/core/board/`
+(`puzzle_board.dart`, `puzzle_board_view.dart`, `board_motion.dart`, `board_verb.dart`,
+`grid_board.dart`), the shared mark vocabulary in `lib/ui/core/board/puzzle_marks.dart`, and
+the one screen chrome every board game uses, `lib/ui/features/games/shared/board_game_scaffold.dart`.
+A new board is a subclass of `GridBoard` plus a screen that hands it to `BoardGameScaffold`; it
+never writes a gesture, a `Column` of paddings or a hard-coded colour. Both layers are
+documented in [docs/GAME_DEV_GUIDE.md](docs/GAME_DEV_GUIDE.md) Step 4a.
 
-| | Count |
-| --- | --- |
-| Games that paint their board with `CustomPainter` | 19 |
-| Games built from widget grids | 142 |
-| Games with any drag interaction | **0** (3 after Phase 1) |
-| Games calling haptics through `HapticFeedbackUtil` | 152 (good) |
-| Games with their own `AnimationController` | 7 |
-
-The counts were measured on the 161-game tree. Phase 2 merged 143 more games and Phase 3
-ported nine, so the same proportions now apply to 313; the Phase 3 and 4 puzzles are the only
-ones on the contract so far, which is exactly why the ports and rebuilds come next.
-
-So: two rendering philosophies, no drag anywhere, and almost no motion. Colour and haptics are
-already shared; **feel is not**. Porting 67 more puzzles before fixing that would bake the
-inconsistency in 67 more times.
-
-This document is the fix. It is the gate every port and every rebuild passes.
+Older boards still carry their own paint and chrome; they keep it until someone touches them.
+Every port and rebuild from now on is on the contract, and the gate at the bottom of this file
+is what "on the contract" means.
 
 ---
 
@@ -92,7 +85,7 @@ declare *which future states a drag can lead to*. The engine speculatively rende
 states, works out where the dragged element lands in each, and synthesizes the drag — float,
 drop zones, snapping, transitions — from that.
 
-Why this is the right foundation for 228 puzzles:
+Why this is the right foundation for 229 puzzles:
 
 - **One drag feel, everywhere.** Connect an island in Bridges, place a tent, swap two tiles,
   slide a row in Netslide: same lift, same snap, same settle, because it is one engine.

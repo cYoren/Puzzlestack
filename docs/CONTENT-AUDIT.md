@@ -1,6 +1,7 @@
-# Content audit — 313 games, what is broken, thin, or missing
+# Content audit — what is broken, thin, or missing
 
-Measured against `main` at `e7c2475`, 2026-11-13. Every number here came from a script run on that
+Measured against `main` at `e7c2475`, 2026-11-13: 313 games at the time, 315 in the catalog
+today. The rules below are live; the counts are a snapshot of that tree. Every number here came from a script run on that
 tree, and the rule that produced it is stated with it. Re-run the rule, get the number; if you get
 something else, the tree moved and this file is stale.
 
@@ -13,8 +14,10 @@ Two rules for whoever picks these up:
 1. **Every fix ships with a test that would have failed before it.** Every band-1 defect is content
    that was never checked against the game's own rules. A test is the only thing that stops the
    next one.
-2. **Never fix thin content by deleting the game.** Grow the table. The number 313 is written into
-   five files (`number-313-drift`) and the store copy is set from it.
+2. **Never delete a game.** Grow the table instead. A game that cannot meet the bar is archived
+   (`archived: true`): its code and its tests stay, its card goes. Deleting is the one thing that
+   loses work and the one thing this repo does not do. The catalog counts are written into ten
+   files plus `docs/CATALOG.md`, and `test/content/registry_test.dart` holds them together.
 
 ---
 
