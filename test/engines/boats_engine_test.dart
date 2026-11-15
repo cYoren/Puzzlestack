@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/boats/boats_engine.dart';
 import 'package:puzzle/ui/features/games/boats/boats_model.dart';
+import 'package:puzzle/ui/features/games/boats/boats_provider.dart';
 
 const engine = BoatsEngine();
 
@@ -208,6 +210,61 @@ void main() {
         crossedOffFleet(marks, BoatsSize.small.fleet, rows: rows, cols: cols),
         [false, false, false],
       );
+    });
+
+    test('the hint is applied, not merely outlined', () {
+      // The bug this pins: the notifier stored the proved value and the board
+      // read only the cell, so the hint outlined whatever the player had put
+      // there. A player with a boat marked on open water was told nothing.
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(boatsNotifierProvider.notifier);
+      final start = container.read(boatsNotifierProvider);
+      final answer = start.puzzle.solution;
+
+      // Fill the board from the answer, then put one wrong boat on water.
+      final water = [
+        for (var cell = 0; cell < answer.length; cell++)
+          if (answer[cell] == kBoatWater) cell,
+      ].first;
+      notifier.state = start.copyWith(
+        marks: [for (final value in answer) markOfSolution(value)],
+      );
+      final wrong = [...notifier.state.marks];
+      wrong[water] = kMarkShip;
+      notifier.state = notifier.state.copyWith(marks: wrong);
+
+      notifier.hint();
+
+      final after = container.read(boatsNotifierProvider);
+      expect(after.hintCell, water,
+          reason: 'the only disagreeing cell is the wrong boat');
+      expect(after.marks[water], kMarkWater,
+          reason:
+              'the hint must write the proved mark, not outline the old one');
+      expect(after.isSolved, isTrue,
+          reason: 'the board is complete once fixed');
+    });
+
+    test('the hint writes into an untouched board and moves on', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(boatsNotifierProvider.notifier);
+
+      notifier.hint();
+      final first = container.read(boatsNotifierProvider);
+      final cell = first.hintCell;
+      expect(cell, isNotNull);
+      // The written mark is the answer's mark for that cell.
+      expect(
+        first.marks[cell!],
+        markOfSolution(first.puzzle.solution[cell]),
+      );
+
+      notifier.hint();
+      final second = container.read(boatsNotifierProvider);
+      expect(second.hintCell, isNot(cell),
+          reason: 'a second hint is about a different cell, not the same one');
     });
 
     test('the model never reports progress it did not make', () {

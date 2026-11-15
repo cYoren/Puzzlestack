@@ -68,6 +68,38 @@ class AbcdPuzzle {
 
   String letterAt(int index) => String.fromCharCode(65 + index);
 
+  /// True when a row's letters match its clues exactly.
+  ///
+  /// The board colours a clue when the line is *done*, so this has to be an
+  /// equality test on every letter. The first version asked only whether a
+  /// letter had overshot its target, which is true of an empty row: every row
+  /// clue was green from the first frame while the column clues turned green
+  /// only when they were really finished. One function for both directions now,
+  /// so they cannot drift apart again.
+  bool rowSatisfied(List<int> grid, int row) => _lineSatisfied(
+        grid,
+        [for (var col = 0; col < cols; col++) row * cols + col],
+        rowCounts[row],
+      );
+
+  /// True when a column's letters match its clues exactly.
+  bool colSatisfied(List<int> grid, int col) => _lineSatisfied(
+        grid,
+        [for (var row = 0; row < rows; row++) row * cols + col],
+        colCounts[col],
+      );
+
+  bool _lineSatisfied(List<int> grid, List<int> cells, List<int> counts) {
+    for (var letter = 0; letter < letters; letter++) {
+      var seen = 0;
+      for (final cell in cells) {
+        if (grid[cell] == letter) seen++;
+      }
+      if (seen != counts[letter]) return false;
+    }
+    return true;
+  }
+
   /// True when [grid] fits every clue and breaks no adjacency rule.
   bool isLegal(List<int> grid) {
     for (final value in grid) {
