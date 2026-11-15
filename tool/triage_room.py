@@ -474,8 +474,12 @@ def run_audit(report: dict) -> dict:
     """
     ids = ",".join(sorted(report["games"]))
     lines = {}
+    clean = True
     for mode, env_extra in (
-        ("light", {}),
+        # The light pass sets the variable rather than leaving it out: a shell
+        # that already exports AUDIT_DARK=1 would otherwise make both passes dark
+        # and the report claim two.
+        ("light", {"AUDIT_DARK": "0"}),
         ("dark", {"AUDIT_DARK": "1"}),
     ):
         env = {**os.environ, "TMPDIR": str(Path.home() / ".cache" / "tmp"),
@@ -489,22 +493,40 @@ def run_audit(report: dict) -> dict:
             lines[mode] = f"audit did not run: {error}"
             continue
         found = re.search(r"^AUDIT checked=.*$", done.stdout, re.M)
-        if found:
+        # `checked=` must be the number of cards asked for, or the sweep skipped
+        # something and its zero means nothing.
+        asked = len(ids.split(","))
+        covered = found and re.search(r"checked=(\d+)", found.group(0))
+        if done.returncode == 0 and covered and int(covered.group(1)) == asked:
             lines[mode] = found.group(0)
-        else:
-            lines[mode] = "audit printed no summary (see the run above)"
-    return lines
+            continue
+        # A sweep that did not pass must not be published as if it had: the whole
+        # point of running it per room is that the number is about this room.
+        clean = False
+        lines[mode] = (
+            found.group(0) + " (audit failed)"
+            if found
+            else f"audit failed (exit {done.returncode}, no summary)"
+        )
+    return lines, clean
 
 
 def main() -> int:
     room_key = (sys.argv[1] if len(sys.argv) > 1 else "logic").lower()
     if room_key not in ROOMS:
         raise SystemExit(f"rooms: {', '.join(ROOMS)}")
-    report = triage(room_key)
-    audit = run_audit(report)
+    # Ids first, then the sweep, then the verdicts: a room whose cards overflow
+    # must not render "audit-clean" for every card, which is what happens when the
+    # verdicts are decided before the audit runs.
+    probe = triage(room_key, audit_clean=False)
+    audit, clean = run_audit(probe)
+    report = triage(room_key, audit_clean=clean)
     out = REPO / "docs" / f"TRIAGE-{report['room'].upper()}.md"
     out.write_text(render(report, audit))
     print(f"wrote {out.relative_to(REPO)}")
+    if not clean:
+        print("check 6 FAILED: see the evidence section", file=sys.stderr)
+        return 1
     return 0
 
 
