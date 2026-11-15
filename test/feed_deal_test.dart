@@ -28,6 +28,18 @@ Widget _app(Widget child) => ProviderScope(
       ),
     );
 
+/// Tear the feed down, and let a straggler timer fire before the test ends.
+///
+/// The card after the pinned one comes from the shuffled pool, so a run can deal
+/// a game that schedules a timer in `initState` (Chain Reaction schedules a 50 ms
+/// haptic). That timer outlives the test and fails it at teardown with "Pending
+/// timers" after every assertion has passed - a test that fails at random tells
+/// you nothing about anything. Pumping past it with the tree gone drains it.
+Future<void> _teardown(WidgetTester tester) async {
+  await tester.pumpWidget(const SizedBox());
+  await tester.pump(const Duration(milliseconds: 100));
+}
+
 void _sizeTo(WidgetTester tester) {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 2.0;
@@ -42,7 +54,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('001'), findsOneWidget);
-    await tester.pumpWidget(const SizedBox());
+    await _teardown(tester);
   });
 
   testWidgets('NEXT deals the next card and the counter follows',
@@ -63,7 +75,7 @@ void main() {
         reason: 'the deal stepped the deck and the card face says 002');
     expect(find.text('001'), findsNothing);
 
-    await tester.pumpWidget(const SizedBox());
+    await _teardown(tester);
   });
 
   testWidgets('pulling the card up past the threshold deals it',
@@ -80,7 +92,7 @@ void main() {
 
     expect(find.text('002'), findsOneWidget);
 
-    await tester.pumpWidget(const SizedBox());
+    await _teardown(tester);
   });
 
   testWidgets('a short pull puts the card back', (tester) async {
@@ -94,6 +106,6 @@ void main() {
 
     expect(find.text('001'), findsOneWidget);
 
-    await tester.pumpWidget(const SizedBox());
+    await _teardown(tester);
   });
 }
