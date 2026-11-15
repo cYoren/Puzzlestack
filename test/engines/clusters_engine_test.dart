@@ -10,6 +10,31 @@ const engine = ClustersEngine();
 
 void main() {
   group('ClustersEngine', () {
+    test('an unfinished enumeration proves nothing', () {
+      // The exact rule used to treat agreement among the first `limit` answers
+      // as agreement among every answer. A clue-free board has far more than
+      // three colourings, so the search must not hand out forced cells and the
+      // rule must write nothing.
+      final size = ClustersSize.small;
+      final bare = ClustersPuzzle(
+        size: size,
+        clues: List<int>.filled(size.cellCount, kClusterNoClue),
+        solution: List<int>.filled(size.cellCount, kClusterRed),
+      );
+      final count = ClustersSearch(
+        puzzle: bare,
+        masks: ClustersModel.fresh(bare).masks,
+        limit: 3,
+      ).run();
+      expect(count.solutions, 3);
+      expect(count.exhausted, isFalse);
+      expect(count.forced.every((value) => value == 0), isTrue);
+
+      final model = ClustersModel.fresh(bare);
+      expect(const ClustersForced().apply(model), 0,
+          reason: 'the rule wrote a cell it had not proved');
+    });
+
     test('a dealt board is a legal colouring', () {
       final rng = Random(1);
       for (final size in ClustersSize.values) {
@@ -114,7 +139,7 @@ void main() {
         budget: 200000,
       ).run();
       expect(found.solutions, 1);
-      expect(found.forced, puzzle.solution);
+      expect(found.first, puzzle.solution);
     });
     test('the dots are on the board, not hidden behind it', () {
       final container = ProviderContainer();

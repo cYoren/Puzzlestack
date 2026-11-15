@@ -231,6 +231,8 @@ class SeismicCount {
   const SeismicCount({
     required this.solutions,
     required this.truncated,
+    required this.exhausted,
+    required this.first,
     required this.forced,
   });
 
@@ -240,7 +242,15 @@ class SeismicCount {
   /// True when the budget ran out. A truncated count proves nothing.
   final bool truncated;
 
+  /// True when the search finished: no budget ran out and the limit was not
+  /// reached. Only then is "every answer agrees on this cell" a proof.
+  final bool exhausted;
+
+  /// The first answer the search completed, per cell, or empty.
+  final List<int> first;
+
   /// Per cell, the digit every answer found agrees on, or 0 when they differ.
+  /// Empty unless [exhausted].
   final List<int> forced;
 
   bool get isUnique => solutions == 1 && !truncated;
@@ -270,14 +280,18 @@ class SeismicSearch {
 
   int _nodes = 0;
   int _solutions = 0;
+  List<int>? _first;
   bool _truncated = false;
   late List<int> _seen;
 
   SeismicCount run() {
     _seen = List<int>.filled(puzzle.cellCount, 0);
     _search(SeismicModel(puzzle: puzzle, masks: masks));
+    // Stopping at the limit is not finishing: the answers beyond it were never
+    // looked at, so nothing is proved about them.
+    final exhausted = !_truncated && _solutions < limit;
     final forced = List<int>.filled(puzzle.cellCount, 0);
-    if (!_truncated && _solutions > 0) {
+    if (exhausted && _solutions > 0) {
       for (var cell = 0; cell < puzzle.cellCount; cell++) {
         if (_popCount(_seen[cell]) == 1) {
           forced[cell] = seismicDigit(_seen[cell]);
@@ -287,9 +301,15 @@ class SeismicSearch {
     return SeismicCount(
       solutions: _solutions,
       truncated: _truncated,
+      exhausted: exhausted,
+      first: _first ?? const [],
       forced: forced,
     );
   }
+
+  List<int> _valuesOf(SeismicModel model) => [
+        for (var cell = 0; cell < model.cellCount; cell++) model.digitAt(cell),
+      ];
 
   void _search(SeismicModel model) {
     if (_truncated || _solutions >= limit) return;
@@ -301,6 +321,7 @@ class SeismicSearch {
     final outcome = deduce(model, seismicEasyRules);
     if (!outcome.consistent) return;
     if (model.isComplete) {
+      _first ??= _valuesOf(model);
       _solutions++;
       for (var cell = 0; cell < model.cellCount; cell++) {
         _seen[cell] |= model.masks[cell];
@@ -396,6 +417,9 @@ class SeismicForced implements DeductionRule<SeismicModel> {
       budget: 40000,
     ).run();
     if (count.truncated) return 0;
+    // Never write a cell the search did not finish proving: agreement among
+    // the first few answers says nothing about the rest.
+    if (!count.exhausted) return 0;
     if (count.solutions == 0) return -1;
 
     var news = 0;
