@@ -55,7 +55,7 @@ class GameProfile {
   final ArchiveReason? reason;
 }
 
-/// 315 games: 89 archive, 139 deck, 87 library.
+/// 318 games: 89 archive, 139 deck, 90 library.
 const Map<String, GameProfile> gameProfiles = {
   'ab_reversal_oddball': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'rule_switcher', reason: ArchiveReason.twin),
   'abcd': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
@@ -69,6 +69,7 @@ const Map<String, GameProfile> gameProfiles = {
   'angle_finder': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.worksheet),
   'area_perimeter_match': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.worksheet),
   'arithmetic_chain': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
+  'ascent': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'associative_pairs': GameProfile(tier: GameTier.library, kind: CardKind.snap, origin: GameOrigin.lab),
   'attentional_blink': GameProfile(tier: GameTier.library, kind: CardKind.snap, origin: GameOrigin.lab),
   'attentional_blink_probe': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'attentional_blink', reason: ArchiveReason.twin),
@@ -96,6 +97,7 @@ const Map<String, GameProfile> gameProfiles = {
   'chimp_test': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'choice_reaction_time': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'reflex_tap', reason: ArchiveReason.twin),
   'classic_maze': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
+  'clusters': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'cognate_catch': GameProfile(tier: GameTier.library, kind: CardKind.word, origin: GameOrigin.quiz),
   'collatz': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.worksheet),
   'color_flood': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
@@ -283,6 +285,7 @@ const Map<String, GameProfile> gameProfiles = {
   'same_game': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'schulte_table': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'sdmt': GameProfile(tier: GameTier.library, kind: CardKind.snap, origin: GameOrigin.lab),
+  'seismic': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'semantic_association': GameProfile(tier: GameTier.archive, kind: CardKind.word, origin: GameOrigin.puzzle, family: 'semantic_link', reason: ArchiveReason.twin),
   'semantic_distance': GameProfile(tier: GameTier.archive, kind: CardKind.word, origin: GameOrigin.puzzle, family: 'semantic_link', reason: ArchiveReason.twin),
   'semantic_link': GameProfile(tier: GameTier.library, kind: CardKind.word, origin: GameOrigin.quiz),

@@ -1,0 +1,102 @@
+import 'dart:math';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/ui/features/games/clusters/clusters_engine.dart';
+import 'package:puzzle/ui/features/games/clusters/clusters_model.dart';
+import 'package:puzzle/ui/features/games/clusters/clusters_provider.dart';
+
+const engine = ClustersEngine();
+
+void main() {
+  group('ClustersEngine', () {
+    test('a dealt board is a legal colouring', () {
+      final rng = Random(1);
+      for (final size in ClustersSize.values) {
+        final puzzle = engine.generate(size, random: rng);
+        expect(puzzle.isLegal(puzzle.solution), isTrue, reason: size.name);
+        expect(puzzle.isSolved(puzzle.solution), isTrue, reason: size.name);
+      }
+    });
+
+    test('a dot is exactly a cell with one same-coloured neighbour', () {
+      // The clue set is read off the answer, so this test would catch a dot
+      // that was never a dot, and a dot the generator forgot to print.
+      for (final size in ClustersSize.values) {
+        final puzzle = engine.generate(size, random: Random(size.index + 2));
+        for (var cell = 0; cell < puzzle.cellCount; cell++) {
+          final same =
+              puzzle.sameAround(puzzle.solution, cell, puzzle.solution[cell]);
+          expect(puzzle.clue(cell),
+              same == 1 ? puzzle.solution[cell] : kClusterNoClue,
+              reason: '${size.name} cell $cell');
+        }
+      }
+    });
+
+    test('the dots pin down exactly one colouring, at every size', () {
+      for (final size in ClustersSize.values) {
+        final puzzle = engine.generate(size, random: Random(size.index + 5));
+        final count = engine.count(puzzle, limit: 2);
+        expect(count.truncated, isFalse, reason: size.name);
+        expect(count.solutions, 1, reason: '${size.name} is ambiguous');
+        expect(count.forced, puzzle.solution, reason: size.name);
+      }
+    });
+
+    test('the dots can be finished without a guess, at every size', () {
+      for (final size in ClustersSize.values) {
+        final puzzle = engine.generate(size, random: Random(size.index + 9));
+        expect(engine.levelOf(puzzle), isNotNull,
+            reason: '${size.name} needs a guess');
+      }
+    });
+
+    test('a colour flipped away from both rules is not a solution', () {
+      final puzzle = engine.generate(ClustersSize.small, random: Random(21));
+      final values = List<int>.from(puzzle.solution);
+      expect(puzzle.conflicts(values), isEmpty);
+      for (var cell = 0; cell < puzzle.cellCount; cell++) {
+        if (puzzle.clue(cell) != kClusterNoClue) continue;
+        values[cell] = otherColour(values[cell]);
+        break;
+      }
+      expect(puzzle.isSolved(values), isFalse);
+    });
+
+    test('a tap cycles three states, and a dotted cell never changes', () {
+      expect(nextColour(kClusterUnmarked), kClusterRed);
+      expect(nextColour(kClusterRed), kClusterBlue);
+      expect(nextColour(kClusterBlue), kClusterUnmarked);
+      // The three states are three values, so unmarked is not a colour.
+      expect({kClusterUnmarked, kClusterRed, kClusterBlue}, hasLength(3));
+      expect(kClusterNoClue, kClusterUnmarked,
+          reason: 'both zeros, but in two different lists — the puzzle never '
+              'compares a clue against a player value');
+    });
+
+    test('the hint writes a colour the answer agrees with, and advances', () {
+      final puzzle = engine.generate(ClustersSize.small, random: Random(31));
+      final values = List<int>.filled(puzzle.cellCount, kClusterUnmarked);
+      final first = engine.hint(puzzle, values);
+      expect(first, isNotNull);
+      expect(first!.colour, puzzle.solution[first.cell]);
+      values[first.cell] = first.colour;
+      final second = engine.hint(puzzle, values);
+      expect(second, isNotNull);
+      expect(second!.cell, isNot(first.cell));
+      expect(second.colour, puzzle.solution[second.cell]);
+    });
+
+    test('the solver agrees with the generator at cell level', () {
+      final puzzle = engine.generate(ClustersSize.medium, random: Random(41));
+      final found = ClustersSearch(
+        puzzle: puzzle,
+        masks: ClustersModel.fresh(puzzle).masks,
+        limit: 1,
+        budget: 200000,
+      ).run();
+      expect(found.solutions, 1);
+      expect(found.forced, puzzle.solution);
+    });
+  });
+}
