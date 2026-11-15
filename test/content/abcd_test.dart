@@ -41,6 +41,37 @@ void main() {
     }
   });
 
+  test('no line clue is marked done until its counts are met exactly', () {
+    // The bug this pins: the board's row test asked only whether a letter had
+    // overshot its target, which is true of an empty row, so every row clue was
+    // green from the first frame while the column clues were honest. Both
+    // directions are one function now, and it is an equality test.
+    final puzzle = engine.generate(AbcdSize.small, random: Random(11));
+    final empty = List<int>.filled(puzzle.cellCount, -1);
+
+    for (var row = 0; row < puzzle.rows; row++) {
+      expect(puzzle.rowSatisfied(empty, row), isFalse, reason: 'row $row');
+    }
+    for (var col = 0; col < puzzle.cols; col++) {
+      expect(puzzle.colSatisfied(empty, col), isFalse, reason: 'col $col');
+    }
+
+    for (var row = 0; row < puzzle.rows; row++) {
+      expect(puzzle.rowSatisfied(puzzle.solution, row), isTrue,
+          reason: 'row $row of the answer');
+    }
+    for (var col = 0; col < puzzle.cols; col++) {
+      expect(puzzle.colSatisfied(puzzle.solution, col), isTrue,
+          reason: 'col $col of the answer');
+    }
+
+    // One cell changed and both of its lines stop being done.
+    final edited = [...puzzle.solution];
+    edited[0] = (edited[0] + 1) % puzzle.letters;
+    expect(puzzle.rowSatisfied(edited, 0), isFalse);
+    expect(puzzle.colSatisfied(edited, 0), isFalse);
+  });
+
   test('the guide teaches the digit clue and the ending', () {
     final guide = gameGuides['abcd'];
     expect(guide, isNotNull);

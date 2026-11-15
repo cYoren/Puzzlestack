@@ -14,7 +14,6 @@ class BoatsState extends PuzzleState {
     required this.size,
     this.isSolved = false,
     this.hintCell,
-    this.hintValue,
   });
 
   final BoatsPuzzle puzzle;
@@ -26,9 +25,8 @@ class BoatsState extends PuzzleState {
   final BoatsSize size;
   final bool isSolved;
 
-  /// A cell the hint has proved, and what it should be.
+  /// The cell the hint just proved and wrote.
   final int? hintCell;
-  final int? hintValue;
 
   int get rows => puzzle.rows;
 
@@ -40,7 +38,6 @@ class BoatsState extends PuzzleState {
     List<int>? marks,
     bool? isSolved,
     int? hintCell,
-    int? hintValue,
     bool clearHint = false,
   }) {
     return BoatsState(
@@ -49,7 +46,6 @@ class BoatsState extends PuzzleState {
       size: size,
       isSolved: isSolved ?? this.isSolved,
       hintCell: clearHint ? null : (hintCell ?? this.hintCell),
-      hintValue: clearHint ? null : (hintValue ?? this.hintValue),
     );
   }
 }
@@ -86,11 +82,21 @@ class BoatsNotifier extends _$BoatsNotifier {
     state = next.copyWith(isSolved: _engine.isSolved(state.puzzle, marks));
   }
 
+  /// Writes one cell the rules have proved.
+  ///
+  /// It *applies* the mark rather than outlining the cell. The engine returns
+  /// boat or water, and an outline cannot say which: a player who had marked a
+  /// boat on open water pressed hint and saw the same outline again, learning
+  /// nothing. Applying also means the next hint is about a different cell, so
+  /// hinting makes progress instead of repeating itself.
   void hint() {
     if (state.isSolved) return;
     final found = _engine.hint(state.puzzle, state.marks);
     if (found == null) return;
-    state = state.copyWith(hintCell: found.cell, hintValue: found.value);
+    final marks = [...state.marks];
+    marks[found.cell] = found.value;
+    final next = state.copyWith(marks: marks, hintCell: found.cell);
+    state = next.copyWith(isSolved: _engine.isSolved(state.puzzle, marks));
   }
 
   int? get level => _engine.levelOf(state.puzzle);

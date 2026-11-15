@@ -71,19 +71,6 @@ class AbcdBoard extends GridBoard<AbcdState> {
         same(row + 1, col);
   }
 
-  /// True when this letter has all the cells its line clue asks for.
-  bool _rowSettled(int row) {
-    final counts = state.puzzle.rowCounts[row];
-    for (var letter = 0; letter < state.letters; letter++) {
-      var seen = 0;
-      for (var col = 0; col < cols; col++) {
-        if (state.grid[row * cols + col] == letter) seen++;
-      }
-      if (seen > counts[letter]) return false;
-    }
-    return true;
-  }
-
   @override
   void paintCell(PuzzleCanvas canvas, AbcdState state, int row, int col) {
     final marks = PuzzleMarks(canvas, fraction: 0.92);
@@ -120,7 +107,7 @@ class AbcdBoard extends GridBoard<AbcdState> {
     for (var col = 0; col < cols; col++) {
       final rect = cellRect(0, col);
       final counts = state.puzzle.colCounts[col];
-      final satisfied = _columnSatisfied(col);
+      final satisfied = state.puzzle.colSatisfied(state.grid, col);
       canvas.text(
         counts.join(),
         Rect.fromCenter(
@@ -144,22 +131,13 @@ class AbcdBoard extends GridBoard<AbcdState> {
           width: rect.width,
           height: rect.height,
         ),
-        color: _rowSettled(row) ? palette.success : palette.muted,
+        color: state.puzzle.rowSatisfied(state.grid, row)
+            ? palette.success
+            : palette.muted,
         fontSize: fontSize,
         weight: FontWeight.w700,
       );
     }
-  }
-
-  bool _columnSatisfied(int col) {
-    for (var letter = 0; letter < state.letters; letter++) {
-      var seen = 0;
-      for (var row = 0; row < rows; row++) {
-        if (state.grid[row * cols + col] == letter) seen++;
-      }
-      if (seen != state.puzzle.colCounts[col][letter]) return false;
-    }
-    return true;
   }
 }
 
