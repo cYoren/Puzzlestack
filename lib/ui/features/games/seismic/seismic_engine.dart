@@ -113,8 +113,11 @@ class SeismicEngine {
         budget: 2000,
       ).run();
       if (found.truncated || found.solutions == 0) continue;
-      final digits = found.forced;
-      if (digits.any((digit) => digit == 0)) continue;
+      // One answer, read out of the search: `forced` is the *proof* cell and
+      // needs an exhaustive enumeration, which a fill search deliberately does
+      // not do.
+      final digits = found.first;
+      if (digits.isEmpty || digits.any((digit) => digit == 0)) continue;
 
       final seed = SeismicPuzzle(
         size: size,

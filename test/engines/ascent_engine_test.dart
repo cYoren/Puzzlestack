@@ -96,6 +96,27 @@ void main() {
       expect(puzzle.isSolved(values), isFalse);
     });
 
+    test('an unfinished enumeration proves nothing', () {
+      final size = AscentSize.small;
+      final bare = AscentPuzzle(
+        size: size,
+        givens: List<int>.filled(size.cellCount, kAscentNoClue),
+        solution: List<int>.filled(size.cellCount, kAscentBlank),
+      );
+      final count = AscentSearch(
+        puzzle: bare,
+        domains: AscentModel.fresh(bare).domains,
+        limit: 3,
+      ).run();
+      expect(count.solutions, 3);
+      expect(count.exhausted, isFalse);
+      expect(count.forced.every((value) => value == 0), isTrue);
+
+      final model = AscentModel.fresh(bare);
+      expect(const AscentForced().apply(model), 0,
+          reason: 'the rule wrote a cell it had not proved');
+    });
+
     test('the solver agrees with the generator at cell level', () {
       final puzzle = engine.generate(AscentSize.medium, random: Random(51));
       final found = AscentSearch(
@@ -105,7 +126,7 @@ void main() {
         budget: 200000,
       ).run();
       expect(found.solutions, 1);
-      expect(found.forced, puzzle.solution);
+      expect(found.first, puzzle.solution);
     });
     test('the clues are on the board, not hidden behind it', () {
       final container = ProviderContainer();

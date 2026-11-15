@@ -116,6 +116,30 @@ void main() {
       expect(puzzle.isSolved(values), isFalse);
     });
 
+    test('an unfinished enumeration proves nothing', () {
+      final size = SeismicSize.medium;
+      final bare = SeismicPuzzle(
+        size: size,
+        regions: engine.generate(size, random: Random(71)).regions,
+        regionSizes: List<int>.filled(size.n, size.n),
+        givens: List<int>.filled(size.cellCount, kSeismicNoClue),
+        solution: List<int>.filled(size.cellCount, kSeismicBlank),
+      );
+      final count = SeismicSearch(
+        puzzle: bare,
+        masks: SeismicModel.fresh(bare).masks,
+        limit: 3,
+      ).run();
+      expect(count.solutions, 3);
+      expect(count.exhausted, isFalse,
+          reason: 'a clue-free board has more answers than the limit');
+      expect(count.forced.every((value) => value == 0), isTrue);
+
+      final model = SeismicModel.fresh(bare);
+      expect(const SeismicForced().apply(model), 0,
+          reason: 'the rule wrote a cell it had not proved');
+    });
+
     test('the solver agrees with the generator at cell level', () {
       // The search's own answer, not the generator's field, must reproduce the
       // board: that is what makes it a prover.
@@ -128,7 +152,7 @@ void main() {
         budget: 200000,
       ).run();
       expect(found.solutions, 1);
-      expect(found.forced, puzzle.solution);
+      expect(found.first, puzzle.solution);
     });
     test('the clues are on the board, not hidden behind it', () {
       // The first render must show the printed numbers: a clue left only in the

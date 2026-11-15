@@ -268,13 +268,22 @@ class AscentCount {
   const AscentCount({
     required this.solutions,
     required this.truncated,
+    required this.exhausted,
+    required this.first,
     required this.forced,
   });
 
   final int solutions;
   final bool truncated;
 
-  /// Per cell, the number every path found agrees on, or 0.
+  /// True when the search finished, so [forced] is a proof and not a guess.
+  final bool exhausted;
+
+  /// The first answer the search completed, per cell, or empty.
+  final List<int> first;
+
+  /// Per cell, the number every path found agrees on, or 0. Empty unless
+  /// [exhausted].
   final List<int> forced;
 
   bool get isUnique => solutions == 1 && !truncated;
@@ -301,6 +310,7 @@ class AscentSearch {
 
   int _nodes = 0;
   int _solutions = 0;
+  List<int>? _first;
   bool _truncated = false;
   late List<Set<int>> _seen;
 
@@ -312,8 +322,11 @@ class AscentSearch {
         for (final domain in domains) {...domain}
       ],
     ));
+    // Stopping at the limit is not finishing: the answers beyond it were never
+    // looked at, so nothing is proved about them.
+    final exhausted = !_truncated && _solutions < limit;
     final forced = List<int>.filled(puzzle.cellCount, 0);
-    if (!_truncated && _solutions > 0) {
+    if (exhausted && _solutions > 0) {
       for (var cell = 0; cell < puzzle.cellCount; cell++) {
         if (_seen[cell].length == 1) forced[cell] = _seen[cell].first;
       }
@@ -321,9 +334,15 @@ class AscentSearch {
     return AscentCount(
       solutions: _solutions,
       truncated: _truncated,
+      exhausted: exhausted,
+      first: _first ?? const [],
       forced: forced,
     );
   }
+
+  List<int> _valuesOf(AscentModel model) => [
+        for (var cell = 0; cell < model.cellCount; cell++) model.numberAt(cell),
+      ];
 
   void _search(AscentModel model) {
     if (_truncated || _solutions >= limit) return;
@@ -335,6 +354,7 @@ class AscentSearch {
     final outcome = deduce(model, ascentDeductionRules);
     if (!outcome.consistent) return;
     if (model.isComplete) {
+      _first ??= _valuesOf(model);
       _solutions++;
       for (var cell = 0; cell < model.cellCount; cell++) {
         _seen[cell].addAll(model.domains[cell]);
@@ -371,6 +391,9 @@ class AscentForced implements DeductionRule<AscentModel> {
       budget: 40000,
     ).run();
     if (count.truncated) return 0;
+    // Never write a cell the search did not finish proving: agreement among
+    // the first few answers says nothing about the rest.
+    if (!count.exhausted) return 0;
     if (count.solutions == 0) return -1;
 
     var news = 0;
