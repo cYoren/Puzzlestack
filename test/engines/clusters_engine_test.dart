@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/clusters/clusters_engine.dart';
 import 'package:puzzle/ui/features/games/clusters/clusters_model.dart';
@@ -97,6 +98,31 @@ void main() {
       ).run();
       expect(found.solutions, 1);
       expect(found.forced, puzzle.solution);
+    });
+    test('the dots are on the board, not hidden behind it', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final state = container.read(clustersNotifierProvider);
+      final shown = state.values.where((v) => v != kClusterUnmarked).length;
+      expect(shown, state.puzzle.clueCount());
+      expect(shown, greaterThan(0));
+    });
+
+    test('a board can be finished by playing it', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(clustersNotifierProvider.notifier);
+      final puzzle = container.read(clustersNotifierProvider).puzzle;
+      for (var cell = 0; cell < puzzle.cellCount; cell++) {
+        if (puzzle.clue(cell) != kClusterNoClue) continue;
+        var state = container.read(clustersNotifierProvider);
+        for (var taps = 0; taps < 3; taps++) {
+          if (state.values[cell] == puzzle.solution[cell]) break;
+          notifier.cycle(cell);
+          state = container.read(clustersNotifierProvider);
+        }
+      }
+      expect(container.read(clustersNotifierProvider).isSolved, isTrue);
     });
   });
 }

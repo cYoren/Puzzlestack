@@ -73,11 +73,23 @@ class AscentNotifier extends _$AscentNotifier {
   @override
   AscentState build() => _newPuzzle(AscentSize.small);
 
-  AscentState _newPuzzle(AscentSize size) => AscentState(
-        puzzle: _engine.generate(size),
-        values: List<int>.filled(size.cellCount, kAscentBlank),
-        size: size,
-      );
+  /// The printed numbers are seeded into the values: they are cells the player
+  /// can see, and the win test asks whether every cell holds its number. Kept
+  /// apart from the board, a clue would be invisible and impossible to
+  /// complete around.
+  AscentState _newPuzzle(AscentSize size) {
+    final puzzle = _engine.generate(size);
+    return AscentState(
+      puzzle: puzzle,
+      values: [
+        for (var cell = 0; cell < size.cellCount; cell++)
+          puzzle.given(cell) == kAscentNoClue
+              ? kAscentBlank
+              : puzzle.given(cell),
+      ],
+      size: size,
+    );
+  }
 
   void newGame() => state = _newPuzzle(state.size);
 

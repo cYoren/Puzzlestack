@@ -65,11 +65,23 @@ class ClustersNotifier extends _$ClustersNotifier {
   @override
   ClustersState build() => _newPuzzle(ClustersSize.small);
 
-  ClustersState _newPuzzle(ClustersSize size) => ClustersState(
-        puzzle: _engine.generate(size),
-        values: List<int>.filled(size.cellCount, kClusterUnmarked),
-        size: size,
-      );
+  /// A dotted cell is a cell the player can already read, so its colour is
+  /// seeded into the values. A clue kept only in the puzzle renders, but the
+  /// win test would still call that cell unmarked, and no board could ever be
+  /// finished.
+  ClustersState _newPuzzle(ClustersSize size) {
+    final puzzle = _engine.generate(size);
+    return ClustersState(
+      puzzle: puzzle,
+      values: [
+        for (var cell = 0; cell < size.cellCount; cell++)
+          puzzle.clue(cell) == kClusterNoClue
+              ? kClusterUnmarked
+              : puzzle.clue(cell),
+      ],
+      size: size,
+    );
+  }
 
   void newGame() => state = _newPuzzle(state.size);
 

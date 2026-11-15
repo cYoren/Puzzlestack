@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/seismic/seismic_engine.dart';
 import 'package:puzzle/ui/features/games/seismic/seismic_model.dart';
+import 'package:puzzle/ui/features/games/seismic/seismic_provider.dart';
 
 const engine = SeismicEngine();
 
@@ -127,6 +129,29 @@ void main() {
       ).run();
       expect(found.solutions, 1);
       expect(found.forced, puzzle.solution);
+    });
+    test('the clues are on the board, not hidden behind it', () {
+      // The first render must show the printed numbers: a clue left only in the
+      // puzzle is invisible, and the win test would then never be reachable.
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final state = container.read(seismicNotifierProvider);
+      final shown = state.values.where((v) => v != kSeismicBlank).length;
+      expect(shown, state.puzzle.givenCount());
+      expect(shown, greaterThan(0));
+    });
+
+    test('a board can be finished by playing it', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(seismicNotifierProvider.notifier);
+      final puzzle = container.read(seismicNotifierProvider).puzzle;
+      for (var cell = 0; cell < puzzle.cellCount; cell++) {
+        if (puzzle.given(cell) != kSeismicNoClue) continue;
+        notifier.select(cell);
+        notifier.enter(puzzle.solution[cell]);
+      }
+      expect(container.read(seismicNotifierProvider).isSolved, isTrue);
     });
   });
 }
