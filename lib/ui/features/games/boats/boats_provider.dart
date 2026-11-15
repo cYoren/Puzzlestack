@@ -19,7 +19,8 @@ class BoatsState extends PuzzleState {
 
   final BoatsPuzzle puzzle;
 
-  /// Per cell: 0 untouched, [kBoatShip] or [kBoatWater].
+  /// Per cell: [kMarkEmpty], [kMarkWater] or [kMarkShip]. Untouched is its own
+  /// state, not water.
   final List<int> marks;
 
   final BoatsSize size;
@@ -33,7 +34,7 @@ class BoatsState extends PuzzleState {
 
   int get cols => puzzle.cols;
 
-  int get ships => marks.where((mark) => mark == kBoatShip).length;
+  int get ships => marks.where((mark) => mark == kMarkShip).length;
 
   BoatsState copyWith({
     List<int>? marks,
@@ -62,7 +63,7 @@ class BoatsNotifier extends _$BoatsNotifier {
 
   BoatsState _newPuzzle(BoatsSize size) => BoatsState(
         puzzle: _engine.generate(size),
-        marks: List<int>.filled(size.rows * size.cols, 0),
+        marks: List<int>.filled(size.rows * size.cols, kMarkEmpty),
         size: size,
       );
 
@@ -80,11 +81,7 @@ class BoatsNotifier extends _$BoatsNotifier {
   void cycle(int cell) {
     if (state.isSolved) return;
     final marks = [...state.marks];
-    marks[cell] = switch (marks[cell]) {
-      0 => kBoatShip,
-      kBoatShip => kBoatWater,
-      _ => 0,
-    };
+    marks[cell] = nextMark(marks[cell]);
     final next = state.copyWith(marks: marks, clearHint: true);
     state = next.copyWith(isSolved: _engine.isSolved(state.puzzle, marks));
   }
@@ -102,7 +99,9 @@ class BoatsNotifier extends _$BoatsNotifier {
   void solve() {
     if (state.isSolved) return;
     state = state.copyWith(
-      marks: List<int>.from(state.puzzle.solution),
+      marks: [
+        for (final value in state.puzzle.solution) markOfSolution(value),
+      ],
       isSolved: true,
       clearHint: true,
     );

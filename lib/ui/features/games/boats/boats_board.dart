@@ -10,7 +10,8 @@ import 'boats_provider.dart';
 ///
 /// A boat cell is a solid block that joins the boat cells beside it, so a run
 /// of four reads as one hull and not as four tiles. Water is the house dot,
-/// which is the smallest mark that still says "decided" at 320dp.
+/// which is the smallest mark that still says "decided" at 320dp. An untouched
+/// cell draws nothing at all: it is a third state, not a paler water.
 class BoatsBoard extends GridBoard<BoatsState> {
   BoatsBoard({required this.state});
 
@@ -40,7 +41,7 @@ class BoatsBoard extends GridBoard<BoatsState> {
       row < rows &&
       col >= 0 &&
       col < cols &&
-      _value(row, col) == kBoatShip;
+      _value(row, col) == kMarkShip;
 
   @override
   List<PuzzleMove<BoatsState>> movesFor(ElementRef element) {
@@ -57,25 +58,11 @@ class BoatsBoard extends GridBoard<BoatsState> {
   @override
   PuzzleMove<BoatsState>? tapMove(ElementRef element) {
     if (!isCell(element) || state.isSolved) return null;
-    final cell = element.a * cols + element.b;
     return PuzzleMove<BoatsState>(
       kind: MoveKind.toggle,
       source: element,
-      apply: (current) => current.copyWith(
-        marks: _cycle(current.marks, cell),
-        isSolved: false,
-      ),
+      apply: (current) => current,
     );
-  }
-
-  List<int> _cycle(List<int> marks, int cell) {
-    final next = [...marks];
-    next[cell] = switch (next[cell]) {
-      0 => kBoatShip,
-      kBoatShip => kBoatWater,
-      _ => 0,
-    };
-    return next;
   }
 
   @override
@@ -86,19 +73,14 @@ class BoatsBoard extends GridBoard<BoatsState> {
     final value = state.marks[cell];
     final hinted = state.hintCell == cell;
 
-    if (value == kBoatShip) {
+    if (value == kMarkShip) {
       final join = <MarkSide>{
         if (_isShip(row - 1, col)) MarkSide.up,
         if (_isShip(row + 1, col)) MarkSide.down,
         if (_isShip(row, col - 1)) MarkSide.left,
         if (_isShip(row, col + 1)) MarkSide.right,
       };
-      marks.block(
-        rect,
-        role: MarkRole.structure,
-        inset: 0.06,
-        join: join,
-      );
+      marks.block(rect, role: MarkRole.structure, inset: 0.06, join: join);
       if (hinted) marks.hint(rect);
       return;
     }
@@ -109,7 +91,7 @@ class BoatsBoard extends GridBoard<BoatsState> {
       stroke: canvas.palette.line.withValues(alpha: 0.6),
       radius: 6,
     );
-    if (value == kBoatWater) {
+    if (value == kMarkWater) {
       marks.dotMark(rect, role: MarkRole.muted, size: 0.14);
     }
     if (hinted) marks.hint(rect);
@@ -125,8 +107,11 @@ class BoatsBoard extends GridBoard<BoatsState> {
       final rect = cellRect(row, 0);
       final count = state.puzzle.rowCounts[row];
       final done = _rowShips(row) == count;
+      // The clue itself, not a running total: the guide says these numbers are
+      // the counts the row holds, and a number that changes under the finger
+      // reads as a different puzzle.
       canvas.text(
-        '${count - _rowShips(row)}',
+        '$count',
         Rect.fromCenter(
           center: Offset(rect.left - rect.width * 0.62, rect.center.dy),
           width: rect.width,
@@ -143,7 +128,7 @@ class BoatsBoard extends GridBoard<BoatsState> {
       final count = state.puzzle.colCounts[col];
       final done = _colShips(col) == count;
       canvas.text(
-        '${count - _colShips(col)}',
+        '$count',
         Rect.fromCenter(
           center: Offset(rect.center.dx, rect.top - rect.height * 0.62),
           width: rect.width,
@@ -159,7 +144,7 @@ class BoatsBoard extends GridBoard<BoatsState> {
   int _rowShips(int row) {
     var count = 0;
     for (var col = 0; col < cols; col++) {
-      if (_value(row, col) == kBoatShip) count++;
+      if (_value(row, col) == kMarkShip) count++;
     }
     return count;
   }
@@ -167,7 +152,7 @@ class BoatsBoard extends GridBoard<BoatsState> {
   int _colShips(int col) {
     var count = 0;
     for (var row = 0; row < rows; row++) {
-      if (_value(row, col) == kBoatShip) count++;
+      if (_value(row, col) == kMarkShip) count++;
     }
     return count;
   }
@@ -176,7 +161,8 @@ class BoatsBoard extends GridBoard<BoatsState> {
 /// The strip of boats still to find, under the board.
 ///
 /// A found boat is crossed off, which is the only progress signal the puzzle
-/// needs: the counts say the rest.
+/// needs: the counts say the rest. One marked boat crosses off exactly one
+/// required boat, even when the fleet holds two of the same length.
 class BoatsFleetStrip extends StatelessWidget {
   const BoatsFleetStrip({super.key, required this.state});
 
@@ -185,66 +171,27 @@ class BoatsFleetStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final found = _foundBoats();
-    final remaining = [...state.puzzle.fleet];
+    final crossed = crossedOffFleet(
+      state.marks,
+      state.puzzle.fleet,
+      rows: state.rows,
+      cols: state.cols,
+    );
 
     return Wrap(
       alignment: WrapAlignment.center,
       spacing: 10,
       runSpacing: 6,
       children: [
-        for (final length in state.puzzle.fleet)
+        for (var i = 0; i < state.puzzle.fleet.length; i++)
           _BoatChip(
-            length: length,
-            found: remaining.remove(length) && found.contains(length),
+            length: state.puzzle.fleet[i],
+            found: crossed[i],
             scheme: scheme,
           ),
       ],
     );
   }
-
-  /// The lengths of the complete boats the player has marked.
-  List<int> _foundBoats() {
-    final marks = state.marks;
-    final seen = List<bool>.filled(marks.length, false);
-    final lengths = <int>[];
-    for (var cell = 0; cell < marks.length; cell++) {
-      if (marks[cell] != kBoatShip || seen[cell]) continue;
-      final row = cell ~/ cols;
-      final col = cell % cols;
-      final horizontal = (col + 1 < cols && marks[cell + 1] == kBoatShip) ||
-          (col > 0 && marks[cell - 1] == kBoatShip);
-      var length = 0;
-      if (horizontal) {
-        var start = col;
-        while (start > 0 && marks[row * cols + start - 1] == kBoatShip) {
-          start--;
-        }
-        for (var c = start; c < cols; c++) {
-          final index = row * cols + c;
-          if (marks[index] != kBoatShip) break;
-          seen[index] = true;
-          length++;
-        }
-      } else {
-        var start = row;
-        while (start > 0 && marks[(start - 1) * cols + col] == kBoatShip) {
-          start--;
-        }
-        for (var r = start; r < rows; r++) {
-          final index = r * cols + col;
-          if (marks[index] != kBoatShip) break;
-          seen[index] = true;
-          length++;
-        }
-      }
-      lengths.add(length);
-    }
-    return lengths;
-  }
-
-  int get cols => state.cols;
-  int get rows => state.rows;
 }
 
 class _BoatChip extends StatelessWidget {

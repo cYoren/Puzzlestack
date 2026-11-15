@@ -54,6 +54,98 @@ const int kKnownShip = 2;
 /// Maps a puzzle answer cell to the clue vocabulary.
 int knownOfSolution(int value) => value == kBoatShip ? kKnownShip : kKnownWater;
 
+/// What the *player* has done to a cell, which is a third question.
+///
+/// This is the same trap as [kKnownAny], one layer up: the player's marks
+/// started as `0 = untouched`, `kBoatWater = 0`, `kBoatShip = 1`, so tapping
+/// cycled `0 -> 1 -> 0`, ruled-out water was indistinguishable from "not looked
+/// at yet", and the board painted a water dot on every cell from the first
+/// frame. Three states, three values; [markOfSolution] bridges to the answer
+/// vocabulary when the game asks whether the fleet is finished.
+const int kMarkEmpty = 0;
+const int kMarkWater = 1;
+const int kMarkShip = 2;
+
+/// The mark one tap on [mark] produces: untouched -> boat -> water -> untouched.
+///
+/// It lives here, not in the notifier, so the three-state cycle can be tested
+/// without pumping a screen. It exists at all because the first version had two
+/// states spelled with two constants and one of them was `0`.
+int nextMark(int mark) => switch (mark) {
+      kMarkEmpty => kMarkShip,
+      kMarkShip => kMarkWater,
+      _ => kMarkEmpty,
+    };
+
+/// Maps a puzzle answer cell to the player vocabulary.
+int markOfSolution(int value) => value == kBoatShip ? kMarkShip : kMarkWater;
+
+/// The lengths of the complete boats a player has marked, longest first.
+///
+/// A boat is a maximal run of [kMarkShip] cells. This is what the fleet strip
+/// crosses off, and it lives here rather than in the widget so the "one marked
+/// boat crosses off exactly one required boat" rule can be tested without
+/// pumping a screen.
+List<int> markedBoatLengths(
+  List<int> marks, {
+  required int rows,
+  required int cols,
+}) {
+  final seen = List<bool>.filled(marks.length, false);
+  final lengths = <int>[];
+  for (var cell = 0; cell < marks.length; cell++) {
+    if (marks[cell] != kMarkShip || seen[cell]) continue;
+    final row = cell ~/ cols;
+    final col = cell % cols;
+    final horizontal = (col + 1 < cols && marks[cell + 1] == kMarkShip) ||
+        (col > 0 && marks[cell - 1] == kMarkShip);
+    var length = 0;
+    if (horizontal) {
+      var start = col;
+      while (start > 0 && marks[row * cols + start - 1] == kMarkShip) {
+        start--;
+      }
+      for (var c = start; c < cols; c++) {
+        final index = row * cols + c;
+        if (marks[index] != kMarkShip) break;
+        seen[index] = true;
+        length++;
+      }
+    } else {
+      var start = row;
+      while (start > 0 && marks[(start - 1) * cols + col] == kMarkShip) {
+        start--;
+      }
+      for (var r = start; r < rows; r++) {
+        final index = r * cols + col;
+        if (marks[index] != kMarkShip) break;
+        seen[index] = true;
+        length++;
+      }
+    }
+    lengths.add(length);
+  }
+  lengths.sort((a, b) => b.compareTo(a));
+  return lengths;
+}
+
+/// Which fleet entries a set of player marks has crossed off.
+///
+/// Returned per fleet entry, in fleet order, so a fleet with two boats of the
+/// same length crosses off one chip per marked boat instead of both at once.
+List<bool> crossedOffFleet(
+  List<int> marks,
+  List<int> fleet, {
+  required int rows,
+  required int cols,
+}) {
+  final found = markedBoatLengths(marks, rows: rows, cols: cols);
+  return [
+    for (final length in fleet)
+      if (found.remove(length)) true else false,
+  ];
+}
+
 /// A Boats board: the clues, and the fleet that satisfies them.
 class BoatsPuzzle {
   BoatsPuzzle({
@@ -115,6 +207,19 @@ class BoatsPuzzle {
       if (count != colCounts[col]) return false;
     }
     return true;
+  }
+
+  /// True when the player's marks are a legal answer.
+  ///
+  /// Untouched cells count as water, so a player who places the fleet and never
+  /// dots the sea still wins: the counts prove the rest. What it cannot do is
+  /// accept a mark that puts a boat where the answer has water, because
+  /// [isLegal] checks the exact counts, the exact fleet and the touching rule.
+  bool isSolvedMarks(List<int> marks) {
+    if (marks.length != cellCount) return false;
+    return isLegal([
+      for (final mark in marks) mark == kMarkShip ? kBoatShip : kBoatWater,
+    ]);
   }
 
   /// The lengths of the boats in [solve], longest first.
