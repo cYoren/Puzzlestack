@@ -47,6 +47,12 @@ The SDK's formatter is the new "tall style" and this tree predates it. `dart for
 reformatted **967 files** that had nothing to do with the change. Format the files you touched,
 by name, or not at all.
 
+It happened again on 2026-11-15 with `dart format lib/ui/features/games/`: **980 files** in one
+command, right in the middle of a port, and the tell is `flutter analyze` — 5 infos became 108
+across files nobody opened. Recovering means listing the 980 paths, checking them all out, and
+re-applying the three files the change was about. The rule is in AGENTS.md; this is what ignoring
+it costs.
+
 ### A widget test only remembers the first exception
 
 `tester.takeException()` returns the first error and, once a second one arrives, starts
@@ -109,6 +115,27 @@ This one hangs the test runner rather than failing it, which is much harder to r
 `home_smoke_test.dart` opened a different one of 307 games per run and failed about one run in
 three, because some games overflow or leave timers. A test that fails a third of the time tells
 you nothing about anything. Pin the random thing.
+
+### A radius is not a normalised length
+
+`PuzzleCanvas.dot(centre, radius)` hands `radius` straight to `Canvas.drawCircle`, so it is in
+**pixels**, while everything around it (`centre`, a cell rectangle) is normalised 0-1. Passing
+`rect.shortestSide * 0.17` therefore draws a dot 0.02 px wide: invisible, and nothing that measures
+layout can see it. Six boards had this shape — the shared `PuzzleMarks` dots and rings, Boats,
+Inertia, Kurodoko, Cube, Netslide — before Clusters made it seven.
+
+Use `canvas.radiusFor(cell, fraction)`, and prove a mark with a **pixel** test: rasterise the board
+(`PictureRecorder` → `toImage` → `toByteData`) and assert the centre pixel is painted.
+`test/board/puzzle_marks_test.dart` is that test, and it fails on the hand-multiplied version.
+
+### Dart's web build truncates bitwise integers to 32 bits
+
+A cell's candidate set as an `int` bitmask is fast on the VM and silently wrong on web: 49 bits of
+mask on a 7x7 Number Path become 32, numbers above 32 vanish, and the board generates fully printed
+and unplayable **only in the browser build**. `List<Set<int>>` (or a `List<bool>`) costs nothing at
+these sizes — the timings did not move.
+
+Any integer wider than 32 bits in shared puzzle code is a web-only bug waiting for a release.
 
 ### Pending timers fail a widget test after it passes
 
@@ -184,19 +211,23 @@ where a reviewer can check them.
 
 ## Measuring things
 
-### `test/board/game_audit.dart` is a tool, not a test
+### `test/board/game_audit.dart` is a sweep, and it fails
 
-It is deliberately not named `_test.dart` so the suite does not run it. It reports a number
-rather than asserting one, because the number is currently bad enough that a red suite would
-only repeat what it already says.
+It is still not named `_test.dart`, so the suite does not pay 318 pumps, but it now **asserts**:
+a card that overflows or throws fails the run instead of printing a number nobody reads. The
+printed line stays as the record of what was pumped.
 
 ```
 flutter test test/board/game_audit.dart
-AUDIT checked=307 overflow=85 threw=34
+AUDIT checked=318 overflow=0 threw=0
 ```
 
-The count moves by one or two between runs; a few games randomise their layout. Treat it as
-"about 119".
+Two ways to be green for the wrong reason, both now closed: the assertion was first registered
+*before* the loop (it inspected empty maps), so it also asserts that the sweep reached every card;
+and `AUDIT_ONLY=<typo>` audits nothing and prints `checked=0 overflow=0`, which reads exactly like
+a clean room, so an id that names no card is a failure too.
+
+If a script runs the sweep, check its exit status **and** that `checked=` equals what it asked for.
 
 ### The test suite is now 2 minutes
 
