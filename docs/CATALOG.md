@@ -1,6 +1,6 @@
 # The catalog: a verdict for every game
 
-All 313 registry ids, each in exactly one list. Tiers and the checks behind them:
+All 315 registry ids, each in exactly one list. Tiers and the checks behind them:
 [PUZZLE-BAR.md](PUZZLE-BAR.md).
 
 **This is a first pass (2026-11-14), made from ids, subtitles and the two audits, not from
@@ -15,15 +15,15 @@ leaves Deck if it fails any of the ten checks.
 
 | | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
-| Logic | 44 | 8 | 1 | 0 | 53 |
+| Logic | 44 | 10 | 1 | 0 | 55 |
 | Math | 19 | 25 | 10 | 9 | 63 |
 | Memory | 12 | 17 | 16 | 9 | 54 |
 | Attention | 18 | 9 | 16 | 11 | 54 |
 | Word | 24 | 17 | 8 | 2 | 51 |
 | Spatial | 22 | 9 | 6 | 1 | 38 |
-| **All** | **139** | **85** | **57** | **32** | **313** |
+| **All** | **139** | **87** | **57** | **32** | **315** |
 
-Visible in the app after this pass: **224**. The other 89 are archived: hidden, tagged, still in
+Visible in the app after this pass: **226**. The other 89 are archived: hidden, tagged, still in
 the repo. The store copy takes its number from the visible registry, never from this file.
 
 ## Format
@@ -64,8 +64,8 @@ tents_and_trees tower_of_london twiddle water_sort yajilin
 ```
 
 ```library
-einstein_riddle lock_pattern logical_syllogisms matrix_reasoning path_finder symbol_logic
-triplets_logic wisconsin_card_sorting
+abcd boats einstein_riddle lock_pattern logical_syllogisms matrix_reasoning path_finder
+symbol_logic triplets_logic wisconsin_card_sorting
 ```
 
 ```merge
