@@ -44,7 +44,7 @@ class AscentEngine {
   /// Counts the paths the clues allow, by the complete search.
   AscentCount count(AscentPuzzle puzzle, {int limit = 2}) => AscentSearch(
         puzzle: puzzle,
-        masks: AscentModel.fresh(puzzle).masks,
+        domains: AscentModel.fresh(puzzle).domains,
         limit: limit,
         budget: 2000000,
       ).run();

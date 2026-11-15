@@ -73,7 +73,7 @@ class ClustersBoard extends GridBoard<ClustersState> {
         // colour, and two marks would read as a third colour.
         canvas.dot(
           rect.center,
-          rect.shortestSide * 0.17,
+          canvas.radiusFor(rect, 0.17),
           color: palette.surface,
         );
       }

@@ -146,7 +146,7 @@ class PuzzleMarks {
     final rect = inside(cell);
     canvas.dot(
       rect.center,
-      math.min(rect.width, rect.height) * size / 2,
+      canvas.radiusFor(rect, size / 2),
       color: color(role),
     );
   }
@@ -185,7 +185,7 @@ class PuzzleMarks {
     final rect = inside(cell);
     canvas.ring(
       rect.center,
-      math.min(rect.width, rect.height) * size / 2,
+      canvas.radiusFor(rect, size / 2),
       color: color(role),
       width: weight,
     );
