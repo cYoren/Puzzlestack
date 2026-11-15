@@ -88,6 +88,23 @@ void main() {
       expect(second.colour, puzzle.solution[second.cell]);
     });
 
+    test('an oversatisfied dot is not an answer', () {
+      // A red dot in every cell of a 6x6 board: the all-red colouring gives
+      // every dotted cell four same-coloured neighbours, so the rule is broken
+      // everywhere. The counter used to call this "one solution" because the
+      // count rule never reported the contradiction.
+      final size = ClustersSize.small;
+      final allRed = List<int>.filled(size.cellCount, kClusterRed);
+      final puzzle = ClustersPuzzle(
+        size: size,
+        clues: List<int>.filled(size.cellCount, kClusterRed),
+        solution: allRed,
+      );
+      expect(puzzle.isLegal(allRed), isFalse);
+      expect(engine.count(puzzle).solutions, 0);
+      expect(engine.levelOf(puzzle), isNull);
+    });
+
     test('the solver agrees with the generator at cell level', () {
       final puzzle = engine.generate(ClustersSize.medium, random: Random(41));
       final found = ClustersSearch(

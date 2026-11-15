@@ -3161,7 +3161,7 @@ abstract class AppLocalizations {
   /// No description provided for @seismicSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill every shape with the numbers 1 to its size. The same number twice in a line needs a gap as wide as itself.'**
+  /// **'Fill every shape with the numbers 1 to its size. Two equal numbers in a line need that many cells between them.'**
   String get seismicSubtitle;
 
   /// No description provided for @seismicClues.

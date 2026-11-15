@@ -59,7 +59,18 @@ class ClustersModel implements DeductionModel<ClustersModel> {
       ClustersModel(puzzle: puzzle, masks: [...masks], broken: broken);
 
   @override
-  bool get isComplete => !broken && masks.every((mask) => _popCount(mask) == 1);
+  bool get isComplete {
+    if (broken) return false;
+    final values = <int>[];
+    for (final mask in masks) {
+      if (_popCount(mask) != 1) return false;
+      values.add(colourOfBit(mask));
+    }
+    // Decided and legal are two different questions. A board can be complete
+    // and wrong — all red dots on an all-red board — and a counter that does
+    // not ask the second question calls that one answer.
+    return puzzle.isLegal(values);
+  }
 
   @override
   Choice? get choice {
@@ -143,6 +154,12 @@ class ClustersCounts implements DeductionRule<ClustersModel> {
             open.add(other);
           }
         }
+
+        // A dot is exactly one, so two same-coloured neighbours already break
+        // it. Reporting that here matters: without it an all-red board of red
+        // dots counted as a legal colouring, and the exact rule reasoned over
+        // boards the game would call wrong.
+        if (dotted && same > 1) return -1;
 
         final room = need - same;
         if (room > open.length) {
