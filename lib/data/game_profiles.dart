@@ -55,7 +55,7 @@ class GameProfile {
   final ArchiveReason? reason;
 }
 
-/// 322 games: 89 archive, 139 deck, 94 library.
+/// 323 games: 89 archive, 139 deck, 95 library.
 const Map<String, GameProfile> gameProfiles = {
   'ab_reversal_oddball': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'rule_switcher', reason: ArchiveReason.twin),
   'abcd': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
@@ -121,6 +121,7 @@ const Map<String, GameProfile> gameProfiles = {
   'counting_sheep': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'counting_span': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'operation_span', reason: ArchiveReason.twin),
   'cross_section_slice': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
+  'crossing': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'crossword': GameProfile(tier: GameTier.deck, kind: CardKind.word, origin: GameOrigin.puzzle),
   'crown': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'crypto_arithmetic': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),

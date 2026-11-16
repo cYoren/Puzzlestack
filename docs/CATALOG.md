@@ -1,6 +1,6 @@
 # The catalog: a verdict for every game
 
-All 322 registry ids, each in exactly one list. Tiers and the checks behind them:
+All 323 registry ids, each in exactly one list. Tiers and the checks behind them:
 [PUZZLE-BAR.md](PUZZLE-BAR.md).
 
 **A pass, first made on 2026-11-14 and extended on 2026-11-15, made from ids, subtitles and the two audits, not from
@@ -15,15 +15,15 @@ leaves Deck if it fails any of the ten checks.
 
 | | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
-| Logic | 44 | 17 | 1 | 0 | 62 |
+| Logic | 44 | 18 | 1 | 0 | 63 |
 | Math | 19 | 25 | 10 | 9 | 63 |
 | Memory | 12 | 17 | 16 | 9 | 54 |
 | Attention | 18 | 9 | 16 | 11 | 54 |
 | Word | 24 | 17 | 8 | 2 | 51 |
 | Spatial | 22 | 9 | 6 | 1 | 38 |
-| **All** | **139** | **94** | **57** | **32** | **322** |
+| **All** | **139** | **95** | **57** | **32** | **323** |
 
-Visible in the app after this pass: **233**. The other 89 are archived: hidden, tagged, still in
+Visible in the app after this pass: **234**. The other 89 are archived: hidden, tagged, still in
 the repo. The store copy takes its number from the visible registry, never from this file.
 
 ## Format
@@ -64,7 +64,7 @@ tents_and_trees tower_of_london twiddle water_sort yajilin
 ```
 
 ```library
-abcd ascent boats bricks clusters einstein_riddle lock_pattern logical_syllogisms
+abcd ascent boats bricks clusters crossing einstein_riddle lock_pattern logical_syllogisms
 matrix_reasoning mathrax path_finder rome salad seismic symbol_logic triplets_logic
 wisconsin_card_sorting
 ```
@@ -77,6 +77,13 @@ sudoku <- alphabet_sudoku
 ```
 
 Notes
+- **`crossing` (2026-11-16):** Library. Lay every number in the list into the skeleton once, across
+  or down, and make the crossings agree. The skeleton is part of the puzzle and the source's walls
+  are kept: on a bare grid any placement can slide into empty space, so no list would have exactly
+  one filling. Modelled on the numbers rather than the cells (per number the runs it can still take,
+  plus a digit domain per cell shared by every run through it), proved in Dart: exactly one filling,
+  reachable with the player rules (level <= 2), about a millisecond per board. Rules in
+  `lib/ui/features/games/crossing/crossing_puzzle.dart`.
 - **`rome` (2026-11-16):** Library. One arrow per cell, no repeated arrow inside an outlined area,
   and every chain of arrows must arrive at a circled goal without looping. Generated and proved in
   Dart: a random in-grid arrow field, areas grown by flood fill, one goal per cycle, printed arrows

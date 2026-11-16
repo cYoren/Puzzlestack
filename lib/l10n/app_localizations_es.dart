@@ -6531,6 +6531,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get difficultyHard => 'DIFÍCIL';
 
   @override
+  String get crossingTitle => 'Number Crossing';
+
+  @override
+  String get crossingSubtitle =>
+      'Lay every number in the list into the grid once, across or down. The cells that cross have to agree, and the cells left over are wall.';
+
+  @override
+  String get crossingPlaced => 'Placed';
+
+  @override
+  String get crossingWinTitle => 'EVERY NUMBER FITS!';
+
+  @override
+  String get crossingWinMessage =>
+      'Each number once, and every crossing agrees digit for digit.';
+
+  @override
   String get navDeal => 'Deal';
 
   @override
