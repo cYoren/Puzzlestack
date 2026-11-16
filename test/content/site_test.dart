@@ -77,9 +77,19 @@ void main() {
           in RegExp(r'href="([^"#][^"]*)"').allMatches(html)) {
         final String href = match.group(1)!;
         if (href.startsWith('http') || href.startsWith('mailto:')) continue;
-        final String path = href.split('#').first;
+        final String path = href.split('#').first.split('?').first;
         if (path.isEmpty) continue;
         final Uri target = file.uri.resolve(path);
+        // The browser build lives in `app/` on the deployed branch, not in the
+        // repo (`tool/deploy_pages.sh`), so a link into it is checked as a shape
+        // and the deploy script checks the file.
+        if (target.path.contains('/app/')) {
+          if (!path.endsWith('app/index.html')) {
+            broken
+                .add('${file.path} -> $href (app links go to app/index.html)');
+          }
+          continue;
+        }
         // `./` is a directory link: valid when it lands on a page.
         final bool exists = File.fromUri(target).existsSync() ||
             File.fromUri(target.resolve('index.html')).existsSync();
@@ -87,6 +97,16 @@ void main() {
       }
     }
     expect(broken, isEmpty, reason: broken.take(10).join('; '));
+  });
+
+  test('every game page offers the puzzle in the browser, by slug', () {
+    for (final Map<String, Object?> game in exported) {
+      final String html =
+          File('docs/games/${game['slug']}.html').readAsStringSync();
+      expect(html.contains('href="../app/index.html?game=${game['slug']}"'),
+          isTrue,
+          reason: '${game['id']} has no playable link');
+    }
   });
 
   test('each page has a title, a description, a canonical and one h1', () {
