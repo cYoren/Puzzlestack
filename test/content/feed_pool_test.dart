@@ -13,13 +13,14 @@ void main() {
   test('the pool is drawn from the deal, not from the registry', () {
     final pool = GameFeed.feedPool();
     expect(pool.length, lessThan(registryIds.length),
-        reason: 'the deal should be smaller than the registry after the first pass');
+        reason:
+            'the deal should be smaller than the registry after the first pass');
     expect(pool.where((g) => !deckIds.contains(g.id)), isEmpty);
   });
 
   test('the reel never serves an archived game', () {
     final archived = registryIds.difference(visibleIds);
-    expect(archived, isNotEmpty, reason: 'the first pass archived 89 games');
+    expect(archived, isNotEmpty, reason: 'the first pass archived 139 games');
     expect(GameFeed.feedPool().where((g) => archived.contains(g.id)), isEmpty);
     expect(GameFeed.quickPlay.where((g) => archived.contains(g.id)), isEmpty);
     expect(archived.contains(GameFeed.dailyPick().id), isFalse);
