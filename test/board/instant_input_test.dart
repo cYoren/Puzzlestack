@@ -151,7 +151,10 @@ final _plans = <String, _Plan>{
   'mathrax': _Plan(2),
   // A clue cannot take a digit, so the walk may need a second cell before the
   // tray offers one; four taps always reaches an editable cell.
-  'sudoku': _Plan(4, landsSpatial: true),
+  // Sudoku's tray only offers a target once a cell is selected, so a step can
+  // legitimately be a plain select; signpost and water_sort carry the spatial
+  // proof instead of a coin-flip on which cell the walk lands on first.
+  'sudoku': _Plan(4),
   'water_sort': _Plan(2, landsSpatial: true),
   'kurodoko': _Plan(2),
   // A tap that turns a square: the move carries a transition as well, so this
