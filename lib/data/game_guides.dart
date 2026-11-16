@@ -5062,7 +5062,7 @@ const Map<String, GameGuide> gameGuides = {
     walkthrough: [
       "Step 1: The board is a Latin square before it is arithmetic. A number written in a cell is gone from the rest of its row and its column, and that alone fills a lot of a five by five.",
       "Step 2: Read a corner clue as two separate questions. A +7 between four cells says the top left and the bottom right add to seven AND the top right and the bottom left add to seven. Either one failing breaks the clue.",
-      "Step 3: Use the small numbers first. A \u00d72 forces a 1 and a 2, a \u00f72 forces a 1 and a 2 as well, a \u22121 forces neighbours, and an E or an O decides the parity of four cells at once.",
+      "Step 3: Use the small numbers first. A \u00d72 forces a 1 and a 2, a \u22121 forces two neighbours, and an E or an O decides the parity of four cells at once.",
       "Step 4: When a row has only one cell left for a number, that cell is it, even if you have not looked at the corners yet.",
       "Step 5: The board is finished when every row and column holds each number once and no corner is red. A number that repeats or a corner that fails shows in red.",
     ],
@@ -5070,6 +5070,7 @@ const Map<String, GameGuide> gameGuides = {
       "Count the parity first: an E corner needs four even numbers, and on a five board that is 2 and 4 with one of them twice, so the corner immediately says which cells cannot hold 1, 3 or 5.",
       "For a product clue, list the pairs that multiply to it before touching the board. A \u00d712 on a six board is 2 and 6 or 3 and 4, and which pair it is usually falls out of the row.",
       "A \u00d7 with the biggest number is the strongest clue on the board: it pairs the largest digit with a 1 or a 2, and there are very few places for either.",
+      "Division is the weakest of the four operations: a \u00f72 means one number is twice the other, which is 1 and 2, 2 and 4, or 3 and 6 on a six board. List the pairs before you eliminate anything, and prefer a product clue when both are on the same corner.",
       "Work from the corners inward. The four corner cells of the grid touch only one clue each, so they have the least to satisfy, and they feed the row and column rules for everything else.",
     ],
   ),
