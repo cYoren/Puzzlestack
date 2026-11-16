@@ -139,6 +139,17 @@ class InertiaBoard extends GridBoard<InertiaState> {
   @override
   void paint(PuzzleCanvas canvas, InertiaState state) {
     super.paint(canvas, state);
+
+    // Where this ball can go is the whole game, and it used to be invisible
+    // until you dropped one. Two things make it readable without a legend:
+    // the lane the ball travels in is washed in, and every square it would stop
+    // on gets a hairline. The ball itself is drawn last and larger than before,
+    // with a paper ring so it never disappears against a wall.
+    if (!state.isSolved && !state.position.exploded) {
+      _paintLane(canvas, state);
+      _paintLandings(canvas, state);
+    }
+
     _paintBall(canvas, state, state.position.cell);
 
     final hint = state.hint;
@@ -154,19 +165,79 @@ class InertiaBoard extends GridBoard<InertiaState> {
     );
   }
 
+  /// The row and the column the ball can move along.
+  void _paintLane(PuzzleCanvas canvas, InertiaState state) {
+    final palette = canvas.palette;
+    final int row = state.position.cell ~/ cols;
+    final int col = state.position.cell % cols;
+    final Color wash = palette.ink.withValues(alpha: 0.05);
+
+    void washCell(int r, int c) {
+      if (r == row && c == col) return;
+      // Only the floor: a wall, a gem or a mine keeps its own colour.
+      if (state.puzzle.kindAt(r * cols + c) != CellKind.floor) return;
+      canvas.cell(cellRect(r, c), fill: wash, radius: 4);
+    }
+
+    for (int c = 0; c < cols; c++) {
+      washCell(row, c);
+    }
+    for (int r = 0; r < rows; r++) {
+      washCell(r, col);
+    }
+  }
+
+  /// The four squares a swipe would stop on. Hollow, so a landing never reads
+  /// as a wall or a collected gem.
+  void _paintLandings(PuzzleCanvas canvas, InertiaState state) {
+    final palette = canvas.palette;
+    for (final direction in InertiaDirection.values) {
+      final landing = const InertiaEngine()
+          .landing(state.puzzle, state.position, direction);
+      if (landing == null) continue;
+      final rect = cellRect(landing ~/ cols, landing % cols);
+      canvas.cell(
+        rect.deflate(rect.width * 0.22),
+        stroke: palette.primary.withValues(alpha: 0.45),
+        strokeWidth: 1.2,
+        radius: 3,
+      );
+    }
+  }
+
   void _paintBall(PuzzleCanvas canvas, InertiaState state, int cell) {
     final palette = canvas.palette;
     final rect = cellRect(cell ~/ cols, cell % cols).deflate(0.006);
     final dead = state.position.exploded;
+    final double radius = canvas.radiusFor(rect, 0.40);
+
+    // A paper ring under the ball: on a wall cell the fill would otherwise be
+    // the same near-black as the wall.
+    canvas.ring(rect.center, radius + 1.6, color: palette.surface, width: 2.4);
     canvas.dot(
       rect.center,
-      canvas.radiusFor(rect, 0.34),
+      radius,
       color: dead ? palette.error : palette.primary,
     );
     if (dead) {
-      canvas.ring(rect.center, canvas.radiusFor(rect, 0.44),
-          color: palette.error, width: 2);
+      canvas.ring(rect.center, radius + 2.6, color: palette.error, width: 2);
     }
+  }
+
+  @override
+  void paintElement(
+      PuzzleCanvas canvas, InertiaState state, ElementRef element) {
+    // The engine lifts the element a drag started on, which for this game is a
+    // *cell*. Drawing that cell would carry a square of the board around the
+    // screen with the ball, which is exactly what a lifted copy must not do: the
+    // thing being moved is the ball, so that is what follows the finger (and
+    // what pops in the win cascade).
+    if (isCell(element) &&
+        element.a * cols + element.b == state.position.cell) {
+      _paintBall(canvas, state, state.position.cell);
+      return;
+    }
+    super.paintElement(canvas, state, element);
   }
 
   // -------------------------------------------------------------- transition
@@ -200,13 +271,15 @@ class InertiaBoard extends GridBoard<InertiaState> {
     final ball = cellRect(0, 0);
     final dead = to.position.exploded;
 
+    canvas.ring(centre, canvas.radiusFor(ball, 0.40) + 1.6,
+        color: palette.surface, width: 2.4);
     canvas.dot(
       centre,
-      canvas.radiusFor(ball, 0.34),
+      canvas.radiusFor(ball, 0.40),
       color: dead ? palette.error : palette.primary,
     );
     if (dead) {
-      canvas.ring(centre, canvas.radiusFor(ball, 0.44),
+      canvas.ring(centre, canvas.radiusFor(ball, 0.40) + 2.6,
           color: palette.error, width: 2);
     }
   }

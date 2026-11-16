@@ -134,6 +134,16 @@ class AppLocalizationsBn extends AppLocalizations {
       'খেলার সময় স্ক্রিন বন্ধ হওয়া প্রতিরোধ করুন';
 
   @override
+  String get showArchivedGames => 'Show archived puzzles';
+
+  @override
+  String get showArchivedGamesDescription =>
+      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+
+  @override
+  String get archived => 'ARCHIVED';
+
+  @override
   String get appearance => 'চেহারা';
 
   @override

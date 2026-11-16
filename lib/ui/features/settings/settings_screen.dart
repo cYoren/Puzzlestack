@@ -54,6 +54,8 @@ class SettingsScreen extends ConsumerWidget {
         userDataNotifierProvider.select((s) => s.isTrialModeEnabled ?? false));
     final keepAwake = ref.watch(userDataNotifierProvider
         .select((s) => s.isKeepScreenAwakeEnabled ?? false));
+    final showArchived = ref.watch(
+        userDataNotifierProvider.select((s) => s.showArchivedGames ?? false));
     final hiddenIds = ref.watch(
         userDataNotifierProvider.select((s) => s.hiddenGameIds ?? const []));
     final currentLocale = ref.watch(localeNotifierProvider);
@@ -115,6 +117,17 @@ class SettingsScreen extends ConsumerWidget {
                         onChanged: (value) => ref
                             .read(userDataNotifierProvider.notifier)
                             .setKeepScreenAwake(value),
+                      ),
+                      const SizedBox(height: DesignSystem.spaceSM),
+                      _buildToggleRow(
+                        context,
+                        icon: Icons.inventory_2_outlined,
+                        title: l10n.showArchivedGames,
+                        subtitle: l10n.showArchivedGamesDescription,
+                        value: showArchived,
+                        onChanged: (value) => ref
+                            .read(userDataNotifierProvider.notifier)
+                            .setShowArchivedGames(value),
                       ),
                       if (hiddenIds.isNotEmpty) ...[
                         const SizedBox(height: DesignSystem.spaceSM),

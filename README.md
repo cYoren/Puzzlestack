@@ -44,7 +44,39 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
   - `lib/ui/features/feed/feed_session.dart` — the bridge that lets a game screen and its
     completion dialog behave as a card while the feed is on screen.
   - `lib/ui/features/home/discovery_home_screen.dart` — the stack: rooms, today, quick play.
-  - `lib/ui/features/home/category_room_screen.dart` — a single category's puzzles.
+  - `lib/ui/features/home/category_room_screen.dart` — a single category's puzzles, each
+    tile drawn as a mini board of the game it opens (`lib/ui/core/preview/game_preview.dart`;
+    contact sheet of every game in `docs/previews/previews.png`).
+- **The archive:** `docs/CATALOG.md` files 89 games as lab tasks, worksheets and twins. They stay
+  in the repo, they are not dealt, and one switch in settings (`Show archived puzzles`) is the
+  only way to look at them. `GameFeed.browse` is the single decider for every list.
+
+## Website
+
+`docs/` is the website, served by GitHub Pages at <https://cyoren.github.io/Puzzlestack/>:
+one page per puzzle (230), a page per room, an index and a hub, in the shape of a search-first
+puzzle site. Every page carries the app's own guide text, the English title and one line, and
+metadata (`canonical`, Open Graph, `BreadcrumbList`, `SoftwareApplication`, `FAQPage`).
+
+It is generated, never hand-edited:
+
+```bash
+dart run tool/site_export.dart   # tool/site/games.json: the 230 playable games, from the repo
+python3 tool/gen_site.py         # docs/: 238 pages, sitemap.xml, robots.txt, fonts
+flutter test test/content/site_test.dart   # every game has a page, every link resolves
+tool/deploy_pages.sh             # build the browser app, publish both to gh-pages
+```
+
+Pages serves the **`gh-pages`** branch: `docs/` plus `app/` (the Flutter web build, base href
+`/Puzzlestack/app/`). The branch is force-pushed by `tool/deploy_pages.sh` and holds one commit,
+so the 40 MB browser build never enters the history of the repo people clone. Every game page
+offers `Play <game>` at `../app/index.html?game=<slug>`, and that query is what opens the named
+puzzle (`lib/utils/deep_link.dart`).
+
+`test/content/site_test.dart` is the contract: a game without a page fails, an archived game
+with one fails, a broken internal link fails, a page without its playable link fails.
+`PLAY_ANDROID` / `PLAY_IOS` in `tool/gen_site.py` are empty until 1.1.0 is on the stores, so a page
+offers the browser build and the source instead of a dead store link.
 
 ## Build & run
 

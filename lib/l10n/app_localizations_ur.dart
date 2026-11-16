@@ -134,6 +134,16 @@ class AppLocalizationsUr extends AppLocalizations {
       'گیم پلے کے دوران اسکرین بند ہونے سے روکیں';
 
   @override
+  String get showArchivedGames => 'Show archived puzzles';
+
+  @override
+  String get showArchivedGamesDescription =>
+      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+
+  @override
+  String get archived => 'ARCHIVED';
+
+  @override
   String get appearance => 'ظاہری شکل';
 
   @override

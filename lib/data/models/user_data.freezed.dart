@@ -38,6 +38,8 @@ mixin _$UserData {
   List<String>? get hiddenGameIds => throw _privateConstructorUsedError;
   @HiveField(8)
   bool? get isKeepScreenAwakeEnabled => throw _privateConstructorUsedError;
+  @HiveField(9)
+  bool? get showArchivedGames => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,7 +61,8 @@ abstract class $UserDataCopyWith<$Res> {
       @HiveField(5) List<String>? favoriteGameIds,
       @HiveField(6) bool? isTrialModeEnabled,
       @HiveField(7) List<String>? hiddenGameIds,
-      @HiveField(8) bool? isKeepScreenAwakeEnabled});
+      @HiveField(8) bool? isKeepScreenAwakeEnabled,
+      @HiveField(9) bool? showArchivedGames});
 }
 
 /// @nodoc
@@ -84,6 +87,7 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
     Object? isTrialModeEnabled = freezed,
     Object? hiddenGameIds = freezed,
     Object? isKeepScreenAwakeEnabled = freezed,
+    Object? showArchivedGames = freezed,
   }) {
     return _then(_value.copyWith(
       xp: null == xp
@@ -122,6 +126,10 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
           ? _value.isKeepScreenAwakeEnabled
           : isKeepScreenAwakeEnabled // ignore: cast_nullable_to_non_nullable
               as bool?,
+      showArchivedGames: freezed == showArchivedGames
+          ? _value.showArchivedGames
+          : showArchivedGames // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -143,7 +151,8 @@ abstract class _$$UserDataImplCopyWith<$Res>
       @HiveField(5) List<String>? favoriteGameIds,
       @HiveField(6) bool? isTrialModeEnabled,
       @HiveField(7) List<String>? hiddenGameIds,
-      @HiveField(8) bool? isKeepScreenAwakeEnabled});
+      @HiveField(8) bool? isKeepScreenAwakeEnabled,
+      @HiveField(9) bool? showArchivedGames});
 }
 
 /// @nodoc
@@ -166,6 +175,7 @@ class __$$UserDataImplCopyWithImpl<$Res>
     Object? isTrialModeEnabled = freezed,
     Object? hiddenGameIds = freezed,
     Object? isKeepScreenAwakeEnabled = freezed,
+    Object? showArchivedGames = freezed,
   }) {
     return _then(_$UserDataImpl(
       xp: null == xp
@@ -204,6 +214,10 @@ class __$$UserDataImplCopyWithImpl<$Res>
           ? _value.isKeepScreenAwakeEnabled
           : isKeepScreenAwakeEnabled // ignore: cast_nullable_to_non_nullable
               as bool?,
+      showArchivedGames: freezed == showArchivedGames
+          ? _value.showArchivedGames
+          : showArchivedGames // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -221,7 +235,8 @@ class _$UserDataImpl implements _UserData {
       @HiveField(5) final List<String>? favoriteGameIds,
       @HiveField(6) this.isTrialModeEnabled,
       @HiveField(7) final List<String>? hiddenGameIds,
-      @HiveField(8) this.isKeepScreenAwakeEnabled})
+      @HiveField(8) this.isKeepScreenAwakeEnabled,
+      @HiveField(9) this.showArchivedGames})
       : _favoriteGameIds = favoriteGameIds,
         _hiddenGameIds = hiddenGameIds;
 
@@ -271,10 +286,13 @@ class _$UserDataImpl implements _UserData {
   @override
   @HiveField(8)
   final bool? isKeepScreenAwakeEnabled;
+  @override
+  @HiveField(9)
+  final bool? showArchivedGames;
 
   @override
   String toString() {
-    return 'UserData(xp: $xp, level: $level, superStreak: $superStreak, lastSuperStreakDate: $lastSuperStreakDate, totalSolved: $totalSolved, favoriteGameIds: $favoriteGameIds, isTrialModeEnabled: $isTrialModeEnabled, hiddenGameIds: $hiddenGameIds, isKeepScreenAwakeEnabled: $isKeepScreenAwakeEnabled)';
+    return 'UserData(xp: $xp, level: $level, superStreak: $superStreak, lastSuperStreakDate: $lastSuperStreakDate, totalSolved: $totalSolved, favoriteGameIds: $favoriteGameIds, isTrialModeEnabled: $isTrialModeEnabled, hiddenGameIds: $hiddenGameIds, isKeepScreenAwakeEnabled: $isKeepScreenAwakeEnabled, showArchivedGames: $showArchivedGames)';
   }
 
   @override
@@ -298,7 +316,9 @@ class _$UserDataImpl implements _UserData {
                 .equals(other._hiddenGameIds, _hiddenGameIds) &&
             (identical(
                     other.isKeepScreenAwakeEnabled, isKeepScreenAwakeEnabled) ||
-                other.isKeepScreenAwakeEnabled == isKeepScreenAwakeEnabled));
+                other.isKeepScreenAwakeEnabled == isKeepScreenAwakeEnabled) &&
+            (identical(other.showArchivedGames, showArchivedGames) ||
+                other.showArchivedGames == showArchivedGames));
   }
 
   @JsonKey(ignore: true)
@@ -313,7 +333,8 @@ class _$UserDataImpl implements _UserData {
       const DeepCollectionEquality().hash(_favoriteGameIds),
       isTrialModeEnabled,
       const DeepCollectionEquality().hash(_hiddenGameIds),
-      isKeepScreenAwakeEnabled);
+      isKeepScreenAwakeEnabled,
+      showArchivedGames);
 
   @JsonKey(ignore: true)
   @override
@@ -339,7 +360,8 @@ abstract class _UserData implements UserData {
       @HiveField(5) final List<String>? favoriteGameIds,
       @HiveField(6) final bool? isTrialModeEnabled,
       @HiveField(7) final List<String>? hiddenGameIds,
-      @HiveField(8) final bool? isKeepScreenAwakeEnabled}) = _$UserDataImpl;
+      @HiveField(8) final bool? isKeepScreenAwakeEnabled,
+      @HiveField(9) final bool? showArchivedGames}) = _$UserDataImpl;
 
   factory _UserData.fromJson(Map<String, dynamic> json) =
       _$UserDataImpl.fromJson;
@@ -371,6 +393,9 @@ abstract class _UserData implements UserData {
   @override
   @HiveField(8)
   bool? get isKeepScreenAwakeEnabled;
+  @override
+  @HiveField(9)
+  bool? get showArchivedGames;
   @override
   @JsonKey(ignore: true)
   _$$UserDataImplCopyWith<_$UserDataImpl> get copyWith =>
