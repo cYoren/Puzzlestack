@@ -6,7 +6,7 @@ import 'package:puzzle/data/game_registry.dart';
 
 /// The archive is material, not a shelf.
 ///
-/// `docs/CATALOG.md` files 89 games as lab tasks, worksheets or absorbed twins.
+/// `docs/CATALOG.md` files 139 games as lab tasks, worksheets or absorbed twins.
 /// They keep compiling, and every surface that offers a puzzle has to pretend
 /// they are not there — including the "next game" after a solve, which used to
 /// read the whole registry and hand a player `sternberg_task` after a win.

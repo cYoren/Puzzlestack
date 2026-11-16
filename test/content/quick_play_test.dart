@@ -54,7 +54,9 @@ void main() {
   });
 
   test('the list is big enough to mean "quick play"', () {
-    expect(quick.length, greaterThanOrEqualTo(40),
+    // 41 before `lab-hide` (2026-11-16) archived the snap tasks; it is 18 now, and the
+    // drop is expected. This floor is here so the next shrink is a decision, not a slip.
+    expect(quick.length, greaterThanOrEqualTo(15),
         reason: '${quick.length} games promised under two minutes');
   });
 
