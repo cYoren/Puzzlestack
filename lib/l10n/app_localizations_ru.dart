@@ -1730,6 +1730,23 @@ class AppLocalizationsRu extends AppLocalizations {
       'Every letter once in every line, and every border clue reads true.';
 
   @override
+  String get romeTitle => 'Rome';
+
+  @override
+  String get romeSubtitle =>
+      'One arrow in every cell. No arrow repeats inside an outlined area, and following the arrows from anywhere has to arrive at a circled goal without looping.';
+
+  @override
+  String get romeWritten => 'Arrows';
+
+  @override
+  String get romeWinTitle => 'EVERY CHAIN ARRIVES!';
+
+  @override
+  String get romeWinMessage =>
+      'One arrow per cell, no repeats in an area, and every chain ends at a goal.';
+
+  @override
   String get ascentTitle => 'Number Path';
 
   @override

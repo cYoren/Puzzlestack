@@ -3254,6 +3254,36 @@ abstract class AppLocalizations {
   /// **'Every letter once in every line, and every border clue reads true.'**
   String get saladWinMessage;
 
+  /// No description provided for @romeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rome'**
+  String get romeTitle;
+
+  /// No description provided for @romeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'One arrow in every cell. No arrow repeats inside an outlined area, and following the arrows from anywhere has to arrive at a circled goal without looping.'**
+  String get romeSubtitle;
+
+  /// No description provided for @romeWritten.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrows'**
+  String get romeWritten;
+
+  /// No description provided for @romeWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY CHAIN ARRIVES!'**
+  String get romeWinTitle;
+
+  /// No description provided for @romeWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'One arrow per cell, no repeats in an area, and every chain ends at a goal.'**
+  String get romeWinMessage;
+
   /// No description provided for @ascentTitle.
   ///
   /// In en, this message translates to:
