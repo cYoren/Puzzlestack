@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_ce/hive_ce.dart';
+
 import '../models/user_data.dart';
 import '../models/game_streak.dart';
 
@@ -11,6 +12,40 @@ class UserRepository {
   static const int _currentSchemaVersion = 1;
 
   Future<void> init() async {
+    try {
+      await _openAndValidate();
+    } on Object catch (error) {
+      // The local store moved to the maintained fork of the same engine
+      // (`hive` -> `hive_ce`): same typeIds, same field indices, same binary
+      // layout, so a box written by the old engine is expected to read. "Expect"
+      // is not "know", and the failure mode if it does not is a crash loop at
+      // launch, which is the worst possible shape for a data problem. So the
+      // box is set aside once and the app starts clean instead of never
+      // starting; a player loses a streak rather than the whole app.
+      debugPrint(
+        'UserRepository: stored data could not be read, starting '
+        'fresh ($error)',
+      );
+      await _setAsideUnreadableBoxes();
+      await _openAndValidate();
+    }
+  }
+
+  /// Deletes the three boxes so the next open starts empty.
+  ///
+  /// Deliberately not silent: the message above is the only trace, and it names
+  /// the error.
+  Future<void> _setAsideUnreadableBoxes() async {
+    for (final name in [userDataBoxName, gameStreakBoxName, _metaBoxName]) {
+      try {
+        await Hive.deleteBoxFromDisk(name);
+      } on Object catch (error) {
+        debugPrint('UserRepository: could not clear $name ($error)');
+      }
+    }
+  }
+
+  Future<void> _openAndValidate() async {
     try {
       final userBox = await Hive.openBox<UserData>(userDataBoxName);
       final streakBox = await Hive.openBox<GameStreak>(gameStreakBoxName);
@@ -88,7 +123,10 @@ class UserRepository {
   Future<void> saveGameStreak(GameStreak streak) async {
     try {
       final box = Hive.box<GameStreak>(gameStreakBoxName);
-      await box.put(streak.gameId, streak.isValid ? streak : streak.sanitized());
+      await box.put(
+        streak.gameId,
+        streak.isValid ? streak : streak.sanitized(),
+      );
     } catch (e) {
       debugPrint('saveGameStreak error: $e');
       rethrow;
@@ -112,8 +150,14 @@ class UserRepository {
       final userBox = Hive.box<UserData>(userDataBoxName);
       final streakBox = Hive.box<GameStreak>(gameStreakBoxName);
       await Future.wait([
-        userBox.put('current', userData.isValid ? userData : userData.sanitized()),
-        streakBox.put(streak.gameId, streak.isValid ? streak : streak.sanitized()),
+        userBox.put(
+          'current',
+          userData.isValid ? userData : userData.sanitized(),
+        ),
+        streakBox.put(
+          streak.gameId,
+          streak.isValid ? streak : streak.sanitized(),
+        ),
       ]);
     } catch (e) {
       debugPrint('saveGameCompletion error: $e');
