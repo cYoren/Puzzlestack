@@ -85,7 +85,7 @@ declare *which future states a drag can lead to*. The engine speculatively rende
 states, works out where the dragged element lands in each, and synthesizes the drag — float,
 drop zones, snapping, transitions — from that.
 
-Why this is the right foundation for 233 puzzles:
+Why this is the right foundation for 234 puzzles:
 
 - **One drag feel, everywhere.** Connect an island in Bridges, place a tent, swap two tiles,
   slide a row in Netslide: same lift, same snap, same settle, because it is one engine.

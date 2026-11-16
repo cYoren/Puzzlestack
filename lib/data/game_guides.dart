@@ -1877,6 +1877,27 @@ const Map<String, GameGuide> gameGuides = {
       "Avoid blinking while the items are in motion.",
     ],
   ),
+  "crossing": GameGuide(
+    title: "Number Crossing",
+    category: "LOGIC",
+    objective:
+        "Lay every number in the list into the skeleton once, across or down, one digit per cell. A number that crosses another shares a cell with it, so both must have the same digit there, and the cells no number covers are wall.",
+    controls:
+        "Tap a cell to write the next digit: 1, 2, up to 9, then empty again. Wall cells take nothing. The hint button writes what the crossings prove, which is sometimes a whole number at once.",
+    walkthrough: [
+      "Step 1: Count the strips. Every outlined strip takes exactly one number, and its length says which numbers fit it, so a three-cell strip can only hold a three-digit number.",
+      "Step 2: Read a crossing. The digit a strip needs at a crossing must be the digit the other strip needs there, so keep only the digits both strips allow. A crossing that leaves one digit has decided that cell.",
+      "Step 3: Write the digit. A decided digit rules out every number that would have written something else in that position, which is usually what collapses the next strip.",
+      "Step 4: Count on both sides. A number with only one strip left goes there; a strip with only one number left that fits takes it. Every strip is used and every number is placed, so the two counts are the same number.",
+      "Step 5: The board is done when every chip is struck through and no strip is red. A red strip is one that can no longer become a listed number.",
+    ],
+    strategies: [
+      "Start with the threes. A three-digit number is far more specific than a two-digit one, so the strips it crosses usually fall first.",
+      "Use the list against itself. Two numbers that share their first two digits can only be told apart by the digit a crossing puts between them.",
+      "Watch a strip that crosses twice. One digit is a small clue, but a strip of three that meets two others has to satisfy both at once, and that often leaves exactly one number.",
+      "Never guess. Every board is dealt with exactly one filling, so a digit that feels like a guess is a crossing you have not used yet.",
+    ],
+  ),
   "einstein_riddle": GameGuide(
     title: "Einstein's Riddle",
     category: "LOGIC",
