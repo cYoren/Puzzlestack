@@ -1,15 +1,21 @@
-# These are supported funding model platforms
+# Sponsorship for Puzzlestack.
+#
+# Deliberately empty: this repo is a GPL-3.0 derivative of "Puzzle" by Sidhant
+# Khatkar, and the upstream author's Liberapay and Buy Me a Coffee accounts were
+# left in this file when the fork was made. A Sponsor button on our repo must not
+# pay somebody else, and we do not take donations for the app, so no platform is
+# listed. Attribution for the upstream work lives in NOTICE.
 
-github: # Replace with up to 4 GitHub Sponsors-enabled usernames e.g., [user1, user2]
-patreon: # Replace with a single Patreon username
-open_collective: # Replace with a single Open Collective username
-ko_fi: # Replace with a single Ko-fi username
-tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
-community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
-liberapay: sidhant947 # Replace with a single Liberapay username
-issuehunt: # Replace with a single IssueHunt username
-lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
-polar: # Replace with a single Polar username
-buy_me_a_coffee: sidhant947 # Replace with a single Buy Me a Coffee username
-thanks_dev: # Replace with a single thanks.dev username
-custom: # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
+github:
+patreon:
+open_collective:
+ko_fi:
+tidelift:
+community_bridge:
+liberapay:
+issuehunt:
+lfx_crowdfunding:
+polar:
+buy_me_a_coffee:
+thanks_dev:
+custom:

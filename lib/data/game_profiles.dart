@@ -413,3 +413,13 @@ Set<String> get visibleIds => {
   for (final entry in gameProfiles.entries)
     if (entry.value.tier != GameTier.archive) entry.key,
 };
+
+/// The ids the catalog archived: lab tasks, worksheets and twins.
+///
+/// They stay in the app's registry so their code, tests and strings keep
+/// compiling, and a player can still look at them behind the "show archived"
+/// switch. Nothing deals them.
+Set<String> get archivedIds => {
+  for (final entry in gameProfiles.entries)
+    if (entry.value.tier == GameTier.archive) entry.key,
+};

@@ -132,6 +132,12 @@ class UserDataNotifier extends _$UserDataNotifier {
     state = newState;
     await ref.read(userRepositoryProvider).saveUserData(newState);
   }
+
+  Future<void> setShowArchivedGames(bool enabled) async {
+    final newState = state.copyWith(showArchivedGames: enabled);
+    state = newState;
+    await ref.read(userRepositoryProvider).saveUserData(newState);
+  }
 }
 
 @Riverpod(keepAlive: true)

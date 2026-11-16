@@ -13,6 +13,7 @@ import '../../../utils/haptic_feedback.dart';
 import '../../../utils/navigation_utils.dart';
 import '../../../widgets/deck.dart';
 import '../../core/assist/game_launch.dart';
+import '../../core/preview/game_preview.dart';
 import '../main_shell/main_shell.dart';
 import '../feed/feed_screen.dart';
 import 'category_room_screen.dart';
@@ -55,8 +56,8 @@ class DiscoveryHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Set<String> hidden = ref
-        .watch(userDataNotifierProvider.select(
-            (d) => d.hiddenGameIds ?? const []))
+        .watch(
+            userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []))
         .toSet();
     // The daily pick is the same for everyone, so it is not drawn from this
     // player's hidden games; the card is what a hidden game suppresses.
@@ -66,6 +67,8 @@ class DiscoveryHomeScreen extends ConsumerWidget {
         .where((g) => !hidden.contains(g.id))
         .toList(growable: false);
     final List<GameMetadata> favorites = _favorites(ref);
+    final bool showArchived = ref.watch(
+        userDataNotifierProvider.select((d) => d.showArchivedGames ?? false));
 
     return Scaffold(
       backgroundColor: DesignSystem.paperOf(context),
@@ -76,7 +79,9 @@ class DiscoveryHomeScreen extends ConsumerWidget {
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
-                SliverToBoxAdapter(child: _header(context, ref, hidden.toList())),
+                SliverToBoxAdapter(
+                    child:
+                        _header(context, ref, hidden.toList(), showArchived)),
                 SliverToBoxAdapter(child: _dealCard(context, ref)),
                 if (favorites.isNotEmpty) ...[
                   SliverToBoxAdapter(
@@ -112,7 +117,8 @@ class DiscoveryHomeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _header(BuildContext context, WidgetRef ref, List<String> hidden) {
+  Widget _header(BuildContext context, WidgetRef ref, List<String> hidden,
+      bool showArchived) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         DesignSystem.spaceLG,
@@ -131,6 +137,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
               context: context,
               delegate: GameSearchDelegate(
                 hiddenIds: hidden.toSet(),
+                includeArchived: showArchived,
                 onSelected: (g) => _openGame(context, ref, g),
               ),
             ),
@@ -322,9 +329,10 @@ class DiscoveryHomeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _quickRow(BuildContext context, WidgetRef ref, List<GameMetadata> games) {
+  Widget _quickRow(
+      BuildContext context, WidgetRef ref, List<GameMetadata> games) {
     return SizedBox(
-      height: 100,
+      height: 106,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -342,7 +350,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
   Widget _favoritesRow(
       BuildContext context, WidgetRef ref, List<GameMetadata> games) {
     return SizedBox(
-      height: 100,
+      height: 106,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -386,8 +394,13 @@ class DiscoveryHomeScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(game.icon, size: 20, color: DesignSystem.accent(context)),
-            const SizedBox(height: 12),
+            GameCardPreview(
+              game: game,
+              title: game.titleGetter(context),
+              size: 38,
+              dimmed: GameCategories.isArchived(game.id),
+            ),
+            const SizedBox(height: 8),
             Text(
               game.titleGetter(context),
               maxLines: 2,

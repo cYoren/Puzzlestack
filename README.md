@@ -44,7 +44,12 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
   - `lib/ui/features/feed/feed_session.dart` — the bridge that lets a game screen and its
     completion dialog behave as a card while the feed is on screen.
   - `lib/ui/features/home/discovery_home_screen.dart` — the stack: rooms, today, quick play.
-  - `lib/ui/features/home/category_room_screen.dart` — a single category's puzzles.
+  - `lib/ui/features/home/category_room_screen.dart` — a single category's puzzles, each
+    tile drawn as a mini board of the game it opens (`lib/ui/core/preview/game_preview.dart`;
+    contact sheet of all 319 in `docs/previews/previews.png`).
+- **The archive:** `docs/CATALOG.md` files 89 games as lab tasks, worksheets and twins. They stay
+  in the repo, they are not dealt, and one switch in settings (`Show archived puzzles`) is the
+  only way to look at them. `GameFeed.browse` is the single decider for every list.
 
 ## Build & run
 
