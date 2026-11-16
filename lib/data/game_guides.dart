@@ -5095,6 +5095,27 @@ const Map<String, GameGuide> gameGuides = {
       "Write the hole when you are sure of it. A written hole eliminates nothing by itself, but it tightens the hole count of its line, and that is usually what turns the next letter into a single.",
     ],
   ),
+  "bricks": GameGuide(
+    title: "Bricks",
+    category: "LOGIC",
+    objective:
+        "Shade cells of the honeycomb so that every shaded cell stands on a shaded cell below it, no three shaded cells sit in a row, and every number counts the shaded cells around it.",
+    controls:
+        "Tap a cell to shade it, and tap it again to clear it. A numbered cell is fixed: it counts its neighbours and is never shaded.",
+    walkthrough: [
+      "Step 1: Read the bottom row first. A shaded cell there needs nothing under it, so the bottom row is where a pile can start.",
+      "Step 2: A cell on any other row can only be shaded if one of the two cells under it, down-left or down-right and never straight down, is shaded. That pair is the whole rule this game is named after.",
+      "Step 3: Count for every number. A cell with as many shaded neighbours as its number is finished, and every neighbour still empty is unshaded. A number that needs every neighbour it has left shades them all.",
+      "Step 4: Watch the horizontal runs. Two shaded cells side by side forbid the third in that row, so a run of two is a wall you can lean on.",
+      "Step 5: Work a shaded cell downwards when you are stuck: it has to reach a shaded cell, so when only one of its two cells below is still open, that one is shaded. The board is finished when every shade is held up, no run reaches three, and every number reads true.",
+    ],
+    strategies: [
+      "Start at the bottom and climb. A shade high up is only legal because of the cells under it, so a wrong cell at the top is usually a wrong cell two rows below.",
+      "A number of zero is the strongest clue on the board: its own cell is unshaded and so is every neighbour it counts, whichever way the pile leans.",
+      "Gravity and the run rule fight on the left and right edges, where a cell has only one neighbour below it: there the rule collapses into a single forced cell.",
+      "When two cells below a shade are both still open, leave them. The board only forces a cell when the count is tight or one of the pair is already ruled out.",
+    ],
+  ),
   "tents_and_trees": GameGuide(
     title: "Tents And Trees",
     category: "LOGIC",
