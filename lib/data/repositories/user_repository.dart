@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:hive_ce/hive_ce.dart';
 
@@ -13,7 +15,13 @@ class UserRepository {
 
   Future<void> init() async {
     try {
-      await _openAndValidate();
+      await _openBoxes();
+    } on FileSystemException catch (error) {
+      // A disk problem is not a broken store: the data may be perfectly
+      // readable once there is space to write. Deleting it here would turn a
+      // full disk into lost progress, so this one is rethrown untouched.
+      debugPrint('UserRepository: storage unavailable ($error)');
+      rethrow;
     } on Object catch (error) {
       // The local store moved to the maintained fork of the same engine
       // (`hive` -> `hive_ce`): same typeIds, same field indices, same binary
@@ -27,7 +35,28 @@ class UserRepository {
         'fresh ($error)',
       );
       await _setAsideUnreadableBoxes();
-      await _openAndValidate();
+      await _openBoxes();
+    }
+    await _tidyUp();
+  }
+
+  /// Compaction and the schema version are housekeeping. Nothing in here is
+  /// allowed to delete anything: a failure leaves the boxes exactly as they
+  /// were, which is the difference between a full disk and lost progress.
+  Future<void> _tidyUp() async {
+    try {
+      final userBox = Hive.box<UserData>(userDataBoxName);
+      final streakBox = Hive.box<GameStreak>(gameStreakBoxName);
+      final metaBox = Hive.box(_metaBoxName);
+      await userBox.compact();
+      await streakBox.compact();
+      final version = metaBox.get(_versionKey, defaultValue: 0) as int;
+      if (version < _currentSchemaVersion) {
+        _validateExistingData(userBox, streakBox);
+        await metaBox.put(_versionKey, _currentSchemaVersion);
+      }
+    } on FileSystemException catch (error) {
+      debugPrint('UserRepository: housekeeping skipped ($error)');
     }
   }
 
@@ -45,24 +74,12 @@ class UserRepository {
     }
   }
 
-  Future<void> _openAndValidate() async {
-    try {
-      final userBox = await Hive.openBox<UserData>(userDataBoxName);
-      final streakBox = await Hive.openBox<GameStreak>(gameStreakBoxName);
-      final metaBox = await Hive.openBox(_metaBoxName);
-
-      await userBox.compact();
-      await streakBox.compact();
-
-      final version = metaBox.get(_versionKey, defaultValue: 0) as int;
-      if (version < _currentSchemaVersion) {
-        _validateExistingData(userBox, streakBox);
-        await metaBox.put(_versionKey, _currentSchemaVersion);
-      }
-    } catch (e) {
-      debugPrint('UserRepository init error: $e');
-      rethrow;
-    }
+  /// Opens the three boxes. A throw here means the stored bytes cannot be read
+  /// as this app's types: that is the only failure allowed to lose data.
+  Future<void> _openBoxes() async {
+    await Hive.openBox<UserData>(userDataBoxName);
+    await Hive.openBox<GameStreak>(gameStreakBoxName);
+    await Hive.openBox(_metaBoxName);
   }
 
   void _validateExistingData(Box<UserData> userBox, Box<GameStreak> streakBox) {
