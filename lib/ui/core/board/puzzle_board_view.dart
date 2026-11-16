@@ -108,10 +108,12 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   void didUpdateWidget(covariant PuzzleBoardView<S> oldWidget) {
     super.didUpdateWidget(oldWidget);
     final changed = !identical(oldWidget.board.state, widget.board.state);
+    var committedChange = false;
     if (changed && _lifted != null) {
       if (_committedDragChange) {
         // The change this drag asked for; keep the lifted copy flying.
         _committedDragChange = false;
+        committedChange = true;
       } else {
         // A reset or a new level landed mid-drag; drop the gesture, not the app.
         _clearDrag(notify: false);
@@ -122,6 +124,11 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       final duration =
           widget.board.transitionFor(oldWidget.board.state, widget.board.state);
       if (duration != null && duration > Duration.zero) {
+        // The transition owns the painting now: the board below draws the new
+        // state and the carried copy would ride over it as a second object on
+        // the same square (Inertia's marble). Retire it without touching the
+        // state that already moved.
+        if (committedChange) _clearDrag(notify: false);
         _transitionFrom = oldWidget.board.state;
         _transitionTo = widget.board.state;
         _transition.duration = duration;
