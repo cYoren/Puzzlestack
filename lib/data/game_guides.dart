@@ -5074,6 +5074,27 @@ const Map<String, GameGuide> gameGuides = {
       "Work from the corners inward. The four corner cells of the grid touch only one clue each, so they have the least to satisfy, and they feed the row and column rules for everything else.",
     ],
   ),
+  "rome": GameGuide(
+    title: "Rome",
+    category: "LOGIC",
+    objective:
+        "Put one arrow in every cell. No arrow may repeat inside an outlined area, and if you follow the arrows from any cell you have to arrive at a circled goal, without ever looping or leaving the board.",
+    controls:
+        "Tap a cell to cycle the four arrows and then blank. Printed arrows and circled goals are not yours to change. The hint button writes one arrow the rules prove.",
+    walkthrough: [
+      "Step 1: Read the edge first. A cell on the border has fewer than four arrows available, so the outside ring is decided before the middle.",
+      "Step 2: An outlined area may not hold the same arrow twice. Write an arrow and it is gone from the rest of its area, which on a four-cell area means each of the four appears exactly once.",
+      "Step 3: Follow chains that are already decided. If the cells a chain passes through are all written, you can see where it ends: at a goal, which is fine, or back where it started, which is the mistake.",
+      "Step 4: Ask where an arrow could end. An arrow whose chain can only run into a loop or into the edge is wrong, and that keeps an arrow pointing nowhere out of the cell even when you cannot see the whole chain.",
+      "Step 5: The board is finished when every cell holds an arrow, no arrow is red, and every chain reads its way to a circle.",
+    ],
+    strategies: [
+      "Count the goals against the size of the board. Each goal only ends the chains that reach it, so on a board with few circles the arrows near a goal are the ones you can prove first.",
+      "Work the corners. A corner cell offers two arrows, one along each edge, and one of them often loops with its neighbour before anything else in the board is decided.",
+      "When two neighbouring cells both still allow only the arrows that point at each other, one of them has to go elsewhere. That pairing is the cheapest contradiction on a Rome board and it appears early.",
+      "Keep chains short. A cell whose arrow lands two steps from a goal is much easier to settle than one in the middle of a long run, so sort the cells you are unsure about by how far their chain has to travel.",
+    ],
+  ),
   "salad": GameGuide(
     title: "Salad",
     category: "LOGIC",
