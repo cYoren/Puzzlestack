@@ -523,6 +523,15 @@ abstract class PuzzleBoard<S extends PuzzleState> {
   /// is true of every board even when it is not interesting.
   String get semanticsShape => 'board of ${elements.length} elements';
 
+  /// Extra text a listener needs that no element carries.
+  ///
+  /// The elements are what can be tapped, and some boards put information where
+  /// it cannot be: Slitherlink's numeric clues sit inside squares that are not
+  /// hit targets, so a listener reading only the elements would never hear them
+  /// and could not play. Read after [semanticsSummary]; null when every piece of
+  /// the puzzle is already an element (the normal case).
+  String? get semanticsDetails => null;
+
   /// One line read before the elements, so a listener knows what is on screen.
   String get semanticsSummary =>
       isSolved ? '$semanticsShape, solved' : semanticsShape;

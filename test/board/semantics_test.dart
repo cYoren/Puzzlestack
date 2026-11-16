@@ -169,7 +169,12 @@ SlitherlinkState _slitherlink({bool drawn = false}) {
   return SlitherlinkState(
     level: SlitherlinkLevel(
       size: size,
-      clues: List.generate(size, (_) => List<int?>.filled(size, null)),
+      // One clue inside a square: no element can carry it, so the summary must.
+      clues: List.generate(
+        size,
+        (row) =>
+            List<int?>.generate(size, (col) => row == 0 && col == 1 ? 2 : null),
+      ),
       solutionHEdges: List.generate(size + 1, (_) => List.filled(size, false)),
       solutionVEdges: List.generate(size, (_) => List.filled(size + 1, false)),
     ),
@@ -309,6 +314,14 @@ void main() {
         _host(SlitherlinkBoard(state: _slitherlink(drawn: true)), moves.add),
       );
       await tester.pump();
+
+      // The clue is not an element: it has to reach the listener through the
+      // summary, or a square count could never be honoured.
+      expect(
+        find.bySemanticsLabel(RegExp('clues: 2 at row 1, column 2')),
+        findsOneWidget,
+        reason: 'a clue no element carries is missing from the text form',
+      );
 
       final edge = _node(tester, 'horizontal edge at row 1, column 1');
       expect(edge.value, 'line');

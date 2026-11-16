@@ -83,13 +83,15 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   Offset _settleFrom = Offset.zero;
   Offset _settleTo = Offset.zero;
 
-  /// True once this drag's move has been handed to the notifier.
+  /// True between handing this drag's move to the notifier and the first state
+  /// change that lands after it.
   ///
-  /// The state landing while the snap spring is still painting is the point of
-  /// the commit, not an interruption: it is what lets the same spring run over
-  /// a model that has already moved. Anything else that changes state under a
-  /// lifted element is a reset or a new level and still drops the gesture.
-  bool _committed = false;
+  /// That one change is the point of the commit, not an interruption: it is what
+  /// lets the same spring run over a model that has already moved. It is cleared
+  /// by the very next change, so a reset or a new level arriving during the snap
+  /// still drops the gesture — exempting a window of time instead would have
+  /// missed exactly that.
+  bool _committedDragChange = false;
 
   List<ElementRef> _celebrating = const [];
   Duration _winStagger = BoardMotion.winStagger;
@@ -106,9 +108,14 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   void didUpdateWidget(covariant PuzzleBoardView<S> oldWidget) {
     super.didUpdateWidget(oldWidget);
     final changed = !identical(oldWidget.board.state, widget.board.state);
-    if (changed && _lifted != null && !_committed) {
-      // A reset or a new level landed mid-drag; drop the gesture, not the app.
-      _clearDrag(notify: false);
+    if (changed && _lifted != null) {
+      if (_committedDragChange) {
+        // The change this drag asked for; keep the lifted copy flying.
+        _committedDragChange = false;
+      } else {
+        // A reset or a new level landed mid-drag; drop the gesture, not the app.
+        _clearDrag(notify: false);
+      }
     }
 
     if (changed) {
@@ -293,7 +300,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       // which put the snap's whole duration between the finger and the board.
       // Motion decorates a move, it never gates it (PUZZLE_STYLE.md §4), and a
       // board with a transition still paints it over the new state.
-      _committed = true;
+      _committedDragChange = true;
       _settle.value = 0;
       _emitVerbFor(hover.move);
       widget.onMove(hover.move);
@@ -329,7 +336,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     _targets = const [];
     _hover = null;
     _settling = false;
-    _committed = false;
+    _committedDragChange = false;
     if (notify) setState(() {});
   }
 
@@ -419,6 +426,14 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     return fixed ? 'fixed' : null;
   }
 
+  /// The summary line, plus whatever the board says no element can carry.
+  String _spokenSummary() {
+    final details = widget.board.semanticsDetails;
+    return details == null || details.isEmpty
+        ? widget.board.semanticsSummary
+        : '${widget.board.semanticsSummary}. $details';
+  }
+
   /// One semantics node per element, laid over the paint at that element's own
   /// bounds, in the same order the elements are painted.
   ///
@@ -468,7 +483,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
             container: true,
             explicitChildNodes: true,
             textDirection: TextDirection.ltr,
-            label: widget.board.semanticsSummary,
+            label: _spokenSummary(),
             child: Stack(
               children: [
                 Positioned.fill(

@@ -33,6 +33,22 @@ class SlitherlinkBoard extends PuzzleBoard<SlitherlinkState> {
   String? valueOf(ElementRef element) =>
       _isEdge(element) && _drawn(element) ? 'line' : null;
 
+  /// The clues live inside the squares, which are not tap targets, so a
+  /// listener would otherwise never hear them.
+  @override
+  String? get semanticsDetails {
+    final clues = <String>[];
+    for (var row = 0; row < size; row++) {
+      for (var col = 0; col < size; col++) {
+        final clue = state.level.clues[row][col];
+        if (clue != null) {
+          clues.add('$clue at row ${row + 1}, column ${col + 1}');
+        }
+      }
+    }
+    return clues.isEmpty ? null : 'clues: ${clues.join('; ')}';
+  }
+
   /// The verb for an edge tap is draw or erase, not the contract's "toggle".
   @override
   String? describeTap(ElementRef element) {
