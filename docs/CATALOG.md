@@ -3,7 +3,8 @@
 All 323 registry ids, each in exactly one list. Tiers and the checks behind them:
 [PUZZLE-BAR.md](PUZZLE-BAR.md).
 
-**A pass, first made on 2026-11-14 and extended on 2026-11-15, made from ids, subtitles and the two audits, not from
+**A pass, first made on 2026-11-14, extended on 2026-11-15 and on 2026-11-16, made from ids,
+subtitles and the two audits, not from
 playing each game.** Nothing here is final until its room's triage job
 (`triage-<room>` in [ROADMAP.md](../ROADMAP.md)) has played the game and confirmed or moved it.
 The half of that job a machine can do is written per room: [docs/TRIAGE-LOGIC.md](TRIAGE-LOGIC.md),
@@ -13,17 +14,21 @@ The half of that job a machine can do is written per room: [docs/TRIAGE-LOGIC.md
 they do not move a game. A game leaves the Archive if play shows a real decision in it. A game
 leaves Deck if it fails any of the ten checks.
 
+The 2026-11-16 pass is `lab-hide`: a `lab` game stays in the Deck only if it can be played as a
+game from the screen alone, can be won or lost, and is worth playing again. Six pass;
+every other `lab` game is archived, whichever tier it was in.
+
 | | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
 | Logic | 44 | 18 | 1 | 0 | 63 |
 | Math | 19 | 25 | 10 | 9 | 63 |
-| Memory | 12 | 17 | 16 | 9 | 54 |
-| Attention | 18 | 9 | 16 | 11 | 54 |
+| Memory | 1 | 0 | 0 | 53 | 54 |
+| Attention | 5 | 0 | 2 | 47 | 54 |
 | Word | 24 | 17 | 8 | 2 | 51 |
 | Spatial | 22 | 9 | 6 | 1 | 38 |
-| **All** | **139** | **95** | **57** | **32** | **323** |
+| **All** | **115** | **69** | **27** | **112** | **323** |
 
-Visible in the app after this pass: **234**. The other 89 are archived: hidden, tagged, still in
+Visible in the app after this pass: **184**. The other 139 are archived: hidden, tagged, still in
 the repo. The store copy takes its number from the visible registry, never from this file.
 
 ## Format
@@ -172,36 +177,33 @@ Mostly working-memory span tasks from the lab, many of them the same task with a
 stimulus. The Deck keeps the ones that are a game on sight.
 
 ```deck
-card_counting_memory chimp_test corsi_blocks mandala_recall memory_matrix object_shuffle
-path_recall pattern_sequence_draw pixel_mimic room_inspector sequence_stack simon_sequence
+simon_sequence
 ```
 
 ```library
-action_sequence_recall associative_pairs continuous_recognition delayed_match_sample
-digit_span_reverse directions_recall event_timeline_memory face_name_association grocery_list
-memory_palace n_back object_displacement operation_span spatial_cabinet_memory
-staircase_memory story_builder symbol_digit_assoc
 ```
 
 ```merge
-corsi_blocks <- corsi_backward_span
-n_back <- double_n_back
-digit_span_reverse <- probe_digit_span running_memory_span
-delayed_match_sample <- dnms
-operation_span <- reading_span counting_span symmetry_span
-object_displacement <- grid_displacement
-continuous_recognition <- continuous_paired_associate
-face_name_association <- face_trait_association
-associative_pairs <- word_pair_associate_memory word_association_recall relational_memory fact_binder
-story_builder <- narrative_recall
 ```
 
 ```archive
-distractor_matrix dual_coding dual_task_memory feature_matrix_recall sopt source_monitoring
-sternberg_task temporal_order visual_statistical_learning
+action_sequence_recall associative_pairs card_counting_memory chimp_test corsi_backward_span
+corsi_blocks continuous_paired_associate continuous_recognition counting_span delayed_match_sample
+digit_span_reverse directions_recall distractor_matrix dnms dual_coding dual_task_memory
+double_n_back event_timeline_memory face_name_association face_trait_association fact_binder
+feature_matrix_recall grocery_list grid_displacement mandala_recall memory_matrix memory_palace
+n_back narrative_recall object_displacement object_shuffle operation_span path_recall
+pattern_sequence_draw pixel_mimic probe_digit_span reading_span relational_memory room_inspector
+running_memory_span sequence_stack sopt source_monitoring spatial_cabinet_memory staircase_memory
+sternberg_task story_builder symbol_digit_assoc symmetry_span temporal_order
+visual_statistical_learning word_association_recall word_pair_associate_memory
 ```
 
 Notes
+- **`lab-hide` (2026-11-16):** the whole room but `simon_sequence` is archived. A span, n-back,
+  recall or recognition test is a lab task, not a game: no decision, nothing to win or lose, and
+  nobody replays it for fun. Reason `no-game`. No merge survives, because every keeper that
+  absorbed a twin is itself archived; the absorbed ids are now archived in their own right.
 - **Machine pass done, play pass pending** (`docs/TRIAGE-MEMORY.md`). Layout clean at 320dp in both
   themes for all 38. 24 titles shout or use lab vocabulary, 16 games have no rule test. Every game
   here is a lab task, so check 2 is fair-by-play: no generator owes a uniqueness proof.
@@ -214,35 +216,33 @@ Reaction and attention tasks. Good as Snap cards between puzzles, in small doses
 per idea rather than five.
 
 ```deck
-change_blindness color_match color_maze_nav counting_sheep double_trouble
-multiple_object_tracking odd_one_out orbit_tap reflex_tap rhythm_master rule_switcher
-schulte_table shell_game simon_command stroop_test subitizing_rush trail_making visual_search
+change_blindness color_match schulte_table shell_game visual_search
 ```
 
 ```library
-attentional_blink divided_attention flanker_test frequency_tap ghost_tap go_no_go
-letter_cancellation sdmt shape_shifter
 ```
 
 ```merge
-stroop_test <- reverse_stroop stroop_number_size color_word_match_up spatial_conflict
-flanker_test <- symbolic_flanker
-attentional_blink <- attentional_blink_probe blink_detector
 visual_search <- visual_search_conjunction conjunction_search
-rule_switcher <- switch_task ab_reversal_oddball
-go_no_go <- stop_signal
-multiple_object_tracking <- multi_track_counter spotlight_track
-letter_cancellation <- d2_attention
-reflex_tap <- choice_reaction_time
 ```
 
 ```archive
-chalk_and_talk dual_mirror dynamic_salience focus_tunnel navon_hierarchical odd_even_flash
-peripheral_focus posner_spatial_cueing temporal_order_judgment vigilance_task
-visual_crowding_acuity
+ab_reversal_oddball attentional_blink attentional_blink_probe blink_detector chalk_and_talk
+choice_reaction_time color_maze_nav color_word_match_up counting_sheep d2_attention divided_attention
+double_trouble dual_mirror dynamic_salience flanker_test focus_tunnel frequency_tap ghost_tap
+go_no_go letter_cancellation multi_track_counter multiple_object_tracking navon_hierarchical
+odd_even_flash odd_one_out orbit_tap peripheral_focus posner_spatial_cueing reflex_tap
+reverse_stroop rhythm_master rule_switcher sdmt shape_shifter simon_command spatial_conflict
+spotlight_track stop_signal stroop_number_size stroop_test subitizing_rush switch_task
+symbolic_flanker temporal_order_judgment trail_making vigilance_task visual_crowding_acuity
 ```
 
 Notes
+- **`lab-hide` (2026-11-16):** only `change_blindness`, `color_match`, `schulte_table`,
+  `shell_game` and `visual_search` stay in the Deck. Stroop, flanker, cueing, vigilance,
+  tracking, reaction and "watch and report" tasks are archived `no-game`: a player cannot win or
+  lose them and would not choose them again. The 13 Deck ids and all 9 Library ids moved, and the
+  merges whose keeper was archived went with them. `visual_search` keeps its two absorbed twins.
 - **Machine pass done, play pass pending** (`docs/TRIAGE-ATTENTION.md`). Layout clean at 320dp in
   both themes for all 38. 19 games have no rule test, 13 shout, and `ghost_tap` and `rhythm_master`
   have no pool to stay fresh. All 38 are lab tasks: check 2 is fair-by-play.

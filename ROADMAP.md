@@ -16,7 +16,7 @@ What those phases taught is in [papercuts.md](papercuts.md).
 
 | # | Gate | How it is checked |
 | --- | --- | --- |
-| G1 | The Deck holds at least 100 verified games, and no room is more than 40% of it | `test/curation_test.dart` |
+| G1 | The Deck holds at least 100 verified games, and no room is more than 40% of it | `test/content/game_profiles_test.dart` |
 | G2 | Every Deck game passes the ten checks | its row in `docs/CATALOG.md` is marked verified, with a PR |
 | G3 | Every kept game has a test against its own rule (79 have none today: each room's `rule-tests` list in `docs/TRIAGE-*`) | `test/content/` plus a registry sweep that fails on an untested id |
 | G4 | No game can be dealt unwinnable, or with two answers where one is implied | generator and pool tests |

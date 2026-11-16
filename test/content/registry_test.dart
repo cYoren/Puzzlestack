@@ -26,9 +26,9 @@ void main() {
   });
 
   test('every guide belongs to a game', () {
-    final orphans =
-        gameGuides.keys.where((key) => !ids.contains(key)).toList();
-    expect(orphans, isEmpty, reason: 'guides for no game: ${orphans.join(', ')}');
+    final orphans = gameGuides.keys.where((key) => !ids.contains(key)).toList();
+    expect(orphans, isEmpty,
+        reason: 'guides for no game: ${orphans.join(', ')}');
   });
 
   test('every guide has the shape the rules page needs', () {
@@ -47,7 +47,7 @@ void main() {
     // The registry is not the number the player sees: the archive is hidden, and the store
     // page, the web shell, the Pages site and the README are about what a player can open.
     // This used to require the registry total, which is how the copy ended up advertising
-    // 89 games the app no longer deals.
+    // 139 games the app no longer deals.
     final visible = visibleIds.length.toString();
     final total = '${allGamesMetadata.length}';
     // Files that must carry the number, and the one that must not carry the archived total
