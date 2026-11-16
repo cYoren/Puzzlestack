@@ -153,6 +153,41 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
   });
 
+  testWidgets(
+      'a landed drag stops painting its lifted copy when the transition starts',
+      (tester) async {
+    tester.view.physicalSize = const Size(720, 1600);
+    tester.view.devicePixelRatio = 2.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(_app(const InertiaScreen()));
+    await tester.pumpAndSettle();
+
+    final board = _board(tester);
+    final measured = await _dragAndTime(tester, board);
+    expect(measured.moved, isTrue, reason: 'the drag never moved the board');
+
+    // The state has landed and Inertia's own transition now owns the painting:
+    // the carried copy must be gone, or the marble is drawn twice on the way
+    // to its destination.
+    final painters = tester
+        .widgetList<CustomPaint>(find.byType(CustomPaint))
+        .map((paint) => paint.painter)
+        .where((painter) =>
+            painter != null &&
+            painter.runtimeType.toString().startsWith('_BoardPainter'))
+        .toList();
+    expect(painters, isNotEmpty, reason: 'no board painter on screen');
+    for (final painter in painters) {
+      expect((painter as dynamic).liftedState, isNull,
+          reason:
+              'the lifted copy is still painted after the transition took over');
+    }
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(seconds: 1));
+  });
+
   testWidgets('a tap still lands in one frame after the drag change',
       (tester) async {
     tester.view.physicalSize = const Size(720, 1600);
