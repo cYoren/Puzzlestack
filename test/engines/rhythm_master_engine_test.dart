@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/rhythm_master/rhythm_master_engine.dart';
 
@@ -69,6 +71,40 @@ void main() {
         expect(engine.getAccuracyLabel(0), equals('MISS'));
         expect(engine.getAccuracyLabel(19), equals('MISS'));
       });
+    });
+  });
+
+  group('RhythmMasterSession', () {
+    test('a drawn session is on a documented tempo and step', () {
+      final random = Random(5);
+      for (var i = 0; i < 200; i++) {
+        final session = RhythmMasterSession.random(random);
+        expect(RhythmMasterSession.startBpms, contains(session.startBpm));
+        expect(RhythmMasterSession.stepBpms, contains(session.stepBpm));
+      }
+    });
+
+    test('two hundred draws are not one repeated session', () {
+      final random = Random(9);
+      final sessions = <String>{};
+      for (var i = 0; i < 200; i++) {
+        final session = RhythmMasterSession.random(random);
+        sessions.add('${session.startBpm}/${session.stepBpm}');
+      }
+      // Six tempos by three steps: a fixed 60 bpm / 2 step session would give one.
+      expect(sessions.length, greaterThan(10));
+    });
+
+    test('a session speeds up on its own ladder, and never stalls', () {
+      const session = RhythmMasterSession(startBpm: 60, stepBpm: 2);
+      expect(session.bpmAt(0), 60);
+      expect(session.bpmAt(1), 62);
+      expect(session.bpmAt(20), 100);
+      expect(session.intervalAt(0), 1000);
+
+      const fast = RhythmMasterSession(startBpm: 78, stepBpm: 3);
+      expect(fast.intervalAt(0), lessThan(session.intervalAt(0)));
+      expect(fast.bpmAt(20), greaterThan(session.bpmAt(20)));
     });
   });
 }

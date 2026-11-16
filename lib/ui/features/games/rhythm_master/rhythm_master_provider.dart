@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'rhythm_master_engine.dart';
 
@@ -52,13 +54,18 @@ class RhythmMasterNotifier extends _$RhythmMasterNotifier {
   final _engine = RhythmMasterEngine();
   final int _maxBeats = 20;
 
+  /// This game's tempo ladder. Drawn by [initGame], so two games open at
+  /// different tempos and speed up differently.
+  RhythmMasterSession _session = RhythmMasterSession.random(Random());
+
   @override
   RhythmMasterState build() {
     return RhythmMasterState();
   }
 
   void initGame() {
-    state = RhythmMasterState(isLoading: false, bpm: 60);
+    _session = RhythmMasterSession.random(Random());
+    state = RhythmMasterState(isLoading: false, bpm: _session.startBpm);
   }
 
   void onBeat(double progress) {
@@ -69,12 +76,14 @@ class RhythmMasterNotifier extends _$RhythmMasterNotifier {
   void onTap(int timeDiffMs) {
     if (state.isGameOver) return;
 
-    final accuracy = _engine.calculateAccuracy(timeDiffMs, (60000 / state.bpm).toInt());
+    final accuracy = _engine.calculateAccuracy(
+        timeDiffMs, _session.intervalAt(state.totalBeats));
     final label = _engine.getAccuracyLabel(accuracy);
-    
+
     final newBeats = state.totalBeats + 1;
     final newScore = state.score + accuracy;
-    final newPerfect = accuracy == 100 ? state.perfectHits + 1 : state.perfectHits;
+    final newPerfect =
+        accuracy == 100 ? state.perfectHits + 1 : state.perfectHits;
 
     state = state.copyWith(
       totalBeats: newBeats,
@@ -82,7 +91,7 @@ class RhythmMasterNotifier extends _$RhythmMasterNotifier {
       perfectHits: newPerfect,
       lastAccuracyLabel: label,
       isGameOver: newBeats >= _maxBeats,
-      bpm: 60 + (newBeats * 2), // Speed up!
+      bpm: _session.bpmAt(newBeats), // Speed up on this session's ladder
     );
   }
 }

@@ -23,19 +23,19 @@ by playing.
 
 | | Deck | Library | Archive |
 | --- | --- | --- | --- |
-| Games | 44 | 13 | 0 |
+| Games | 44 | 18 | 0 |
 
 **Origin tags** in this room, which is what the uniqueness column above turns on:
 
 | Origin | Games |
 | --- | --- |
-| puzzle | 57 |
+| puzzle | 62 |
 
 **Check 6 evidence.** `AUDIT_ONLY=<room ids> flutter test test/board/game_audit.dart`,
 light and `AUDIT_DARK=1`:
 
-- light: `AUDIT checked=57 overflow=0 threw=0`
-- dark: `AUDIT checked=57 overflow=0 threw=0`
+- light: `AUDIT checked=62 overflow=0 threw=0`
+- dark: `AUDIT checked=62 overflow=0 threw=0`
 
 ## Per game
 
@@ -47,9 +47,11 @@ light and `AUDIT_DARK=1`:
 | `binary_puzzle` | BINARY PUZZLE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
 | `block_escape` | BLOCK ESCAPE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
 | `boats` | Boats | library | pass | pass | audit-clean | pass | pass | pass | pass |
+| `bricks` | Bricks | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `bridges` | BRIDGES | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
 | `clusters` | Clusters | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `color_flood` | Color Flood | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `crossing` | Number Crossing | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `crown` | CROWN | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
 | `cube` | CUBE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
 | `dominosa` | DOMINOSA | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
@@ -71,6 +73,7 @@ light and `AUDIT_DARK=1`:
 | `magnets` | MAGNETS | deck | pass | pass | audit-clean | pass | pass | shouting | pass |
 | `map` | MAP | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
 | `masyu` | Masyu Loop | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `mathrax` | Mathrax | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `matrix_reasoning` | Matrix Reasoning | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `minesweeper` | Minesweeper | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `netslide` | NETSLIDE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
@@ -80,6 +83,8 @@ light and `AUDIT_DARK=1`:
 | `path_finder` | Path Finder | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `pegs` | Pegs | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `pipes` | Pipes | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `rome` | Rome | library | pass | pass | audit-clean | pass | pass | pass | pass |
+| `salad` | Salad | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `same_game` | Same Game | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `seismic` | Ripple Effect | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `shikaku` | Shikaku | deck | unproven | pass | audit-clean | pass | pass | shouting | fail |
@@ -112,16 +117,16 @@ usually one mechanism and not N edits.
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (18): `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `heyawake`, `hitori`, `inertia`, `map`, `netslide`, `pegs`, `pipes`, `same_game`, `tangle_fix`, `tower_of_london`, `twiddle`, `water_sort`
+- winnable, not unique (26): `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `map`, `masyu`, `netslide`, `pegs`, `pipes`, `same_game`, `shikaku`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `yajilin`
 
-- neither proven (15): `gokigen_naname`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `masyu`, `matrix_reasoning`, `path_finder`, `shikaku`, `symbol_logic`, `tapa`, `tenner_grid`, `triplets_logic`, `wisconsin_card_sorting`, `yajilin`
+- neither proven (7): `kakuro`, `lock_pattern`, `logical_syllogisms`, `matrix_reasoning`, `path_finder`, `symbol_logic`, `wisconsin_card_sorting`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.
 
 ## What the play pass has to answer
 
-57 games. Play five times at phone size, write the first thing that
+62 games. Play five times at phone size, write the first thing that
 confused you, then confirm or move the id in `docs/CATALOG.md` with one line of reason:
 
-`abcd`, `akari`, `ascent`, `binary_puzzle`, `block_escape`, `boats`, `bridges`, `clusters`, `color_flood`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `galaxies`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `kurodoko`, `lighthouses`, `lights_out`, `lock_pattern`, `logical_syllogisms`, `magnets`, `map`, `masyu`, `matrix_reasoning`, `minesweeper`, `netslide`, `nonogram`, `norinori`, `nurikabe`, `path_finder`, `pegs`, `pipes`, `same_game`, `seismic`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `sudoku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tents_and_trees`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
+`abcd`, `akari`, `ascent`, `binary_puzzle`, `block_escape`, `boats`, `bricks`, `bridges`, `clusters`, `color_flood`, `crossing`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `galaxies`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `kurodoko`, `lighthouses`, `lights_out`, `lock_pattern`, `logical_syllogisms`, `magnets`, `map`, `masyu`, `mathrax`, `matrix_reasoning`, `minesweeper`, `netslide`, `nonogram`, `norinori`, `nurikabe`, `path_finder`, `pegs`, `pipes`, `rome`, `salad`, `same_game`, `seismic`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `sudoku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tents_and_trees`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
