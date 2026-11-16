@@ -5,6 +5,8 @@ import 'package:puzzle/data/game_categories.dart';
 import 'package:puzzle/data/models/user_data.dart';
 import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/ui/features/home/discovery_home_screen.dart';
+import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/core/preview/game_preview.dart';
 import 'package:puzzle/ui/features/home/category_room_screen.dart';
@@ -15,28 +17,52 @@ import 'package:puzzle/utils/design_system.dart';
 /// and the archive switch, which has to add the archived games without letting
 /// them into a room the switch is off in.
 class _FakeRepository extends UserRepository {
-  _FakeRepository({this.showArchived = false});
+  _FakeRepository({this.showArchived = false, this.favorites = const []});
 
   final bool showArchived;
+  final List<String> favorites;
 
   @override
-  UserData getUserData() =>
-      UserData.initial().copyWith(showArchivedGames: showArchived);
+  UserData getUserData() => UserData.initial().copyWith(
+        showArchivedGames: showArchived,
+        favoriteGameIds: favorites,
+      );
 
   @override
   Future<void> saveUserData(UserData data) async {}
 }
 
-Widget _app(String categoryId, {bool showArchived = false}) => ProviderScope(
+Widget _app(String categoryId,
+        {bool showArchived = false, List<String> favorites = const []}) =>
+    ProviderScope(
       overrides: [
-        userRepositoryProvider
-            .overrideWithValue(_FakeRepository(showArchived: showArchived)),
+        userRepositoryProvider.overrideWithValue(_FakeRepository(
+          showArchived: showArchived,
+          favorites: favorites,
+        )),
       ],
       child: MaterialApp(
         theme: DesignSystem.lightTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: CategoryRoomScreen(categoryId: categoryId),
+      ),
+    );
+
+Widget _homeApp(
+        {bool showArchived = false, List<String> favorites = const []}) =>
+    ProviderScope(
+      overrides: [
+        userRepositoryProvider.overrideWithValue(_FakeRepository(
+          showArchived: showArchived,
+          favorites: favorites,
+        )),
+      ],
+      child: MaterialApp(
+        theme: DesignSystem.lightTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const DiscoveryHomeScreen(),
       ),
     );
 
@@ -65,6 +91,30 @@ void main() {
         expect(tester.takeException(), isNull,
             reason: 'layout broke at scroll step $i, ${width.toInt()}dp');
       }
+    });
+  }
+
+  // Codex caught this one: starring an archived game worked, but the shelf on
+  // the stack was built from the playable list only, so the star went nowhere.
+  for (final bool showArchived in [false, true]) {
+    testWidgets(
+        'a favourited archived game is on the shelf only with the switch '
+        '${showArchived ? 'on' : 'off'}', (tester) async {
+      _sizeTo(tester, 400);
+      const String archivedId = 'distractor_matrix';
+      expect(GameCategories.isArchived(archivedId), isTrue,
+          reason: 'the test needs a game the catalog archives');
+
+      await tester.pumpWidget(
+          _homeApp(showArchived: showArchived, favorites: const [archivedId]));
+      await tester.pumpAndSettle();
+
+      final BuildContext context =
+          tester.element(find.byType(DiscoveryHomeScreen));
+      final String title = L10nGameHelpers.getGameTitle(context, archivedId);
+      final bool onShelf = find.text(title).evaluate().isNotEmpty;
+      expect(onShelf, showArchived);
+      expect(tester.takeException(), isNull);
     });
   }
 
