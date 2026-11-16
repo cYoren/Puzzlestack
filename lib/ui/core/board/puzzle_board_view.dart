@@ -349,30 +349,15 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     }
     emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
 
-    // A tap that moves something somewhere gets the same settle a drag does.
-    // Without it a pour, a jump or a link happened in one frame, which read as
-    // the board flickering rather than the move being made.
-    final target = move.target;
-    final bounds = target == null ? null : widget.board.boundsOf(target);
-    final origin = widget.board.boundsOf(move.source);
-    if (target == null || bounds == null || origin == null) {
-      widget.onMove(move);
-      return;
-    }
-    final delta = bounds.center - origin.center;
-    setState(() {
-      _lifted = move.source;
-      _grab = Offset.zero;
-      _pointer = Offset.zero;
-      _pending = move;
-      _settling = true;
-      _settleFrom = Offset.zero;
-      _settleTo = Offset(delta.dx * _size.width, delta.dy * _size.height);
-    });
-    _settle.value = 0;
-    _settle
-        .animateWith(SpringSimulation(BoardMotion.snapSpring, 0, 1, 0))
-        .whenCompleteOrCancel(_commit);
+    // A tap is a drag that resolved immediately, so it lands in this frame.
+    //
+    // This used to run the snap spring first and commit the move when it ended,
+    // which put 160ms of animation between the finger and the board: a tap on a
+    // cell and the arrow it draws were two different moments. Motion decorates
+    // a move, it never gates it. A board with something to show (a pour, a
+    // turn) declares `transitionFor`, and the engine paints that once the state
+    // has already moved, so the move is instant and still animated.
+    widget.onMove(move);
   }
 
   // -------------------------------------------------------------------- win

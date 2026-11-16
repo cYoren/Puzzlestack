@@ -166,6 +166,10 @@ seconds.
 
 Motion is feedback, not decoration. If a cell moves, the player learned something.
 
+A tap lands in the frame of the tap. The state changes before the next paint, and any
+motion the board declares (`transitionFor`) runs over the new state, never in front of it;
+a tap does not owe an animation before it is allowed to be true.
+
 ## 5. Five verbs
 
 One file, `HapticFeedbackUtil`, already exists. Games emit verbs; they never call
