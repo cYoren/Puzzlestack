@@ -21,6 +21,7 @@
   <url><loc>https://cyoren.github.io/Puzzlestack/games/block-escape.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/block-stacking-physics.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/boats.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
+  <url><loc>https://cyoren.github.io/Puzzlestack/games/bricks.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/bridges.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/calculation-sprint.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/card-counting-memory.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
@@ -45,6 +46,7 @@
   <url><loc>https://cyoren.github.io/Puzzlestack/games/countdown-math.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/counting-sheep.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/cross-section-slice.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
+  <url><loc>https://cyoren.github.io/Puzzlestack/games/crossing.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/crossword.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/crown.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/crypto-arithmetic.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
@@ -165,9 +167,11 @@
   <url><loc>https://cyoren.github.io/Puzzlestack/games/rhyme-master.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/rhythm-master.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/roman-arithmetic.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
+  <url><loc>https://cyoren.github.io/Puzzlestack/games/rome.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/room-inspector.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/rotating-maze.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/rule-switcher.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
+  <url><loc>https://cyoren.github.io/Puzzlestack/games/salad.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/same-game.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/schulte-table.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
   <url><loc>https://cyoren.github.io/Puzzlestack/games/seismic.html</loc><lastmod>2026-11-16</lastmod><priority>0.8</priority></url>
