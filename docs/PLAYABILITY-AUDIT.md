@@ -54,7 +54,10 @@ not apply everywhere · `[ ]` still open.
       movement — Water Sort (a real pour: draining tube, rising tube, arcing stream), Twiddle
       (the block actually rotates 90°), Inertia (the ball slides between cells), Cube (rolls
       over the shared edge with a small lift) and Netslide (row/column shift with the wrap tile
-      entering from the far edge). The shared tap-settle covers every other moving tap. The
+      entering from the far edge). Every other tap lands in the frame it was made in: the
+      engine commits a tap's move immediately instead of running a settle first, so a board
+      that wants the move seen declares a transition and one that does not is simply instant.
+      The
       313-game audit runs in both themes (`AUDIT_DARK=1`): 313 checked, 0 overflow, 0 throws
       at 320dp.
 - [x] **No coffee for someone else.** The upstream author's Ko-fi link is gone from the

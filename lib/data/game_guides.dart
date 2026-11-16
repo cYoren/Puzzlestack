@@ -1877,6 +1877,27 @@ const Map<String, GameGuide> gameGuides = {
       "Avoid blinking while the items are in motion.",
     ],
   ),
+  "crossing": GameGuide(
+    title: "Number Crossing",
+    category: "LOGIC",
+    objective:
+        "Lay every number in the list into the skeleton once, across or down, one digit per cell. A number that crosses another shares a cell with it, so both must have the same digit there, and the cells no number covers are wall.",
+    controls:
+        "Tap a cell to write the next digit: 1, 2, up to 9, then empty again. Wall cells take nothing. The hint button writes what the crossings prove, which is sometimes a whole number at once.",
+    walkthrough: [
+      "Step 1: Count the strips. Every outlined strip takes exactly one number, and its length says which numbers fit it, so a three-cell strip can only hold a three-digit number.",
+      "Step 2: Read a crossing. The digit a strip needs at a crossing must be the digit the other strip needs there, so keep only the digits both strips allow. A crossing that leaves one digit has decided that cell.",
+      "Step 3: Write the digit. A decided digit rules out every number that would have written something else in that position, which is usually what collapses the next strip.",
+      "Step 4: Count on both sides. A number with only one strip left goes there; a strip with only one number left that fits takes it. Every strip is used and every number is placed, so the two counts are the same number.",
+      "Step 5: The board is done when every chip is struck through and no strip is red. A red strip is one that can no longer become a listed number.",
+    ],
+    strategies: [
+      "Start with the threes. A three-digit number is far more specific than a two-digit one, so the strips it crosses usually fall first.",
+      "Use the list against itself. Two numbers that share their first two digits can only be told apart by the digit a crossing puts between them.",
+      "Watch a strip that crosses twice. One digit is a small clue, but a strip of three that meets two others has to satisfy both at once, and that often leaves exactly one number.",
+      "Never guess. Every board is dealt with exactly one filling, so a digit that feels like a guess is a crossing you have not used yet.",
+    ],
+  ),
   "einstein_riddle": GameGuide(
     title: "Einstein's Riddle",
     category: "LOGIC",
@@ -5072,6 +5093,69 @@ const Map<String, GameGuide> gameGuides = {
       "A \u00d7 with the biggest number is the strongest clue on the board: it pairs the largest digit with a 1 or a 2, and there are very few places for either.",
       "Division is the weakest of the four operations: a \u00f72 means one number is twice the other, which is 1 and 2, 2 and 4, or 3 and 6 on a six board. List the pairs before you eliminate anything, and prefer a product clue when both are on the same corner.",
       "Work from the corners inward. The four corner cells of the grid touch only one clue each, so they have the least to satisfy, and they feed the row and column rules for everything else.",
+    ],
+  ),
+  "rome": GameGuide(
+    title: "Rome",
+    category: "LOGIC",
+    objective:
+        "Put one arrow in every cell. No arrow may repeat inside an outlined area, and if you follow the arrows from any cell you have to arrive at a circled goal, without ever looping or leaving the board.",
+    controls:
+        "Tap a cell to cycle the four arrows and then blank. Printed arrows and circled goals are not yours to change. The hint button writes one arrow the rules prove.",
+    walkthrough: [
+      "Step 1: Read the edge first. A cell on the border has fewer than four arrows available, so the outside ring is decided before the middle.",
+      "Step 2: An outlined area may not hold the same arrow twice. Write an arrow and it is gone from the rest of its area, which on a four-cell area means each of the four appears exactly once.",
+      "Step 3: Follow chains that are already decided. If the cells a chain passes through are all written, you can see where it ends: at a goal, which is fine, or back where it started, which is the mistake.",
+      "Step 4: Ask where an arrow could end. An arrow whose chain can only run into a loop or into the edge is wrong, and that keeps an arrow pointing nowhere out of the cell even when you cannot see the whole chain.",
+      "Step 5: The board is finished when every cell holds an arrow, no arrow is red, and every chain reads its way to a circle.",
+    ],
+    strategies: [
+      "Count the goals against the size of the board. Each goal only ends the chains that reach it, so on a board with few circles the arrows near a goal are the ones you can prove first.",
+      "Work the corners. A corner cell offers two arrows, one along each edge, and one of them often loops with its neighbour before anything else in the board is decided.",
+      "When two neighbouring cells both still allow only the arrows that point at each other, one of them has to go elsewhere. That pairing is the cheapest contradiction on a Rome board and it appears early.",
+      "Keep chains short. A cell whose arrow lands two steps from a goal is much easier to settle than one in the middle of a long run, so sort the cells you are unsure about by how far their chain has to travel.",
+    ],
+  ),
+  "salad": GameGuide(
+    title: "Salad",
+    category: "LOGIC",
+    objective:
+        "Fill every row and column with the letters A to the last letter, once each, and leave the rest of each line as holes. Every letter printed around the border is the first one you meet looking into that line, skipping holes.",
+    controls:
+        "Tap a cell to write the next value: a hole, then A, then B, up to the last letter, then back to a hole. The hint button writes one value the clues prove.",
+    walkthrough: [
+      "Step 1: Read the distance before the letter. A clue letter can only sit as many cells from its edge as the line has holes, so on a board with one hole per line the clue letter is in the first cell or the second.",
+      "Step 2: Everything in front of that point is a hole. Only holes can come before the clue letter, so the cell a clue points at is often decided before you look at anything else.",
+      "Step 3: A letter appears once in its row and once in its column. Write a letter and it is gone from the rest of its line, which is the same rule as a Latin square.",
+      "Step 4: Count what is left in a line. When a letter has only one cell left, it goes there; when a line already holds all its holes, every other cell is a letter.",
+      "Step 5: The board is finished when every line holds each letter once with the right number of holes and no clue is red. A clue turns red only when its line is decided and the first letter does not match.",
+    ],
+    strategies: [
+      "Start at the edges, not the middle. The first cell of a line is either a hole or the clue letter and nothing else, which makes the border the most constrained part of the board.",
+      "Count holes before you count letters. Once both holes of a line are placed, every remaining cell is a letter, and the letters usually fall out of a single crossing with the line that meets it.",
+      "Use both ends of the same line. The clue on the left and the clue on the right bracket where the holes can be, and the cells that both clues leave free are where the interior has to sort itself out.",
+      "Write the hole when you are sure of it. A written hole eliminates nothing by itself, but it tightens the hole count of its line, and that is usually what turns the next letter into a single.",
+    ],
+  ),
+  "bricks": GameGuide(
+    title: "Bricks",
+    category: "LOGIC",
+    objective:
+        "Shade cells of the honeycomb so that every shaded cell stands on a shaded cell below it, no three shaded cells sit in a row, and every number counts the shaded cells around it.",
+    controls:
+        "Tap a cell to shade it, and tap it again to clear it. A numbered cell is fixed: it counts its neighbours and is never shaded.",
+    walkthrough: [
+      "Step 1: Read the bottom row first. A shaded cell there needs nothing under it, so the bottom row is where a pile can start.",
+      "Step 2: A cell on any other row can only be shaded if one of the two cells under it, down-left or down-right and never straight down, is shaded. That pair is the whole rule this game is named after.",
+      "Step 3: Count for every number. A cell with as many shaded neighbours as its number is finished, and every neighbour still empty is unshaded. A number that needs every neighbour it has left shades them all.",
+      "Step 4: Watch the horizontal runs. Two shaded cells side by side forbid the third in that row, so a run of two is a wall you can lean on.",
+      "Step 5: Work a shaded cell downwards when you are stuck: it has to reach a shaded cell, so when only one of its two cells below is still open, that one is shaded. The board is finished when every shade is held up, no run reaches three, and every number reads true.",
+    ],
+    strategies: [
+      "Start at the bottom and climb. A shade high up is only legal because of the cells under it, so a wrong cell at the top is usually a wrong cell two rows below.",
+      "A number of zero is the strongest clue on the board: its own cell is unshaded and so is every neighbour it counts, whichever way the pile leans.",
+      "Gravity and the run rule fight on the left and right edges, where a cell has only one neighbour below it: there the rule collapses into a single forced cell.",
+      "When two cells below a shade are both still open, leave them. The board only forces a cell when the count is tight or one of the pair is already ruled out.",
     ],
   ),
   "tents_and_trees": GameGuide(

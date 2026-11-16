@@ -1752,6 +1752,40 @@ class AppLocalizationsPt extends AppLocalizations {
       'A Latin square that satisfies every corner clue.';
 
   @override
+  String get saladTitle => 'Salad';
+
+  @override
+  String get saladSubtitle =>
+      'Fill every row and column with the letters A to the last one, once each, with the rest holes. A letter on the border is the first one you meet looking into that line.';
+
+  @override
+  String get saladWritten => 'Written';
+
+  @override
+  String get saladWinTitle => 'EVERY LINE AGREES!';
+
+  @override
+  String get saladWinMessage =>
+      'Every letter once in every line, and every border clue reads true.';
+
+  @override
+  String get romeTitle => 'Rome';
+
+  @override
+  String get romeSubtitle =>
+      'One arrow in every cell. No arrow repeats inside an outlined area, and following the arrows from anywhere has to arrive at a circled goal without looping.';
+
+  @override
+  String get romeWritten => 'Arrows';
+
+  @override
+  String get romeWinTitle => 'EVERY CHAIN ARRIVES!';
+
+  @override
+  String get romeWinMessage =>
+      'One arrow per cell, no repeats in an area, and every chain ends at a goal.';
+
+  @override
   String get ascentTitle => 'Number Path';
 
   @override
@@ -1790,6 +1824,26 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get clustersWinMessage =>
       'Two colours, every dot true, every cluster of two or more.';
+
+  @override
+  String get bricksTitle => 'Bricks';
+
+  @override
+  String get bricksSubtitle =>
+      'Shade cells of the honeycomb. A shaded cell needs a shaded cell under it, no three shaded cells may sit in a row, and a number counts the shaded cells around it.';
+
+  @override
+  String get bricksShaded => 'Shaded';
+
+  @override
+  String get bricksDepth => 'Depth';
+
+  @override
+  String get bricksWinTitle => 'THE PILE HOLDS!';
+
+  @override
+  String get bricksWinMessage =>
+      'Every shaded cell is held up, no run of three, and every number reads true.';
 
   @override
   String get tentsAndTreesTitle => 'Tendas e Árvores';
@@ -6449,6 +6503,23 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get difficultyHard => 'DIFÍCIL';
+
+  @override
+  String get crossingTitle => 'Number Crossing';
+
+  @override
+  String get crossingSubtitle =>
+      'Lay every number in the list into the grid once, across or down. The cells that cross have to agree, and the cells left over are wall.';
+
+  @override
+  String get crossingPlaced => 'Placed';
+
+  @override
+  String get crossingWinTitle => 'EVERY NUMBER FITS!';
+
+  @override
+  String get crossingWinMessage =>
+      'Each number once, and every crossing agrees digit for digit.';
 
   @override
   String get navDeal => 'Deal';

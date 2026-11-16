@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/core/board/puzzle_board.dart';
+import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
 import 'package:puzzle/ui/features/games/signpost/signpost_board.dart';
 import 'package:puzzle/ui/features/games/signpost/signpost_engine.dart';
 import 'package:puzzle/ui/features/games/signpost/signpost_provider.dart';
@@ -151,6 +153,110 @@ void main() {
         expect(state.isSolved, isTrue,
             reason: '${difficulty.name}: tapping out the answer did not win');
       }
+    });
+
+    test('every tier can be finished backwards by tapping alone', () {
+      // The owner's reference: "you can work backwards, 16 then 15 then 14".
+      // Joining the answer's last link first has to be as legal as joining the
+      // first one, so this is the same walk as above in the other direction —
+      // through the same two taps, select then link.
+      for (final difficulty in SignpostDifficulty.values) {
+        final puzzle =
+            _engine.generate(difficulty, random: Random(difficulty.index + 4));
+        var state = SignpostState(
+          puzzle: puzzle,
+          links: List<int>.filled(puzzle.cellCount, -1),
+          difficulty: difficulty,
+        );
+
+        var links = 0;
+        for (var number = puzzle.cellCount;
+            number > 1 && !state.isSolved;
+            number--) {
+          final from = _where(puzzle, number - 1);
+          final to = _where(puzzle, number);
+
+          final select = SignpostBoard(state: state).tapMove(from);
+          expect(select, isNotNull,
+              reason: '${difficulty.name}: cannot start from ${number - 1}');
+          state = select!.apply(state);
+
+          final link = SignpostBoard(state: state).tapMove(to);
+          expect(link, isNotNull,
+              reason: '${difficulty.name}: cannot join ${number - 1} to '
+                  '$number from the far end');
+          // The number is on the board the moment the link is, not after an
+          // animation: the move is the whole state.
+          expect(link!.target, to,
+              reason: '${difficulty.name}: the link named no destination');
+          state = link.apply(state);
+          expect(state.links[puzzle.cellOfNumber(number - 1)],
+              puzzle.cellOfNumber(number),
+              reason: '${difficulty.name}: the link did not land');
+          links++;
+        }
+
+        expect(links, greaterThan(0));
+        expect(state.isSolved, isTrue,
+            reason: '${difficulty.name}: tapping backwards did not win');
+      }
+    });
+  });
+
+  group('same frame', () {
+    // "The arrow appears the moment you move." The board is the links, and the
+    // numbers are read off them, so a tap that lands has already changed what
+    // the cell shows. Anything that draws the arrow later — a controller, a
+    // settle spring, a second pass — is the lag the owner is talking about.
+    testWidgets('a tap shows the link and its number after one frame',
+        (tester) async {
+      final puzzle = _puzzle(21);
+      var state = _state(puzzle);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: SizedBox(
+              width: 320,
+              child: StatefulBuilder(
+                builder: (context, setState) => PuzzleBoardView<SignpostState>(
+                  board: SignpostBoard(state: state),
+                  onMove: (move) => setState(() => state = move.apply(state)),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final rect = tester.getRect(
+        find.byWidgetPredicate((widget) => widget is PuzzleBoardView),
+      );
+      Offset pointOf(int number) {
+        final bounds =
+            SignpostBoard(state: state).boundsOf(_where(puzzle, number))!;
+        return Offset(
+          rect.left + rect.width * bounds.center.dx,
+          rect.top + rect.height * bounds.center.dy,
+        );
+      }
+
+      // The two taps a link takes: select the cell, then the place the arrow
+      // runs to. One frame each, no settle.
+      await tester.tapAt(pointOf(1));
+      await tester.pump();
+      expect(state.selected, puzzle.cellOfNumber(1));
+
+      await tester.tapAt(pointOf(2));
+      await tester.pump();
+
+      expect(state.links[puzzle.cellOfNumber(1)], puzzle.cellOfNumber(2),
+          reason: 'the link did not land in the frame of the tap');
+      expect(state.position.numbers[puzzle.cellOfNumber(1)], 1,
+          reason: 'the number the link proves is not on the board yet');
+      expect(state.position.numbers[puzzle.cellOfNumber(2)], 2,
+          reason: 'the second number the link proves is not on the board yet');
     });
   });
 }

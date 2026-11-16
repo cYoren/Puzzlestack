@@ -9,6 +9,10 @@ import 'package:puzzle/ui/features/games/ascent/ascent_provider.dart';
 const engine = AscentEngine();
 
 void main() {
+  // The provider shelves a pre-warmed next board with a post-frame callback, so
+  // these tests need a binding before they read a container.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('AscentEngine', () {
     test('a dealt board is a legal path that agrees with its clues', () {
       final rng = Random(1);
