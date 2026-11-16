@@ -67,13 +67,29 @@ class _PuzzleBoardViewState<S extends PuzzleState>
 
   ElementRef? _pressed;
   ElementRef? _lifted;
+
+  /// The state the drag started from.
+  ///
+  /// The lifted copy is painted from this, not from the live state: once the
+  /// move lands on finger-up the board's state is the *result*, and the thing
+  /// under the finger is still the thing that was picked up. Painting it from
+  /// the new state would turn a signpost arrow into its own destination
+  /// mid-flight. The board underneath already paints the new state.
+  S? _liftedState;
   List<_DropTarget<S>> _targets = const [];
   _DropTarget<S>? _hover;
-  PuzzleMove<S>? _pending;
 
   bool _settling = false;
   Offset _settleFrom = Offset.zero;
   Offset _settleTo = Offset.zero;
+
+  /// True once this drag's move has been handed to the notifier.
+  ///
+  /// The state landing while the snap spring is still painting is the point of
+  /// the commit, not an interruption: it is what lets the same spring run over
+  /// a model that has already moved. Anything else that changes state under a
+  /// lifted element is a reset or a new level and still drops the gesture.
+  bool _committed = false;
 
   List<ElementRef> _celebrating = const [];
   Duration _winStagger = BoardMotion.winStagger;
@@ -90,7 +106,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   void didUpdateWidget(covariant PuzzleBoardView<S> oldWidget) {
     super.didUpdateWidget(oldWidget);
     final changed = !identical(oldWidget.board.state, widget.board.state);
-    if (changed && _lifted != null) {
+    if (changed && _lifted != null && !_committed) {
       // A reset or a new level landed mid-drag; drop the gesture, not the app.
       _clearDrag(notify: false);
     }
@@ -213,6 +229,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     setState(() {
       _pressed = null;
       _lifted = element;
+      _liftedState = widget.board.state;
       // Grab from where the finger went down, not where the pan crossed its
       // slop: using the pan start made every lifted cell jump by ~18dp.
       _grab = _down;
@@ -271,15 +288,21 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       final delta = hover.bounds.center - origin;
       _settleFrom = current;
       _settleTo = Offset(delta.dx * _size.width, delta.dy * _size.height);
-      _pending = hover.move;
+      // The state lands now, in the frame of the finger-up; the spring below
+      // only paints the landing. This used to call back when the spring ended,
+      // which put the snap's whole duration between the finger and the board.
+      // Motion decorates a move, it never gates it (PUZZLE_STYLE.md §4), and a
+      // board with a transition still paints it over the new state.
+      _committed = true;
       _settle.value = 0;
+      _emitVerbFor(hover.move);
+      widget.onMove(hover.move);
       _settle
           .animateWith(SpringSimulation(BoardMotion.snapSpring, 0, 1, 0))
-          .whenCompleteOrCancel(_commit);
+          .whenCompleteOrCancel(_clearDrag);
     } else {
       _settleFrom = current;
       _settleTo = Offset.zero;
-      _pending = null;
       _invalid.forward(from: 0).whenComplete(() {
         if (mounted) _invalid.value = 0;
       });
@@ -290,14 +313,8 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     }
   }
 
-  void _commit() {
-    if (!mounted) return;
-    final move = _pending;
-    _clearDrag();
-    if (move == null) return;
-    emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
-    widget.onMove(move);
-  }
+  void _emitVerbFor(PuzzleMove<S> move) => emitVerb(
+      move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
 
   void _clearDrag({bool notify = true}) {
     if (!mounted) return;
@@ -308,10 +325,11 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     _settle.value = 0;
     _zones.value = 0;
     _lifted = null;
+    _liftedState = null;
     _targets = const [];
     _hover = null;
-    _pending = null;
     _settling = false;
+    _committed = false;
     if (notify) setState(() {});
   }
 
@@ -473,6 +491,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
                             board: widget.board,
                             palette: palette,
                             highlight: _highlight,
+                            liftedState: _liftedState,
                             transitionFrom: _transitionFrom,
                             transitionTo: _transitionTo,
                             transitionT: _transition.value,
@@ -497,6 +516,7 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
     required this.board,
     required this.palette,
     required this.highlight,
+    this.liftedState,
     this.transitionFrom,
     this.transitionTo,
     this.transitionT = 0,
@@ -505,6 +525,7 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
   final PuzzleBoard<S> board;
   final PuzzlePalette palette;
   final BoardHighlight highlight;
+  final S? liftedState;
   final S? transitionFrom;
   final S? transitionTo;
   final double transitionT;
@@ -535,13 +556,14 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
 
     final lifted = highlight.lifted;
     if (lifted != null) {
+      final carried = liftedState ?? board.state;
       _transformed(
           canvas,
           view,
           lifted,
           highlight.liftScale,
           highlight.liftOffset,
-          () => board.paintElement(view, board.state, lifted));
+          () => board.paintElement(view, carried, lifted));
 
       // The refused drop: a red wash over the element on its way home.
       if (highlight.invalidOpacity > 0) {
@@ -590,6 +612,7 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
       oldDelegate.board != board ||
       oldDelegate.highlight != highlight ||
       oldDelegate.palette != palette ||
+      oldDelegate.liftedState != liftedState ||
       oldDelegate.transitionFrom != transitionFrom ||
       oldDelegate.transitionTo != transitionTo ||
       oldDelegate.transitionT != transitionT;
