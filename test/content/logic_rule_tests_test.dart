@@ -876,9 +876,20 @@ List<List<List<int>>> _masyuCycles() {
       if (nr < 0 || nr > 3 || nc < 0 || nc > 3) continue;
       if (nr == path.first[0] && nc == path.first[1]) {
         if (path.length >= 4) {
-          final key =
-              (path.map((p) => p[0] * 4 + p[1]).toList()..sort()).join(',');
-          cycles[key] = [
+          // Key by the EDGES, not the visited cells: two different loops can
+          // visit the same cells by taking different turns, and a cell key threw
+          // one of them away (196 of 213 loops on a 4x4). Normalise each edge so
+          // the same loop walked from the other end keys the same.
+          final edges = <String>[];
+          for (var i = 0; i < path.length; i++) {
+            final a = path[i];
+            final b = path[(i + 1) % path.length];
+            final forward = '${a[0]},${a[1]}-${b[0]},${b[1]}';
+            final backward = '${b[0]},${b[1]}-${a[0]},${a[1]}';
+            edges.add(forward.compareTo(backward) < 0 ? forward : backward);
+          }
+          edges.sort();
+          cycles[edges.join(';')] = [
             for (final p in path) [p[0], p[1]]
           ];
         }
@@ -1056,7 +1067,11 @@ TapaCell? _firstTapaClue(List<List<TapaCell>> cells) {
 }
 
 YajilinPuzzle _yajilinLoopPuzzle() {
-  const size = 3;
+  // A legal board, not a perimeter: row 0 holds the four clue cells (all counts
+  // 0, so no black cell) and rows 1 to 3 are one Hamiltonian cycle over their
+  // twelve cells. A loop may not enter a clue cell, so the old perimeter fixture
+  // proved an omission instead of the rule.
+  const size = 4;
   final grid = List.generate(
     size,
     (r) => List.generate(
@@ -1064,25 +1079,31 @@ YajilinPuzzle _yajilinLoopPuzzle() {
       (c) => YajilinCell(
         r: r,
         c: c,
-        clue: r == 0 && c == 1
-            ? YajilinClue(ArrowDirection.down, 1)
-            : r == 1 && c == 0
-                ? YajilinClue(ArrowDirection.right, 1)
-                : null,
-        state:
-            r == 1 && c == 1 ? YajilinCellState.black : YajilinCellState.empty,
+        clue: r != 0
+            ? null
+            : c == 0
+                ? YajilinClue(ArrowDirection.right, 0)
+                : c == 3
+                    ? YajilinClue(ArrowDirection.left, 0)
+                    : YajilinClue(ArrowDirection.down, 0),
       ),
     ),
   );
+  // One cycle over the twelve cells of rows 1 to 3, in this order:
+  // (1,0) (1,1) (2,1) (2,2) (1,2) (1,3) (2,3) (3,3) (3,2) (3,1) (3,0) (2,0) (1,0)
   const edges = [
-    [0, 0, 0, 1],
-    [0, 1, 0, 2],
-    [0, 2, 1, 2],
-    [1, 2, 2, 2],
-    [2, 2, 2, 1],
-    [2, 1, 2, 0],
+    [1, 0, 1, 1],
+    [1, 1, 2, 1],
+    [2, 1, 2, 2],
+    [2, 2, 1, 2],
+    [1, 2, 1, 3],
+    [1, 3, 2, 3],
+    [2, 3, 3, 3],
+    [3, 3, 3, 2],
+    [3, 2, 3, 1],
+    [3, 1, 3, 0],
+    [3, 0, 2, 0],
     [2, 0, 1, 0],
-    [1, 0, 0, 0],
   ];
   return YajilinPuzzle(
     size: size,
