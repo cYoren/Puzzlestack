@@ -9,6 +9,10 @@ import 'package:puzzle/ui/features/games/boats/boats_provider.dart';
 const engine = BoatsEngine();
 
 void main() {
+  // The provider shelves a pre-warmed next board with a post-frame callback, so
+  // these tests need a binding before they read a container.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('BoatsEngine', () {
     test('a generated board is a legal fleet', () {
       final rng = Random(1);
