@@ -40,11 +40,14 @@ rsync -a --prune-empty-dirs \
   --include '*/' --include '*.html' --include 'site.css' \
   --include 'sitemap.xml' --include 'robots.txt' \
   --include 'fonts/' --include 'fonts/**' \
+  --include 'js/' --include 'js/**' \
   --exclude '*' \
   "$ROOT/docs/" "$OUT/"
 [ -f "$OUT/index.html" ] || die "docs/index.html is missing"
 [ -f "$OUT/games/index.html" ] || die "docs/games/index.html is missing"
 [ -f "$OUT/sitemap.xml" ] || die "docs/sitemap.xml is missing"
+[ -f "$OUT/js/board.js" ] || die "docs/js/board.js is missing (tool/web_build.sh)"
+[ -f "$OUT/js/sudoku.js" ] || die "docs/js/sudoku.js is missing (tool/web_build.sh)"
 
 echo "== app"
 if [ -z "${SKIP_APP:-}" ]; then

@@ -47,6 +47,13 @@ ORIGIN = "https://cyoren.github.io/Puzzlestack"
 #   PLAY_ANDROID = "https://play.google.com/store/apps/details?id=com.medhub.puzzlestack"
 #   PLAY_IOS = "https://apps.apple.com/app/id<the App Store id>"
 PLAY_WEB = True
+
+# Games whose page hosts a board of its own: plain HTML cells, and a bundle built
+# from the app's own engine by `tool/web_build.sh` (dart compile js). These pages
+# do not need the 17 MB browser app to be playable, and the app still has all 230.
+WEB_BOARDS = {
+    "sudoku": {"clues": 35},
+}
 PLAY_ANDROID = ""
 PLAY_IOS = ""
 REPO = "https://github.com/cYoren/Puzzlestack"
@@ -232,6 +239,33 @@ class Site:
         return ('<p class="cta">' + "".join(buttons)
                 + f'<span class="note">{note}</span></p>')
 
+    def play_area(self, game: dict) -> str:
+        """The board if this page has one, the browser app otherwise."""
+        board = self.board_block(game)
+        if not board:
+            return self.play_block(label=f'Play {game["title"]}',
+                                   slug=game["slug"], prefix="../")
+        slug = game["slug"]
+        return board + (
+            '<p class="cta"><a class="btn" href="../app/index.html?game='
+            f'{slug}">Open in the app</a><span class="note">The other 229 '
+            'puzzles are in the app.</span></p>\n')
+
+    def board_block(self, game: dict) -> str:
+        """A playable board, when this page has one."""
+        config = WEB_BOARDS.get(game["id"])
+        if not config:
+            return ""
+        slug = game["slug"]
+        attrs = " ".join(f'data-{k}="{v}"' for k, v in config.items())
+        return f'''<div class="board" data-board="{slug}" {attrs}></div>
+<p class="note" id="boardStatus" role="status">Loading the board&hellip;</p>
+<noscript><p class="note">The board needs JavaScript. The same puzzle runs in the
+<a href="../app/index.html?game={slug}">browser app</a>.</p></noscript>
+<script src="../js/{slug}.js" defer></script>
+<script src="../js/board.js" defer></script>
+'''
+
     def related(self, game: dict) -> list[dict]:
         pool = [g for g in self.by_room.get(game["category"], []) if g["id"] != game["id"]]
         # Deterministic neighbours: the next few in the room's alphabetical order,
@@ -329,7 +363,7 @@ class Site:
 
 <h1>{esc(title)}</h1>
 <p class="lede">{esc(subtitle)}</p>
-{self.play_block(label=f'Play {title}', slug=slug, prefix='../')}
+{self.play_area(game)}
 
 <h2>How to play</h2>
 <p>{esc(game['controls'])}</p>
