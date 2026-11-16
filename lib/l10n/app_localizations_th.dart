@@ -1704,6 +1704,23 @@ class AppLocalizationsTh extends AppLocalizations {
       'A Latin square that satisfies every corner clue.';
 
   @override
+  String get saladTitle => 'Salad';
+
+  @override
+  String get saladSubtitle =>
+      'Fill every row and column with the letters A to the last one, once each, with the rest holes. A letter on the border is the first one you meet looking into that line.';
+
+  @override
+  String get saladWritten => 'Written';
+
+  @override
+  String get saladWinTitle => 'EVERY LINE AGREES!';
+
+  @override
+  String get saladWinMessage =>
+      'Every letter once in every line, and every border clue reads true.';
+
+  @override
   String get ascentTitle => 'Number Path';
 
   @override
