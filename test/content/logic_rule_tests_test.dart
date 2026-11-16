@@ -599,8 +599,9 @@ _TennerLevel? _tennerLevel(
       matching: find.byType(Text),
     );
     final data = tester.widget<Text>(text).data;
-    if (data != null && data.isNotEmpty)
+    if (data != null && data.isNotEmpty) {
       values[i ~/ 10][i % 10] = int.parse(data);
+    }
   }
   for (final level in _tennerLevels) {
     var matches = true;
