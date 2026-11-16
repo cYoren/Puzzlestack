@@ -85,6 +85,10 @@ abstract class GridBoard<S extends PuzzleState> extends PuzzleBoard<S> {
   @override
   double get aspectRatio => rows / cols;
 
+  /// A listener hears the shape that matters: "9 by 9 grid".
+  @override
+  String get semanticsShape => '$rows by $cols grid';
+
   /// Paints the board bed and every cell that [paintCell] does not handle.
   ///
   /// A puzzle that only draws inside cells can leave [paint] alone and
