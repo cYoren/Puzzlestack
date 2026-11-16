@@ -139,6 +139,10 @@ int bruteForceCount(SaladPuzzle puzzle) {
 }
 
 void main() {
+  // The provider shelves a pre-warmed next board with a post-frame callback, so
+  // these tests need a binding before they read a container.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('Salad vocabularies', () {
     test('a hole, a missing clue and an unwritten cell are three things', () {
       expect(kSaladHole, 0);

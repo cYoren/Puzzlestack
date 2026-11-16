@@ -10,6 +10,10 @@ import 'package:puzzle/ui/features/games/mathrax/mathrax_puzzle.dart';
 const engine = MathraxEngine();
 
 void main() {
+  // The provider shelves a pre-warmed next board with a post-frame callback, so
+  // these tests need a binding before they read a container.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('MathraxEngine', () {
     test('a dealt board is a Latin square whose clues are all true', () {
       final rng = Random(1);
