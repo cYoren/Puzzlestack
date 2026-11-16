@@ -162,6 +162,9 @@ class Site:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bing Webmaster: the site is a project page, so verification has to sit on
+     the page itself. Nothing else in the build reads this. -->
+<meta name="msvalidate.01" content="DFE132ECE62D3F6AC2E582289D8C75EF">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{esc(canonical)}">
