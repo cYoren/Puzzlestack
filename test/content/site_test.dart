@@ -151,6 +151,52 @@ void main() {
               '${game['id']} walkthrough (${steps.length}) is not rendered');
     }
   });
+
+  test('a page that hosts its own board has a bundle to draw it with', () {
+    // The generated pages pull the in-page boards out of this registry, and the
+    // bundles are built by tool/web_build.sh. A page that mounts a board whose
+    // bundle was never built loads nothing at all, which is the failure mode
+    // this test exists for.
+    final String generator = File('tool/gen_site.py').readAsStringSync();
+    final RegExpMatch? block =
+        RegExp(r'WEB_BOARDS = \{(.*?)\}', dotAll: true).firstMatch(generator);
+    expect(block, isNotNull, reason: 'WEB_BOARDS is gone from the generator');
+    // Outer keys only: the inner dicts carry settings (`clues`, ...), not games.
+    final List<String> slugs = RegExp(r'^    "([a-z0-9_]+)":', multiLine: true)
+        .allMatches(block!.group(0)!)
+        .map((m) => m.group(1)!)
+        .toList();
+    expect(slugs, isNotEmpty, reason: 'no page hosts a board');
+
+    final File boardRuntime = File('docs/js/board.js');
+    expect(boardRuntime.existsSync(), isTrue);
+    expect(boardRuntime.lengthSync(), greaterThan(1000));
+
+    for (final String slug in slugs) {
+      final String html = File('docs/games/$slug.html').readAsStringSync();
+      expect(html.contains('data-board="$slug"'), isTrue,
+          reason: '$slug does not mount its board');
+      expect(html.contains('id="boardStatus"'), isTrue,
+          reason: '$slug has no place to say what happened');
+      expect(html.contains('js/$slug.js'), isTrue,
+          reason: '$slug does not load its bundle');
+      expect(html.contains('js/board.js'), isTrue,
+          reason: '$slug does not load the renderer');
+      final File bundle = File('docs/js/$slug.js');
+      expect(bundle.existsSync(), isTrue,
+          reason: '$slug bundle missing: run tool/web_build.sh');
+      expect(bundle.lengthSync(), greaterThan(20000),
+          reason: '$slug bundle looks empty');
+      // A page without a board must not ship someone else's.
+      expect(
+        File('docs/games/nonogram.html')
+            .readAsStringSync()
+            .contains('js/board.js'),
+        isFalse,
+        reason: 'a boardless page loads the board renderer',
+      );
+    }
+  });
 }
 
 /// The registry ids the app can open, read once. Kept as a getter so a failure

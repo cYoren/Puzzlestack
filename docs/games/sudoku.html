@@ -36,7 +36,14 @@
 
 <h1>Sudoku</h1>
 <p class="lede">Complete the grid so that every row, column, and 3x3 box contains all digits 1 to 9.</p>
-<p class="cta"><a class="btn primary" href="../app/index.html?game=sudoku">Play Sudoku</a><span class="note">Runs in your browser, nothing to install.</span></p>
+<div class="board" data-board="sudoku" data-clues="35"></div>
+<p class="note" id="boardStatus" role="status">Loading the board&hellip;</p>
+<noscript><p class="note">The board needs JavaScript. The same puzzle runs in the
+<a href="../app/index.html?game=sudoku">browser app</a>.</p></noscript>
+<script src="../js/sudoku.js" defer></script>
+<script src="../js/board.js" defer></script>
+<p class="cta"><a class="btn" href="../app/index.html?game=sudoku">Open in the app</a><span class="note">The other 229 puzzles are in the app.</span></p>
+
 
 <h2>How to play</h2>
 <p>Tap an empty cell on the grid to select it, then tap a number from the bottom keypad to fill it. Tap the selected cell again or the clear button to erase a number.</p>
