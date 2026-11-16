@@ -188,6 +188,7 @@ import '../ui/features/games/block_escape/block_escape_metadata.dart';
 import '../ui/features/games/abcd/abcd_metadata.dart';
 import '../ui/features/games/boats/boats_metadata.dart';
 import '../ui/features/games/mathrax/mathrax_metadata.dart';
+import '../ui/features/games/salad/salad_metadata.dart';
 import '../ui/features/games/seismic/seismic_metadata.dart';
 import '../ui/features/games/ascent/ascent_metadata.dart';
 import '../ui/features/games/clusters/clusters_metadata.dart';
@@ -502,6 +503,7 @@ List<GameMetadata> _buildGameList() {
     abcdMetadata,
     boatsMetadata,
     mathraxMetadata,
+    saladMetadata,
     seismicMetadata,
     ascentMetadata,
     clustersMetadata,

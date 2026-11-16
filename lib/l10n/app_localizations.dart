@@ -3224,6 +3224,36 @@ abstract class AppLocalizations {
   /// **'A Latin square that satisfies every corner clue.'**
   String get mathraxWinMessage;
 
+  /// No description provided for @saladTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Salad'**
+  String get saladTitle;
+
+  /// No description provided for @saladSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill every row and column with the letters A to the last one, once each, with the rest holes. A letter on the border is the first one you meet looking into that line.'**
+  String get saladSubtitle;
+
+  /// No description provided for @saladWritten.
+  ///
+  /// In en, this message translates to:
+  /// **'Written'**
+  String get saladWritten;
+
+  /// No description provided for @saladWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY LINE AGREES!'**
+  String get saladWinTitle;
+
+  /// No description provided for @saladWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every letter once in every line, and every border clue reads true.'**
+  String get saladWinMessage;
+
   /// No description provided for @ascentTitle.
   ///
   /// In en, this message translates to:
