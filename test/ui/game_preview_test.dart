@@ -57,11 +57,15 @@ void main() {
         reason: 'a tile that is always the same grid says nothing: $kinds');
 
     // Each room must be able to show more than one thing, or the room tile and
-    // the game tiles inside it read as the same picture repeated.
+    // the game tiles inside it read as the same picture repeated. A room the catalog
+    // has cut to one game (Memory, after `lab-hide` 2026-11-16) cannot, and is skipped.
     for (final CategoryInfo room in GameCategories.all) {
+      final List<GameMetadata> inRoom =
+          visible.where((g) => g.category == room.id).toList();
+      if (inRoom.length < 2) continue;
       final Set<GamePreviewKind> roomKinds = {
-        for (final GameMetadata game in visible)
-          if (game.category == room.id) previewKindFor(game.id, game.category),
+        for (final GameMetadata game in inRoom)
+          previewKindFor(game.id, game.category),
       };
       expect(roomKinds.length, greaterThanOrEqualTo(2),
           reason: '${room.id} draws only ${roomKinds.map((k) => k.name)}');
