@@ -26,13 +26,14 @@ class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
       isTrialModeEnabled: fields[6] as bool?,
       hiddenGameIds: (fields[7] as List?)?.cast<String>(),
       isKeepScreenAwakeEnabled: fields[8] as bool?,
+      showArchivedGames: fields[9] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$UserDataImpl obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.xp)
       ..writeByte(1)
@@ -47,6 +48,8 @@ class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
       ..write(obj.isTrialModeEnabled)
       ..writeByte(8)
       ..write(obj.isKeepScreenAwakeEnabled)
+      ..writeByte(9)
+      ..write(obj.showArchivedGames)
       ..writeByte(5)
       ..write(obj.favoriteGameIds)
       ..writeByte(7)
@@ -85,6 +88,7 @@ _$UserDataImpl _$$UserDataImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => e as String)
           .toList(),
       isKeepScreenAwakeEnabled: json['isKeepScreenAwakeEnabled'] as bool?,
+      showArchivedGames: json['showArchivedGames'] as bool?,
     );
 
 Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
@@ -98,4 +102,5 @@ Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
       'isTrialModeEnabled': instance.isTrialModeEnabled,
       'hiddenGameIds': instance.hiddenGameIds,
       'isKeepScreenAwakeEnabled': instance.isKeepScreenAwakeEnabled,
+      'showArchivedGames': instance.showArchivedGames,
     };

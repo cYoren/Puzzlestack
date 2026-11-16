@@ -3,36 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Puzzlestack</title>
-<meta name="description" content="One good puzzle, then another: 230 brain puzzles.">
-<style>
-  :root { color-scheme: light dark; --ink:#0f172a; --muted:#5b6472; --bg:#ffffff; --line:#e3e8ef; --accent:#4338ca; }
-  @media (prefers-color-scheme: dark) { :root { --ink:#f5f7fa; --muted:#a4acb9; --bg:#0b0b0b; --line:#23262b; --accent:#a5b4fc; } }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.65 ui-sans-serif, -apple-system, "Segoe UI", Geist, Roboto, Helvetica, Arial, sans-serif; }
-  main { max-width: 40rem; margin: 0 auto; padding: 4rem 1.25rem 5rem; }
-  h1 { font-size: 2rem; letter-spacing: -.02em; margin: 0 0 .25rem; }
-  .sub { color: var(--muted); margin: 0 0 2.5rem; }
-  ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
-  li { border-bottom: 1px solid var(--line); }
-  a { color: var(--ink); text-decoration: none; display: block; padding: 1rem 0; }
-  a:hover { color: var(--accent); }
-  a span { color: var(--muted); display: block; font-size: .9rem; }
-  footer { color: var(--muted); font-size: .85rem; margin-top: 3rem; }
-  footer a { display:inline; padding:0; color: var(--muted); text-decoration: underline; }
-</style>
+<title>Puzzlestack: 230 real puzzles, one at a time</title>
+<meta name="description" content="A feed of real puzzles: logic, math, memory, spatial, attention and word. Each one about a minute, each one fair, none of them filler.">
+<link rel="canonical" href="https://cyoren.github.io/Puzzlestack/index.html">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#EBE6D8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08080A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Puzzlestack">
+<meta property="og:title" content="Puzzlestack: 230 real puzzles, one at a time">
+<meta property="og:description" content="A feed of real puzzles: logic, math, memory, spatial, attention and word. Each one about a minute, each one fair, none of them filler.">
+<meta property="og:url" content="https://cyoren.github.io/Puzzlestack/index.html">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Puzzlestack","url":"https://cyoren.github.io/Puzzlestack/index.html","description":"230 real puzzles in one app: one good puzzle, then another.","inLanguage":"en"},{"@type":"Organization","name":"Puzzlestack","url":"https://cyoren.github.io/Puzzlestack/index.html","sameAs":["https://github.com/cYoren/Puzzlestack"]}]}</script>
 </head>
 <body>
-<main>
-  <h1>Puzzlestack</h1>
-  <p class="sub">One good puzzle, then another. 230 puzzles: logic, math, memory, spatial, attention and word games, in one calm app.</p>
-  <ul>
-    <li><a href="privacy.html">Privacy policy<span>What the app stores, and what it does not.</span></a></li>
-    <li><a href="terms.html">Terms of service<span>The licence, and what the app promises.</span></a></li>
-    <li><a href="https://github.com/cYoren/Puzzlestack">Source code<span>Puzzlestack is GPL-3.0. Read it, build it, fork it.</span></a></li>
-    <li><a href="https://github.com/cYoren/Puzzlestack/issues">Report a problem<span>An issue on the tracker reaches the authors.</span></a></li>
-  </ul>
-  <footer>Copyright (C) 2026 Gustavo Marcelino and the Puzzlestack authors. Free software under the GNU GPL, version 3 or later.</footer>
+<header class="bar">
+  <a class="mark" href="index.html">PUZZLE<em>STACK</em></a>
+  <nav>
+    <a href="games/index.html">All puzzles</a>
+    <a href="index.html#rooms">Rooms</a>
+    <a class="play" href="app/index.html">Play</a>
+  </nav>
+</header>
+<main class="hub">
+<h1>One good puzzle, then another</h1>
+<p class="lede">Puzzlestack opens on a puzzle, not a menu. 230 of them, in six rooms, every
+one with one answer and about a minute of your time.</p>
+<p class="cta"><a class="btn primary" href="app/index.html">Play now</a><span class="note">Runs in your browser, nothing to install.</span></p>
+
+<h2 id="rooms">Six rooms</h2>
+<ul class="cards"><li><a href="rooms/logic.html">Logic puzzles<span>58 puzzles</span></a></li><li><a href="rooms/math.html">Math puzzles<span>44 puzzles</span></a></li><li><a href="rooms/memory.html">Memory puzzles<span>29 puzzles</span></a></li><li><a href="rooms/spatial.html">Spatial puzzles<span>31 puzzles</span></a></li><li><a href="rooms/attention.html">Attention puzzles<span>27 puzzles</span></a></li><li><a href="rooms/word.html">Word puzzles<span>41 puzzles</span></a></li></ul>
+
+<h2>Start here</h2>
+<ul class="cards"><li><a href="games/sudoku.html">Sudoku<span>Complete the grid so that every row, column, and 3x3 box contains all digits 1 to 9.</span></a></li><li><a href="games/nonogram.html">Nonogram<span>Reveal the hidden image using logic clues.</span></a></li><li><a href="games/minesweeper.html">Minesweeper<span>Identify all the mines without triggering them.</span></a></li><li><a href="games/slitherlink.html">Slitherlink<span>Loop the pin grid using number clues.</span></a></li><li><a href="games/kakuro.html">Kakuro<span>Solve crosswords with numbers and sums.</span></a></li><li><a href="games/2048.html">2048<span>Combine tiles with the same numbers to reach the 2048 tile.</span></a></li><li><a href="games/word-search.html">Word Search<span>Find all the hidden words in the grid. Drag to select.</span></a></li><li><a href="games/crossword.html">Crossword<span>Complete the grid with the correct words based on the clues provided.</span></a></li><li><a href="games/akari.html">Akari<span>Illuminate all white cells</span></a></li><li><a href="games/lights-out.html">Lights out<span>Tapping a tile toggles it and its adjacent neighbors. Turn off all lights to solve.</span></a></li><li><a href="games/hitori.html">Hitori<span>Shade duplicate numbers in each row and column.</span></a></li><li><a href="games/tents-and-trees.html">Tents &amp; Trees<span>Place tents next to trees. Numbers indicate how many tents are in each row/column. Tents cannot touch each other.</span></a></li></ul>
+<p class="more"><a href="games/index.html">All 230 puzzles</a></p>
+
+<h2>What it is not</h2>
+<p>No feed to scroll, no streak to protect, no energy to spend. A puzzle arrives, you
+solve it, the next one is dealt. If you want to choose instead, the whole catalogue is one
+tap away and filed by room.</p>
+<p>Every puzzle here is played in the app, and everything the app is made of is public:
+<a href="https://github.com/cYoren/Puzzlestack">the source</a>, <a href="games/index.html">the full list</a>, and the rules
+for each card written on its page.</p>
 </main>
+<footer>
+  <p class="foot-links">
+    <a href="index.html">Puzzlestack</a>
+    <a href="games/index.html">All 230 puzzles</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="https://github.com/cYoren/Puzzlestack">Source</a>
+    <a href="https://github.com/cYoren/Puzzlestack/issues">Report a problem</a>
+  </p>
+  <p class="foot-note">Free, no ads, no account, no data collected. Puzzlestack is free
+  software under the GNU GPL, version 3 or later. It is a modified derivative of
+  <a href="https://github.com/sidhant947/Puzzle">Puzzle</a> by Sidhant Khatkar.</p>
+</footer>
 </body>
 </html>

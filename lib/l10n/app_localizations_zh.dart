@@ -132,6 +132,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get keepScreenAwakeDescription => '防止游戏过程中屏幕自动关闭';
 
   @override
+  String get showArchivedGames => 'Show archived puzzles';
+
+  @override
+  String get showArchivedGamesDescription =>
+      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+
+  @override
+  String get archived => 'ARCHIVED';
+
+  @override
   String get appearance => '外观';
 
   @override

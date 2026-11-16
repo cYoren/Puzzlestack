@@ -19,7 +19,11 @@ import '../stats/stats_screen.dart';
 /// preference belongs, instead of taking a third of the bottom bar away from
 /// the two things anyone opens this app for.
 class MainShell extends ConsumerStatefulWidget {
-  const MainShell({super.key});
+  const MainShell({super.key, this.startGameId});
+
+  /// The card the app opens on, when a URL named one. Null is the normal launch:
+  /// the deal's first card.
+  final String? startGameId;
 
   @override
   ConsumerState<MainShell> createState() => _MainShellState();
@@ -96,7 +100,13 @@ class _MainShellState extends ConsumerState<MainShell>
     // full height and keeps a way back in its own top bar.
     final bool short = size.height < 720;
     final List<Widget> tabs = [
-      _tab(0, FeedScreen(onBrowse: short ? () => _select(1) : null)),
+      _tab(
+        0,
+        FeedScreen(
+          startGameId: widget.startGameId,
+          onBrowse: short ? () => _select(1) : null,
+        ),
+      ),
       _tab(1, const DiscoveryHomeScreen()),
       _tab(2, const StatsScreen()),
     ];

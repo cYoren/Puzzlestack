@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
-import '../../../utils/design_system.dart';
+import '../../core/preview/game_preview.dart';
 
 /// Search across the whole registry by title or category. Returns the chosen game
 /// through [onSelected]; the caller handles navigation.
@@ -11,19 +11,26 @@ class GameSearchDelegate extends SearchDelegate<void> {
   /// Games the player has hidden; they are not searchable either.
   final Set<String> hiddenIds;
 
-  GameSearchDelegate({required this.onSelected, this.hiddenIds = const {}})
-      : super(
-            searchFieldLabel:
-                'Search ${GameCategories.visible.length} puzzles');
+  /// The settings switch. When it is on, the archive is searchable too, which is
+  /// the only way a player can reach a lab task by name.
+  final bool includeArchived;
 
-  /// Only what a player can open: archived games are in the registry, not the app.
-  static List<GameMetadata> get _pool => GameCategories.visible;
+  GameSearchDelegate({
+    required this.onSelected,
+    this.hiddenIds = const {},
+    this.includeArchived = false,
+  }) : super(
+            searchFieldLabel: includeArchived
+                ? 'Search ${GameCategories.all.length} puzzles'
+                : 'Search ${GameCategories.visible.length} puzzles');
+
+  List<GameMetadata> get _pool =>
+      GameCategories.library(includeArchived: includeArchived);
 
   List<GameMetadata> _results(BuildContext context) {
     final q = query.trim().toLowerCase();
-    final pool = _pool
-        .where((g) => !hiddenIds.contains(g.id))
-        .toList(growable: false);
+    final pool =
+        _pool.where((g) => !hiddenIds.contains(g.id)).toList(growable: false);
     if (q.isEmpty) return pool;
     return pool.where((g) {
       return g.titleGetter(context).toLowerCase().contains(q) ||
@@ -70,15 +77,21 @@ class GameSearchDelegate extends SearchDelegate<void> {
       itemBuilder: (context, i) {
         final g = results[i];
         final cat = GameCategories.info(g.category);
+        // The same mini board the tile shows, so a search result is recognisable
+        // as the card the player was looking for. A category tint here would
+        // also break the rule that colour is state, never category.
         return ListTile(
-          leading: Container(
+          leading: SizedBox(
             width: 44,
             height: 44,
-            decoration: BoxDecoration(
-              color: g.color.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+            child: Center(
+              child: GameCardPreview(
+                game: g,
+                title: g.titleGetter(context),
+                size: 40,
+                dimmed: GameCategories.isArchived(g.id),
+              ),
             ),
-            child: Icon(g.icon, color: g.color, size: 22),
           ),
           title: Text(
             g.titleGetter(context),
