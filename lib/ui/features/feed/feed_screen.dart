@@ -69,6 +69,15 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   /// up (deal the next card), negative is down (put this one back).
   double _drag = 0;
 
+  /// How far a finger must travel before the card is allowed to follow it.
+  static const double _slop = 22;
+
+  /// Finger travel of the current gesture, reset when it ends.
+  double _travelled = 0;
+
+  /// True once the gesture has passed the slop and the card is following it.
+  bool _armed = false;
+
   /// Height of one card slot, measured on layout. Every threshold below is a
   /// fraction of it, so a small phone and a tablet deal the same way.
   double _slot = 1;
@@ -158,9 +167,22 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   }
 
   /// The drag ended: deal, go back, or settle. Distance or a throw decides.
-  void _release({required double velocity}) {
-    final bool deal = velocity < -650 || _drag > _slot * 0.16;
-    final bool back = velocity > 650 || _drag < -_slot * 0.16;
+  ///
+  /// Both numbers were raised on 2026-11-16 because a card was one careless
+  /// thumb away: 16% of the screen and 650 px/s meant a board drag (Tangle,
+  /// Inertia, Netslide all take a drag) dealt the next card before the player
+  /// had moved a piece. A card that leaves when you did not mean to is worse
+  /// than a card that takes a deliberate flick, so the bar is now a third of a
+  /// screen or a real throw.
+  void _release({required double velocity, double travelled = 0}) {
+    // A gesture that never got past the slop is a tap or a puzzle drag, not a
+    // swipe, whatever the fling velocity says.
+    if (travelled.abs() < _slop) {
+      _animateTo(0);
+      return;
+    }
+    final bool deal = velocity < -900 || _drag > _slot * 0.30;
+    final bool back = velocity > 900 || _drag < -_slot * 0.30;
 
     if (deal) {
       _animateTo(_slot);
@@ -356,6 +378,24 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
               onVerticalDragUpdate: live && !_locked
                   ? (details) {
                       _settle.stop();
+                      // A card does not move at all until the finger has
+                      // travelled [_slop] on its own: below that it is a tap, or
+                      // a board drag that should belong to the puzzle. Without
+                      // this the card crept under every micro-movement and the
+                      // gesture arena handed the feed a drag the board wanted.
+                      _travelled += details.delta.dy;
+                      if (!_armed) {
+                        if (_travelled.abs() < _slop) return;
+                        // Crossed the slop: take the whole travel at once, so a
+                        // deliberate drag is not 20px behind the finger for the
+                        // rest of the gesture.
+                        _armed = true;
+                        setState(() {
+                          _drag =
+                              (-_travelled).clamp(-_slot * 1.2, _slot * 1.2);
+                        });
+                        return;
+                      }
                       setState(() {
                         _drag = (_drag - details.delta.dy)
                             .clamp(-_slot * 1.2, _slot * 1.2);
@@ -363,8 +403,15 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
                     }
                   : null,
               onVerticalDragEnd: live && !_locked
-                  ? (details) =>
-                      _release(velocity: details.primaryVelocity ?? 0)
+                  ? (details) {
+                      final double travelled = _travelled;
+                      _travelled = 0;
+                      _armed = false;
+                      _release(
+                        velocity: details.primaryVelocity ?? 0,
+                        travelled: travelled,
+                      );
+                    }
                   : null,
               child: Stack(
                 children: [
@@ -743,7 +790,9 @@ class _FeedCard extends StatelessWidget {
               const Spacer(),
               _quietButton(
                 context,
-                icon: liked ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                icon: liked
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
                 tooltip: liked ? 'Remove from favourites' : 'Add to favourites',
                 onTap: onLike,
                 tinted: liked,
