@@ -13,6 +13,8 @@ import 'providers/user_providers.dart';
 import 'providers/theme_provider.dart';
 import 'providers/locale_provider.dart';
 import 'ui/features/main_shell/main_shell.dart';
+import 'data/game_registry.dart';
+import 'utils/deep_link.dart';
 import 'utils/design_system.dart';
 import 'widgets/error_boundary.dart';
 
@@ -88,26 +90,35 @@ void main() async {
   // app falls back to a session without a memory.
   await GameStatsRepository.instance.init();
 
-
-
   // Log app startup time
   stopwatch.stop();
   debugPrint('App startup time (sync): ${stopwatch.elapsedMilliseconds}ms');
+
+  // A page on the website names one puzzle, so a browser launch can open on it
+  // (`?game=nonogram`). On a phone `Uri.base` carries no query and this is null,
+  // which is the same launch the app always had.
+  final String? startGameId = gameIdFromUri(
+    Uri.base,
+    knownIds: allGamesMetadata.map((game) => game.id),
+  );
 
   runApp(
     ProviderScope(
       overrides: [
         userRepositoryProvider.overrideWithValue(userRepository),
       ],
-      child: const ErrorBoundary(
-        child: MyApp(),
+      child: ErrorBoundary(
+        child: MyApp(startGameId: startGameId),
       ),
     ),
   );
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.startGameId});
+
+  /// The puzzle the launch URL named, if any (`lib/utils/deep_link.dart`).
+  final String? startGameId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -142,7 +153,8 @@ class MyApp extends ConsumerWidget {
       locale: appLocale,
       supportedLocales: [
         const Locale('en'),
-        ...AppLocalizations.supportedLocales.where((l) => l.languageCode != 'en'),
+        ...AppLocalizations.supportedLocales
+            .where((l) => l.languageCode != 'en'),
       ],
       localeListResolutionCallback: (locales, supportedLocales) {
         if (locales != null) {
@@ -156,9 +168,7 @@ class MyApp extends ConsumerWidget {
         }
         return const Locale('en');
       },
-      home: const MainShell(),
+      home: MainShell(startGameId: startGameId),
     );
   }
 }
-
-

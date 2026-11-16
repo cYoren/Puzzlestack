@@ -1,0 +1,231 @@
+/* Puzzlestack, on the web.
+   The app is a deck of paper cards: paper bed, lighter card, near-black ink,
+   hairline rules, one live colour. This is the same palette and the same two
+   faces, so a page and a card look like the same object. No gradients, no
+   shadows for decoration, no category hues. See DESIGN.md. */
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('fonts/BebasNeue-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('fonts/Geist-Regular.ttf') format('truetype');
+  font-weight: 400 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('fonts/Geist-SemiBold.ttf') format('truetype');
+  font-weight: 600 800;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --paper: #EBE6D8;
+  --card: #FFFEFB;
+  --ink: #14130E;
+  --muted: #6B6659;
+  --hair: #D8D1BE;
+  --signal: #4338CA;
+  --radius: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #08080A;
+    --card: #141416;
+    --ink: #F1EFE7;
+    --muted: #9C988C;
+    --hair: #26262A;
+    --signal: #9C97FF;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.65 Geist, ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-feature-settings: "kern" 1;
+}
+
+a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--signal); }
+
+.bar {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.6rem 1.25rem 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mark {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: .08em;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.mark em { color: var(--signal); font-style: normal; }
+
+.bar nav { display: flex; gap: 1.1rem; font-size: .9rem; }
+.bar nav a { color: var(--muted); text-decoration: none; }
+.bar nav a:hover { color: var(--signal); }
+
+main { max-width: 52rem; margin: 0 auto; padding: 2.25rem 1.25rem 4rem; }
+
+.crumbs {
+  font-size: .82rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-bottom: 1.4rem;
+}
+
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--signal); }
+.crumbs span[aria-current] { color: var(--ink); }
+
+h1 {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  letter-spacing: .03em;
+  line-height: .98;
+  margin: 0 0 .6rem;
+  font-weight: 400;
+}
+
+h2 {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: .04em;
+  font-weight: 400;
+  margin: 2.6rem 0 .6rem;
+}
+
+h2 .count { color: var(--muted); margin-left: .5rem; font-size: 1.1rem; }
+
+h3 { font-size: 1rem; margin: 0 0 .2rem; }
+
+p { margin: .7rem 0; max-width: 65ch; }
+
+.lede { font-size: 1.12rem; color: var(--muted); margin-top: 0; max-width: 60ch; }
+
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin: 1.6rem 0 2rem; }
+
+.btn {
+  display: inline-block;
+  padding: .7rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid var(--hair);
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: .95rem;
+  text-decoration: none;
+}
+
+.btn.primary { background: var(--signal); border-color: var(--signal); color: #fff; }
+.btn:hover { color: var(--signal); }
+.btn.primary:hover { color: #fff; opacity: .92; }
+
+.note { color: var(--muted); font-size: .85rem; }
+
+.steps, .plain { max-width: 65ch; padding-left: 1.15rem; }
+.steps li, .plain li { margin: .45rem 0; }
+
+.faq { border-top: 1px solid var(--hair); }
+.qa { border-bottom: 1px solid var(--hair); padding: .9rem 0; }
+.qa p { color: var(--muted); margin: .25rem 0 0; }
+
+.cards {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+  gap: .75rem;
+}
+
+.cards li a {
+  display: block;
+  height: 100%;
+  padding: .9rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.cards li a span {
+  display: block;
+  font-weight: 400;
+  font-size: .86rem;
+  color: var(--muted);
+  margin-top: .2rem;
+}
+
+.cards li a:hover { border-color: var(--signal); }
+
+.inline {
+  list-style: none;
+  padding: 0;
+  margin: .8rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .35rem;
+}
+
+.inline li a {
+  display: inline-block;
+  padding: .3rem .7rem;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  font-size: .86rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.inline li a:hover { border-color: var(--signal); color: var(--signal); }
+
+.blurb { color: var(--muted); margin: .3rem 0 .6rem; }
+.more { margin-top: 1.4rem; font-size: .92rem; }
+
+.hub h1 { font-size: clamp(2.6rem, 8vw, 4rem); max-width: 20ch; }
+
+footer {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.6rem 1.25rem 3rem;
+  border-top: 1px solid var(--hair);
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.foot-links { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0 0 .9rem; max-width: none; }
+.foot-links a { color: var(--muted); text-decoration: none; }
+.foot-links a:hover { color: var(--signal); }
+.foot-note { margin: 0; max-width: 62ch; }
+
+@media (max-width: 420px) {
+  main { padding-top: 1.5rem; }
+  .bar { padding-top: 1.1rem; }
+  .bar nav { gap: .8rem; font-size: .84rem; }
+}

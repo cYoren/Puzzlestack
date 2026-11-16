@@ -46,10 +46,32 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
   - `lib/ui/features/home/discovery_home_screen.dart` — the stack: rooms, today, quick play.
   - `lib/ui/features/home/category_room_screen.dart` — a single category's puzzles, each
     tile drawn as a mini board of the game it opens (`lib/ui/core/preview/game_preview.dart`;
-    contact sheet of all 319 in `docs/previews/previews.png`).
+    contact sheet of every game in `docs/previews/previews.png`).
 - **The archive:** `docs/CATALOG.md` files 89 games as lab tasks, worksheets and twins. They stay
   in the repo, they are not dealt, and one switch in settings (`Show archived puzzles`) is the
   only way to look at them. `GameFeed.browse` is the single decider for every list.
+
+## Website
+
+`docs/` is the website, served by GitHub Pages at <https://cyoren.github.io/Puzzlestack/>:
+one page per puzzle (230), a page per room, an index and a hub, in the shape of a search-first
+puzzle site. Every page carries the app's own guide text, the English title and one line, and
+metadata (`canonical`, Open Graph, `BreadcrumbList`, `SoftwareApplication`, `FAQPage`).
+
+It is generated, never hand-edited:
+
+```bash
+dart run tool/site_export.dart   # tool/site/games.json: the 230 playable games, from the repo
+python3 tool/gen_site.py         # docs/: 238 pages, sitemap.xml, robots.txt, fonts
+flutter test test/content/site_test.dart   # every game has a page, every link resolves
+```
+
+`test/content/site_test.dart` is the contract: a game without a page fails, an archived game
+with one fails, a broken internal link fails. `PLAY_ANDROID` / `PLAY_IOS` in `tool/gen_site.py`
+are empty until 1.1.0 is on the stores, so the button offers the source instead of a dead link.
+The Play button on each page deep-links the web build with `?game=<slug>`
+(`lib/utils/deep_link.dart`), which is what hosting the Flutter web build turns into "playable in
+the browser".
 
 ## Build & run
 
