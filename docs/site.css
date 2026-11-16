@@ -230,3 +230,60 @@ footer {
   .bar { padding-top: 1.1rem; }
   .bar nav { gap: .8rem; font-size: .84rem; }
 }
+
+/* --- a board that plays in the page ---------------------------------------
+   The puzzle pages used to offer one action: a 17 MB canvas app. A page that
+   hosts its own board is drawn with cells, which costs a few KB and keeps the
+   text selectable and the focus ring real. */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  width: min(100%, 26rem);
+  margin: 1.25rem 0 .75rem;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.board .cell {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+  background: none;
+  color: var(--ink);
+  font: 500 1.15rem/1 ui-monospace, "SF Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.board .cell[data-col="2"],
+.board .cell[data-col="5"] { border-right: 1px solid var(--ink); }
+.board .cell[data-row="2"],
+.board .cell[data-row="5"] { border-bottom: 1px solid var(--ink); }
+.board .cell[data-col="8"] { border-right: 0; }
+.board .cell[data-row="8"] { border-bottom: 0; }
+.board .cell.given { font-weight: 700; cursor: default; }
+.board .cell.sel { box-shadow: inset 0 0 0 2px var(--signal); }
+.board .cell.bad { color: #b3261e; background: rgba(179, 38, 30, .09); }
+.board .cell:focus-visible { outline: 2px solid var(--signal); outline-offset: -3px; }
+
+.pad { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 1.25rem; }
+.pad-key {
+  min-width: 2.6rem;
+  min-height: 2.6rem;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font: 600 1rem/1 inherit;
+  cursor: pointer;
+}
+.pad-key:hover { border-color: var(--signal); color: var(--signal); }
+.note.solved { color: var(--signal); font-weight: 600; }
