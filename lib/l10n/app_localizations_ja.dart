@@ -132,6 +132,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get keepScreenAwakeDescription => 'プレイ中に画面が消灯するのを防ぎます';
 
   @override
+  String get showArchivedGames => 'Show archived puzzles';
+
+  @override
+  String get showArchivedGamesDescription =>
+      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+
+  @override
+  String get archived => 'ARCHIVED';
+
+  @override
   String get appearance => '外観';
 
   @override

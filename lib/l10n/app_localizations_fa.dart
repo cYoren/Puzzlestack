@@ -134,6 +134,16 @@ class AppLocalizationsFa extends AppLocalizations {
       'جلوگیری از خاموش شدن صفحه در حین بازی';
 
   @override
+  String get showArchivedGames => 'Show archived puzzles';
+
+  @override
+  String get showArchivedGamesDescription =>
+      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+
+  @override
+  String get archived => 'ARCHIVED';
+
+  @override
   String get appearance => 'ظاهر';
 
   @override
