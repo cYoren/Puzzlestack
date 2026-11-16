@@ -527,6 +527,11 @@ including the 38 one-answer games in `one-answer-games` and the 113 games with n
 keeps typos out of a list that does not exist yet. Deciding the list is a human call (memory:
 "Gus judges the puzzles, not me"); wiring it is done.
 
+*2026-11-16: `lib/data/curation.dart` does not exist in this tree and never did in the release
+branch. The pool is `GameFeed.feedPool` over the Deck in `lib/data/game_profiles.dart`, so the job
+is "choose the Deck", which `lab-hide` and the six triage reports do. The rest of this entry is the
+state before that.*
+
 ### 24. `Quick Play` is 12 games out of 313
 
 <sub>job id: `quick-play-pool`</sub>

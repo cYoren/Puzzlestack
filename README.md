@@ -1,13 +1,13 @@
 # Puzzlestack
 
-A cross-platform suite of **234 playable brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
+A cross-platform suite of **184 playable brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
 
 Two ideas sit at the heart of Puzzlestack:
 
 1. **The deal.** The app opens on a puzzle, not on a menu. One full-screen card, playable
    where it lands; swipe up and the next card is dealt. The deck is a real shuffled pass over
    every playable puzzle, so nothing repeats until the bag is empty and the counter on the card
-   (`042 / 234`) is true. Solving a card offers one thing: the next card.
+   (`042 / 184`) is true. Solving a card offers one thing: the next card.
 2. **The stack.** When you know what you want, the second room files every puzzle by
    category: six rooms, today's card, a row for when you have two minutes, and search.
 
@@ -16,13 +16,13 @@ live colour (indigo) that only appears where something is active. See [DESIGN.md
 
 ---
 
-## The 234 games, by category
+## The 184 games, by category
 
 - **Logic (62):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies, Ripple Effect, Mathrax, Salad, Bricks, Rome, Crossing and more.
 - **Math (44):** 2048, KenKen, Magic Squares, Prime Hunter, Fraction Match, Quick Math, Sum Pyramid and more.
-- **Memory (29):** Memory Matrix, Corsi Blocks, N-Back, Memory Palace, Digit Span, Face/Name and more.
+- **Memory (1):** Simon.
 - **Spatial (31):** Mental Rotation, Paper Folding, Cube Net Fold, Classic Maze, Mirror Image and more.
-- **Attention (27):** Stroop, Flanker, Schulte Table, Trail Making, Go/No-Go, Visual Search and more.
+- **Attention (5):** Spot the Change, Colour Match, Number Hunt, Shell Game, Visual Search.
 - **Word (41):** Find Word, Crossword, Word Search, Word Ladder, Cryptogram, Word Scramble and more.
 
 ## Architecture
@@ -47,21 +47,21 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
   - `lib/ui/features/home/category_room_screen.dart` — a single category's puzzles, each
     tile drawn as a mini board of the game it opens (`lib/ui/core/preview/game_preview.dart`;
     contact sheet of every game in `docs/previews/previews.png`).
-- **The archive:** `docs/CATALOG.md` files 89 games as lab tasks, worksheets and twins. They stay
+- **The archive:** `docs/CATALOG.md` files 139 games as lab tasks, worksheets and twins. They stay
   in the repo, they are not dealt, and one switch in settings (`Show archived puzzles`) is the
   only way to look at them. `GameFeed.browse` is the single decider for every list.
 
 ## Website
 
 `docs/` is the website, served by GitHub Pages at <https://cyoren.github.io/Puzzlestack/>:
-one page per puzzle (230), a page per room, an index and a hub, in the shape of a search-first
+one page per puzzle (184), a page per room, an index and a hub, in the shape of a search-first
 puzzle site. Every page carries the app's own guide text, the English title and one line, and
 metadata (`canonical`, Open Graph, `BreadcrumbList`, `SoftwareApplication`, `FAQPage`).
 
 It is generated, never hand-edited:
 
 ```bash
-dart run tool/site_export.dart   # tool/site/games.json: the 230 playable games, from the repo
+dart run tool/site_export.dart   # tool/site/games.json: the 184 playable games, from the repo
 python3 tool/gen_site.py         # docs/: 238 pages, sitemap.xml, robots.txt, fonts
 flutter test test/content/site_test.dart   # every game has a page, every link resolves
 tool/deploy_pages.sh             # build the browser app, publish both to gh-pages

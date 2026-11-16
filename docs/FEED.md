@@ -67,8 +67,9 @@ A pure function of (Deck, player history, seed). No network, no model. It is tes
 
 The first ten cards are a fixed, hand-picked order: the easiest feed size of ten of the most
 immediately readable Deck games, alternating kinds, starting with one that is solved in under
-30 seconds. The list lives next to the Deck list in `lib/data/curation.dart`. After card ten
-the normal deal takes over. There is no onboarding screen; these ten cards are the onboarding.
+30 seconds. The list belongs beside the Deck list in `lib/data/game_profiles.dart` (job
+`first-ten`; not built yet). After card ten the normal deal takes over. There is no onboarding
+screen; these ten cards are the onboarding.
 
 Starting proposal, to be confirmed by play: `water_sort`, `find_word`, `lights_out`,
 `memory_matrix`, `sudoku` (4x4), `word_scramble`, `game_2048`, `schulte_table`, `nonogram`
