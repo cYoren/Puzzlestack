@@ -67,13 +67,31 @@ class _PuzzleBoardViewState<S extends PuzzleState>
 
   ElementRef? _pressed;
   ElementRef? _lifted;
+
+  /// The state the drag started from.
+  ///
+  /// The lifted copy is painted from this, not from the live state: once the
+  /// move lands on finger-up the board's state is the *result*, and the thing
+  /// under the finger is still the thing that was picked up. Painting it from
+  /// the new state would turn a signpost arrow into its own destination
+  /// mid-flight. The board underneath already paints the new state.
+  S? _liftedState;
   List<_DropTarget<S>> _targets = const [];
   _DropTarget<S>? _hover;
-  PuzzleMove<S>? _pending;
 
   bool _settling = false;
   Offset _settleFrom = Offset.zero;
   Offset _settleTo = Offset.zero;
+
+  /// True between handing this drag's move to the notifier and the first state
+  /// change that lands after it.
+  ///
+  /// That one change is the point of the commit, not an interruption: it is what
+  /// lets the same spring run over a model that has already moved. It is cleared
+  /// by the very next change, so a reset or a new level arriving during the snap
+  /// still drops the gesture — exempting a window of time instead would have
+  /// missed exactly that.
+  bool _committedDragChange = false;
 
   List<ElementRef> _celebrating = const [];
   Duration _winStagger = BoardMotion.winStagger;
@@ -90,15 +108,27 @@ class _PuzzleBoardViewState<S extends PuzzleState>
   void didUpdateWidget(covariant PuzzleBoardView<S> oldWidget) {
     super.didUpdateWidget(oldWidget);
     final changed = !identical(oldWidget.board.state, widget.board.state);
+    var committedChange = false;
     if (changed && _lifted != null) {
-      // A reset or a new level landed mid-drag; drop the gesture, not the app.
-      _clearDrag(notify: false);
+      if (_committedDragChange) {
+        // The change this drag asked for; keep the lifted copy flying.
+        _committedDragChange = false;
+        committedChange = true;
+      } else {
+        // A reset or a new level landed mid-drag; drop the gesture, not the app.
+        _clearDrag(notify: false);
+      }
     }
 
     if (changed) {
       final duration =
           widget.board.transitionFor(oldWidget.board.state, widget.board.state);
       if (duration != null && duration > Duration.zero) {
+        // The transition owns the painting now: the board below draws the new
+        // state and the carried copy would ride over it as a second object on
+        // the same square (Inertia's marble). Retire it without touching the
+        // state that already moved.
+        if (committedChange) _clearDrag(notify: false);
         _transitionFrom = oldWidget.board.state;
         _transitionTo = widget.board.state;
         _transition.duration = duration;
@@ -213,6 +243,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     setState(() {
       _pressed = null;
       _lifted = element;
+      _liftedState = widget.board.state;
       // Grab from where the finger went down, not where the pan crossed its
       // slop: using the pan start made every lifted cell jump by ~18dp.
       _grab = _down;
@@ -271,15 +302,21 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       final delta = hover.bounds.center - origin;
       _settleFrom = current;
       _settleTo = Offset(delta.dx * _size.width, delta.dy * _size.height);
-      _pending = hover.move;
+      // The state lands now, in the frame of the finger-up; the spring below
+      // only paints the landing. This used to call back when the spring ended,
+      // which put the snap's whole duration between the finger and the board.
+      // Motion decorates a move, it never gates it (PUZZLE_STYLE.md §4), and a
+      // board with a transition still paints it over the new state.
+      _committedDragChange = true;
       _settle.value = 0;
+      _emitVerbFor(hover.move);
+      widget.onMove(hover.move);
       _settle
           .animateWith(SpringSimulation(BoardMotion.snapSpring, 0, 1, 0))
-          .whenCompleteOrCancel(_commit);
+          .whenCompleteOrCancel(_clearDrag);
     } else {
       _settleFrom = current;
       _settleTo = Offset.zero;
-      _pending = null;
       _invalid.forward(from: 0).whenComplete(() {
         if (mounted) _invalid.value = 0;
       });
@@ -290,14 +327,8 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     }
   }
 
-  void _commit() {
-    if (!mounted) return;
-    final move = _pending;
-    _clearDrag();
-    if (move == null) return;
-    emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
-    widget.onMove(move);
-  }
+  void _emitVerbFor(PuzzleMove<S> move) => emitVerb(
+      move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
 
   void _clearDrag({bool notify = true}) {
     if (!mounted) return;
@@ -308,10 +339,11 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     _settle.value = 0;
     _zones.value = 0;
     _lifted = null;
+    _liftedState = null;
     _targets = const [];
     _hover = null;
-    _pending = null;
     _settling = false;
+    _committedDragChange = false;
     if (notify) setState(() {});
   }
 
@@ -341,13 +373,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       return;
     }
 
-    final move = widget.board.tapMove(element);
     _handleTapCancel();
-    if (move == null) {
-      emitVerb(BoardVerb.select);
-      return;
-    }
-    emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
 
     // A tap is a drag that resolved immediately, so it lands in this frame.
     //
@@ -357,6 +383,20 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     // a move, it never gates it. A board with something to show (a pour, a
     // turn) declares `transitionFor`, and the engine paints that once the state
     // has already moved, so the move is instant and still animated.
+    _playTap(element);
+  }
+
+  /// The tap path, shared by the gesture and by a semantics node.
+  ///
+  /// A screen reader's tap and a finger's tap must land on the same move, so
+  /// they go through one function rather than two that drift apart.
+  void _playTap(ElementRef element) {
+    final move = widget.board.tapMove(element);
+    if (move == null) {
+      emitVerb(BoardVerb.select);
+      return;
+    }
+    emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
     widget.onMove(move);
   }
 
@@ -383,6 +423,58 @@ class _PuzzleBoardViewState<S extends PuzzleState>
 
   // ------------------------------------------------------------------ build
 
+  /// The value a listener hears, with "fixed" on a given.
+  String? _spokenValue(ElementRef element) {
+    final value = widget.board.valueOf(element);
+    final fixed = widget.board.isFixed(element);
+    if (value != null && value.isNotEmpty) {
+      return fixed ? '$value, fixed' : value;
+    }
+    return fixed ? 'fixed' : null;
+  }
+
+  /// The summary line, plus whatever the board says no element can carry.
+  String _spokenSummary() {
+    final details = widget.board.semanticsDetails;
+    return details == null || details.isEmpty
+        ? widget.board.semanticsSummary
+        : '${widget.board.semanticsSummary}. $details';
+  }
+
+  /// One semantics node per element, laid over the paint at that element's own
+  /// bounds, in the same order the elements are painted.
+  ///
+  /// The nodes ignore pointers, so the gesture detector underneath still gets
+  /// every touch: they exist for a listener and for an agent, not for a finger.
+  List<Widget> _semanticsNodes(Size size) {
+    final nodes = <Widget>[];
+    for (final element in widget.board.elements) {
+      final bounds = widget.board.boundsOf(element);
+      if (bounds == null) continue;
+      final action = widget.enabled ? widget.board.describeTap(element) : null;
+      nodes.add(
+        Positioned.fromRect(
+          rect: Rect.fromLTRB(
+            bounds.left * size.width,
+            bounds.top * size.height,
+            bounds.right * size.width,
+            bounds.bottom * size.height,
+          ),
+          child: Semantics(
+            container: true,
+            textDirection: TextDirection.ltr,
+            label: widget.board.describeElement(element),
+            value: _spokenValue(element),
+            hint: action == null ? null : 'tap to $action',
+            onTap: action == null ? null : () => _playTap(element),
+            child: const IgnorePointer(child: SizedBox.expand()),
+          ),
+        ),
+      );
+    }
+    return nodes;
+  }
+
   @override
   Widget build(BuildContext context) {
     final palette = PuzzlePalette.of(context);
@@ -394,31 +486,45 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       child: LayoutBuilder(
         builder: (context, constraints) {
           _size = constraints.biggest;
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onPanDown: _handlePanDown,
-            onPanStart: _handlePanStart,
-            onPanUpdate: _handlePanUpdate,
-            onPanEnd: _handlePanEnd,
-            onPanCancel: _handlePanCancel,
-            onTapDown: _handleTapDown,
-            onTapUp: _handleTapUp,
-            onTapCancel: _handleTapCancel,
-            child: RepaintBoundary(
-              child: AnimatedBuilder(
-                animation: listenable,
-                builder: (context, _) => CustomPaint(
-                  size: _size,
-                  painter: _BoardPainter<S>(
-                    board: widget.board,
-                    palette: palette,
-                    highlight: _highlight,
-                    transitionFrom: _transitionFrom,
-                    transitionTo: _transitionTo,
-                    transitionT: _transition.value,
+          return Semantics(
+            container: true,
+            explicitChildNodes: true,
+            textDirection: TextDirection.ltr,
+            label: _spokenSummary(),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onPanDown: _handlePanDown,
+                    onPanStart: _handlePanStart,
+                    onPanUpdate: _handlePanUpdate,
+                    onPanEnd: _handlePanEnd,
+                    onPanCancel: _handlePanCancel,
+                    onTapDown: _handleTapDown,
+                    onTapUp: _handleTapUp,
+                    onTapCancel: _handleTapCancel,
+                    child: RepaintBoundary(
+                      child: AnimatedBuilder(
+                        animation: listenable,
+                        builder: (context, _) => CustomPaint(
+                          size: _size,
+                          painter: _BoardPainter<S>(
+                            board: widget.board,
+                            palette: palette,
+                            highlight: _highlight,
+                            liftedState: _liftedState,
+                            transitionFrom: _transitionFrom,
+                            transitionTo: _transitionTo,
+                            transitionT: _transition.value,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                ..._semanticsNodes(_size),
+              ],
             ),
           );
         },
@@ -432,6 +538,7 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
     required this.board,
     required this.palette,
     required this.highlight,
+    this.liftedState,
     this.transitionFrom,
     this.transitionTo,
     this.transitionT = 0,
@@ -440,6 +547,7 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
   final PuzzleBoard<S> board;
   final PuzzlePalette palette;
   final BoardHighlight highlight;
+  final S? liftedState;
   final S? transitionFrom;
   final S? transitionTo;
   final double transitionT;
@@ -470,13 +578,14 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
 
     final lifted = highlight.lifted;
     if (lifted != null) {
+      final carried = liftedState ?? board.state;
       _transformed(
           canvas,
           view,
           lifted,
           highlight.liftScale,
           highlight.liftOffset,
-          () => board.paintElement(view, board.state, lifted));
+          () => board.paintElement(view, carried, lifted));
 
       // The refused drop: a red wash over the element on its way home.
       if (highlight.invalidOpacity > 0) {
@@ -525,6 +634,7 @@ class _BoardPainter<S extends PuzzleState> extends CustomPainter {
       oldDelegate.board != board ||
       oldDelegate.highlight != highlight ||
       oldDelegate.palette != palette ||
+      oldDelegate.liftedState != liftedState ||
       oldDelegate.transitionFrom != transitionFrom ||
       oldDelegate.transitionTo != transitionTo ||
       oldDelegate.transitionT != transitionT;

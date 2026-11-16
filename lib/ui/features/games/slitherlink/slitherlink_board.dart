@@ -28,6 +28,37 @@ class SlitherlinkBoard extends PuzzleBoard<SlitherlinkState> {
   @override
   bool get isSolved => state.isSolved;
 
+  /// An edge is either part of the loop or not; a dot holds nothing.
+  @override
+  String? valueOf(ElementRef element) =>
+      _isEdge(element) && _drawn(element) ? 'line' : null;
+
+  /// The clues live inside the squares, which are not tap targets, so a
+  /// listener would otherwise never hear them.
+  @override
+  String? get semanticsDetails {
+    final clues = <String>[];
+    for (var row = 0; row < size; row++) {
+      for (var col = 0; col < size; col++) {
+        final clue = state.level.clues[row][col];
+        if (clue != null) {
+          clues.add('$clue at row ${row + 1}, column ${col + 1}');
+        }
+      }
+    }
+    return clues.isEmpty ? null : 'clues: ${clues.join('; ')}';
+  }
+
+  /// The verb for an edge tap is draw or erase, not the contract's "toggle".
+  @override
+  String? describeTap(ElementRef element) {
+    if (!_isEdge(element)) return null;
+    return _drawn(element) ? 'erase line' : 'draw line';
+  }
+
+  bool _isEdge(ElementRef element) =>
+      element.kind == 'edgeH' || element.kind == 'edgeV';
+
   // --------------------------------------------------------------- geometry
 
   Offset _vertex(int row, int col) =>
@@ -232,9 +263,7 @@ class SlitherlinkBoard extends PuzzleBoard<SlitherlinkState> {
       canvas.line(
         start,
         end,
-        color: hinted
-            ? palette.success
-            : palette.line,
+        color: hinted ? palette.success : palette.line,
         width: hinted ? 3 : 1.5,
       );
     }

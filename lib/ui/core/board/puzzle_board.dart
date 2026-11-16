@@ -7,8 +7,10 @@ import '../../../utils/design_system.dart';
 /// Immutable state of one puzzle.
 ///
 /// A puzzle is rules plus a generator. Its state is a value: applying a move
-/// returns a new state, and nothing in here knows about widgets, providers or
-/// gestures.
+/// returns a new state, and nothing here knows about widgets, providers or
+/// gestures. The one exception is its text form ([describeElement], [valueOf],
+/// [isFixed]): a board that plays must also read, and only the board knows what
+/// its cells mean.
 abstract class PuzzleState {
   const PuzzleState();
 }
@@ -505,5 +507,91 @@ abstract class PuzzleBoard<S extends PuzzleState> {
       }
     }
     return null;
+  }
+
+  // ---------------------------------------------------------------- semantics
+  //
+  // Every board has a text form, for a screen reader and for an agent driving
+  // the app. It is derived here from the three answers a board already gives
+  // the engine (`elements`, `boundsOf`, `tapMove`), so every board that can be
+  // played can be read, and no game screen adds a thing.
+
+  /// The shape of the board in words: the head of [semanticsSummary].
+  ///
+  /// A grid overrides this with its rows and columns; a board whose shape is
+  /// the point overrides it with the shape. The default counts elements, which
+  /// is true of every board even when it is not interesting.
+  String get semanticsShape => 'board of ${elements.length} elements';
+
+  /// Extra text a listener needs that no element carries.
+  ///
+  /// The elements are what can be tapped, and some boards put information where
+  /// it cannot be: Slitherlink's numeric clues sit inside squares that are not
+  /// hit targets, so a listener reading only the elements would never hear them
+  /// and could not play. Read after [semanticsSummary]; null when every piece of
+  /// the puzzle is already an element (the normal case).
+  String? get semanticsDetails => null;
+
+  /// One line read before the elements, so a listener knows what is on screen.
+  String get semanticsSummary =>
+      isSolved ? '$semanticsShape, solved' : semanticsShape;
+
+  /// The value an element holds right now, in the words a listener needs:
+  /// `5`, `black`, `line`. `null` when there is nothing to read.
+  ///
+  /// The default says nothing, which is right for a board whose cells carry no
+  /// value of their own (a painted region, an empty cell). A board that holds
+  /// values overrides this — it is the one part of the text form the contract
+  /// cannot guess, because only the game knows what its state means.
+  String? valueOf(ElementRef element) => null;
+
+  /// Whether an element is fixed — a given a player cannot change.
+  ///
+  /// Read after [valueOf], so a clue says "3, fixed" and an empty editable
+  /// cell says nothing.
+  bool isFixed(ElementRef element) => false;
+
+  /// Where an element is, in words. Coordinates are 1-based, because that is
+  /// how a person counts, and every board uses the same words.
+  String describeElement(ElementRef element) {
+    final row = element.a + 1;
+    final col = element.b + 1;
+    switch (element.kind) {
+      case 'cell':
+        return element.b >= 0 ? 'row $row, column $col' : 'cell $row';
+      case 'vertex':
+        return element.b >= 0
+            ? 'corner at row $row, column $col'
+            : 'corner $row';
+      case 'edgeH':
+        return 'horizontal edge at row $row, column $col';
+      case 'edgeV':
+        return 'vertical edge at row $row, column $col';
+      case 'digit':
+        return 'digit ${element.a}';
+      case 'erase':
+        return 'erase';
+      case 'tube':
+        return 'tube $row';
+    }
+    return element.b >= 0
+        ? '${element.kind} at row $row, column $col'
+        : '${element.kind} $row';
+  }
+
+  /// What a tap on [element] does, in words, or `null` when it does nothing.
+  ///
+  /// Derived from [tapMove], so the screen reader and the finger can never
+  /// disagree about what a tap is. Override it only when the verb is the wrong
+  /// word for the board (a toggle that draws rather than turns off).
+  String? describeTap(ElementRef element) {
+    final move = tapMove(element);
+    if (move == null) return null;
+    return switch (move.kind) {
+      MoveKind.select => 'select',
+      MoveKind.place => 'place',
+      MoveKind.clear => 'clear',
+      MoveKind.toggle => 'toggle',
+    };
   }
 }
