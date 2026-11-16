@@ -40,13 +40,19 @@ class DiscoveryHomeScreen extends ConsumerWidget {
     launchGame(context, ref, game);
   }
 
-  List<GameMetadata> _favorites(WidgetRef ref) {
+  List<GameMetadata> _favorites(WidgetRef ref, {required bool showArchived}) {
     final List<String> ids = ref.watch(
         userDataNotifierProvider.select((d) => d.favoriteGameIds ?? const []));
     if (ids.isEmpty) return const [];
     final hidden = ref.watch(
         userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
-    final byId = {for (final g in GameCategories.visible) g.id: g};
+    // The shelf is built from the pool the player can see. A star on an archived
+    // game is a real star: with the switch on it belongs on the shelf, and with
+    // the switch off the shelf must not smuggle the archive back in.
+    final byId = {
+      for (final g in GameCategories.library(includeArchived: showArchived))
+        g.id: g,
+    };
     return [
       for (final id in ids)
         if (byId[id] != null && !hidden.contains(id)) byId[id]!,
@@ -66,9 +72,10 @@ class DiscoveryHomeScreen extends ConsumerWidget {
     final List<GameMetadata> quick = GameFeed.quickPlay
         .where((g) => !hidden.contains(g.id))
         .toList(growable: false);
-    final List<GameMetadata> favorites = _favorites(ref);
     final bool showArchived = ref.watch(
         userDataNotifierProvider.select((d) => d.showArchivedGames ?? false));
+    final List<GameMetadata> favorites =
+        _favorites(ref, showArchived: showArchived);
 
     return Scaffold(
       backgroundColor: DesignSystem.paperOf(context),
