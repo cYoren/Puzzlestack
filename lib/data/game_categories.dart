@@ -81,18 +81,47 @@ class GameCategories {
 
   /// A room shows the games a player can open: the deal and the library.
   /// Archived games stay in the repo and out of every list.
-  static List<GameMetadata> inCategory(String id) => allGamesMetadata
-      .where((game) => game.category == id && visibleIds.contains(game.id))
-      .toList(growable: false);
+  ///
+  /// [includeArchived] is the settings switch, and the only way in: a room with
+  /// it on lists the archived games after the playable ones, each marked.
+  static List<GameMetadata> inCategory(String id,
+          {bool includeArchived = false}) =>
+      _playableFirst(allGamesMetadata.where((game) =>
+          game.category == id &&
+          (includeArchived || visibleIds.contains(game.id))));
 
-  static int countIn(String id) => allGamesMetadata
-      .where((game) => game.category == id && visibleIds.contains(game.id))
-      .length;
+  static int countIn(String id, {bool includeArchived = false}) =>
+      allGamesMetadata
+          .where((game) =>
+              game.category == id &&
+              (includeArchived || visibleIds.contains(game.id)))
+          .length;
 
   /// Every game a player can open, across all rooms.
   static List<GameMetadata> get visible => allGamesMetadata
       .where((game) => visibleIds.contains(game.id))
       .toList(growable: false);
+
+  /// Every game in the registry, archived ones last.
+  static List<GameMetadata> library({bool includeArchived = false}) {
+    if (!includeArchived) return visible;
+    return _playableFirst(allGamesMetadata);
+  }
+
+  /// Playable games keep their order; the archive follows in one block, so an
+  /// opt-in shelf reads as reference material instead of interrupting the room.
+  static List<GameMetadata> _playableFirst(Iterable<GameMetadata> games) {
+    final List<GameMetadata> playable = [];
+    final List<GameMetadata> archived = [];
+    for (final GameMetadata game in games) {
+      (visibleIds.contains(game.id) ? playable : archived).add(game);
+    }
+    return [...playable, ...archived];
+  }
+
+  /// Whether this game is archived (kept, but not dealt and not searched by
+  /// default).
+  static bool isArchived(String id) => !visibleIds.contains(id);
 
   /// Every game in the deal.
   static List<GameMetadata> get deck => allGamesMetadata
@@ -168,6 +197,53 @@ class GameFeed {
           _quickPlayIds.contains(g.id))
       .toList(growable: false);
 
+  /// The browse list: what the player can reach, filtered and ordered.
+  ///
+  /// Pure on purpose. It decides which games a surface may show — archived games
+  /// only behind the settings switch, hidden games never, one room at a time —
+  /// and a decision about the game belongs somewhere a test can call it without
+  /// a Hive box (`filteredGamesProvider` is a two-line wrapper over this).
+  static List<GameMetadata> browse({
+    required String searchQuery,
+    required String selectedCategory,
+    required Map<String, String> localizedTitles,
+    Set<String> favoriteIds = const {},
+    Set<String> hiddenIds = const {},
+    bool includeArchived = false,
+    List<GameMetadata>? registry,
+  }) {
+    final pool = registry ?? allGamesMetadata;
+    final query = searchQuery.toLowerCase();
+    final filtered = pool.where((game) {
+      if (hiddenIds.contains(game.id)) return false;
+      if (!includeArchived && !visibleIds.contains(game.id)) return false;
+      final title = localizedTitles[game.id]?.toLowerCase() ?? '';
+      final matchesSearch = game.id.toLowerCase().contains(query) ||
+          title.contains(query) ||
+          game.category.toLowerCase().contains(query);
+      final matchesCategory =
+          selectedCategory == 'ALL' || game.category == selectedCategory;
+      return matchesSearch && matchesCategory;
+    }).toList();
+
+    int priority(GameMetadata game) {
+      if (favoriteIds.contains(game.id)) return -1;
+      if (game.popularity == Popularity.high) return 0;
+      if (game.popularity == Popularity.low) return 2;
+      return 1;
+    }
+
+    // Archived games are listed last whatever their popularity: they are the
+    // reference shelf, not a better card.
+    int tier(GameMetadata game) => visibleIds.contains(game.id) ? 0 : 1;
+
+    filtered.sort((a, b) {
+      final int byTier = tier(a).compareTo(tier(b));
+      return byTier != 0 ? byTier : priority(a).compareTo(priority(b));
+    });
+    return filtered;
+  }
+
   /// The pool the deal draws from: the Deck (see `data/game_profiles.dart`, generated
   /// from `docs/CATALOG.md`) minus [exclude], the player's own hidden games.
   ///
@@ -199,16 +275,18 @@ class GameFeed {
 
   /// Whether the player's own hidden list covers today's pick. The daily stays
   /// shared; the card is simply not offered, exactly as the reel hides it.
-  static bool dailyPickIsHidden({DateTime? now, required Set<String> exclude}) =>
+  static bool dailyPickIsHidden(
+          {DateTime? now, required Set<String> exclude}) =>
       exclude.contains(dailyPick(now: now).id);
 
   /// Days since the epoch, counted on the calendar date the player sees. A
   /// `year * 10000 + month * 100 + day` seed looks equivalent and is not: at a
   /// month boundary it jumps by 70 instead of 1, so the stride skips entries and
   /// a third of the catalogue could never be a daily pick.
-  static int _dayNumber(DateTime date) => DateTime.utc(date.year, date.month, date.day)
-      .difference(DateTime.utc(1970))
-      .inDays;
+  static int _dayNumber(DateTime date) =>
+      DateTime.utc(date.year, date.month, date.day)
+          .difference(DateTime.utc(1970))
+          .inDays;
 
   /// The deal in a stable order that also spreads the rooms, for the daily.
   ///
@@ -234,11 +312,12 @@ class GameFeed {
         return byHash != 0 ? byHash : a.compareTo(b);
       });
     for (final room in rooms) {
-      final games = GameCategories.deck.where((g) => g.category == room).toList()
-        ..sort((a, b) {
-          final byHash = _fnv1a(a.id).compareTo(_fnv1a(b.id));
-          return byHash != 0 ? byHash : a.id.compareTo(b.id);
-        });
+      final games =
+          GameCategories.deck.where((g) => g.category == room).toList()
+            ..sort((a, b) {
+              final byHash = _fnv1a(a.id).compareTo(_fnv1a(b.id));
+              return byHash != 0 ? byHash : a.id.compareTo(b.id);
+            });
       for (var i = 0; i < games.length; i++) {
         keyed.add(MapEntry((i + 0.5) / games.length, games[i]));
       }
@@ -247,8 +326,8 @@ class GameFeed {
       final byKey = a.key.compareTo(b.key);
       return byKey != 0 ? byKey : a.value.id.compareTo(b.value.id);
     });
-    return _hashOrder = List<GameMetadata>.unmodifiable(
-        keyed.map((entry) => entry.value));
+    return _hashOrder =
+        List<GameMetadata>.unmodifiable(keyed.map((entry) => entry.value));
   }
 
   static List<GameMetadata>? _hashOrder;

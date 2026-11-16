@@ -18,6 +18,7 @@ class UserData with _$UserData {
     @HiveField(6) bool? isTrialModeEnabled,
     @HiveField(7) List<String>? hiddenGameIds,
     @HiveField(8) bool? isKeepScreenAwakeEnabled,
+    @HiveField(9) bool? showArchivedGames,
   }) = _UserData;
 
   factory UserData.initial() => const UserData(
@@ -30,6 +31,7 @@ class UserData with _$UserData {
         isTrialModeEnabled: false,
         hiddenGameIds: [],
         isKeepScreenAwakeEnabled: false,
+        showArchivedGames: false,
       );
 
   factory UserData.fromJson(Map<String, dynamic> json) =>

@@ -134,6 +134,16 @@ class AppLocalizationsTe extends AppLocalizations {
       'గేమ్‌ప్లే సమయంలో స్క్రీన్ ఆఫ్ కాకుండా నిరోధించండి';
 
   @override
+  String get showArchivedGames => 'Show archived puzzles';
+
+  @override
+  String get showArchivedGamesDescription =>
+      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+
+  @override
+  String get archived => 'ARCHIVED';
+
+  @override
   String get appearance => 'రూపురేఖలు';
 
   @override

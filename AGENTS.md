@@ -42,9 +42,11 @@ your PR.
 
 ## Mechanics
 
-- One job, one branch, one worktree under `~/Projects/`, one PR against `cYoren/Puzzlestack`
-  (`gh ... -R cYoren/Puzzlestack`; plain `gh` resolves to upstream). Never push to `main`.
-- `TMPDIR=$HOME/.cache/tmp flutter test -j 4`, one test run at a time on this machine.
+- Release work runs in waves: [ROADMAP.md](ROADMAP.md), "Running the release (head model)". One
+  worktree per agent under `~/Projects/`, one branch and one PR per wave against `cYoren/Puzzlestack`
+  (`gh ... -R cYoren/Puzzlestack`; plain `gh` resolves to upstream). Docs may go straight to `main`.
+- `flock ~/.cache/flutter-test.lock env TMPDIR=$HOME/.cache/tmp flutter test -j 4`, because two test
+  runs at once stall each other on this machine.
 - `dart format <file>`, never a directory.
 - The Dart package is `puzzle`; the product is Puzzlestack.
 - PR body: the job id, what a player sees differently, before and after (screenshots for
