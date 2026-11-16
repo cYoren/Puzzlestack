@@ -220,6 +220,73 @@ void main() {
     });
   });
 
+  group('order', () {
+    // The owner's reference for how the game should feel: "the arrow appears the
+    // moment you move, and you can work backwards, 16 then 15 then 14". So the
+    // rules may not care which end of the chain the player starts from. A fill
+    // is a set of links, and every rule below reads the numbers off the chains
+    // that already have a given number in them, so both directions have to be
+    // the same board.
+    test('a board can be filled backwards, 16 then 15 then 14', () {
+      final rng = Random(11);
+      for (final difficulty in SignpostDifficulty.values) {
+        for (var board = 0; board < 5; board++) {
+          final puzzle = engine.generate(difficulty, random: rng);
+          final where = '${difficulty.name} board $board';
+          final total = puzzle.cellCount;
+          final links = List<int>.filled(total, -1);
+          var position = SignpostPosition.of(puzzle, links);
+
+          // The answer's last link first, then the one before it: the player is
+          // walking the chain down from N instead of up from 1.
+          for (var number = total; number > 1; number--) {
+            final from = puzzle.cellOfNumber(number - 1);
+            final to = puzzle.cellOfNumber(number);
+            expect(engine.legal(position, puzzle, from, to), isTrue,
+                reason: '$where: ${number - 1}->$number was refused when the '
+                    'chain was being built from the far end');
+            links[from] = to;
+            position = SignpostPosition.of(puzzle, links);
+            expect(position.impossible, isFalse,
+                reason: '$where: the backwards links disagree at $number');
+          }
+
+          // Every cell is numbered and the links are the answer's.
+          for (var number = 1; number <= total; number++) {
+            expect(position.numbers[puzzle.cellOfNumber(number)], number,
+                reason: '$where: cell of $number reads another number');
+          }
+          expect(engine.isSolved(puzzle, links), isTrue,
+              reason: '$where: a board filled backwards is not a win');
+        }
+      }
+    });
+
+    test('starting at the far end shows the numbers in the first frame', () {
+      // "The arrow appears the moment you move": the link the player makes is
+      // the whole state. There is no controller between the tap and the board
+      // here — applying the move is the only step — so whatever the numbers
+      // read the instant the move is applied is what the frame paints.
+      final puzzle =
+          engine.generate(SignpostDifficulty.easy, random: Random(17));
+      final total = puzzle.cellCount;
+      final links = List<int>.filled(total, -1);
+
+      // One link, made from the top of the chain downwards.
+      final from = puzzle.cellOfNumber(total - 1);
+      final to = puzzle.cellOfNumber(total);
+      final before = SignpostPosition.of(puzzle, links);
+      expect(engine.legal(before, puzzle, from, to), isTrue);
+
+      links[from] = to;
+      final after = SignpostPosition.of(puzzle, links);
+      expect(after.numbers[from], total - 1,
+          reason: 'the cell the player just linked shows no number');
+      expect(after.numbers[to], total,
+          reason: 'the given number N does not read in the same frame');
+    });
+  });
+
   group('hint', () {
     test('names one link the answer has, from the board as it stands', () {
       final rng = Random(13);
