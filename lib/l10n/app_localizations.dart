@@ -3188,6 +3188,42 @@ abstract class AppLocalizations {
   /// **'Every shape holds 1 to its size, with no two numbers too close.'**
   String get seismicWinMessage;
 
+  /// No description provided for @mathraxTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mathrax'**
+  String get mathraxTitle;
+
+  /// No description provided for @mathraxSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill every row and column with 1 to the side of the board. Each corner clue binds the four cells around it on both diagonals.'**
+  String get mathraxSubtitle;
+
+  /// No description provided for @mathraxFilled.
+  ///
+  /// In en, this message translates to:
+  /// **'Filled'**
+  String get mathraxFilled;
+
+  /// No description provided for @mathraxDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get mathraxDepth;
+
+  /// No description provided for @mathraxWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY CORNER AGREES!'**
+  String get mathraxWinTitle;
+
+  /// No description provided for @mathraxWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A Latin square that satisfies every corner clue.'**
+  String get mathraxWinMessage;
+
   /// No description provided for @ascentTitle.
   ///
   /// In en, this message translates to:
