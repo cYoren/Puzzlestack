@@ -20,17 +20,17 @@ class _TopologyScreenState extends ConsumerState<TopologyScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(topologyNotifierProvider.notifier).initGame();
+      ref.read(topologyProvider.notifier).initGame();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(topologyNotifierProvider);
+    final state = ref.watch(topologyProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(topologyNotifierProvider, (previous, next) {
+    ref.listen(topologyProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -44,7 +44,7 @@ class _TopologyScreenState extends ConsumerState<TopologyScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(topologyNotifierProvider.notifier).reset();
+              ref.read(topologyProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -67,7 +67,7 @@ class _TopologyScreenState extends ConsumerState<TopologyScreen> {
       subtitle: l10n.topologySubtitle,
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(topologyNotifierProvider.notifier).reset();
+        ref.read(topologyProvider.notifier).reset();
       },
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +89,7 @@ class _TopologyScreenState extends ConsumerState<TopologyScreen> {
               TangibleButton(
                 onTap: () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(topologyNotifierProvider.notifier).submitAnswer(true);
+                  ref.read(topologyProvider.notifier).submitAnswer(true);
                 },
                 color: DesignSystem.accentEmerald,
                 child: Text(l10n.yes.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),
@@ -98,7 +98,7 @@ class _TopologyScreenState extends ConsumerState<TopologyScreen> {
               TangibleButton(
                 onTap: () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(topologyNotifierProvider.notifier).submitAnswer(false);
+                  ref.read(topologyProvider.notifier).submitAnswer(false);
                 },
                 color: colorScheme.error,
                 child: Text(l10n.no.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),

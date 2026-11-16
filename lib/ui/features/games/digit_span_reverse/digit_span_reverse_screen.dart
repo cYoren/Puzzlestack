@@ -23,7 +23,7 @@ class _DigitSpanReverseScreenState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(digitSpanReverseNotifierProvider.notifier).initGame();
+      ref.read(digitSpanReverseProvider.notifier).initGame();
     });
   }
 
@@ -39,7 +39,7 @@ class _DigitSpanReverseScreenState
         message: isVictory
             ? l10n.digitSpanReverseWinMessage
             : l10n.digitSpanReverseLoseMessage(ref
-                .read(digitSpanReverseNotifierProvider)
+                .read(digitSpanReverseProvider)
                 .sequence
                 .reversed
                 .join(', ')),
@@ -50,7 +50,7 @@ class _DigitSpanReverseScreenState
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(digitSpanReverseNotifierProvider.notifier).initGame();
+          ref.read(digitSpanReverseProvider.notifier).initGame();
         },
       ),
     );
@@ -58,18 +58,18 @@ class _DigitSpanReverseScreenState
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(digitSpanReverseNotifierProvider);
-    final notifier = ref.read(digitSpanReverseNotifierProvider.notifier);
+    final state = ref.watch(digitSpanReverseProvider);
+    final notifier = ref.read(digitSpanReverseProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(digitSpanReverseNotifierProvider, (previous, next) async {
+    ref.listen(digitSpanReverseProvider, (previous, next) async {
       if (next.phase == DigitSpanPhase.result &&
           previous?.phase != DigitSpanPhase.result) {
         final isVictory = next.score > (previous?.score ?? 0);
         if (isVictory) {
           HapticFeedbackUtil.victory();
           await ref
-              .read(gameStreakNotifierProvider.notifier)
+              .read(gameStreakProvider.notifier)
               .completeGame('digit_span_reverse');
         } else {
           HapticFeedbackUtil.vibrate();

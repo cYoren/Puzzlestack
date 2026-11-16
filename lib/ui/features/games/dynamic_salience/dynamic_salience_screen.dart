@@ -124,7 +124,7 @@ class _DynamicSalienceScreenState extends ConsumerState<DynamicSalienceScreen> w
   void _onGameComplete() async {
     _animationController.stop();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('dynamic_salience');
+    await ref.read(gameStreakProvider.notifier).completeGame('dynamic_salience');
     if (!mounted) return;
     showDialog(
       context: context,

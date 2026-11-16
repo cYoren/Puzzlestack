@@ -146,7 +146,7 @@ class _PatternSequenceDrawScreenState extends ConsumerState<PatternSequenceDrawS
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('pattern_sequence_draw');
+    await ref.read(gameStreakProvider.notifier).completeGame('pattern_sequence_draw');
     if (!mounted) return;
     showDialog(
       context: context,

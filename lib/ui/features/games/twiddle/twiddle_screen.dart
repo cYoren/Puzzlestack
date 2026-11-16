@@ -23,7 +23,7 @@ class TwiddleScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('twiddle', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -47,8 +47,8 @@ class TwiddleScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(twiddleNotifierProvider);
-    final notifier = ref.read(twiddleNotifierProvider.notifier);
+    final state = ref.watch(twiddleProvider);
+    final notifier = ref.read(twiddleProvider.notifier);
 
     return GameScaffold(
       title: l10n.twiddleTitle,

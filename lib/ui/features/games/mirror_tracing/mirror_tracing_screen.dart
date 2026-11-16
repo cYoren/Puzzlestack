@@ -35,8 +35,8 @@ class _MirrorTracingScreenState extends ConsumerState<MirrorTracingScreen> {
         onPlayAgain: () {
           Navigator.of(context).pop();
           _lastTouch = null;
-          final canvasSize = ref.read(mirrorTracingNotifierProvider).canvasSize;
-          ref.read(mirrorTracingNotifierProvider.notifier).initGame(canvasSize);
+          final canvasSize = ref.read(mirrorTracingProvider).canvasSize;
+          ref.read(mirrorTracingProvider.notifier).initGame(canvasSize);
         },
       ),
     );
@@ -45,13 +45,13 @@ class _MirrorTracingScreenState extends ConsumerState<MirrorTracingScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(mirrorTracingNotifierProvider);
-    final notifier = ref.read(mirrorTracingNotifierProvider.notifier);
+    final state = ref.watch(mirrorTracingProvider);
+    final notifier = ref.read(mirrorTracingProvider.notifier);
 
-    ref.listen(mirrorTracingNotifierProvider, (previous, next) {
+    ref.listen(mirrorTracingProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('mirror_tracing');
+        ref.read(gameStreakProvider.notifier).completeGame('mirror_tracing');
         _showCompletionDialog();
       }
     });

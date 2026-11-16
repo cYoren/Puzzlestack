@@ -72,7 +72,7 @@ class _SetTheoryVennScreenState extends ConsumerState<SetTheoryVennScreen> {
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('set_theory_venn');
+        ref.read(gameStreakProvider.notifier).completeGame('set_theory_venn');
         _showWinDialog();
         return;
       }

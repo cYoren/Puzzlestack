@@ -24,13 +24,13 @@ class _PortmanteauSplitScreenState extends ConsumerState<PortmanteauSplitScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(portmanteauSplitNotifierProvider.notifier).startGame();
+      ref.read(portmanteauSplitProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final score = ref.read(portmanteauSplitNotifierProvider).score;
+    final score = ref.read(portmanteauSplitProvider).score;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -44,7 +44,7 @@ class _PortmanteauSplitScreenState extends ConsumerState<PortmanteauSplitScreen>
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(portmanteauSplitNotifierProvider.notifier).startGame();
+          ref.read(portmanteauSplitProvider.notifier).startGame();
         },
       ),
     );
@@ -53,13 +53,13 @@ class _PortmanteauSplitScreenState extends ConsumerState<PortmanteauSplitScreen>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(portmanteauSplitNotifierProvider);
-    final notifier = ref.read(portmanteauSplitNotifierProvider.notifier);
+    final state = ref.watch(portmanteauSplitProvider);
+    final notifier = ref.read(portmanteauSplitProvider.notifier);
 
-    ref.listen(portmanteauSplitNotifierProvider, (previous, next) {
+    ref.listen(portmanteauSplitProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('portmanteau_split');
+        ref.read(gameStreakProvider.notifier).completeGame('portmanteau_split');
         _showCompletionDialog();
       }
       if (next.isCorrect && !(previous?.isCorrect ?? false)) {

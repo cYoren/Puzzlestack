@@ -64,7 +64,7 @@ class LogicalSyllogismsNotifier extends _$LogicalSyllogismsNotifier {
 
   void startGame() {
     _timer?.cancel();
-    final isTrialMode = ref.read(userDataNotifierProvider).isTrialModeEnabled ?? false;
+    final isTrialMode = ref.read(userDataProvider).isTrialModeEnabled ?? false;
 
     state = LogicalSyllogismsState(
       puzzle: _engine.generatePuzzle(),

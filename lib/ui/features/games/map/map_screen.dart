@@ -24,7 +24,7 @@ class MapScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('map', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class MapScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(mapNotifierProvider);
-    final notifier = ref.read(mapNotifierProvider.notifier);
+    final state = ref.watch(mapProvider);
+    final notifier = ref.read(mapProvider.notifier);
 
     return GameScaffold(
       title: l10n.mapTitle,

@@ -73,7 +73,7 @@ class _VisualCrowdingAcuityScreenState extends ConsumerState<VisualCrowdingAcuit
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('visual_crowding_acuity');
+    ref.read(gameStreakProvider.notifier).completeGame('visual_crowding_acuity');
     _showEndDialog();
   }
 

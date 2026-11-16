@@ -56,7 +56,7 @@ class _HeyawakeScreenState extends ConsumerState<HeyawakeScreen> {
       setState(() {
         _isCompleted = true;
       });
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('heyawake');
+      ref.read(gameStreakProvider.notifier).completeGame('heyawake');
       _showWinDialog();
     }
   }

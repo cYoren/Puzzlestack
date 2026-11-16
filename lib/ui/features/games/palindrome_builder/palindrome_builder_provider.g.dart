@@ -6,23 +6,61 @@ part of 'palindrome_builder_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(PalindromeBuilderNotifier)
+final palindromeBuilderProvider = PalindromeBuilderNotifierProvider._();
+
+final class PalindromeBuilderNotifierProvider
+    extends
+        $NotifierProvider<PalindromeBuilderNotifier, PalindromeBuilderState> {
+  PalindromeBuilderNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'palindromeBuilderProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$palindromeBuilderNotifierHash();
+
+  @$internal
+  @override
+  PalindromeBuilderNotifier create() => PalindromeBuilderNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PalindromeBuilderState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PalindromeBuilderState>(value),
+    );
+  }
+}
+
 String _$palindromeBuilderNotifierHash() =>
     r'5f485961e3eff9932933deae266ce35726210b0b';
 
-/// See also [PalindromeBuilderNotifier].
-@ProviderFor(PalindromeBuilderNotifier)
-final palindromeBuilderNotifierProvider = AutoDisposeNotifierProvider<
-    PalindromeBuilderNotifier, PalindromeBuilderState>.internal(
-  PalindromeBuilderNotifier.new,
-  name: r'palindromeBuilderNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$palindromeBuilderNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$PalindromeBuilderNotifier
-    = AutoDisposeNotifier<PalindromeBuilderState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$PalindromeBuilderNotifier
+    extends $Notifier<PalindromeBuilderState> {
+  PalindromeBuilderState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<PalindromeBuilderState, PalindromeBuilderState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<PalindromeBuilderState, PalindromeBuilderState>,
+              PalindromeBuilderState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

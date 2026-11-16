@@ -6,21 +6,57 @@ part of 'laser_link_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$laserLinkNotifierHash() => r'cf72a38cce5d83ec645b2da5303364a2e1dad74c';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [LaserLinkNotifier].
 @ProviderFor(LaserLinkNotifier)
-final laserLinkNotifierProvider =
-    AutoDisposeNotifierProvider<LaserLinkNotifier, LaserLinkState>.internal(
-  LaserLinkNotifier.new,
-  name: r'laserLinkNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$laserLinkNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final laserLinkProvider = LaserLinkNotifierProvider._();
 
-typedef _$LaserLinkNotifier = AutoDisposeNotifier<LaserLinkState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class LaserLinkNotifierProvider
+    extends $NotifierProvider<LaserLinkNotifier, LaserLinkState> {
+  LaserLinkNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'laserLinkProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$laserLinkNotifierHash();
+
+  @$internal
+  @override
+  LaserLinkNotifier create() => LaserLinkNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(LaserLinkState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<LaserLinkState>(value),
+    );
+  }
+}
+
+String _$laserLinkNotifierHash() => r'e4147b96d835d855739ec010747ace51a2ddd472';
+
+abstract class _$LaserLinkNotifier extends $Notifier<LaserLinkState> {
+  LaserLinkState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<LaserLinkState, LaserLinkState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<LaserLinkState, LaserLinkState>,
+              LaserLinkState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

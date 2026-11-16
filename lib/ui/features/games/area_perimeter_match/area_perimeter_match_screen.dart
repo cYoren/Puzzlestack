@@ -67,7 +67,7 @@ class _AreaPerimeterMatchScreenState extends ConsumerState<AreaPerimeterMatchScr
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('area_perimeter_match');
+    await ref.read(gameStreakProvider.notifier).completeGame('area_perimeter_match');
     if (!mounted) return;
     showDialog(
       context: context,

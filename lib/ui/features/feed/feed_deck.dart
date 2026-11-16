@@ -22,6 +22,9 @@ class FeedDeck {
     Set<String> hidden = const {},
     Random? random,
   })  : _random = random ?? Random(),
+        // `this._hidden` would be a named parameter no caller outside this
+        // library could pass, so the field stays assigned from public `hidden`.
+        // ignore: prefer_initializing_formals
         _hidden = hidden {
     _pool = _buildPool();
     _refill();

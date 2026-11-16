@@ -6,22 +6,59 @@ part of 'source_monitoring_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sourceMonitoringNotifierHash() =>
-    r'c5203876c4fdf927936eac3fa1df2869f8d385c3';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SourceMonitoringNotifier].
 @ProviderFor(SourceMonitoringNotifier)
-final sourceMonitoringNotifierProvider = AutoDisposeNotifierProvider<
-    SourceMonitoringNotifier, SourceMonitoringState>.internal(
-  SourceMonitoringNotifier.new,
-  name: r'sourceMonitoringNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$sourceMonitoringNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final sourceMonitoringProvider = SourceMonitoringNotifierProvider._();
 
-typedef _$SourceMonitoringNotifier = AutoDisposeNotifier<SourceMonitoringState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class SourceMonitoringNotifierProvider
+    extends $NotifierProvider<SourceMonitoringNotifier, SourceMonitoringState> {
+  SourceMonitoringNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sourceMonitoringProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sourceMonitoringNotifierHash();
+
+  @$internal
+  @override
+  SourceMonitoringNotifier create() => SourceMonitoringNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SourceMonitoringState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SourceMonitoringState>(value),
+    );
+  }
+}
+
+String _$sourceMonitoringNotifierHash() =>
+    r'd380155ef07b3cb3a93352bee77b8414c80d471b';
+
+abstract class _$SourceMonitoringNotifier
+    extends $Notifier<SourceMonitoringState> {
+  SourceMonitoringState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<SourceMonitoringState, SourceMonitoringState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SourceMonitoringState, SourceMonitoringState>,
+              SourceMonitoringState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

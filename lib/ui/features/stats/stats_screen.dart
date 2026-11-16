@@ -187,8 +187,8 @@ class _UserStatsCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final userData = ref.watch(userDataNotifierProvider);
-    final notifier = ref.read(userDataNotifierProvider.notifier);
+    final userData = ref.watch(userDataProvider);
+    final notifier = ref.read(userDataProvider.notifier);
 
     final level = userData.level;
     final xp = userData.xp;
@@ -310,7 +310,7 @@ class _StreakTracker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final userData = ref.watch(userDataNotifierProvider);
+    final userData = ref.watch(userDataProvider);
     final superStreak = userData.superStreak ?? 0;
     final lastDate = userData.lastSuperStreakDate;
 
@@ -593,7 +593,7 @@ class _AchievementCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final xp = ref.watch(userDataNotifierProvider.select((d) => d.xp));
+    final xp = ref.watch(userDataProvider.select((d) => d.xp));
     final isUnlocked = xp >= achievement.requiredXp;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;

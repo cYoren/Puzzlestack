@@ -139,7 +139,7 @@ class AssociativePairsNotifier extends _$AssociativePairsNotifier {
       status: AssociativeStatus.completed,
       isWon: true,
     );
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('associative_pairs', xpAmount: 25);
+    ref.read(gameStreakProvider.notifier).completeGame('associative_pairs', xpAmount: 25);
   }
 
   void reset() {

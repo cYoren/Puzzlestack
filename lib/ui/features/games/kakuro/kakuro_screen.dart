@@ -17,10 +17,10 @@ class KakuroScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(kakuroNotifierProvider);
-    final notifier = ref.read(kakuroNotifierProvider.notifier);
+    final state = ref.watch(kakuroProvider);
+    final notifier = ref.read(kakuroProvider.notifier);
 
-    ref.listen(kakuroNotifierProvider, (previous, next) {
+    ref.listen(kakuroProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(

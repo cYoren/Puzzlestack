@@ -35,17 +35,17 @@ class _CrownScreenState extends ConsumerState<CrownScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(crownNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(crownProvider.notifier).initGame());
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(crownNotifierProvider);
-    final notifier = ref.read(crownNotifierProvider.notifier);
+    final state = ref.watch(crownProvider);
+    final notifier = ref.read(crownProvider.notifier);
 
-    ref.listen(crownNotifierProvider, (previous, next) {
+    ref.listen(crownProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -174,7 +174,7 @@ class _CrownScreenState extends ConsumerState<CrownScreen> {
   }
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('crown');
+    await ref.read(gameStreakProvider.notifier).completeGame('crown');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -187,7 +187,7 @@ class _CrownScreenState extends ConsumerState<CrownScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(crownNotifierProvider.notifier).initGame();
+          ref.read(crownProvider.notifier).initGame();
           Navigator.of(context).pop();
         },
       ),

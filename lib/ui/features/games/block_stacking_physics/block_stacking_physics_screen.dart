@@ -137,7 +137,7 @@ class _BlockStackingPhysicsScreenState extends ConsumerState<BlockStackingPhysic
     _animationTimer.cancel();
     if (won) {
       HapticFeedbackUtil.victory();
-      await ref.read(gameStreakNotifierProvider.notifier).completeGame('block_stacking_physics');
+      await ref.read(gameStreakProvider.notifier).completeGame('block_stacking_physics');
     }
     if (!mounted) return;
 

@@ -15,9 +15,9 @@ class BinaryPuzzleScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(binaryPuzzleNotifierProvider);
+    final state = ref.watch(binaryPuzzleProvider);
 
-    ref.listen(binaryPuzzleNotifierProvider, (previous, next) {
+    ref.listen(binaryPuzzleProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -33,7 +33,7 @@ class BinaryPuzzleScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(binaryPuzzleNotifierProvider.notifier).newGame();
+            ref.read(binaryPuzzleProvider.notifier).newGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(Icons.refresh_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface),
@@ -107,7 +107,7 @@ class BinaryPuzzleScreen extends ConsumerWidget {
                 shadowColor: shadowColor,
                 onTap: isFixed ? null : () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(binaryPuzzleNotifierProvider.notifier).toggleCell(r, c);
+                  ref.read(binaryPuzzleProvider.notifier).toggleCell(r, c);
                 },
                 child: Center(
                   child: cell == null
@@ -134,7 +134,7 @@ class BinaryPuzzleScreen extends ConsumerWidget {
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('binary_puzzle');
+    await ref.read(gameStreakProvider.notifier).completeGame('binary_puzzle');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -147,7 +147,7 @@ class BinaryPuzzleScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(binaryPuzzleNotifierProvider.notifier).newGame();
+          ref.read(binaryPuzzleProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
       ),

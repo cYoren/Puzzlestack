@@ -90,7 +90,7 @@ class NonogramNotifier extends _$NonogramNotifier {
     state = AsyncValue.data(currentState.copyWith(grid: newGrid, isSolved: solved));
 
     if (solved) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('nonogram', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('nonogram', xpAmount: 25);
     }
   }
 }

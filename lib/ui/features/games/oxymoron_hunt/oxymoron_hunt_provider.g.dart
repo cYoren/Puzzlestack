@@ -6,22 +6,58 @@ part of 'oxymoron_hunt_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(OxymoronHuntNotifier)
+final oxymoronHuntProvider = OxymoronHuntNotifierProvider._();
+
+final class OxymoronHuntNotifierProvider
+    extends $NotifierProvider<OxymoronHuntNotifier, OxymoronHuntState> {
+  OxymoronHuntNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'oxymoronHuntProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$oxymoronHuntNotifierHash();
+
+  @$internal
+  @override
+  OxymoronHuntNotifier create() => OxymoronHuntNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(OxymoronHuntState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<OxymoronHuntState>(value),
+    );
+  }
+}
+
 String _$oxymoronHuntNotifierHash() =>
     r'7e9ea8e02079b7d4fdf8aa74e1b540b7babeb0c7';
 
-/// See also [OxymoronHuntNotifier].
-@ProviderFor(OxymoronHuntNotifier)
-final oxymoronHuntNotifierProvider = AutoDisposeNotifierProvider<
-    OxymoronHuntNotifier, OxymoronHuntState>.internal(
-  OxymoronHuntNotifier.new,
-  name: r'oxymoronHuntNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$oxymoronHuntNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$OxymoronHuntNotifier = AutoDisposeNotifier<OxymoronHuntState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$OxymoronHuntNotifier extends $Notifier<OxymoronHuntState> {
+  OxymoronHuntState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<OxymoronHuntState, OxymoronHuntState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<OxymoronHuntState, OxymoronHuntState>,
+              OxymoronHuntState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

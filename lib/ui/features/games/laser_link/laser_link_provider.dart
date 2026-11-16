@@ -134,7 +134,7 @@ class LaserLinkNotifier extends _$LaserLinkNotifier {
     );
 
     if (solved) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('laser_link');
+      ref.read(gameStreakProvider.notifier).completeGame('laser_link');
     }
   }
 }

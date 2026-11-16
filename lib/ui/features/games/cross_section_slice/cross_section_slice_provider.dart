@@ -64,7 +64,7 @@ class CrossSectionSliceNotifier extends _$CrossSectionSliceNotifier {
 
   void startGame() {
     _timer?.cancel();
-    final isTrialMode = ref.read(userDataNotifierProvider).isTrialModeEnabled ?? false;
+    final isTrialMode = ref.read(userDataProvider).isTrialModeEnabled ?? false;
 
     state = CrossSectionSliceState(
       challenge: _engine.generateChallenge(),

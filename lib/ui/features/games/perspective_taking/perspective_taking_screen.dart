@@ -21,7 +21,7 @@ class _PerspectiveTakingScreenState extends ConsumerState<PerspectiveTakingScree
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(perspectiveTakingNotifierProvider.notifier).initGame();
+      ref.read(perspectiveTakingProvider.notifier).initGame();
     });
   }
 
@@ -40,7 +40,7 @@ class _PerspectiveTakingScreenState extends ConsumerState<PerspectiveTakingScree
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(perspectiveTakingNotifierProvider.notifier).initGame();
+          ref.read(perspectiveTakingProvider.notifier).initGame();
         },
       ),
     );
@@ -65,13 +65,13 @@ class _PerspectiveTakingScreenState extends ConsumerState<PerspectiveTakingScree
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(perspectiveTakingNotifierProvider);
-    final notifier = ref.read(perspectiveTakingNotifierProvider.notifier);
+    final state = ref.watch(perspectiveTakingProvider);
+    final notifier = ref.read(perspectiveTakingProvider.notifier);
 
-    ref.listen(perspectiveTakingNotifierProvider, (previous, next) {
+    ref.listen(perspectiveTakingProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('perspective_taking');
+        ref.read(gameStreakProvider.notifier).completeGame('perspective_taking');
         _showCompletionDialog();
       }
     });

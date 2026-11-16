@@ -143,7 +143,7 @@ class _RelationalMemoryScreenState extends ConsumerState<RelationalMemoryScreen>
         });
         _startRound();
       } else {
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('relational_memory', xpAmount: 30);
+        ref.read(gameStreakProvider.notifier).completeGame('relational_memory', xpAmount: 30);
         showDialog(
           context: context,
           barrierDismissible: false,

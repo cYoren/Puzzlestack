@@ -97,7 +97,7 @@ class _SubitizingRushScreenState extends ConsumerState<SubitizingRushScreen> {
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('subitizing_rush');
+        ref.read(gameStreakProvider.notifier).completeGame('subitizing_rush');
         _showEndDialog(isVictory: true);
         return;
       }

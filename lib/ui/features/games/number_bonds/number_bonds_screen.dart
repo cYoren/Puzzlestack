@@ -109,7 +109,7 @@ class _NumberBondsScreenState extends ConsumerState<NumberBondsScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('number_bonds');
+    await ref.read(gameStreakProvider.notifier).completeGame('number_bonds');
     if (!mounted) return;
     showDialog(
       context: context,

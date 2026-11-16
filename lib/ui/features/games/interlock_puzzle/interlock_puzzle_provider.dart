@@ -78,7 +78,7 @@ class InterlockPuzzleNotifier extends _$InterlockPuzzleNotifier {
     );
 
     if (correct) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('interlock_puzzle');
+      ref.read(gameStreakProvider.notifier).completeGame('interlock_puzzle');
     }
   }
 }

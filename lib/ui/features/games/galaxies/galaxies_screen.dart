@@ -23,7 +23,7 @@ class GalaxiesScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('galaxies', xpAmount: 40);
     if (!context.mounted) return;
     await showDialog(
@@ -47,8 +47,8 @@ class GalaxiesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(galaxiesNotifierProvider);
-    final notifier = ref.read(galaxiesNotifierProvider.notifier);
+    final state = ref.watch(galaxiesProvider);
+    final notifier = ref.read(galaxiesProvider.notifier);
 
     return GameScaffold(
       title: l10n.galaxiesTitle,

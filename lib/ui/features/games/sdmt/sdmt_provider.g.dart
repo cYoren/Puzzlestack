@@ -6,20 +6,57 @@ part of 'sdmt_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(SdmtNotifier)
+final sdmtProvider = SdmtNotifierProvider._();
+
+final class SdmtNotifierProvider
+    extends $NotifierProvider<SdmtNotifier, SdmtState> {
+  SdmtNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sdmtProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sdmtNotifierHash();
+
+  @$internal
+  @override
+  SdmtNotifier create() => SdmtNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SdmtState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SdmtState>(value),
+    );
+  }
+}
+
 String _$sdmtNotifierHash() => r'74a2dc8105075c59d5937be6621e307b2222b029';
 
-/// See also [SdmtNotifier].
-@ProviderFor(SdmtNotifier)
-final sdmtNotifierProvider =
-    AutoDisposeNotifierProvider<SdmtNotifier, SdmtState>.internal(
-  SdmtNotifier.new,
-  name: r'sdmtNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$sdmtNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SdmtNotifier = AutoDisposeNotifier<SdmtState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$SdmtNotifier extends $Notifier<SdmtState> {
+  SdmtState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<SdmtState, SdmtState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SdmtState, SdmtState>,
+              SdmtState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

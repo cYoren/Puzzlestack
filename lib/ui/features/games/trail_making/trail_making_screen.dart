@@ -21,14 +21,14 @@ class _TrailMakingScreenState extends ConsumerState<TrailMakingScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(trailMakingNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(trailMakingProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 3;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('trail_making');
+      ref.read(gameStreakProvider.notifier).completeGame('trail_making');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -41,7 +41,7 @@ class _TrailMakingScreenState extends ConsumerState<TrailMakingScreen> {
           title: won ? l10n.trailMakingTitle.toUpperCase() : l10n.gameOver,
           message: AppLocalizations.of(context)!.trailMakingMessage((score).toString()),
           onPlayAgain: () {
-            ref.read(trailMakingNotifierProvider.notifier).initGame();
+            ref.read(trailMakingProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -56,10 +56,10 @@ class _TrailMakingScreenState extends ConsumerState<TrailMakingScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(trailMakingNotifierProvider);
-    final notifier = ref.read(trailMakingNotifierProvider.notifier);
+    final state = ref.watch(trailMakingProvider);
+    final notifier = ref.read(trailMakingProvider.notifier);
 
-    ref.listen(trailMakingNotifierProvider, (previous, next) {
+    ref.listen(trailMakingProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

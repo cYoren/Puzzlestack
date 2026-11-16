@@ -19,20 +19,20 @@ class _PhoneticGuessScreenState extends ConsumerState<PhoneticGuessScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(phoneticGuessNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(phoneticGuessProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('phonetic_guess');
+    ref.read(gameStreakProvider.notifier).completeGame('phonetic_guess');
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.phoneticGuessTitle.toUpperCase(),
-        message: l10n.wordFoundMessage(ref.read(phoneticGuessNotifierProvider).targetWord),
+        message: l10n.wordFoundMessage(ref.read(phoneticGuessProvider).targetWord),
         onPlayAgain: () {
-          ref.read(phoneticGuessNotifierProvider.notifier).initGame();
+          ref.read(phoneticGuessProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -47,10 +47,10 @@ class _PhoneticGuessScreenState extends ConsumerState<PhoneticGuessScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(phoneticGuessNotifierProvider);
-    final notifier = ref.read(phoneticGuessNotifierProvider.notifier);
+    final state = ref.watch(phoneticGuessProvider);
+    final notifier = ref.read(phoneticGuessProvider.notifier);
 
-    ref.listen(phoneticGuessNotifierProvider, (previous, next) {
+    ref.listen(phoneticGuessProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver && next.isGameWon) {
         _showCompletionDialog();
       }

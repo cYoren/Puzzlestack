@@ -6,23 +6,64 @@ part of 'face_trait_association_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$faceTraitAssociationNotifierHash() =>
-    r'4bfe44772e7609828f88bbdde2586d81f1581e5d';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [FaceTraitAssociationNotifier].
 @ProviderFor(FaceTraitAssociationNotifier)
-final faceTraitAssociationNotifierProvider = AutoDisposeNotifierProvider<
-    FaceTraitAssociationNotifier, FaceTraitAssociationState>.internal(
-  FaceTraitAssociationNotifier.new,
-  name: r'faceTraitAssociationNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$faceTraitAssociationNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final faceTraitAssociationProvider = FaceTraitAssociationNotifierProvider._();
 
-typedef _$FaceTraitAssociationNotifier
-    = AutoDisposeNotifier<FaceTraitAssociationState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class FaceTraitAssociationNotifierProvider
+    extends
+        $NotifierProvider<
+          FaceTraitAssociationNotifier,
+          FaceTraitAssociationState
+        > {
+  FaceTraitAssociationNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'faceTraitAssociationProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$faceTraitAssociationNotifierHash();
+
+  @$internal
+  @override
+  FaceTraitAssociationNotifier create() => FaceTraitAssociationNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(FaceTraitAssociationState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<FaceTraitAssociationState>(value),
+    );
+  }
+}
+
+String _$faceTraitAssociationNotifierHash() =>
+    r'991f65790e9ac96c155d2914b85e067d3d90d943';
+
+abstract class _$FaceTraitAssociationNotifier
+    extends $Notifier<FaceTraitAssociationState> {
+  FaceTraitAssociationState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<FaceTraitAssociationState, FaceTraitAssociationState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<FaceTraitAssociationState, FaceTraitAssociationState>,
+              FaceTraitAssociationState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

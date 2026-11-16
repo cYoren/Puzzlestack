@@ -21,13 +21,13 @@ class _MentalMappingScreenState extends ConsumerState<MentalMappingScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(mentalMappingNotifierProvider);
-    final notifier = ref.read(mentalMappingNotifierProvider.notifier);
+    final state = ref.watch(mentalMappingProvider);
+    final notifier = ref.read(mentalMappingProvider.notifier);
 
-    ref.listen(mentalMappingNotifierProvider, (previous, next) {
+    ref.listen(mentalMappingProvider, (previous, next) {
       if (next.status == MentalMappingStatus.success && previous?.status != MentalMappingStatus.success) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('mental_mapping');
+        ref.read(gameStreakProvider.notifier).completeGame('mental_mapping');
         _showResultDialog(true);
       } else if (next.status == MentalMappingStatus.failure && previous?.status != MentalMappingStatus.failure) {
         HapticFeedbackUtil.error();
@@ -238,7 +238,7 @@ class _MentalMappingScreenState extends ConsumerState<MentalMappingScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(mentalMappingNotifierProvider.notifier).nextLevel();
+          ref.read(mentalMappingProvider.notifier).nextLevel();
           Navigator.of(context).pop();
         },
       ),

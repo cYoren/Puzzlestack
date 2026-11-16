@@ -24,7 +24,7 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(fractionMatcherNotifierProvider.notifier).initGame();
+      ref.read(fractionMatcherProvider.notifier).initGame();
     });
   }
 
@@ -34,16 +34,16 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
     } else {
       HapticFeedbackUtil.error();
     }
-    ref.read(fractionMatcherNotifierProvider.notifier).selectOption(index);
+    ref.read(fractionMatcherProvider.notifier).selectOption(index);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(fractionMatcherNotifierProvider);
+    final state = ref.watch(fractionMatcherProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(fractionMatcherNotifierProvider, (previous, next) {
+    ref.listen(fractionMatcherProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -58,7 +58,7 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(fractionMatcherNotifierProvider.notifier).reset();
+              ref.read(fractionMatcherProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -83,7 +83,7 @@ class _FractionMatcherScreenState extends ConsumerState<FractionMatcherScreen> {
       subtitle: L10nGameHelpers.getGameTitle(context, 'fraction_matcher'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(fractionMatcherNotifierProvider.notifier).reset();
+        ref.read(fractionMatcherProvider.notifier).reset();
       },
       body: LayoutBuilder(
         builder: (context, constraints) {

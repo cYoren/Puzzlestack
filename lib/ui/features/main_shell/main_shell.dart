@@ -43,7 +43,7 @@ class _MainShellState extends ConsumerState<MainShell>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(gameStreakNotifierProvider.notifier).refreshStatus();
+      ref.read(gameStreakProvider.notifier).refreshStatus();
     });
     _lastCheckedDate = DateTime.now();
     _dayCheckTimer = Timer.periodic(const Duration(minutes: 1), (_) {
@@ -58,7 +58,7 @@ class _MainShellState extends ConsumerState<MainShell>
     final today = DateTime(now.year, now.month, now.day);
     if (_lastCheckedDate == null || today != _lastCheckedDate) {
       _lastCheckedDate = today;
-      ref.read(gameStreakNotifierProvider.notifier).refreshStatus();
+      ref.read(gameStreakProvider.notifier).refreshStatus();
     }
   }
 
@@ -72,7 +72,7 @@ class _MainShellState extends ConsumerState<MainShell>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      ref.read(gameStreakNotifierProvider.notifier).refreshStatus();
+      ref.read(gameStreakProvider.notifier).refreshStatus();
     }
   }
 

@@ -23,12 +23,12 @@ class _MatrixReasoningScreenState extends ConsumerState<MatrixReasoningScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(matrixReasoningNotifierProvider.notifier).startGame();
+      ref.read(matrixReasoningProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(matrixReasoningNotifierProvider);
+    final state = ref.read(matrixReasoningProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -42,7 +42,7 @@ class _MatrixReasoningScreenState extends ConsumerState<MatrixReasoningScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(matrixReasoningNotifierProvider.notifier).startGame();
+          ref.read(matrixReasoningProvider.notifier).startGame();
         },
       ),
     );
@@ -52,13 +52,13 @@ class _MatrixReasoningScreenState extends ConsumerState<MatrixReasoningScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(matrixReasoningNotifierProvider);
-    final notifier = ref.read(matrixReasoningNotifierProvider.notifier);
+    final state = ref.watch(matrixReasoningProvider);
+    final notifier = ref.read(matrixReasoningProvider.notifier);
 
-    ref.listen(matrixReasoningNotifierProvider, (previous, next) {
+    ref.listen(matrixReasoningProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('matrix_reasoning');
+        ref.read(gameStreakProvider.notifier).completeGame('matrix_reasoning');
         _showCompletionDialog();
       }
       if (next.lastResult != null && next.lastResult != previous?.lastResult) {

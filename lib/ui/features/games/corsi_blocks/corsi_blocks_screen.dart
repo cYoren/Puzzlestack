@@ -20,14 +20,14 @@ class _CorsiBlocksScreenState extends ConsumerState<CorsiBlocksScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(corsiBlocksNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(corsiBlocksProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 5;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('corsi_blocks');
+      ref.read(gameStreakProvider.notifier).completeGame('corsi_blocks');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -36,9 +36,9 @@ class _CorsiBlocksScreenState extends ConsumerState<CorsiBlocksScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: won ? AppLocalizations.of(context)!.corsiBlocksWinTitle : AppLocalizations.of(context)!.corsiBlocksLoseTitle,
-        message: AppLocalizations.of(context)!.corsiBlocksMessage(score, ref.read(corsiBlocksNotifierProvider).currentLength),
+        message: AppLocalizations.of(context)!.corsiBlocksMessage(score, ref.read(corsiBlocksProvider).currentLength),
         onPlayAgain: () {
-          ref.read(corsiBlocksNotifierProvider.notifier).initGame();
+          ref.read(corsiBlocksProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -52,9 +52,9 @@ class _CorsiBlocksScreenState extends ConsumerState<CorsiBlocksScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(corsiBlocksNotifierProvider);
+    final state = ref.watch(corsiBlocksProvider);
 
-    ref.listen(corsiBlocksNotifierProvider, (previous, next) {
+    ref.listen(corsiBlocksProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }
@@ -140,7 +140,7 @@ class _CorsiBlocksScreenState extends ConsumerState<CorsiBlocksScreen> {
                 onTap: () {
                   if (state.phase == CorsiPhase.inputting) {
                     HapticFeedbackUtil.lightImpact();
-                    ref.read(corsiBlocksNotifierProvider.notifier).onBlockTap(index);
+                    ref.read(corsiBlocksProvider.notifier).onBlockTap(index);
                   }
                 },
                 color: isHighlighted 

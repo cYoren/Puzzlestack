@@ -7,7 +7,7 @@ class SuperStreakAction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final streak = ref.watch(userDataNotifierProvider.select((d) => d.superStreak ?? 0));
+    final streak = ref.watch(userDataProvider.select((d) => d.superStreak ?? 0));
     final theme = Theme.of(context);
 
     if (streak == 0) return const SizedBox.shrink();

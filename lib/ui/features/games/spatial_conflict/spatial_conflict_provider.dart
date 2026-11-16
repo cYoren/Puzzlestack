@@ -92,7 +92,7 @@ class SpatialConflictNotifier extends _$SpatialConflictNotifier {
         score: (state.score + scoreChange).clamp(0, 9999),
         errors: state.errors + errorChange,
       );
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('spatial_conflict', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('spatial_conflict', xpAmount: 25);
     } else {
       state = state.copyWith(
         currentTrialIndex: nextIndex,

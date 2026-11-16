@@ -104,7 +104,7 @@ class MemoryMatrixNotifier extends _$MemoryMatrixNotifier {
 
   void completeGame() {
     state = state.copyWith(status: MemoryMatrixStatus.completed, isWon: true);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('memory_matrix', xpAmount: 25);
+    ref.read(gameStreakProvider.notifier).completeGame('memory_matrix', xpAmount: 25);
   }
 
   void reset() {

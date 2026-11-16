@@ -24,13 +24,13 @@ class _SyllableStackScreenState extends ConsumerState<SyllableStackScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(syllableStackNotifierProvider.notifier).startGame();
+      ref.read(syllableStackProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(syllableStackNotifierProvider);
+    final state = ref.read(syllableStackProvider);
     
     showDialog(
       context: context,
@@ -45,7 +45,7 @@ class _SyllableStackScreenState extends ConsumerState<SyllableStackScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(syllableStackNotifierProvider.notifier).startGame();
+          ref.read(syllableStackProvider.notifier).startGame();
         },
       ),
     );
@@ -54,13 +54,13 @@ class _SyllableStackScreenState extends ConsumerState<SyllableStackScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(syllableStackNotifierProvider);
-    final notifier = ref.read(syllableStackNotifierProvider.notifier);
+    final state = ref.watch(syllableStackProvider);
+    final notifier = ref.read(syllableStackProvider.notifier);
 
-    ref.listen(syllableStackNotifierProvider, (previous, next) {
+    ref.listen(syllableStackProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('syllable_stack');
+        ref.read(gameStreakProvider.notifier).completeGame('syllable_stack');
         _showCompletionDialog();
       }
       if (next.lastCheck == true && previous?.lastCheck != true) {

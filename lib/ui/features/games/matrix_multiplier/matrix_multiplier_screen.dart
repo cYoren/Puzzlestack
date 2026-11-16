@@ -107,7 +107,7 @@ class _MatrixMultiplierScreenState extends ConsumerState<MatrixMultiplierScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('matrix_multiplier');
+    await ref.read(gameStreakProvider.notifier).completeGame('matrix_multiplier');
     if (!mounted) return;
     showDialog(
       context: context,

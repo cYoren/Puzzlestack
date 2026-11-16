@@ -78,7 +78,7 @@ class Target10Notifier extends _$Target10Notifier {
           timeLeft: 0,
           isGameOver: true,
         );
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('target_10', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('target_10', xpAmount: 25);
       }
     });
   }
@@ -135,7 +135,7 @@ class Target10Notifier extends _$Target10Notifier {
       if (nextTime == 0) {
         _timer?.cancel();
         state = state.copyWith(isGameOver: true);
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('target_10', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('target_10', xpAmount: 25);
       }
     }
   }

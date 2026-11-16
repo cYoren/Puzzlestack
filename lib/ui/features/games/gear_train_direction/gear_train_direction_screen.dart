@@ -69,7 +69,7 @@ class _GearTrainDirectionScreenState extends ConsumerState<GearTrainDirectionScr
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('gear_train_direction');
+        ref.read(gameStreakProvider.notifier).completeGame('gear_train_direction');
         _showWinDialog();
         return;
       }

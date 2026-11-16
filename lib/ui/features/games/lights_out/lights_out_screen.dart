@@ -24,7 +24,7 @@ class LightsOutScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('lights_out', xpAmount: 25);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class LightsOutScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(lightsOutNotifierProvider);
-    final notifier = ref.read(lightsOutNotifierProvider.notifier);
+    final state = ref.watch(lightsOutProvider);
+    final notifier = ref.read(lightsOutProvider.notifier);
 
     return GameScaffold(
       title: l10n.lightsOutTitle,

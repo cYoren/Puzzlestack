@@ -25,7 +25,7 @@ class CategoryRoomScreen extends ConsumerWidget {
     HapticFeedbackUtil.selectionClick();
     // Tells the result card which shelf the player is browsing, so "next" stays
     // inside this room instead of jumping anywhere.
-    ref.read(gameSessionNotifierProvider.notifier).setSession(
+    ref.read(gameSessionProvider.notifier).setSession(
           gameId: game.id,
           category: categoryId,
           query: '',
@@ -37,7 +37,7 @@ class CategoryRoomScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final CategoryInfo cat = GameCategories.info(categoryId);
     final List<String> hidden = ref.watch(
-        userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
+        userDataProvider.select((d) => d.hiddenGameIds ?? const []));
     final List<GameMetadata> games = GameCategories.inCategory(categoryId)
         .where((g) => !hidden.contains(g.id))
         .toList(growable: false);
@@ -181,7 +181,7 @@ class CategoryRoomScreen extends ConsumerWidget {
 
   Widget _gameTile(BuildContext context, WidgetRef ref, GameMetadata game,
       int position) {
-    final bool isFavorite = ref.watch(userDataNotifierProvider
+    final bool isFavorite = ref.watch(userDataProvider
         .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
     return DeckCard(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
@@ -231,7 +231,7 @@ class CategoryRoomScreen extends ConsumerWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () {
         HapticFeedbackUtil.lightImpact();
-        ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
+        ref.read(userDataProvider.notifier).toggleFavorite(game.id);
       },
       child: Icon(
         isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
@@ -246,7 +246,7 @@ class CategoryRoomScreen extends ConsumerWidget {
   void _hideGame(BuildContext context, WidgetRef ref, GameMetadata game) {
     final l10n = AppLocalizations.of(context)!;
     HapticFeedbackUtil.mediumImpact();
-    ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
+    ref.read(userDataProvider.notifier).toggleHideGame(game.id);
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -255,7 +255,7 @@ class CategoryRoomScreen extends ConsumerWidget {
         action: SnackBarAction(
           label: l10n.undo,
           onPressed: () => ref
-              .read(userDataNotifierProvider.notifier)
+              .read(userDataProvider.notifier)
               .toggleHideGame(game.id),
         ),
         duration: const Duration(seconds: 4),

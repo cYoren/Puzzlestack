@@ -6,22 +6,58 @@ part of 'dual_mirror_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dualMirrorNotifierHash() =>
-    r'6a7479e8ef9d5490691c18f5a7c0acbf1934778f';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [DualMirrorNotifier].
 @ProviderFor(DualMirrorNotifier)
-final dualMirrorNotifierProvider =
-    AutoDisposeNotifierProvider<DualMirrorNotifier, DualMirrorState>.internal(
-  DualMirrorNotifier.new,
-  name: r'dualMirrorNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$dualMirrorNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final dualMirrorProvider = DualMirrorNotifierProvider._();
 
-typedef _$DualMirrorNotifier = AutoDisposeNotifier<DualMirrorState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class DualMirrorNotifierProvider
+    extends $NotifierProvider<DualMirrorNotifier, DualMirrorState> {
+  DualMirrorNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dualMirrorProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dualMirrorNotifierHash();
+
+  @$internal
+  @override
+  DualMirrorNotifier create() => DualMirrorNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DualMirrorState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DualMirrorState>(value),
+    );
+  }
+}
+
+String _$dualMirrorNotifierHash() =>
+    r'597ec22e168f402ab422fb5a91d185d29c6bdbf9';
+
+abstract class _$DualMirrorNotifier extends $Notifier<DualMirrorState> {
+  DualMirrorState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<DualMirrorState, DualMirrorState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<DualMirrorState, DualMirrorState>,
+              DualMirrorState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

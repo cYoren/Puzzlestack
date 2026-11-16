@@ -75,7 +75,7 @@ class _ChalkAndTalkScreenState extends ConsumerState<ChalkAndTalkScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('chalk_and_talk');
+    await ref.read(gameStreakProvider.notifier).completeGame('chalk_and_talk');
     if (!mounted) return;
     showDialog(
       context: context,

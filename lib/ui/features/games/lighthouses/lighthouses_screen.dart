@@ -21,7 +21,7 @@ class _LighthousesScreenState extends ConsumerState<LighthousesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(lighthousesNotifierProvider.notifier).initGame();
+      ref.read(lighthousesProvider.notifier).initGame();
     });
   }
 
@@ -40,7 +40,7 @@ class _LighthousesScreenState extends ConsumerState<LighthousesScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(lighthousesNotifierProvider.notifier).initGame();
+          ref.read(lighthousesProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _LighthousesScreenState extends ConsumerState<LighthousesScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(lighthousesNotifierProvider);
-    final notifier = ref.read(lighthousesNotifierProvider.notifier);
+    final state = ref.watch(lighthousesProvider);
+    final notifier = ref.read(lighthousesProvider.notifier);
 
-    ref.listen(lighthousesNotifierProvider, (previous, next) {
+    ref.listen(lighthousesProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('lighthouses');
+        ref.read(gameStreakProvider.notifier).completeGame('lighthouses');
         _showCompletionDialog();
       }
     });

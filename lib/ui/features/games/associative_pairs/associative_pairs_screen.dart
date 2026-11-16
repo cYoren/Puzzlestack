@@ -62,10 +62,10 @@ class AssociativePairsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(associativePairsNotifierProvider);
+    final state = ref.watch(associativePairsProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(associativePairsNotifierProvider, (previous, next) {
+    ref.listen(associativePairsProvider, (previous, next) {
       if (next.status == AssociativeStatus.completed &&
           previous?.status != AssociativeStatus.completed) {
         HapticFeedbackUtil.victory();
@@ -80,7 +80,7 @@ class AssociativePairsScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(associativePairsNotifierProvider.notifier).reset();
+              ref.read(associativePairsProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -100,7 +100,7 @@ class AssociativePairsScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(associativePairsNotifierProvider.notifier).reset();
+              ref.read(associativePairsProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -120,7 +120,7 @@ class AssociativePairsScreen extends ConsumerWidget {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(associativePairsNotifierProvider.notifier).reset();
+            ref.read(associativePairsProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -260,7 +260,7 @@ class AssociativePairsScreen extends ConsumerWidget {
             TangibleButton(
               onTap: () {
                 HapticFeedbackUtil.success();
-                ref.read(associativePairsNotifierProvider.notifier).startTesting();
+                ref.read(associativePairsProvider.notifier).startTesting();
               },
               color: DesignSystem.primary,
               depth: 3,
@@ -383,7 +383,7 @@ class AssociativePairsScreen extends ConsumerWidget {
                 return TangibleButton(
                   onTap: () {
                     HapticFeedbackUtil.lightImpact();
-                    ref.read(associativePairsNotifierProvider.notifier).answerQuestion(option);
+                    ref.read(associativePairsProvider.notifier).answerQuestion(option);
                   },
                   color: btnColor,
                   depth: depth,

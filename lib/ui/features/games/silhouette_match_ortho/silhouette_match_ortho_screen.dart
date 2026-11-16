@@ -24,7 +24,7 @@ class _SilhouetteMatchOrthoScreenState extends ConsumerState<SilhouetteMatchOrth
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(silhouetteMatchOrthoNotifierProvider.notifier).initGame();
+      ref.read(silhouetteMatchOrthoProvider.notifier).initGame();
     });
   }
 
@@ -83,8 +83,8 @@ class _SilhouetteMatchOrthoScreenState extends ConsumerState<SilhouetteMatchOrth
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(silhouetteMatchOrthoNotifierProvider);
-    final notifier = ref.read(silhouetteMatchOrthoNotifierProvider.notifier);
+    final state = ref.watch(silhouetteMatchOrthoProvider);
+    final notifier = ref.read(silhouetteMatchOrthoProvider.notifier);
     final theme = Theme.of(context);
 
     if (state.isVictory) {

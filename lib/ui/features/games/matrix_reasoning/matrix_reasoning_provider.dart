@@ -64,7 +64,7 @@ class MatrixReasoningNotifier extends _$MatrixReasoningNotifier {
 
   void startGame() {
     _timer?.cancel();
-    final isTrialMode = ref.read(userDataNotifierProvider).isTrialModeEnabled ?? false;
+    final isTrialMode = ref.read(userDataProvider).isTrialModeEnabled ?? false;
 
     state = MatrixReasoningState(
       puzzle: _engine.generatePuzzle(level: 0),

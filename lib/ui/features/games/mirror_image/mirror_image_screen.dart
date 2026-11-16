@@ -18,9 +18,9 @@ class MirrorImageScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(mirrorImageNotifierProvider);
+    final state = ref.watch(mirrorImageProvider);
 
-    ref.listen(mirrorImageNotifierProvider, (previous, next) {
+    ref.listen(mirrorImageProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -109,7 +109,7 @@ class MirrorImageScreen extends ConsumerWidget {
             child: TangibleButton(
               onTap: state.isSolved ? null : () {
                 HapticFeedbackUtil.selectionClick();
-                ref.read(mirrorImageNotifierProvider.notifier).selectOption(index);
+                ref.read(mirrorImageProvider.notifier).selectOption(index);
               },
               color: buttonColor,
               depth: isSelected ? 2.0 : 6.0,
@@ -133,7 +133,7 @@ class MirrorImageScreen extends ConsumerWidget {
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
     // Award XP and update streak
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('mirror_image');
+    await ref.read(gameStreakProvider.notifier).completeGame('mirror_image');
     
     if (!context.mounted) return;
     
@@ -148,7 +148,7 @@ class MirrorImageScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(mirrorImageNotifierProvider.notifier).nextLevel();
+          ref.read(mirrorImageProvider.notifier).nextLevel();
           Navigator.of(context).pop();
         },
       ),

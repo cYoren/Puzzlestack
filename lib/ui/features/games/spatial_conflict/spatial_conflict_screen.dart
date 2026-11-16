@@ -17,12 +17,12 @@ class SpatialConflictScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(spatialConflictNotifierProvider);
-    final notifier = ref.read(spatialConflictNotifierProvider.notifier);
+    final state = ref.watch(spatialConflictProvider);
+    final notifier = ref.read(spatialConflictProvider.notifier);
     final trial = state.currentTrial;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    ref.listen(spatialConflictNotifierProvider, (previous, next) {
+    ref.listen(spatialConflictProvider, (previous, next) {
       if (next.isCompleted && !(previous?.isCompleted ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(

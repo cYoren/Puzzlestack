@@ -6,22 +6,59 @@ part of 'change_blindness_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ChangeBlindnessNotifier)
+final changeBlindnessProvider = ChangeBlindnessNotifierProvider._();
+
+final class ChangeBlindnessNotifierProvider
+    extends $NotifierProvider<ChangeBlindnessNotifier, ChangeBlindnessState> {
+  ChangeBlindnessNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'changeBlindnessProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$changeBlindnessNotifierHash();
+
+  @$internal
+  @override
+  ChangeBlindnessNotifier create() => ChangeBlindnessNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ChangeBlindnessState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ChangeBlindnessState>(value),
+    );
+  }
+}
+
 String _$changeBlindnessNotifierHash() =>
     r'80c1843219692cba5e1bc7aba99932ef5c889458';
 
-/// See also [ChangeBlindnessNotifier].
-@ProviderFor(ChangeBlindnessNotifier)
-final changeBlindnessNotifierProvider = AutoDisposeNotifierProvider<
-    ChangeBlindnessNotifier, ChangeBlindnessState>.internal(
-  ChangeBlindnessNotifier.new,
-  name: r'changeBlindnessNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$changeBlindnessNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$ChangeBlindnessNotifier = AutoDisposeNotifier<ChangeBlindnessState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$ChangeBlindnessNotifier
+    extends $Notifier<ChangeBlindnessState> {
+  ChangeBlindnessState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<ChangeBlindnessState, ChangeBlindnessState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ChangeBlindnessState, ChangeBlindnessState>,
+              ChangeBlindnessState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

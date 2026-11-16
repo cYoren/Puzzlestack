@@ -23,7 +23,7 @@ class _MagicSquaresScreenState extends ConsumerState<MagicSquaresScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(magicSquaresNotifierProvider.notifier).initGame();
+      ref.read(magicSquaresProvider.notifier).initGame();
     });
   }
 
@@ -44,7 +44,7 @@ class _MagicSquaresScreenState extends ConsumerState<MagicSquaresScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(magicSquaresNotifierProvider.notifier).initGame();
+          ref.read(magicSquaresProvider.notifier).initGame();
         },
       ),
     );
@@ -53,14 +53,14 @@ class _MagicSquaresScreenState extends ConsumerState<MagicSquaresScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(magicSquaresNotifierProvider);
-    final notifier = ref.read(magicSquaresNotifierProvider.notifier);
+    final state = ref.watch(magicSquaresProvider);
+    final notifier = ref.read(magicSquaresProvider.notifier);
 
-    ref.listen(magicSquaresNotifierProvider, (previous, next) async {
+    ref.listen(magicSquaresProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isGameWon) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('magic_squares');
+          await ref.read(gameStreakProvider.notifier).completeGame('magic_squares');
         } else {
           HapticFeedbackUtil.vibrate();
         }

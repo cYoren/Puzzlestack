@@ -21,7 +21,7 @@ class _CubeNetFoldScreenState extends ConsumerState<CubeNetFoldScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(cubeNetFoldNotifierProvider.notifier).initGame();
+      ref.read(cubeNetFoldProvider.notifier).initGame();
     });
   }
 
@@ -96,8 +96,8 @@ class _CubeNetFoldScreenState extends ConsumerState<CubeNetFoldScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(cubeNetFoldNotifierProvider);
-    final notifier = ref.read(cubeNetFoldNotifierProvider.notifier);
+    final state = ref.watch(cubeNetFoldProvider);
+    final notifier = ref.read(cubeNetFoldProvider.notifier);
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 

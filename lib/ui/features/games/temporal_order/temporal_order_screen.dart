@@ -52,10 +52,10 @@ class TemporalOrderScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(temporalOrderNotifierProvider);
+    final state = ref.watch(temporalOrderProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(temporalOrderNotifierProvider, (previous, next) {
+    ref.listen(temporalOrderProvider, (previous, next) {
       if (next.status == TemporalOrderStatus.completed &&
           previous?.status != TemporalOrderStatus.completed) {
         HapticFeedbackUtil.victory();
@@ -70,7 +70,7 @@ class TemporalOrderScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(temporalOrderNotifierProvider.notifier).reset();
+              ref.read(temporalOrderProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -90,7 +90,7 @@ class TemporalOrderScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(temporalOrderNotifierProvider.notifier).reset();
+              ref.read(temporalOrderProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -110,7 +110,7 @@ class TemporalOrderScreen extends ConsumerWidget {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(temporalOrderNotifierProvider.notifier).reset();
+            ref.read(temporalOrderProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -299,7 +299,7 @@ Widget _buildOptionCard(WidgetRef ref, TemporalOrderState state, int item, Build
     child: TangibleButton(
       onTap: () {
         HapticFeedbackUtil.lightImpact();
-        ref.read(temporalOrderNotifierProvider.notifier).selectOption(item);
+        ref.read(temporalOrderProvider.notifier).selectOption(item);
       },
       color: cardColor,
       depth: depth,

@@ -23,7 +23,7 @@ class _ComplexFoldingNetsScreenState extends ConsumerState<ComplexFoldingNetsScr
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(complexFoldingNetsNotifierProvider.notifier).initGame();
+      ref.read(complexFoldingNetsProvider.notifier).initGame();
     });
   }
 
@@ -42,7 +42,7 @@ class _ComplexFoldingNetsScreenState extends ConsumerState<ComplexFoldingNetsScr
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(complexFoldingNetsNotifierProvider.notifier).reset();
+          ref.read(complexFoldingNetsProvider.notifier).reset();
         },
       ),
     );
@@ -50,15 +50,15 @@ class _ComplexFoldingNetsScreenState extends ConsumerState<ComplexFoldingNetsScr
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(complexFoldingNetsNotifierProvider);
+    final state = ref.watch(complexFoldingNetsProvider);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(complexFoldingNetsNotifierProvider, (previous, next) {
+    ref.listen(complexFoldingNetsProvider, (previous, next) {
       if ((next.isVictory && !(previous?.isVictory ?? false)) ||
           (next.isFailed && !(previous?.isFailed ?? false))) {
         if (next.isVictory) {
           HapticFeedbackUtil.victory();
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('complex_folding_nets');
+          ref.read(gameStreakProvider.notifier).completeGame('complex_folding_nets');
         } else {
           HapticFeedbackUtil.error();
         }
@@ -77,7 +77,7 @@ class _ComplexFoldingNetsScreenState extends ConsumerState<ComplexFoldingNetsScr
     return GameScaffold(
       title: L10nGameHelpers.getGameTitle(context, 'complex_folding_nets'),
       subtitle: l10n.complexFoldingNetsSubtitle,
-      onReset: () => ref.read(complexFoldingNetsNotifierProvider.notifier).reset(),
+      onReset: () => ref.read(complexFoldingNetsProvider.notifier).reset(),
       body: Column(
         children: [
           Expanded(
@@ -137,7 +137,7 @@ class _ComplexFoldingNetsScreenState extends ConsumerState<ComplexFoldingNetsScr
                 }
 
                 return GestureDetector(
-                  onTap: () => ref.read(complexFoldingNetsNotifierProvider.notifier).selectOption(index),
+                  onTap: () => ref.read(complexFoldingNetsProvider.notifier).selectOption(index),
                   child: Container(
                     decoration: BoxDecoration(
                       color: cardColor,

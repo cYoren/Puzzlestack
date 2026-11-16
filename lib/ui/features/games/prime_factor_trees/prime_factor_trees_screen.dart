@@ -64,7 +64,7 @@ class _PrimeFactorTreesScreenState extends ConsumerState<PrimeFactorTreesScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('prime_factor_trees');
+    await ref.read(gameStreakProvider.notifier).completeGame('prime_factor_trees');
     if (!mounted) return;
     showDialog(
       context: context,

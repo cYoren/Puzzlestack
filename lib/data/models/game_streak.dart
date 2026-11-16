@@ -1,12 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 
 part 'game_streak.freezed.dart';
 part 'game_streak.g.dart';
 
 @freezed
-class GameStreak with _$GameStreak {
+abstract class GameStreak with _$GameStreak {
+  const GameStreak._();
+
+  // hive_ce targets HiveType at classes; freezed needs it on the factory.
+  // ignore: invalid_annotation_target
   @HiveType(typeId: 1, adapterName: 'GameStreakAdapter')
   const factory GameStreak({
     @HiveField(0) required String gameId,

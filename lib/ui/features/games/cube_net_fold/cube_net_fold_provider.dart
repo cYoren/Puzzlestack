@@ -83,7 +83,7 @@ class CubeNetFoldNotifier extends _$CubeNetFoldNotifier {
     
     if (state.selectedIndex == state.correctOptionIndex) {
       state = state.copyWith(isVictory: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('cube_net_fold', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('cube_net_fold', xpAmount: 25);
       return true;
     } else {
       state = state.copyWith(isFailed: true);

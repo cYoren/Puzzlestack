@@ -21,7 +21,7 @@ class _ChoiceReactionTimeScreenState extends ConsumerState<ChoiceReactionTimeScr
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(choiceReactionTimeNotifierProvider.notifier).initGame();
+      ref.read(choiceReactionTimeProvider.notifier).initGame();
     });
   }
 
@@ -43,7 +43,7 @@ class _ChoiceReactionTimeScreenState extends ConsumerState<ChoiceReactionTimeScr
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(choiceReactionTimeNotifierProvider.notifier).initGame();
+          ref.read(choiceReactionTimeProvider.notifier).initGame();
         },
       ),
     );
@@ -53,14 +53,14 @@ class _ChoiceReactionTimeScreenState extends ConsumerState<ChoiceReactionTimeScr
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(choiceReactionTimeNotifierProvider);
-    final notifier = ref.read(choiceReactionTimeNotifierProvider.notifier);
+    final state = ref.watch(choiceReactionTimeProvider);
+    final notifier = ref.read(choiceReactionTimeProvider.notifier);
 
-    ref.listen(choiceReactionTimeNotifierProvider, (previous, next) async {
+    ref.listen(choiceReactionTimeProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.reactionTimes.isNotEmpty) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('choice_reaction_time');
+          await ref.read(gameStreakProvider.notifier).completeGame('choice_reaction_time');
         } else {
           HapticFeedbackUtil.vibrate();
         }

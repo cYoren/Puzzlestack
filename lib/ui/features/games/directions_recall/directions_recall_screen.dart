@@ -154,7 +154,7 @@ class _DirectionsRecallScreenState extends ConsumerState<DirectionsRecallScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('directions_recall');
+    await ref.read(gameStreakProvider.notifier).completeGame('directions_recall');
     if (!mounted) return;
     showDialog(
       context: context,

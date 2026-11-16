@@ -21,13 +21,13 @@ class _EtymonOddballScreenState extends ConsumerState<EtymonOddballScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(etymonOddballNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(etymonOddballProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(etymonOddballNotifierProvider);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('etymon_oddball');
+    final state = ref.read(etymonOddballProvider);
+    ref.read(gameStreakProvider.notifier).completeGame('etymon_oddball');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -35,7 +35,7 @@ class _EtymonOddballScreenState extends ConsumerState<EtymonOddballScreen> {
         title: state.isGameWon ? l10n.wellDone.toUpperCase() : l10n.gameOver.toUpperCase(),
         message: state.description,
         onPlayAgain: () {
-          ref.read(etymonOddballNotifierProvider.notifier).initGame();
+          ref.read(etymonOddballProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -49,10 +49,10 @@ class _EtymonOddballScreenState extends ConsumerState<EtymonOddballScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(etymonOddballNotifierProvider);
-    final notifier = ref.read(etymonOddballNotifierProvider.notifier);
+    final state = ref.watch(etymonOddballProvider);
+    final notifier = ref.read(etymonOddballProvider.notifier);
 
-    ref.listen(etymonOddballNotifierProvider, (previous, next) {
+    ref.listen(etymonOddballProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showCompletionDialog();
       }
@@ -128,5 +128,5 @@ class _EtymonOddballScreenState extends ConsumerState<EtymonOddballScreen> {
     );
   }
 
-  bool get isGameWon => ref.read(etymonOddballNotifierProvider).isGameWon;
+  bool get isGameWon => ref.read(etymonOddballProvider).isGameWon;
 }

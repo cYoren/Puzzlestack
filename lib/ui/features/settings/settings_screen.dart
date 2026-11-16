@@ -49,14 +49,14 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final themeMode = ref.watch(themeNotifierProvider);
+    final themeMode = ref.watch(themeProvider);
     final isTrialModeEnabled = ref.watch(
-        userDataNotifierProvider.select((s) => s.isTrialModeEnabled ?? false));
-    final keepAwake = ref.watch(userDataNotifierProvider
+        userDataProvider.select((s) => s.isTrialModeEnabled ?? false));
+    final keepAwake = ref.watch(userDataProvider
         .select((s) => s.isKeepScreenAwakeEnabled ?? false));
     final hiddenIds = ref.watch(
-        userDataNotifierProvider.select((s) => s.hiddenGameIds ?? const []));
-    final currentLocale = ref.watch(localeNotifierProvider);
+        userDataProvider.select((s) => s.hiddenGameIds ?? const []));
+    final currentLocale = ref.watch(localeProvider);
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -113,7 +113,7 @@ class SettingsScreen extends ConsumerWidget {
                         subtitle: l10n.keepScreenAwakeDescription,
                         value: keepAwake,
                         onChanged: (value) => ref
-                            .read(userDataNotifierProvider.notifier)
+                            .read(userDataProvider.notifier)
                             .setKeepScreenAwake(value),
                       ),
                       if (hiddenIds.isNotEmpty) ...[
@@ -272,7 +272,7 @@ class SettingsScreen extends ConsumerWidget {
       subtitle: l10n.trialModeDescription,
       value: isEnabled,
       onChanged: (value) =>
-          ref.read(userDataNotifierProvider.notifier).setTrialMode(value),
+          ref.read(userDataProvider.notifier).setTrialMode(value),
     );
   }
 
@@ -348,7 +348,7 @@ class SettingsScreen extends ConsumerWidget {
       tooltip: '',
       position: PopupMenuPosition.under,
       onSelected: (code) => ref
-          .read(localeNotifierProvider.notifier)
+          .read(localeProvider.notifier)
           .setLocale(code == _kSystemLocale ? null : Locale(code)),
       itemBuilder: (context) => [
         _buildLanguageMenuItem(context,
@@ -420,7 +420,7 @@ class SettingsScreen extends ConsumerWidget {
                 trailing: IconButton(
                   icon: const Icon(Icons.restore_rounded, size: 20),
                   onPressed: () =>
-                      ref.read(userDataNotifierProvider.notifier).toggleHideGame(id),
+                      ref.read(userDataProvider.notifier).toggleHideGame(id),
                 ),
               );
             },
@@ -452,7 +452,7 @@ class SettingsScreen extends ConsumerWidget {
       AppThemeMode mode, String label, IconData icon, bool isSelected) {
     final Color accent = DesignSystem.accent(context);
     return InkWell(
-      onTap: () => ref.read(themeNotifierProvider.notifier).setThemeMode(mode),
+      onTap: () => ref.read(themeProvider.notifier).setThemeMode(mode),
       child: SizedBox(
         height: 52,
         child: Padding(

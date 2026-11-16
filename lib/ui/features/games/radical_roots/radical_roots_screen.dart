@@ -14,10 +14,10 @@ class RadicalRootsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(radicalRootsNotifierProvider);
-    final notifier = ref.read(radicalRootsNotifierProvider.notifier);
+    final state = ref.watch(radicalRootsProvider);
+    final notifier = ref.read(radicalRootsProvider.notifier);
 
-    ref.listen(radicalRootsNotifierProvider, (previous, next) {
+    ref.listen(radicalRootsProvider, (previous, next) {
       if (next.status == RadicalStatus.gameOver &&
           previous?.status != RadicalStatus.gameOver) {
         final isGoalReached = next.score >= 10;
@@ -40,7 +40,7 @@ class RadicalRootsScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(radicalRootsNotifierProvider.notifier).reset();
+              ref.read(radicalRootsProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),

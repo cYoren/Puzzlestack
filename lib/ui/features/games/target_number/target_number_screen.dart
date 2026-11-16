@@ -23,7 +23,7 @@ class _TargetNumberScreenState extends ConsumerState<TargetNumberScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(targetNumberNotifierProvider.notifier).initGame();
+      ref.read(targetNumberProvider.notifier).initGame();
     });
   }
 
@@ -43,7 +43,7 @@ class _TargetNumberScreenState extends ConsumerState<TargetNumberScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(targetNumberNotifierProvider.notifier).initGame();
+          ref.read(targetNumberProvider.notifier).initGame();
         },
       ),
     );
@@ -52,14 +52,14 @@ class _TargetNumberScreenState extends ConsumerState<TargetNumberScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(targetNumberNotifierProvider);
-    final notifier = ref.read(targetNumberNotifierProvider.notifier);
+    final state = ref.watch(targetNumberProvider);
+    final notifier = ref.read(targetNumberProvider.notifier);
 
-    ref.listen(targetNumberNotifierProvider, (previous, next) async {
+    ref.listen(targetNumberProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isGameWon) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('target_number');
+          await ref.read(gameStreakProvider.notifier).completeGame('target_number');
         } else {
           HapticFeedbackUtil.vibrate();
         }

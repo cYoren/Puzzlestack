@@ -21,13 +21,13 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(affixFactoryNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(affixFactoryProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(affixFactoryNotifierProvider);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('affix_factory');
+    final state = ref.read(affixFactoryProvider);
+    ref.read(gameStreakProvider.notifier).completeGame('affix_factory');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -35,7 +35,7 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
         title: state.isGameWon ? l10n.wellDone.toUpperCase() : l10n.gameOver.toUpperCase(),
         message: state.description,
         onPlayAgain: () {
-          ref.read(affixFactoryNotifierProvider.notifier).initGame();
+          ref.read(affixFactoryProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -49,10 +49,10 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(affixFactoryNotifierProvider);
-    final notifier = ref.read(affixFactoryNotifierProvider.notifier);
+    final state = ref.watch(affixFactoryProvider);
+    final notifier = ref.read(affixFactoryProvider.notifier);
 
-    ref.listen(affixFactoryNotifierProvider, (previous, next) {
+    ref.listen(affixFactoryProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showCompletionDialog();
       }

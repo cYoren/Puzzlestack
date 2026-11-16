@@ -159,7 +159,7 @@ void main() {
       // puzzle is invisible, and the win test would then never be reachable.
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final state = container.read(seismicNotifierProvider);
+      final state = container.read(seismicProvider);
       final shown = state.values.where((v) => v != kSeismicBlank).length;
       expect(shown, state.puzzle.givenCount());
       expect(shown, greaterThan(0));
@@ -168,14 +168,14 @@ void main() {
     test('a board can be finished by playing it', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final notifier = container.read(seismicNotifierProvider.notifier);
-      final puzzle = container.read(seismicNotifierProvider).puzzle;
+      final notifier = container.read(seismicProvider.notifier);
+      final puzzle = container.read(seismicProvider).puzzle;
       for (var cell = 0; cell < puzzle.cellCount; cell++) {
         if (puzzle.given(cell) != kSeismicNoClue) continue;
         notifier.select(cell);
         notifier.enter(puzzle.solution[cell]);
       }
-      expect(container.read(seismicNotifierProvider).isSolved, isTrue);
+      expect(container.read(seismicProvider).isSolved, isTrue);
     });
   });
 }

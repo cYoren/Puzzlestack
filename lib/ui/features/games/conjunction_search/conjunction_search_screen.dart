@@ -110,11 +110,11 @@ class ConjunctionSearchScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(conjunctionSearchNotifierProvider);
-    final notifier = ref.read(conjunctionSearchNotifierProvider.notifier);
+    final state = ref.watch(conjunctionSearchProvider);
+    final notifier = ref.read(conjunctionSearchProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(conjunctionSearchNotifierProvider, (previous, next) {
+    ref.listen(conjunctionSearchProvider, (previous, next) {
       if (next.isCompleted && !(previous?.isCompleted ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(

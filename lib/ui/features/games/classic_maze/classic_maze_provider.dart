@@ -177,7 +177,7 @@ class ClassicMazeNotifier extends _$ClassicMazeNotifier {
     // Check victory
     if (nr == state.exitRow && nc == state.exitCol) {
       state = state.copyWith(isVictory: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('classic_maze', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('classic_maze', xpAmount: 25);
     }
 
     return true;

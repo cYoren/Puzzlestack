@@ -34,7 +34,7 @@ class _OddOneOutScreenState extends ConsumerState<OddOneOutScreen> {
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      ref.read(oddOneOutNotifierProvider.notifier).tick();
+      ref.read(oddOneOutProvider.notifier).tick();
     });
   }
 
@@ -48,9 +48,9 @@ class _OddOneOutScreenState extends ConsumerState<OddOneOutScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(oddOneOutNotifierProvider);
+    final state = ref.watch(oddOneOutProvider);
 
-    ref.listen(oddOneOutNotifierProvider, (previous, next) {
+    ref.listen(oddOneOutProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _timer?.cancel();
@@ -71,7 +71,7 @@ class _OddOneOutScreenState extends ConsumerState<OddOneOutScreen> {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(oddOneOutNotifierProvider.notifier).startGame();
+            ref.read(oddOneOutProvider.notifier).startGame();
             _startTimer();
           },
           padding: const EdgeInsets.all(12),
@@ -193,7 +193,7 @@ class _OddOneOutScreenState extends ConsumerState<OddOneOutScreen> {
               color: color,
               onTap: () {
                 HapticFeedbackUtil.lightImpact();
-                ref.read(oddOneOutNotifierProvider.notifier).pickTile(index);
+                ref.read(oddOneOutProvider.notifier).pickTile(index);
               },
               child: const SizedBox.expand(),
             );
@@ -204,7 +204,7 @@ class _OddOneOutScreenState extends ConsumerState<OddOneOutScreen> {
   }
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('odd_one_out');
+    await ref.read(gameStreakProvider.notifier).completeGame('odd_one_out');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -215,12 +215,12 @@ class _OddOneOutScreenState extends ConsumerState<OddOneOutScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(oddOneOutNotifierProvider.notifier).startGame();
+          ref.read(oddOneOutProvider.notifier).startGame();
           _startTimer();
           Navigator.of(context).pop();
         },
         title: L10nGameHelpers.getGameTitle(context, 'odd_one_out'),
-        message: AppLocalizations.of(context)!.oddOneOutMessage((ref.read(oddOneOutNotifierProvider).score).toString()),
+        message: AppLocalizations.of(context)!.oddOneOutMessage((ref.read(oddOneOutProvider).score).toString()),
       ),
     );
   }
@@ -236,12 +236,12 @@ class _OddOneOutScreenState extends ConsumerState<OddOneOutScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(oddOneOutNotifierProvider.notifier).startGame();
+          ref.read(oddOneOutProvider.notifier).startGame();
           _startTimer();
           Navigator.of(context).pop();
         },
         title: L10nGameHelpers.getGameTitle(context, 'odd_one_out'),
-        message: AppLocalizations.of(context)!.oddOneOutMessage1((ref.read(oddOneOutNotifierProvider).score).toString()),
+        message: AppLocalizations.of(context)!.oddOneOutMessage1((ref.read(oddOneOutProvider).score).toString()),
       ),
     );
   }

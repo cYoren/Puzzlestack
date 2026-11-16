@@ -126,7 +126,7 @@ class _ColorMazeNavScreenState extends ConsumerState<ColorMazeNavScreen> {
   void _onGameComplete() async {
     _colorCycleTimer.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('color_maze_nav');
+    await ref.read(gameStreakProvider.notifier).completeGame('color_maze_nav');
     if (!mounted) return;
     showDialog(
       context: context,

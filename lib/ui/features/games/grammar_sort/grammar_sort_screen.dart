@@ -25,13 +25,13 @@ class _GrammarSortScreenState extends ConsumerState<GrammarSortScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(grammarSortNotifierProvider.notifier).startGame();
+      ref.read(grammarSortProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(grammarSortNotifierProvider);
+    final state = ref.read(grammarSortProvider);
     
     showDialog(
       context: context,
@@ -46,7 +46,7 @@ class _GrammarSortScreenState extends ConsumerState<GrammarSortScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(grammarSortNotifierProvider.notifier).startGame();
+          ref.read(grammarSortProvider.notifier).startGame();
         },
       ),
     );
@@ -55,13 +55,13 @@ class _GrammarSortScreenState extends ConsumerState<GrammarSortScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(grammarSortNotifierProvider);
-    final notifier = ref.read(grammarSortNotifierProvider.notifier);
+    final state = ref.watch(grammarSortProvider);
+    final notifier = ref.read(grammarSortProvider.notifier);
 
-    ref.listen(grammarSortNotifierProvider, (previous, next) {
+    ref.listen(grammarSortProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('grammar_sort');
+        ref.read(gameStreakProvider.notifier).completeGame('grammar_sort');
         _showCompletionDialog();
       }
       if (next.lastCorrect == true && previous?.lastCorrect != true) {

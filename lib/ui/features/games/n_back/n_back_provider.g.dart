@@ -6,21 +6,57 @@ part of 'n_back_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(NBackNotifier)
+final nBackProvider = NBackNotifierProvider._();
+
+final class NBackNotifierProvider
+    extends $NotifierProvider<NBackNotifier, NBackState> {
+  NBackNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'nBackProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$nBackNotifierHash();
+
+  @$internal
+  @override
+  NBackNotifier create() => NBackNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(NBackState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<NBackState>(value),
+    );
+  }
+}
+
 String _$nBackNotifierHash() => r'6f4e4cfa9546830482cf893781387a3b1ca40a97';
 
-/// See also [NBackNotifier].
-@ProviderFor(NBackNotifier)
-final nBackNotifierProvider =
-    AutoDisposeNotifierProvider<NBackNotifier, NBackState>.internal(
-  NBackNotifier.new,
-  name: r'nBackNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$nBackNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$NBackNotifier = AutoDisposeNotifier<NBackState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$NBackNotifier extends $Notifier<NBackState> {
+  NBackState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<NBackState, NBackState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<NBackState, NBackState>,
+              NBackState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

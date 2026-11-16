@@ -21,13 +21,13 @@ class _EtymologyOriginScreenState extends ConsumerState<EtymologyOriginScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(etymologyOriginNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(etymologyOriginProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(etymologyOriginNotifierProvider);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('etymology_origin');
+    final state = ref.read(etymologyOriginProvider);
+    ref.read(gameStreakProvider.notifier).completeGame('etymology_origin');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -35,7 +35,7 @@ class _EtymologyOriginScreenState extends ConsumerState<EtymologyOriginScreen> {
         title: state.isGameWon ? l10n.wellDone.toUpperCase() : l10n.gameOver.toUpperCase(),
         message: state.description,
         onPlayAgain: () {
-          ref.read(etymologyOriginNotifierProvider.notifier).initGame();
+          ref.read(etymologyOriginProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -49,10 +49,10 @@ class _EtymologyOriginScreenState extends ConsumerState<EtymologyOriginScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(etymologyOriginNotifierProvider);
-    final notifier = ref.read(etymologyOriginNotifierProvider.notifier);
+    final state = ref.watch(etymologyOriginProvider);
+    final notifier = ref.read(etymologyOriginProvider.notifier);
 
-    ref.listen(etymologyOriginNotifierProvider, (previous, next) {
+    ref.listen(etymologyOriginProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showCompletionDialog();
       }

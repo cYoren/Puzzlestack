@@ -58,7 +58,7 @@ class _PrimeGapHuntScreenState extends ConsumerState<PrimeGapHuntScreen> {
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('prime_gap_hunt');
+        ref.read(gameStreakProvider.notifier).completeGame('prime_gap_hunt');
         _showWinDialog();
         return;
       }

@@ -16,12 +16,12 @@ class PathFinderScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(pathFinderNotifierProvider);
+    final state = ref.watch(pathFinderProvider);
 
-    ref.listen(pathFinderNotifierProvider, (previous, next) {
+    ref.listen(pathFinderProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('path_finder', xpAmount: 30);
+        ref.read(gameStreakProvider.notifier).completeGame('path_finder', xpAmount: 30);
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -33,7 +33,7 @@ class PathFinderScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(pathFinderNotifierProvider.notifier).reset();
+              ref.read(pathFinderProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -50,7 +50,7 @@ class PathFinderScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(pathFinderNotifierProvider.notifier).reset();
+            ref.read(pathFinderProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -127,7 +127,7 @@ class _PathGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(pathFinderNotifierProvider);
+    final state = ref.watch(pathFinderProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
@@ -143,7 +143,7 @@ class _PathGrid extends ConsumerWidget {
               
               if (x >= 0 && x < 5 && y >= 0 && y < 5) {
                 final point = Point(x.floor(), y.floor());
-                ref.read(pathFinderNotifierProvider.notifier).addNode(point);
+                ref.read(pathFinderProvider.notifier).addNode(point);
               }
             }
 

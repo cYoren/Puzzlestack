@@ -185,7 +185,7 @@ class _CryptoArithmeticScreenState extends ConsumerState<CryptoArithmeticScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('crypto_arithmetic');
+    await ref.read(gameStreakProvider.notifier).completeGame('crypto_arithmetic');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -111,7 +111,7 @@ class AlphabetSudokuNotifier extends _$AlphabetSudokuNotifier {
     state = AsyncValue.data(currentState.copyWith(currentBoard: newBoard, isSolved: solved));
     
     if (solved) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('alphabet_sudoku', xpAmount: 20);
+      ref.read(gameStreakProvider.notifier).completeGame('alphabet_sudoku', xpAmount: 20);
     }
   }
 

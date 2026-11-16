@@ -6,25 +6,70 @@ part of 'locale_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+/// Persists the user-selected app locale (or `null` for system default).
+///
+/// Mirrors the Hive-backed pattern used by [ThemeNotifier].
+
+@ProviderFor(LocaleNotifier)
+final localeProvider = LocaleNotifierProvider._();
+
+/// Persists the user-selected app locale (or `null` for system default).
+///
+/// Mirrors the Hive-backed pattern used by [ThemeNotifier].
+final class LocaleNotifierProvider
+    extends $NotifierProvider<LocaleNotifier, Locale?> {
+  /// Persists the user-selected app locale (or `null` for system default).
+  ///
+  /// Mirrors the Hive-backed pattern used by [ThemeNotifier].
+  LocaleNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'localeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$localeNotifierHash();
+
+  @$internal
+  @override
+  LocaleNotifier create() => LocaleNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Locale? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Locale?>(value),
+    );
+  }
+}
+
 String _$localeNotifierHash() => r'012810658db43e0fe9175e945fa5305ef9836c03';
 
 /// Persists the user-selected app locale (or `null` for system default).
 ///
 /// Mirrors the Hive-backed pattern used by [ThemeNotifier].
-///
-/// Copied from [LocaleNotifier].
-@ProviderFor(LocaleNotifier)
-final localeNotifierProvider =
-    AutoDisposeNotifierProvider<LocaleNotifier, Locale?>.internal(
-  LocaleNotifier.new,
-  name: r'localeNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$localeNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
 
-typedef _$LocaleNotifier = AutoDisposeNotifier<Locale?>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$LocaleNotifier extends $Notifier<Locale?> {
+  Locale? build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<Locale?, Locale?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<Locale?, Locale?>,
+              Locale?,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

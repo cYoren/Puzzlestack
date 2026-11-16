@@ -24,10 +24,10 @@ class _Game2048ScreenState extends ConsumerState<Game2048Screen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(game2048NotifierProvider);
-    final notifier = ref.read(game2048NotifierProvider.notifier);
+    final state = ref.watch(game2048Provider);
+    final notifier = ref.read(game2048Provider.notifier);
 
-    ref.listen(game2048NotifierProvider, (previous, next) {
+    ref.listen(game2048Provider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (_hapticEnabled) HapticFeedbackUtil.heavyImpact();
         _showGameOverDialog(context, ref, next);
@@ -221,7 +221,7 @@ class _Game2048ScreenState extends ConsumerState<Game2048Screen> {
   void _showGameOverDialog(BuildContext context, WidgetRef ref, Game2048State state) async {
     final l10n = AppLocalizations.of(context)!;
     if (state.isGameWon) {
-      await ref.read(gameStreakNotifierProvider.notifier).completeGame('game_2048');
+      await ref.read(gameStreakProvider.notifier).completeGame('game_2048');
 
       if (!context.mounted) return;
 
@@ -234,7 +234,7 @@ class _Game2048ScreenState extends ConsumerState<Game2048Screen> {
             Navigator.of(context).pop();
           },
           onPlayAgain: () {
-            ref.read(game2048NotifierProvider.notifier).reset();
+            ref.read(game2048Provider.notifier).reset();
             Navigator.of(context).pop();
           },
           title: l10n.congrats.toUpperCase(),
@@ -256,7 +256,7 @@ class _Game2048ScreenState extends ConsumerState<Game2048Screen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(game2048NotifierProvider.notifier).reset();
+          ref.read(game2048Provider.notifier).reset();
           Navigator.of(context).pop();
         },
         title: l10n.gameOver.toUpperCase(),

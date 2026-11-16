@@ -21,7 +21,7 @@ class _FillominoScreenState extends ConsumerState<FillominoScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(fillominoNotifierProvider.notifier).initGame();
+      ref.read(fillominoProvider.notifier).initGame();
     });
   }
 
@@ -40,7 +40,7 @@ class _FillominoScreenState extends ConsumerState<FillominoScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(fillominoNotifierProvider.notifier).initGame();
+          ref.read(fillominoProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _FillominoScreenState extends ConsumerState<FillominoScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(fillominoNotifierProvider);
-    final notifier = ref.read(fillominoNotifierProvider.notifier);
+    final state = ref.watch(fillominoProvider);
+    final notifier = ref.read(fillominoProvider.notifier);
 
-    ref.listen(fillominoNotifierProvider, (previous, next) {
+    ref.listen(fillominoProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('fillomino');
+        ref.read(gameStreakProvider.notifier).completeGame('fillomino');
         _showCompletionDialog();
       }
     });

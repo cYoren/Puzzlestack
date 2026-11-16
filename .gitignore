@@ -56,3 +56,7 @@ app.*.map.json
 
 
 
+
+# hive_ce_generator emits this registrar on every build. main.dart registers the
+# two adapters explicitly, so nothing imports it.
+/lib/hive_registrar.g.dart

@@ -97,7 +97,7 @@ class _ModuloClockScreenState extends ConsumerState<ModuloClockScreen> {
 
     if (_correctAnswers >= targetAnswers) {
       _timer?.cancel();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('modulo_clock', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('modulo_clock', xpAmount: 25);
       showDialog(
         context: context,
         barrierDismissible: false,

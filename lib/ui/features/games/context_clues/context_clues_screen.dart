@@ -15,10 +15,10 @@ class ContextCluesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(contextCluesNotifierProvider);
+    final state = ref.watch(contextCluesProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(contextCluesNotifierProvider, (previous, next) {
+    ref.listen(contextCluesProvider, (previous, next) {
       if (next.status == ContextCluesStatus.completed &&
           previous?.status != ContextCluesStatus.completed) {
         HapticFeedbackUtil.victory();
@@ -33,7 +33,7 @@ class ContextCluesScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(contextCluesNotifierProvider.notifier).reset();
+              ref.read(contextCluesProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -53,7 +53,7 @@ class ContextCluesScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(contextCluesNotifierProvider.notifier).reset();
+              ref.read(contextCluesProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -73,7 +73,7 @@ class ContextCluesScreen extends ConsumerWidget {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(contextCluesNotifierProvider.notifier).reset();
+            ref.read(contextCluesProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -198,7 +198,7 @@ class ContextCluesScreen extends ConsumerWidget {
               return TangibleButton(
                 onTap: () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(contextCluesNotifierProvider.notifier).answerQuestion(option);
+                  ref.read(contextCluesProvider.notifier).answerQuestion(option);
                 },
                 color: btnColor,
                 depth: depth,

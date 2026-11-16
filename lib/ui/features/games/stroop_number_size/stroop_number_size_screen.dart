@@ -72,7 +72,7 @@ class _StroopNumberSizeScreenState extends ConsumerState<StroopNumberSizeScreen>
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('stroop_number_size');
+    ref.read(gameStreakProvider.notifier).completeGame('stroop_number_size');
     _showEndDialog();
   }
 

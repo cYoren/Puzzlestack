@@ -128,7 +128,7 @@ class _BinomialMatchScreenState extends ConsumerState<BinomialMatchScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('binomial_match');
+    await ref.read(gameStreakProvider.notifier).completeGame('binomial_match');
     if (!mounted) return;
     showDialog(
       context: context,

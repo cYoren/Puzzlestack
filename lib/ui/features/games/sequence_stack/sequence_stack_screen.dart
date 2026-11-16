@@ -157,7 +157,7 @@ class _SequenceStackScreenState extends ConsumerState<SequenceStackScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('sequence_stack');
+    await ref.read(gameStreakProvider.notifier).completeGame('sequence_stack');
     if (!mounted) return;
     showDialog(
       context: context,

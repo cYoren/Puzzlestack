@@ -22,7 +22,7 @@ class _GoNoGoScreenState extends ConsumerState<GoNoGoScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(goNoGoNotifierProvider.notifier).initGame();
+      ref.read(goNoGoProvider.notifier).initGame();
     });
   }
 
@@ -41,7 +41,7 @@ class _GoNoGoScreenState extends ConsumerState<GoNoGoScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(goNoGoNotifierProvider.notifier).resetGame();
+          ref.read(goNoGoProvider.notifier).resetGame();
         },
       ),
     );
@@ -51,17 +51,17 @@ class _GoNoGoScreenState extends ConsumerState<GoNoGoScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(goNoGoNotifierProvider);
-    final notifier = ref.read(goNoGoNotifierProvider.notifier);
+    final state = ref.watch(goNoGoProvider);
+    final notifier = ref.read(goNoGoProvider.notifier);
 
-    ref.listen(goNoGoNotifierProvider, (previous, next) async {
+    ref.listen(goNoGoProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
         _showCompletionDialog();
       } else if (next.score > (previous?.score ?? 0)) {
         HapticFeedbackUtil.selectionClick();
         if (next.score % 10 == 0) {
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('go_no_go');
+          await ref.read(gameStreakProvider.notifier).completeGame('go_no_go');
         }
       }
     });

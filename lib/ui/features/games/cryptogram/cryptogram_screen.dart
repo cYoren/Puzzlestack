@@ -21,13 +21,13 @@ class _CryptogramScreenState extends ConsumerState<CryptogramScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(cryptogramNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(cryptogramProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(bool won) {
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('cryptogram');
+      ref.read(gameStreakProvider.notifier).completeGame('cryptogram');
     } else {
       HapticFeedbackUtil.error();
     }
@@ -38,7 +38,7 @@ class _CryptogramScreenState extends ConsumerState<CryptogramScreen> {
         title: won ? AppLocalizations.of(context)!.winCodeBroken : AppLocalizations.of(context)!.winDecodedPerfectly,
         message: won ? AppLocalizations.of(context)!.cryptogramSuccess : AppLocalizations.of(context)!.cryptogramTryAgain,
         onPlayAgain: () {
-          ref.read(cryptogramNotifierProvider.notifier).initGame();
+          ref.read(cryptogramProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -53,10 +53,10 @@ class _CryptogramScreenState extends ConsumerState<CryptogramScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(cryptogramNotifierProvider);
-    final notifier = ref.read(cryptogramNotifierProvider.notifier);
+    final state = ref.watch(cryptogramProvider);
+    final notifier = ref.read(cryptogramProvider.notifier);
 
-    ref.listen(cryptogramNotifierProvider, (previous, next) {
+    ref.listen(cryptogramProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.isGameWon);
       }

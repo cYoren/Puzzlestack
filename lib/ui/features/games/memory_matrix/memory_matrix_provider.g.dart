@@ -6,22 +6,58 @@ part of 'memory_matrix_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$memoryMatrixNotifierHash() =>
-    r'01ae525b81741d4b9b1d9d59332fdc0bea5216a7';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [MemoryMatrixNotifier].
 @ProviderFor(MemoryMatrixNotifier)
-final memoryMatrixNotifierProvider = AutoDisposeNotifierProvider<
-    MemoryMatrixNotifier, MemoryMatrixState>.internal(
-  MemoryMatrixNotifier.new,
-  name: r'memoryMatrixNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$memoryMatrixNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final memoryMatrixProvider = MemoryMatrixNotifierProvider._();
 
-typedef _$MemoryMatrixNotifier = AutoDisposeNotifier<MemoryMatrixState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class MemoryMatrixNotifierProvider
+    extends $NotifierProvider<MemoryMatrixNotifier, MemoryMatrixState> {
+  MemoryMatrixNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'memoryMatrixProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$memoryMatrixNotifierHash();
+
+  @$internal
+  @override
+  MemoryMatrixNotifier create() => MemoryMatrixNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MemoryMatrixState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MemoryMatrixState>(value),
+    );
+  }
+}
+
+String _$memoryMatrixNotifierHash() =>
+    r'5f873e271c0035f053f7fed52e59feb31017cf9b';
+
+abstract class _$MemoryMatrixNotifier extends $Notifier<MemoryMatrixState> {
+  MemoryMatrixState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<MemoryMatrixState, MemoryMatrixState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<MemoryMatrixState, MemoryMatrixState>,
+              MemoryMatrixState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

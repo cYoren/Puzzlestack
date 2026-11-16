@@ -98,7 +98,7 @@ class _ContinuousPairedAssociateScreenState extends ConsumerState<ContinuousPair
           setState(() {
             _isGameOver = true;
           });
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('continuous_paired_associate');
+          ref.read(gameStreakProvider.notifier).completeGame('continuous_paired_associate');
           _showEndDialog(isVictory: true);
           return;
         }

@@ -26,7 +26,7 @@ class _ChainReactionScreenState extends ConsumerState<ChainReactionScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(chainReactionNotifierProvider.notifier).startGame();
+      ref.read(chainReactionProvider.notifier).startGame();
     });
   }
 
@@ -38,7 +38,7 @@ class _ChainReactionScreenState extends ConsumerState<ChainReactionScreen> {
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(chainReactionNotifierProvider);
+    final state = ref.read(chainReactionProvider);
     
     showDialog(
       context: context,
@@ -53,7 +53,7 @@ class _ChainReactionScreenState extends ConsumerState<ChainReactionScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(chainReactionNotifierProvider.notifier).startGame();
+          ref.read(chainReactionProvider.notifier).startGame();
         },
       ),
     );
@@ -62,13 +62,13 @@ class _ChainReactionScreenState extends ConsumerState<ChainReactionScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(chainReactionNotifierProvider);
-    final notifier = ref.read(chainReactionNotifierProvider.notifier);
+    final state = ref.watch(chainReactionProvider);
+    final notifier = ref.read(chainReactionProvider.notifier);
 
-    ref.listen(chainReactionNotifierProvider, (previous, next) {
+    ref.listen(chainReactionProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('chain_reaction');
+        ref.read(gameStreakProvider.notifier).completeGame('chain_reaction');
         _showCompletionDialog();
       }
       if (next.chain.length > (previous?.chain.length ?? 0)) {

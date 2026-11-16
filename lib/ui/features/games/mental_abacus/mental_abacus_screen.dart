@@ -23,7 +23,7 @@ class _MentalAbacusScreenState extends ConsumerState<MentalAbacusScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(mentalAbacusNotifierProvider.notifier).initGame();
+      ref.read(mentalAbacusProvider.notifier).initGame();
     });
   }
 
@@ -42,7 +42,7 @@ class _MentalAbacusScreenState extends ConsumerState<MentalAbacusScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(mentalAbacusNotifierProvider.notifier).initGame();
+          ref.read(mentalAbacusProvider.notifier).initGame();
         },
       ),
     );
@@ -52,13 +52,13 @@ class _MentalAbacusScreenState extends ConsumerState<MentalAbacusScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(mentalAbacusNotifierProvider);
-    final notifier = ref.read(mentalAbacusNotifierProvider.notifier);
+    final state = ref.watch(mentalAbacusProvider);
+    final notifier = ref.read(mentalAbacusProvider.notifier);
 
-    ref.listen(mentalAbacusNotifierProvider, (previous, next) {
+    ref.listen(mentalAbacusProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('mental_abacus');
+        ref.read(gameStreakProvider.notifier).completeGame('mental_abacus');
         _showCompletionDialog();
       }
     });

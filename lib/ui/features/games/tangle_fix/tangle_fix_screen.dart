@@ -43,12 +43,12 @@ class _TangleFixScreenState extends ConsumerState<TangleFixScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(tangleFixNotifierProvider);
-    final notifier = ref.read(tangleFixNotifierProvider.notifier);
+    final state = ref.watch(tangleFixProvider);
+    final notifier = ref.read(tangleFixProvider.notifier);
 
-    ref.listen(tangleFixNotifierProvider, (previous, next) async {
+    ref.listen(tangleFixProvider, (previous, next) async {
       if (next.gameCompleted && !(previous?.gameCompleted ?? false)) {
-        await ref.read(gameStreakNotifierProvider.notifier).completeGame('tangle_fix');
+        await ref.read(gameStreakProvider.notifier).completeGame('tangle_fix');
         if (!context.mounted) return;
         _showCompletionDialog();
       }

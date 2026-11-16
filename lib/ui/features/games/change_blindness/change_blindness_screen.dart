@@ -23,8 +23,8 @@ class _ChangeBlindnessScreenState extends ConsumerState<ChangeBlindnessScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final isTrialMode = ref.read(userDataNotifierProvider.select((u) => u.isTrialModeEnabled ?? false));
-      ref.read(changeBlindnessNotifierProvider.notifier).initGame(isTrialMode: isTrialMode);
+      final isTrialMode = ref.read(userDataProvider.select((u) => u.isTrialModeEnabled ?? false));
+      ref.read(changeBlindnessProvider.notifier).initGame(isTrialMode: isTrialMode);
     });
   }
 
@@ -41,8 +41,8 @@ class _ChangeBlindnessScreenState extends ConsumerState<ChangeBlindnessScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          final isTrialMode = ref.read(userDataNotifierProvider.select((u) => u.isTrialModeEnabled ?? false));
-          ref.read(changeBlindnessNotifierProvider.notifier).initGame(isTrialMode: isTrialMode);
+          final isTrialMode = ref.read(userDataProvider.select((u) => u.isTrialModeEnabled ?? false));
+          ref.read(changeBlindnessProvider.notifier).initGame(isTrialMode: isTrialMode);
         },
       ),
     );
@@ -52,9 +52,9 @@ class _ChangeBlindnessScreenState extends ConsumerState<ChangeBlindnessScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(changeBlindnessNotifierProvider);
+    final state = ref.watch(changeBlindnessProvider);
 
-    ref.listen(changeBlindnessNotifierProvider, (previous, next) {
+    ref.listen(changeBlindnessProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         _showCompletionDialog(next);
       }
@@ -64,7 +64,7 @@ class _ChangeBlindnessScreenState extends ConsumerState<ChangeBlindnessScreen> {
       title: l10n.changeBlindnessTitle,
       subtitle: l10n.changeBlindnessSubtitle,
       onHowToPlay: () async {
-        ref.read(changeBlindnessNotifierProvider.notifier).pauseGame();
+        ref.read(changeBlindnessProvider.notifier).pauseGame();
         await showDialog(
           context: context,
           builder: (dialogCtx) => Dialog(
@@ -185,7 +185,7 @@ class _ChangeBlindnessScreenState extends ConsumerState<ChangeBlindnessScreen> {
             ),
           ),
         );
-        ref.read(changeBlindnessNotifierProvider.notifier).resumeGame();
+        ref.read(changeBlindnessProvider.notifier).resumeGame();
       },
       actions: [
         if (!state.isTrialMode)
@@ -374,7 +374,7 @@ class _ChangeBlindnessScreenState extends ConsumerState<ChangeBlindnessScreen> {
                                       HapticFeedbackUtil.error();
                                     }
                                     ref
-                                        .read(changeBlindnessNotifierProvider
+                                        .read(changeBlindnessProvider
                                             .notifier)
                                         .tap(index);
                                   },

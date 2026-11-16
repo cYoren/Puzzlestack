@@ -23,10 +23,10 @@ class _MinesweeperScreenState extends ConsumerState<MinesweeperScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(minesweeperNotifierProvider);
-    final notifier = ref.read(minesweeperNotifierProvider.notifier);
+    final state = ref.watch(minesweeperProvider);
+    final notifier = ref.read(minesweeperProvider.notifier);
 
-    ref.listen(minesweeperNotifierProvider, (previous, next) {
+    ref.listen(minesweeperProvider, (previous, next) {
       if (next.isWon && !(previous?.isWon ?? false)) {
         HapticFeedbackUtil.victory();
         _showGameOverDialog(context, true);
@@ -241,7 +241,7 @@ class _MinesweeperScreenState extends ConsumerState<MinesweeperScreen> {
             Navigator.of(context).pop();
           },
           onPlayAgain: () {
-            ref.read(minesweeperNotifierProvider.notifier).reset();
+            ref.read(minesweeperProvider.notifier).reset();
             Navigator.of(context).pop();
           },
           title: l10n.minesweeperWin.toUpperCase(),
@@ -261,7 +261,7 @@ class _MinesweeperScreenState extends ConsumerState<MinesweeperScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(minesweeperNotifierProvider.notifier).reset();
+          ref.read(minesweeperProvider.notifier).reset();
           Navigator.of(context).pop();
         },
         title: l10n.gameOver.toUpperCase(),
@@ -285,8 +285,8 @@ class MinesweeperCellWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cell = ref.watch(minesweeperNotifierProvider.select((s) => s.board[row][col]));
-    final notifier = ref.read(minesweeperNotifierProvider.notifier);
+    final cell = ref.watch(minesweeperProvider.select((s) => s.board[row][col]));
+    final notifier = ref.read(minesweeperProvider.notifier);
 
     final bool isRevealed = cell.state == CellState.revealed;
     final bool isFlagged = cell.state == CellState.flagged;

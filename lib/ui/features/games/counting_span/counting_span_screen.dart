@@ -22,14 +22,14 @@ class _CountingSpanScreenState extends ConsumerState<CountingSpanScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(countingSpanNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(countingSpanProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 20;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('counting_span');
+      ref.read(gameStreakProvider.notifier).completeGame('counting_span');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -43,7 +43,7 @@ class _CountingSpanScreenState extends ConsumerState<CountingSpanScreen> {
           message: l10n.countingSpanGameOverMessage(score),
           isVictory: won,
           onPlayAgain: () {
-            ref.read(countingSpanNotifierProvider.notifier).initGame();
+            ref.read(countingSpanProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -57,10 +57,10 @@ class _CountingSpanScreenState extends ConsumerState<CountingSpanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(countingSpanNotifierProvider);
-    final notifier = ref.read(countingSpanNotifierProvider.notifier);
+    final state = ref.watch(countingSpanProvider);
+    final notifier = ref.read(countingSpanProvider.notifier);
 
-    ref.listen(countingSpanNotifierProvider, (previous, next) {
+    ref.listen(countingSpanProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

@@ -171,7 +171,7 @@ class DistractorMatrixNotifier extends _$DistractorMatrixNotifier {
       status: DistractorMatrixStatus.completed,
       isWon: true,
     );
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('distractor_matrix', xpAmount: 25);
+    ref.read(gameStreakProvider.notifier).completeGame('distractor_matrix', xpAmount: 25);
   }
 
   void reset() {

@@ -58,7 +58,7 @@ class _VectorDotProductScreenState extends ConsumerState<VectorDotProductScreen>
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('vector_dot_product');
+        ref.read(gameStreakProvider.notifier).completeGame('vector_dot_product');
         _showWinDialog();
         return;
       }

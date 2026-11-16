@@ -6,22 +6,58 @@ part of 'reading_span_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ReadingSpanNotifier)
+final readingSpanProvider = ReadingSpanNotifierProvider._();
+
+final class ReadingSpanNotifierProvider
+    extends $NotifierProvider<ReadingSpanNotifier, ReadingSpanState> {
+  ReadingSpanNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'readingSpanProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$readingSpanNotifierHash();
+
+  @$internal
+  @override
+  ReadingSpanNotifier create() => ReadingSpanNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ReadingSpanState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ReadingSpanState>(value),
+    );
+  }
+}
+
 String _$readingSpanNotifierHash() =>
     r'ba56bb40112e91e71e760ebedd9291f23dd03586';
 
-/// See also [ReadingSpanNotifier].
-@ProviderFor(ReadingSpanNotifier)
-final readingSpanNotifierProvider =
-    AutoDisposeNotifierProvider<ReadingSpanNotifier, ReadingSpanState>.internal(
-  ReadingSpanNotifier.new,
-  name: r'readingSpanNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$readingSpanNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$ReadingSpanNotifier = AutoDisposeNotifier<ReadingSpanState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$ReadingSpanNotifier extends $Notifier<ReadingSpanState> {
+  ReadingSpanState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<ReadingSpanState, ReadingSpanState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ReadingSpanState, ReadingSpanState>,
+              ReadingSpanState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

@@ -22,16 +22,16 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(simonSequenceNotifierProvider.notifier).startSequence());
+    Future.microtask(() => ref.read(simonSequenceProvider.notifier).startSequence());
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(simonSequenceNotifierProvider);
+    final state = ref.watch(simonSequenceProvider);
 
-    ref.listen(simonSequenceNotifierProvider, (previous, next) {
+    ref.listen(simonSequenceProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.heavyImpact();
         _showGameOverDialog(context, ref, next, false);
@@ -82,7 +82,7 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
               _buildGrid(state, constraints.maxHeight * 0.45),
               const Spacer(),
               TangibleButton(
-                onTap: state.isShowingSequence ? () {} : () => ref.read(simonSequenceNotifierProvider.notifier).reset(),
+                onTap: state.isShowingSequence ? () {} : () => ref.read(simonSequenceProvider.notifier).reset(),
                 color: state.isShowingSequence ? colorScheme.outline.withValues(alpha: 0.5) : DesignSystem.primary,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 child: const Text(
@@ -126,7 +126,7 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
                 onTap: () {
                   if (!state.isShowingSequence) {
                     HapticFeedbackUtil.selectionClick();
-                    ref.read(simonSequenceNotifierProvider.notifier).tapTile(index);
+                    ref.read(simonSequenceProvider.notifier).tapTile(index);
                   }
                 },
                 child: TangibleContainer(
@@ -154,7 +154,7 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, SimonSequenceState state, bool won) {
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('simon_sequence', xpAmount: 50);
+      ref.read(gameStreakProvider.notifier).completeGame('simon_sequence', xpAmount: 50);
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -164,7 +164,7 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
             Navigator.of(context).pop();
           },
           onPlayAgain: () {
-            ref.read(simonSequenceNotifierProvider.notifier).reset();
+            ref.read(simonSequenceProvider.notifier).reset();
             Navigator.of(context).pop();
           },
           title: L10nGameHelpers.getGameTitle(context, 'simon_sequence'),
@@ -182,7 +182,7 @@ class _SimonSequenceScreenState extends ConsumerState<SimonSequenceScreen> {
         message: AppLocalizations.of(context)!.simonSequenceMessage1,
         onPlayAgain: () {
           Navigator.pop(context);
-          ref.read(simonSequenceNotifierProvider.notifier).reset();
+          ref.read(simonSequenceProvider.notifier).reset();
         },
         onHome: () {
           Navigator.pop(context);

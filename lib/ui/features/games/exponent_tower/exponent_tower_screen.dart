@@ -88,7 +88,7 @@ class _ExponentTowerScreenState extends ConsumerState<ExponentTowerScreen> {
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('exponent_tower');
+        ref.read(gameStreakProvider.notifier).completeGame('exponent_tower');
         _showWinDialog();
         return;
       }

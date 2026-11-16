@@ -89,7 +89,7 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
   @override
   Widget build(BuildContext context) {
     final keepAwake = ref.watch(
-      userDataNotifierProvider
+      userDataProvider
           .select((u) => u.isKeepScreenAwakeEnabled ?? false),
     );
     _syncWakelock(keepAwake);

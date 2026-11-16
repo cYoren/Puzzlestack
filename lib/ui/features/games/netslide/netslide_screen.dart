@@ -24,7 +24,7 @@ class NetslideScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('netslide', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class NetslideScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(netslideNotifierProvider);
-    final notifier = ref.read(netslideNotifierProvider.notifier);
+    final state = ref.watch(netslideProvider);
+    final notifier = ref.read(netslideProvider.notifier);
 
     return GameScaffold(
       title: l10n.netslideTitle,
@@ -123,7 +123,7 @@ class NetslideScreen extends ConsumerWidget {
                 onMove: (move) {
                   // The screen does not need to know which line slid: the board
                   // computed the move, so applying it is the slide.
-                  ref.read(netslideNotifierProvider.notifier).applyBoardMove(move);
+                  ref.read(netslideProvider.notifier).applyBoardMove(move);
                 },
                 onSolved: () => _onSolved(context, ref, notifier),
               ),

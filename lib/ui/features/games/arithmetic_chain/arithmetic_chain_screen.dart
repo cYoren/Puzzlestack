@@ -21,7 +21,7 @@ class _ArithmeticChainScreenState extends ConsumerState<ArithmeticChainScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(arithmeticChainNotifierProvider.notifier).initGame();
+      ref.read(arithmeticChainProvider.notifier).initGame();
     });
   }
 
@@ -34,7 +34,7 @@ class _ArithmeticChainScreenState extends ConsumerState<ArithmeticChainScreen> {
         title: isVictory ? l10n.arithmeticChainWinTitle : l10n.arithmeticChainLoseTitle,
         message: isVictory 
             ? l10n.arithmeticChainWinMessage 
-            : l10n.arithmeticChainLoseMessage(ref.read(arithmeticChainNotifierProvider).answer.toString()),
+            : l10n.arithmeticChainLoseMessage(ref.read(arithmeticChainProvider).answer.toString()),
         isVictory: isVictory,
         onHome: () {
           Navigator.of(context).pop();
@@ -42,7 +42,7 @@ class _ArithmeticChainScreenState extends ConsumerState<ArithmeticChainScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(arithmeticChainNotifierProvider.notifier).initGame();
+          ref.read(arithmeticChainProvider.notifier).initGame();
         },
       ),
     );
@@ -51,15 +51,15 @@ class _ArithmeticChainScreenState extends ConsumerState<ArithmeticChainScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(arithmeticChainNotifierProvider);
-    final notifier = ref.read(arithmeticChainNotifierProvider.notifier);
+    final state = ref.watch(arithmeticChainProvider);
+    final notifier = ref.read(arithmeticChainProvider.notifier);
 
-    ref.listen(arithmeticChainNotifierProvider, (previous, next) async {
+    ref.listen(arithmeticChainProvider, (previous, next) async {
       if (next.phase == GamePhase.result && previous?.phase != GamePhase.result) {
         final isVictory = int.tryParse(next.userInput) == next.answer;
         if (isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('arithmetic_chain');
+          await ref.read(gameStreakProvider.notifier).completeGame('arithmetic_chain');
         } else {
           HapticFeedbackUtil.vibrate();
         }

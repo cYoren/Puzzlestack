@@ -6,22 +6,58 @@ part of 'dual_coding_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dualCodingNotifierHash() =>
-    r'b6c743b5dc57827d4380830d79290358bb8e126d';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [DualCodingNotifier].
 @ProviderFor(DualCodingNotifier)
-final dualCodingNotifierProvider =
-    AutoDisposeNotifierProvider<DualCodingNotifier, DualCodingState>.internal(
-  DualCodingNotifier.new,
-  name: r'dualCodingNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$dualCodingNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final dualCodingProvider = DualCodingNotifierProvider._();
 
-typedef _$DualCodingNotifier = AutoDisposeNotifier<DualCodingState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class DualCodingNotifierProvider
+    extends $NotifierProvider<DualCodingNotifier, DualCodingState> {
+  DualCodingNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'dualCodingProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$dualCodingNotifierHash();
+
+  @$internal
+  @override
+  DualCodingNotifier create() => DualCodingNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DualCodingState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DualCodingState>(value),
+    );
+  }
+}
+
+String _$dualCodingNotifierHash() =>
+    r'032d2f2528b630fce9455599749da14adf318c7a';
+
+abstract class _$DualCodingNotifier extends $Notifier<DualCodingState> {
+  DualCodingState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<DualCodingState, DualCodingState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<DualCodingState, DualCodingState>,
+              DualCodingState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

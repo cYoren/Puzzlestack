@@ -33,7 +33,7 @@ class _SpellingSprintScreenState extends ConsumerState<SpellingSprintScreen> {
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      ref.read(spellingSprintNotifierProvider.notifier).tick();
+      ref.read(spellingSprintProvider.notifier).tick();
     });
   }
 
@@ -46,9 +46,9 @@ class _SpellingSprintScreenState extends ConsumerState<SpellingSprintScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(spellingSprintNotifierProvider);
+    final state = ref.watch(spellingSprintProvider);
 
-    ref.listen(spellingSprintNotifierProvider, (previous, next) {
+    ref.listen(spellingSprintProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _timer?.cancel();
@@ -213,7 +213,7 @@ class _SpellingSprintScreenState extends ConsumerState<SpellingSprintScreen> {
               child: TangibleButton(
                 onTap: () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(spellingSprintNotifierProvider.notifier).addLetter(index);
+                  ref.read(spellingSprintProvider.notifier).addLetter(index);
                 },
                 color: Theme.of(context).colorScheme.surface,
                 shadowColor: Theme.of(context).colorScheme.outline,
@@ -240,7 +240,7 @@ class _SpellingSprintScreenState extends ConsumerState<SpellingSprintScreen> {
   }
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('spelling_sprint');
+    await ref.read(gameStreakProvider.notifier).completeGame('spelling_sprint');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -253,7 +253,7 @@ class _SpellingSprintScreenState extends ConsumerState<SpellingSprintScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(spellingSprintNotifierProvider.notifier).startGame();
+          ref.read(spellingSprintProvider.notifier).startGame();
           _startTimer();
           Navigator.of(context).pop();
         },
@@ -268,13 +268,13 @@ class _SpellingSprintScreenState extends ConsumerState<SpellingSprintScreen> {
       builder: (context) => GameCompletionDialog(
         isVictory: false,
         title: L10nGameHelpers.getGameTitle(context, 'spelling_sprint'),
-        message: AppLocalizations.of(context)!.spellingSprintMessage1((ref.read(spellingSprintNotifierProvider).score).toString()),
+        message: AppLocalizations.of(context)!.spellingSprintMessage1((ref.read(spellingSprintProvider).score).toString()),
         onHome: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(spellingSprintNotifierProvider.notifier).startGame();
+          ref.read(spellingSprintProvider.notifier).startGame();
           _startTimer();
           Navigator.of(context).pop();
         },

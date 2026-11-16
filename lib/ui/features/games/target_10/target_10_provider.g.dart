@@ -6,21 +6,57 @@ part of 'target_10_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$target10NotifierHash() => r'95e96ffc36cec79d32003ac4bb6e09f1ef0c9aea';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [Target10Notifier].
 @ProviderFor(Target10Notifier)
-final target10NotifierProvider =
-    AutoDisposeNotifierProvider<Target10Notifier, Target10State>.internal(
-  Target10Notifier.new,
-  name: r'target10NotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$target10NotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final target10Provider = Target10NotifierProvider._();
 
-typedef _$Target10Notifier = AutoDisposeNotifier<Target10State>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class Target10NotifierProvider
+    extends $NotifierProvider<Target10Notifier, Target10State> {
+  Target10NotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'target10Provider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$target10NotifierHash();
+
+  @$internal
+  @override
+  Target10Notifier create() => Target10Notifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Target10State value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Target10State>(value),
+    );
+  }
+}
+
+String _$target10NotifierHash() => r'881661c239da345276b66a682dbe66b7cd3c9f9f';
+
+abstract class _$Target10Notifier extends $Notifier<Target10State> {
+  Target10State build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<Target10State, Target10State>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<Target10State, Target10State>,
+              Target10State,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

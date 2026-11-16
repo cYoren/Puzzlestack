@@ -27,7 +27,7 @@ class _SemanticDistanceScreenState extends ConsumerState<SemanticDistanceScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(semanticDistanceNotifierProvider.notifier).startGame();
+      ref.read(semanticDistanceProvider.notifier).startGame();
     });
   }
 
@@ -65,7 +65,7 @@ class _SemanticDistanceScreenState extends ConsumerState<SemanticDistanceScreen>
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(semanticDistanceNotifierProvider);
+    final state = ref.read(semanticDistanceProvider);
     final isVictory = state.guesses.any((g) => g.distance == 0);
     
     showDialog(
@@ -83,7 +83,7 @@ class _SemanticDistanceScreenState extends ConsumerState<SemanticDistanceScreen>
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(semanticDistanceNotifierProvider.notifier).startGame();
+          ref.read(semanticDistanceProvider.notifier).startGame();
         },
       ),
     );
@@ -94,18 +94,18 @@ class _SemanticDistanceScreenState extends ConsumerState<SemanticDistanceScreen>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
-    final state = ref.watch(semanticDistanceNotifierProvider);
-    final notifier = ref.read(semanticDistanceNotifierProvider.notifier);
+    final state = ref.watch(semanticDistanceProvider);
+    final notifier = ref.read(semanticDistanceProvider.notifier);
     final bestGuess = state.guesses.isNotEmpty ? state.guesses.first : null;
 
-    ref.listen(semanticDistanceNotifierProvider, (previous, next) {
+    ref.listen(semanticDistanceProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.guesses.any((g) => g.distance == 0)) {
           HapticFeedbackUtil.victory();
         } else {
           HapticFeedbackUtil.vibrate();
         }
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('semantic_distance');
+        ref.read(gameStreakProvider.notifier).completeGame('semantic_distance');
         _showCompletionDialog();
       }
     });

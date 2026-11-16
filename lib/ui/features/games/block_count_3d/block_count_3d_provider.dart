@@ -93,7 +93,7 @@ class BlockCount3DNotifier extends _$BlockCount3DNotifier {
     
     if (state.currentGuess == state.totalBlocks) {
       state = state.copyWith(isVictory: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('block_count_3d', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('block_count_3d', xpAmount: 25);
     }
   }
 

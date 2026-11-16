@@ -154,7 +154,7 @@ class TemporalOrderNotifier extends _$TemporalOrderNotifier {
       status: TemporalOrderStatus.completed,
       isWon: true,
     );
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('temporal_order', xpAmount: 25);
+    ref.read(gameStreakProvider.notifier).completeGame('temporal_order', xpAmount: 25);
   }
 
   void reset() {

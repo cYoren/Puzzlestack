@@ -58,7 +58,7 @@ class _PythagoreanTripleBuilderScreenState extends ConsumerState<PythagoreanTrip
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('pythagorean_triple_builder');
+        ref.read(gameStreakProvider.notifier).completeGame('pythagorean_triple_builder');
         _showWinDialog();
         return;
       }

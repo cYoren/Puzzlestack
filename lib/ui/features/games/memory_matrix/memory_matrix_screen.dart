@@ -16,9 +16,9 @@ class MemoryMatrixScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(memoryMatrixNotifierProvider);
+    final state = ref.watch(memoryMatrixProvider);
 
-    ref.listen(memoryMatrixNotifierProvider, (previous, next) {
+    ref.listen(memoryMatrixProvider, (previous, next) {
       if (next.status == MemoryMatrixStatus.completed && 
           previous?.status != MemoryMatrixStatus.completed) {
         HapticFeedbackUtil.victory();
@@ -33,7 +33,7 @@ class MemoryMatrixScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(memoryMatrixNotifierProvider.notifier).reset();
+              ref.read(memoryMatrixProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -52,7 +52,7 @@ class MemoryMatrixScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(memoryMatrixNotifierProvider.notifier).reset();
+              ref.read(memoryMatrixProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -72,7 +72,7 @@ class MemoryMatrixScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(memoryMatrixNotifierProvider.notifier).reset();
+            ref.read(memoryMatrixProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -199,7 +199,7 @@ class MemoryMatrixScreen extends ConsumerWidget {
       color: tileColor,
       onTap: () {
         HapticFeedbackUtil.lightImpact();
-        ref.read(memoryMatrixNotifierProvider.notifier).selectTile(index);
+        ref.read(memoryMatrixProvider.notifier).selectTile(index);
       },
       child: const SizedBox.expand(),
     );

@@ -6,20 +6,57 @@ part of 'map_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(MapNotifier)
+final mapProvider = MapNotifierProvider._();
+
+final class MapNotifierProvider
+    extends $NotifierProvider<MapNotifier, MapState> {
+  MapNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mapProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mapNotifierHash();
+
+  @$internal
+  @override
+  MapNotifier create() => MapNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MapState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MapState>(value),
+    );
+  }
+}
+
 String _$mapNotifierHash() => r'72503194a4b50e0a5c60cc315862249c8dfda989';
 
-/// See also [MapNotifier].
-@ProviderFor(MapNotifier)
-final mapNotifierProvider =
-    AutoDisposeNotifierProvider<MapNotifier, MapState>.internal(
-  MapNotifier.new,
-  name: r'mapNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$mapNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$MapNotifier = AutoDisposeNotifier<MapState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$MapNotifier extends $Notifier<MapState> {
+  MapState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<MapState, MapState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<MapState, MapState>,
+              MapState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

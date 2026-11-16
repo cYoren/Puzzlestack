@@ -6,21 +6,57 @@ part of 'seismic_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$seismicNotifierHash() => r'a7c1f4d59b2f1c8e6a3f0d74b95e18c2d3a4f607';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SeismicNotifier].
 @ProviderFor(SeismicNotifier)
-final seismicNotifierProvider =
-    AutoDisposeNotifierProvider<SeismicNotifier, SeismicState>.internal(
-  SeismicNotifier.new,
-  name: r'seismicNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$seismicNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final seismicProvider = SeismicNotifierProvider._();
 
-typedef _$SeismicNotifier = AutoDisposeNotifier<SeismicState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class SeismicNotifierProvider
+    extends $NotifierProvider<SeismicNotifier, SeismicState> {
+  SeismicNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'seismicProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$seismicNotifierHash();
+
+  @$internal
+  @override
+  SeismicNotifier create() => SeismicNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SeismicState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SeismicState>(value),
+    );
+  }
+}
+
+String _$seismicNotifierHash() => r'79fff5b211406cee156101cd682e4b6c2b46acbf';
+
+abstract class _$SeismicNotifier extends $Notifier<SeismicState> {
+  SeismicState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<SeismicState, SeismicState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SeismicState, SeismicState>,
+              SeismicState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

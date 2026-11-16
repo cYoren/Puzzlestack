@@ -58,7 +58,7 @@ class _BinaryMatrixRankScreenState extends ConsumerState<BinaryMatrixRankScreen>
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('binary_matrix_rank');
+        ref.read(gameStreakProvider.notifier).completeGame('binary_matrix_rank');
         _showWinDialog();
         return;
       }

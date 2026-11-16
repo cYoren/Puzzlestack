@@ -24,13 +24,13 @@ class _VowelReconstructScreenState extends ConsumerState<VowelReconstructScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(vowelReconstructNotifierProvider.notifier).startGame();
+      ref.read(vowelReconstructProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(vowelReconstructNotifierProvider);
+    final state = ref.read(vowelReconstructProvider);
     
     showDialog(
       context: context,
@@ -45,7 +45,7 @@ class _VowelReconstructScreenState extends ConsumerState<VowelReconstructScreen>
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(vowelReconstructNotifierProvider.notifier).startGame();
+          ref.read(vowelReconstructProvider.notifier).startGame();
         },
       ),
     );
@@ -54,13 +54,13 @@ class _VowelReconstructScreenState extends ConsumerState<VowelReconstructScreen>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(vowelReconstructNotifierProvider);
-    final notifier = ref.read(vowelReconstructNotifierProvider.notifier);
+    final state = ref.watch(vowelReconstructProvider);
+    final notifier = ref.read(vowelReconstructProvider.notifier);
 
-    ref.listen(vowelReconstructNotifierProvider, (previous, next) {
+    ref.listen(vowelReconstructProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('vowel_reconstruct');
+        ref.read(gameStreakProvider.notifier).completeGame('vowel_reconstruct');
         _showCompletionDialog();
       }
       if (next.lastCheck == true && previous?.lastCheck != true) {

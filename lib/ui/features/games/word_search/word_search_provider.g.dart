@@ -6,22 +6,58 @@ part of 'word_search_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(WordSearchNotifier)
+final wordSearchProvider = WordSearchNotifierProvider._();
+
+final class WordSearchNotifierProvider
+    extends $NotifierProvider<WordSearchNotifier, WordSearchState> {
+  WordSearchNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'wordSearchProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$wordSearchNotifierHash();
+
+  @$internal
+  @override
+  WordSearchNotifier create() => WordSearchNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WordSearchState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WordSearchState>(value),
+    );
+  }
+}
+
 String _$wordSearchNotifierHash() =>
     r'2f89636820015dcc3d78857ad06a4605b7f82160';
 
-/// See also [WordSearchNotifier].
-@ProviderFor(WordSearchNotifier)
-final wordSearchNotifierProvider =
-    AutoDisposeNotifierProvider<WordSearchNotifier, WordSearchState>.internal(
-  WordSearchNotifier.new,
-  name: r'wordSearchNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$wordSearchNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$WordSearchNotifier = AutoDisposeNotifier<WordSearchState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$WordSearchNotifier extends $Notifier<WordSearchState> {
+  WordSearchState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<WordSearchState, WordSearchState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<WordSearchState, WordSearchState>,
+              WordSearchState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

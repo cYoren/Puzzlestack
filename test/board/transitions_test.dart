@@ -76,7 +76,7 @@ void main() {
   test('a twiddle turn animates and paints every frame', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    final state = container.read(twiddleNotifierProvider);
+    final state = container.read(twiddleProvider);
     final board = TwiddleBoard(state: state);
 
     for (final cell in board.cells) {
@@ -94,14 +94,14 @@ void main() {
     final container = ProviderContainer();
     addTearDown(container.dispose);
 
-    final twiddleState = container.read(twiddleNotifierProvider);
+    final twiddleState = container.read(twiddleProvider);
     final twiddleBoard = TwiddleBoard(state: twiddleState);
     final hinted = twiddleState.copyWith(
       hint: const TwiddleMove(0, 0, true),
     );
     expect(twiddleBoard.transitionFor(twiddleState, hinted), isNull);
 
-    final netState = container.read(netslideNotifierProvider);
+    final netState = container.read(netslideProvider);
     final netBoard = NetslideBoard(state: netState);
     final netHinted = netState.copyWith(
       hint: (row: true, index: 0, forward: true),
@@ -112,7 +112,7 @@ void main() {
   test('a netslide slide animates and paints every frame', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    final state = container.read(netslideNotifierProvider);
+    final state = container.read(netslideProvider);
     final board = NetslideBoard(state: state);
 
     for (final cell in board.cells) {
@@ -129,7 +129,7 @@ void main() {
   test('a cube roll animates and paints every frame', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    final state = container.read(cubeNotifierProvider);
+    final state = container.read(cubeProvider);
     final board = CubeBoard(state: state);
     final cell = state.position.cell;
     final moves = board.movesFor(
@@ -144,7 +144,7 @@ void main() {
   test('an inertia slide animates and paints every frame', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    final state = container.read(inertiaNotifierProvider);
+    final state = container.read(inertiaProvider);
     final board = InertiaBoard(state: state);
     final ball = state.position.cell;
     final moves = board.movesFor(

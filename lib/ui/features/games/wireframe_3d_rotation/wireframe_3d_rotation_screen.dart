@@ -59,7 +59,7 @@ class _Wireframe3DRotationScreenState extends ConsumerState<Wireframe3DRotationS
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('wireframe_3d_rotation');
+        ref.read(gameStreakProvider.notifier).completeGame('wireframe_3d_rotation');
         _showWinDialog();
         return;
       }

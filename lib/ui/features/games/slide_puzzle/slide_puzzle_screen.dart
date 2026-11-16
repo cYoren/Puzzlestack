@@ -16,9 +16,9 @@ class SlidePuzzleScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(slidePuzzleNotifierProvider);
+    final state = ref.watch(slidePuzzleProvider);
 
-    ref.listen(slidePuzzleNotifierProvider, (previous, next) {
+    ref.listen(slidePuzzleProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -50,7 +50,7 @@ class SlidePuzzleScreen extends ConsumerWidget {
                   child: TangibleButton(
                     onTap: () {
                       HapticFeedbackUtil.mediumImpact();
-                      ref.read(slidePuzzleNotifierProvider.notifier).newGame();
+                      ref.read(slidePuzzleProvider.notifier).newGame();
                     },
                     child: Text(l10n.slidePuzzleNewGame),
                   ),
@@ -127,7 +127,7 @@ class SlidePuzzleScreen extends ConsumerWidget {
             return GestureDetector(
               onTap: () {
                 HapticFeedbackUtil.selectionClick();
-                ref.read(slidePuzzleNotifierProvider.notifier).moveTile(index);
+                ref.read(slidePuzzleProvider.notifier).moveTile(index);
               },
               child: TangibleContainer(
                 radius: DesignSystem.radiusXS,
@@ -155,7 +155,7 @@ class SlidePuzzleScreen extends ConsumerWidget {
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('slide_puzzle');
+    await ref.read(gameStreakProvider.notifier).completeGame('slide_puzzle');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -166,7 +166,7 @@ class SlidePuzzleScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(slidePuzzleNotifierProvider.notifier).newGame();
+          ref.read(slidePuzzleProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
         title: l10n.congrats.toUpperCase(),

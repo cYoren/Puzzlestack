@@ -23,7 +23,7 @@ class _NegativeSpaceDetectionScreenState extends ConsumerState<NegativeSpaceDete
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(negativeSpaceDetectionNotifierProvider.notifier).initGame();
+      ref.read(negativeSpaceDetectionProvider.notifier).initGame();
     });
   }
 
@@ -42,7 +42,7 @@ class _NegativeSpaceDetectionScreenState extends ConsumerState<NegativeSpaceDete
         },
         onPlayAgain: () {
           Navigator.of(dialogCtx).pop();
-          ref.read(negativeSpaceDetectionNotifierProvider.notifier).initGame();
+          ref.read(negativeSpaceDetectionProvider.notifier).initGame();
         },
       ),
     );
@@ -52,13 +52,13 @@ class _NegativeSpaceDetectionScreenState extends ConsumerState<NegativeSpaceDete
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(negativeSpaceDetectionNotifierProvider);
-    final notifier = ref.read(negativeSpaceDetectionNotifierProvider.notifier);
+    final state = ref.watch(negativeSpaceDetectionProvider);
+    final notifier = ref.read(negativeSpaceDetectionProvider.notifier);
 
-    ref.listen(negativeSpaceDetectionNotifierProvider, (previous, next) {
+    ref.listen(negativeSpaceDetectionProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('negative_space_detection');
+        ref.read(gameStreakProvider.notifier).completeGame('negative_space_detection');
         Future.delayed(const Duration(milliseconds: 500), () {
           if (mounted) _showCompletionDialog(true);
         });

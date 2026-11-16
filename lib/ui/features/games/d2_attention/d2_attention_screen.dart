@@ -17,11 +17,11 @@ class D2AttentionScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(d2AttentionNotifierProvider);
-    final notifier = ref.read(d2AttentionNotifierProvider.notifier);
+    final state = ref.watch(d2AttentionProvider);
+    final notifier = ref.read(d2AttentionProvider.notifier);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    ref.listen(d2AttentionNotifierProvider, (previous, next) {
+    ref.listen(d2AttentionProvider, (previous, next) {
       if (next.isCompleted && !(previous?.isCompleted ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(

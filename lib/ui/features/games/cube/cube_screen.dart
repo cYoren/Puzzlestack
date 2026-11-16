@@ -24,7 +24,7 @@ class CubeScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('cube', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class CubeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(cubeNotifierProvider);
-    final notifier = ref.read(cubeNotifierProvider.notifier);
+    final state = ref.watch(cubeProvider);
+    final notifier = ref.read(cubeProvider.notifier);
 
     return GameScaffold(
       title: l10n.cubeTitle,

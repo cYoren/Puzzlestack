@@ -21,10 +21,10 @@ class SchulteTableScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(schulteTableNotifierProvider);
-    final notifier = ref.read(schulteTableNotifierProvider.notifier);
+    final state = ref.watch(schulteTableProvider);
+    final notifier = ref.read(schulteTableProvider.notifier);
 
-    ref.listen(schulteTableNotifierProvider, (previous, next) {
+    ref.listen(schulteTableProvider, (previous, next) {
       if (next.status == SchulteStatus.completed && 
           previous?.status != SchulteStatus.completed) {
         HapticFeedbackUtil.victory();
@@ -39,7 +39,7 @@ class SchulteTableScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(schulteTableNotifierProvider.notifier).reset();
+              ref.read(schulteTableProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),

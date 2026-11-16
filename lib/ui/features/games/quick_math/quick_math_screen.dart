@@ -20,14 +20,14 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(quickMathNotifierProvider.notifier).initGame());
+        () => ref.read(quickMathProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 5;
     final l10n = AppLocalizations.of(context)!;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('quick_math');
+      ref.read(gameStreakProvider.notifier).completeGame('quick_math');
     }
     showDialog(
       context: context,
@@ -36,7 +36,7 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
         title: won ? l10n.winMathGenius : l10n.loseTimeUp,
         message: AppLocalizations.of(context)!.quickMathMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(quickMathNotifierProvider.notifier).initGame();
+          ref.read(quickMathProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -51,10 +51,10 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(quickMathNotifierProvider);
-    final notifier = ref.read(quickMathNotifierProvider.notifier);
+    final state = ref.watch(quickMathProvider);
+    final notifier = ref.read(quickMathProvider.notifier);
 
-    ref.listen(quickMathNotifierProvider, (previous, next) {
+    ref.listen(quickMathProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

@@ -216,7 +216,7 @@ class _WordGridConnectionScreenState extends ConsumerState<WordGridConnectionScr
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('word_grid_connection');
+    await ref.read(gameStreakProvider.notifier).completeGame('word_grid_connection');
     if (!mounted) return;
     showDialog(
       context: context,

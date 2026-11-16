@@ -22,7 +22,7 @@ class _BaseShiftScreenState extends ConsumerState<BaseShiftScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(baseShiftNotifierProvider.notifier).initGame();
+      ref.read(baseShiftProvider.notifier).initGame();
     });
   }
 
@@ -34,11 +34,11 @@ class _BaseShiftScreenState extends ConsumerState<BaseShiftScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(baseShiftNotifierProvider);
+    final state = ref.watch(baseShiftProvider);
     final colorScheme = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(baseShiftNotifierProvider, (previous, next) {
+    ref.listen(baseShiftProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -52,7 +52,7 @@ class _BaseShiftScreenState extends ConsumerState<BaseShiftScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(baseShiftNotifierProvider.notifier).reset();
+              ref.read(baseShiftProvider.notifier).reset();
               _controller.clear();
               Navigator.of(context).pop();
             },
@@ -78,7 +78,7 @@ class _BaseShiftScreenState extends ConsumerState<BaseShiftScreen> {
       subtitle: l10n.baseShiftSubtitle,
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(baseShiftNotifierProvider.notifier).reset();
+        ref.read(baseShiftProvider.notifier).reset();
       },
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(DesignSystem.spaceLG),
@@ -115,7 +115,7 @@ class _BaseShiftScreenState extends ConsumerState<BaseShiftScreen> {
               ),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              onSubmitted: (val) => ref.read(baseShiftNotifierProvider.notifier).submitAnswer(val),
+              onSubmitted: (val) => ref.read(baseShiftProvider.notifier).submitAnswer(val),
             ),
             const SizedBox(height: DesignSystem.spaceLG),
             if (state.message != null)
@@ -129,7 +129,7 @@ class _BaseShiftScreenState extends ConsumerState<BaseShiftScreen> {
               ),
             const SizedBox(height: DesignSystem.spaceLG),
             TangibleButton(
-              onTap: () => ref.read(baseShiftNotifierProvider.notifier).submitAnswer(_controller.text),
+              onTap: () => ref.read(baseShiftProvider.notifier).submitAnswer(_controller.text),
               color: colorScheme.primary,
               child: Text(l10n.baseShiftSubmit, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             ),

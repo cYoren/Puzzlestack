@@ -22,7 +22,7 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(towerOfLondonNotifierProvider.notifier).initGame();
+      ref.read(towerOfLondonProvider.notifier).initGame();
     });
   }
 
@@ -43,7 +43,7 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(towerOfLondonNotifierProvider.notifier).initGame();
+          ref.read(towerOfLondonProvider.notifier).initGame();
         },
       ),
     );
@@ -53,14 +53,14 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(towerOfLondonNotifierProvider);
-    final notifier = ref.read(towerOfLondonNotifierProvider.notifier);
+    final state = ref.watch(towerOfLondonProvider);
+    final notifier = ref.read(towerOfLondonProvider.notifier);
 
-    ref.listen(towerOfLondonNotifierProvider, (previous, next) async {
+    ref.listen(towerOfLondonProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('tower_of_london');
+          await ref.read(gameStreakProvider.notifier).completeGame('tower_of_london');
         } else {
           HapticFeedbackUtil.vibrate();
         }

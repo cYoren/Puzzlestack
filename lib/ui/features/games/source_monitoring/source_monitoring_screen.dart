@@ -23,16 +23,16 @@ class _SourceMonitoringScreenState extends ConsumerState<SourceMonitoringScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(sourceMonitoringNotifierProvider.notifier).initGame();
+      ref.read(sourceMonitoringProvider.notifier).initGame();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(sourceMonitoringNotifierProvider);
+    final state = ref.watch(sourceMonitoringProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(sourceMonitoringNotifierProvider, (previous, next) {
+    ref.listen(sourceMonitoringProvider, (previous, next) {
       if (next.phase == SourceMonitoringPhase.complete && previous?.phase != SourceMonitoringPhase.complete) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -46,7 +46,7 @@ class _SourceMonitoringScreenState extends ConsumerState<SourceMonitoringScreen>
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(sourceMonitoringNotifierProvider.notifier).reset();
+              ref.read(sourceMonitoringProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -93,7 +93,7 @@ class _SourceMonitoringScreenState extends ConsumerState<SourceMonitoringScreen>
             Padding(
               padding: const EdgeInsets.all(DesignSystem.spaceLG),
               child: TangibleButton(
-                onTap: () => ref.read(sourceMonitoringNotifierProvider.notifier).startRecall(),
+                onTap: () => ref.read(sourceMonitoringProvider.notifier).startRecall(),
                 color: colorScheme.primary,
                 child: Text(AppLocalizations.of(context)!.sourceMonitoringText, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
@@ -149,7 +149,7 @@ class _SourceButton extends ConsumerWidget {
     return TangibleButton(
       onTap: () {
         HapticFeedbackUtil.lightImpact();
-        ref.read(sourceMonitoringNotifierProvider.notifier).submitAnswer(name);
+        ref.read(sourceMonitoringProvider.notifier).submitAnswer(name);
       },
       color: color.withValues(alpha: 0.1),
       child: Text(name, style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 18)),

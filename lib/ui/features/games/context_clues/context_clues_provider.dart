@@ -109,7 +109,7 @@ class ContextCluesNotifier extends _$ContextCluesNotifier {
       isWon: true,
     );
     // Adjust XP for one-shot game
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('context_clues', xpAmount: 10);
+    ref.read(gameStreakProvider.notifier).completeGame('context_clues', xpAmount: 10);
   }
 
   void reset() {

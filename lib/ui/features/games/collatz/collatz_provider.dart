@@ -69,7 +69,7 @@ class CollatzNotifier extends _$CollatzNotifier {
 
     if (next == 1) {
       state = state.copyWith(isGameOver: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('collatz', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('collatz', xpAmount: 25);
     }
   }
 

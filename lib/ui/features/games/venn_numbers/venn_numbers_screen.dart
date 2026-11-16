@@ -21,14 +21,14 @@ class _VennNumbersScreenState extends ConsumerState<VennNumbersScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(vennNumbersNotifierProvider.notifier).initGame());
+        () => ref.read(vennNumbersProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     final l10n = AppLocalizations.of(context)!;
     final won = score >= 5;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('venn_numbers');
+      ref.read(gameStreakProvider.notifier).completeGame('venn_numbers');
     }
     showDialog(
       context: context,
@@ -37,7 +37,7 @@ class _VennNumbersScreenState extends ConsumerState<VennNumbersScreen> {
         title: won ? 'VENN MASTER!' : l10n.timeUp.toUpperCase(),
         message: AppLocalizations.of(context)!.vennNumbersMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(vennNumbersNotifierProvider.notifier).initGame();
+          ref.read(vennNumbersProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -52,10 +52,10 @@ class _VennNumbersScreenState extends ConsumerState<VennNumbersScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(vennNumbersNotifierProvider);
-    final notifier = ref.read(vennNumbersNotifierProvider.notifier);
+    final state = ref.watch(vennNumbersProvider);
+    final notifier = ref.read(vennNumbersProvider.notifier);
 
-    ref.listen(vennNumbersNotifierProvider, (previous, next) {
+    ref.listen(vennNumbersProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

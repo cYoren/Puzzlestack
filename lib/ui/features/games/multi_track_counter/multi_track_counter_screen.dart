@@ -103,7 +103,7 @@ class _MultiTrackCounterScreenState extends ConsumerState<MultiTrackCounterScree
   void _onGameComplete() async {
     _gameTimer.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('multi_track_counter');
+    await ref.read(gameStreakProvider.notifier).completeGame('multi_track_counter');
     if (!mounted) return;
     showDialog(
       context: context,

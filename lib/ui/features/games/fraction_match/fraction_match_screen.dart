@@ -22,7 +22,7 @@ class _FractionMatchScreenState extends ConsumerState<FractionMatchScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(fractionMatchNotifierProvider.notifier).initGame();
+      ref.read(fractionMatchProvider.notifier).initGame();
     });
   }
 
@@ -33,7 +33,7 @@ class _FractionMatchScreenState extends ConsumerState<FractionMatchScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.fractionMatchLoseTitle,
-        message: l10n.fractionMatchLoseMessage(ref.read(fractionMatchNotifierProvider).correctAnswer),
+        message: l10n.fractionMatchLoseMessage(ref.read(fractionMatchProvider).correctAnswer),
         isVictory: false,
         onHome: () {
           Navigator.of(context).pop();
@@ -41,7 +41,7 @@ class _FractionMatchScreenState extends ConsumerState<FractionMatchScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(fractionMatchNotifierProvider.notifier).resetGame();
+          ref.read(fractionMatchProvider.notifier).resetGame();
         },
       ),
     );
@@ -51,17 +51,17 @@ class _FractionMatchScreenState extends ConsumerState<FractionMatchScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(fractionMatchNotifierProvider);
-    final notifier = ref.read(fractionMatchNotifierProvider.notifier);
+    final state = ref.watch(fractionMatchProvider);
+    final notifier = ref.read(fractionMatchProvider.notifier);
 
-    ref.listen(fractionMatchNotifierProvider, (previous, next) async {
+    ref.listen(fractionMatchProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
         _showCompletionDialog();
       } else if (next.score > (previous?.score ?? 0)) {
         HapticFeedbackUtil.selectionClick();
         if (next.score % 5 == 0) {
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('fraction_match');
+          await ref.read(gameStreakProvider.notifier).completeGame('fraction_match');
         }
       }
     });

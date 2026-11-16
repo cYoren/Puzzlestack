@@ -6,21 +6,57 @@ part of 'trace_path_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(TracePathNotifier)
+final tracePathProvider = TracePathNotifierProvider._();
+
+final class TracePathNotifierProvider
+    extends $NotifierProvider<TracePathNotifier, TracePathState> {
+  TracePathNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'tracePathProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$tracePathNotifierHash();
+
+  @$internal
+  @override
+  TracePathNotifier create() => TracePathNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(TracePathState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<TracePathState>(value),
+    );
+  }
+}
+
 String _$tracePathNotifierHash() => r'277e919bb2f032ae28f38c444c5bd51d60852283';
 
-/// See also [TracePathNotifier].
-@ProviderFor(TracePathNotifier)
-final tracePathNotifierProvider =
-    AutoDisposeNotifierProvider<TracePathNotifier, TracePathState>.internal(
-  TracePathNotifier.new,
-  name: r'tracePathNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$tracePathNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$TracePathNotifier = AutoDisposeNotifier<TracePathState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$TracePathNotifier extends $Notifier<TracePathState> {
+  TracePathState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<TracePathState, TracePathState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<TracePathState, TracePathState>,
+              TracePathState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

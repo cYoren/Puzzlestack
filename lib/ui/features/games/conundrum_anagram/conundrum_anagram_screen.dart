@@ -82,7 +82,7 @@ class _ConundrumAnagramScreenState extends ConsumerState<ConundrumAnagramScreen>
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('conundrum_anagram');
+        ref.read(gameStreakProvider.notifier).completeGame('conundrum_anagram');
         _showWinDialog();
         return;
       }

@@ -21,7 +21,7 @@ class MathraxScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('mathrax', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -45,8 +45,8 @@ class MathraxScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(mathraxNotifierProvider);
-    final notifier = ref.read(mathraxNotifierProvider.notifier);
+    final state = ref.watch(mathraxProvider);
+    final notifier = ref.read(mathraxProvider.notifier);
 
     return BoardGameScaffold(
       title: l10n.mathraxTitle,

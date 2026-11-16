@@ -22,14 +22,14 @@ class _FibonacciMergeScreenState extends ConsumerState<FibonacciMergeScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(fibonacciMergeNotifierProvider.notifier).initGame());
+        () => ref.read(fibonacciMergeProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(FibonacciMergeState state) {
     final l10n = AppLocalizations.of(context)!;
     bool won = state.isGameWon;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('fibonacci_merge');
+      ref.read(gameStreakProvider.notifier).completeGame('fibonacci_merge');
     }
     showDialog(
       context: context,
@@ -38,7 +38,7 @@ class _FibonacciMergeScreenState extends ConsumerState<FibonacciMergeScreen> {
         title: won ? 'FIBONACCI MASTER!' : l10n.gameOver.toUpperCase(),
         message: AppLocalizations.of(context)!.fibonacciMergeMessage((l10n.score).toString(), (state.score).toString()),
         onPlayAgain: () {
-          ref.read(fibonacciMergeNotifierProvider.notifier).initGame();
+          ref.read(fibonacciMergeProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -53,10 +53,10 @@ class _FibonacciMergeScreenState extends ConsumerState<FibonacciMergeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(fibonacciMergeNotifierProvider);
-    final notifier = ref.read(fibonacciMergeNotifierProvider.notifier);
+    final state = ref.watch(fibonacciMergeProvider);
+    final notifier = ref.read(fibonacciMergeProvider.notifier);
 
-    ref.listen(fibonacciMergeNotifierProvider, (previous, next) {
+    ref.listen(fibonacciMergeProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         HapticFeedbackUtil.heavyImpact();
         _showGameOverDialog(next);

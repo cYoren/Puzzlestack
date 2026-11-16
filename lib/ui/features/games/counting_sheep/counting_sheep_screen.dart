@@ -27,7 +27,7 @@ class _CountingSheepScreenState extends ConsumerState<CountingSheepScreen> {
 
   void _showGameOverDialog(bool success, int correctCount) {
     if (success) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('counting_sheep');
+      ref.read(gameStreakProvider.notifier).completeGame('counting_sheep');
     }
     showDialog(
       context: context,
@@ -38,7 +38,7 @@ class _CountingSheepScreenState extends ConsumerState<CountingSheepScreen> {
           ? 'You counted all $correctCount sheep!' 
           : 'There were actually $correctCount sheep.',
         onPlayAgain: () {
-          ref.read(countingSheepNotifierProvider.notifier).reset();
+          ref.read(countingSheepProvider.notifier).reset();
           Navigator.pop(context);
         },
         onHome: () {
@@ -52,10 +52,10 @@ class _CountingSheepScreenState extends ConsumerState<CountingSheepScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(countingSheepNotifierProvider);
-    final notifier = ref.read(countingSheepNotifierProvider.notifier);
+    final state = ref.watch(countingSheepProvider);
+    final notifier = ref.read(countingSheepProvider.notifier);
 
-    ref.listen(countingSheepNotifierProvider, (previous, next) {
+    ref.listen(countingSheepProvider, (previous, next) {
       if ((next.status == CountingSheepStatus.success || next.status == CountingSheepStatus.failure) &&
           (previous?.status != CountingSheepStatus.success && previous?.status != CountingSheepStatus.failure)) {
         _showGameOverDialog(next.status == CountingSheepStatus.success, next.correctCount);

@@ -21,13 +21,13 @@ class _SternbergTaskScreenState extends ConsumerState<SternbergTaskScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(sternbergTaskNotifierProvider.notifier).initGame();
+      ref.read(sternbergTaskProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final score = ref.read(sternbergTaskNotifierProvider).score;
+    final score = ref.read(sternbergTaskProvider).score;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,7 +41,7 @@ class _SternbergTaskScreenState extends ConsumerState<SternbergTaskScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(sternbergTaskNotifierProvider.notifier).initGame();
+          ref.read(sternbergTaskProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _SternbergTaskScreenState extends ConsumerState<SternbergTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(sternbergTaskNotifierProvider);
-    final notifier = ref.read(sternbergTaskNotifierProvider.notifier);
+    final state = ref.watch(sternbergTaskProvider);
+    final notifier = ref.read(sternbergTaskProvider.notifier);
 
-    ref.listen(sternbergTaskNotifierProvider, (previous, next) {
+    ref.listen(sternbergTaskProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('sternberg_task');
+        ref.read(gameStreakProvider.notifier).completeGame('sternberg_task');
         _showCompletionDialog();
       }
     });

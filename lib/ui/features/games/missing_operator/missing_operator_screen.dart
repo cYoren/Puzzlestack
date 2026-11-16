@@ -25,7 +25,7 @@ class _MissingOperatorScreenState extends ConsumerState<MissingOperatorScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(missingOperatorNotifierProvider.notifier).initGame();
+      ref.read(missingOperatorProvider.notifier).initGame();
     });
   }
 
@@ -39,7 +39,7 @@ class _MissingOperatorScreenState extends ConsumerState<MissingOperatorScreen> {
           title: isVictory ? l10n.missingOperatorTitle.toUpperCase() : l10n.gameOver,
           message: isVictory 
               ? 'You found the correct operators!' 
-              : 'That set of operators didn\'t equal ${ref.read(missingOperatorNotifierProvider).problem?.result}.',
+              : 'That set of operators didn\'t equal ${ref.read(missingOperatorProvider).problem?.result}.',
           isVictory: isVictory,
           onHome: () {
             Navigator.of(context).pop();
@@ -48,7 +48,7 @@ class _MissingOperatorScreenState extends ConsumerState<MissingOperatorScreen> {
           onPlayAgain: () {
             Navigator.of(context).pop();
             setState(() => selectedSlot = null);
-            ref.read(missingOperatorNotifierProvider.notifier).initGame();
+            ref.read(missingOperatorProvider.notifier).initGame();
           },
         );
       },
@@ -57,14 +57,14 @@ class _MissingOperatorScreenState extends ConsumerState<MissingOperatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(missingOperatorNotifierProvider);
-    final notifier = ref.read(missingOperatorNotifierProvider.notifier);
+    final state = ref.watch(missingOperatorProvider);
+    final notifier = ref.read(missingOperatorProvider.notifier);
 
-    ref.listen(missingOperatorNotifierProvider, (previous, next) async {
+    ref.listen(missingOperatorProvider, (previous, next) async {
       if (next.isGameOver && previous?.isGameOver != true) {
         if (next.isLastAnswerCorrect == true) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('missing_operator');
+          await ref.read(gameStreakProvider.notifier).completeGame('missing_operator');
         } else {
           HapticFeedbackUtil.vibrate();
         }

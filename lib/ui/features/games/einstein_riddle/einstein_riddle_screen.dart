@@ -21,7 +21,7 @@ class _EinsteinRiddleScreenState extends ConsumerState<EinsteinRiddleScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(einsteinRiddleNotifierProvider.notifier).initGame();
+      ref.read(einsteinRiddleProvider.notifier).initGame();
     });
   }
 
@@ -40,7 +40,7 @@ class _EinsteinRiddleScreenState extends ConsumerState<EinsteinRiddleScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(einsteinRiddleNotifierProvider.notifier).initGame();
+          ref.read(einsteinRiddleProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _EinsteinRiddleScreenState extends ConsumerState<EinsteinRiddleScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(einsteinRiddleNotifierProvider);
-    final notifier = ref.read(einsteinRiddleNotifierProvider.notifier);
+    final state = ref.watch(einsteinRiddleProvider);
+    final notifier = ref.read(einsteinRiddleProvider.notifier);
 
-    ref.listen(einsteinRiddleNotifierProvider, (previous, next) {
+    ref.listen(einsteinRiddleProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('einstein_riddle');
+        ref.read(gameStreakProvider.notifier).completeGame('einstein_riddle');
         _showCompletionDialog();
       }
     });

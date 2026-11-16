@@ -78,7 +78,7 @@ class FractionMatcherNotifier extends _$FractionMatcherNotifier {
           timeLeft: 0,
           isGameOver: true,
         );
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('fraction_matcher', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('fraction_matcher', xpAmount: 25);
       }
     });
   }
@@ -101,7 +101,7 @@ class FractionMatcherNotifier extends _$FractionMatcherNotifier {
         isGameOver: true,
         lastAnswerCorrect: isCorrect,
       );
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('fraction_matcher', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('fraction_matcher', xpAmount: 25);
       return;
     }
 

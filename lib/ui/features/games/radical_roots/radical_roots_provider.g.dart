@@ -6,22 +6,58 @@ part of 'radical_roots_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$radicalRootsNotifierHash() =>
-    r'6810bd1f149982d9fae4c9b31fbf600af4105696';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [RadicalRootsNotifier].
 @ProviderFor(RadicalRootsNotifier)
-final radicalRootsNotifierProvider = AutoDisposeNotifierProvider<
-    RadicalRootsNotifier, RadicalRootsState>.internal(
-  RadicalRootsNotifier.new,
-  name: r'radicalRootsNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$radicalRootsNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final radicalRootsProvider = RadicalRootsNotifierProvider._();
 
-typedef _$RadicalRootsNotifier = AutoDisposeNotifier<RadicalRootsState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class RadicalRootsNotifierProvider
+    extends $NotifierProvider<RadicalRootsNotifier, RadicalRootsState> {
+  RadicalRootsNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'radicalRootsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$radicalRootsNotifierHash();
+
+  @$internal
+  @override
+  RadicalRootsNotifier create() => RadicalRootsNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(RadicalRootsState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<RadicalRootsState>(value),
+    );
+  }
+}
+
+String _$radicalRootsNotifierHash() =>
+    r'534d2c09d28e713e10d9d7f1b00cb6d346ee57ea';
+
+abstract class _$RadicalRootsNotifier extends $Notifier<RadicalRootsState> {
+  RadicalRootsState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<RadicalRootsState, RadicalRootsState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<RadicalRootsState, RadicalRootsState>,
+              RadicalRootsState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

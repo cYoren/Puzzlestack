@@ -20,13 +20,13 @@ class _LetterCancellationScreenState extends ConsumerState<LetterCancellationScr
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(letterCancellationNotifierProvider.notifier).initGame();
+      ref.read(letterCancellationProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog(AppLocalizations l10n) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(letterCancellationNotifierProvider);
+    final state = ref.read(letterCancellationProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -40,7 +40,7 @@ class _LetterCancellationScreenState extends ConsumerState<LetterCancellationScr
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(letterCancellationNotifierProvider.notifier).initGame();
+          ref.read(letterCancellationProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _LetterCancellationScreenState extends ConsumerState<LetterCancellationScr
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(letterCancellationNotifierProvider);
-    final notifier = ref.read(letterCancellationNotifierProvider.notifier);
+    final state = ref.watch(letterCancellationProvider);
+    final notifier = ref.read(letterCancellationProvider.notifier);
 
-    ref.listen(letterCancellationNotifierProvider, (previous, next) async {
+    ref.listen(letterCancellationProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
-        await ref.read(gameStreakNotifierProvider.notifier).completeGame('letter_cancellation');
+        await ref.read(gameStreakProvider.notifier).completeGame('letter_cancellation');
         if (!context.mounted) return;
         _showCompletionDialog(l10n);
       }

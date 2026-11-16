@@ -124,7 +124,7 @@ class _PolyominoTilingScreenState extends ConsumerState<PolyominoTilingScreen> {
       setState(() {
         _isCompleted = true;
       });
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('polyomino_tiling');
+      ref.read(gameStreakProvider.notifier).completeGame('polyomino_tiling');
       _showWinDialog();
     }
   }

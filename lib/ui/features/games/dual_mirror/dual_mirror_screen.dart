@@ -22,16 +22,16 @@ class _DualMirrorScreenState extends ConsumerState<DualMirrorScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(dualMirrorNotifierProvider.notifier).initGame();
+      ref.read(dualMirrorProvider.notifier).initGame();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(dualMirrorNotifierProvider);
+    final state = ref.watch(dualMirrorProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(dualMirrorNotifierProvider, (previous, next) {
+    ref.listen(dualMirrorProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -45,7 +45,7 @@ class _DualMirrorScreenState extends ConsumerState<DualMirrorScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(dualMirrorNotifierProvider.notifier).reset();
+              ref.read(dualMirrorProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -66,7 +66,7 @@ class _DualMirrorScreenState extends ConsumerState<DualMirrorScreen> {
       subtitle: L10nGameHelpers.getGameTitle(context, 'dual_mirror'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(dualMirrorNotifierProvider.notifier).reset();
+        ref.read(dualMirrorProvider.notifier).reset();
       },
       body: Column(
         children: [
@@ -164,7 +164,7 @@ class _DirectionButton extends ConsumerWidget {
     return TangibleButton(
       onTap: () {
         HapticFeedbackUtil.lightImpact();
-        ref.read(dualMirrorNotifierProvider.notifier).move(direction);
+        ref.read(dualMirrorProvider.notifier).move(direction);
       },
       child: Icon(icon),
     );

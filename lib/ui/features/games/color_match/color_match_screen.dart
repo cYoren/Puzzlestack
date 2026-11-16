@@ -17,9 +17,9 @@ class ColorMatchScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(colorMatchNotifierProvider);
+    final state = ref.watch(colorMatchProvider);
 
-    ref.listen(colorMatchNotifierProvider, (previous, next) {
+    ref.listen(colorMatchProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         _showGameOverDialog(context, ref, next);
@@ -35,7 +35,7 @@ class ColorMatchScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(colorMatchNotifierProvider.notifier).reset();
+            ref.read(colorMatchProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(Icons.refresh_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface),
@@ -68,16 +68,16 @@ class ColorMatchScreen extends ConsumerWidget {
                   depth: 4.0,
                   child: Column(
                     children: [
-                      _buildSlider(context, l10n.red.toUpperCase(), (state.currentColor.r * 255.0).round().toDouble(), (v) => ref.read(colorMatchNotifierProvider.notifier).updateColor(v, (state.currentColor.g * 255.0).round().toDouble(), (state.currentColor.b * 255.0).round().toDouble()), DesignSystem.error),
+                      _buildSlider(context, l10n.red.toUpperCase(), (state.currentColor.r * 255.0).round().toDouble(), (v) => ref.read(colorMatchProvider.notifier).updateColor(v, (state.currentColor.g * 255.0).round().toDouble(), (state.currentColor.b * 255.0).round().toDouble()), DesignSystem.error),
                       const SizedBox(height: DesignSystem.spaceSM),
-                      _buildSlider(context, l10n.green.toUpperCase(), (state.currentColor.g * 255.0).round().toDouble(), (v) => ref.read(colorMatchNotifierProvider.notifier).updateColor((state.currentColor.r * 255.0).round().toDouble(), v, (state.currentColor.b * 255.0).round().toDouble()), DesignSystem.accentEmerald),
+                      _buildSlider(context, l10n.green.toUpperCase(), (state.currentColor.g * 255.0).round().toDouble(), (v) => ref.read(colorMatchProvider.notifier).updateColor((state.currentColor.r * 255.0).round().toDouble(), v, (state.currentColor.b * 255.0).round().toDouble()), DesignSystem.accentEmerald),
                       const SizedBox(height: DesignSystem.spaceSM),
-                      _buildSlider(context, l10n.blue.toUpperCase(), (state.currentColor.b * 255.0).round().toDouble(), (v) => ref.read(colorMatchNotifierProvider.notifier).updateColor((state.currentColor.r * 255.0).round().toDouble(), (state.currentColor.g * 255.0).round().toDouble(), v), DesignSystem.primary),
+                      _buildSlider(context, l10n.blue.toUpperCase(), (state.currentColor.b * 255.0).round().toDouble(), (v) => ref.read(colorMatchProvider.notifier).updateColor((state.currentColor.r * 255.0).round().toDouble(), (state.currentColor.g * 255.0).round().toDouble(), v), DesignSystem.primary),
                       const SizedBox(height: DesignSystem.spaceLG),
                       TangibleButton(
                         onTap: () {
                           HapticFeedbackUtil.selectionClick();
-                          ref.read(colorMatchNotifierProvider.notifier).submit();
+                          ref.read(colorMatchProvider.notifier).submit();
                         },
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Center(child: Text(l10n.colorMatchCheck, style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13))),
@@ -154,7 +154,7 @@ class ColorMatchScreen extends ConsumerWidget {
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, ColorMatchState state) {
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('color_match', xpAmount: state.score.toInt());
+    ref.read(gameStreakProvider.notifier).completeGame('color_match', xpAmount: state.score.toInt());
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -166,7 +166,7 @@ class ColorMatchScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(colorMatchNotifierProvider.notifier).reset();
+          ref.read(colorMatchProvider.notifier).reset();
           Navigator.of(context).pop();
         },
       ),

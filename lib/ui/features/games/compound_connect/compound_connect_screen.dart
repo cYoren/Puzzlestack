@@ -21,12 +21,12 @@ class _CompoundConnectScreenState extends ConsumerState<CompoundConnectScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(compoundConnectNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(compoundConnectProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(compoundConnectNotifierProvider);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('compound_connect');
+    final state = ref.read(compoundConnectProvider);
+    ref.read(gameStreakProvider.notifier).completeGame('compound_connect');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -36,7 +36,7 @@ class _CompoundConnectScreenState extends ConsumerState<CompoundConnectScreen> {
           title: state.isGameWon ? l10n.compoundConnectTitle : l10n.gameOver,
           message: AppLocalizations.of(context)!.compoundConnectMessage((state.prefix).toString(), (state.correctSuffix).toString()),
           onPlayAgain: () {
-            ref.read(compoundConnectNotifierProvider.notifier).initGame();
+            ref.read(compoundConnectProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -51,10 +51,10 @@ class _CompoundConnectScreenState extends ConsumerState<CompoundConnectScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(compoundConnectNotifierProvider);
-    final notifier = ref.read(compoundConnectNotifierProvider.notifier);
+    final state = ref.watch(compoundConnectProvider);
+    final notifier = ref.read(compoundConnectProvider.notifier);
 
-    ref.listen(compoundConnectNotifierProvider, (previous, next) {
+    ref.listen(compoundConnectProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showCompletionDialog();
       }

@@ -50,7 +50,7 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
 
 ```bash
 flutter pub get
-dart run build_runner build --delete-conflicting-outputs   # generates *.g.dart / *.freezed.dart
+dart run build_runner build   # generates *.g.dart / *.freezed.dart
 flutter run                                                 # or: flutter run -d chrome
 ```
 

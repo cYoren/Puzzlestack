@@ -24,7 +24,7 @@ class _StaircaseMemoryScreenState extends ConsumerState<StaircaseMemoryScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(staircaseMemoryNotifierProvider.notifier).initGame();
+      ref.read(staircaseMemoryProvider.notifier).initGame();
     });
   }
 
@@ -45,7 +45,7 @@ class _StaircaseMemoryScreenState extends ConsumerState<StaircaseMemoryScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(staircaseMemoryNotifierProvider.notifier).initGame();
+          ref.read(staircaseMemoryProvider.notifier).initGame();
         },
       ),
     );
@@ -54,16 +54,16 @@ class _StaircaseMemoryScreenState extends ConsumerState<StaircaseMemoryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(staircaseMemoryNotifierProvider);
-    final notifier = ref.read(staircaseMemoryNotifierProvider.notifier);
+    final state = ref.watch(staircaseMemoryProvider);
+    final notifier = ref.read(staircaseMemoryProvider.notifier);
     final engine = StaircaseMemoryEngine();
 
-    ref.listen(staircaseMemoryNotifierProvider, (previous, next) async {
+    ref.listen(staircaseMemoryProvider, (previous, next) async {
       if (next.phase == StaircasePhase.result && previous?.phase != StaircasePhase.result) {
         final isVictory = next.correctCount >= (next.totalTests * 0.8);
         if (isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('staircase_memory');
+          await ref.read(gameStreakProvider.notifier).completeGame('staircase_memory');
         } else {
           HapticFeedbackUtil.vibrate();
         }

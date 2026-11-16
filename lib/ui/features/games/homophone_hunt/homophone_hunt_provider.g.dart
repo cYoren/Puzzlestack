@@ -6,22 +6,58 @@ part of 'homophone_hunt_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(HomophoneHuntNotifier)
+final homophoneHuntProvider = HomophoneHuntNotifierProvider._();
+
+final class HomophoneHuntNotifierProvider
+    extends $NotifierProvider<HomophoneHuntNotifier, HomophoneHuntState> {
+  HomophoneHuntNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'homophoneHuntProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$homophoneHuntNotifierHash();
+
+  @$internal
+  @override
+  HomophoneHuntNotifier create() => HomophoneHuntNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(HomophoneHuntState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<HomophoneHuntState>(value),
+    );
+  }
+}
+
 String _$homophoneHuntNotifierHash() =>
     r'272e621408feb3c08bce830b710f92cd09822fd7';
 
-/// See also [HomophoneHuntNotifier].
-@ProviderFor(HomophoneHuntNotifier)
-final homophoneHuntNotifierProvider = AutoDisposeNotifierProvider<
-    HomophoneHuntNotifier, HomophoneHuntState>.internal(
-  HomophoneHuntNotifier.new,
-  name: r'homophoneHuntNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$homophoneHuntNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$HomophoneHuntNotifier = AutoDisposeNotifier<HomophoneHuntState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$HomophoneHuntNotifier extends $Notifier<HomophoneHuntState> {
+  HomophoneHuntState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<HomophoneHuntState, HomophoneHuntState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<HomophoneHuntState, HomophoneHuntState>,
+              HomophoneHuntState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

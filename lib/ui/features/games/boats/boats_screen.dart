@@ -21,7 +21,7 @@ class BoatsScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('boats', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -45,8 +45,8 @@ class BoatsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(boatsNotifierProvider);
-    final notifier = ref.read(boatsNotifierProvider.notifier);
+    final state = ref.watch(boatsProvider);
+    final notifier = ref.read(boatsProvider.notifier);
 
     return BoardGameScaffold(
       title: l10n.boatsTitle,

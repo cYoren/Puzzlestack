@@ -6,22 +6,22 @@ part of 'user_data.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
+class UserDataAdapter extends TypeAdapter<_UserData> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
-  _$UserDataImpl read(BinaryReader reader) {
+  _UserData read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$UserDataImpl(
-      xp: fields[0] as int,
-      level: fields[1] as int,
-      superStreak: fields[2] as int?,
+    return _UserData(
+      xp: (fields[0] as num).toInt(),
+      level: (fields[1] as num).toInt(),
+      superStreak: (fields[2] as num?)?.toInt(),
       lastSuperStreakDate: fields[3] as DateTime?,
-      totalSolved: fields[4] as int?,
+      totalSolved: (fields[4] as num?)?.toInt(),
       favoriteGameIds: (fields[5] as List?)?.cast<String>(),
       isTrialModeEnabled: fields[6] as bool?,
       hiddenGameIds: (fields[7] as List?)?.cast<String>(),
@@ -30,7 +30,7 @@ class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
   }
 
   @override
-  void write(BinaryWriter writer, _$UserDataImpl obj) {
+  void write(BinaryWriter writer, _UserData obj) {
     writer
       ..writeByte(9)
       ..writeByte(0)
@@ -43,14 +43,14 @@ class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
       ..write(obj.lastSuperStreakDate)
       ..writeByte(4)
       ..write(obj.totalSolved)
-      ..writeByte(6)
-      ..write(obj.isTrialModeEnabled)
-      ..writeByte(8)
-      ..write(obj.isKeepScreenAwakeEnabled)
       ..writeByte(5)
       ..write(obj.favoriteGameIds)
+      ..writeByte(6)
+      ..write(obj.isTrialModeEnabled)
       ..writeByte(7)
-      ..write(obj.hiddenGameIds);
+      ..write(obj.hiddenGameIds)
+      ..writeByte(8)
+      ..write(obj.isKeepScreenAwakeEnabled);
   }
 
   @override
@@ -68,34 +68,32 @@ class UserDataAdapter extends TypeAdapter<_$UserDataImpl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserDataImpl _$$UserDataImplFromJson(Map<String, dynamic> json) =>
-    _$UserDataImpl(
-      xp: (json['xp'] as num).toInt(),
-      level: (json['level'] as num).toInt(),
-      superStreak: (json['superStreak'] as num?)?.toInt(),
-      lastSuperStreakDate: json['lastSuperStreakDate'] == null
-          ? null
-          : DateTime.parse(json['lastSuperStreakDate'] as String),
-      totalSolved: (json['totalSolved'] as num?)?.toInt(),
-      favoriteGameIds: (json['favoriteGameIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      isTrialModeEnabled: json['isTrialModeEnabled'] as bool?,
-      hiddenGameIds: (json['hiddenGameIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      isKeepScreenAwakeEnabled: json['isKeepScreenAwakeEnabled'] as bool?,
-    );
+_UserData _$UserDataFromJson(Map<String, dynamic> json) => _UserData(
+  xp: (json['xp'] as num).toInt(),
+  level: (json['level'] as num).toInt(),
+  superStreak: (json['superStreak'] as num?)?.toInt(),
+  lastSuperStreakDate: json['lastSuperStreakDate'] == null
+      ? null
+      : DateTime.parse(json['lastSuperStreakDate'] as String),
+  totalSolved: (json['totalSolved'] as num?)?.toInt(),
+  favoriteGameIds: (json['favoriteGameIds'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
+  isTrialModeEnabled: json['isTrialModeEnabled'] as bool?,
+  hiddenGameIds: (json['hiddenGameIds'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
+  isKeepScreenAwakeEnabled: json['isKeepScreenAwakeEnabled'] as bool?,
+);
 
-Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
-    <String, dynamic>{
-      'xp': instance.xp,
-      'level': instance.level,
-      'superStreak': instance.superStreak,
-      'lastSuperStreakDate': instance.lastSuperStreakDate?.toIso8601String(),
-      'totalSolved': instance.totalSolved,
-      'favoriteGameIds': instance.favoriteGameIds,
-      'isTrialModeEnabled': instance.isTrialModeEnabled,
-      'hiddenGameIds': instance.hiddenGameIds,
-      'isKeepScreenAwakeEnabled': instance.isKeepScreenAwakeEnabled,
-    };
+Map<String, dynamic> _$UserDataToJson(_UserData instance) => <String, dynamic>{
+  'xp': instance.xp,
+  'level': instance.level,
+  'superStreak': instance.superStreak,
+  'lastSuperStreakDate': instance.lastSuperStreakDate?.toIso8601String(),
+  'totalSolved': instance.totalSolved,
+  'favoriteGameIds': instance.favoriteGameIds,
+  'isTrialModeEnabled': instance.isTrialModeEnabled,
+  'hiddenGameIds': instance.hiddenGameIds,
+  'isKeepScreenAwakeEnabled': instance.isKeepScreenAwakeEnabled,
+};

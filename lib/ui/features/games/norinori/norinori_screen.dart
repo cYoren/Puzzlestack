@@ -192,7 +192,7 @@ class _NorinoriScreenState extends ConsumerState<NorinoriScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('norinori');
+    await ref.read(gameStreakProvider.notifier).completeGame('norinori');
     if (!mounted) return;
     showDialog(
       context: context,

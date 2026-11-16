@@ -22,14 +22,14 @@ class _ContinuousRecognitionScreenState extends ConsumerState<ContinuousRecognit
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(continuousRecognitionNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(continuousRecognitionProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 15;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('continuous_recognition');
+      ref.read(gameStreakProvider.notifier).completeGame('continuous_recognition');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -43,7 +43,7 @@ class _ContinuousRecognitionScreenState extends ConsumerState<ContinuousRecognit
           message: '$score correct recognitions!',
           isVictory: won,
           onPlayAgain: () {
-            ref.read(continuousRecognitionNotifierProvider.notifier).initGame();
+            ref.read(continuousRecognitionProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -57,10 +57,10 @@ class _ContinuousRecognitionScreenState extends ConsumerState<ContinuousRecognit
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(continuousRecognitionNotifierProvider);
-    final notifier = ref.read(continuousRecognitionNotifierProvider.notifier);
+    final state = ref.watch(continuousRecognitionProvider);
+    final notifier = ref.read(continuousRecognitionProvider.notifier);
 
-    ref.listen(continuousRecognitionNotifierProvider, (previous, next) {
+    ref.listen(continuousRecognitionProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

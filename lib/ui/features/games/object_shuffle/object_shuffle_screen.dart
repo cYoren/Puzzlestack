@@ -23,14 +23,14 @@ class _ObjectShuffleScreenState extends ConsumerState<ObjectShuffleScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(objectShuffleNotifierProvider.notifier).initGame();
+      ref.read(objectShuffleProvider.notifier).initGame();
     });
   }
 
   void _showGameOverDialog(bool won) {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('object_shuffle');
+      ref.read(gameStreakProvider.notifier).completeGame('object_shuffle');
     }
     showDialog(
       context: context,
@@ -42,7 +42,7 @@ class _ObjectShuffleScreenState extends ConsumerState<ObjectShuffleScreen> {
             : l10n.snackbarIncorrectTryNew,
         isVictory: won,
         onPlayAgain: () {
-          ref.read(objectShuffleNotifierProvider.notifier).initGame();
+          ref.read(objectShuffleProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -57,10 +57,10 @@ class _ObjectShuffleScreenState extends ConsumerState<ObjectShuffleScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(objectShuffleNotifierProvider);
-    final notifier = ref.read(objectShuffleNotifierProvider.notifier);
+    final state = ref.watch(objectShuffleProvider);
+    final notifier = ref.read(objectShuffleProvider.notifier);
 
-    ref.listen(objectShuffleNotifierProvider, (previous, next) {
+    ref.listen(objectShuffleProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         // We need to know if the user's last tap was correct. 
         final won = next.isWon;

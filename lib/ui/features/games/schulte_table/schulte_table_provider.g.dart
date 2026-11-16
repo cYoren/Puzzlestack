@@ -6,22 +6,58 @@ part of 'schulte_table_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$schulteTableNotifierHash() =>
-    r'f3013db8d30b7fa11be48e78dadfd9c81f546548';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SchulteTableNotifier].
 @ProviderFor(SchulteTableNotifier)
-final schulteTableNotifierProvider = AutoDisposeNotifierProvider<
-    SchulteTableNotifier, SchulteTableState>.internal(
-  SchulteTableNotifier.new,
-  name: r'schulteTableNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$schulteTableNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final schulteTableProvider = SchulteTableNotifierProvider._();
 
-typedef _$SchulteTableNotifier = AutoDisposeNotifier<SchulteTableState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class SchulteTableNotifierProvider
+    extends $NotifierProvider<SchulteTableNotifier, SchulteTableState> {
+  SchulteTableNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'schulteTableProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$schulteTableNotifierHash();
+
+  @$internal
+  @override
+  SchulteTableNotifier create() => SchulteTableNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SchulteTableState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SchulteTableState>(value),
+    );
+  }
+}
+
+String _$schulteTableNotifierHash() =>
+    r'affdc5b94861a5cc33130e4cac73230422218637';
+
+abstract class _$SchulteTableNotifier extends $Notifier<SchulteTableState> {
+  SchulteTableState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<SchulteTableState, SchulteTableState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SchulteTableState, SchulteTableState>,
+              SchulteTableState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

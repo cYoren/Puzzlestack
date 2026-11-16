@@ -20,7 +20,7 @@ class _AttentionalBlinkScreenState extends ConsumerState<AttentionalBlinkScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(attentionalBlinkNotifierProvider.notifier).initGame();
+      ref.read(attentionalBlinkProvider.notifier).initGame();
     });
   }
 
@@ -38,7 +38,7 @@ class _AttentionalBlinkScreenState extends ConsumerState<AttentionalBlinkScreen>
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(attentionalBlinkNotifierProvider.notifier).initGame();
+          ref.read(attentionalBlinkProvider.notifier).initGame();
         },
       ),
     );
@@ -48,9 +48,9 @@ class _AttentionalBlinkScreenState extends ConsumerState<AttentionalBlinkScreen>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(attentionalBlinkNotifierProvider);
+    final state = ref.watch(attentionalBlinkProvider);
 
-    ref.listen(attentionalBlinkNotifierProvider, (previous, next) {
+    ref.listen(attentionalBlinkProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         _showCompletionDialog(next);
       }
@@ -172,7 +172,7 @@ class _AttentionalBlinkScreenState extends ConsumerState<AttentionalBlinkScreen>
             onTap: () {
               if (state.phase == ABPhase.input) {
                 HapticFeedbackUtil.selectionClick();
-                ref.read(attentionalBlinkNotifierProvider.notifier).submitInput(char);
+                ref.read(attentionalBlinkProvider.notifier).submitInput(char);
               }
             },
             color: Theme.of(context).colorScheme.surface,

@@ -21,7 +21,7 @@ class ClustersScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('clusters', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -45,8 +45,8 @@ class ClustersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(clustersNotifierProvider);
-    final notifier = ref.read(clustersNotifierProvider.notifier);
+    final state = ref.watch(clustersProvider);
+    final notifier = ref.read(clustersProvider.notifier);
 
     return BoardGameScaffold(
       title: l10n.clustersTitle,

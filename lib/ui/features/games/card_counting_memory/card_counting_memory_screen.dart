@@ -126,7 +126,7 @@ class _CardCountingMemoryScreenState extends ConsumerState<CardCountingMemoryScr
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('card_counting_memory');
+    await ref.read(gameStreakProvider.notifier).completeGame('card_counting_memory');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -127,7 +127,7 @@ class _PosnerSpatialCueingScreenState extends ConsumerState<PosnerSpatialCueingS
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('posner_spatial_cueing');
+    ref.read(gameStreakProvider.notifier).completeGame('posner_spatial_cueing');
     _showEndDialog();
   }
 

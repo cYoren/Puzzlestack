@@ -15,9 +15,9 @@ class MultipleObjectTrackingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(mOTNotifierProvider);
+    final state = ref.watch(mOTProvider);
 
-    ref.listen(mOTNotifierProvider, (previous, next) {
+    ref.listen(mOTProvider, (previous, next) {
       if (next.phase == MOTPhase.result && previous?.phase != MOTPhase.result) {
         HapticFeedbackUtil.victory();
         _showResultDialog(context, ref);
@@ -33,7 +33,7 @@ class MultipleObjectTrackingScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(mOTNotifierProvider.notifier).resetGame();
+            ref.read(mOTProvider.notifier).resetGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(Icons.refresh_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface),
@@ -72,7 +72,7 @@ class MultipleObjectTrackingScreen extends ConsumerWidget {
               for (var ball in state.balls) {
                 final distance = (ball.position - localOffset).distance;
                 if (distance <= 20.0 * 1.5) {
-                  ref.read(mOTNotifierProvider.notifier).toggleBallSelection(ball.id);
+                  ref.read(mOTProvider.notifier).toggleBallSelection(ball.id);
                   HapticFeedbackUtil.lightImpact();
                   break;
                 }
@@ -116,7 +116,7 @@ class MultipleObjectTrackingScreen extends ConsumerWidget {
       return TangibleButton(
         onTap: () {
           HapticFeedbackUtil.mediumImpact();
-          ref.read(mOTNotifierProvider.notifier).initGame(size);
+          ref.read(mOTProvider.notifier).initGame(size);
         },
         color: DesignSystem.primary,
         child: Text(
@@ -152,7 +152,7 @@ class MultipleObjectTrackingScreen extends ConsumerWidget {
   }
 
   void _showResultDialog(BuildContext context, WidgetRef ref) {
-    final state = ref.read(mOTNotifierProvider);
+    final state = ref.read(mOTProvider);
     final targetCount = state.balls.where((b) => b.isTarget).length;
     final correctCount = state.balls.where((b) => b.isSelected && b.isTarget).length;
     final isVictory = correctCount == targetCount;
@@ -170,7 +170,7 @@ class MultipleObjectTrackingScreen extends ConsumerWidget {
         onHome: () => Navigator.of(context).popUntil((route) => route.isFirst),
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(mOTNotifierProvider.notifier).resetGame();
+          ref.read(mOTProvider.notifier).resetGame();
         },
       ),
     );

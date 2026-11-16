@@ -140,7 +140,7 @@ class _FeatureMatrixRecallScreenState extends ConsumerState<FeatureMatrixRecallS
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('feature_matrix_recall');
+    await ref.read(gameStreakProvider.notifier).completeGame('feature_matrix_recall');
     if (!mounted) return;
     showDialog(
       context: context,

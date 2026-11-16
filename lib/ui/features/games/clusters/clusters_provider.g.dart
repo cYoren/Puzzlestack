@@ -6,21 +6,57 @@ part of 'clusters_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clustersNotifierHash() => r'9e4c2a7b1f8d6053c2a4e7b9d1f3068a5c7e9b24';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [ClustersNotifier].
 @ProviderFor(ClustersNotifier)
-final clustersNotifierProvider =
-    AutoDisposeNotifierProvider<ClustersNotifier, ClustersState>.internal(
-  ClustersNotifier.new,
-  name: r'clustersNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$clustersNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final clustersProvider = ClustersNotifierProvider._();
 
-typedef _$ClustersNotifier = AutoDisposeNotifier<ClustersState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class ClustersNotifierProvider
+    extends $NotifierProvider<ClustersNotifier, ClustersState> {
+  ClustersNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'clustersProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$clustersNotifierHash();
+
+  @$internal
+  @override
+  ClustersNotifier create() => ClustersNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ClustersState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ClustersState>(value),
+    );
+  }
+}
+
+String _$clustersNotifierHash() => r'67d0265e23625cd8d7b3f412388c7a03c5f1839b';
+
+abstract class _$ClustersNotifier extends $Notifier<ClustersState> {
+  ClustersState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<ClustersState, ClustersState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ClustersState, ClustersState>,
+              ClustersState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

@@ -28,7 +28,7 @@ class _RhythmMasterScreenState extends ConsumerState<RhythmMasterScreen> with Si
       vsync: this,
       duration: const Duration(seconds: 1),
     )..addListener(() {
-      ref.read(rhythmMasterNotifierProvider.notifier).onBeat(_controller.value);
+      ref.read(rhythmMasterProvider.notifier).onBeat(_controller.value);
     });
 
     _controller.addStatusListener((status) {
@@ -39,7 +39,7 @@ class _RhythmMasterScreenState extends ConsumerState<RhythmMasterScreen> with Si
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(rhythmMasterNotifierProvider.notifier).initGame();
+      ref.read(rhythmMasterProvider.notifier).initGame();
       _lastBeatTime = DateTime.now().millisecondsSinceEpoch;
       _controller.forward();
     });
@@ -54,7 +54,7 @@ class _RhythmMasterScreenState extends ConsumerState<RhythmMasterScreen> with Si
   void _showGameOverDialog(int score, int perfect) {
     bool won = perfect >= 10;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('rhythm_master');
+      ref.read(gameStreakProvider.notifier).completeGame('rhythm_master');
     }
     showDialog(
       context: context,
@@ -66,7 +66,7 @@ class _RhythmMasterScreenState extends ConsumerState<RhythmMasterScreen> with Si
           message: AppLocalizations.of(context)!.rhythmMasterMessage((perfect).toString(), (score).toString()),
           isVictory: won,
           onPlayAgain: () {
-            ref.read(rhythmMasterNotifierProvider.notifier).initGame();
+            ref.read(rhythmMasterProvider.notifier).initGame();
             _controller.forward(from: 0);
             Navigator.pop(context);
           },
@@ -83,9 +83,9 @@ class _RhythmMasterScreenState extends ConsumerState<RhythmMasterScreen> with Si
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(rhythmMasterNotifierProvider);
+    final state = ref.watch(rhythmMasterProvider);
     
-    ref.listen(rhythmMasterNotifierProvider, (previous, next) {
+    ref.listen(rhythmMasterProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         _controller.stop();
         HapticFeedbackUtil.victory();
@@ -108,7 +108,7 @@ class _RhythmMasterScreenState extends ConsumerState<RhythmMasterScreen> with Si
           final effectiveDiff = diff > interval / 2 ? (interval - diff).abs() : diff;
           
           HapticFeedbackUtil.lightImpact();
-          ref.read(rhythmMasterNotifierProvider.notifier).onTap(effectiveDiff);
+          ref.read(rhythmMasterProvider.notifier).onTap(effectiveDiff);
         },
         child: Container(
           color: Colors.transparent,

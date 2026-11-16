@@ -181,7 +181,7 @@ class _TangramScreenState extends ConsumerState<TangramScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('tangram');
+    await ref.read(gameStreakProvider.notifier).completeGame('tangram');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -50,7 +50,7 @@ To get started with the codebase:
 1.  **Prerequisites**: Ensure you have [Flutter SDK](https://docs.flutter.dev/get-started/install) installed.
 2.  **Clone the Repo**: `git clone https://github.com/cYoren/Puzzlestack.git`
 3.  **Install Dependencies**: `flutter pub get`
-4.  **Run Build Runner**: This project uses code generation. Run `flutter pub run build_runner build --delete-conflicting-outputs` to generate the necessary files.
+4.  **Run Build Runner**: This project uses code generation. Run `dart run build_runner build` to generate the necessary files.
 5.  **Run the App**: `flutter run`
 
 ### Pull Requests

@@ -144,7 +144,7 @@ void main() {
     test('the dots are on the board, not hidden behind it', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final state = container.read(clustersNotifierProvider);
+      final state = container.read(clustersProvider);
       final shown = state.values.where((v) => v != kClusterUnmarked).length;
       expect(shown, state.puzzle.clueCount());
       expect(shown, greaterThan(0));
@@ -153,18 +153,18 @@ void main() {
     test('a board can be finished by playing it', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final notifier = container.read(clustersNotifierProvider.notifier);
-      final puzzle = container.read(clustersNotifierProvider).puzzle;
+      final notifier = container.read(clustersProvider.notifier);
+      final puzzle = container.read(clustersProvider).puzzle;
       for (var cell = 0; cell < puzzle.cellCount; cell++) {
         if (puzzle.clue(cell) != kClusterNoClue) continue;
-        var state = container.read(clustersNotifierProvider);
+        var state = container.read(clustersProvider);
         for (var taps = 0; taps < 3; taps++) {
           if (state.values[cell] == puzzle.solution[cell]) break;
           notifier.cycle(cell);
-          state = container.read(clustersNotifierProvider);
+          state = container.read(clustersProvider);
         }
       }
-      expect(container.read(clustersNotifierProvider).isSolved, isTrue);
+      expect(container.read(clustersProvider).isSolved, isTrue);
     });
   });
 }

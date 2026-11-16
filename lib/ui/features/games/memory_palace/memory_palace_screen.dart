@@ -13,7 +13,7 @@ class MemoryPalaceScreen extends ConsumerWidget {
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, bool success) {
     if (success) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('memory_palace');
+      ref.read(gameStreakProvider.notifier).completeGame('memory_palace');
     }
     showDialog(
       context: context,
@@ -24,7 +24,7 @@ class MemoryPalaceScreen extends ConsumerWidget {
           ? 'You remembered all the word locations!' 
           : 'Some words weren\'t quite in the right place.',
         onPlayAgain: () {
-          ref.read(memoryPalaceNotifierProvider.notifier).reset();
+          ref.read(memoryPalaceProvider.notifier).reset();
           Navigator.pop(context);
         },
         onHome: () {
@@ -38,10 +38,10 @@ class MemoryPalaceScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(memoryPalaceNotifierProvider);
-    final notifier = ref.read(memoryPalaceNotifierProvider.notifier);
+    final state = ref.watch(memoryPalaceProvider);
+    final notifier = ref.read(memoryPalaceProvider.notifier);
 
-    ref.listen(memoryPalaceNotifierProvider, (previous, next) {
+    ref.listen(memoryPalaceProvider, (previous, next) {
       if ((next.status == MemoryPalaceStatus.success || next.status == MemoryPalaceStatus.failure) &&
           (previous?.status != MemoryPalaceStatus.success && previous?.status != MemoryPalaceStatus.failure)) {
         _showGameOverDialog(context, ref, next.status == MemoryPalaceStatus.success);
@@ -112,7 +112,7 @@ class MemoryPalaceScreen extends ConsumerWidget {
 
         return GestureDetector(
           onTap: state.status == MemoryPalaceStatus.recalling
-              ? () => ref.read(memoryPalaceNotifierProvider.notifier).selectPosition(index)
+              ? () => ref.read(memoryPalaceProvider.notifier).selectPosition(index)
               : null,
           child: TangibleContainer(
             depth: isSelected ? 0 : 4,
@@ -163,7 +163,7 @@ class MemoryPalaceScreen extends ConsumerWidget {
 
             return GestureDetector(
               onTap: !isPlaced
-                  ? () => ref.read(memoryPalaceNotifierProvider.notifier).selectWord(word)
+                  ? () => ref.read(memoryPalaceProvider.notifier).selectWord(word)
                   : null,
               child: Opacity(
                 opacity: isPlaced ? 0.3 : 1.0,

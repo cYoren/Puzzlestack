@@ -21,13 +21,13 @@ class _DoubleNBackScreenState extends ConsumerState<DoubleNBackScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(doubleNBackNotifierProvider.notifier).initGame();
+      ref.read(doubleNBackProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(doubleNBackNotifierProvider);
+    final state = ref.read(doubleNBackProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,7 +41,7 @@ class _DoubleNBackScreenState extends ConsumerState<DoubleNBackScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(doubleNBackNotifierProvider.notifier).initGame();
+          ref.read(doubleNBackProvider.notifier).initGame();
         },
       ),
     );
@@ -50,14 +50,14 @@ class _DoubleNBackScreenState extends ConsumerState<DoubleNBackScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(doubleNBackNotifierProvider);
-    final notifier = ref.read(doubleNBackNotifierProvider.notifier);
+    final state = ref.watch(doubleNBackProvider);
+    final notifier = ref.read(doubleNBackProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(doubleNBackNotifierProvider, (previous, next) {
+    ref.listen(doubleNBackProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('double_n_back');
+        ref.read(gameStreakProvider.notifier).completeGame('double_n_back');
         _showCompletionDialog();
       }
     });

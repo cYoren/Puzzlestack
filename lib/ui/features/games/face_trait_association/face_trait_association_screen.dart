@@ -14,9 +14,9 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(faceTraitAssociationNotifierProvider);
+    final state = ref.watch(faceTraitAssociationProvider);
 
-    ref.listen(faceTraitAssociationNotifierProvider, (previous, next) {
+    ref.listen(faceTraitAssociationProvider, (previous, next) {
       if (next.phase == GamePhase.result && previous?.phase != GamePhase.result) {
         _showResultDialog(context, ref, next);
       }
@@ -94,7 +94,7 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
           child: TangibleButton(
             onTap: () {
               HapticFeedbackUtil.heavyImpact();
-              ref.read(faceTraitAssociationNotifierProvider.notifier).startTest();
+              ref.read(faceTraitAssociationProvider.notifier).startTest();
             },
             child: Center(
               child: Text(
@@ -163,7 +163,7 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 depth: isSelected ? 0.0 : 4.0,
                 color: isSelected ? DesignSystem.primary : Theme.of(context).colorScheme.surface,
-                onTap: () => ref.read(faceTraitAssociationNotifierProvider.notifier).selectOccupation(opt),
+                onTap: () => ref.read(faceTraitAssociationProvider.notifier).selectOccupation(opt),
                 child: Text(opt, style: TextStyle(fontSize: 14, color: isSelected ? Colors.white : null)),
               );
             }).toList(),
@@ -181,7 +181,7 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 depth: isSelected ? 0.0 : 4.0,
                 color: isSelected ? DesignSystem.primary : Theme.of(context).colorScheme.surface,
-                onTap: () => ref.read(faceTraitAssociationNotifierProvider.notifier).selectHobby(opt),
+                onTap: () => ref.read(faceTraitAssociationProvider.notifier).selectHobby(opt),
                 child: Text(opt, style: TextStyle(fontSize: 14, color: isSelected ? Colors.white : null)),
               );
             }).toList(),
@@ -191,7 +191,7 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
             onTap: (state.selectedOccupation != null && state.selectedHobby != null)
                 ? () {
                     HapticFeedbackUtil.selectionClick();
-                    ref.read(faceTraitAssociationNotifierProvider.notifier).submitAnswer();
+                    ref.read(faceTraitAssociationProvider.notifier).submitAnswer();
                   }
                 : null,
             color: (state.selectedOccupation != null && state.selectedHobby != null)
@@ -220,7 +220,7 @@ class FaceTraitAssociationScreen extends ConsumerWidget {
         message: l10n.faceTraitAssociationScoreMessage(state.correctCount, state.trials.length),
         onPlayAgain: () {
           Navigator.pop(context);
-          ref.read(faceTraitAssociationNotifierProvider.notifier).reset();
+          ref.read(faceTraitAssociationProvider.notifier).reset();
         },
         onHome: () {
           Navigator.pop(context);

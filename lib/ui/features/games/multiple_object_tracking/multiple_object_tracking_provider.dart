@@ -133,7 +133,7 @@ class MOTNotifier extends _$MOTNotifier {
     final isVictory = correctCount == targetCount;
     
     if (isVictory) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('multiple_object_tracking', xpAmount: 10);
+      ref.read(gameStreakProvider.notifier).completeGame('multiple_object_tracking', xpAmount: 10);
     }
 
     state = state.copyWith(

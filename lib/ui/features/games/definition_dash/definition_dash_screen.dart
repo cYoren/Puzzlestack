@@ -23,12 +23,12 @@ class _DefinitionDashScreenState extends ConsumerState<DefinitionDashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(definitionDashNotifierProvider.notifier).startGame();
+      ref.read(definitionDashProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(definitionDashNotifierProvider);
+    final state = ref.read(definitionDashProvider);
     final isCorrect = state.isCorrect ?? false;
     final l10n = AppLocalizations.of(context)!;
     
@@ -47,7 +47,7 @@ class _DefinitionDashScreenState extends ConsumerState<DefinitionDashScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(definitionDashNotifierProvider.notifier).startGame();
+          ref.read(definitionDashProvider.notifier).startGame();
         },
       ),
     );
@@ -56,17 +56,17 @@ class _DefinitionDashScreenState extends ConsumerState<DefinitionDashScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(definitionDashNotifierProvider);
-    final notifier = ref.read(definitionDashNotifierProvider.notifier);
+    final state = ref.watch(definitionDashProvider);
+    final notifier = ref.read(definitionDashProvider.notifier);
 
-    ref.listen(definitionDashNotifierProvider, (previous, next) {
+    ref.listen(definitionDashProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isCorrect == true) {
           HapticFeedbackUtil.victory();
         } else {
           HapticFeedbackUtil.error();
         }
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('definition_dash');
+        ref.read(gameStreakProvider.notifier).completeGame('definition_dash');
         _showCompletionDialog();
       }
     });

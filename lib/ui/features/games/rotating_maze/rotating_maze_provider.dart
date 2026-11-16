@@ -152,7 +152,7 @@ class RotatingMazeNotifier extends _$RotatingMazeNotifier {
     // Check victory
     if (state.marbleRow == state.exitRow && state.marbleCol == state.exitCol) {
       state = state.copyWith(isVictory: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('rotating_maze', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('rotating_maze', xpAmount: 25);
     }
 
     return true;

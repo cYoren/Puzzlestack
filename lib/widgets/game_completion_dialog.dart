@@ -231,7 +231,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final session = ref.read(gameSessionNotifierProvider);
+    final session = ref.read(gameSessionProvider);
     final localizedTitles = {
       for (final game in allGamesMetadata)
         game.id: L10nGameHelpers.getGameTitle(context, game.id),
@@ -241,7 +241,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
       selectedCategory: session.selectedCategory,
       localizedTitles: localizedTitles,
     ));
-    final streaks = ref.read(gameStreakNotifierProvider);
+    final streaks = ref.read(gameStreakProvider);
 
     GameMetadata? nextGame;
     bool isSameGame = true;
@@ -422,7 +422,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
                       child: TangibleButton(
                         onTap: () {
                           ref
-                              .read(gameSessionNotifierProvider.notifier)
+                              .read(gameSessionProvider.notifier)
                               .setSession(
                                 gameId: next.id,
                                 category: session.selectedCategory,
@@ -506,7 +506,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
                             barrierColor: Colors.black.withValues(alpha: 0.05),
                             transitionDuration:
                                 const Duration(milliseconds: 200),
-                            pageBuilder: (reviewCtx, _, __) {
+                            pageBuilder: (reviewCtx, _, _) {
                               return Consumer(
                                 builder: (reviewCtx, ref, _) {
                                   final reviewTheme = Theme.of(reviewCtx);
@@ -594,7 +594,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
                                                                     reviewCtx);
                                                             if (next != null) {
                                                               ref
-                                                                  .read(gameSessionNotifierProvider
+                                                                  .read(gameSessionProvider
                                                                       .notifier)
                                                                   .setSession(
                                                                     gameId:

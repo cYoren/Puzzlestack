@@ -7,7 +7,7 @@ void main() {
   group('PipesNotifier', () {
     test('pipes should not be able to pass through a terminal dot of a different color', () {
       final container = ProviderContainer();
-      final notifier = container.read(pipesNotifierProvider.notifier);
+      final notifier = container.read(pipesProvider.notifier);
       
       final level = PipesLevel(
         size: 4,
@@ -27,7 +27,7 @@ void main() {
       notifier.startPath(0, 0);
       notifier.updatePath(0, 1);
 
-      final state = container.read(pipesNotifierProvider);
+      final state = container.read(pipesProvider);
       final color0Path = state.paths[0];
 
       expect(color0Path.contains(Point(0, 1)), isFalse);
@@ -35,7 +35,7 @@ void main() {
 
     test('pipes should be able to pass through their own terminal dots', () {
       final container = ProviderContainer();
-      final notifier = container.read(pipesNotifierProvider.notifier);
+      final notifier = container.read(pipesProvider.notifier);
       
       final level = PipesLevel(
         size: 4,
@@ -53,7 +53,7 @@ void main() {
       notifier.startPath(0, 0);
       notifier.updatePath(1, 0);
 
-      final state = container.read(pipesNotifierProvider);
+      final state = container.read(pipesProvider);
       final color0Path = state.paths[0];
 
       expect(color0Path.contains(Point(1, 0)), isTrue);

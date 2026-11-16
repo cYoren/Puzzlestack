@@ -24,14 +24,14 @@ class _MandalaRecallScreenState extends ConsumerState<MandalaRecallScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(mandalaRecallNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(mandalaRecallProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 12;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('mandala_recall');
+      ref.read(gameStreakProvider.notifier).completeGame('mandala_recall');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -45,7 +45,7 @@ class _MandalaRecallScreenState extends ConsumerState<MandalaRecallScreen> {
           message: '$score points by recreating colored geometric layouts!',
           isVictory: won,
           onPlayAgain: () {
-            ref.read(mandalaRecallNotifierProvider.notifier).initGame();
+            ref.read(mandalaRecallProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -59,10 +59,10 @@ class _MandalaRecallScreenState extends ConsumerState<MandalaRecallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(mandalaRecallNotifierProvider);
-    final notifier = ref.read(mandalaRecallNotifierProvider.notifier);
+    final state = ref.watch(mandalaRecallProvider);
+    final notifier = ref.read(mandalaRecallProvider.notifier);
 
-    ref.listen(mandalaRecallNotifierProvider, (previous, next) {
+    ref.listen(mandalaRecallProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

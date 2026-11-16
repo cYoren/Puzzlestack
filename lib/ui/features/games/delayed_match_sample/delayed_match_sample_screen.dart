@@ -218,7 +218,7 @@ class _DelayedMatchSampleScreenState extends ConsumerState<DelayedMatchSampleScr
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('delayed_match_sample');
+    await ref.read(gameStreakProvider.notifier).completeGame('delayed_match_sample');
     if (!mounted) return;
     showDialog(
       context: context,

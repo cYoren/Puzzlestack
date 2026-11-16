@@ -6,21 +6,57 @@ part of 'base_shift_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$baseShiftNotifierHash() => r'daa44c3cd7201372b516577ad785aa981bdd08ed';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [BaseShiftNotifier].
 @ProviderFor(BaseShiftNotifier)
-final baseShiftNotifierProvider =
-    AutoDisposeNotifierProvider<BaseShiftNotifier, BaseShiftState>.internal(
-  BaseShiftNotifier.new,
-  name: r'baseShiftNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$baseShiftNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final baseShiftProvider = BaseShiftNotifierProvider._();
 
-typedef _$BaseShiftNotifier = AutoDisposeNotifier<BaseShiftState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class BaseShiftNotifierProvider
+    extends $NotifierProvider<BaseShiftNotifier, BaseShiftState> {
+  BaseShiftNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'baseShiftProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$baseShiftNotifierHash();
+
+  @$internal
+  @override
+  BaseShiftNotifier create() => BaseShiftNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BaseShiftState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BaseShiftState>(value),
+    );
+  }
+}
+
+String _$baseShiftNotifierHash() => r'ff4970e7795c35cb1941247c888a751dd246d57f';
+
+abstract class _$BaseShiftNotifier extends $Notifier<BaseShiftState> {
+  BaseShiftState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<BaseShiftState, BaseShiftState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<BaseShiftState, BaseShiftState>,
+              BaseShiftState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

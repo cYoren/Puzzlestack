@@ -21,15 +21,15 @@ class _SpoonerismSolverScreenState extends ConsumerState<SpoonerismSolverScreen>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(spoonerismSolverNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(spoonerismSolverProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(spoonerismSolverNotifierProvider);
+    final state = ref.read(spoonerismSolverProvider);
     final l10n = AppLocalizations.of(context)!;
     
     if (state.isGameWon) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('spoonerism_solver');
+      ref.read(gameStreakProvider.notifier).completeGame('spoonerism_solver');
     }
     
     showDialog(
@@ -42,7 +42,7 @@ class _SpoonerismSolverScreenState extends ConsumerState<SpoonerismSolverScreen>
             : l10n.snackbarIncorrectStudyAgain,
         isVictory: state.isGameWon,
         onPlayAgain: () {
-          ref.read(spoonerismSolverNotifierProvider.notifier).initGame();
+          ref.read(spoonerismSolverProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -56,10 +56,10 @@ class _SpoonerismSolverScreenState extends ConsumerState<SpoonerismSolverScreen>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(spoonerismSolverNotifierProvider);
-    final notifier = ref.read(spoonerismSolverNotifierProvider.notifier);
+    final state = ref.watch(spoonerismSolverProvider);
+    final notifier = ref.read(spoonerismSolverProvider.notifier);
 
-    ref.listen(spoonerismSolverNotifierProvider, (previous, next) {
+    ref.listen(spoonerismSolverProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         if (next.isGameWon) {
           HapticFeedbackUtil.victory();

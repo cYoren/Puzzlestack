@@ -161,7 +161,7 @@ class _ModuloPathScreenState extends ConsumerState<ModuloPathScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('modulo_path');
+    await ref.read(gameStreakProvider.notifier).completeGame('modulo_path');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -20,7 +20,7 @@ class _PathIntersectScreenState extends ConsumerState<PathIntersectScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(pathIntersectNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(pathIntersectProvider.notifier).initGame());
   }
 
   void _showCompletionDialog(bool isVictory) {
@@ -38,7 +38,7 @@ class _PathIntersectScreenState extends ConsumerState<PathIntersectScreen> {
         },
         onPlayAgain: () {
           Navigator.of(dialogCtx).pop();
-          ref.read(pathIntersectNotifierProvider.notifier).initGame();
+          ref.read(pathIntersectProvider.notifier).initGame();
         },
       ),
     );
@@ -46,9 +46,9 @@ class _PathIntersectScreenState extends ConsumerState<PathIntersectScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(pathIntersectNotifierProvider);
+    final state = ref.watch(pathIntersectProvider);
 
-    ref.listen(pathIntersectNotifierProvider, (prev, next) {
+    ref.listen(pathIntersectProvider, (prev, next) {
       if (next.isVictory && !(prev?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -59,7 +59,7 @@ class _PathIntersectScreenState extends ConsumerState<PathIntersectScreen> {
 
     return GameScaffold(
       title: L10nGameHelpers.getGameTitle(context, 'path_intersect'),
-      onReset: () => ref.read(pathIntersectNotifierProvider.notifier).initGame(),
+      onReset: () => ref.read(pathIntersectProvider.notifier).initGame(),
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Column(
@@ -119,7 +119,7 @@ class _PathIntersectScreenState extends ConsumerState<PathIntersectScreen> {
         return GestureDetector(
           onTap: () {
             HapticFeedbackUtil.selection();
-            ref.read(pathIntersectNotifierProvider.notifier).selectPoint(x, y);
+            ref.read(pathIntersectProvider.notifier).selectPoint(x, y);
           },
           child: Container(
             decoration: BoxDecoration(

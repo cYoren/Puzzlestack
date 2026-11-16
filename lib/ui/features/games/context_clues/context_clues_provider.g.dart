@@ -6,22 +6,58 @@ part of 'context_clues_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$contextCluesNotifierHash() =>
-    r'1871b7ea8f7caaa9bccc0b45d0b846f9a98b6ea4';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [ContextCluesNotifier].
 @ProviderFor(ContextCluesNotifier)
-final contextCluesNotifierProvider = AutoDisposeNotifierProvider<
-    ContextCluesNotifier, ContextCluesState>.internal(
-  ContextCluesNotifier.new,
-  name: r'contextCluesNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$contextCluesNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final contextCluesProvider = ContextCluesNotifierProvider._();
 
-typedef _$ContextCluesNotifier = AutoDisposeNotifier<ContextCluesState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class ContextCluesNotifierProvider
+    extends $NotifierProvider<ContextCluesNotifier, ContextCluesState> {
+  ContextCluesNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'contextCluesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$contextCluesNotifierHash();
+
+  @$internal
+  @override
+  ContextCluesNotifier create() => ContextCluesNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ContextCluesState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ContextCluesState>(value),
+    );
+  }
+}
+
+String _$contextCluesNotifierHash() =>
+    r'298544dc3cdbd6a665e86c67335eb5bb134d34bb';
+
+abstract class _$ContextCluesNotifier extends $Notifier<ContextCluesState> {
+  ContextCluesState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<ContextCluesState, ContextCluesState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ContextCluesState, ContextCluesState>,
+              ContextCluesState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

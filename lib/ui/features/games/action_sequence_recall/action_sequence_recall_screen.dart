@@ -149,7 +149,7 @@ class _ActionSequenceRecallScreenState extends ConsumerState<ActionSequenceRecal
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('action_sequence_recall');
+    await ref.read(gameStreakProvider.notifier).completeGame('action_sequence_recall');
     if (!mounted) return;
     showDialog(
       context: context,

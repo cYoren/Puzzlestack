@@ -143,7 +143,7 @@ class _MazeNav3DScreenState extends ConsumerState<MazeNav3DScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('maze_nav_3d');
+    await ref.read(gameStreakProvider.notifier).completeGame('maze_nav_3d');
     if (!mounted) return;
     showDialog(
       context: context,

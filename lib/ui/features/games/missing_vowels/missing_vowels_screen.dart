@@ -20,20 +20,20 @@ class _MissingVowelsScreenState extends ConsumerState<MissingVowelsScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(missingVowelsNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(missingVowelsProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('missing_vowels');
+    ref.read(gameStreakProvider.notifier).completeGame('missing_vowels');
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.missingVowelsWin.toUpperCase(),
-        message: l10n.wordFoundMessage(ref.read(missingVowelsNotifierProvider).targetWord),
+        message: l10n.wordFoundMessage(ref.read(missingVowelsProvider).targetWord),
         onPlayAgain: () {
-          ref.read(missingVowelsNotifierProvider.notifier).initGame();
+          ref.read(missingVowelsProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -48,10 +48,10 @@ class _MissingVowelsScreenState extends ConsumerState<MissingVowelsScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(missingVowelsNotifierProvider);
-    final notifier = ref.read(missingVowelsNotifierProvider.notifier);
+    final state = ref.watch(missingVowelsProvider);
+    final notifier = ref.read(missingVowelsProvider.notifier);
 
-    ref.listen(missingVowelsNotifierProvider, (previous, next) {
+    ref.listen(missingVowelsProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver && next.isGameWon) {
         HapticFeedbackUtil.victory();
         _showCompletionDialog();

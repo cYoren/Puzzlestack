@@ -23,7 +23,7 @@ class _RotatingMazeScreenState extends ConsumerState<RotatingMazeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(rotatingMazeNotifierProvider.notifier).initGame();
+      ref.read(rotatingMazeProvider.notifier).initGame();
     });
   }
 
@@ -70,8 +70,8 @@ class _RotatingMazeScreenState extends ConsumerState<RotatingMazeScreen> {
   }
 
   void _handleDirectionalInput(String direction) {
-    final state = ref.read(rotatingMazeNotifierProvider);
-    final notifier = ref.read(rotatingMazeNotifierProvider.notifier);
+    final state = ref.read(rotatingMazeProvider);
+    final notifier = ref.read(rotatingMazeProvider.notifier);
 
     if (state.isVictory) return;
 
@@ -111,7 +111,7 @@ class _RotatingMazeScreenState extends ConsumerState<RotatingMazeScreen> {
 
     final success = notifier.moveMarble(dr, dc);
     if (success) {
-      final updatedState = ref.read(rotatingMazeNotifierProvider);
+      final updatedState = ref.read(rotatingMazeProvider);
       if (updatedState.justRotated) {
         HapticFeedbackUtil.heavyImpact();
         notifier.clearRotatedFlag();
@@ -132,8 +132,8 @@ class _RotatingMazeScreenState extends ConsumerState<RotatingMazeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(rotatingMazeNotifierProvider);
-    final notifier = ref.read(rotatingMazeNotifierProvider.notifier);
+    final state = ref.watch(rotatingMazeProvider);
+    final notifier = ref.read(rotatingMazeProvider.notifier);
     final theme = Theme.of(context);
 
     if (state.isVictory) {

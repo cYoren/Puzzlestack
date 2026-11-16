@@ -111,7 +111,7 @@ class RadicalRootsNotifier extends _$RadicalRootsNotifier {
     );
 
     if (state.score >= 10) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('radical_roots', xpAmount: 20 + (state.score ~/ 2));
+      ref.read(gameStreakProvider.notifier).completeGame('radical_roots', xpAmount: 20 + (state.score ~/ 2));
     }
   }
 

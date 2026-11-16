@@ -12,7 +12,7 @@ import 'game_stats_provider.dart';
 part 'user_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-UserRepository userRepository(UserRepositoryRef ref) {
+UserRepository userRepository(Ref ref) {
   return UserRepository();
 }
 
@@ -230,21 +230,21 @@ class GameStreakNotifier extends _$GameStreakNotifier {
     );
 
     // Batch user data updates
-    final newXp = ref.read(userDataNotifierProvider).xp + xpAmount;
-    final newLevel = ref.read(userDataNotifierProvider.notifier).calculateLevel(newXp);
-    final newUserData = ref.read(userDataNotifierProvider).copyWith(
+    final newXp = ref.read(userDataProvider).xp + xpAmount;
+    final newLevel = ref.read(userDataProvider.notifier).calculateLevel(newXp);
+    final newUserData = ref.read(userDataProvider).copyWith(
       xp: newXp,
       level: newLevel,
-      totalSolved: (ref.read(userDataNotifierProvider).totalSolved ?? 0) + 1,
+      totalSolved: (ref.read(userDataProvider).totalSolved ?? 0) + 1,
     );
 
     state = {...state, gameId: newStreak};
 
     // Single batched save
     await ref.read(userRepositoryProvider).saveGameCompletion(newUserData, newStreak);
-    ref.read(userDataNotifierProvider.notifier).state = newUserData;
+    ref.read(userDataProvider.notifier).state = newUserData;
 
-    await ref.read(userDataNotifierProvider.notifier).updateSuperStreak(state);
+    await ref.read(userDataProvider.notifier).updateSuperStreak(state);
 
     // Ask for a review only after XP, the streak and the super streak are all
     // persisted, so a prompt can never sit in front of a save. A headline
@@ -266,7 +266,7 @@ class GameStreakNotifier extends _$GameStreakNotifier {
   }
 
   void refreshStatus() {
-    ref.read(userDataNotifierProvider.notifier).refreshSuperStreak();
+    ref.read(userDataProvider.notifier).refreshSuperStreak();
     applyDailyReset();
   }
 }

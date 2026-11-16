@@ -146,7 +146,7 @@ class _ShikakuScreenState extends ConsumerState<ShikakuScreen> {
 
     // Win!
     HapticFeedbackUtil.victory();
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('shikaku');
+    ref.read(gameStreakProvider.notifier).completeGame('shikaku');
     showDialog(
       context: context,
       barrierDismissible: false,

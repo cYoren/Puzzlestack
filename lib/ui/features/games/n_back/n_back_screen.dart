@@ -20,7 +20,7 @@ class _NBackScreenState extends ConsumerState<NBackScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(nBackNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(nBackProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
@@ -28,7 +28,7 @@ class _NBackScreenState extends ConsumerState<NBackScreen> {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('n_back');
+      ref.read(gameStreakProvider.notifier).completeGame('n_back');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -39,7 +39,7 @@ class _NBackScreenState extends ConsumerState<NBackScreen> {
         title: won ? l10n.winMemoryMaster : l10n.loseFadingEcho,
         message: AppLocalizations.of(context)!.nBackMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(nBackNotifierProvider.notifier).initGame();
+          ref.read(nBackProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -54,10 +54,10 @@ class _NBackScreenState extends ConsumerState<NBackScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(nBackNotifierProvider);
-    final notifier = ref.read(nBackNotifierProvider.notifier);
+    final state = ref.watch(nBackProvider);
+    final notifier = ref.read(nBackProvider.notifier);
 
-    ref.listen(nBackNotifierProvider, (previous, next) {
+    ref.listen(nBackProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

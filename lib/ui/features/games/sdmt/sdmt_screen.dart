@@ -20,7 +20,7 @@ class _SDMTScreenState extends ConsumerState<SDMTScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(sdmtNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(sdmtProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
@@ -28,7 +28,7 @@ class _SDMTScreenState extends ConsumerState<SDMTScreen> {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('sdmt');
+      ref.read(gameStreakProvider.notifier).completeGame('sdmt');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -39,7 +39,7 @@ class _SDMTScreenState extends ConsumerState<SDMTScreen> {
         title: won ? l10n.winSpeedDemon : l10n.loseSlowSteady,
         message: AppLocalizations.of(context)!.sdmtMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(sdmtNotifierProvider.notifier).initGame();
+          ref.read(sdmtProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -53,10 +53,10 @@ class _SDMTScreenState extends ConsumerState<SDMTScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(sdmtNotifierProvider);
-    final notifier = ref.read(sdmtNotifierProvider.notifier);
+    final state = ref.watch(sdmtProvider);
+    final notifier = ref.read(sdmtProvider.notifier);
 
-    ref.listen(sdmtNotifierProvider, (previous, next) {
+    ref.listen(sdmtProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

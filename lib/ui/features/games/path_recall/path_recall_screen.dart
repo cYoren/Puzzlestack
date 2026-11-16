@@ -23,13 +23,13 @@ class _PathRecallScreenState extends ConsumerState<PathRecallScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(pathRecallNotifierProvider.notifier).initGame();
+      ref.read(pathRecallProvider.notifier).initGame();
     });
   }
 
   void _showGameOverDialog(bool won) {
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('path_recall');
+      ref.read(gameStreakProvider.notifier).completeGame('path_recall');
     }
     showDialog(
       context: context,
@@ -43,7 +43,7 @@ class _PathRecallScreenState extends ConsumerState<PathRecallScreen> {
               : 'You missed a step. Try again to master the sequence.',
           isVictory: won,
           onPlayAgain: () {
-            ref.read(pathRecallNotifierProvider.notifier).initGame();
+            ref.read(pathRecallProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -59,10 +59,10 @@ class _PathRecallScreenState extends ConsumerState<PathRecallScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(pathRecallNotifierProvider);
-    final notifier = ref.read(pathRecallNotifierProvider.notifier);
+    final state = ref.watch(pathRecallProvider);
+    final notifier = ref.read(pathRecallProvider.notifier);
 
-    ref.listen(pathRecallNotifierProvider, (previous, next) {
+    ref.listen(pathRecallProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         final won = next.userPath.length == next.targetPath.length;
         if (won) {

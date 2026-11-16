@@ -134,7 +134,7 @@ class _EventTimelineMemoryScreenState extends ConsumerState<EventTimelineMemoryS
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('event_timeline_memory');
+    await ref.read(gameStreakProvider.notifier).completeGame('event_timeline_memory');
     if (!mounted) return;
     showDialog(
       context: context,

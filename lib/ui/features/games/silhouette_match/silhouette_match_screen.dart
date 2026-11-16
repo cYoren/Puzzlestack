@@ -23,7 +23,7 @@ class _SilhouetteMatchScreenState extends ConsumerState<SilhouetteMatchScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(silhouetteMatchNotifierProvider.notifier).initGame();
+      ref.read(silhouetteMatchProvider.notifier).initGame();
     });
   }
 
@@ -44,7 +44,7 @@ class _SilhouetteMatchScreenState extends ConsumerState<SilhouetteMatchScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(silhouetteMatchNotifierProvider.notifier).initGame();
+          ref.read(silhouetteMatchProvider.notifier).initGame();
         },
       ),
     );
@@ -54,15 +54,15 @@ class _SilhouetteMatchScreenState extends ConsumerState<SilhouetteMatchScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(silhouetteMatchNotifierProvider);
-    final notifier = ref.read(silhouetteMatchNotifierProvider.notifier);
+    final state = ref.watch(silhouetteMatchProvider);
+    final notifier = ref.read(silhouetteMatchProvider.notifier);
 
-    ref.listen(silhouetteMatchNotifierProvider, (previous, next) {
+    ref.listen(silhouetteMatchProvider, (previous, next) {
       if ((next.isVictory && !(previous?.isVictory ?? false)) ||
           (next.isFailed && !(previous?.isFailed ?? false))) {
         if (next.isVictory) {
           HapticFeedbackUtil.victory();
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('silhouette_match');
+          ref.read(gameStreakProvider.notifier).completeGame('silhouette_match');
         } else {
           HapticFeedbackUtil.error();
         }

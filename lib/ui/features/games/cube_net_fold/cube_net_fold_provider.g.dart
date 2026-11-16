@@ -6,22 +6,58 @@ part of 'cube_net_fold_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cubeNetFoldNotifierHash() =>
-    r'7927a85b4af7c05d15aaa6f8e47132d529fc2f13';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [CubeNetFoldNotifier].
 @ProviderFor(CubeNetFoldNotifier)
-final cubeNetFoldNotifierProvider =
-    AutoDisposeNotifierProvider<CubeNetFoldNotifier, CubeNetFoldState>.internal(
-  CubeNetFoldNotifier.new,
-  name: r'cubeNetFoldNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$cubeNetFoldNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final cubeNetFoldProvider = CubeNetFoldNotifierProvider._();
 
-typedef _$CubeNetFoldNotifier = AutoDisposeNotifier<CubeNetFoldState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class CubeNetFoldNotifierProvider
+    extends $NotifierProvider<CubeNetFoldNotifier, CubeNetFoldState> {
+  CubeNetFoldNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'cubeNetFoldProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$cubeNetFoldNotifierHash();
+
+  @$internal
+  @override
+  CubeNetFoldNotifier create() => CubeNetFoldNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CubeNetFoldState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CubeNetFoldState>(value),
+    );
+  }
+}
+
+String _$cubeNetFoldNotifierHash() =>
+    r'f3f3e9bc220385ede76643e158aa479887ff22a3';
+
+abstract class _$CubeNetFoldNotifier extends $Notifier<CubeNetFoldState> {
+  CubeNetFoldState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<CubeNetFoldState, CubeNetFoldState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<CubeNetFoldState, CubeNetFoldState>,
+              CubeNetFoldState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

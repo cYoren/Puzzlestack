@@ -121,7 +121,7 @@ class _CorsiBackwardSpanScreenState extends ConsumerState<CorsiBackwardSpanScree
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('corsi_backward_span');
+        ref.read(gameStreakProvider.notifier).completeGame('corsi_backward_span');
         _showWinDialog();
         return;
       }

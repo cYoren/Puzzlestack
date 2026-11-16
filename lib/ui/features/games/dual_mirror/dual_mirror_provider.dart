@@ -66,7 +66,7 @@ class DualMirrorNotifier extends _$DualMirrorNotifier {
 
     if (npos1 == state.currentLevel!.target1 && npos2 == state.currentLevel!.target2) {
       state = state.copyWith(isGameOver: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('dual_mirror', xpAmount: 30);
+      ref.read(gameStreakProvider.notifier).completeGame('dual_mirror', xpAmount: 30);
     }
   }
 

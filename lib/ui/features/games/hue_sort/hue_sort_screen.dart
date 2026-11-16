@@ -15,9 +15,9 @@ class HueSortScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(hueSortNotifierProvider);
+    final state = ref.watch(hueSortProvider);
 
-    ref.listen(hueSortNotifierProvider, (previous, next) {
+    ref.listen(hueSortProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref, l10n);
@@ -33,7 +33,7 @@ class HueSortScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(hueSortNotifierProvider.notifier).newGame();
+            ref.read(hueSortProvider.notifier).newGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(Icons.refresh_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface),
@@ -120,7 +120,7 @@ class HueSortScreen extends ConsumerWidget {
               return GestureDetector(
                 onTap: () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(hueSortNotifierProvider.notifier).selectTile(index);
+                  ref.read(hueSortProvider.notifier).selectTile(index);
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
@@ -162,7 +162,7 @@ class HueSortScreen extends ConsumerWidget {
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref, AppLocalizations l10n) async {
     final l10n = AppLocalizations.of(context)!;
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('hue_sort');
+    await ref.read(gameStreakProvider.notifier).completeGame('hue_sort');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -175,7 +175,7 @@ class HueSortScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(hueSortNotifierProvider.notifier).newGame();
+          ref.read(hueSortProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
       ),

@@ -24,7 +24,7 @@ class TentsAndTreesScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('tentsAndTrees', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class TentsAndTreesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(tentsAndTreesNotifierProvider);
-    final notifier = ref.read(tentsAndTreesNotifierProvider.notifier);
+    final state = ref.watch(tentsAndTreesProvider);
+    final notifier = ref.read(tentsAndTreesProvider.notifier);
 
     return GameScaffold(
       title: l10n.tentsAndTreesTitle,

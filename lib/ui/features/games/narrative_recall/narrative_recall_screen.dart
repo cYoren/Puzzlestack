@@ -151,7 +151,7 @@ class _NarrativeRecallScreenState extends ConsumerState<NarrativeRecallScreen> {
 
     if (allCorrect) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('narrative_recall');
+      ref.read(gameStreakProvider.notifier).completeGame('narrative_recall');
       showDialog(
         context: context,
         barrierDismissible: false,

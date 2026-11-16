@@ -23,7 +23,7 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(crossSectionSliceNotifierProvider.notifier).startGame();
+      ref.read(crossSectionSliceProvider.notifier).startGame();
     });
   }
 
@@ -39,7 +39,7 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
         onHome: () => Navigator.of(context).popUntil((route) => route.isFirst),
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(crossSectionSliceNotifierProvider.notifier).startGame();
+          ref.read(crossSectionSliceProvider.notifier).startGame();
         },
       ),
     );
@@ -47,10 +47,10 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(crossSectionSliceNotifierProvider);
+    final state = ref.watch(crossSectionSliceProvider);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(crossSectionSliceNotifierProvider.select((s) => s.isGameOver), (prev, next) {
+    ref.listen(crossSectionSliceProvider.select((s) => s.isGameOver), (prev, next) {
       if (next && !(prev ?? false)) {
         final isVictory = state.score >= (state.isTrialMode ? state.targetTrials / 2 : 5);
         if (isVictory) {
@@ -58,7 +58,7 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
         } else {
           HapticFeedbackUtil.error();
         }
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('cross_section_slice');
+        ref.read(gameStreakProvider.notifier).completeGame('cross_section_slice');
         Future.delayed(const Duration(milliseconds: 500), () {
           if (mounted) _showCompletionDialog(isVictory);
         });
@@ -72,7 +72,7 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
     return GameScaffold(
       title: l10n.crossSectionSliceTitle,
       subtitle: l10n.crossSectionSliceSubtitle,
-      onReset: () => ref.read(crossSectionSliceNotifierProvider.notifier).startGame(),
+      onReset: () => ref.read(crossSectionSliceProvider.notifier).startGame(),
       body: Column(
         children: [
           _buildHeader(state, l10n),
@@ -155,7 +155,7 @@ class _CrossSectionSliceScreenState extends ConsumerState<CrossSectionSliceScree
         childAspectRatio: 2.5,
         children: state.challenge!.options.map((shape) {
           return TangibleButton(
-            onTap: () => ref.read(crossSectionSliceNotifierProvider.notifier).submitAnswer(shape),
+            onTap: () => ref.read(crossSectionSliceProvider.notifier).submitAnswer(shape),
             color: Theme.of(context).colorScheme.surface,
             child: FittedBox(
               fit: BoxFit.scaleDown,

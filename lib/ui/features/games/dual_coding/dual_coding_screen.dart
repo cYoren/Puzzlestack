@@ -23,7 +23,7 @@ class _DualCodingScreenState extends ConsumerState<DualCodingScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(dualCodingNotifierProvider.notifier).initGame();
+      ref.read(dualCodingProvider.notifier).initGame();
     });
   }
 
@@ -42,7 +42,7 @@ class _DualCodingScreenState extends ConsumerState<DualCodingScreen> {
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(dualCodingNotifierProvider);
+    final state = ref.read(dualCodingProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -56,7 +56,7 @@ class _DualCodingScreenState extends ConsumerState<DualCodingScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(dualCodingNotifierProvider.notifier).initGame();
+          ref.read(dualCodingProvider.notifier).initGame();
         },
       ),
     );
@@ -65,10 +65,10 @@ class _DualCodingScreenState extends ConsumerState<DualCodingScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(dualCodingNotifierProvider);
-    final notifier = ref.read(dualCodingNotifierProvider.notifier);
+    final state = ref.watch(dualCodingProvider);
+    final notifier = ref.read(dualCodingProvider.notifier);
 
-    ref.listen(dualCodingNotifierProvider, (previous, next) {
+    ref.listen(dualCodingProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         _showCompletionDialog();

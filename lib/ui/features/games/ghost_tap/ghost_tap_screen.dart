@@ -107,7 +107,7 @@ class _GhostTapScreenState extends ConsumerState<GhostTapScreen> with SingleTick
   void _onGameComplete() async {
     _pulseController.stop();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('ghost_tap');
+    await ref.read(gameStreakProvider.notifier).completeGame('ghost_tap');
     if (!mounted) return;
     showDialog(
       context: context,

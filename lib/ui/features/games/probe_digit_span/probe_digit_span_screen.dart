@@ -116,7 +116,7 @@ class _ProbeDigitSpanScreenState extends ConsumerState<ProbeDigitSpanScreen> {
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('probe_digit_span');
+    ref.read(gameStreakProvider.notifier).completeGame('probe_digit_span');
     _showEndDialog();
   }
 

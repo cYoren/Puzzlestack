@@ -21,17 +21,17 @@ class _CrosswordScreenState extends ConsumerState<CrosswordScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(crosswordNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(crosswordProvider.notifier).initGame());
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(crosswordNotifierProvider);
-    final notifier = ref.read(crosswordNotifierProvider.notifier);
+    final state = ref.watch(crosswordProvider);
+    final notifier = ref.read(crosswordProvider.notifier);
 
-    ref.listen(crosswordNotifierProvider, (previous, next) {
+    ref.listen(crosswordProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -113,16 +113,16 @@ class CrosswordCellWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(crosswordNotifierProvider);
-    final notifier = ref.read(crosswordNotifierProvider.notifier);
+    final state = ref.watch(crosswordProvider);
+    final notifier = ref.read(crosswordProvider.notifier);
     final board = state.board!;
 
     // Selectively watch only the data this cell needs
-    final userChar = ref.watch(crosswordNotifierProvider.select((s) => s.userGrid[y][x]));
-    final isSelected = ref.watch(crosswordNotifierProvider.select((s) => s.selectedX == x && s.selectedY == y));
+    final userChar = ref.watch(crosswordProvider.select((s) => s.userGrid[y][x]));
+    final isSelected = ref.watch(crosswordProvider.select((s) => s.selectedX == x && s.selectedY == y));
     
     // Check if cell is in the current word being played
-    final isInCurrentWord = ref.watch(crosswordNotifierProvider.select((s) {
+    final isInCurrentWord = ref.watch(crosswordProvider.select((s) {
       if (s.selectedX == null || s.selectedY == null) return false;
       for (var w in board.words) {
         if (w.isHorizontal == s.isAcross) {
@@ -369,7 +369,7 @@ extension _CrosswordScreenControls on _CrosswordScreenState {
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('crossword');
+    await ref.read(gameStreakProvider.notifier).completeGame('crossword');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -382,7 +382,7 @@ extension _CrosswordScreenControls on _CrosswordScreenState {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(crosswordNotifierProvider.notifier).initGame();
+          ref.read(crosswordProvider.notifier).initGame();
           Navigator.of(context).pop();
         },
       ),

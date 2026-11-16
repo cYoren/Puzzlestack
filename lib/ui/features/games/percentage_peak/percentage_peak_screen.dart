@@ -20,14 +20,14 @@ class _PercentagePeakScreenState extends ConsumerState<PercentagePeakScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(percentagePeakNotifierProvider.notifier).initGame());
+        () => ref.read(percentagePeakProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     final l10n = AppLocalizations.of(context)!;
     final won = score >= 5;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('percentage_peak');
+      ref.read(gameStreakProvider.notifier).completeGame('percentage_peak');
     }
     showDialog(
       context: context,
@@ -36,7 +36,7 @@ class _PercentagePeakScreenState extends ConsumerState<PercentagePeakScreen> {
         title: won ? 'PERCENTAGE PRO!' : l10n.timeUp.toUpperCase(),
         message: AppLocalizations.of(context)!.percentagePeakMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(percentagePeakNotifierProvider.notifier).initGame();
+          ref.read(percentagePeakProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -51,10 +51,10 @@ class _PercentagePeakScreenState extends ConsumerState<PercentagePeakScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(percentagePeakNotifierProvider);
-    final notifier = ref.read(percentagePeakNotifierProvider.notifier);
+    final state = ref.watch(percentagePeakProvider);
+    final notifier = ref.read(percentagePeakProvider.notifier);
 
-    ref.listen(percentagePeakNotifierProvider, (previous, next) {
+    ref.listen(percentagePeakProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

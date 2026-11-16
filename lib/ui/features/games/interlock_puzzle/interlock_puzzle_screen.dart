@@ -24,7 +24,7 @@ class _InterlockPuzzleScreenState extends ConsumerState<InterlockPuzzleScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(interlockPuzzleNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(interlockPuzzleProvider.notifier).initGame());
   }
 
   void _showCompletionDialog(bool isVictory) {
@@ -42,7 +42,7 @@ class _InterlockPuzzleScreenState extends ConsumerState<InterlockPuzzleScreen> {
         },
         onPlayAgain: () {
           Navigator.of(dialogCtx).pop();
-          ref.read(interlockPuzzleNotifierProvider.notifier).initGame();
+          ref.read(interlockPuzzleProvider.notifier).initGame();
         },
       ),
     );
@@ -50,9 +50,9 @@ class _InterlockPuzzleScreenState extends ConsumerState<InterlockPuzzleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(interlockPuzzleNotifierProvider);
+    final state = ref.watch(interlockPuzzleProvider);
 
-    ref.listen(interlockPuzzleNotifierProvider, (prev, next) {
+    ref.listen(interlockPuzzleProvider, (prev, next) {
       if (next.isSolved && !(prev?.isSolved ?? false)) {
         if (next.isCorrect) {
           HapticFeedbackUtil.victory();
@@ -72,7 +72,7 @@ class _InterlockPuzzleScreenState extends ConsumerState<InterlockPuzzleScreen> {
           _rotationX = -0.5;
           _rotationY = 0.5;
         });
-        ref.read(interlockPuzzleNotifierProvider.notifier).initGame();
+        ref.read(interlockPuzzleProvider.notifier).initGame();
       },
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -117,7 +117,7 @@ class _InterlockPuzzleScreenState extends ConsumerState<InterlockPuzzleScreen> {
                           child: TangibleButton(
                             onTap: () {
                               HapticFeedbackUtil.selection();
-                              ref.read(interlockPuzzleNotifierProvider.notifier).submitAnswer(true);
+                              ref.read(interlockPuzzleProvider.notifier).submitAnswer(true);
                             },
                             color: Colors.green,
                             child: Text(AppLocalizations.of(context)!.btnYes, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
@@ -128,7 +128,7 @@ class _InterlockPuzzleScreenState extends ConsumerState<InterlockPuzzleScreen> {
                           child: TangibleButton(
                             onTap: () {
                               HapticFeedbackUtil.selection();
-                              ref.read(interlockPuzzleNotifierProvider.notifier).submitAnswer(false);
+                              ref.read(interlockPuzzleProvider.notifier).submitAnswer(false);
                             },
                             color: Colors.red,
                             child: Text(AppLocalizations.of(context)!.btnNo, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),

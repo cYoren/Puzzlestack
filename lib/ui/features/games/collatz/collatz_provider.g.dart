@@ -6,21 +6,57 @@ part of 'collatz_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$collatzNotifierHash() => r'b6fe2abde2d3a9340f3ed8285e848d079dfbbcda';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [CollatzNotifier].
 @ProviderFor(CollatzNotifier)
-final collatzNotifierProvider =
-    AutoDisposeNotifierProvider<CollatzNotifier, CollatzState>.internal(
-  CollatzNotifier.new,
-  name: r'collatzNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$collatzNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final collatzProvider = CollatzNotifierProvider._();
 
-typedef _$CollatzNotifier = AutoDisposeNotifier<CollatzState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class CollatzNotifierProvider
+    extends $NotifierProvider<CollatzNotifier, CollatzState> {
+  CollatzNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'collatzProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$collatzNotifierHash();
+
+  @$internal
+  @override
+  CollatzNotifier create() => CollatzNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CollatzState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CollatzState>(value),
+    );
+  }
+}
+
+String _$collatzNotifierHash() => r'0415a97deb1ab7429e8ba64ee8619d27463c7fd5';
+
+abstract class _$CollatzNotifier extends $Notifier<CollatzState> {
+  CollatzState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<CollatzState, CollatzState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<CollatzState, CollatzState>,
+              CollatzState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

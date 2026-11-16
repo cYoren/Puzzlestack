@@ -6,22 +6,58 @@ part of 'factor_finder_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$factorFinderNotifierHash() =>
-    r'6d8246f938216f4289fc093522a744171544ff17';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [FactorFinderNotifier].
 @ProviderFor(FactorFinderNotifier)
-final factorFinderNotifierProvider = AutoDisposeNotifierProvider<
-    FactorFinderNotifier, FactorFinderState>.internal(
-  FactorFinderNotifier.new,
-  name: r'factorFinderNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$factorFinderNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final factorFinderProvider = FactorFinderNotifierProvider._();
 
-typedef _$FactorFinderNotifier = AutoDisposeNotifier<FactorFinderState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class FactorFinderNotifierProvider
+    extends $NotifierProvider<FactorFinderNotifier, FactorFinderState> {
+  FactorFinderNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'factorFinderProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$factorFinderNotifierHash();
+
+  @$internal
+  @override
+  FactorFinderNotifier create() => FactorFinderNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(FactorFinderState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<FactorFinderState>(value),
+    );
+  }
+}
+
+String _$factorFinderNotifierHash() =>
+    r'06a8b58cad6097748a420f5ccf236317a8e9d411';
+
+abstract class _$FactorFinderNotifier extends $Notifier<FactorFinderState> {
+  FactorFinderState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<FactorFinderState, FactorFinderState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<FactorFinderState, FactorFinderState>,
+              FactorFinderState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

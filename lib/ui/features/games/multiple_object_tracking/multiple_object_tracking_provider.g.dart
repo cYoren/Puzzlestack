@@ -6,20 +6,57 @@ part of 'multiple_object_tracking_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mOTNotifierHash() => r'd9b4b2381f3d62fb93ba0eb825ad8b4424531914';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [MOTNotifier].
 @ProviderFor(MOTNotifier)
-final mOTNotifierProvider =
-    AutoDisposeNotifierProvider<MOTNotifier, MOTState>.internal(
-  MOTNotifier.new,
-  name: r'mOTNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$mOTNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final mOTProvider = MOTNotifierProvider._();
 
-typedef _$MOTNotifier = AutoDisposeNotifier<MOTState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class MOTNotifierProvider
+    extends $NotifierProvider<MOTNotifier, MOTState> {
+  MOTNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mOTProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mOTNotifierHash();
+
+  @$internal
+  @override
+  MOTNotifier create() => MOTNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MOTState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MOTState>(value),
+    );
+  }
+}
+
+String _$mOTNotifierHash() => r'77c4b74a4cfc5599f4e4693929e0e1aff48ba148';
+
+abstract class _$MOTNotifier extends $Notifier<MOTState> {
+  MOTState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<MOTState, MOTState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<MOTState, MOTState>,
+              MOTState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

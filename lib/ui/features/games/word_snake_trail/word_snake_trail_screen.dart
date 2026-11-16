@@ -242,7 +242,7 @@ class _WordSnakeTrailScreenState extends ConsumerState<WordSnakeTrailScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('word_snake_trail');
+    await ref.read(gameStreakProvider.notifier).completeGame('word_snake_trail');
     if (!mounted) return;
     showDialog(
       context: context,

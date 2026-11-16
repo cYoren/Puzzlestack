@@ -92,7 +92,7 @@ class _BinaryCodeScreenState extends ConsumerState<BinaryCodeScreen> {
 
     if (_correctAnswers >= targetAnswers) {
       _timer?.cancel();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('binary_code', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('binary_code', xpAmount: 25);
       showDialog(
         context: context,
         barrierDismissible: false,

@@ -111,7 +111,7 @@ class RomanArithmeticNotifier extends _$RomanArithmeticNotifier {
     );
 
     if (state.score >= 10) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('roman_arithmetic', xpAmount: 20 + (state.score ~/ 2));
+      ref.read(gameStreakProvider.notifier).completeGame('roman_arithmetic', xpAmount: 20 + (state.score ~/ 2));
     }
   }
 

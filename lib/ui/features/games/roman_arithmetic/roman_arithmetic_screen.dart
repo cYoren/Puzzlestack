@@ -14,10 +14,10 @@ class RomanArithmeticScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(romanArithmeticNotifierProvider);
-    final notifier = ref.read(romanArithmeticNotifierProvider.notifier);
+    final state = ref.watch(romanArithmeticProvider);
+    final notifier = ref.read(romanArithmeticProvider.notifier);
 
-    ref.listen(romanArithmeticNotifierProvider, (previous, next) {
+    ref.listen(romanArithmeticProvider, (previous, next) {
       if (next.status == RomanStatus.gameOver &&
           previous?.status != RomanStatus.gameOver) {
         final isGoalReached = next.score >= 10;
@@ -40,7 +40,7 @@ class RomanArithmeticScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(romanArithmeticNotifierProvider.notifier).reset();
+              ref.read(romanArithmeticProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),

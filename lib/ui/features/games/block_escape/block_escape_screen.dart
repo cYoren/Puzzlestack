@@ -22,9 +22,9 @@ class _BlockEscapeScreenState extends ConsumerState<BlockEscapeScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(blockEscapeNotifierProvider);
+    final state = ref.watch(blockEscapeProvider);
 
-    ref.listen(blockEscapeNotifierProvider, (previous, next) {
+    ref.listen(blockEscapeProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -40,7 +40,7 @@ class _BlockEscapeScreenState extends ConsumerState<BlockEscapeScreen> {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(blockEscapeNotifierProvider.notifier).newGame();
+            ref.read(blockEscapeProvider.notifier).newGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(Icons.refresh_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface),
@@ -142,7 +142,7 @@ class _BlockEscapeScreenState extends ConsumerState<BlockEscapeScreen> {
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('block_escape');
+    await ref.read(gameStreakProvider.notifier).completeGame('block_escape');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -155,7 +155,7 @@ class _BlockEscapeScreenState extends ConsumerState<BlockEscapeScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(blockEscapeNotifierProvider.notifier).newGame();
+          ref.read(blockEscapeProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
       ),
@@ -203,7 +203,7 @@ class _DraggableBlockState extends State<_DraggableBlock> {
 
           final threshold = cellSize * 0.35;
 
-          final notifier = ProviderScope.containerOf(context).read(blockEscapeNotifierProvider.notifier);
+          final notifier = ProviderScope.containerOf(context).read(blockEscapeProvider.notifier);
           while (_accumulatedDelta.abs() >= threshold) {
             final direction = _accumulatedDelta > 0 ? 1 : -1;
             if (block.orientation == BlockOrientation.horizontal) {

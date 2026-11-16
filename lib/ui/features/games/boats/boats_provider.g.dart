@@ -6,21 +6,57 @@ part of 'boats_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$boatsNotifierHash() => r'382310e8910ef3721c995b96b74e2f66002be9c5';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [BoatsNotifier].
 @ProviderFor(BoatsNotifier)
-final boatsNotifierProvider =
-    AutoDisposeNotifierProvider<BoatsNotifier, BoatsState>.internal(
-  BoatsNotifier.new,
-  name: r'boatsNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$boatsNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final boatsProvider = BoatsNotifierProvider._();
 
-typedef _$BoatsNotifier = AutoDisposeNotifier<BoatsState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class BoatsNotifierProvider
+    extends $NotifierProvider<BoatsNotifier, BoatsState> {
+  BoatsNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'boatsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$boatsNotifierHash();
+
+  @$internal
+  @override
+  BoatsNotifier create() => BoatsNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(BoatsState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<BoatsState>(value),
+    );
+  }
+}
+
+String _$boatsNotifierHash() => r'ff92d2c1e8e2584f5128c8e0f2a81b781efcd96a';
+
+abstract class _$BoatsNotifier extends $Notifier<BoatsState> {
+  BoatsState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<BoatsState, BoatsState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<BoatsState, BoatsState>,
+              BoatsState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

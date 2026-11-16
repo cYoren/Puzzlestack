@@ -24,7 +24,7 @@ class _PaperFoldingScreenState extends ConsumerState<PaperFoldingScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(paperFoldingNotifierProvider.notifier).initGame();
+      ref.read(paperFoldingProvider.notifier).initGame();
     });
   }
 
@@ -43,7 +43,7 @@ class _PaperFoldingScreenState extends ConsumerState<PaperFoldingScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(paperFoldingNotifierProvider.notifier).initGame();
+          ref.read(paperFoldingProvider.notifier).initGame();
         },
       ),
     );
@@ -53,13 +53,13 @@ class _PaperFoldingScreenState extends ConsumerState<PaperFoldingScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(paperFoldingNotifierProvider);
-    final notifier = ref.read(paperFoldingNotifierProvider.notifier);
+    final state = ref.watch(paperFoldingProvider);
+    final notifier = ref.read(paperFoldingProvider.notifier);
 
-    ref.listen(paperFoldingNotifierProvider, (previous, next) {
+    ref.listen(paperFoldingProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('paper_folding');
+        ref.read(gameStreakProvider.notifier).completeGame('paper_folding');
         _showCompletionDialog();
       }
     });
