@@ -488,6 +488,24 @@ for each card written on its page.</p>
 
     # --- output -----------------------------------------------------------
 
+    def prune(self) -> None:
+        """Delete pages this run did not write.
+
+        A slug that changes (or a game that leaves the catalog) would otherwise
+        leave its old page behind, and a stale page is a duplicate of a live one
+        with a link to a puzzle that moved.
+        """
+        keep = set(self.pages)
+        for folder in ("games", "rooms"):
+            target = DOCS / folder
+            if not target.is_dir():
+                continue
+            for file in target.glob("*.html"):
+                rel = f"{folder}/{file.name}"
+                if rel not in keep:
+                    file.unlink()
+                    print(f"removed stale page {rel}")
+
     def write(self, path: str, body: str) -> None:
         target = DOCS / path
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -515,6 +533,7 @@ for each card written on its page.</p>
         self.write(*self.index_page())
         self.write(*self.hub_page())
 
+        self.prune()
         (DOCS / "sitemap.xml").write_text(self.sitemap(), encoding="utf-8")
         (DOCS / "robots.txt").write_text(
             "User-agent: *\nAllow: /\n\n"

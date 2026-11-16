@@ -45,6 +45,15 @@ void main() {
       expect(pages, isNot(contains(slugFor(archived))),
           reason: 'the archive is not published, and $archived is archived');
     }
+    // No orphans: a slug that changed must not leave the old page behind.
+    // `pages` is the file names without the extension.
+    final Set<String> expected = {
+      for (final Map<String, Object?> game in exported) '${game['slug']}',
+      'index',
+    };
+    expect(pages, expected,
+        reason: 'docs/games holds pages the export does not: '
+            '${pages.difference(expected)}');
   });
 
   test('the sitemap lists every page and nothing else', () {
