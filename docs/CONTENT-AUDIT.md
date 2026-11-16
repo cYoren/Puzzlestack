@@ -1,7 +1,7 @@
 # Content audit — what is broken, thin, or missing
 
 Measured against `main` at `e7c2475`, 2026-11-13: 313 games at the time, 315 in the catalog
-today — 321 in the catalog. The rules below are live; the counts are a snapshot of that tree. Every number here came from a script run on that
+today — 322 in the catalog. The rules below are live; the counts are a snapshot of that tree. Every number here came from a script run on that
 tree, and the rule that produced it is stated with it. Re-run the rule, get the number; if you get
 something else, the tree moved and this file is stale.
 
