@@ -9,6 +9,7 @@ import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/l10n_game_helpers.dart';
 import '../../../widgets/deck.dart';
+import '../plus/plus_sheet.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -136,11 +137,18 @@ class SettingsScreen extends ConsumerWidget {
                             context,
                             '${l10n.hiddenGames} (${hiddenIds.length})',
                             Icons.visibility_off_outlined,
-                            () => _showHiddenGamesDialog(
-                                context, ref, hiddenIds),
+                            () =>
+                                _showHiddenGamesDialog(context, ref, hiddenIds),
                           ),
                         ]),
                       ],
+                      const SizedBox(height: DesignSystem.spaceXL),
+                      _buildSectionTitle(context, 'Puzzlestack Plus'),
+                      const SizedBox(height: DesignSystem.spaceSM),
+                      // What this device owns, and the way back from a new
+                      // phone. The sale itself lives in one place only: the
+                      // sheet the fourth pick of a day opens.
+                      _buildGroup(context, const [PlusSettingsRow()]),
                       const SizedBox(height: DesignSystem.spaceXL),
                       _buildSectionTitle(context, l10n.supportUs),
                       const SizedBox(height: DesignSystem.spaceSM),
@@ -396,7 +404,9 @@ class SettingsScreen extends ConsumerWidget {
       child: Row(
         children: [
           Icon(
-            selected ? Icons.check_circle_rounded : Icons.radio_button_off_rounded,
+            selected
+                ? Icons.check_circle_rounded
+                : Icons.radio_button_off_rounded,
             size: 18,
             color: selected ? accent : DesignSystem.hairline(context),
           ),
@@ -432,8 +442,9 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 trailing: IconButton(
                   icon: const Icon(Icons.restore_rounded, size: 20),
-                  onPressed: () =>
-                      ref.read(userDataNotifierProvider.notifier).toggleHideGame(id),
+                  onPressed: () => ref
+                      .read(userDataNotifierProvider.notifier)
+                      .toggleHideGame(id),
                 ),
               );
             },
