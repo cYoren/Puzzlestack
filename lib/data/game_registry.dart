@@ -192,6 +192,7 @@ import '../ui/features/games/salad/salad_metadata.dart';
 import '../ui/features/games/seismic/seismic_metadata.dart';
 import '../ui/features/games/ascent/ascent_metadata.dart';
 import '../ui/features/games/clusters/clusters_metadata.dart';
+import '../ui/features/games/bricks/bricks_metadata.dart';
 import '../ui/features/games/tents_and_trees/tents_and_trees_metadata.dart';
 import '../ui/features/games/find_word/find_word_metadata.dart';
 import '../ui/features/games/crossword/crossword_metadata.dart';
@@ -507,6 +508,7 @@ List<GameMetadata> _buildGameList() {
     seismicMetadata,
     ascentMetadata,
     clustersMetadata,
+    bricksMetadata,
     tentsAndTreesMetadata,
     findWordMetadata,
     crosswordMetadata,

@@ -1723,6 +1723,26 @@ class AppLocalizationsKo extends AppLocalizations {
       'Two colours, every dot true, every cluster of two or more.';
 
   @override
+  String get bricksTitle => 'Bricks';
+
+  @override
+  String get bricksSubtitle =>
+      'Shade cells of the honeycomb. A shaded cell needs a shaded cell under it, no three shaded cells may sit in a row, and a number counts the shaded cells around it.';
+
+  @override
+  String get bricksShaded => 'Shaded';
+
+  @override
+  String get bricksDepth => 'Depth';
+
+  @override
+  String get bricksWinTitle => 'THE PILE HOLDS!';
+
+  @override
+  String get bricksWinMessage =>
+      'Every shaded cell is held up, no run of three, and every number reads true.';
+
+  @override
   String get tentsAndTreesTitle => '텐트와 나무';
 
   @override

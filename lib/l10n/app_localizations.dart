@@ -3326,6 +3326,42 @@ abstract class AppLocalizations {
   /// **'Two colours, every dot true, every cluster of two or more.'**
   String get clustersWinMessage;
 
+  /// No description provided for @bricksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bricks'**
+  String get bricksTitle;
+
+  /// No description provided for @bricksSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shade cells of the honeycomb. A shaded cell needs a shaded cell under it, no three shaded cells may sit in a row, and a number counts the shaded cells around it.'**
+  String get bricksSubtitle;
+
+  /// No description provided for @bricksShaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Shaded'**
+  String get bricksShaded;
+
+  /// No description provided for @bricksDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get bricksDepth;
+
+  /// No description provided for @bricksWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'THE PILE HOLDS!'**
+  String get bricksWinTitle;
+
+  /// No description provided for @bricksWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every shaded cell is held up, no run of three, and every number reads true.'**
+  String get bricksWinMessage;
+
   /// No description provided for @tentsAndTreesTitle.
   ///
   /// In en, this message translates to:
