@@ -28,6 +28,23 @@ class SeismicBoard extends GridBoard<SeismicState> {
   @override
   bool get isSolved => state.isSolved;
 
+  /// The digit a player has written, or a given's number; a blank says nothing.
+  @override
+  String? valueOf(ElementRef element) {
+    if (!isCell(element)) return null;
+    final cell = element.a * cols + element.b;
+    final value = state.values[cell];
+    if (value != kSeismicBlank) return '$value';
+    final given = state.puzzle.given(cell);
+    return given == kSeismicNoClue ? null : '$given';
+  }
+
+  @override
+  bool isFixed(ElementRef element) {
+    if (!isCell(element)) return false;
+    return state.puzzle.given(element.a * cols + element.b) != kSeismicNoClue;
+  }
+
   /// The regions are the board, so the cells must touch.
   @override
   double get gapFraction => 0;

@@ -341,13 +341,7 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       return;
     }
 
-    final move = widget.board.tapMove(element);
     _handleTapCancel();
-    if (move == null) {
-      emitVerb(BoardVerb.select);
-      return;
-    }
-    emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
 
     // A tap is a drag that resolved immediately, so it lands in this frame.
     //
@@ -357,6 +351,20 @@ class _PuzzleBoardViewState<S extends PuzzleState>
     // a move, it never gates it. A board with something to show (a pour, a
     // turn) declares `transitionFor`, and the engine paints that once the state
     // has already moved, so the move is instant and still animated.
+    _playTap(element);
+  }
+
+  /// The tap path, shared by the gesture and by a semantics node.
+  ///
+  /// A screen reader's tap and a finger's tap must land on the same move, so
+  /// they go through one function rather than two that drift apart.
+  void _playTap(ElementRef element) {
+    final move = widget.board.tapMove(element);
+    if (move == null) {
+      emitVerb(BoardVerb.select);
+      return;
+    }
+    emitVerb(move.kind == MoveKind.select ? BoardVerb.select : BoardVerb.place);
     widget.onMove(move);
   }
 
@@ -383,6 +391,50 @@ class _PuzzleBoardViewState<S extends PuzzleState>
 
   // ------------------------------------------------------------------ build
 
+  /// The value a listener hears, with "fixed" on a given.
+  String? _spokenValue(ElementRef element) {
+    final value = widget.board.valueOf(element);
+    final fixed = widget.board.isFixed(element);
+    if (value != null && value.isNotEmpty) {
+      return fixed ? '$value, fixed' : value;
+    }
+    return fixed ? 'fixed' : null;
+  }
+
+  /// One semantics node per element, laid over the paint at that element's own
+  /// bounds, in the same order the elements are painted.
+  ///
+  /// The nodes ignore pointers, so the gesture detector underneath still gets
+  /// every touch: they exist for a listener and for an agent, not for a finger.
+  List<Widget> _semanticsNodes(Size size) {
+    final nodes = <Widget>[];
+    for (final element in widget.board.elements) {
+      final bounds = widget.board.boundsOf(element);
+      if (bounds == null) continue;
+      final action = widget.enabled ? widget.board.describeTap(element) : null;
+      nodes.add(
+        Positioned.fromRect(
+          rect: Rect.fromLTRB(
+            bounds.left * size.width,
+            bounds.top * size.height,
+            bounds.right * size.width,
+            bounds.bottom * size.height,
+          ),
+          child: Semantics(
+            container: true,
+            textDirection: TextDirection.ltr,
+            label: widget.board.describeElement(element),
+            value: _spokenValue(element),
+            hint: action == null ? null : 'tap to $action',
+            onTap: action == null ? null : () => _playTap(element),
+            child: const IgnorePointer(child: SizedBox.expand()),
+          ),
+        ),
+      );
+    }
+    return nodes;
+  }
+
   @override
   Widget build(BuildContext context) {
     final palette = PuzzlePalette.of(context);
@@ -394,31 +446,44 @@ class _PuzzleBoardViewState<S extends PuzzleState>
       child: LayoutBuilder(
         builder: (context, constraints) {
           _size = constraints.biggest;
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onPanDown: _handlePanDown,
-            onPanStart: _handlePanStart,
-            onPanUpdate: _handlePanUpdate,
-            onPanEnd: _handlePanEnd,
-            onPanCancel: _handlePanCancel,
-            onTapDown: _handleTapDown,
-            onTapUp: _handleTapUp,
-            onTapCancel: _handleTapCancel,
-            child: RepaintBoundary(
-              child: AnimatedBuilder(
-                animation: listenable,
-                builder: (context, _) => CustomPaint(
-                  size: _size,
-                  painter: _BoardPainter<S>(
-                    board: widget.board,
-                    palette: palette,
-                    highlight: _highlight,
-                    transitionFrom: _transitionFrom,
-                    transitionTo: _transitionTo,
-                    transitionT: _transition.value,
+          return Semantics(
+            container: true,
+            explicitChildNodes: true,
+            textDirection: TextDirection.ltr,
+            label: widget.board.semanticsSummary,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onPanDown: _handlePanDown,
+                    onPanStart: _handlePanStart,
+                    onPanUpdate: _handlePanUpdate,
+                    onPanEnd: _handlePanEnd,
+                    onPanCancel: _handlePanCancel,
+                    onTapDown: _handleTapDown,
+                    onTapUp: _handleTapUp,
+                    onTapCancel: _handleTapCancel,
+                    child: RepaintBoundary(
+                      child: AnimatedBuilder(
+                        animation: listenable,
+                        builder: (context, _) => CustomPaint(
+                          size: _size,
+                          painter: _BoardPainter<S>(
+                            board: widget.board,
+                            palette: palette,
+                            highlight: _highlight,
+                            transitionFrom: _transitionFrom,
+                            transitionTo: _transitionTo,
+                            transitionT: _transition.value,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                ..._semanticsNodes(_size),
+              ],
             ),
           );
         },
