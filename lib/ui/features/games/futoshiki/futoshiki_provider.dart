@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/deduction.dart';
 import '../../../../core/latin.dart';
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'futoshiki_engine.dart';
 
 part 'futoshiki_provider.g.dart';
@@ -91,7 +92,10 @@ class FutoshikiNotifier extends _$FutoshikiNotifier {
   final FutoshikiEngine _engine = const FutoshikiEngine();
 
   @override
-  FutoshikiState build() => _newPuzzle(FutoshikiDifficulty.medium);
+  FutoshikiState build() => _newPuzzle(
+        ref.startTier('futoshiki', FutoshikiDifficulty.values,
+            FutoshikiDifficulty.medium, (tier) => tier.name),
+      );
 
   FutoshikiState _newPuzzle(FutoshikiDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -108,6 +112,7 @@ class FutoshikiNotifier extends _$FutoshikiNotifier {
 
   void setDifficulty(FutoshikiDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('futoshiki', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

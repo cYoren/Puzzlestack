@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'dominosa_engine.dart';
 
 part 'dominosa_provider.g.dart';
@@ -79,7 +80,10 @@ class DominosaNotifier extends _$DominosaNotifier {
   final DominosaEngine _engine = const DominosaEngine();
 
   @override
-  DominosaState build() => _newPuzzle(DominosaDifficulty.medium);
+  DominosaState build() => _newPuzzle(
+        ref.startTier('dominosa', DominosaDifficulty.values,
+            DominosaDifficulty.medium, (tier) => tier.name),
+      );
 
   DominosaState _newPuzzle(DominosaDifficulty difficulty) {
     return DominosaState(
@@ -93,6 +97,7 @@ class DominosaNotifier extends _$DominosaNotifier {
 
   void setDifficulty(DominosaDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('dominosa', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

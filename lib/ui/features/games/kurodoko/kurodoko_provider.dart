@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/deduction.dart';
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'kurodoko_engine.dart';
 
 part 'kurodoko_provider.g.dart';
@@ -67,7 +68,10 @@ class KurodokoNotifier extends _$KurodokoNotifier {
   final KurodokoEngine _engine = const KurodokoEngine();
 
   @override
-  KurodokoState build() => _newPuzzle(KurodokoDifficulty.easy);
+  KurodokoState build() => _newPuzzle(
+        ref.startTier('kurodoko', KurodokoDifficulty.values,
+            KurodokoDifficulty.easy, (tier) => tier.label),
+      );
 
   KurodokoState _newPuzzle(KurodokoDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty: difficulty);
@@ -82,6 +86,7 @@ class KurodokoNotifier extends _$KurodokoNotifier {
 
   void setDifficulty(KurodokoDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('kurodoko', difficulty.label);
     state = _newPuzzle(difficulty);
   }
 

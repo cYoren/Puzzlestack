@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'inertia_engine.dart';
 
 part 'inertia_provider.g.dart';
@@ -53,7 +54,10 @@ class InertiaNotifier extends _$InertiaNotifier {
   final InertiaEngine _engine = const InertiaEngine();
 
   @override
-  InertiaState build() => _newPuzzle(InertiaDifficulty.medium);
+  InertiaState build() => _newPuzzle(
+        ref.startTier('inertia', InertiaDifficulty.values,
+            InertiaDifficulty.medium, (tier) => tier.name),
+      );
 
   InertiaState _newPuzzle(InertiaDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -68,6 +72,7 @@ class InertiaNotifier extends _$InertiaNotifier {
 
   void setDifficulty(InertiaDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('inertia', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

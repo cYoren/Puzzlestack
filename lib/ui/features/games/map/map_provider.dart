@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'map_engine.dart';
 
 part 'map_provider.g.dart';
@@ -51,7 +52,10 @@ class MapNotifier extends _$MapNotifier {
   final MapEngine _engine = const MapEngine();
 
   @override
-  MapState build() => _newPuzzle(MapDifficulty.medium);
+  MapState build() => _newPuzzle(
+        ref.startTier('map', MapDifficulty.values, MapDifficulty.medium,
+            (tier) => tier.name),
+      );
 
   MapState _newPuzzle(MapDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -66,6 +70,7 @@ class MapNotifier extends _$MapNotifier {
 
   void setDifficulty(MapDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('map', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

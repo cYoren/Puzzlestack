@@ -3,20 +3,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/game_guides.dart';
 import '../../../data/game_metadata.dart';
+import '../../../data/game_tiers.dart';
 import '../../../data/picks/pick_gate.dart';
 import '../../../data/repositories/game_stats_repository.dart';
+import '../../../providers/game_tier_provider.dart';
 import '../../../providers/pick_providers.dart';
 import '../../../utils/navigation_utils.dart';
 import '../../../widgets/game_guide_screen.dart';
+import '../../features/home/stack_chooser_sheet.dart';
 import '../../features/plus/plus_sheet.dart';
 import '../juice/game_scope.dart';
 
-/// Opens a game, asking the pick gate first and the rules second.
+/// Opens a game, asking the pick gate first, the rules second, and the size
+/// last.
 ///
 /// Every surface that opens a game from the Stack — a room, a search result,
 /// the home screen — goes through here, which is what makes "three picks a day"
 /// one rule instead of one per screen. The Deal never calls this: a dealt card
 /// is free and always was.
+///
+/// The size question comes last for the same reason the rules do: it is about
+/// the board that is not built yet. A game with one size is never asked, and a
+/// game with a ladder opens at the size last chosen (`lib/data/game_tiers.dart`)
+/// without this file knowing which sizes that game has.
 ///
 /// "Show the rules first" has to happen before the game screen exists: a timed
 /// game starts its clock in `initState`, so a guide painted on top of it would
@@ -63,6 +72,25 @@ Future<void> launchGame(
   }
 
   if (!context.mounted) return;
+
+  if (offersTierChoice(game.id)) {
+    final GameLadder ladder = gameLadders[game.id]!;
+    final GameTier? chosen = await showStackChooserSheet(
+      context,
+      ladder: ladder,
+      gameTitle: game.titleGetter(context),
+      currentTierId: ref.read(gameTierStoreProvider).startFor(game.id) ??
+          ladder.defaultTier,
+    );
+    // Closing the sheet opens nothing: the board is chosen before it exists.
+    if (!context.mounted || chosen == null) return;
+
+    // Written before the board is built, which is how the chosen size reaches
+    // it: the provider reads this row in `build` and nowhere else.
+    await ref.rememberTier(game.id, chosen.id);
+    if (!context.mounted) return;
+  }
+
   _open(context, game);
 }
 

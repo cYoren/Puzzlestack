@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/deduction.dart';
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'galaxies_engine.dart';
 
 part 'galaxies_provider.g.dart';
@@ -80,7 +81,10 @@ class GalaxiesNotifier extends _$GalaxiesNotifier {
   final GalaxiesEngine _engine = const GalaxiesEngine();
 
   @override
-  GalaxiesState build() => _newGame(GalaxiesDifficulty.easy);
+  GalaxiesState build() => _newGame(
+        ref.startTier('galaxies', GalaxiesDifficulty.values,
+            GalaxiesDifficulty.easy, (tier) => tier.name),
+      );
 
   GalaxiesState _newGame(GalaxiesDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty: difficulty);
@@ -102,6 +106,7 @@ class GalaxiesNotifier extends _$GalaxiesNotifier {
 
   void setDifficulty(GalaxiesDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('galaxies', difficulty.name);
     newGame(difficulty: difficulty);
   }
 

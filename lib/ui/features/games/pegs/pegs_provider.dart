@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'pegs_engine.dart';
 
 part 'pegs_provider.g.dart';
@@ -60,7 +61,10 @@ class PegsNotifier extends _$PegsNotifier {
   final PegsEngine _engine = const PegsEngine();
 
   @override
-  PegsState build() => _newPuzzle(PegsDifficulty.medium);
+  PegsState build() => _newPuzzle(
+        ref.startTier('pegs', PegsDifficulty.values, PegsDifficulty.medium,
+            (tier) => tier.name),
+      );
 
   PegsState _newPuzzle(PegsDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty: difficulty);
@@ -75,6 +79,7 @@ class PegsNotifier extends _$PegsNotifier {
 
   void setDifficulty(PegsDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('pegs', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

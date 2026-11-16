@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'netslide_engine.dart';
 
 part 'netslide_provider.g.dart';
@@ -59,7 +60,10 @@ class NetslideNotifier extends _$NetslideNotifier {
   final NetEngine _engine = const NetEngine();
 
   @override
-  NetState build() => _newPuzzle(NetDifficulty.medium);
+  NetState build() => _newPuzzle(
+        ref.startTier('netslide', NetDifficulty.values, NetDifficulty.medium,
+            (tier) => tier.name),
+      );
 
   NetState _newPuzzle(NetDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -74,6 +78,7 @@ class NetslideNotifier extends _$NetslideNotifier {
 
   void setDifficulty(NetDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('netslide', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

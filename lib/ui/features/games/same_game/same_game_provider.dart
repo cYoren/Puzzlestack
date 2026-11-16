@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'same_game_engine.dart';
 
 part 'same_game_provider.g.dart';
@@ -64,7 +65,10 @@ class SameGameNotifier extends _$SameGameNotifier {
   final SameGameEngine _engine = const SameGameEngine();
 
   @override
-  SameGameState build() => _newPuzzle(SameGameDifficulty.medium);
+  SameGameState build() => _newPuzzle(
+        ref.startTier('same_game', SameGameDifficulty.values,
+            SameGameDifficulty.medium, (tier) => tier.name),
+      );
 
   SameGameState _newPuzzle(SameGameDifficulty difficulty) {
     final puzzle = SameGamePuzzle(
@@ -88,6 +92,7 @@ class SameGameNotifier extends _$SameGameNotifier {
 
   void setDifficulty(SameGameDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('same_game', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

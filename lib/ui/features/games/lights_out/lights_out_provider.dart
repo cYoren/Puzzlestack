@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'lights_out_engine.dart';
 
 part 'lights_out_provider.g.dart';
@@ -58,7 +59,10 @@ class LightsOutNotifier extends _$LightsOutNotifier {
   final LightsOutEngine _engine = const LightsOutEngine();
 
   @override
-  LightsOutState build() => _newPuzzle(LightsOutDifficulty.medium);
+  LightsOutState build() => _newPuzzle(
+        ref.startTier('lights_out', LightsOutDifficulty.values,
+            LightsOutDifficulty.medium, (tier) => tier.name),
+      );
 
   LightsOutState _newPuzzle(LightsOutDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -74,6 +78,7 @@ class LightsOutNotifier extends _$LightsOutNotifier {
 
   void setDifficulty(LightsOutDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('lights_out', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 
