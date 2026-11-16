@@ -26,6 +26,83 @@ What those phases taught is in [papercuts.md](papercuts.md).
 | G8 | Store copy, screenshots and in-app counts all read the visible count from the registry | `registry_test` |
 | G9 | Plus can be bought, restored and refunded-then-revoked on both stores | sandbox purchase on each |
 | G10 | Zero open PRs older than the release branch | `gh pr list` |
+| G11 | Signed release builds for Play and the App Store come from one commit, built on the Mac (not GitHub Actions), and the iOS one has been opened from TestFlight | build ids in the release PR |
+| G12 | Nothing reachable is unfinished: no stub, no "coming soon", no empty room, no setting that does nothing (Gus, 2026-11-15) | a registry sweep test plus the device pass |
+
+## Running the release (head model)
+
+Added 2026-11-15 by the project owner pass. Gus's whole instruction to the head model is "read the
+docs and work on everything so we are ready for our release". This section is what that means here.
+The workers are DeepSeek V4.1 Flash agents through the Command Code provider; never a Pro model.
+
+**Nothing is half implemented.** A job merges complete, with its test, or it does not merge. A game
+that cannot be finished for 1.1.0 is moved down a tier, never shipped unfinished.
+
+### The decision that unblocks the release: who plays 230 games
+
+The play pass was owed to "hands and eyes", which made the release wait on one person playing 230
+games. It is now done in three layers, and all three are real play of the running app, never a
+verdict from reading code:
+
+1. **`accessibility-boards` moves to the front.** Semantics on the board contract give every board
+   a text form (cells, values, what a tap does). That is the accessibility work the gate already
+   owes, and it is also what lets an agent play.
+2. **Flash agents play every Deck candidate** on the Linux release build through `agent-device`,
+   reading the board from its semantics: start a deal, make real moves to a solve or to a dead end,
+   time it. They record checks 1, 3 and 4 for each game in that room's `docs/TRIAGE-*.md` as
+   `machine-played`, with the move list as evidence.
+3. **The head model replays** every game a Flash agent marked fail or unsure, and a random 15% of
+   the passes, looking at the screen. Its verdict replaces the machine one.
+4. **Gus plays two things only:** the fixed first session (`first-ten`) and the fifty dealt cards of
+   `device-pass`.
+
+**Time box.** When every other gate row is green, a Deck game still not verified moves to Library
+and a Library game below the Library floor is archived. G1 does not move: 100 verified or no release.
+
+### Waves, not one PR per job
+
+Jobs are grouped so the review quota lasts. One branch per wave; agents inside a wave own disjoint
+files and run at the same time; the head model merges them into the wave branch and opens one PR.
+
+| Wave | Branch | Jobs | How it splits |
+| --- | --- | --- | --- |
+| 1 | `release/1.1-fair` | `uniqueness`, `rule-tests` (`untested-sweep`), the two `feed-size` pools | six agents, one per room; each owns that room's game files and tests |
+| 2 | `release/1.1-boards` | `accessibility-boards`, then the machine play pass | one agent on the board contract first; then six, one per room, writing only that room's triage file |
+| 3 | `release/1.1-plus` | `plus-purchase`, `picks`, `stack-chooser` | one agent, in order |
+| 4 | `release/1.1-feed` | `feed-size` mechanism, `runs`, `card-teaches`, `card-result`, `swipe-rules`, `hints-deck`, `deal-order`, `first-ten`, `daily-five` | the mechanism and `deal-order` first, one agent each; then one agent per remaining job |
+| 5 | `release/1.1-words` | `plain-names`, `merge-families`, `l10n-kept-games`, `crossword-supply`, `word-wheel-curated` | one agent per `.arb` file or content table; never two on one file |
+| 6 | `release/1.1-ship` | `store-shots`, `readme-docs`, `device-pass` fixes, `site` leftovers, `ship` | after waves 1 to 5 are merged |
+
+Waves 1, 2 and 3 start together. Wave 4 starts when wave 1 is merged; wave 5 when wave 2 is.
+
+### The loop
+
+1. Read `AGENTS.md`, `docs/PRODUCT.md`, `docs/PUZZLE-BAR.md` and this file. `git log --oneline -15`,
+   `gh pr list -R cYoren/Puzzlestack`.
+2. Write under the gate table, once, what each row measures today (run the test it names).
+3. For each wave that can start: branch from `origin/main`, one worktree per agent under
+   `~/Projects/`, one Flash agent each with its job rows from "The work", the hard rules from
+   `AGENTS.md`, and "write the files you will touch to `CLAIM.md` first":
+
+   ```bash
+   git worktree add ~/Projects/puzzlestack-w1-logic -b w1/logic release/1.1-fair
+   cd ~/Projects/puzzlestack-w1-logic && nohup pi -p "$(cat ../w1-logic.prompt.md)" --no-session \
+     --provider commandcode --model deepseek/deepseek-v4.1-flash > ../w1-logic.log 2>&1 &
+   ```
+
+4. **Tests run one at a time on this machine.** Two `flutter test` runs stall each other, so every
+   agent runs them through one lock:
+   `flock ~/.cache/flutter-test.lock env TMPDIR=$HOME/.cache/tmp flutter test -j 4 <paths>`.
+   Agents run only the tests of the files they touched; the head model runs the full suite on the
+   wave branch.
+5. Refuse an agent's work if it touched an unclaimed file, added a game to the Deck without the ten
+   checks, edited many screens where one mechanism was due, or left a fix without its test.
+6. Audit the wave against its gate rows, mark what is proven, open the PR, answer every review
+   comment, merge when clean.
+
+**Stop points, one short question each:** a store login or 2FA; the Mac's keychain; the three
+sandbox purchases (G9); the first-ten session and the fifty cards; the yes to submit and to publish.
+Nothing else stops the work.
 
 ## The work
 
@@ -185,5 +262,6 @@ Galaxies, Kurodoko.
 8. **The registry is the source of truth** for what exists and for every number in copy.
 9. **Upstream still merges.** A new upstream game enters as Library and is triaged like any
    other; an archived game stays archived until a rebuild PR passes the bar.
-10. **One job per branch, one PR per job**, in its own worktree, with before and after in the
-    PR. Nothing is pushed to `main`.
+10. **One wave per branch, one PR per wave** (2026-11-15; it was one PR per job). Each agent works
+    in its own worktree on its own files; the wave PR shows before and after. Docs and plans may go
+    straight to `main`; anything a player can see or that touches money goes through the wave PR.
