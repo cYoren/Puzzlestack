@@ -64,14 +64,19 @@ It is generated, never hand-edited:
 dart run tool/site_export.dart   # tool/site/games.json: the 230 playable games, from the repo
 python3 tool/gen_site.py         # docs/: 238 pages, sitemap.xml, robots.txt, fonts
 flutter test test/content/site_test.dart   # every game has a page, every link resolves
+tool/deploy_pages.sh             # build the browser app, publish both to gh-pages
 ```
 
+Pages serves the **`gh-pages`** branch: `docs/` plus `app/` (the Flutter web build, base href
+`/Puzzlestack/app/`). The branch is force-pushed by `tool/deploy_pages.sh` and holds one commit,
+so the 40 MB browser build never enters the history of the repo people clone. Every game page
+offers `Play <game>` at `../app/index.html?game=<slug>`, and that query is what opens the named
+puzzle (`lib/utils/deep_link.dart`).
+
 `test/content/site_test.dart` is the contract: a game without a page fails, an archived game
-with one fails, a broken internal link fails. `PLAY_ANDROID` / `PLAY_IOS` in `tool/gen_site.py`
-are empty until 1.1.0 is on the stores, so the button offers the source instead of a dead link.
-The Play button on each page deep-links the web build with `?game=<slug>`
-(`lib/utils/deep_link.dart`), which is what hosting the Flutter web build turns into "playable in
-the browser".
+with one fails, a broken internal link fails, a page without its playable link fails.
+`PLAY_ANDROID` / `PLAY_IOS` in `tool/gen_site.py` are empty until 1.1.0 is on the stores, so a page
+offers the browser build and the source instead of a dead store link.
 
 ## Build & run
 

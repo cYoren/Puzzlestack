@@ -138,7 +138,7 @@ them says the registry total again.
 | `store-shots` | Eight shots, every board mid-solve, the first one the Deal. Play 1080x1920, App Store 1290x2796 |
 | `readme-docs` | README, PUZZLE_STYLE header, GAME_DEV_GUIDE and CONTENT-AUDIT rule 2 brought in line with docs/PRODUCT.md; delete what is finished |
 | `device-pass` | A person plays 50 dealt cards on a cheap Android and an iPhone; every stumble becomes a fix before the build (G6) |
-| `site` | Generated website in `docs/` (238 pages: one per puzzle, six rooms, an index, a hub) with `sitemap.xml`, `robots.txt` and JSON-LD. `dart run tool/site_export.dart` then `python3 tool/gen_site.py`; `test/content/site_test.dart` is the contract. **Left:** flip `PLAY_ANDROID`/`PLAY_IOS` when 1.1.0 is live, and host the Flutter web build so `?game=<slug>` opens the named puzzle in a browser |
+| `site` | Generated website in `docs/` (238 pages: one per puzzle, six rooms, an index, a hub) with `sitemap.xml`, `robots.txt` and JSON-LD. `dart run tool/site_export.dart` then `python3 tool/gen_site.py`; `test/content/site_test.dart` is the contract. `tool/deploy_pages.sh` publishes `docs/` plus the Flutter web build to the `gh-pages` branch, which Pages serves. **Left:** flip `PLAY_ANDROID`/`PLAY_IOS` when 1.1.0 is live, submit the sitemap in Search Console and Bing, and keep the page count in step with the catalog |
 | `ship` | Data Safety form, both store builds from one commit, version 1.1.0. Shorebird stays off |
 
 ## After 1.1.0

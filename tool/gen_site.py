@@ -35,13 +35,18 @@ DATA = ROOT / "tool" / "site" / "games.json"
 ORIGIN = "https://cyoren.github.io/Puzzlestack"
 
 # The app is not on the stores yet (release 1.1.0 is pending). While a URL is
-# empty the page offers the repository instead of a dead store button, and says
-# so: a page that claims "download now" for a missing app is a broken promise the
-# first visitor reports.
+# empty the page offers the browser build instead of a dead store button: a page
+# that claims "download now" for a missing app is a broken promise the first
+# visitor reports.
+#
+# `app/` is the Flutter web build, deployed next to these pages by
+# `tool/deploy_pages.sh` (Pages serves the `gh-pages` branch, which is `docs/`
+# plus `app/`). `?game=<slug>` lands on that puzzle (`lib/utils/deep_link.dart`).
 #
 # When 1.1.0 is live, set these two and rerun:
 #   PLAY_ANDROID = "https://play.google.com/store/apps/details?id=com.medhub.puzzlestack"
 #   PLAY_IOS = "https://apps.apple.com/app/id<the App Store id>"
+PLAY_WEB = True
 PLAY_ANDROID = ""
 PLAY_IOS = ""
 REPO = "https://github.com/cYoren/Puzzlestack"
@@ -179,6 +184,7 @@ class Site:
   <nav>
     <a href="{prefix}games/index.html">All puzzles</a>
     <a href="{prefix}index.html#rooms">Rooms</a>
+    <a class="play" href="{prefix}app/index.html">Play</a>
   </nav>
 </header>
 """
@@ -203,17 +209,25 @@ class Site:
 
     # --- game page --------------------------------------------------------
 
-    def play_block(self) -> str:
-        if PLAY_ANDROID or PLAY_IOS:
-            buttons = []
-            if PLAY_ANDROID:
-                buttons.append(f'<a class="btn primary" href="{PLAY_ANDROID}">Play on Android</a>')
-            if PLAY_IOS:
-                buttons.append(f'<a class="btn" href="{PLAY_IOS}">Play on iPhone</a>')
-            return '<p class="cta">' + "".join(buttons) + "</p>"
-        return (f'<p class="cta"><a class="btn primary" href="{REPO}">Get Puzzlestack</a>'
-                f'<span class="note">The 1.1.0 release is finishing. '
-                f'The source is public today.</span></p>')
+    def play_block(self, label: str = "Play", slug: str | None = None,
+                   prefix: str = "") -> str:
+        """The one action a page offers: the puzzle, in the browser, right now."""
+        buttons = []
+        if PLAY_WEB:
+            target = f"{prefix}app/index.html"
+            if slug:
+                target += f"?game={slug}"
+            buttons.append(f'<a class="btn primary" href="{target}">{esc(label)}</a>')
+        if PLAY_ANDROID:
+            buttons.append(f'<a class="btn" href="{PLAY_ANDROID}">Android</a>')
+        if PLAY_IOS:
+            buttons.append(f'<a class="btn" href="{PLAY_IOS}">iPhone</a>')
+        note = ("Runs in your browser, nothing to install."
+                if PLAY_WEB else "The 1.1.0 release is finishing. The source is public today.")
+        if not PLAY_WEB and not PLAY_ANDROID and not PLAY_IOS:
+            buttons.append(f'<a class="btn primary" href="{REPO}">Get Puzzlestack</a>')
+        return ('<p class="cta">' + "".join(buttons)
+                + f'<span class="note">{note}</span></p>')
 
     def related(self, game: dict) -> list[dict]:
         pool = [g for g in self.by_room.get(game["category"], []) if g["id"] != game["id"]]
@@ -312,7 +326,7 @@ class Site:
 
 <h1>{esc(title)}</h1>
 <p class="lede">{esc(subtitle)}</p>
-{self.play_block()}
+{self.play_block(label=f'Play {title}', slug=slug, prefix='../')}
 
 <h2>How to play</h2>
 <p>{esc(game['controls'])}</p>
@@ -372,7 +386,7 @@ class Site:
 <h1>{esc(info['title'])}</h1>
 <p class="lede">{esc(info['blurb'])}</p>
 <p>{esc(info['intro'])}</p>
-{self.play_block()}
+{self.play_block(label='Play a puzzle', prefix='../')}
 
 <h2>Every {esc(info['title'].lower())} puzzle ({len(games)})</h2>
 <ul class="cards">{items}</ul>
@@ -451,7 +465,7 @@ with the rules, the strategy and a way to play.</p>
 <h1>One good puzzle, then another</h1>
 <p class="lede">Puzzlestack opens on a puzzle, not a menu. 230 of them, in six rooms, every
 one with one answer and about a minute of your time.</p>
-{self.play_block()}
+{self.play_block(label='Play now', prefix='')}
 
 <h2 id="rooms">Six rooms</h2>
 <ul class="cards">{room_items}</ul>
