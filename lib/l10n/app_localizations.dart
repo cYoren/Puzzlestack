@@ -11325,6 +11325,36 @@ abstract class AppLocalizations {
   /// **'HARD'**
   String get difficultyHard;
 
+  /// No description provided for @crossingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Number Crossing'**
+  String get crossingTitle;
+
+  /// No description provided for @crossingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay every number in the list into the grid once, across or down. The cells that cross have to agree, and the cells left over are wall.'**
+  String get crossingSubtitle;
+
+  /// No description provided for @crossingPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Placed'**
+  String get crossingPlaced;
+
+  /// No description provided for @crossingWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY NUMBER FITS!'**
+  String get crossingWinTitle;
+
+  /// No description provided for @crossingWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Each number once, and every crossing agrees digit for digit.'**
+  String get crossingWinMessage;
+
   /// No description provided for @navDeal.
   ///
   /// In en, this message translates to:
