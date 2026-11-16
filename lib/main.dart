@@ -8,9 +8,11 @@ import 'package:puzzle/l10n/app_localizations.dart';
 import 'data/models/user_data.dart';
 import 'data/models/game_streak.dart';
 import 'data/key_value_store.dart';
+import 'data/picks/pick_ledger.dart';
 import 'data/purchase/plus_store.dart';
 import 'data/repositories/game_stats_repository.dart';
 import 'data/repositories/user_repository.dart';
+import 'providers/pick_providers.dart';
 import 'providers/plus_providers.dart';
 import 'providers/user_providers.dart';
 import 'providers/theme_provider.dart';
@@ -99,6 +101,12 @@ void main() async {
   final KeyValueStore plusStore =
       await HiveKeyValueStore.open(PlusStore.boxName) ?? MemoryKeyValueStore();
 
+  // Today's picks. The gate reads it before a screen builds, so it is opened
+  // here; a device that cannot store anything gets three free picks every
+  // launch rather than none.
+  final KeyValueStore pickStore =
+      await HiveKeyValueStore.open(PickLedger.boxName) ?? MemoryKeyValueStore();
+
   // Log app startup time
   stopwatch.stop();
   debugPrint('App startup time (sync): ${stopwatch.elapsedMilliseconds}ms');
@@ -116,6 +124,7 @@ void main() async {
       overrides: [
         userRepositoryProvider.overrideWithValue(userRepository),
         plusStoreProvider.overrideWithValue(plusStore),
+        pickStoreProvider.overrideWithValue(pickStore),
       ],
       child: ErrorBoundary(
         child: MyApp(startGameId: startGameId),
