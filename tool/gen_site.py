@@ -50,7 +50,7 @@ PLAY_WEB = True
 
 # Games whose page hosts a board of its own: plain HTML cells, and a bundle built
 # from the app's own engine by `tool/web_build.sh` (dart compile js). These pages
-# do not need the 17 MB browser app to be playable, and the app still has all 230.
+# do not need the 17 MB browser app to be playable, and the app still has all of them.
 WEB_BOARDS = {
     "sudoku": {"clues": 35},
 }
@@ -485,14 +485,14 @@ with the rules, the strategy and a way to play.</p>
             "@context": "https://schema.org",
             "@graph": [
                 {"@type": "WebSite", "name": "Puzzlestack", "url": f"{ORIGIN}/index.html",
-                 "description": "230 real puzzles in one app: one good puzzle, then another.",
+                 "description": f"{len(self.games)} real puzzles in one app: one good puzzle, then another.",
                  "inLanguage": "en"},
                 {"@type": "Organization", "name": "Puzzlestack", "url": f"{ORIGIN}/index.html",
                  "sameAs": [REPO]},
             ],
         }
         page = self.head(
-            title="Puzzlestack: 230 real puzzles, one at a time",
+            title=f"Puzzlestack: {len(self.games)} real puzzles, one at a time",
             description=truncate("A feed of real puzzles: logic, math, memory, spatial, "
                                  "attention and word. Each one about a minute, each one fair, "
                                  "none of them filler.", 155),
@@ -500,7 +500,7 @@ with the rules, the strategy and a way to play.</p>
         page += self.bar("")
         page += f"""<main class="hub">
 <h1>One good puzzle, then another</h1>
-<p class="lede">Puzzlestack opens on a puzzle, not a menu. 230 of them, in six rooms, every
+<p class="lede">Puzzlestack opens on a puzzle, not a menu. {len(self.games)} of them, in six rooms, every
 one with one answer and about a minute of your time.</p>
 {self.play_block(label='Play now', prefix='')}
 

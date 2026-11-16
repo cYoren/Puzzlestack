@@ -1,6 +1,6 @@
 Puzzlestack is a feed of real puzzles. Open it and you are already playing: swipe up and the next one is dealt.
 
-One good puzzle, then another. Each card is fair, each one is made to be finished, and none of them is filler. 234 puzzles across six rooms: logic, math, memory, spatial, attention and word.
+One good puzzle, then another. Each card is fair, each one is made to be finished, and none of them is filler. 184 puzzles across six rooms: logic, math, memory, spatial, attention and word.
 
 THE DEAL
 - A vertical feed of puzzle cards. Swipe up for the next one, or stay on the one that has you.
