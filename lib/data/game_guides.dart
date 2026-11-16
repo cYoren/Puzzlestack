@@ -5074,6 +5074,27 @@ const Map<String, GameGuide> gameGuides = {
       "Work from the corners inward. The four corner cells of the grid touch only one clue each, so they have the least to satisfy, and they feed the row and column rules for everything else.",
     ],
   ),
+  "salad": GameGuide(
+    title: "Salad",
+    category: "LOGIC",
+    objective:
+        "Fill every row and column with the letters A to the last letter, once each, and leave the rest of each line as holes. Every letter printed around the border is the first one you meet looking into that line, skipping holes.",
+    controls:
+        "Tap a cell to write the next value: a hole, then A, then B, up to the last letter, then back to a hole. The hint button writes one value the clues prove.",
+    walkthrough: [
+      "Step 1: Read the distance before the letter. A clue letter can only sit as many cells from its edge as the line has holes, so on a board with one hole per line the clue letter is in the first cell or the second.",
+      "Step 2: Everything in front of that point is a hole. Only holes can come before the clue letter, so the cell a clue points at is often decided before you look at anything else.",
+      "Step 3: A letter appears once in its row and once in its column. Write a letter and it is gone from the rest of its line, which is the same rule as a Latin square.",
+      "Step 4: Count what is left in a line. When a letter has only one cell left, it goes there; when a line already holds all its holes, every other cell is a letter.",
+      "Step 5: The board is finished when every line holds each letter once with the right number of holes and no clue is red. A clue turns red only when its line is decided and the first letter does not match.",
+    ],
+    strategies: [
+      "Start at the edges, not the middle. The first cell of a line is either a hole or the clue letter and nothing else, which makes the border the most constrained part of the board.",
+      "Count holes before you count letters. Once both holes of a line are placed, every remaining cell is a letter, and the letters usually fall out of a single crossing with the line that meets it.",
+      "Use both ends of the same line. The clue on the left and the clue on the right bracket where the holes can be, and the cells that both clues leave free are where the interior has to sort itself out.",
+      "Write the hole when you are sure of it. A written hole eliminates nothing by itself, but it tightens the hole count of its line, and that is usually what turns the next letter into a single.",
+    ],
+  ),
   "tents_and_trees": GameGuide(
     title: "Tents And Trees",
     category: "LOGIC",

@@ -1,6 +1,6 @@
 # The catalog: a verdict for every game
 
-All 319 registry ids, each in exactly one list. Tiers and the checks behind them:
+All 320 registry ids, each in exactly one list. Tiers and the checks behind them:
 [PUZZLE-BAR.md](PUZZLE-BAR.md).
 
 **A pass, first made on 2026-11-14 and extended on 2026-11-15, made from ids, subtitles and the two audits, not from
@@ -15,15 +15,15 @@ leaves Deck if it fails any of the ten checks.
 
 | | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
-| Logic | 44 | 14 | 1 | 0 | 59 |
+| Logic | 44 | 15 | 1 | 0 | 60 |
 | Math | 19 | 25 | 10 | 9 | 63 |
 | Memory | 12 | 17 | 16 | 9 | 54 |
 | Attention | 18 | 9 | 16 | 11 | 54 |
 | Word | 24 | 17 | 8 | 2 | 51 |
 | Spatial | 22 | 9 | 6 | 1 | 38 |
-| **All** | **139** | **91** | **57** | **32** | **319** |
+| **All** | **139** | **92** | **57** | **32** | **320** |
 
-Visible in the app after this pass: **230**. The other 89 are archived: hidden, tagged, still in
+Visible in the app after this pass: **231**. The other 89 are archived: hidden, tagged, still in
 the repo. The store copy takes its number from the visible registry, never from this file.
 
 ## Format
@@ -65,7 +65,7 @@ tents_and_trees tower_of_london twiddle water_sort yajilin
 
 ```library
 abcd ascent boats clusters einstein_riddle lock_pattern logical_syllogisms
-matrix_reasoning mathrax path_finder seismic symbol_logic triplets_logic
+matrix_reasoning mathrax path_finder salad seismic symbol_logic triplets_logic
 wisconsin_card_sorting
 ```
 
@@ -77,6 +77,12 @@ sudoku <- alphabet_sudoku
 ```
 
 Notes
+- **`salad` (2026-11-15):** Library. A Latin square with holes: each letter once per row and
+  column, and each border clue is the first letter you meet looking in, skipping holes. Generated
+  and proved in Dart (level <= 2): the answer is a random Latin square, the clues are read off it,
+  and a clue is dropped only while the board still proves itself. The 7x7 ships A-E with two holes
+  per line because A-F has an interior no border clue reaches (0 unique boards in 200 measured).
+  Rules in `lib/ui/features/games/salad/salad_puzzle.dart`.
 - **`mathrax` (2026-11-15):** Library. A Latin square whose clues sit on the corners between
   four cells; generated and proved in Dart (`rate`, level 2), every clue read off the answer, so
   an untrue clue cannot ship. Rules and reference in
