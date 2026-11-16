@@ -89,7 +89,9 @@ class GameStatsRepository {
 
   static final GameStatsRepository instance = GameStatsRepository._();
 
-  static const String _boxName = 'game_stats';
+  /// Public because the remembered tier is one row per game id in this same
+  /// box, beside `hasSeen` (`lib/data/game_tiers.dart`).
+  static const String boxName = 'game_stats';
   static const String _seenKey = '_seen_games';
   static const String _statsKey = '_stats';
 
@@ -101,7 +103,7 @@ class GameStatsRepository {
 
   Future<void> init() async {
     try {
-      final box = await Hive.openBox<dynamic>(_boxName);
+      final box = await Hive.openBox<dynamic>(boxName);
       _stats = _decodeStats(box.get(_statsKey));
       _seen = _decodeSeen(box.get(_seenKey));
       _loaded = true;
@@ -144,7 +146,7 @@ class GameStatsRepository {
   Future<void> _write(String key, Object value) async {
     if (!_loaded) return;
     try {
-      final box = Hive.box<dynamic>(_boxName);
+      final box = Hive.box<dynamic>(boxName);
       await box.put(key, jsonEncode(value));
     } catch (error) {
       debugPrint('GameStatsRepository write error: $error');

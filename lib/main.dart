@@ -8,11 +8,13 @@ import 'package:puzzle/l10n/app_localizations.dart';
 import 'data/models/user_data.dart';
 import 'data/models/game_streak.dart';
 import 'data/key_value_store.dart';
+import 'data/game_tiers.dart';
 import 'data/picks/pick_ledger.dart';
 import 'data/purchase/plus_store.dart';
 import 'data/repositories/game_stats_repository.dart';
 import 'data/repositories/user_repository.dart';
 import 'providers/pick_providers.dart';
+import 'providers/game_tier_provider.dart';
 import 'providers/plus_providers.dart';
 import 'providers/user_providers.dart';
 import 'providers/theme_provider.dart';
@@ -107,6 +109,14 @@ void main() async {
   final KeyValueStore pickStore =
       await HiveKeyValueStore.open(PickLedger.boxName) ?? MemoryKeyValueStore();
 
+  // The size last chosen per game. The rows share the stats box, which is
+  // already open, so this reads synchronously while a board builds; a device
+  // that cannot store anything still plays, at each game's default size.
+  final GameTierStore gameTierStore = GameTierStore(
+    await HiveKeyValueStore.open(GameTierStore.boxName) ??
+        MemoryKeyValueStore(),
+  );
+
   // Log app startup time
   stopwatch.stop();
   debugPrint('App startup time (sync): ${stopwatch.elapsedMilliseconds}ms');
@@ -125,6 +135,7 @@ void main() async {
         userRepositoryProvider.overrideWithValue(userRepository),
         plusStoreProvider.overrideWithValue(plusStore),
         pickStoreProvider.overrideWithValue(pickStore),
+        gameTierStoreProvider.overrideWithValue(gameTierStore),
       ],
       child: ErrorBoundary(
         child: MyApp(startGameId: startGameId),
