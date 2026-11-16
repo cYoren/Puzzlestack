@@ -85,7 +85,7 @@ declare *which future states a drag can lead to*. The engine speculatively rende
 states, works out where the dragged element lands in each, and synthesizes the drag — float,
 drop zones, snapping, transitions — from that.
 
-Why this is the right foundation for 230 puzzles:
+Why this is the right foundation for 234 puzzles:
 
 - **One drag feel, everywhere.** Connect an island in Bridges, place a tent, swap two tiles,
   slide a row in Netslide: same lift, same snap, same settle, because it is one engine.
@@ -165,6 +165,10 @@ compresses it so a full 81-cell board still finishes inside 500ms instead of tak
 seconds.
 
 Motion is feedback, not decoration. If a cell moves, the player learned something.
+
+A tap lands in the frame of the tap. The state changes before the next paint, and any
+motion the board declares (`transitionFor`) runs over the new state, never in front of it;
+a tap does not owe an animation before it is allowed to be true.
 
 ## 5. Five verbs
 

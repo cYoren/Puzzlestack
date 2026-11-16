@@ -9,6 +9,10 @@ import 'package:puzzle/ui/features/games/clusters/clusters_provider.dart';
 const engine = ClustersEngine();
 
 void main() {
+  // The provider shelves a pre-warmed next board with a post-frame callback, so
+  // these tests need a binding before they read a container.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('ClustersEngine', () {
     test('an unfinished enumeration proves nothing', () {
       // The exact rule used to treat agreement among the first `limit` answers

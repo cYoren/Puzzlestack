@@ -55,7 +55,7 @@ class GameProfile {
   final ArchiveReason? reason;
 }
 
-/// 319 games: 89 archive, 139 deck, 91 library.
+/// 323 games: 89 archive, 139 deck, 95 library.
 const Map<String, GameProfile> gameProfiles = {
   'ab_reversal_oddball': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'rule_switcher', reason: ArchiveReason.twin),
   'abcd': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
@@ -87,6 +87,7 @@ const Map<String, GameProfile> gameProfiles = {
   'block_stacking_physics': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'boats': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'box_completion': GameProfile(tier: GameTier.archive, kind: CardKind.think, origin: GameOrigin.puzzle, family: 'cube_net_fold', reason: ArchiveReason.twin),
+  'bricks': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'bridges': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'calculation_sprint': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.worksheet),
   'card_counting_memory': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
@@ -120,6 +121,7 @@ const Map<String, GameProfile> gameProfiles = {
   'counting_sheep': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'counting_span': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'operation_span', reason: ArchiveReason.twin),
   'cross_section_slice': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
+  'crossing': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'crossword': GameProfile(tier: GameTier.deck, kind: CardKind.word, origin: GameOrigin.puzzle),
   'crown': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'crypto_arithmetic': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
@@ -279,10 +281,12 @@ const Map<String, GameProfile> gameProfiles = {
   'rhyme_master': GameProfile(tier: GameTier.deck, kind: CardKind.word, origin: GameOrigin.puzzle),
   'rhythm_master': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'roman_arithmetic': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.worksheet),
+  'rome': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'room_inspector': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'rotating_maze': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'rule_switcher': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'running_memory_span': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'digit_span_reverse', reason: ArchiveReason.twin),
+  'salad': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'same_game': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'schulte_table': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
   'sdmt': GameProfile(tier: GameTier.library, kind: CardKind.snap, origin: GameOrigin.lab),

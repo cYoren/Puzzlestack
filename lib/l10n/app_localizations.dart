@@ -3242,6 +3242,66 @@ abstract class AppLocalizations {
   /// **'A Latin square that satisfies every corner clue.'**
   String get mathraxWinMessage;
 
+  /// No description provided for @saladTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Salad'**
+  String get saladTitle;
+
+  /// No description provided for @saladSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill every row and column with the letters A to the last one, once each, with the rest holes. A letter on the border is the first one you meet looking into that line.'**
+  String get saladSubtitle;
+
+  /// No description provided for @saladWritten.
+  ///
+  /// In en, this message translates to:
+  /// **'Written'**
+  String get saladWritten;
+
+  /// No description provided for @saladWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY LINE AGREES!'**
+  String get saladWinTitle;
+
+  /// No description provided for @saladWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every letter once in every line, and every border clue reads true.'**
+  String get saladWinMessage;
+
+  /// No description provided for @romeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rome'**
+  String get romeTitle;
+
+  /// No description provided for @romeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'One arrow in every cell. No arrow repeats inside an outlined area, and following the arrows from anywhere has to arrive at a circled goal without looping.'**
+  String get romeSubtitle;
+
+  /// No description provided for @romeWritten.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrows'**
+  String get romeWritten;
+
+  /// No description provided for @romeWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY CHAIN ARRIVES!'**
+  String get romeWinTitle;
+
+  /// No description provided for @romeWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'One arrow per cell, no repeats in an area, and every chain ends at a goal.'**
+  String get romeWinMessage;
+
   /// No description provided for @ascentTitle.
   ///
   /// In en, this message translates to:
@@ -3313,6 +3373,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Two colours, every dot true, every cluster of two or more.'**
   String get clustersWinMessage;
+
+  /// No description provided for @bricksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bricks'**
+  String get bricksTitle;
+
+  /// No description provided for @bricksSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shade cells of the honeycomb. A shaded cell needs a shaded cell under it, no three shaded cells may sit in a row, and a number counts the shaded cells around it.'**
+  String get bricksSubtitle;
+
+  /// No description provided for @bricksShaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Shaded'**
+  String get bricksShaded;
+
+  /// No description provided for @bricksDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth'**
+  String get bricksDepth;
+
+  /// No description provided for @bricksWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'THE PILE HOLDS!'**
+  String get bricksWinTitle;
+
+  /// No description provided for @bricksWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Every shaded cell is held up, no run of three, and every number reads true.'**
+  String get bricksWinMessage;
 
   /// No description provided for @tentsAndTreesTitle.
   ///
@@ -11312,6 +11408,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'HARD'**
   String get difficultyHard;
+
+  /// No description provided for @crossingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Number Crossing'**
+  String get crossingTitle;
+
+  /// No description provided for @crossingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay every number in the list into the grid once, across or down. The cells that cross have to agree, and the cells left over are wall.'**
+  String get crossingSubtitle;
+
+  /// No description provided for @crossingPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Placed'**
+  String get crossingPlaced;
+
+  /// No description provided for @crossingWinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EVERY NUMBER FITS!'**
+  String get crossingWinTitle;
+
+  /// No description provided for @crossingWinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Each number once, and every crossing agrees digit for digit.'**
+  String get crossingWinMessage;
 
   /// No description provided for @navDeal.
   ///

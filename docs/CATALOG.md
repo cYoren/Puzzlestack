@@ -1,6 +1,6 @@
 # The catalog: a verdict for every game
 
-All 319 registry ids, each in exactly one list. Tiers and the checks behind them:
+All 323 registry ids, each in exactly one list. Tiers and the checks behind them:
 [PUZZLE-BAR.md](PUZZLE-BAR.md).
 
 **A pass, first made on 2026-11-14 and extended on 2026-11-15, made from ids, subtitles and the two audits, not from
@@ -15,15 +15,15 @@ leaves Deck if it fails any of the ten checks.
 
 | | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
-| Logic | 44 | 14 | 1 | 0 | 59 |
+| Logic | 44 | 18 | 1 | 0 | 63 |
 | Math | 19 | 25 | 10 | 9 | 63 |
 | Memory | 12 | 17 | 16 | 9 | 54 |
 | Attention | 18 | 9 | 16 | 11 | 54 |
 | Word | 24 | 17 | 8 | 2 | 51 |
 | Spatial | 22 | 9 | 6 | 1 | 38 |
-| **All** | **139** | **91** | **57** | **32** | **319** |
+| **All** | **139** | **95** | **57** | **32** | **323** |
 
-Visible in the app after this pass: **230**. The other 89 are archived: hidden, tagged, still in
+Visible in the app after this pass: **234**. The other 89 are archived: hidden, tagged, still in
 the repo. The store copy takes its number from the visible registry, never from this file.
 
 ## Format
@@ -64,8 +64,8 @@ tents_and_trees tower_of_london twiddle water_sort yajilin
 ```
 
 ```library
-abcd ascent boats clusters einstein_riddle lock_pattern logical_syllogisms
-matrix_reasoning mathrax path_finder seismic symbol_logic triplets_logic
+abcd ascent boats bricks clusters crossing einstein_riddle lock_pattern logical_syllogisms
+matrix_reasoning mathrax path_finder rome salad seismic symbol_logic triplets_logic
 wisconsin_card_sorting
 ```
 
@@ -77,6 +77,30 @@ sudoku <- alphabet_sudoku
 ```
 
 Notes
+- **`crossing` (2026-11-16):** Library. Lay every number in the list into the skeleton once, across
+  or down, and make the crossings agree. The skeleton is part of the puzzle and the source's walls
+  are kept: on a bare grid any placement can slide into empty space, so no list would have exactly
+  one filling. Modelled on the numbers rather than the cells (per number the runs it can still take,
+  plus a digit domain per cell shared by every run through it), proved in Dart: exactly one filling,
+  reachable with the player rules (level <= 2), about a millisecond per board. Rules in
+  `lib/ui/features/games/crossing/crossing_puzzle.dart`.
+- **`rome` (2026-11-16):** Library. One arrow per cell, no repeated arrow inside an outlined area,
+  and every chain of arrows must arrive at a circled goal without looping. Generated and proved in
+  Dart: a random in-grid arrow field, areas grown by flood fill, one goal per cycle, printed arrows
+  stripped only while rules 1-3 still finish the board with exactly one answer. About half the board
+  ships printed, which is the honest price of "never a board that needs a guess". Rules in
+  `lib/ui/features/games/rome/rome_puzzle.dart`.
+- **`bricks` (2026-11-16):** Library. Tawamurenga on a hexagonal lattice: every shaded cell stands
+  on a shaded cell below it, no three in a horizontal run, a number counts shaded neighbours. The
+  lattice, including the C's corner cut and its six-neighbour table, is in
+  `lib/ui/features/games/bricks/bricks_puzzle.dart`; the board paints real hexagons in its own
+  painter rather than slanting a square grid. Generated and proved in Dart (level <= 2).
+- **`salad` (2026-11-15):** Library. A Latin square with holes: each letter once per row and
+  column, and each border clue is the first letter you meet looking in, skipping holes. Generated
+  and proved in Dart (level <= 2): the answer is a random Latin square, the clues are read off it,
+  and a clue is dropped only while the board still proves itself. The 7x7 ships A-E with two holes
+  per line because A-F has an interior no border clue reaches (0 unique boards in 200 measured).
+  Rules in `lib/ui/features/games/salad/salad_puzzle.dart`.
 - **`mathrax` (2026-11-15):** Library. A Latin square whose clues sit on the corners between
   four cells; generated and proved in Dart (`rate`, level 2), every clue read off the answer, so
   an untrue clue cannot ship. Rules and reference in

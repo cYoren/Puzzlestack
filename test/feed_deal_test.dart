@@ -78,6 +78,24 @@ void main() {
     await _teardown(tester);
   });
 
+  testWidgets('a thumb-sized drag does not deal the next card', (tester) async {
+    // Gus, 2026-11-16: on a desktop a board drag (Tangle, Inertia, Netslide all
+    // take one) was dealing the next card. A card that leaves when you did not
+    // mean it is worse than one that needs a deliberate flick.
+    _sizeTo(tester);
+    await tester.pumpWidget(_app(const FeedScreen(startGameId: 'pegs')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    await tester.drag(find.byType(FeedScreen), const Offset(0, -90));
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(find.text('001'), findsOneWidget);
+
+    await _teardown(tester);
+  });
+
   testWidgets('pulling the card up past the threshold deals it',
       (tester) async {
     _sizeTo(tester);

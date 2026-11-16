@@ -9,6 +9,10 @@ import 'package:puzzle/ui/features/games/seismic/seismic_provider.dart';
 const engine = SeismicEngine();
 
 void main() {
+  // The provider shelves a pre-warmed next board with a post-frame callback, so
+  // these tests need a binding before they read a container.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('SeismicEngine', () {
     test('a dealt board is a legal answer with clues that agree with it', () {
       final rng = Random(1);

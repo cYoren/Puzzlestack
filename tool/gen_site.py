@@ -9,7 +9,7 @@ sitemap, all static HTML with no build step at page-view time. The model is
 <https://8puzzle.org/>: a search result lands on the game it names, with the
 rules to read and a way to play, not on a marketing page.
 
-Why generated and not hand-written: 230 puzzles cannot be hand-written twice, and
+Why generated and not hand-written: the catalogue cannot be hand-written twice, and
 a page that drifts from the app is worse than no page. The text on each page is
 the app's own guide (`lib/data/game_guides.dart`), the title and one-line line are
 the English strings (`lib/l10n/app_en.arb`), and the tier comes from
@@ -203,7 +203,7 @@ class Site:
         return f"""<footer>
   <p class="foot-links">
     <a href="{prefix}index.html">Puzzlestack</a>
-    <a href="{prefix}games/index.html">All 230 puzzles</a>
+    <a href="{prefix}games/index.html">All {len(self.games)} puzzles</a>
     <a href="{prefix}privacy.html">Privacy</a>
     <a href="{prefix}terms.html">Terms</a>
     <a href="{REPO}">Source</a>
@@ -380,7 +380,7 @@ class Site:
 
 <h2>More {esc(room_info['title'].lower())}</h2>
 <ul class="cards">{neighbours}</ul>
-<p class="more"><a href="index.html">All 230 puzzles</a></p>
+<p class="more"><a href="index.html">All {len(self.games)} puzzles</a></p>
 </main>
 """
         page += self.foot("../")
@@ -427,7 +427,7 @@ class Site:
 
 <h2>Every {esc(info['title'].lower())} puzzle ({len(games)})</h2>
 <ul class="cards">{items}</ul>
-<p class="more"><a href="../games/index.html">All 230 puzzles</a></p>
+<p class="more"><a href="../games/index.html">All {len(self.games)} puzzles</a></p>
 </main>
 """
         page += self.foot("../")
@@ -447,9 +447,9 @@ class Site:
                 f'<p class="blurb">{esc(info["blurb"])}</p>'
                 f'<ul class="inline">{items}</ul></section>'
             )
-        meta = ("All 230 Puzzlestack puzzles, filed by room: logic, math, memory, spatial, "
+        meta = (f"All {len(self.games)} Puzzlestack puzzles, filed by room: logic, math, memory, spatial, "
                 "attention and word. Each one has its rules and a strategy.")
-        page = self.head(title="All 230 puzzles, by room | Puzzlestack",
+        page = self.head(title=f"All {len(self.games)} puzzles, by room | Puzzlestack",
                          description=truncate(meta, 155), path="games/index.html",
                          prefix="../")
         page += self.bar("../")
@@ -457,7 +457,7 @@ class Site:
 <nav class="crumbs"><a href="../index.html">Puzzlestack</a><span>/</span>
 <span aria-current="page">All puzzles</span></nav>
 
-<h1>All 230 puzzles</h1>
+<h1>All {len(self.games)} puzzles</h1>
 <p class="lede">Every game the app can open, filed by room. Every one of them has a page
 with the rules, the strategy and a way to play.</p>
 {''.join(blocks)}
@@ -509,7 +509,7 @@ one with one answer and about a minute of your time.</p>
 
 <h2>Start here</h2>
 <ul class="cards">{pick_items}</ul>
-<p class="more"><a href="games/index.html">All 230 puzzles</a></p>
+<p class="more"><a href="games/index.html">All {len(self.games)} puzzles</a></p>
 
 <h2>What it is not</h2>
 <p>No feed to scroll, no streak to protect, no energy to spend. A puzzle arrives, you
