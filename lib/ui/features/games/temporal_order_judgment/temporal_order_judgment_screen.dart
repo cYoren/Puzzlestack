@@ -130,7 +130,7 @@ class _TemporalOrderJudgmentScreenState extends ConsumerState<TemporalOrderJudgm
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('temporal_order_judgment');
+    ref.read(gameStreakProvider.notifier).completeGame('temporal_order_judgment');
     _showEndDialog();
   }
 

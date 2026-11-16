@@ -18,9 +18,9 @@ class MathPathScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(mathPathNotifierProvider);
+    final state = ref.watch(mathPathProvider);
 
-    ref.listen(mathPathNotifierProvider, (previous, next) {
+    ref.listen(mathPathProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -36,7 +36,7 @@ class MathPathScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(mathPathNotifierProvider.notifier).newGame();
+            ref.read(mathPathProvider.notifier).newGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -142,7 +142,7 @@ class MathPathScreen extends ConsumerWidget {
                     : Theme.of(context).colorScheme.surface,
                 onTap: () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(mathPathNotifierProvider.notifier).toggleTile(x, y);
+                  ref.read(mathPathProvider.notifier).toggleTile(x, y);
                 },
                 child: Center(
                   child: FittedBox(
@@ -171,7 +171,7 @@ class MathPathScreen extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 12),
         onTap: () {
           HapticFeedbackUtil.mediumImpact();
-          ref.read(mathPathNotifierProvider.notifier).resetPath();
+          ref.read(mathPathProvider.notifier).resetPath();
         },
         color: Theme.of(context).colorScheme.surface,
         shadowColor: Theme.of(context).colorScheme.outline,
@@ -191,7 +191,7 @@ class MathPathScreen extends ConsumerWidget {
   }
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('math_path');
+    await ref.read(gameStreakProvider.notifier).completeGame('math_path');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -204,7 +204,7 @@ class MathPathScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(mathPathNotifierProvider.notifier).newGame();
+          ref.read(mathPathProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
       ),

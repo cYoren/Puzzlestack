@@ -108,7 +108,7 @@ class ShadowPivotNotifier extends _$ShadowPivotNotifier {
     
     if (state.selectedIndex == state.correctOptionIndex) {
       state = state.copyWith(isVictory: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('shadow_pivot', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('shadow_pivot', xpAmount: 25);
       return true;
     } else {
       state = state.copyWith(isFailed: true);

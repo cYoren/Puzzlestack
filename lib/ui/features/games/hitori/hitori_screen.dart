@@ -21,7 +21,7 @@ class _HitoriScreenState extends ConsumerState<HitoriScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(hitoriNotifierProvider.notifier).initGame();
+      ref.read(hitoriProvider.notifier).initGame();
     });
   }
 
@@ -40,7 +40,7 @@ class _HitoriScreenState extends ConsumerState<HitoriScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(hitoriNotifierProvider.notifier).initGame();
+          ref.read(hitoriProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _HitoriScreenState extends ConsumerState<HitoriScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(hitoriNotifierProvider);
-    final notifier = ref.read(hitoriNotifierProvider.notifier);
+    final state = ref.watch(hitoriProvider);
+    final notifier = ref.read(hitoriProvider.notifier);
 
-    ref.listen(hitoriNotifierProvider, (previous, next) {
+    ref.listen(hitoriProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('hitori');
+        ref.read(gameStreakProvider.notifier).completeGame('hitori');
         _showCompletionDialog();
       }
     });

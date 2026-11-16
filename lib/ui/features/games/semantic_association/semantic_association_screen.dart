@@ -132,7 +132,7 @@ class _SemanticAssociationScreenState extends ConsumerState<SemanticAssociationS
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('semantic_association');
+    await ref.read(gameStreakProvider.notifier).completeGame('semantic_association');
     if (!mounted) return;
     showDialog(
       context: context,

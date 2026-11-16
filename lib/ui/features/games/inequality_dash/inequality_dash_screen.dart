@@ -22,14 +22,14 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(inequalityDashNotifierProvider.notifier).initGame();
+      ref.read(inequalityDashProvider.notifier).initGame();
     });
   }
 
   void _handleOperatorTap(String op) {
     HapticFeedbackUtil.selectionClick();
-    final notifier = ref.read(inequalityDashNotifierProvider.notifier);
-    final state = ref.read(inequalityDashNotifierProvider);
+    final notifier = ref.read(inequalityDashProvider.notifier);
+    final state = ref.read(inequalityDashProvider);
 
     final isCorrect = state.currentQuestion?.correctOperator == op;
     if (isCorrect) {
@@ -44,10 +44,10 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(inequalityDashNotifierProvider);
+    final state = ref.watch(inequalityDashProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(inequalityDashNotifierProvider, (previous, next) {
+    ref.listen(inequalityDashProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -62,7 +62,7 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
               Navigator.of(context).pop(); // Back to home
             },
             onPlayAgain: () {
-              ref.read(inequalityDashNotifierProvider.notifier).reset();
+              ref.read(inequalityDashProvider.notifier).reset();
               Navigator.of(context).pop(); // Dismiss dialog
             },
           ),
@@ -87,7 +87,7 @@ class _InequalityDashScreenState extends ConsumerState<InequalityDashScreen> {
       subtitle: L10nGameHelpers.getGameTitle(context, 'inequality_dash'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(inequalityDashNotifierProvider.notifier).reset();
+        ref.read(inequalityDashProvider.notifier).reset();
       },
       body: LayoutBuilder(
         builder: (context, constraints) {

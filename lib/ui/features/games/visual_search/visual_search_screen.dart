@@ -23,7 +23,7 @@ class _VisualSearchScreenState extends ConsumerState<VisualSearchScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(visualSearchNotifierProvider.notifier).initGame();
+      ref.read(visualSearchProvider.notifier).initGame();
     });
   }
 
@@ -45,7 +45,7 @@ class _VisualSearchScreenState extends ConsumerState<VisualSearchScreen> {
           },
           onPlayAgain: () {
             Navigator.of(context).pop();
-            ref.read(visualSearchNotifierProvider.notifier).resetGame();
+            ref.read(visualSearchProvider.notifier).resetGame();
           },
         );
       },
@@ -55,14 +55,14 @@ class _VisualSearchScreenState extends ConsumerState<VisualSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(visualSearchNotifierProvider);
-    final notifier = ref.read(visualSearchNotifierProvider.notifier);
+    final state = ref.watch(visualSearchProvider);
+    final notifier = ref.read(visualSearchProvider.notifier);
 
-    ref.listen(visualSearchNotifierProvider, (previous, next) async {
+    ref.listen(visualSearchProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('visual_search');
+          await ref.read(gameStreakProvider.notifier).completeGame('visual_search');
           _showCompletionDialog(true);
         } else {
           HapticFeedbackUtil.vibrate();

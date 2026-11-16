@@ -23,14 +23,14 @@ class _TracePathScreenState extends ConsumerState<TracePathScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final size = MediaQuery.of(context).size;
-      ref.read(tracePathNotifierProvider.notifier).initGame(Size(size.width, size.height * 0.6));
+      ref.read(tracePathProvider.notifier).initGame(Size(size.width, size.height * 0.6));
     });
   }
 
   void _showGameOverDialog(int score, double accuracy) {
     bool won = accuracy >= 0.7;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('trace_path');
+      ref.read(gameStreakProvider.notifier).completeGame('trace_path');
     }
     showDialog(
       context: context,
@@ -43,7 +43,7 @@ class _TracePathScreenState extends ConsumerState<TracePathScreen> {
           isVictory: won,
           onPlayAgain: () {
             final size = MediaQuery.of(context).size;
-            ref.read(tracePathNotifierProvider.notifier).initGame(Size(size.width, size.height * 0.6));
+            ref.read(tracePathProvider.notifier).initGame(Size(size.width, size.height * 0.6));
             Navigator.pop(context);
           },
           onHome: () {
@@ -58,10 +58,10 @@ class _TracePathScreenState extends ConsumerState<TracePathScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(tracePathNotifierProvider);
-    final notifier = ref.read(tracePathNotifierProvider.notifier);
+    final state = ref.watch(tracePathProvider);
+    final notifier = ref.read(tracePathProvider.notifier);
 
-    ref.listen(tracePathNotifierProvider, (previous, next) {
+    ref.listen(tracePathProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.accuracy >= 0.7) {
           HapticFeedbackUtil.victory();

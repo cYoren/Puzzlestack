@@ -21,12 +21,12 @@ class _OddRotationScreenState extends ConsumerState<OddRotationScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(oddRotationNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(oddRotationProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(bool won) {
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('odd_rotation');
+      ref.read(gameStreakProvider.notifier).completeGame('odd_rotation');
       HapticFeedbackUtil.victory();
     } else {
       HapticFeedbackUtil.error();
@@ -40,7 +40,7 @@ class _OddRotationScreenState extends ConsumerState<OddRotationScreen> {
           title: won ? l10n.oddRotationTitle.toUpperCase() : l10n.gameOver,
           message: won ? 'You spotted the odd rotation!' : 'Look closer next time.',
           onPlayAgain: () {
-            ref.read(oddRotationNotifierProvider.notifier).initGame();
+            ref.read(oddRotationProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -55,10 +55,10 @@ class _OddRotationScreenState extends ConsumerState<OddRotationScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(oddRotationNotifierProvider);
-    final notifier = ref.read(oddRotationNotifierProvider.notifier);
+    final state = ref.watch(oddRotationProvider);
+    final notifier = ref.read(oddRotationProvider.notifier);
 
-    ref.listen(oddRotationNotifierProvider, (previous, next) {
+    ref.listen(oddRotationProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.isGameWon);
       }
@@ -73,7 +73,7 @@ class _OddRotationScreenState extends ConsumerState<OddRotationScreen> {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(oddRotationNotifierProvider.notifier).initGame();
+            ref.read(oddRotationProvider.notifier).initGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(

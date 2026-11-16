@@ -19,9 +19,9 @@ class BridgesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(bridgesNotifierProvider);
+    final state = ref.watch(bridgesProvider);
 
-    ref.listen(bridgesNotifierProvider, (previous, next) {
+    ref.listen(bridgesProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -37,7 +37,7 @@ class BridgesScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(bridgesNotifierProvider.notifier).newGame();
+            ref.read(bridgesProvider.notifier).newGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(Icons.refresh_rounded, size: 20, color: Theme.of(context).colorScheme.onSurface),
@@ -145,7 +145,7 @@ class BridgesScreen extends ConsumerWidget {
       child: GestureDetector(
         onTap: () {
           HapticFeedbackUtil.lightImpact();
-          ref.read(bridgesNotifierProvider.notifier).selectIsland(island.id);
+          ref.read(bridgesProvider.notifier).selectIsland(island.id);
         },
         child: SizedBox(
           width: cellSize * 0.8,
@@ -186,7 +186,7 @@ class BridgesScreen extends ConsumerWidget {
   }
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('bridges');
+    await ref.read(gameStreakProvider.notifier).completeGame('bridges');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -199,7 +199,7 @@ class BridgesScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(bridgesNotifierProvider.notifier).newGame();
+          ref.read(bridgesProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
       ),

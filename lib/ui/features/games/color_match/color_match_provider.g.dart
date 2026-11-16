@@ -6,22 +6,58 @@ part of 'color_match_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ColorMatchNotifier)
+final colorMatchProvider = ColorMatchNotifierProvider._();
+
+final class ColorMatchNotifierProvider
+    extends $NotifierProvider<ColorMatchNotifier, ColorMatchState> {
+  ColorMatchNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'colorMatchProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$colorMatchNotifierHash();
+
+  @$internal
+  @override
+  ColorMatchNotifier create() => ColorMatchNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ColorMatchState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ColorMatchState>(value),
+    );
+  }
+}
+
 String _$colorMatchNotifierHash() =>
     r'68b3847dd38fa469636a66e5f4f331cb2aa0ab1d';
 
-/// See also [ColorMatchNotifier].
-@ProviderFor(ColorMatchNotifier)
-final colorMatchNotifierProvider =
-    AutoDisposeNotifierProvider<ColorMatchNotifier, ColorMatchState>.internal(
-  ColorMatchNotifier.new,
-  name: r'colorMatchNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$colorMatchNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$ColorMatchNotifier = AutoDisposeNotifier<ColorMatchState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$ColorMatchNotifier extends $Notifier<ColorMatchState> {
+  ColorMatchState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<ColorMatchState, ColorMatchState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ColorMatchState, ColorMatchState>,
+              ColorMatchState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

@@ -114,7 +114,7 @@ class _WordAssociationRecallScreenState extends ConsumerState<WordAssociationRec
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('word_association_recall');
+    await ref.read(gameStreakProvider.notifier).completeGame('word_association_recall');
     if (!mounted) return;
     showDialog(
       context: context,

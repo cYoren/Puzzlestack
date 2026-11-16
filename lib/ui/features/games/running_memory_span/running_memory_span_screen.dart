@@ -22,7 +22,7 @@ class _RunningMemorySpanScreenState extends ConsumerState<RunningMemorySpanScree
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(runningMemorySpanNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(runningMemorySpanProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
@@ -30,7 +30,7 @@ class _RunningMemorySpanScreenState extends ConsumerState<RunningMemorySpanScree
     bool won = score >= 12;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('running_memory_span');
+      ref.read(gameStreakProvider.notifier).completeGame('running_memory_span');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -42,7 +42,7 @@ class _RunningMemorySpanScreenState extends ConsumerState<RunningMemorySpanScree
         message: l10n.runningSpanGameOverMessage(score),
         isVictory: won,
         onPlayAgain: () {
-          ref.read(runningMemorySpanNotifierProvider.notifier).initGame();
+          ref.read(runningMemorySpanProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -55,11 +55,11 @@ class _RunningMemorySpanScreenState extends ConsumerState<RunningMemorySpanScree
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(runningMemorySpanNotifierProvider);
-    final notifier = ref.read(runningMemorySpanNotifierProvider.notifier);
+    final state = ref.watch(runningMemorySpanProvider);
+    final notifier = ref.read(runningMemorySpanProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(runningMemorySpanNotifierProvider, (previous, next) {
+    ref.listen(runningMemorySpanProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

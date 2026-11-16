@@ -22,7 +22,7 @@ class _KenKenScreenState extends ConsumerState<KenKenScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(kenKenNotifierProvider.notifier).initGame();
+      ref.read(kenKenProvider.notifier).initGame();
     });
   }
 
@@ -43,7 +43,7 @@ class _KenKenScreenState extends ConsumerState<KenKenScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(kenKenNotifierProvider.notifier).initGame();
+          ref.read(kenKenProvider.notifier).initGame();
         },
       ),
     );
@@ -52,14 +52,14 @@ class _KenKenScreenState extends ConsumerState<KenKenScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(kenKenNotifierProvider);
-    final notifier = ref.read(kenKenNotifierProvider.notifier);
+    final state = ref.watch(kenKenProvider);
+    final notifier = ref.read(kenKenProvider.notifier);
 
-    ref.listen(kenKenNotifierProvider, (previous, next) async {
+    ref.listen(kenKenProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isGameWon) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('kenken');
+          await ref.read(gameStreakProvider.notifier).completeGame('kenken');
         } else {
           HapticFeedbackUtil.vibrate();
         }

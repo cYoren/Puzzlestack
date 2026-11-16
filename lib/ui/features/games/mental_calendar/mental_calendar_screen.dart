@@ -17,7 +17,7 @@ class MentalCalendarScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(mentalCalendarNotifierProvider);
+    final state = ref.watch(mentalCalendarProvider);
     final l10n = AppLocalizations.of(context)!;
 
     return GameScaffold(
@@ -109,7 +109,7 @@ class MentalCalendarScreen extends ConsumerWidget {
             return SizedBox(
               width: 140,
               child: TangibleButton(
-                onTap: () => ref.read(mentalCalendarNotifierProvider.notifier).submitAnswer(dayIndex),
+                onTap: () => ref.read(mentalCalendarProvider.notifier).submitAnswer(dayIndex),
                 color: Theme.of(context).colorScheme.surface,
                 child: Text(
                   days[index],
@@ -149,7 +149,7 @@ class MentalCalendarScreen extends ConsumerWidget {
       if (!context.mounted) return;
       final score = state.correctCount;
       if (score >= 7) {
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('mental_calendar');
+        ref.read(gameStreakProvider.notifier).completeGame('mental_calendar');
       }
       // The microtask can run after the screen is popped; showing a dialog
       // with a dead context would throw.
@@ -164,7 +164,7 @@ class MentalCalendarScreen extends ConsumerWidget {
           },
           onPlayAgain: () {
             Navigator.of(context).pop();
-            ref.read(mentalCalendarNotifierProvider.notifier).resetGame();
+            ref.read(mentalCalendarProvider.notifier).resetGame();
           },
           title: L10nGameHelpers.getGameTitle(context, 'mental_calendar'),
           message: AppLocalizations.of(context)!.mentalCalendarMessage((score).toString()),

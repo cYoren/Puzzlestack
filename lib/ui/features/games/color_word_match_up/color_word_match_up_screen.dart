@@ -122,7 +122,7 @@ class _ColorWordMatchUpScreenState extends ConsumerState<ColorWordMatchUpScreen>
   void _onGameComplete() async {
     _timer?.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('color_word_match_up');
+    await ref.read(gameStreakProvider.notifier).completeGame('color_word_match_up');
     if (!mounted) return;
     showDialog(
       context: context,

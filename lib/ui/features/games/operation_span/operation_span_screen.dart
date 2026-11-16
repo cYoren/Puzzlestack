@@ -21,13 +21,13 @@ class _OperationSpanScreenState extends ConsumerState<OperationSpanScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(operationSpanNotifierProvider.notifier).initGame();
+      ref.read(operationSpanProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final score = ref.read(operationSpanNotifierProvider).score;
+    final score = ref.read(operationSpanProvider).score;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,7 +41,7 @@ class _OperationSpanScreenState extends ConsumerState<OperationSpanScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(operationSpanNotifierProvider.notifier).initGame();
+          ref.read(operationSpanProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _OperationSpanScreenState extends ConsumerState<OperationSpanScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(operationSpanNotifierProvider);
-    final notifier = ref.read(operationSpanNotifierProvider.notifier);
+    final state = ref.watch(operationSpanProvider);
+    final notifier = ref.read(operationSpanProvider.notifier);
 
-    ref.listen(operationSpanNotifierProvider, (previous, next) {
+    ref.listen(operationSpanProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('operation_span');
+        ref.read(gameStreakProvider.notifier).completeGame('operation_span');
         _showCompletionDialog();
       }
     });

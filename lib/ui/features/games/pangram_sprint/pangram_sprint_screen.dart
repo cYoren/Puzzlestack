@@ -21,11 +21,11 @@ class _PangramSprintScreenState extends ConsumerState<PangramSprintScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(pangramSprintNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(pangramSprintProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('pangram_sprint');
+    ref.read(gameStreakProvider.notifier).completeGame('pangram_sprint');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -33,7 +33,7 @@ class _PangramSprintScreenState extends ConsumerState<PangramSprintScreen> {
         title: L10nGameHelpers.getGameTitle(context, 'pangram_sprint'),
         message: AppLocalizations.of(context)!.pangramSprintMessage,
         onPlayAgain: () {
-          ref.read(pangramSprintNotifierProvider.notifier).initGame();
+          ref.read(pangramSprintProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -46,11 +46,11 @@ class _PangramSprintScreenState extends ConsumerState<PangramSprintScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(pangramSprintNotifierProvider);
+    final state = ref.watch(pangramSprintProvider);
     final colorScheme = Theme.of(context).colorScheme;
-    final notifier = ref.read(pangramSprintNotifierProvider.notifier);
+    final notifier = ref.read(pangramSprintProvider.notifier);
 
-    ref.listen(pangramSprintNotifierProvider, (previous, next) {
+    ref.listen(pangramSprintProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showCompletionDialog();
       }

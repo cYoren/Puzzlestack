@@ -196,7 +196,7 @@ class _UnitConverterProScreenState extends ConsumerState<UnitConverterProScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('unit_converter_pro');
+    await ref.read(gameStreakProvider.notifier).completeGame('unit_converter_pro');
     if (!mounted) return;
     showDialog(
       context: context,

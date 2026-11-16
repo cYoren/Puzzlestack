@@ -22,14 +22,14 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(mathGuessNotifierProvider.notifier).initGame());
+        () => ref.read(mathGuessProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(MathGuessState state) {
     bool won = state.isGameWon;
     final l10n = AppLocalizations.of(context)!;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('math_guess');
+      ref.read(gameStreakProvider.notifier).completeGame('math_guess');
     }
     showDialog(
       context: context,
@@ -40,7 +40,7 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
             ? l10n.snackbarCorrect
             : l10n.snackbarIncorrectTryNew,
         onPlayAgain: () {
-          ref.read(mathGuessNotifierProvider.notifier).initGame();
+          ref.read(mathGuessProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -120,10 +120,10 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(mathGuessNotifierProvider);
-    final notifier = ref.read(mathGuessNotifierProvider.notifier);
+    final state = ref.watch(mathGuessProvider);
+    final notifier = ref.read(mathGuessProvider.notifier);
 
-    ref.listen(mathGuessNotifierProvider, (previous, next) {
+    ref.listen(mathGuessProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next);
       }

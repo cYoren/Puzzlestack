@@ -134,7 +134,7 @@ class _LetterGridSwapperScreenState extends ConsumerState<LetterGridSwapperScree
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('letter_grid_swapper');
+    await ref.read(gameStreakProvider.notifier).completeGame('letter_grid_swapper');
     if (!mounted) return;
     showDialog(
       context: context,

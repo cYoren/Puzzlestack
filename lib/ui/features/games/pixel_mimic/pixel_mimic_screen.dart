@@ -28,13 +28,13 @@ class _PixelMimicScreenState extends ConsumerState<PixelMimicScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(pixelMimicNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(pixelMimicProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(bool won) {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('pixel_mimic');
+      ref.read(gameStreakProvider.notifier).completeGame('pixel_mimic');
       HapticFeedbackUtil.victory();
     } else {
       HapticFeedbackUtil.error();
@@ -46,7 +46,7 @@ class _PixelMimicScreenState extends ConsumerState<PixelMimicScreen> {
         title: won ? l10n.winMimicMaster : l10n.losePatternMismatch,
         message: won ? l10n.winPerfectRecall : l10n.losePatternMismatch,
         onPlayAgain: () {
-          ref.read(pixelMimicNotifierProvider.notifier).initGame();
+          ref.read(pixelMimicProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -61,10 +61,10 @@ class _PixelMimicScreenState extends ConsumerState<PixelMimicScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(pixelMimicNotifierProvider);
-    final notifier = ref.read(pixelMimicNotifierProvider.notifier);
+    final state = ref.watch(pixelMimicProvider);
+    final notifier = ref.read(pixelMimicProvider.notifier);
 
-    ref.listen(pixelMimicNotifierProvider, (previous, next) {
+    ref.listen(pixelMimicProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.isGameWon);
       }
@@ -79,7 +79,7 @@ class _PixelMimicScreenState extends ConsumerState<PixelMimicScreen> {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(pixelMimicNotifierProvider.notifier).initGame();
+            ref.read(pixelMimicProvider.notifier).initGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(

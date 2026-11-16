@@ -6,21 +6,49 @@ part of 'nonogram_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$nonogramNotifierHash() => r'0d7a90e2048cc85859aa5d84dcedc1137aea9b9d';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [NonogramNotifier].
 @ProviderFor(NonogramNotifier)
-final nonogramNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<NonogramNotifier, NonogramState>.internal(
-  NonogramNotifier.new,
-  name: r'nonogramNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$nonogramNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final nonogramProvider = NonogramNotifierProvider._();
 
-typedef _$NonogramNotifier = AutoDisposeAsyncNotifier<NonogramState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class NonogramNotifierProvider
+    extends $AsyncNotifierProvider<NonogramNotifier, NonogramState> {
+  NonogramNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'nonogramProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$nonogramNotifierHash();
+
+  @$internal
+  @override
+  NonogramNotifier create() => NonogramNotifier();
+}
+
+String _$nonogramNotifierHash() => r'b9cb4105004858b141d6c93e1c3da8b45472b89c';
+
+abstract class _$NonogramNotifier extends $AsyncNotifier<NonogramState> {
+  FutureOr<NonogramState> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<NonogramState>, NonogramState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<NonogramState>, NonogramState>,
+              AsyncValue<NonogramState>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

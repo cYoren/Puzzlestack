@@ -22,7 +22,7 @@ class _VisualStatisticalLearningScreenState extends ConsumerState<VisualStatisti
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(visualStatisticalLearningNotifierProvider.notifier).initGame();
+      ref.read(visualStatisticalLearningProvider.notifier).initGame();
     });
   }
 
@@ -40,7 +40,7 @@ class _VisualStatisticalLearningScreenState extends ConsumerState<VisualStatisti
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(visualStatisticalLearningNotifierProvider.notifier).initGame();
+          ref.read(visualStatisticalLearningProvider.notifier).initGame();
         },
       ),
     );
@@ -49,9 +49,9 @@ class _VisualStatisticalLearningScreenState extends ConsumerState<VisualStatisti
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(visualStatisticalLearningNotifierProvider);
+    final state = ref.watch(visualStatisticalLearningProvider);
 
-    ref.listen(visualStatisticalLearningNotifierProvider, (previous, next) {
+    ref.listen(visualStatisticalLearningProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         _showCompletionDialog(next);
       }
@@ -133,7 +133,7 @@ class _VisualStatisticalLearningScreenState extends ConsumerState<VisualStatisti
               icons: state.testLeft,
               onTap: () {
                 HapticFeedbackUtil.selectionClick();
-                ref.read(visualStatisticalLearningNotifierProvider.notifier).choose(true);
+                ref.read(visualStatisticalLearningProvider.notifier).choose(true);
               },
             ),
           ),
@@ -143,7 +143,7 @@ class _VisualStatisticalLearningScreenState extends ConsumerState<VisualStatisti
               icons: state.testRight,
               onTap: () {
                 HapticFeedbackUtil.selectionClick();
-                ref.read(visualStatisticalLearningNotifierProvider.notifier).choose(false);
+                ref.read(visualStatisticalLearningProvider.notifier).choose(false);
               },
             ),
           ),

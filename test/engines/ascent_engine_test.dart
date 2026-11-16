@@ -131,7 +131,7 @@ void main() {
     test('the clues are on the board, not hidden behind it', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final state = container.read(ascentNotifierProvider);
+      final state = container.read(ascentProvider);
       final shown = state.values.where((v) => v != kAscentBlank).length;
       expect(shown, state.puzzle.clueCount());
       expect(shown, greaterThan(0));
@@ -140,8 +140,8 @@ void main() {
     test('a board can be finished by playing it', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final notifier = container.read(ascentNotifierProvider.notifier);
-      final puzzle = container.read(ascentNotifierProvider).puzzle;
+      final notifier = container.read(ascentProvider.notifier);
+      final puzzle = container.read(ascentProvider).puzzle;
       // Numbers go on in order, so walk the answer in order and tap the cell
       // that holds each one the player has to write.
       for (var number = 1; number <= puzzle.maxNumber; number++) {
@@ -149,7 +149,7 @@ void main() {
         if (puzzle.given(cell) != kAscentNoClue) continue;
         notifier.tap(cell);
       }
-      expect(container.read(ascentNotifierProvider).isSolved, isTrue);
+      expect(container.read(ascentProvider).isSolved, isTrue);
     });
   });
 }

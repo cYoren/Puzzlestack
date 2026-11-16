@@ -22,7 +22,7 @@ class _ColorFloodScreenState extends ConsumerState<ColorFloodScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(colorFloodNotifierProvider.notifier).initGame();
+      ref.read(colorFloodProvider.notifier).initGame();
     });
   }
 
@@ -43,7 +43,7 @@ class _ColorFloodScreenState extends ConsumerState<ColorFloodScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(colorFloodNotifierProvider.notifier).initGame();
+          ref.read(colorFloodProvider.notifier).initGame();
         },
       ),
     );
@@ -52,15 +52,15 @@ class _ColorFloodScreenState extends ConsumerState<ColorFloodScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(colorFloodNotifierProvider);
-    final notifier = ref.read(colorFloodNotifierProvider.notifier);
+    final state = ref.watch(colorFloodProvider);
+    final notifier = ref.read(colorFloodProvider.notifier);
 
-    ref.listen(colorFloodNotifierProvider, (previous, next) async {
+    ref.listen(colorFloodProvider, (previous, next) async {
       if (next.status != ColorFloodStatus.playing && previous?.status == ColorFloodStatus.playing) {
         final isVictory = next.status == ColorFloodStatus.won;
         if (isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('color_flood');
+          await ref.read(gameStreakProvider.notifier).completeGame('color_flood');
         } else {
           HapticFeedbackUtil.vibrate();
         }

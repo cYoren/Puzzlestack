@@ -21,7 +21,7 @@ class _NurikabeScreenState extends ConsumerState<NurikabeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(nurikabeNotifierProvider.notifier).initGame();
+      ref.read(nurikabeProvider.notifier).initGame();
     });
   }
 
@@ -40,7 +40,7 @@ class _NurikabeScreenState extends ConsumerState<NurikabeScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(nurikabeNotifierProvider.notifier).initGame();
+          ref.read(nurikabeProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _NurikabeScreenState extends ConsumerState<NurikabeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(nurikabeNotifierProvider);
-    final notifier = ref.read(nurikabeNotifierProvider.notifier);
+    final state = ref.watch(nurikabeProvider);
+    final notifier = ref.read(nurikabeProvider.notifier);
 
-    ref.listen(nurikabeNotifierProvider, (previous, next) {
+    ref.listen(nurikabeProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('nurikabe');
+        ref.read(gameStreakProvider.notifier).completeGame('nurikabe');
         _showCompletionDialog();
       }
     });

@@ -115,7 +115,7 @@ class CalculationSprintNotifier extends _$CalculationSprintNotifier {
 
     // Goal: Get at least 15 points to "complete" the game for the daily streak
     if (state.score >= 15) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('calculation_sprint', xpAmount: 20 + (state.score ~/ 2));
+      ref.read(gameStreakProvider.notifier).completeGame('calculation_sprint', xpAmount: 20 + (state.score ~/ 2));
     }
   }
 

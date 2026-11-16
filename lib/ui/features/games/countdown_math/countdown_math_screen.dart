@@ -169,7 +169,7 @@ class _CountdownMathScreenState extends ConsumerState<CountdownMathScreen> {
   void _checkWin() {
     if (_numbers.contains(_target)) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('countdown_math');
+      ref.read(gameStreakProvider.notifier).completeGame('countdown_math');
       showDialog(
         context: context,
         barrierDismissible: false,

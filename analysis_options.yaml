@@ -12,7 +12,7 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   # Generated sources. Their lints come from the generators, not from code we
   # can edit, so analysing them only hides real findings behind noise.
-  # Regenerate with: dart run build_runner build --delete-conflicting-outputs
+  # Regenerate with: dart run build_runner build
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"

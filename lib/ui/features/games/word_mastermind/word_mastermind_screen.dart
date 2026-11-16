@@ -18,10 +18,10 @@ class WordMastermindScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(wordMastermindNotifierProvider);
-    final notifier = ref.read(wordMastermindNotifierProvider.notifier);
+    final state = ref.watch(wordMastermindProvider);
+    final notifier = ref.read(wordMastermindProvider.notifier);
 
-    ref.listen(wordMastermindNotifierProvider, (previous, next) {
+    ref.listen(wordMastermindProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isGameWon) {
           HapticFeedbackUtil.victory();
@@ -236,7 +236,7 @@ class WordMastermindScreen extends ConsumerWidget {
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, WordMastermindState state) async {
     if (state.isGameWon) {
-      await ref.read(gameStreakNotifierProvider.notifier).completeGame('word_mastermind', xpAmount: 40);
+      await ref.read(gameStreakProvider.notifier).completeGame('word_mastermind', xpAmount: 40);
 
       if (!context.mounted) return;
 
@@ -249,7 +249,7 @@ class WordMastermindScreen extends ConsumerWidget {
             Navigator.of(context).pop();
           },
           onPlayAgain: () {
-            ref.read(wordMastermindNotifierProvider.notifier).reset();
+            ref.read(wordMastermindProvider.notifier).reset();
             Navigator.of(context).pop();
           },
           title: L10nGameHelpers.getGameTitle(context, 'word_mastermind'),
@@ -271,7 +271,7 @@ class WordMastermindScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(wordMastermindNotifierProvider.notifier).reset();
+          ref.read(wordMastermindProvider.notifier).reset();
           Navigator.of(context).pop();
         },
         title: L10nGameHelpers.getGameTitle(context, 'word_mastermind'),

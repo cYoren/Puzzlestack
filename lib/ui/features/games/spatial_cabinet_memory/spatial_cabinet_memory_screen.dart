@@ -22,14 +22,14 @@ class _SpatialCabinetMemoryScreenState extends ConsumerState<SpatialCabinetMemor
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(spatialCabinetMemoryNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(spatialCabinetMemoryProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 12;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('spatial_cabinet_memory');
+      ref.read(gameStreakProvider.notifier).completeGame('spatial_cabinet_memory');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -43,7 +43,7 @@ class _SpatialCabinetMemoryScreenState extends ConsumerState<SpatialCabinetMemor
           message: '$score points in Spatial Cabinet Memory!',
           isVictory: won,
           onPlayAgain: () {
-            ref.read(spatialCabinetMemoryNotifierProvider.notifier).initGame();
+            ref.read(spatialCabinetMemoryProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -57,10 +57,10 @@ class _SpatialCabinetMemoryScreenState extends ConsumerState<SpatialCabinetMemor
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(spatialCabinetMemoryNotifierProvider);
-    final notifier = ref.read(spatialCabinetMemoryNotifierProvider.notifier);
+    final state = ref.watch(spatialCabinetMemoryProvider);
+    final notifier = ref.read(spatialCabinetMemoryProvider.notifier);
 
-    ref.listen(spatialCabinetMemoryNotifierProvider, (previous, next) {
+    ref.listen(spatialCabinetMemoryProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

@@ -21,12 +21,12 @@ class _CognateCatchScreenState extends ConsumerState<CognateCatchScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(cognateCatchNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(cognateCatchProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(cognateCatchNotifierProvider);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('cognate_catch');
+    final state = ref.read(cognateCatchProvider);
+    ref.read(gameStreakProvider.notifier).completeGame('cognate_catch');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -37,7 +37,7 @@ class _CognateCatchScreenState extends ConsumerState<CognateCatchScreen> {
           message: state.description,
           isVictory: state.isGameWon,
           onPlayAgain: () {
-            ref.read(cognateCatchNotifierProvider.notifier).initGame();
+            ref.read(cognateCatchProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -52,10 +52,10 @@ class _CognateCatchScreenState extends ConsumerState<CognateCatchScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(cognateCatchNotifierProvider);
-    final notifier = ref.read(cognateCatchNotifierProvider.notifier);
+    final state = ref.watch(cognateCatchProvider);
+    final notifier = ref.read(cognateCatchProvider.notifier);
 
-    ref.listen(cognateCatchNotifierProvider, (previous, next) {
+    ref.listen(cognateCatchProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showCompletionDialog();
       }

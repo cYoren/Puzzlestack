@@ -82,7 +82,7 @@ class _BinaryScaleBalanceScreenState extends ConsumerState<BinaryScaleBalanceScr
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('binary_scale_balance');
+    await ref.read(gameStreakProvider.notifier).completeGame('binary_scale_balance');
     if (!mounted) return;
     showDialog(
       context: context,

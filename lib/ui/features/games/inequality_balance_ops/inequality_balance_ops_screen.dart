@@ -127,7 +127,7 @@ class _InequalityBalanceOpsScreenState extends ConsumerState<InequalityBalanceOp
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('inequality_balance_ops');
+    await ref.read(gameStreakProvider.notifier).completeGame('inequality_balance_ops');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -127,7 +127,7 @@ class _KlotskiScreenState extends ConsumerState<KlotskiScreen> {
     final hero = _blocks.firstWhere((b) => b.id == 'hero');
     if (hero.x == 1 && hero.y == 3) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('klotski', xpAmount: 30);
+      ref.read(gameStreakProvider.notifier).completeGame('klotski', xpAmount: 30);
       showDialog(
         context: context,
         barrierDismissible: false,

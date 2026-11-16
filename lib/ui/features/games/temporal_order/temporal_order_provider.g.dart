@@ -6,22 +6,58 @@ part of 'temporal_order_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$temporalOrderNotifierHash() =>
-    r'c7f9dce98ebf607ced7c22df6490b7d414bc335b';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [TemporalOrderNotifier].
 @ProviderFor(TemporalOrderNotifier)
-final temporalOrderNotifierProvider = AutoDisposeNotifierProvider<
-    TemporalOrderNotifier, TemporalOrderState>.internal(
-  TemporalOrderNotifier.new,
-  name: r'temporalOrderNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$temporalOrderNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final temporalOrderProvider = TemporalOrderNotifierProvider._();
 
-typedef _$TemporalOrderNotifier = AutoDisposeNotifier<TemporalOrderState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class TemporalOrderNotifierProvider
+    extends $NotifierProvider<TemporalOrderNotifier, TemporalOrderState> {
+  TemporalOrderNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'temporalOrderProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$temporalOrderNotifierHash();
+
+  @$internal
+  @override
+  TemporalOrderNotifier create() => TemporalOrderNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(TemporalOrderState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<TemporalOrderState>(value),
+    );
+  }
+}
+
+String _$temporalOrderNotifierHash() =>
+    r'a35dd79d6cba2668e6fd5b4bdfc6ae58ffcf1aa8';
+
+abstract class _$TemporalOrderNotifier extends $Notifier<TemporalOrderState> {
+  TemporalOrderState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<TemporalOrderState, TemporalOrderState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<TemporalOrderState, TemporalOrderState>,
+              TemporalOrderState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

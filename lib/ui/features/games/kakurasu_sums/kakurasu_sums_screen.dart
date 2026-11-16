@@ -125,7 +125,7 @@ class _KakurasuSumsScreenState extends ConsumerState<KakurasuSumsScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('kakurasu_sums');
+    await ref.read(gameStreakProvider.notifier).completeGame('kakurasu_sums');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -20,7 +20,7 @@ class _FlankerTestScreenState extends ConsumerState<FlankerTestScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(flankerTestNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(flankerTestProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
@@ -28,7 +28,7 @@ class _FlankerTestScreenState extends ConsumerState<FlankerTestScreen> {
     bool won = score >= 15;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('flanker_test');
+      ref.read(gameStreakProvider.notifier).completeGame('flanker_test');
     } else {
       HapticFeedbackUtil.error();
     }
@@ -39,7 +39,7 @@ class _FlankerTestScreenState extends ConsumerState<FlankerTestScreen> {
         title: won ? l10n.flankerTestWinTitle : l10n.flankerTestLoseTitle,
         message: l10n.flankerTestScoreMessage(score),
         onPlayAgain: () {
-          ref.read(flankerTestNotifierProvider.notifier).initGame();
+          ref.read(flankerTestProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -54,10 +54,10 @@ class _FlankerTestScreenState extends ConsumerState<FlankerTestScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(flankerTestNotifierProvider);
-    final notifier = ref.read(flankerTestNotifierProvider.notifier);
+    final state = ref.watch(flankerTestProvider);
+    final notifier = ref.read(flankerTestProvider.notifier);
 
-    ref.listen(flankerTestNotifierProvider, (previous, next) {
+    ref.listen(flankerTestProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

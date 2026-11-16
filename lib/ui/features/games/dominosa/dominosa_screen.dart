@@ -24,7 +24,7 @@ class DominosaScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('dominosa', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class DominosaScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(dominosaNotifierProvider);
-    final notifier = ref.read(dominosaNotifierProvider.notifier);
+    final state = ref.watch(dominosaProvider);
+    final notifier = ref.read(dominosaProvider.notifier);
 
     return GameScaffold(
       title: l10n.dominosaTitle,

@@ -17,10 +17,10 @@ class LetterFrequencyScanScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(letterFrequencyScanNotifierProvider);
-    final notifier = ref.read(letterFrequencyScanNotifierProvider.notifier);
+    final state = ref.watch(letterFrequencyScanProvider);
+    final notifier = ref.read(letterFrequencyScanProvider.notifier);
 
-    ref.listen(letterFrequencyScanNotifierProvider, (previous, next) {
+    ref.listen(letterFrequencyScanProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isCorrect) {
           HapticFeedbackUtil.victory();
@@ -189,7 +189,7 @@ class LetterFrequencyScanScreen extends ConsumerWidget {
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, LetterFrequencyScanState state) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('letter_frequency_scan', xpAmount: 25);
+    await ref.read(gameStreakProvider.notifier).completeGame('letter_frequency_scan', xpAmount: 25);
 
     if (!context.mounted) return;
 
@@ -204,7 +204,7 @@ class LetterFrequencyScanScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(letterFrequencyScanNotifierProvider.notifier).reset();
+          ref.read(letterFrequencyScanProvider.notifier).reset();
           Navigator.of(context).pop();
         },
       ),

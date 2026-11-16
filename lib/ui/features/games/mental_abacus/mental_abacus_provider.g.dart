@@ -6,22 +6,58 @@ part of 'mental_abacus_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(MentalAbacusNotifier)
+final mentalAbacusProvider = MentalAbacusNotifierProvider._();
+
+final class MentalAbacusNotifierProvider
+    extends $NotifierProvider<MentalAbacusNotifier, MentalAbacusState> {
+  MentalAbacusNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mentalAbacusProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mentalAbacusNotifierHash();
+
+  @$internal
+  @override
+  MentalAbacusNotifier create() => MentalAbacusNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MentalAbacusState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MentalAbacusState>(value),
+    );
+  }
+}
+
 String _$mentalAbacusNotifierHash() =>
     r'2e19e98bf0962f54c3eb89997b0a2fd76c5f8726';
 
-/// See also [MentalAbacusNotifier].
-@ProviderFor(MentalAbacusNotifier)
-final mentalAbacusNotifierProvider = AutoDisposeNotifierProvider<
-    MentalAbacusNotifier, MentalAbacusState>.internal(
-  MentalAbacusNotifier.new,
-  name: r'mentalAbacusNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$mentalAbacusNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$MentalAbacusNotifier = AutoDisposeNotifier<MentalAbacusState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$MentalAbacusNotifier extends $Notifier<MentalAbacusState> {
+  MentalAbacusState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<MentalAbacusState, MentalAbacusState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<MentalAbacusState, MentalAbacusState>,
+              MentalAbacusState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

@@ -98,7 +98,7 @@ class SchulteTableNotifier extends _$SchulteTableNotifier {
       bestTime: newBest,
     );
 
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('schulte_table', xpAmount: 25);
+    ref.read(gameStreakProvider.notifier).completeGame('schulte_table', xpAmount: 25);
   }
 
   void reset() {

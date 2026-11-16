@@ -17,10 +17,10 @@ class OneLetterShiftScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(oneLetterShiftNotifierProvider);
-    final notifier = ref.read(oneLetterShiftNotifierProvider.notifier);
+    final state = ref.watch(oneLetterShiftProvider);
+    final notifier = ref.read(oneLetterShiftProvider.notifier);
 
-    ref.listen(oneLetterShiftNotifierProvider, (previous, next) {
+    ref.listen(oneLetterShiftProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isCorrect) {
           HapticFeedbackUtil.victory();
@@ -222,7 +222,7 @@ class OneLetterShiftScreen extends ConsumerWidget {
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, OneLetterShiftState state) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('one_letter_shift', xpAmount: 30);
+    await ref.read(gameStreakProvider.notifier).completeGame('one_letter_shift', xpAmount: 30);
 
     if (!context.mounted) return;
 
@@ -237,7 +237,7 @@ class OneLetterShiftScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(oneLetterShiftNotifierProvider.notifier).reset();
+          ref.read(oneLetterShiftProvider.notifier).reset();
           Navigator.of(context).pop();
         },
       ),

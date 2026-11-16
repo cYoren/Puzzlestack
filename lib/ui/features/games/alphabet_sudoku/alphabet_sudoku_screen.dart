@@ -20,11 +20,11 @@ class _AlphabetSudokuScreenState extends ConsumerState<AlphabetSudokuScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(alphabetSudokuNotifierProvider);
-    final notifier = ref.read(alphabetSudokuNotifierProvider.notifier);
+    final state = ref.watch(alphabetSudokuProvider);
+    final notifier = ref.read(alphabetSudokuProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen<AsyncValue<AlphabetSudokuState>>(alphabetSudokuNotifierProvider, (previous, next) {
+    ref.listen<AsyncValue<AlphabetSudokuState>>(alphabetSudokuProvider, (previous, next) {
       if (next.hasValue && next.value!.isSolved && !(previous?.value?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -237,16 +237,16 @@ class AlphabetSudokuCell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(alphabetSudokuNotifierProvider.notifier);
+    final notifier = ref.read(alphabetSudokuProvider.notifier);
 
     // Selectively watch only the data this cell needs
-    final value = ref.watch(alphabetSudokuNotifierProvider.select((s) => s.value?.currentBoard[row][col] ?? 0));
-    final isInitial = ref.watch(alphabetSudokuNotifierProvider.select((s) => s.value?.initialBoard[row][col] != 0));
-    final isSelected = ref.watch(alphabetSudokuNotifierProvider.select((s) => s.value?.selectedRow == row && s.value?.selectedCol == col));
+    final value = ref.watch(alphabetSudokuProvider.select((s) => s.value?.currentBoard[row][col] ?? 0));
+    final isInitial = ref.watch(alphabetSudokuProvider.select((s) => s.value?.initialBoard[row][col] != 0));
+    final isSelected = ref.watch(alphabetSudokuProvider.select((s) => s.value?.selectedRow == row && s.value?.selectedCol == col));
 
-    final selR = ref.watch(alphabetSudokuNotifierProvider.select((s) => s.value?.selectedRow));
-    final selC = ref.watch(alphabetSudokuNotifierProvider.select((s) => s.value?.selectedCol));
-    final selectedValue = ref.watch(alphabetSudokuNotifierProvider.select((s) =>
+    final selR = ref.watch(alphabetSudokuProvider.select((s) => s.value?.selectedRow));
+    final selC = ref.watch(alphabetSudokuProvider.select((s) => s.value?.selectedCol));
+    final selectedValue = ref.watch(alphabetSudokuProvider.select((s) =>
         (s.value?.selectedRow != null && s.value?.selectedCol != null)
             ? s.value!.currentBoard[s.value!.selectedRow!][s.value!.selectedCol!]
             : 0));
@@ -258,7 +258,7 @@ class AlphabetSudokuCell extends ConsumerWidget {
         (selR != null && selC != null && (row ~/ 3 == selR ~/ 3 && col ~/ 3 == selC ~/ 3));
 
     // Conflict detection
-    final board = ref.read(alphabetSudokuNotifierProvider).value?.currentBoard;
+    final board = ref.read(alphabetSudokuProvider).value?.currentBoard;
     bool hasConflict = false;
     if (value != 0 && !isInitial && board != null) {
       hasConflict = !AlphabetSudokuEngine(size: 9).isValid(board, row, col, value);

@@ -23,7 +23,7 @@ class SeismicScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('seismic', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -47,8 +47,8 @@ class SeismicScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(seismicNotifierProvider);
-    final notifier = ref.read(seismicNotifierProvider.notifier);
+    final state = ref.watch(seismicProvider);
+    final notifier = ref.read(seismicProvider.notifier);
 
     return BoardGameScaffold(
       title: l10n.seismicTitle,

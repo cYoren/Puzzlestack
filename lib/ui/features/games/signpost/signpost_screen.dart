@@ -24,7 +24,7 @@ class SignpostScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('signpost', xpAmount: 40);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class SignpostScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(signpostNotifierProvider);
-    final notifier = ref.read(signpostNotifierProvider.notifier);
+    final state = ref.watch(signpostProvider);
+    final notifier = ref.read(signpostProvider.notifier);
 
     return GameScaffold(
       title: l10n.signpostTitle,

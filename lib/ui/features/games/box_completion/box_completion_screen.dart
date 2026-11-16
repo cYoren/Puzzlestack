@@ -21,13 +21,13 @@ class _BoxCompletionScreenState extends ConsumerState<BoxCompletionScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(boxCompletionNotifierProvider.notifier).initGame();
+      ref.read(boxCompletionProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(boxCompletionNotifierProvider);
+    final state = ref.read(boxCompletionProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,7 +41,7 @@ class _BoxCompletionScreenState extends ConsumerState<BoxCompletionScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(boxCompletionNotifierProvider.notifier).initGame();
+          ref.read(boxCompletionProvider.notifier).initGame();
         },
       ),
     );
@@ -50,13 +50,13 @@ class _BoxCompletionScreenState extends ConsumerState<BoxCompletionScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(boxCompletionNotifierProvider);
-    final notifier = ref.read(boxCompletionNotifierProvider.notifier);
+    final state = ref.watch(boxCompletionProvider);
+    final notifier = ref.read(boxCompletionProvider.notifier);
 
-    ref.listen(boxCompletionNotifierProvider, (previous, next) async {
+    ref.listen(boxCompletionProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
-        await ref.read(gameStreakNotifierProvider.notifier).completeGame('box_completion');
+        await ref.read(gameStreakProvider.notifier).completeGame('box_completion');
         if (!context.mounted) return;
         _showCompletionDialog();
       }

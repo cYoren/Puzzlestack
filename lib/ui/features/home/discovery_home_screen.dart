@@ -31,7 +31,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
     HapticFeedbackUtil.selectionClick();
     // The stack has no shelf of its own; "next" after a solve should draw from
     // the whole catalogue rather than from the row the game was found in.
-    ref.read(gameSessionNotifierProvider.notifier).setSession(
+    ref.read(gameSessionProvider.notifier).setSession(
           gameId: game.id,
           category: 'ALL',
           query: '',
@@ -41,10 +41,10 @@ class DiscoveryHomeScreen extends ConsumerWidget {
 
   List<GameMetadata> _favorites(WidgetRef ref) {
     final List<String> ids = ref.watch(
-        userDataNotifierProvider.select((d) => d.favoriteGameIds ?? const []));
+        userDataProvider.select((d) => d.favoriteGameIds ?? const []));
     if (ids.isEmpty) return const [];
     final hidden = ref.watch(
-        userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
+        userDataProvider.select((d) => d.hiddenGameIds ?? const []));
     final byId = {for (final g in GameCategories.visible) g.id: g};
     return [
       for (final id in ids)
@@ -55,7 +55,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Set<String> hidden = ref
-        .watch(userDataNotifierProvider.select(
+        .watch(userDataProvider.select(
             (d) => d.hiddenGameIds ?? const []))
         .toSet();
     // The daily pick is the same for everyone, so it is not drawn from this
@@ -330,7 +330,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
         itemCount: games.length,
-        separatorBuilder: (_, __) =>
+        separatorBuilder: (_, _) =>
             const SizedBox(width: DesignSystem.spaceSM),
         itemBuilder: (context, i) => _quickTile(context, ref, games[i]),
       ),
@@ -348,7 +348,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
         itemCount: games.length,
-        separatorBuilder: (_, __) =>
+        separatorBuilder: (_, _) =>
             const SizedBox(width: DesignSystem.spaceSM),
         itemBuilder: (context, i) {
           final GameMetadata game = games[i];
@@ -362,7 +362,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
                   onTap: () {
                     HapticFeedbackUtil.lightImpact();
                     ref
-                        .read(userDataNotifierProvider.notifier)
+                        .read(userDataProvider.notifier)
                         .toggleFavorite(game.id);
                   },
                   child: Icon(Icons.close_rounded,

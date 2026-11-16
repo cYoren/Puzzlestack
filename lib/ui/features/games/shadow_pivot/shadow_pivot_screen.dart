@@ -25,7 +25,7 @@ class _ShadowPivotScreenState extends ConsumerState<ShadowPivotScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(shadowPivotNotifierProvider.notifier).initGame();
+      ref.read(shadowPivotProvider.notifier).initGame();
     });
   }
 
@@ -86,7 +86,7 @@ class _ShadowPivotScreenState extends ConsumerState<ShadowPivotScreen> {
         },
         onPlayAgain: () {
           Navigator.of(dialogCtx).pop();
-          ref.read(shadowPivotNotifierProvider.notifier).initGame();
+          ref.read(shadowPivotProvider.notifier).initGame();
         },
       ),
     );
@@ -105,16 +105,16 @@ class _ShadowPivotScreenState extends ConsumerState<ShadowPivotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(shadowPivotNotifierProvider);
-    final notifier = ref.read(shadowPivotNotifierProvider.notifier);
+    final state = ref.watch(shadowPivotProvider);
+    final notifier = ref.read(shadowPivotProvider.notifier);
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(shadowPivotNotifierProvider, (previous, next) {
+    ref.listen(shadowPivotProvider, (previous, next) {
       if ((next.isVictory && !(previous?.isVictory ?? false)) ||
           (next.isFailed && !(previous?.isFailed ?? false))) {
         if (next.isVictory) {
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('shadow_pivot');
+          ref.read(gameStreakProvider.notifier).completeGame('shadow_pivot');
         }
         Future.delayed(const Duration(milliseconds: 500), () {
           if (mounted) _showCompletionDialog(next.isVictory);

@@ -23,13 +23,13 @@ class _SymbolicFlankerScreenState extends ConsumerState<SymbolicFlankerScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(symbolicFlankerNotifierProvider.notifier).initGame();
+      ref.read(symbolicFlankerProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(symbolicFlankerNotifierProvider);
+    final state = ref.read(symbolicFlankerProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -43,7 +43,7 @@ class _SymbolicFlankerScreenState extends ConsumerState<SymbolicFlankerScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(symbolicFlankerNotifierProvider.notifier).initGame();
+          ref.read(symbolicFlankerProvider.notifier).initGame();
         },
       ),
     );
@@ -53,13 +53,13 @@ class _SymbolicFlankerScreenState extends ConsumerState<SymbolicFlankerScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(symbolicFlankerNotifierProvider);
-    final notifier = ref.read(symbolicFlankerNotifierProvider.notifier);
+    final state = ref.watch(symbolicFlankerProvider);
+    final notifier = ref.read(symbolicFlankerProvider.notifier);
 
-    ref.listen(symbolicFlankerNotifierProvider, (previous, next) async {
+    ref.listen(symbolicFlankerProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
-        await ref.read(gameStreakNotifierProvider.notifier).completeGame('symbolic_flanker');
+        await ref.read(gameStreakProvider.notifier).completeGame('symbolic_flanker');
         if (!context.mounted) return;
         _showCompletionDialog();
       }

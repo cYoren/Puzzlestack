@@ -144,7 +144,7 @@ class _FocusTunnelScreenState extends ConsumerState<FocusTunnelScreen> with Sing
   void _onGameComplete() async {
     _spawnTimer.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('focus_tunnel');
+    await ref.read(gameStreakProvider.notifier).completeGame('focus_tunnel');
     if (!mounted) return;
     showDialog(
       context: context,

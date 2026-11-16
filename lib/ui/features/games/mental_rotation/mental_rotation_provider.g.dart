@@ -6,22 +6,58 @@ part of 'mental_rotation_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mentalRotationNotifierHash() =>
-    r'd639db24b58082967fe9f8f27d516c482f72129b';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [MentalRotationNotifier].
 @ProviderFor(MentalRotationNotifier)
-final mentalRotationNotifierProvider = AutoDisposeNotifierProvider<
-    MentalRotationNotifier, MentalRotationState>.internal(
-  MentalRotationNotifier.new,
-  name: r'mentalRotationNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$mentalRotationNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final mentalRotationProvider = MentalRotationNotifierProvider._();
 
-typedef _$MentalRotationNotifier = AutoDisposeNotifier<MentalRotationState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class MentalRotationNotifierProvider
+    extends $NotifierProvider<MentalRotationNotifier, MentalRotationState> {
+  MentalRotationNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mentalRotationProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mentalRotationNotifierHash();
+
+  @$internal
+  @override
+  MentalRotationNotifier create() => MentalRotationNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MentalRotationState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MentalRotationState>(value),
+    );
+  }
+}
+
+String _$mentalRotationNotifierHash() =>
+    r'0a52f590b896d4816a1c8c7d214b0b2ec09a4fe0';
+
+abstract class _$MentalRotationNotifier extends $Notifier<MentalRotationState> {
+  MentalRotationState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<MentalRotationState, MentalRotationState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<MentalRotationState, MentalRotationState>,
+              MentalRotationState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

@@ -89,7 +89,7 @@ class MinesweeperNotifier extends _$MinesweeperNotifier {
     state = state.copyWith(board: newBoard, isWon: isWon);
 
     if (isWon) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('minesweeper', xpAmount: 30);
+      ref.read(gameStreakProvider.notifier).completeGame('minesweeper', xpAmount: 30);
     }
   }
 

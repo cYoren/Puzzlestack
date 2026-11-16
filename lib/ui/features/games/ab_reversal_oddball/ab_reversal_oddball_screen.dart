@@ -76,7 +76,7 @@ class _ABReversalOddballScreenState extends ConsumerState<ABReversalOddballScree
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('ab_reversal_oddball');
+    ref.read(gameStreakProvider.notifier).completeGame('ab_reversal_oddball');
     _showEndDialog();
   }
 

@@ -108,7 +108,7 @@ class _WordPairAssociateMemoryScreenState extends ConsumerState<WordPairAssociat
             setState(() {
               _isGameOver = true;
             });
-            ref.read(gameStreakNotifierProvider.notifier).completeGame('word_pair_associate_memory');
+            ref.read(gameStreakProvider.notifier).completeGame('word_pair_associate_memory');
             _showWinDialog();
             return;
           }

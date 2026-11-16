@@ -23,12 +23,12 @@ class _HomophoneHuntScreenState extends ConsumerState<HomophoneHuntScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(homophoneHuntNotifierProvider.notifier).startGame();
+      ref.read(homophoneHuntProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(homophoneHuntNotifierProvider);
+    final state = ref.read(homophoneHuntProvider);
     final isCorrect = state.isCorrect ?? false;
     final l10n = AppLocalizations.of(context)!;
     
@@ -47,7 +47,7 @@ class _HomophoneHuntScreenState extends ConsumerState<HomophoneHuntScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(homophoneHuntNotifierProvider.notifier).startGame();
+          ref.read(homophoneHuntProvider.notifier).startGame();
         },
       ),
     );
@@ -55,17 +55,17 @@ class _HomophoneHuntScreenState extends ConsumerState<HomophoneHuntScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(homophoneHuntNotifierProvider);
-    final notifier = ref.read(homophoneHuntNotifierProvider.notifier);
+    final state = ref.watch(homophoneHuntProvider);
+    final notifier = ref.read(homophoneHuntProvider.notifier);
 
-    ref.listen(homophoneHuntNotifierProvider, (previous, next) {
+    ref.listen(homophoneHuntProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isCorrect == true) {
           HapticFeedbackUtil.victory();
         } else {
           HapticFeedbackUtil.error();
         }
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('homophone_hunt');
+        ref.read(gameStreakProvider.notifier).completeGame('homophone_hunt');
         _showCompletionDialog();
       }
     });

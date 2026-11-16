@@ -24,7 +24,7 @@ class MagnetsScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('magnets', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class MagnetsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(magnetsNotifierProvider);
-    final notifier = ref.read(magnetsNotifierProvider.notifier);
+    final state = ref.watch(magnetsProvider);
+    final notifier = ref.read(magnetsProvider.notifier);
 
     return GameScaffold(
       title: l10n.magnetsTitle,

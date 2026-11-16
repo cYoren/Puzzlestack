@@ -22,13 +22,13 @@ class _FaceNameAssociationScreenState extends ConsumerState<FaceNameAssociationS
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(faceNameAssociationNotifierProvider.notifier).initGame();
+      ref.read(faceNameAssociationProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog(bool isVictory) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(faceNameAssociationNotifierProvider);
+    final state = ref.read(faceNameAssociationProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -44,7 +44,7 @@ class _FaceNameAssociationScreenState extends ConsumerState<FaceNameAssociationS
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(faceNameAssociationNotifierProvider.notifier).initGame();
+          ref.read(faceNameAssociationProvider.notifier).initGame();
         },
       ),
     );
@@ -52,16 +52,16 @@ class _FaceNameAssociationScreenState extends ConsumerState<FaceNameAssociationS
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(faceNameAssociationNotifierProvider);
-    final notifier = ref.read(faceNameAssociationNotifierProvider.notifier);
+    final state = ref.watch(faceNameAssociationProvider);
+    final notifier = ref.read(faceNameAssociationProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(faceNameAssociationNotifierProvider, (previous, next) async {
+    ref.listen(faceNameAssociationProvider, (previous, next) async {
       if (next.phase == FaceNamePhase.result && previous?.phase != FaceNamePhase.result) {
         final isVictory = next.correctCount == next.studyFaces.length;
         if (isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('face_name_association');
+          await ref.read(gameStreakProvider.notifier).completeGame('face_name_association');
         } else {
           HapticFeedbackUtil.vibrate();
         }

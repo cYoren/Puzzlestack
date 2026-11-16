@@ -25,7 +25,7 @@ class InertiaScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('inertia', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -49,8 +49,8 @@ class InertiaScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(inertiaNotifierProvider);
-    final notifier = ref.read(inertiaNotifierProvider.notifier);
+    final state = ref.watch(inertiaProvider);
+    final notifier = ref.read(inertiaProvider.notifier);
 
     return GameScaffold(
       title: l10n.inertiaTitle,

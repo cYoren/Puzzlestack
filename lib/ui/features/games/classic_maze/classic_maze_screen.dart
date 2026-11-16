@@ -24,7 +24,7 @@ class _ClassicMazeScreenState extends ConsumerState<ClassicMazeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(classicMazeNotifierProvider.notifier).initGame();
+      ref.read(classicMazeProvider.notifier).initGame();
     });
   }
 
@@ -75,8 +75,8 @@ class _ClassicMazeScreenState extends ConsumerState<ClassicMazeScreen> {
   }
 
   void _handleInput(int dr, int dc) {
-    final state = ref.read(classicMazeNotifierProvider);
-    final notifier = ref.read(classicMazeNotifierProvider.notifier);
+    final state = ref.read(classicMazeProvider);
+    final notifier = ref.read(classicMazeProvider.notifier);
 
     if (state.isVictory || state.isLoading) return;
 
@@ -90,8 +90,8 @@ class _ClassicMazeScreenState extends ConsumerState<ClassicMazeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(classicMazeNotifierProvider);
-    final notifier = ref.read(classicMazeNotifierProvider.notifier);
+    final state = ref.watch(classicMazeProvider);
+    final notifier = ref.read(classicMazeProvider.notifier);
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
@@ -100,7 +100,7 @@ class _ClassicMazeScreenState extends ConsumerState<ClassicMazeScreen> {
       _focusNode.requestFocus();
     }
 
-    ref.listen<ClassicMazeState>(classicMazeNotifierProvider, (previous, next) {
+    ref.listen<ClassicMazeState>(classicMazeProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(

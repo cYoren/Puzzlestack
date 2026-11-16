@@ -338,7 +338,7 @@ class _TripletsLogicScreenState extends ConsumerState<TripletsLogicScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('triplets_logic');
+    await ref.read(gameStreakProvider.notifier).completeGame('triplets_logic');
     if (!mounted) return;
     showDialog(
       context: context,

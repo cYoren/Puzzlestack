@@ -6,21 +6,57 @@ part of 'hue_sort_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(HueSortNotifier)
+final hueSortProvider = HueSortNotifierProvider._();
+
+final class HueSortNotifierProvider
+    extends $NotifierProvider<HueSortNotifier, HueSortState> {
+  HueSortNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'hueSortProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$hueSortNotifierHash();
+
+  @$internal
+  @override
+  HueSortNotifier create() => HueSortNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(HueSortState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<HueSortState>(value),
+    );
+  }
+}
+
 String _$hueSortNotifierHash() => r'05eef726fcebae03f44ec5bd0ffde1e68a1a138c';
 
-/// See also [HueSortNotifier].
-@ProviderFor(HueSortNotifier)
-final hueSortNotifierProvider =
-    AutoDisposeNotifierProvider<HueSortNotifier, HueSortState>.internal(
-  HueSortNotifier.new,
-  name: r'hueSortNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$hueSortNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$HueSortNotifier = AutoDisposeNotifier<HueSortState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$HueSortNotifier extends $Notifier<HueSortState> {
+  HueSortState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<HueSortState, HueSortState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<HueSortState, HueSortState>,
+              HueSortState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

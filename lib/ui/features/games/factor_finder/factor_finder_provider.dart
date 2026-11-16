@@ -83,7 +83,7 @@ class FactorFinderNotifier extends _$FactorFinderNotifier {
           timeLeft: 0,
           isGameOver: true,
         );
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('factor_finder', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('factor_finder', xpAmount: 25);
       }
     });
   }
@@ -139,7 +139,7 @@ class FactorFinderNotifier extends _$FactorFinderNotifier {
         state = state.copyWith(
           isGameOver: true,
         );
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('factor_finder', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('factor_finder', xpAmount: 25);
       } else {
         // Clear wrong indicator after 300ms
         Future.delayed(const Duration(milliseconds: 300), () {

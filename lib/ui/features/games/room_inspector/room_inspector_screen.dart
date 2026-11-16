@@ -176,7 +176,7 @@ class _RoomInspectorScreenState extends ConsumerState<RoomInspectorScreen> {
   void _onGameComplete() async {
     _phaseTimer?.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('room_inspector');
+    await ref.read(gameStreakProvider.notifier).completeGame('room_inspector');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -30,140 +30,140 @@ void main() {
   test('seismic solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(seismicNotifierProvider.notifier).solve();
-    expect(container.read(seismicNotifierProvider).isSolved, isTrue);
+    container.read(seismicProvider.notifier).solve();
+    expect(container.read(seismicProvider).isSolved, isTrue);
   });
 
   test('ascent solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(ascentNotifierProvider.notifier).solve();
-    expect(container.read(ascentNotifierProvider).isSolved, isTrue);
+    container.read(ascentProvider.notifier).solve();
+    expect(container.read(ascentProvider).isSolved, isTrue);
   });
 
   test('clusters solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(clustersNotifierProvider.notifier).solve();
-    expect(container.read(clustersNotifierProvider).isSolved, isTrue);
+    container.read(clustersProvider.notifier).solve();
+    expect(container.read(clustersProvider).isSolved, isTrue);
   });
 
   test('signpost solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(signpostNotifierProvider.notifier).solve();
-    expect(container.read(signpostNotifierProvider).isSolved, isTrue);
+    container.read(signpostProvider.notifier).solve();
+    expect(container.read(signpostProvider).isSolved, isTrue);
   });
 
   test('futoshiki solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(futoshikiNotifierProvider.notifier).solve();
-    expect(container.read(futoshikiNotifierProvider).isSolved, isTrue);
+    container.read(futoshikiProvider.notifier).solve();
+    expect(container.read(futoshikiProvider).isSolved, isTrue);
   });
 
   test('skyscrapers solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(skyscrapersNotifierProvider.notifier).solve();
-    expect(container.read(skyscrapersNotifierProvider).isSolved, isTrue);
+    container.read(skyscrapersProvider.notifier).solve();
+    expect(container.read(skyscrapersProvider).isSolved, isTrue);
   });
 
   test('kurodoko solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(kurodokoNotifierProvider.notifier).solve();
-    expect(container.read(kurodokoNotifierProvider).isSolved, isTrue);
+    container.read(kurodokoProvider.notifier).solve();
+    expect(container.read(kurodokoProvider).isSolved, isTrue);
   });
 
   test('slitherlink solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(slitherlinkNotifierProvider.notifier).solve();
-    expect(container.read(slitherlinkNotifierProvider).isSolved, isTrue);
+    container.read(slitherlinkProvider.notifier).solve();
+    expect(container.read(slitherlinkProvider).isSolved, isTrue);
   });
 
   test('dominosa solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(dominosaNotifierProvider.notifier).solve();
-    expect(container.read(dominosaNotifierProvider).isSolved, isTrue);
+    container.read(dominosaProvider.notifier).solve();
+    expect(container.read(dominosaProvider).isSolved, isTrue);
   });
 
   test('galaxies solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(galaxiesNotifierProvider.notifier).solve();
-    expect(container.read(galaxiesNotifierProvider).isSolved, isTrue);
+    container.read(galaxiesProvider.notifier).solve();
+    expect(container.read(galaxiesProvider).isSolved, isTrue);
   });
 
   test('magnets solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(magnetsNotifierProvider.notifier).solve();
-    expect(container.read(magnetsNotifierProvider).isSolved, isTrue);
+    container.read(magnetsProvider.notifier).solve();
+    expect(container.read(magnetsProvider).isSolved, isTrue);
   });
 
   test('tents solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(tentsAndTreesNotifierProvider.notifier).solve();
-    expect(container.read(tentsAndTreesNotifierProvider).isSolved, isTrue);
+    container.read(tentsAndTreesProvider.notifier).solve();
+    expect(container.read(tentsAndTreesProvider).isSolved, isTrue);
   });
 
   test('lights out solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(lightsOutNotifierProvider.notifier).solve();
-    expect(container.read(lightsOutNotifierProvider).isSolved, isTrue);
+    container.read(lightsOutProvider.notifier).solve();
+    expect(container.read(lightsOutProvider).isSolved, isTrue);
   });
 
   test('netslide solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(netslideNotifierProvider.notifier).solve();
-    expect(container.read(netslideNotifierProvider).isSolved, isTrue);
+    container.read(netslideProvider.notifier).solve();
+    expect(container.read(netslideProvider).isSolved, isTrue);
   });
 
   test('pegs solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(pegsNotifierProvider.notifier).solve();
-    expect(container.read(pegsNotifierProvider).isSolved, isTrue);
+    container.read(pegsProvider.notifier).solve();
+    expect(container.read(pegsProvider).isSolved, isTrue);
   });
 
   test('twiddle solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(twiddleNotifierProvider.notifier).solve();
-    expect(container.read(twiddleNotifierProvider).isSolved, isTrue);
+    container.read(twiddleProvider.notifier).solve();
+    expect(container.read(twiddleProvider).isSolved, isTrue);
   });
 
   test('water sort solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(waterSortNotifierProvider.notifier).solve();
-    expect(container.read(waterSortNotifierProvider).isSolved, isTrue);
+    container.read(waterSortProvider.notifier).solve();
+    expect(container.read(waterSortProvider).isSolved, isTrue);
   });
 
   test('cube solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(cubeNotifierProvider.notifier).solve();
-    expect(container.read(cubeNotifierProvider).isSolved, isTrue);
+    container.read(cubeProvider.notifier).solve();
+    expect(container.read(cubeProvider).isSolved, isTrue);
   });
 
   test('inertia solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(inertiaNotifierProvider.notifier).solve();
-    expect(container.read(inertiaNotifierProvider).isSolved, isTrue);
+    container.read(inertiaProvider.notifier).solve();
+    expect(container.read(inertiaProvider).isSolved, isTrue);
   });
 
   test('map solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    final notifier = container.read(mapNotifierProvider.notifier);
+    final notifier = container.read(mapProvider.notifier);
     notifier.solve();
     expect(notifier.isSolved, isTrue);
   });
@@ -171,17 +171,17 @@ void main() {
   test('sudoku solve finishes the board', () async {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    final sub = container.listen(sudokuNotifierProvider, (_, __) {});
+    final sub = container.listen(sudokuProvider, (_, _) {});
     addTearDown(sub.close);
-    await container.read(sudokuNotifierProvider.future);
-    container.read(sudokuNotifierProvider.notifier).solve();
-    expect(container.read(sudokuNotifierProvider).value!.isSolved, isTrue);
+    await container.read(sudokuProvider.future);
+    container.read(sudokuProvider.notifier).solve();
+    expect(container.read(sudokuProvider).value!.isSolved, isTrue);
   });
 
   test('same game solve finishes the board', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-    container.read(sameGameNotifierProvider.notifier).solve();
-    expect(container.read(sameGameNotifierProvider).isSolved, isTrue);
+    container.read(sameGameProvider.notifier).solve();
+    expect(container.read(sameGameProvider).isSolved, isTrue);
   });
 }

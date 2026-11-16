@@ -160,7 +160,7 @@ class _FactBinderScreenState extends ConsumerState<FactBinderScreen> {
       // Completed!
       final win = _correctAnswers >= 2; // Need 2 of 3 to pass
       if (win) {
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('fact_binder', xpAmount: 30);
+        ref.read(gameStreakProvider.notifier).completeGame('fact_binder', xpAmount: 30);
       }
       
       showDialog(

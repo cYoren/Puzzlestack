@@ -23,16 +23,16 @@ class _CollatzScreenState extends ConsumerState<CollatzScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(collatzNotifierProvider.notifier).initGame();
+      ref.read(collatzProvider.notifier).initGame();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(collatzNotifierProvider);
+    final state = ref.watch(collatzProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(collatzNotifierProvider, (previous, next) {
+    ref.listen(collatzProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -46,7 +46,7 @@ class _CollatzScreenState extends ConsumerState<CollatzScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(collatzNotifierProvider.notifier).reset();
+              ref.read(collatzProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -69,7 +69,7 @@ class _CollatzScreenState extends ConsumerState<CollatzScreen> {
       subtitle: L10nGameHelpers.getGameTitle(context, 'collatz'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(collatzNotifierProvider.notifier).reset();
+        ref.read(collatzProvider.notifier).reset();
       },
       body: Center(
         child: Padding(
@@ -107,7 +107,7 @@ class _CollatzScreenState extends ConsumerState<CollatzScreen> {
                         child: TangibleButton(
                           onTap: isEven ? () {
                             HapticFeedbackUtil.lightImpact();
-                            ref.read(collatzNotifierProvider.notifier).makeMove(0);
+                            ref.read(collatzProvider.notifier).makeMove(0);
                           } : null,
                           color: isEven ? colorScheme.primary : colorScheme.surfaceContainerHighest,
                           child: Text(AppLocalizations.of(context)!.collatzText, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),
@@ -118,7 +118,7 @@ class _CollatzScreenState extends ConsumerState<CollatzScreen> {
                         child: TangibleButton(
                           onTap: () {
                             HapticFeedbackUtil.lightImpact();
-                            ref.read(collatzNotifierProvider.notifier).makeMove(2);
+                            ref.read(collatzProvider.notifier).makeMove(2);
                           },
                           color: DesignSystem.accentEmerald,
                           child: Text(AppLocalizations.of(context)!.collatzText1, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),
@@ -130,7 +130,7 @@ class _CollatzScreenState extends ConsumerState<CollatzScreen> {
                   TangibleButton(
                     onTap: () {
                       HapticFeedbackUtil.lightImpact();
-                      ref.read(collatzNotifierProvider.notifier).makeMove(1);
+                      ref.read(collatzProvider.notifier).makeMove(1);
                     },
                     color: colorScheme.secondary,
                     child: Text(AppLocalizations.of(context)!.collatzText2, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),

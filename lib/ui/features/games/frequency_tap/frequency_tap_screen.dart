@@ -92,7 +92,7 @@ class _FrequencyTapScreenState extends ConsumerState<FrequencyTapScreen> with Ti
     _pulseControllerA.stop();
     _pulseControllerB.stop();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('frequency_tap');
+    await ref.read(gameStreakProvider.notifier).completeGame('frequency_tap');
     if (!mounted) return;
     showDialog(
       context: context,

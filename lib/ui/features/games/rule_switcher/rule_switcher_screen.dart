@@ -24,12 +24,12 @@ class _RuleSwitcherScreenState extends ConsumerState<RuleSwitcherScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(ruleSwitcherNotifierProvider.notifier).initGame();
+      ref.read(ruleSwitcherProvider.notifier).initGame();
     });
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(ruleSwitcherNotifierProvider);
+    final state = ref.read(ruleSwitcherProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -43,7 +43,7 @@ class _RuleSwitcherScreenState extends ConsumerState<RuleSwitcherScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(ruleSwitcherNotifierProvider.notifier).initGame();
+          ref.read(ruleSwitcherProvider.notifier).initGame();
         },
       ),
     );
@@ -52,13 +52,13 @@ class _RuleSwitcherScreenState extends ConsumerState<RuleSwitcherScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(ruleSwitcherNotifierProvider);
-    final notifier = ref.read(ruleSwitcherNotifierProvider.notifier);
+    final state = ref.watch(ruleSwitcherProvider);
+    final notifier = ref.read(ruleSwitcherProvider.notifier);
 
-    ref.listen(ruleSwitcherNotifierProvider, (previous, next) async {
+    ref.listen(ruleSwitcherProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
-        await ref.read(gameStreakNotifierProvider.notifier).completeGame('rule_switcher');
+        await ref.read(gameStreakProvider.notifier).completeGame('rule_switcher');
         if (!context.mounted) return;
         _showCompletionDialog();
       }

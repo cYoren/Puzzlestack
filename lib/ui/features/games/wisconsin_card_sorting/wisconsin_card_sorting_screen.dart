@@ -23,7 +23,7 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(wisconsinCardSortingNotifierProvider.notifier).initGame();
+      ref.read(wisconsinCardSortingProvider.notifier).initGame();
     });
   }
 
@@ -41,7 +41,7 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(wisconsinCardSortingNotifierProvider.notifier).initGame();
+          ref.read(wisconsinCardSortingProvider.notifier).initGame();
         },
       ),
     );
@@ -51,9 +51,9 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(wisconsinCardSortingNotifierProvider);
+    final state = ref.watch(wisconsinCardSortingProvider);
 
-    ref.listen(wisconsinCardSortingNotifierProvider, (previous, next) {
+    ref.listen(wisconsinCardSortingProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         _showCompletionDialog(next);
         return;
@@ -181,7 +181,7 @@ class _WisconsinCardSortingScreenState extends ConsumerState<WisconsinCardSortin
                           child: TangibleButton(
                             onTap: () {
                               HapticFeedbackUtil.selectionClick();
-                              ref.read(wisconsinCardSortingNotifierProvider.notifier).sort(index);
+                              ref.read(wisconsinCardSortingProvider.notifier).sort(index);
                             },
                             color: colorScheme.surface,
                             shadowColor: colorScheme.outline,

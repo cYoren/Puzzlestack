@@ -6,26 +6,26 @@ part of 'game_streak.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class GameStreakAdapter extends TypeAdapter<_$GameStreakImpl> {
+class GameStreakAdapter extends TypeAdapter<_GameStreak> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
-  _$GameStreakImpl read(BinaryReader reader) {
+  _GameStreak read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$GameStreakImpl(
+    return _GameStreak(
       gameId: fields[0] as String,
-      currentStreak: fields[1] as int,
+      currentStreak: (fields[1] as num).toInt(),
       lastSolvedDate: fields[2] as DateTime,
       solvedToday: fields[3] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, _$GameStreakImpl obj) {
+  void write(BinaryWriter writer, _GameStreak obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -53,15 +53,14 @@ class GameStreakAdapter extends TypeAdapter<_$GameStreakImpl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GameStreakImpl _$$GameStreakImplFromJson(Map<String, dynamic> json) =>
-    _$GameStreakImpl(
-      gameId: json['gameId'] as String,
-      currentStreak: (json['currentStreak'] as num).toInt(),
-      lastSolvedDate: DateTime.parse(json['lastSolvedDate'] as String),
-      solvedToday: json['solvedToday'] as bool,
-    );
+_GameStreak _$GameStreakFromJson(Map<String, dynamic> json) => _GameStreak(
+  gameId: json['gameId'] as String,
+  currentStreak: (json['currentStreak'] as num).toInt(),
+  lastSolvedDate: DateTime.parse(json['lastSolvedDate'] as String),
+  solvedToday: json['solvedToday'] as bool,
+);
 
-Map<String, dynamic> _$$GameStreakImplToJson(_$GameStreakImpl instance) =>
+Map<String, dynamic> _$GameStreakToJson(_GameStreak instance) =>
     <String, dynamic>{
       'gameId': instance.gameId,
       'currentStreak': instance.currentStreak,

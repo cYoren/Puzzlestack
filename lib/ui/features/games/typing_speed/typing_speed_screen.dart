@@ -22,7 +22,7 @@ class _TypingSpeedScreenState extends ConsumerState<TypingSpeedScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(typingSpeedNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(typingSpeedProvider.notifier).initGame());
   }
 
   @override
@@ -34,7 +34,7 @@ class _TypingSpeedScreenState extends ConsumerState<TypingSpeedScreen> {
   void _showGameOverDialog(bool won, double wpm) {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('typing_speed');
+      ref.read(gameStreakProvider.notifier).completeGame('typing_speed');
       HapticFeedbackUtil.victory();
     } else {
       HapticFeedbackUtil.error();
@@ -49,7 +49,7 @@ class _TypingSpeedScreenState extends ConsumerState<TypingSpeedScreen> {
             : l10n.loseTimeExpired,
         onPlayAgain: () {
           _controller.clear();
-          ref.read(typingSpeedNotifierProvider.notifier).initGame();
+          ref.read(typingSpeedProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -64,10 +64,10 @@ class _TypingSpeedScreenState extends ConsumerState<TypingSpeedScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(typingSpeedNotifierProvider);
-    final notifier = ref.read(typingSpeedNotifierProvider.notifier);
+    final state = ref.watch(typingSpeedProvider);
+    final notifier = ref.read(typingSpeedProvider.notifier);
 
-    ref.listen(typingSpeedNotifierProvider, (previous, next) {
+    ref.listen(typingSpeedProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.isGameWon, next.wpm);
       }

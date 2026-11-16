@@ -23,7 +23,7 @@ class _PrimeHunterScreenState extends ConsumerState<PrimeHunterScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(primeHunterNotifierProvider.notifier).initGame();
+      ref.read(primeHunterProvider.notifier).initGame();
     });
   }
 
@@ -37,7 +37,7 @@ class _PrimeHunterScreenState extends ConsumerState<PrimeHunterScreen> {
           title: isVictory ? l10n.primeHunterTitle.toUpperCase() : l10n.gameOver,
           message: isVictory 
               ? 'Your prime number detection is perfect!' 
-              : 'Primes are the building blocks of numbers! Your score: ${ref.read(primeHunterNotifierProvider).score}',
+              : 'Primes are the building blocks of numbers! Your score: ${ref.read(primeHunterProvider).score}',
           isVictory: isVictory,
           onHome: () {
             Navigator.of(context).pop();
@@ -45,7 +45,7 @@ class _PrimeHunterScreenState extends ConsumerState<PrimeHunterScreen> {
           },
           onPlayAgain: () {
             Navigator.of(context).pop();
-            ref.read(primeHunterNotifierProvider.notifier).resetGame();
+            ref.read(primeHunterProvider.notifier).resetGame();
           },
         );
       },
@@ -54,15 +54,15 @@ class _PrimeHunterScreenState extends ConsumerState<PrimeHunterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(primeHunterNotifierProvider);
-    final notifier = ref.read(primeHunterNotifierProvider.notifier);
+    final state = ref.watch(primeHunterProvider);
+    final notifier = ref.read(primeHunterProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(primeHunterNotifierProvider, (previous, next) async {
+    ref.listen(primeHunterProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('prime_hunter');
+          await ref.read(gameStreakProvider.notifier).completeGame('prime_hunter');
           _showCompletionDialog(true);
         } else {
           HapticFeedbackUtil.vibrate();

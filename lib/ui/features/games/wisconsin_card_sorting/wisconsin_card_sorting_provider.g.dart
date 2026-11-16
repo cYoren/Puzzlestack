@@ -6,22 +6,58 @@ part of 'wisconsin_card_sorting_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(WisconsinCardSortingNotifier)
+final wisconsinCardSortingProvider = WisconsinCardSortingNotifierProvider._();
+
+final class WisconsinCardSortingNotifierProvider
+    extends $NotifierProvider<WisconsinCardSortingNotifier, WCSState> {
+  WisconsinCardSortingNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'wisconsinCardSortingProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$wisconsinCardSortingNotifierHash();
+
+  @$internal
+  @override
+  WisconsinCardSortingNotifier create() => WisconsinCardSortingNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(WCSState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<WCSState>(value),
+    );
+  }
+}
+
 String _$wisconsinCardSortingNotifierHash() =>
     r'0f2ac6d6fe8fadf053c2aa2089460c9325428d88';
 
-/// See also [WisconsinCardSortingNotifier].
-@ProviderFor(WisconsinCardSortingNotifier)
-final wisconsinCardSortingNotifierProvider = AutoDisposeNotifierProvider<
-    WisconsinCardSortingNotifier, WCSState>.internal(
-  WisconsinCardSortingNotifier.new,
-  name: r'wisconsinCardSortingNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$wisconsinCardSortingNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$WisconsinCardSortingNotifier = AutoDisposeNotifier<WCSState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$WisconsinCardSortingNotifier extends $Notifier<WCSState> {
+  WCSState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<WCSState, WCSState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<WCSState, WCSState>,
+              WCSState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

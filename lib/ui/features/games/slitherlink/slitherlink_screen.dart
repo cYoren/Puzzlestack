@@ -19,7 +19,7 @@ class SlitherlinkScreen extends ConsumerWidget {
     SlitherlinkNotifier notifier,
   ) async {
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('slitherlink', xpAmount: 25);
     if (!context.mounted) return;
     await showDialog(
@@ -42,10 +42,10 @@ class SlitherlinkScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(slitherlinkNotifierProvider);
-    final notifier = ref.read(slitherlinkNotifierProvider.notifier);
+    final state = ref.watch(slitherlinkProvider);
+    final notifier = ref.read(slitherlinkProvider.notifier);
 
-    ref.listen(slitherlinkNotifierProvider, (previous, next) {
+    ref.listen(slitherlinkProvider, (previous, next) {
       final before = previous?.conflicts.length ?? 0;
       if (next.conflicts.length <= before) return;
       final broken = next.conflicts.last;

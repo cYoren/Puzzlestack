@@ -128,7 +128,7 @@ class _PerspectiveShiftViewScreenState extends ConsumerState<PerspectiveShiftVie
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('perspective_shift_view');
+    await ref.read(gameStreakProvider.notifier).completeGame('perspective_shift_view');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -136,7 +136,7 @@ class _DoubleTroubleScreenState extends ConsumerState<DoubleTroubleScreen> {
     _rightTimer?.cancel();
 
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('double_trouble');
+    await ref.read(gameStreakProvider.notifier).completeGame('double_trouble');
     if (!mounted) return;
     showDialog(
       context: context,

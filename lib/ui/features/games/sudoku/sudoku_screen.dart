@@ -20,7 +20,7 @@ class SudokuScreen extends ConsumerStatefulWidget {
 
 class _SudokuScreenState extends ConsumerState<SudokuScreen> {
   Future<void> _onSolved(AppLocalizations l10n) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('sudoku');
+    await ref.read(gameStreakProvider.notifier).completeGame('sudoku');
     if (!mounted) return;
     await showDialog(
       context: context,
@@ -33,7 +33,7 @@ class _SudokuScreenState extends ConsumerState<SudokuScreen> {
           Navigator.of(dialogContext).pop();
         },
         onPlayAgain: () {
-          ref.read(sudokuNotifierProvider.notifier).initGame();
+          ref.read(sudokuProvider.notifier).initGame();
           Navigator.of(dialogContext).pop();
         },
       ),
@@ -44,8 +44,8 @@ class _SudokuScreenState extends ConsumerState<SudokuScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(sudokuNotifierProvider);
-    final notifier = ref.read(sudokuNotifierProvider.notifier);
+    final state = ref.watch(sudokuProvider);
+    final notifier = ref.read(sudokuProvider.notifier);
 
     return GameScaffold(
       title: l10n.sudokuTitle.toUpperCase(),

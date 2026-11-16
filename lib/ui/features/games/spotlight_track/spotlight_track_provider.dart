@@ -102,7 +102,7 @@ class SpotlightTrackNotifier extends _$SpotlightTrackNotifier {
         final nextRound = state.currentRound + 1;
         if (nextRound > state.totalRounds) {
           state = state.copyWith(isCompleted: true);
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('spotlight_track', xpAmount: 25);
+          ref.read(gameStreakProvider.notifier).completeGame('spotlight_track', xpAmount: 25);
         } else {
           state = state.copyWith(
             currentRound: nextRound,

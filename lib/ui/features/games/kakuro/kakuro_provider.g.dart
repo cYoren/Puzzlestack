@@ -6,21 +6,57 @@ part of 'kakuro_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$kakuroNotifierHash() => r'3b6452bad1be1f4d0b7c4231ae77de0650dd90dd';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [KakuroNotifier].
 @ProviderFor(KakuroNotifier)
-final kakuroNotifierProvider =
-    AutoDisposeNotifierProvider<KakuroNotifier, KakuroState>.internal(
-  KakuroNotifier.new,
-  name: r'kakuroNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$kakuroNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final kakuroProvider = KakuroNotifierProvider._();
 
-typedef _$KakuroNotifier = AutoDisposeNotifier<KakuroState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class KakuroNotifierProvider
+    extends $NotifierProvider<KakuroNotifier, KakuroState> {
+  KakuroNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'kakuroProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$kakuroNotifierHash();
+
+  @$internal
+  @override
+  KakuroNotifier create() => KakuroNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(KakuroState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<KakuroState>(value),
+    );
+  }
+}
+
+String _$kakuroNotifierHash() => r'9c7bbb94e25bbac95e76e3c8a85af78f31dd7a2f';
+
+abstract class _$KakuroNotifier extends $Notifier<KakuroState> {
+  KakuroState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<KakuroState, KakuroState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<KakuroState, KakuroState>,
+              KakuroState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

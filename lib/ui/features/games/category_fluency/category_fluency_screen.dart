@@ -22,7 +22,7 @@ class _CategoryFluencyScreenState extends ConsumerState<CategoryFluencyScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(categoryFluencyNotifierProvider.notifier).initGame();
+      ref.read(categoryFluencyProvider.notifier).initGame();
     });
   }
 
@@ -42,7 +42,7 @@ class _CategoryFluencyScreenState extends ConsumerState<CategoryFluencyScreen> {
           title: isVictory ? l10n.categoryFluencyExpert : l10n.categoryFluencyTimeUp,
           message: isVictory 
               ? l10n.categoryFluencyWinMessage 
-              : l10n.categoryFluencyFoundMessage(ref.read(categoryFluencyNotifierProvider).enteredWords.length),
+              : l10n.categoryFluencyFoundMessage(ref.read(categoryFluencyProvider).enteredWords.length),
           isVictory: isVictory,
           onHome: () {
             Navigator.of(context).pop();
@@ -50,7 +50,7 @@ class _CategoryFluencyScreenState extends ConsumerState<CategoryFluencyScreen> {
           },
           onPlayAgain: () {
             Navigator.of(context).pop();
-            ref.read(categoryFluencyNotifierProvider.notifier).initGame();
+            ref.read(categoryFluencyProvider.notifier).initGame();
             _controller.clear();
           },
         );
@@ -62,15 +62,15 @@ class _CategoryFluencyScreenState extends ConsumerState<CategoryFluencyScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(categoryFluencyNotifierProvider);
-    final notifier = ref.read(categoryFluencyNotifierProvider.notifier);
+    final state = ref.watch(categoryFluencyProvider);
+    final notifier = ref.read(categoryFluencyProvider.notifier);
 
-    ref.listen(categoryFluencyNotifierProvider, (previous, next) {
+    ref.listen(categoryFluencyProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         final isVictory = next.enteredWords.length >= next.targetCount;
         if (isVictory) {
           HapticFeedbackUtil.victory();
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('category_fluency');
+          ref.read(gameStreakProvider.notifier).completeGame('category_fluency');
         } else {
           HapticFeedbackUtil.lightImpact();
         }

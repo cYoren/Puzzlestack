@@ -114,7 +114,7 @@ class _SymbolDigitAssocScreenState extends ConsumerState<SymbolDigitAssocScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('symbol_digit_assoc');
+    await ref.read(gameStreakProvider.notifier).completeGame('symbol_digit_assoc');
     if (!mounted) return;
     showDialog(
       context: context,

@@ -77,7 +77,7 @@ class SourceMonitoringNotifier extends _$SourceMonitoringNotifier {
         score: nextScore,
         phase: SourceMonitoringPhase.complete,
       );
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('source_monitoring', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('source_monitoring', xpAmount: 25);
     }
   }
 

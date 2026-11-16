@@ -19,20 +19,20 @@ class _WordScrambleScreenState extends ConsumerState<WordScrambleScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(wordScrambleNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(wordScrambleProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('word_scramble');
+    ref.read(gameStreakProvider.notifier).completeGame('word_scramble');
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.wordScrambleWin.toUpperCase(),
-        message: l10n.wordFoundMessage(ref.read(wordScrambleNotifierProvider).targetWord),
+        message: l10n.wordFoundMessage(ref.read(wordScrambleProvider).targetWord),
         onPlayAgain: () {
-          ref.read(wordScrambleNotifierProvider.notifier).initGame();
+          ref.read(wordScrambleProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -47,10 +47,10 @@ class _WordScrambleScreenState extends ConsumerState<WordScrambleScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(wordScrambleNotifierProvider);
-    final notifier = ref.read(wordScrambleNotifierProvider.notifier);
+    final state = ref.watch(wordScrambleProvider);
+    final notifier = ref.read(wordScrambleProvider.notifier);
 
-    ref.listen(wordScrambleNotifierProvider, (previous, next) {
+    ref.listen(wordScrambleProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver && next.isGameWon) {
         _showCompletionDialog();
       }

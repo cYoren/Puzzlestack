@@ -22,14 +22,14 @@ class _SymmetrySpanScreenState extends ConsumerState<SymmetrySpanScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(symmetrySpanNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(symmetrySpanProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 20;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('symmetry_span');
+      ref.read(gameStreakProvider.notifier).completeGame('symmetry_span');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -43,7 +43,7 @@ class _SymmetrySpanScreenState extends ConsumerState<SymmetrySpanScreen> {
           message: '$score points by recalling layouts and identifying symmetry!',
           isVictory: won,
           onPlayAgain: () {
-            ref.read(symmetrySpanNotifierProvider.notifier).initGame();
+            ref.read(symmetrySpanProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -57,10 +57,10 @@ class _SymmetrySpanScreenState extends ConsumerState<SymmetrySpanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(symmetrySpanNotifierProvider);
-    final notifier = ref.read(symmetrySpanNotifierProvider.notifier);
+    final state = ref.watch(symmetrySpanProvider);
+    final notifier = ref.read(symmetrySpanProvider.notifier);
 
-    ref.listen(symmetrySpanNotifierProvider, (previous, next) {
+    ref.listen(symmetrySpanProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

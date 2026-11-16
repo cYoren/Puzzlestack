@@ -23,7 +23,7 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(reverseStroopNotifierProvider.notifier).startGame());
+    Future.microtask(() => ref.read(reverseStroopProvider.notifier).startGame());
   }
 
   void _showGameOverDialog(int score) {
@@ -31,7 +31,7 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('reverse_stroop');
+      ref.read(gameStreakProvider.notifier).completeGame('reverse_stroop');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -42,7 +42,7 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
         title: won ? l10n.winFocusMaster : l10n.loseConcentrationBroken,
         message: AppLocalizations.of(context)!.reverseStroopMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(reverseStroopNotifierProvider.notifier).startGame();
+          ref.read(reverseStroopProvider.notifier).startGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -57,10 +57,10 @@ class _ReverseStroopScreenState extends ConsumerState<ReverseStroopScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(reverseStroopNotifierProvider);
-    final notifier = ref.read(reverseStroopNotifierProvider.notifier);
+    final state = ref.watch(reverseStroopProvider);
+    final notifier = ref.read(reverseStroopProvider.notifier);
 
-    ref.listen(reverseStroopNotifierProvider, (previous, next) {
+    ref.listen(reverseStroopProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

@@ -135,7 +135,7 @@ void main() {
       // be printing a different puzzle.
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final state = container.read(mathraxNotifierProvider);
+      final state = container.read(mathraxProvider);
       expect(state.values.every((value) => value == kMathraxBlank), isTrue);
       expect(state.puzzle.clues.where((clue) => clue != null), isNotEmpty);
     });
@@ -143,18 +143,18 @@ void main() {
     test('a board can be finished by playing it', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final notifier = container.read(mathraxNotifierProvider.notifier);
-      final puzzle = container.read(mathraxNotifierProvider).puzzle;
+      final notifier = container.read(mathraxProvider.notifier);
+      final puzzle = container.read(mathraxProvider).puzzle;
       for (var cell = 0; cell < puzzle.cellCount; cell++) {
         // The only input is the tap cycle, so write the answer the way a
         // player does: cycle until the digit is there.
-        while (container.read(mathraxNotifierProvider).values[cell] !=
+        while (container.read(mathraxProvider).values[cell] !=
             puzzle.solution[cell]) {
           notifier.cycle(cell);
         }
       }
-      expect(container.read(mathraxNotifierProvider).isSolved, isTrue);
-      expect(container.read(mathraxNotifierProvider).values, puzzle.solution);
+      expect(container.read(mathraxProvider).isSolved, isTrue);
+      expect(container.read(mathraxProvider).values, puzzle.solution);
     });
   });
 }

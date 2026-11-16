@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:window_manager/window_manager.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+// window_manager 0.6 moves the 0.5.x desktop API to `legacy.dart`, where every
+// member is deprecated. Migrating to the native `Window` API changes desktop
+// window behaviour and needs a run on a real desktop, so the bridge stays.
+// ignore_for_file: deprecated_member_use
+import 'package:window_manager/legacy.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'data/models/user_data.dart';
 import 'data/models/game_streak.dart';
@@ -111,8 +115,8 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appThemeMode = ref.watch(themeNotifierProvider);
-    final appLocale = ref.watch(localeNotifierProvider);
+    final appThemeMode = ref.watch(themeProvider);
+    final appLocale = ref.watch(localeProvider);
 
     ThemeMode themeMode;
     switch (appThemeMode) {

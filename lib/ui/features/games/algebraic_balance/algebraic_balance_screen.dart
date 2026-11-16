@@ -139,7 +139,7 @@ class _AlgebraicBalanceScreenState extends ConsumerState<AlgebraicBalanceScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('algebraic_balance');
+    await ref.read(gameStreakProvider.notifier).completeGame('algebraic_balance');
     if (!mounted) return;
     showDialog(
       context: context,

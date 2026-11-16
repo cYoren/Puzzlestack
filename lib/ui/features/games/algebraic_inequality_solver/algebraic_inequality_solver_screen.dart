@@ -58,7 +58,7 @@ class _AlgebraicInequalitySolverScreenState extends ConsumerState<AlgebraicInequ
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('algebraic_inequality_solver');
+        ref.read(gameStreakProvider.notifier).completeGame('algebraic_inequality_solver');
         _showWinDialog();
         return;
       }

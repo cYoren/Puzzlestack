@@ -6,21 +6,57 @@ part of 'kenken_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(KenKenNotifier)
+final kenKenProvider = KenKenNotifierProvider._();
+
+final class KenKenNotifierProvider
+    extends $NotifierProvider<KenKenNotifier, KenKenState> {
+  KenKenNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'kenKenProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$kenKenNotifierHash();
+
+  @$internal
+  @override
+  KenKenNotifier create() => KenKenNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(KenKenState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<KenKenState>(value),
+    );
+  }
+}
+
 String _$kenKenNotifierHash() => r'5f351996efe015bb69fc9957a00b15efe355adf5';
 
-/// See also [KenKenNotifier].
-@ProviderFor(KenKenNotifier)
-final kenKenNotifierProvider =
-    AutoDisposeNotifierProvider<KenKenNotifier, KenKenState>.internal(
-  KenKenNotifier.new,
-  name: r'kenKenNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$kenKenNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$KenKenNotifier = AutoDisposeNotifier<KenKenState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$KenKenNotifier extends $Notifier<KenKenState> {
+  KenKenState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<KenKenState, KenKenState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<KenKenState, KenKenState>,
+              KenKenState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

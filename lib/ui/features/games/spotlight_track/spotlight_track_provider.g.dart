@@ -6,22 +6,58 @@ part of 'spotlight_track_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$spotlightTrackNotifierHash() =>
-    r'1a5427208e9d180a20a91d3422786d087234bbbc';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [SpotlightTrackNotifier].
 @ProviderFor(SpotlightTrackNotifier)
-final spotlightTrackNotifierProvider = AutoDisposeNotifierProvider<
-    SpotlightTrackNotifier, SpotlightTrackState>.internal(
-  SpotlightTrackNotifier.new,
-  name: r'spotlightTrackNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$spotlightTrackNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final spotlightTrackProvider = SpotlightTrackNotifierProvider._();
 
-typedef _$SpotlightTrackNotifier = AutoDisposeNotifier<SpotlightTrackState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class SpotlightTrackNotifierProvider
+    extends $NotifierProvider<SpotlightTrackNotifier, SpotlightTrackState> {
+  SpotlightTrackNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'spotlightTrackProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$spotlightTrackNotifierHash();
+
+  @$internal
+  @override
+  SpotlightTrackNotifier create() => SpotlightTrackNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SpotlightTrackState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SpotlightTrackState>(value),
+    );
+  }
+}
+
+String _$spotlightTrackNotifierHash() =>
+    r'266cd7383850f429914ce2505ab3d93e2ca1872e';
+
+abstract class _$SpotlightTrackNotifier extends $Notifier<SpotlightTrackState> {
+  SpotlightTrackState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<SpotlightTrackState, SpotlightTrackState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SpotlightTrackState, SpotlightTrackState>,
+              SpotlightTrackState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

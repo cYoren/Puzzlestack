@@ -6,22 +6,59 @@ part of 'associative_pairs_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$associativePairsNotifierHash() =>
-    r'9a59daa9bf9c3bf28f19086a5873ee804cd30fa4';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [AssociativePairsNotifier].
 @ProviderFor(AssociativePairsNotifier)
-final associativePairsNotifierProvider = AutoDisposeNotifierProvider<
-    AssociativePairsNotifier, AssociativePairsState>.internal(
-  AssociativePairsNotifier.new,
-  name: r'associativePairsNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$associativePairsNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final associativePairsProvider = AssociativePairsNotifierProvider._();
 
-typedef _$AssociativePairsNotifier = AutoDisposeNotifier<AssociativePairsState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class AssociativePairsNotifierProvider
+    extends $NotifierProvider<AssociativePairsNotifier, AssociativePairsState> {
+  AssociativePairsNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'associativePairsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$associativePairsNotifierHash();
+
+  @$internal
+  @override
+  AssociativePairsNotifier create() => AssociativePairsNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AssociativePairsState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AssociativePairsState>(value),
+    );
+  }
+}
+
+String _$associativePairsNotifierHash() =>
+    r'ba0b48c21468c2bf5f3efa5ab6c00dc4ecbb18e2';
+
+abstract class _$AssociativePairsNotifier
+    extends $Notifier<AssociativePairsState> {
+  AssociativePairsState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AssociativePairsState, AssociativePairsState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AssociativePairsState, AssociativePairsState>,
+              AssociativePairsState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

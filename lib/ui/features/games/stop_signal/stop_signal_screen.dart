@@ -20,7 +20,7 @@ class _StopSignalScreenState extends ConsumerState<StopSignalScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(stopSignalNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(stopSignalProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
@@ -28,7 +28,7 @@ class _StopSignalScreenState extends ConsumerState<StopSignalScreen> {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('stop_signal');
+      ref.read(gameStreakProvider.notifier).completeGame('stop_signal');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -39,7 +39,7 @@ class _StopSignalScreenState extends ConsumerState<StopSignalScreen> {
         title: won ? l10n.winTotalControl : l10n.loseInhibitionFail,
         message: AppLocalizations.of(context)!.stopSignalMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(stopSignalNotifierProvider.notifier).initGame();
+          ref.read(stopSignalProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -54,10 +54,10 @@ class _StopSignalScreenState extends ConsumerState<StopSignalScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(stopSignalNotifierProvider);
-    final notifier = ref.read(stopSignalNotifierProvider.notifier);
+    final state = ref.watch(stopSignalProvider);
+    final notifier = ref.read(stopSignalProvider.notifier);
 
-    ref.listen(stopSignalNotifierProvider, (previous, next) {
+    ref.listen(stopSignalProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

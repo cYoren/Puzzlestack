@@ -105,7 +105,7 @@ class _GearRotationScreenState extends ConsumerState<GearRotationScreen>
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('gear_rotation');
+    await ref.read(gameStreakProvider.notifier).completeGame('gear_rotation');
     if (!mounted) return;
     showDialog(
       context: context,

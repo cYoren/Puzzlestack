@@ -218,8 +218,8 @@ void main() {
       // there. A player with a boat marked on open water was told nothing.
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final notifier = container.read(boatsNotifierProvider.notifier);
-      final start = container.read(boatsNotifierProvider);
+      final notifier = container.read(boatsProvider.notifier);
+      final start = container.read(boatsProvider);
       final answer = start.puzzle.solution;
 
       // Fill the board from the answer, then put one wrong boat on water.
@@ -236,7 +236,7 @@ void main() {
 
       notifier.hint();
 
-      final after = container.read(boatsNotifierProvider);
+      final after = container.read(boatsProvider);
       expect(after.hintCell, water,
           reason: 'the only disagreeing cell is the wrong boat');
       expect(after.marks[water], kMarkWater,
@@ -249,10 +249,10 @@ void main() {
     test('the hint writes into an untouched board and moves on', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      final notifier = container.read(boatsNotifierProvider.notifier);
+      final notifier = container.read(boatsProvider.notifier);
 
       notifier.hint();
-      final first = container.read(boatsNotifierProvider);
+      final first = container.read(boatsProvider);
       final cell = first.hintCell;
       expect(cell, isNotNull);
       // The written mark is the answer's mark for that cell.
@@ -262,7 +262,7 @@ void main() {
       );
 
       notifier.hint();
-      final second = container.read(boatsNotifierProvider);
+      final second = container.read(boatsProvider);
       expect(second.hintCell, isNot(cell),
           reason: 'a second hint is about a different cell, not the same one');
     });

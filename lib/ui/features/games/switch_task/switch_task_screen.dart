@@ -23,14 +23,14 @@ class _SwitchTaskScreenState extends ConsumerState<SwitchTaskScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(switchTaskNotifierProvider.notifier).initGame());
+        () => ref.read(switchTaskProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 15;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('switch_task');
+      ref.read(gameStreakProvider.notifier).completeGame('switch_task');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -43,7 +43,7 @@ class _SwitchTaskScreenState extends ConsumerState<SwitchTaskScreen> {
           title: won ? l10n.switchTaskTitle.toUpperCase() : l10n.gameOver,
           message: AppLocalizations.of(context)!.switchTaskMessage((score).toString()),
           onPlayAgain: () {
-            ref.read(switchTaskNotifierProvider.notifier).initGame();
+            ref.read(switchTaskProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -59,10 +59,10 @@ class _SwitchTaskScreenState extends ConsumerState<SwitchTaskScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final state = ref.watch(switchTaskNotifierProvider);
-    final notifier = ref.read(switchTaskNotifierProvider.notifier);
+    final state = ref.watch(switchTaskProvider);
+    final notifier = ref.read(switchTaskProvider.notifier);
 
-    ref.listen(switchTaskNotifierProvider, (previous, next) {
+    ref.listen(switchTaskProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

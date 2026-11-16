@@ -22,13 +22,13 @@ class _SymbolLogicScreenState extends ConsumerState<SymbolLogicScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(symbolLogicNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(symbolLogicProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(bool won) {
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('symbol_logic');
+      ref.read(gameStreakProvider.notifier).completeGame('symbol_logic');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -41,7 +41,7 @@ class _SymbolLogicScreenState extends ConsumerState<SymbolLogicScreen> {
           title: won ? l10n.symbolLogicTitle.toUpperCase() : l10n.gameOver,
           message: won ? 'You solved the visual equations!' : 'Try again to find the hidden values.',
           onPlayAgain: () {
-            ref.read(symbolLogicNotifierProvider.notifier).initGame();
+            ref.read(symbolLogicProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -56,10 +56,10 @@ class _SymbolLogicScreenState extends ConsumerState<SymbolLogicScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(symbolLogicNotifierProvider);
-    final notifier = ref.read(symbolLogicNotifierProvider.notifier);
+    final state = ref.watch(symbolLogicProvider);
+    final notifier = ref.read(symbolLogicProvider.notifier);
 
-    ref.listen(symbolLogicNotifierProvider, (previous, next) {
+    ref.listen(symbolLogicProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.isGameWon);
       }

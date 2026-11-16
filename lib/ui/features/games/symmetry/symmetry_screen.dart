@@ -29,7 +29,7 @@ class _SymmetryScreenState extends ConsumerState<SymmetryScreen> {
       final index = y * 6 + x;
       if (!_toggledThisDrag.contains(index)) {
         HapticFeedbackUtil.selectionClick();
-        ref.read(symmetryNotifierProvider.notifier).toggleCell(x, y);
+        ref.read(symmetryProvider.notifier).toggleCell(x, y);
         _toggledThisDrag.add(index);
       }
     }
@@ -38,9 +38,9 @@ class _SymmetryScreenState extends ConsumerState<SymmetryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(symmetryNotifierProvider);
+    final state = ref.watch(symmetryProvider);
 
-    ref.listen(symmetryNotifierProvider, (previous, next) {
+    ref.listen(symmetryProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         _showGameOverDialog(context, ref);
@@ -56,7 +56,7 @@ class _SymmetryScreenState extends ConsumerState<SymmetryScreen> {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(symmetryNotifierProvider.notifier).reset();
+            ref.read(symmetryProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(8),
           child: Icon(
@@ -112,7 +112,7 @@ class _SymmetryScreenState extends ConsumerState<SymmetryScreen> {
                                             onTap: () {
                                               if (isEditable) {
                                                 HapticFeedbackUtil.selectionClick();
-                                                ref.read(symmetryNotifierProvider.notifier).toggleCell(x, y);
+                                                ref.read(symmetryProvider.notifier).toggleCell(x, y);
                                               }
                                             },
                                             child: isActive && !isEditable 
@@ -160,7 +160,7 @@ class _SymmetryScreenState extends ConsumerState<SymmetryScreen> {
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref) {
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('symmetry', xpAmount: 25);
+    ref.read(gameStreakProvider.notifier).completeGame('symmetry', xpAmount: 25);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -171,7 +171,7 @@ class _SymmetryScreenState extends ConsumerState<SymmetryScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(symmetryNotifierProvider.notifier).reset();
+          ref.read(symmetryProvider.notifier).reset();
           Navigator.of(context).pop();
         },
         message: AppLocalizations.of(context)!.symmetryMessage,

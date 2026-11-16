@@ -17,8 +17,8 @@ class WaterSortScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(waterSortNotifierProvider);
-    final notifier = ref.read(waterSortNotifierProvider.notifier);
+    final state = ref.watch(waterSortProvider);
+    final notifier = ref.read(waterSortProvider.notifier);
 
     return GameScaffold(
       title: 'WATER SORT',
@@ -51,7 +51,7 @@ class WaterSortScreen extends ConsumerWidget {
                 onMove: notifier.applyMove,
                 onSolved: () async {
                   await ref
-                      .read(gameStreakNotifierProvider.notifier)
+                      .read(gameStreakProvider.notifier)
                       .completeGame('water_sort', xpAmount: 30);
                   if (!context.mounted) return;
                   await showDialog(

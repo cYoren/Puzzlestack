@@ -21,14 +21,14 @@ class _BalanceScaleScreenState extends ConsumerState<BalanceScaleScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(balanceScaleNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(balanceScaleProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(bool won) {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('balance_scale');
+      ref.read(gameStreakProvider.notifier).completeGame('balance_scale');
     } else {
       HapticFeedbackUtil.error();
     }
@@ -40,7 +40,7 @@ class _BalanceScaleScreenState extends ConsumerState<BalanceScaleScreen> {
         title: won ? l10n.balanceScaleWinTitle : l10n.balanceScaleLoseTitle,
         message: won ? l10n.balanceScaleWinMessage : l10n.balanceScaleLoseMessage,
         onPlayAgain: () {
-          ref.read(balanceScaleNotifierProvider.notifier).initGame();
+          ref.read(balanceScaleProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -55,10 +55,10 @@ class _BalanceScaleScreenState extends ConsumerState<BalanceScaleScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(balanceScaleNotifierProvider);
-    final notifier = ref.read(balanceScaleNotifierProvider.notifier);
+    final state = ref.watch(balanceScaleProvider);
+    final notifier = ref.read(balanceScaleProvider.notifier);
 
-    ref.listen(balanceScaleNotifierProvider, (previous, next) {
+    ref.listen(balanceScaleProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.isGameWon);
       }

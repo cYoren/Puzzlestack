@@ -22,7 +22,7 @@ class _FactorFinderScreenState extends ConsumerState<FactorFinderScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(factorFinderNotifierProvider.notifier).initGame();
+      ref.read(factorFinderProvider.notifier).initGame();
     });
   }
 
@@ -32,16 +32,16 @@ class _FactorFinderScreenState extends ConsumerState<FactorFinderScreen> {
     } else {
       HapticFeedbackUtil.error();
     }
-    ref.read(factorFinderNotifierProvider.notifier).tapNumber(index);
+    ref.read(factorFinderProvider.notifier).tapNumber(index);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(factorFinderNotifierProvider);
+    final state = ref.watch(factorFinderProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(factorFinderNotifierProvider, (previous, next) {
+    ref.listen(factorFinderProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -56,7 +56,7 @@ class _FactorFinderScreenState extends ConsumerState<FactorFinderScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(factorFinderNotifierProvider.notifier).reset();
+              ref.read(factorFinderProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -81,7 +81,7 @@ class _FactorFinderScreenState extends ConsumerState<FactorFinderScreen> {
       subtitle: L10nGameHelpers.getGameTitle(context, 'factor_finder'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(factorFinderNotifierProvider.notifier).reset();
+        ref.read(factorFinderProvider.notifier).reset();
       },
       body: LayoutBuilder(
         builder: (context, constraints) {

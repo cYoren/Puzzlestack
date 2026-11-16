@@ -22,13 +22,13 @@ class _SumPyramidScreenState extends ConsumerState<SumPyramidScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(sumPyramidNotifierProvider.notifier).initGame();
+      ref.read(sumPyramidProvider.notifier).initGame();
     });
   }
 
   void _handleKeypadTap(String val) {
     HapticFeedbackUtil.lightImpact();
-    final notifier = ref.read(sumPyramidNotifierProvider.notifier);
+    final notifier = ref.read(sumPyramidProvider.notifier);
     if (val == '⌫') {
       notifier.deleteDigit();
     } else if (val == 'C') {
@@ -117,7 +117,7 @@ class _SumPyramidScreenState extends ConsumerState<SumPyramidScreen> {
         onTap: isHidden
             ? () {
                 HapticFeedbackUtil.selectionClick();
-                ref.read(sumPyramidNotifierProvider.notifier).selectBlock(index);
+                ref.read(sumPyramidProvider.notifier).selectBlock(index);
               }
             : null,
         child: Center(
@@ -181,10 +181,10 @@ class _SumPyramidScreenState extends ConsumerState<SumPyramidScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(sumPyramidNotifierProvider);
+    final state = ref.watch(sumPyramidProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(sumPyramidNotifierProvider, (previous, next) {
+    ref.listen(sumPyramidProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -198,7 +198,7 @@ class _SumPyramidScreenState extends ConsumerState<SumPyramidScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(sumPyramidNotifierProvider.notifier).reset();
+              ref.read(sumPyramidProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -221,7 +221,7 @@ class _SumPyramidScreenState extends ConsumerState<SumPyramidScreen> {
       subtitle: L10nGameHelpers.getGameTitle(context, 'sum_pyramid'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(sumPyramidNotifierProvider.notifier).reset();
+        ref.read(sumPyramidProvider.notifier).reset();
       },
       body: LayoutBuilder(
         builder: (context, constraints) {

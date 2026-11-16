@@ -129,7 +129,7 @@ class _TypoglycemiaDecoderScreenState extends ConsumerState<TypoglycemiaDecoderS
   void _onOptionSelected(int index) {
     if (index == _correctAnswerIndex) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('typoglycemia_decoder');
+      ref.read(gameStreakProvider.notifier).completeGame('typoglycemia_decoder');
       showDialog(
         context: context,
         barrierDismissible: false,

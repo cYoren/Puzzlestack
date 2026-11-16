@@ -78,7 +78,7 @@ class InequalityDashNotifier extends _$InequalityDashNotifier {
           timeLeft: 0,
           isGameOver: true,
         );
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('inequality_dash', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('inequality_dash', xpAmount: 25);
       }
     });
   }

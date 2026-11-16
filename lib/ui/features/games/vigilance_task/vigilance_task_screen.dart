@@ -22,7 +22,7 @@ class _VigilanceTaskScreenState extends ConsumerState<VigilanceTaskScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(vigilanceNotifierProvider.notifier).startGame();
+      ref.read(vigilanceProvider.notifier).startGame();
     });
   }
 
@@ -41,7 +41,7 @@ class _VigilanceTaskScreenState extends ConsumerState<VigilanceTaskScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(vigilanceNotifierProvider.notifier).startGame();
+          ref.read(vigilanceProvider.notifier).startGame();
         },
       ),
     );
@@ -50,9 +50,9 @@ class _VigilanceTaskScreenState extends ConsumerState<VigilanceTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(vigilanceNotifierProvider);
+    final state = ref.watch(vigilanceProvider);
     
-    ref.listen(vigilanceNotifierProvider, (previous, next) async {
+    ref.listen(vigilanceProvider, (previous, next) async {
       if (next.misses > (previous?.misses ?? 0)) {
         HapticFeedbackUtil.error();
         ScaffoldMessenger.of(context)
@@ -71,7 +71,7 @@ class _VigilanceTaskScreenState extends ConsumerState<VigilanceTaskScreen> {
         final isVictory = next.hits > next.misses;
         if (isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('vigilance_task');
+          await ref.read(gameStreakProvider.notifier).completeGame('vigilance_task');
         } else {
           HapticFeedbackUtil.vibrate();
         }
@@ -148,7 +148,7 @@ class _VigilanceTaskScreenState extends ConsumerState<VigilanceTaskScreen> {
               child: TangibleButton(
                 onTap: () {
                   HapticFeedbackUtil.lightImpact();
-                  ref.read(vigilanceNotifierProvider.notifier).onUserTap();
+                  ref.read(vigilanceProvider.notifier).onUserTap();
                 },
                 color: DesignSystem.primary,
                 child: const Center(

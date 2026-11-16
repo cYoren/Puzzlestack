@@ -115,7 +115,7 @@ class FaceTraitAssociationNotifier extends _$FaceTraitAssociationNotifier {
         correctCount: totalCorrect,
       );
       if (totalCorrect == state.trials.length) {
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('face_trait_association', xpAmount: 50);
+        ref.read(gameStreakProvider.notifier).completeGame('face_trait_association', xpAmount: 50);
       }
     }
   }

@@ -33,7 +33,7 @@ jobs:
         run: flutter pub get
 
       - name: Generate code
-        run: dart run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build
 
       # Errors and warnings fail the build; infos do not.
       #

@@ -45,64 +45,64 @@ class GameAssistActions {
 GameAssistActions? gameAssistFor(String gameId, WidgetRef ref) {
   switch (gameId) {
     case 'signpost':
-      final notifier = ref.read(signpostNotifierProvider.notifier);
+      final notifier = ref.read(signpostProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'kurodoko':
-      final notifier = ref.read(kurodokoNotifierProvider.notifier);
+      final notifier = ref.read(kurodokoProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'slitherlink':
-      final notifier = ref.read(slitherlinkNotifierProvider.notifier);
+      final notifier = ref.read(slitherlinkProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'futoshiki':
-      final notifier = ref.read(futoshikiNotifierProvider.notifier);
+      final notifier = ref.read(futoshikiProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'skyscrapers':
-      final notifier = ref.read(skyscrapersNotifierProvider.notifier);
+      final notifier = ref.read(skyscrapersProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'dominosa':
-      final notifier = ref.read(dominosaNotifierProvider.notifier);
+      final notifier = ref.read(dominosaProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'galaxies':
-      final notifier = ref.read(galaxiesNotifierProvider.notifier);
+      final notifier = ref.read(galaxiesProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'tents_and_trees':
-      final notifier = ref.read(tentsAndTreesNotifierProvider.notifier);
+      final notifier = ref.read(tentsAndTreesProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'magnets':
-      final notifier = ref.read(magnetsNotifierProvider.notifier);
+      final notifier = ref.read(magnetsProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'lights_out':
-      final notifier = ref.read(lightsOutNotifierProvider.notifier);
+      final notifier = ref.read(lightsOutProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'sudoku':
-      final notifier = ref.read(sudokuNotifierProvider.notifier);
+      final notifier = ref.read(sudokuProvider.notifier);
       return GameAssistActions(onSolve: notifier.solve);
     case 'map':
-      final notifier = ref.read(mapNotifierProvider.notifier);
+      final notifier = ref.read(mapProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'inertia':
-      final notifier = ref.read(inertiaNotifierProvider.notifier);
+      final notifier = ref.read(inertiaProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'netslide':
-      final notifier = ref.read(netslideNotifierProvider.notifier);
+      final notifier = ref.read(netslideProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'pegs':
-      final notifier = ref.read(pegsNotifierProvider.notifier);
+      final notifier = ref.read(pegsProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'same_game':
-      final notifier = ref.read(sameGameNotifierProvider.notifier);
+      final notifier = ref.read(sameGameProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'twiddle':
-      final notifier = ref.read(twiddleNotifierProvider.notifier);
+      final notifier = ref.read(twiddleProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'cube':
-      final notifier = ref.read(cubeNotifierProvider.notifier);
+      final notifier = ref.read(cubeProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'akari':
-      final notifier = ref.read(akariNotifierProvider.notifier);
+      final notifier = ref.read(akariProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'water_sort':
-      final notifier = ref.read(waterSortNotifierProvider.notifier);
+      final notifier = ref.read(waterSortProvider.notifier);
       return GameAssistActions(onSolve: notifier.solve);
     default:
       return null;

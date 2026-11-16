@@ -21,14 +21,14 @@ class _SequenceSleuthScreenState extends ConsumerState<SequenceSleuthScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(sequenceSleuthNotifierProvider.notifier).initGame());
+        () => ref.read(sequenceSleuthProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     final l10n = AppLocalizations.of(context)!;
     bool won = score >= 5;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('sequence_sleuth');
+      ref.read(gameStreakProvider.notifier).completeGame('sequence_sleuth');
     }
     showDialog(
       context: context,
@@ -37,7 +37,7 @@ class _SequenceSleuthScreenState extends ConsumerState<SequenceSleuthScreen> {
         title: won ? 'SLEUTH MASTER!' : l10n.timeUp.toUpperCase(),
         message: AppLocalizations.of(context)!.sequenceSleuthMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(sequenceSleuthNotifierProvider.notifier).initGame();
+          ref.read(sequenceSleuthProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -52,10 +52,10 @@ class _SequenceSleuthScreenState extends ConsumerState<SequenceSleuthScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(sequenceSleuthNotifierProvider);
-    final notifier = ref.read(sequenceSleuthNotifierProvider.notifier);
+    final state = ref.watch(sequenceSleuthProvider);
+    final notifier = ref.read(sequenceSleuthProvider.notifier);
 
-    ref.listen(sequenceSleuthNotifierProvider, (previous, next) {
+    ref.listen(sequenceSleuthProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         HapticFeedbackUtil.heavyImpact();
         _showGameOverDialog(next.score);

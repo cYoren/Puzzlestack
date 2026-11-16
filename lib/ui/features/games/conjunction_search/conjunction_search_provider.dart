@@ -73,7 +73,7 @@ class ConjunctionSearchNotifier extends _$ConjunctionSearchNotifier {
           isCompleted: true,
           score: state.score + 100,
         );
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('conjunction_search', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('conjunction_search', xpAmount: 25);
       } else {
         final level = _engine.generateLevel();
         state = state.copyWith(

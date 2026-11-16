@@ -105,7 +105,7 @@ class _VectorGridAlignmentScreenState extends ConsumerState<VectorGridAlignmentS
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('vector_grid_alignment');
+    await ref.read(gameStreakProvider.notifier).completeGame('vector_grid_alignment');
     if (!mounted) return;
     showDialog(
       context: context,

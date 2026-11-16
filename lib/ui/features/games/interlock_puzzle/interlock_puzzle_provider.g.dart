@@ -6,22 +6,59 @@ part of 'interlock_puzzle_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$interlockPuzzleNotifierHash() =>
-    r'05e640511322f66139d5c3a4c908adc1abe044f0';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [InterlockPuzzleNotifier].
 @ProviderFor(InterlockPuzzleNotifier)
-final interlockPuzzleNotifierProvider = AutoDisposeNotifierProvider<
-    InterlockPuzzleNotifier, InterlockPuzzleState>.internal(
-  InterlockPuzzleNotifier.new,
-  name: r'interlockPuzzleNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$interlockPuzzleNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final interlockPuzzleProvider = InterlockPuzzleNotifierProvider._();
 
-typedef _$InterlockPuzzleNotifier = AutoDisposeNotifier<InterlockPuzzleState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class InterlockPuzzleNotifierProvider
+    extends $NotifierProvider<InterlockPuzzleNotifier, InterlockPuzzleState> {
+  InterlockPuzzleNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'interlockPuzzleProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$interlockPuzzleNotifierHash();
+
+  @$internal
+  @override
+  InterlockPuzzleNotifier create() => InterlockPuzzleNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(InterlockPuzzleState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<InterlockPuzzleState>(value),
+    );
+  }
+}
+
+String _$interlockPuzzleNotifierHash() =>
+    r'b79a8763240b791ee548d206e3a75d558ea18952';
+
+abstract class _$InterlockPuzzleNotifier
+    extends $Notifier<InterlockPuzzleState> {
+  InterlockPuzzleState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<InterlockPuzzleState, InterlockPuzzleState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<InterlockPuzzleState, InterlockPuzzleState>,
+              InterlockPuzzleState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

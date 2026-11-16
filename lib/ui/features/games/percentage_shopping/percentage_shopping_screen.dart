@@ -142,7 +142,7 @@ class _PercentageShoppingScreenState extends ConsumerState<PercentageShoppingScr
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('percentage_shopping');
+    await ref.read(gameStreakProvider.notifier).completeGame('percentage_shopping');
     if (!mounted) return;
     showDialog(
       context: context,

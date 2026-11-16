@@ -95,7 +95,7 @@ class _VektorVectorScreenState extends ConsumerState<VektorVectorScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('vektor_vector');
+    await ref.read(gameStreakProvider.notifier).completeGame('vektor_vector');
     if (!mounted) return;
     showDialog(
       context: context,

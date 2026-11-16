@@ -22,14 +22,14 @@ class _ObjectDisplacementScreenState extends ConsumerState<ObjectDisplacementScr
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(objectDisplacementNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(objectDisplacementProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 12;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('object_displacement');
+      ref.read(gameStreakProvider.notifier).completeGame('object_displacement');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -43,7 +43,7 @@ class _ObjectDisplacementScreenState extends ConsumerState<ObjectDisplacementScr
           message: '$score displaced objects identified correctly!',
           isVictory: won,
           onPlayAgain: () {
-            ref.read(objectDisplacementNotifierProvider.notifier).initGame();
+            ref.read(objectDisplacementProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -57,10 +57,10 @@ class _ObjectDisplacementScreenState extends ConsumerState<ObjectDisplacementScr
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(objectDisplacementNotifierProvider);
-    final notifier = ref.read(objectDisplacementNotifierProvider.notifier);
+    final state = ref.watch(objectDisplacementProvider);
+    final notifier = ref.read(objectDisplacementProvider.notifier);
 
-    ref.listen(objectDisplacementNotifierProvider, (previous, next) {
+    ref.listen(objectDisplacementProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

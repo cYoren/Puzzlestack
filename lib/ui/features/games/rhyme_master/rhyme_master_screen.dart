@@ -26,7 +26,7 @@ class _RhymeMasterScreenState extends ConsumerState<RhymeMasterScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(rhymeMasterNotifierProvider.notifier).startGame();
+      ref.read(rhymeMasterProvider.notifier).startGame();
     });
   }
 
@@ -38,7 +38,7 @@ class _RhymeMasterScreenState extends ConsumerState<RhymeMasterScreen> {
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(rhymeMasterNotifierProvider);
+    final state = ref.read(rhymeMasterProvider);
     final isVictory = state.foundRhymes.length == state.puzzle?.allRhymes.length;
     
     showDialog(
@@ -54,7 +54,7 @@ class _RhymeMasterScreenState extends ConsumerState<RhymeMasterScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(rhymeMasterNotifierProvider.notifier).startGame();
+          ref.read(rhymeMasterProvider.notifier).startGame();
         },
       ),
     );
@@ -63,17 +63,17 @@ class _RhymeMasterScreenState extends ConsumerState<RhymeMasterScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(rhymeMasterNotifierProvider);
-    final notifier = ref.read(rhymeMasterNotifierProvider.notifier);
+    final state = ref.watch(rhymeMasterProvider);
+    final notifier = ref.read(rhymeMasterProvider.notifier);
 
-    ref.listen(rhymeMasterNotifierProvider, (previous, next) {
+    ref.listen(rhymeMasterProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.foundRhymes.length == next.puzzle?.allRhymes.length) {
           HapticFeedbackUtil.victory();
         } else {
           HapticFeedbackUtil.vibrate();
         }
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('rhyme_master');
+        ref.read(gameStreakProvider.notifier).completeGame('rhyme_master');
         _showCompletionDialog();
       }
       if (next.foundRhymes.length > (previous?.foundRhymes.length ?? 0)) {

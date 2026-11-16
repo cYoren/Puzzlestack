@@ -21,14 +21,14 @@ class _DivisibilityDashScreenState extends ConsumerState<DivisibilityDashScreen>
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(divisibilityDashNotifierProvider.notifier).initGame());
+        () => ref.read(divisibilityDashProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     final l10n = AppLocalizations.of(context)!;
     bool won = score >= 5;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('divisibility_dash');
+      ref.read(gameStreakProvider.notifier).completeGame('divisibility_dash');
     }
     showDialog(
       context: context,
@@ -37,7 +37,7 @@ class _DivisibilityDashScreenState extends ConsumerState<DivisibilityDashScreen>
         title: won ? 'DIVISIBILITY WHIZ!' : l10n.timeUp.toUpperCase(),
         message: AppLocalizations.of(context)!.divisibilityDashMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(divisibilityDashNotifierProvider.notifier).initGame();
+          ref.read(divisibilityDashProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -52,10 +52,10 @@ class _DivisibilityDashScreenState extends ConsumerState<DivisibilityDashScreen>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(divisibilityDashNotifierProvider);
-    final notifier = ref.read(divisibilityDashNotifierProvider.notifier);
+    final state = ref.watch(divisibilityDashProvider);
+    final notifier = ref.read(divisibilityDashProvider.notifier);
 
-    ref.listen(divisibilityDashNotifierProvider, (previous, next) {
+    ref.listen(divisibilityDashProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         HapticFeedbackUtil.heavyImpact();
         _showGameOverDialog(next.score);

@@ -58,7 +58,7 @@ class _WordLadderStepScreenState extends ConsumerState<WordLadderStepScreen> {
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('word_ladder_step');
+        ref.read(gameStreakProvider.notifier).completeGame('word_ladder_step');
         _showWinDialog();
         return;
       }

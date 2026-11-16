@@ -20,7 +20,7 @@ class _GrammarPoliceScreenState extends ConsumerState<GrammarPoliceScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(grammarPoliceNotifierProvider.notifier).startGame());
+    Future.microtask(() => ref.read(grammarPoliceProvider.notifier).startGame());
   }
 
   void _showHowToPlay(BuildContext context, AppLocalizations l10n) {
@@ -42,10 +42,10 @@ class _GrammarPoliceScreenState extends ConsumerState<GrammarPoliceScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(grammarPoliceNotifierProvider);
-    final notifier = ref.read(grammarPoliceNotifierProvider.notifier);
+    final state = ref.watch(grammarPoliceProvider);
+    final notifier = ref.read(grammarPoliceProvider.notifier);
 
-    ref.listen(grammarPoliceNotifierProvider, (previous, next) {
+    ref.listen(grammarPoliceProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         _showGameOverDialog(context, ref, next.score);
@@ -162,7 +162,7 @@ class _GrammarPoliceScreenState extends ConsumerState<GrammarPoliceScreen> {
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, int score) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('grammar_police');
+    await ref.read(gameStreakProvider.notifier).completeGame('grammar_police');
 
     if (!context.mounted) return;
 
@@ -175,7 +175,7 @@ class _GrammarPoliceScreenState extends ConsumerState<GrammarPoliceScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(grammarPoliceNotifierProvider.notifier).startGame();
+          ref.read(grammarPoliceProvider.notifier).startGame();
           Navigator.of(context).pop();
         },
         message: AppLocalizations.of(context)!.grammarPoliceMessage((score).toString()),

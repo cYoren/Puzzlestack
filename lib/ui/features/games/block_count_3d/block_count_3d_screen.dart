@@ -23,7 +23,7 @@ class _BlockCount3DScreenState extends ConsumerState<BlockCount3DScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(blockCount3DNotifierProvider.notifier).initGame();
+      ref.read(blockCount3DProvider.notifier).initGame();
     });
   }
 
@@ -42,7 +42,7 @@ class _BlockCount3DScreenState extends ConsumerState<BlockCount3DScreen> {
     final parsed = int.tryParse(next);
     if (parsed != null && parsed > 0) {
       HapticFeedbackUtil.selection();
-      ref.read(blockCount3DNotifierProvider.notifier).setGuess(parsed);
+      ref.read(blockCount3DProvider.notifier).setGuess(parsed);
     }
   }
 
@@ -53,13 +53,13 @@ class _BlockCount3DScreenState extends ConsumerState<BlockCount3DScreen> {
     _guessController.text = next;
     HapticFeedbackUtil.selection();
     final parsed = int.tryParse(next);
-    ref.read(blockCount3DNotifierProvider.notifier).setGuess(parsed);
+    ref.read(blockCount3DProvider.notifier).setGuess(parsed);
   }
 
   void _clearInput() {
     _guessController.clear();
     HapticFeedbackUtil.selection();
-    ref.read(blockCount3DNotifierProvider.notifier).setGuess(null);
+    ref.read(blockCount3DProvider.notifier).setGuess(null);
   }
 
   void _showHowToPlay() {
@@ -104,8 +104,8 @@ class _BlockCount3DScreenState extends ConsumerState<BlockCount3DScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(blockCount3DNotifierProvider);
-    final notifier = ref.read(blockCount3DNotifierProvider.notifier);
+    final state = ref.watch(blockCount3DProvider);
+    final notifier = ref.read(blockCount3DProvider.notifier);
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 

@@ -109,7 +109,7 @@ class _BlinkDetectorScreenState extends ConsumerState<BlinkDetectorScreen> {
   void _onGameComplete() async {
     _blinkTimer.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('blink_detector');
+    await ref.read(gameStreakProvider.notifier).completeGame('blink_detector');
     if (!mounted) return;
     showDialog(
       context: context,

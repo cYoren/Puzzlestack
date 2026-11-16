@@ -59,7 +59,7 @@ class _ModularClockArithmeticScreenState extends ConsumerState<ModularClockArith
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('modular_clock_arithmetic');
+        ref.read(gameStreakProvider.notifier).completeGame('modular_clock_arithmetic');
         _showWinDialog();
         return;
       }

@@ -22,7 +22,7 @@ class _DividedAttentionScreenState extends ConsumerState<DividedAttentionScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(dividedAttentionNotifierProvider.notifier).initGame();
+      ref.read(dividedAttentionProvider.notifier).initGame();
     });
   }
 
@@ -33,7 +33,7 @@ class _DividedAttentionScreenState extends ConsumerState<DividedAttentionScreen>
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.dividedAttentionGameOverTitle,
-        message: l10n.dividedAttentionGameOverMessage(ref.read(dividedAttentionNotifierProvider).score),
+        message: l10n.dividedAttentionGameOverMessage(ref.read(dividedAttentionProvider).score),
         isVictory: false,
         onHome: () {
           Navigator.of(context).pop();
@@ -41,7 +41,7 @@ class _DividedAttentionScreenState extends ConsumerState<DividedAttentionScreen>
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(dividedAttentionNotifierProvider.notifier).resetGame();
+          ref.read(dividedAttentionProvider.notifier).resetGame();
         },
       ),
     );
@@ -50,18 +50,18 @@ class _DividedAttentionScreenState extends ConsumerState<DividedAttentionScreen>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(dividedAttentionNotifierProvider);
-    final notifier = ref.read(dividedAttentionNotifierProvider.notifier);
+    final state = ref.watch(dividedAttentionProvider);
+    final notifier = ref.read(dividedAttentionProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(dividedAttentionNotifierProvider, (previous, next) async {
+    ref.listen(dividedAttentionProvider, (previous, next) async {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
         _showCompletionDialog();
       } else if (next.score > (previous?.score ?? 0)) {
         HapticFeedbackUtil.selectionClick();
         if (next.score % 10 == 0) {
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('divided_attention');
+          await ref.read(gameStreakProvider.notifier).completeGame('divided_attention');
         }
       }
     });

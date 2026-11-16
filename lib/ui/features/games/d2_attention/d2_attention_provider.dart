@@ -107,7 +107,7 @@ class D2AttentionNotifier extends _$D2AttentionNotifier {
         errors: state.errors + boardErrors,
         isCompleted: true,
       );
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('d2_attention', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('d2_attention', xpAmount: 25);
     } else {
       state = state.copyWith(
         score: (state.score + boardScore).clamp(0, 9999),

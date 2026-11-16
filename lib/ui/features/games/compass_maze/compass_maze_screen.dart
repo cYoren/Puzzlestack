@@ -23,7 +23,7 @@ class _CompassMazeScreenState extends ConsumerState<CompassMazeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(compassMazeNotifierProvider.notifier).initGame();
+      ref.read(compassMazeProvider.notifier).initGame();
     });
   }
 
@@ -42,7 +42,7 @@ class _CompassMazeScreenState extends ConsumerState<CompassMazeScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(compassMazeNotifierProvider.notifier).initGame();
+          ref.read(compassMazeProvider.notifier).initGame();
         },
       ),
     );
@@ -51,15 +51,15 @@ class _CompassMazeScreenState extends ConsumerState<CompassMazeScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(compassMazeNotifierProvider);
-    final notifier = ref.read(compassMazeNotifierProvider.notifier);
+    final state = ref.watch(compassMazeProvider);
+    final notifier = ref.read(compassMazeProvider.notifier);
 
-    ref.listen(compassMazeNotifierProvider, (previous, next) {
+    ref.listen(compassMazeProvider, (previous, next) {
       if ((next.isVictory && !(previous?.isVictory ?? false)) ||
           (next.isFailed && !(previous?.isFailed ?? false))) {
         if (next.isVictory) {
           HapticFeedbackUtil.victory();
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('compass_maze');
+          ref.read(gameStreakProvider.notifier).completeGame('compass_maze');
         } else {
           HapticFeedbackUtil.error();
         }

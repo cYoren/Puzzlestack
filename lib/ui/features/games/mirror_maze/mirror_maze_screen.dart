@@ -163,7 +163,7 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('mirror_maze');
+    await ref.read(gameStreakProvider.notifier).completeGame('mirror_maze');
     if (!mounted) return;
     showDialog(
       context: context,

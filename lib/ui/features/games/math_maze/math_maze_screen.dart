@@ -192,7 +192,7 @@ class _MathMazeScreenState extends ConsumerState<MathMazeScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('math_maze');
+    await ref.read(gameStreakProvider.notifier).completeGame('math_maze');
     if (!mounted) return;
     showDialog(
       context: context,

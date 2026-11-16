@@ -72,7 +72,7 @@ class _VisualSearchConjunctionScreenState extends ConsumerState<VisualSearchConj
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('visual_search_conjunction');
+    ref.read(gameStreakProvider.notifier).completeGame('visual_search_conjunction');
     _showEndDialog();
   }
 

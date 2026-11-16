@@ -23,7 +23,7 @@ class PegsScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('pegs', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -47,8 +47,8 @@ class PegsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(pegsNotifierProvider);
-    final notifier = ref.read(pegsNotifierProvider.notifier);
+    final state = ref.watch(pegsProvider);
+    final notifier = ref.read(pegsProvider.notifier);
 
     return GameScaffold(
       title: l10n.pegsTitle,

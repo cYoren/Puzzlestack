@@ -24,13 +24,13 @@ class _SentenceUnscrambleScreenState extends ConsumerState<SentenceUnscrambleScr
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(sentenceUnscrambleNotifierProvider.notifier).startGame();
+      ref.read(sentenceUnscrambleProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(sentenceUnscrambleNotifierProvider);
+    final state = ref.read(sentenceUnscrambleProvider);
     
     showDialog(
       context: context,
@@ -45,7 +45,7 @@ class _SentenceUnscrambleScreenState extends ConsumerState<SentenceUnscrambleScr
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(sentenceUnscrambleNotifierProvider.notifier).startGame();
+          ref.read(sentenceUnscrambleProvider.notifier).startGame();
         },
       ),
     );
@@ -54,13 +54,13 @@ class _SentenceUnscrambleScreenState extends ConsumerState<SentenceUnscrambleScr
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(sentenceUnscrambleNotifierProvider);
-    final notifier = ref.read(sentenceUnscrambleNotifierProvider.notifier);
+    final state = ref.watch(sentenceUnscrambleProvider);
+    final notifier = ref.read(sentenceUnscrambleProvider.notifier);
 
-    ref.listen(sentenceUnscrambleNotifierProvider, (previous, next) {
+    ref.listen(sentenceUnscrambleProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('sentence_unscramble');
+        ref.read(gameStreakProvider.notifier).completeGame('sentence_unscramble');
         _showCompletionDialog();
       }
       if (next.lastCheck == true && previous?.lastCheck != true) {

@@ -59,7 +59,7 @@ class TopologyNotifier extends _$TopologyNotifier {
       final nextScore = state.score + 1;
       if (nextScore >= 10) {
         state = state.copyWith(score: nextScore, isGameOver: true);
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('topology', xpAmount: 20);
+        ref.read(gameStreakProvider.notifier).completeGame('topology', xpAmount: 20);
       } else {
         state = state.copyWith(
           score: nextScore,

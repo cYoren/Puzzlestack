@@ -109,7 +109,7 @@ class _AttentionalBlinkProbeScreenState extends ConsumerState<AttentionalBlinkPr
     setState(() {
       _isGameOver = true;
     });
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('attentional_blink_probe');
+    ref.read(gameStreakProvider.notifier).completeGame('attentional_blink_probe');
     _showEndDialog();
   }
 

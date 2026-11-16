@@ -6,23 +6,61 @@ part of 'conjunction_search_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$conjunctionSearchNotifierHash() =>
-    r'4bf2602c6db49a94700fdfdbdf134eb3e8bd859c';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [ConjunctionSearchNotifier].
 @ProviderFor(ConjunctionSearchNotifier)
-final conjunctionSearchNotifierProvider = AutoDisposeNotifierProvider<
-    ConjunctionSearchNotifier, ConjunctionSearchState>.internal(
-  ConjunctionSearchNotifier.new,
-  name: r'conjunctionSearchNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$conjunctionSearchNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final conjunctionSearchProvider = ConjunctionSearchNotifierProvider._();
 
-typedef _$ConjunctionSearchNotifier
-    = AutoDisposeNotifier<ConjunctionSearchState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class ConjunctionSearchNotifierProvider
+    extends
+        $NotifierProvider<ConjunctionSearchNotifier, ConjunctionSearchState> {
+  ConjunctionSearchNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'conjunctionSearchProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$conjunctionSearchNotifierHash();
+
+  @$internal
+  @override
+  ConjunctionSearchNotifier create() => ConjunctionSearchNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ConjunctionSearchState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ConjunctionSearchState>(value),
+    );
+  }
+}
+
+String _$conjunctionSearchNotifierHash() =>
+    r'26dc742a0fc2966bb9a85f2e310c5021e05ac59b';
+
+abstract class _$ConjunctionSearchNotifier
+    extends $Notifier<ConjunctionSearchState> {
+  ConjunctionSearchState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<ConjunctionSearchState, ConjunctionSearchState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ConjunctionSearchState, ConjunctionSearchState>,
+              ConjunctionSearchState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

@@ -128,7 +128,7 @@ class _OddEvenFlashScreenState extends ConsumerState<OddEvenFlashScreen> {
   void _onGameComplete() async {
     _flashTimer.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('odd_even_flash');
+    await ref.read(gameStreakProvider.notifier).completeGame('odd_even_flash');
     if (!mounted) return;
     showDialog(
       context: context,

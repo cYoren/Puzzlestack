@@ -14,10 +14,10 @@ class CalculationSprintScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(calculationSprintNotifierProvider);
-    final notifier = ref.read(calculationSprintNotifierProvider.notifier);
+    final state = ref.watch(calculationSprintProvider);
+    final notifier = ref.read(calculationSprintProvider.notifier);
 
-    ref.listen(calculationSprintNotifierProvider, (previous, next) {
+    ref.listen(calculationSprintProvider, (previous, next) {
       if (next.status == SprintStatus.gameOver &&
           previous?.status != SprintStatus.gameOver) {
         final isGoalReached = next.score >= 15;
@@ -40,7 +40,7 @@ class CalculationSprintScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(calculationSprintNotifierProvider.notifier).reset();
+              ref.read(calculationSprintProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),

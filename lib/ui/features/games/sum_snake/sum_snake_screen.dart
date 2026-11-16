@@ -22,21 +22,21 @@ class _SumSnakeScreenState extends ConsumerState<SumSnakeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(sumSnakeNotifierProvider.notifier).initGame();
+      ref.read(sumSnakeProvider.notifier).initGame();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(sumSnakeNotifierProvider);
-    final notifier = ref.read(sumSnakeNotifierProvider.notifier);
+    final state = ref.watch(sumSnakeProvider);
+    final notifier = ref.read(sumSnakeProvider.notifier);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(sumSnakeNotifierProvider, (previous, next) {
+    ref.listen(sumSnakeProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('sum_snake');
+        ref.read(gameStreakProvider.notifier).completeGame('sum_snake');
         showDialog(
           context: context,
           barrierDismissible: false,

@@ -85,7 +85,7 @@ class _SimonCommandScreenState extends ConsumerState<SimonCommandScreen> {
 
     if (_correctAnswers >= targetScore) {
       _timer?.cancel();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('simon_command', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('simon_command', xpAmount: 25);
       showDialog(
         context: context,
         barrierDismissible: false,

@@ -83,7 +83,7 @@ class KakuroNotifier extends _$KakuroNotifier {
     state = state.copyWith(currentValues: newValues, isSolved: solved);
 
     if (solved) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('kakuro', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('kakuro', xpAmount: 25);
     }
   }
 

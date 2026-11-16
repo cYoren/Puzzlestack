@@ -17,10 +17,10 @@ class WordLadderScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(wordLadderNotifierProvider);
-    final notifier = ref.read(wordLadderNotifierProvider.notifier);
+    final state = ref.watch(wordLadderProvider);
+    final notifier = ref.read(wordLadderProvider.notifier);
 
-    ref.listen(wordLadderNotifierProvider, (previous, next) {
+    ref.listen(wordLadderProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         _showGameOverDialog(context, ref, next);
@@ -264,7 +264,7 @@ class WordLadderScreen extends ConsumerWidget {
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, WordLadderState state) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('word_ladder', xpAmount: 35);
+    await ref.read(gameStreakProvider.notifier).completeGame('word_ladder', xpAmount: 35);
 
     if (!context.mounted) return;
 
@@ -279,7 +279,7 @@ class WordLadderScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(wordLadderNotifierProvider.notifier).reset();
+          ref.read(wordLadderProvider.notifier).reset();
           Navigator.of(context).pop();
         },
       ),

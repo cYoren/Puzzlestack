@@ -32,9 +32,9 @@ class PipesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(pipesNotifierProvider);
+    final state = ref.watch(pipesProvider);
 
-    ref.listen(pipesNotifierProvider, (previous, next) {
+    ref.listen(pipesProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -50,7 +50,7 @@ class PipesScreen extends ConsumerWidget {
           shadowColor: Theme.of(context).colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(pipesNotifierProvider.notifier).newGame();
+            ref.read(pipesProvider.notifier).newGame();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -115,17 +115,17 @@ class PipesScreen extends ConsumerWidget {
             onPanStart: (details) {
               final pos = _getPos(details.localPosition, cellSize, state.level.size);
               if (pos != null) {
-                ref.read(pipesNotifierProvider.notifier).startPath(pos.x, pos.y);
+                ref.read(pipesProvider.notifier).startPath(pos.x, pos.y);
               }
             },
             onPanUpdate: (details) {
               final pos = _getPos(details.localPosition, cellSize, state.level.size);
               if (pos != null) {
-                ref.read(pipesNotifierProvider.notifier).updatePath(pos.x, pos.y);
+                ref.read(pipesProvider.notifier).updatePath(pos.x, pos.y);
               }
             },
             onPanEnd: (_) {
-              ref.read(pipesNotifierProvider.notifier).endPath();
+              ref.read(pipesProvider.notifier).endPath();
             },
             child: SizedBox(
               width: boardSize - DesignSystem.spaceSM * 2,
@@ -155,7 +155,7 @@ class PipesScreen extends ConsumerWidget {
   }
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('pipes');
+    await ref.read(gameStreakProvider.notifier).completeGame('pipes');
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -166,7 +166,7 @@ class PipesScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(pipesNotifierProvider.notifier).newGame();
+          ref.read(pipesProvider.notifier).newGame();
           Navigator.of(context).pop();
         },
         title: L10nGameHelpers.getGameTitle(context, 'pipes'),

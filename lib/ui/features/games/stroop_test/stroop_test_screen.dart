@@ -20,7 +20,7 @@ class _StroopTestScreenState extends ConsumerState<StroopTestScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(stroopTestNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(stroopTestProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
@@ -28,7 +28,7 @@ class _StroopTestScreenState extends ConsumerState<StroopTestScreen> {
     final l10n = AppLocalizations.of(context)!;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('stroop_test');
+      ref.read(gameStreakProvider.notifier).completeGame('stroop_test');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -39,7 +39,7 @@ class _StroopTestScreenState extends ConsumerState<StroopTestScreen> {
         title: won ? l10n.winNeuroMaster : l10n.loseBrainFog,
         message: AppLocalizations.of(context)!.stroopTestMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(stroopTestNotifierProvider.notifier).initGame();
+          ref.read(stroopTestProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -54,10 +54,10 @@ class _StroopTestScreenState extends ConsumerState<StroopTestScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(stroopTestNotifierProvider);
-    final notifier = ref.read(stroopTestNotifierProvider.notifier);
+    final state = ref.watch(stroopTestProvider);
+    final notifier = ref.read(stroopTestProvider.notifier);
 
-    ref.listen(stroopTestNotifierProvider, (previous, next) {
+    ref.listen(stroopTestProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

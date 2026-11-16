@@ -23,13 +23,13 @@ class _NumericalEstimationScreenState extends ConsumerState<NumericalEstimationS
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(numericalEstimationNotifierProvider.notifier).startGame();
+      ref.read(numericalEstimationProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.read(numericalEstimationNotifierProvider);
+    final state = ref.read(numericalEstimationProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -43,7 +43,7 @@ class _NumericalEstimationScreenState extends ConsumerState<NumericalEstimationS
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(numericalEstimationNotifierProvider.notifier).resetGame();
+          ref.read(numericalEstimationProvider.notifier).resetGame();
         },
       ),
     );
@@ -53,13 +53,13 @@ class _NumericalEstimationScreenState extends ConsumerState<NumericalEstimationS
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(numericalEstimationNotifierProvider);
-    final notifier = ref.read(numericalEstimationNotifierProvider.notifier);
+    final state = ref.watch(numericalEstimationProvider);
+    final notifier = ref.read(numericalEstimationProvider.notifier);
 
-    ref.listen(numericalEstimationNotifierProvider, (previous, next) {
+    ref.listen(numericalEstimationProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('numerical_estimation');
+        ref.read(gameStreakProvider.notifier).completeGame('numerical_estimation');
         _showCompletionDialog();
       }
     });

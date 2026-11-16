@@ -135,7 +135,7 @@ class _DigitSwapEqScreenState extends ConsumerState<DigitSwapEqScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('digit_swap_eq');
+    await ref.read(gameStreakProvider.notifier).completeGame('digit_swap_eq');
     if (!mounted) return;
     showDialog(
       context: context,

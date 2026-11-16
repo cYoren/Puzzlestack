@@ -176,7 +176,7 @@ class DualCodingNotifier extends _$DualCodingNotifier {
     _gameTimer?.cancel();
     _stimulusTimer?.cancel();
     state = state.copyWith(isGameOver: true);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('dual_coding', xpAmount: 25);
+    ref.read(gameStreakProvider.notifier).completeGame('dual_coding', xpAmount: 25);
   }
 
   void reset() {

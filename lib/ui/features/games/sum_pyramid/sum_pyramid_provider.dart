@@ -95,7 +95,7 @@ class SumPyramidNotifier extends _$SumPyramidNotifier {
           timeLeft: 0,
           isGameOver: true,
         );
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('sum_pyramid', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('sum_pyramid', xpAmount: 25);
       }
     });
   }
@@ -218,7 +218,7 @@ class SumPyramidNotifier extends _$SumPyramidNotifier {
       if (nextTime == 0) {
         _timer?.cancel();
         state = state.copyWith(isGameOver: true);
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('sum_pyramid', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('sum_pyramid', xpAmount: 25);
       }
       return false;
     }

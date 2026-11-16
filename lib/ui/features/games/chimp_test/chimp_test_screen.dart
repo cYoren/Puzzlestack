@@ -106,7 +106,7 @@ class _ChimpTestScreenState extends ConsumerState<ChimpTestScreen> {
 
   void _gameComplete(bool isVictory) {
     if (isVictory) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('chimp_test', xpAmount: 30);
+      ref.read(gameStreakProvider.notifier).completeGame('chimp_test', xpAmount: 30);
     }
     
     showDialog(

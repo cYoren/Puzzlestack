@@ -22,7 +22,7 @@ class _AkariScreenState extends ConsumerState<AkariScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(akariNotifierProvider.notifier).initGame();
+      ref.read(akariProvider.notifier).initGame();
     });
   }
 
@@ -41,7 +41,7 @@ class _AkariScreenState extends ConsumerState<AkariScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(akariNotifierProvider.notifier).initGame();
+          ref.read(akariProvider.notifier).initGame();
         },
       ),
     );
@@ -51,13 +51,13 @@ class _AkariScreenState extends ConsumerState<AkariScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(akariNotifierProvider);
-    final notifier = ref.read(akariNotifierProvider.notifier);
+    final state = ref.watch(akariProvider);
+    final notifier = ref.read(akariProvider.notifier);
 
-    ref.listen(akariNotifierProvider, (previous, next) {
+    ref.listen(akariProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('akari');
+        ref.read(gameStreakProvider.notifier).completeGame('akari');
         _showCompletionDialog();
       }
     });

@@ -22,9 +22,9 @@ class _NonogramScreenState extends ConsumerState<NonogramScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(nonogramNotifierProvider);
+    final state = ref.watch(nonogramProvider);
 
-    ref.listen(nonogramNotifierProvider, (previous, next) {
+    ref.listen(nonogramProvider, (previous, next) {
       if (next.hasValue && next.value!.isSolved && !(previous?.value?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -38,7 +38,7 @@ class _NonogramScreenState extends ConsumerState<NonogramScreen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(nonogramNotifierProvider.notifier).reset();
+              ref.read(nonogramProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -55,7 +55,7 @@ class _NonogramScreenState extends ConsumerState<NonogramScreen> {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(nonogramNotifierProvider.notifier).reset();
+            ref.read(nonogramProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -268,7 +268,7 @@ class NonogramCell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final value = ref.watch(nonogramNotifierProvider.select((s) => s.value?.grid[row][col] ?? 0));
+    final value = ref.watch(nonogramProvider.select((s) => s.value?.grid[row][col] ?? 0));
 
     return Padding(
       padding: const EdgeInsets.all(1),
@@ -279,7 +279,7 @@ class NonogramCell extends ConsumerWidget {
         color: value == 1 ? DesignSystem.accentBerry : Theme.of(context).colorScheme.surface,
         onTap: () {
           HapticFeedbackUtil.lightImpact();
-          ref.read(nonogramNotifierProvider.notifier).toggleCell(row, col, isMarkMode);
+          ref.read(nonogramProvider.notifier).toggleCell(row, col, isMarkMode);
         },
         child: Center(
           child: value == 2

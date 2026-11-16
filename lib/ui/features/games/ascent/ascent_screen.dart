@@ -21,7 +21,7 @@ class AscentScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('ascent', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -45,8 +45,8 @@ class AscentScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(ascentNotifierProvider);
-    final notifier = ref.read(ascentNotifierProvider.notifier);
+    final state = ref.watch(ascentProvider);
+    final notifier = ref.read(ascentProvider.notifier);
 
     return BoardGameScaffold(
       title: l10n.ascentTitle,

@@ -22,14 +22,14 @@ class _SoptScreenState extends ConsumerState<SoptScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(soptNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(soptProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 15;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('sopt');
+      ref.read(gameStreakProvider.notifier).completeGame('sopt');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -41,7 +41,7 @@ class _SoptScreenState extends ConsumerState<SoptScreen> {
         message: AppLocalizations.of(context)!.soptGameOverMessage(score),
         isVictory: won,
         onPlayAgain: () {
-          ref.read(soptNotifierProvider.notifier).initGame();
+          ref.read(soptProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -54,9 +54,9 @@ class _SoptScreenState extends ConsumerState<SoptScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(soptNotifierProvider);
+    final state = ref.watch(soptProvider);
 
-    ref.listen(soptNotifierProvider, (previous, next) {
+    ref.listen(soptProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }
@@ -139,7 +139,7 @@ class _SoptScreenState extends ConsumerState<SoptScreen> {
           return TangibleButton(
             onTap: () {
               HapticFeedbackUtil.lightImpact();
-              ref.read(soptNotifierProvider.notifier).onTapItem(item.id);
+              ref.read(soptProvider.notifier).onTapItem(item.id);
             },
             color: Theme.of(context).colorScheme.surface,
             shadowColor: Theme.of(context).colorScheme.outline,

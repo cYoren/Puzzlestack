@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../data/game_metadata.dart';
 import '../data/game_registry.dart';
@@ -6,10 +7,10 @@ import '../providers/user_providers.dart';
 part 'game_providers.g.dart';
 
 @riverpod
-List<GameMetadata> filteredGames(FilteredGamesRef ref, {required String searchQuery, required String selectedCategory, required Map<String, String> localizedTitles}) {
+List<GameMetadata> filteredGames(Ref ref, {required String searchQuery, required String selectedCategory, required Map<String, String> localizedTitles}) {
   final allGames = allGamesMetadata;
-  final favoriteIds = ref.watch(userDataNotifierProvider.select((d) => d.favoriteGameIds ?? []));
-  final hiddenIds = ref.watch(userDataNotifierProvider.select((d) => d.hiddenGameIds ?? []));
+  final favoriteIds = ref.watch(userDataProvider.select((d) => d.favoriteGameIds ?? []));
+  final hiddenIds = ref.watch(userDataProvider.select((d) => d.hiddenGameIds ?? []));
   final favoriteSet = favoriteIds.toSet();
   final hiddenSet = hiddenIds.toSet();
   final query = searchQuery.toLowerCase();
@@ -38,7 +39,7 @@ List<GameMetadata> filteredGames(FilteredGamesRef ref, {required String searchQu
 }
 
 @riverpod
-Map<String, int> categoryStats(CategoryStatsRef ref) {
+Map<String, int> categoryStats(Ref ref) {
   final allGames = allGamesMetadata;
   final Map<String, int> stats = {};
   for (final game in allGames) {
@@ -49,8 +50,8 @@ Map<String, int> categoryStats(CategoryStatsRef ref) {
 }
 
 @riverpod
-Map<String, int> solvedStats(SolvedStatsRef ref) {
-  final streaks = ref.watch(gameStreakNotifierProvider);
+Map<String, int> solvedStats(Ref ref) {
+  final streaks = ref.watch(gameStreakProvider);
   final allGames = allGamesMetadata;
   final Map<String, int> stats = {};
   
@@ -64,8 +65,8 @@ Map<String, int> solvedStats(SolvedStatsRef ref) {
 }
 
 @riverpod
-int solvedTodayCount(SolvedTodayCountRef ref) {
-  return ref.watch(gameStreakNotifierProvider.select(
+int solvedTodayCount(Ref ref) {
+  return ref.watch(gameStreakProvider.select(
     (streaks) => streaks.values.where((s) => s.solvedToday).length,
   ));
 }

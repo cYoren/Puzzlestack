@@ -22,7 +22,7 @@ class _VerbalAnalogiesScreenState extends ConsumerState<VerbalAnalogiesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(verbalAnalogiesNotifierProvider.notifier).initGame();
+      ref.read(verbalAnalogiesProvider.notifier).initGame();
     });
   }
 
@@ -41,7 +41,7 @@ class _VerbalAnalogiesScreenState extends ConsumerState<VerbalAnalogiesScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(verbalAnalogiesNotifierProvider.notifier).initGame();
+          ref.read(verbalAnalogiesProvider.notifier).initGame();
         },
       ),
     );
@@ -51,13 +51,13 @@ class _VerbalAnalogiesScreenState extends ConsumerState<VerbalAnalogiesScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(verbalAnalogiesNotifierProvider);
-    final notifier = ref.read(verbalAnalogiesNotifierProvider.notifier);
+    final state = ref.watch(verbalAnalogiesProvider);
+    final notifier = ref.read(verbalAnalogiesProvider.notifier);
 
-    ref.listen(verbalAnalogiesNotifierProvider, (previous, next) {
+    ref.listen(verbalAnalogiesProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('verbal_analogies');
+        ref.read(gameStreakProvider.notifier).completeGame('verbal_analogies');
         _showCompletionDialog();
       }
     });

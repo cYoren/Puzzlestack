@@ -64,7 +64,7 @@ class BoxCompletionNotifier extends _$BoxCompletionNotifier {
 
   void initGame() {
     _timer?.cancel();
-    final isTrialMode = ref.read(userDataNotifierProvider).isTrialModeEnabled ?? false;
+    final isTrialMode = ref.read(userDataProvider).isTrialModeEnabled ?? false;
 
     _nextTrial(resetScore: true);
     state = state.copyWith(

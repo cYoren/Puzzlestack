@@ -19,20 +19,20 @@ class _SilentLetterSearchScreenState extends ConsumerState<SilentLetterSearchScr
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(silentLetterSearchNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(silentLetterSearchProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('silent_letter_search');
+    ref.read(gameStreakProvider.notifier).completeGame('silent_letter_search');
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: l10n.silentLetterSearchTitle.toUpperCase(),
-        message: l10n.wordFoundMessage(ref.read(silentLetterSearchNotifierProvider).word),
+        message: l10n.wordFoundMessage(ref.read(silentLetterSearchProvider).word),
         onPlayAgain: () {
-          ref.read(silentLetterSearchNotifierProvider.notifier).initGame();
+          ref.read(silentLetterSearchProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -47,10 +47,10 @@ class _SilentLetterSearchScreenState extends ConsumerState<SilentLetterSearchScr
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(silentLetterSearchNotifierProvider);
-    final notifier = ref.read(silentLetterSearchNotifierProvider.notifier);
+    final state = ref.watch(silentLetterSearchProvider);
+    final notifier = ref.read(silentLetterSearchProvider.notifier);
 
-    ref.listen(silentLetterSearchNotifierProvider, (previous, next) {
+    ref.listen(silentLetterSearchProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver && next.isGameWon) {
         _showCompletionDialog();
       }

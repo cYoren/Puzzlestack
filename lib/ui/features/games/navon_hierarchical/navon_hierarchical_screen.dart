@@ -52,7 +52,7 @@ class _NavonHierarchicalScreenState extends ConsumerState<NavonHierarchicalScree
         setState(() {
           _isGameOver = true;
         });
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('navon_hierarchical');
+        ref.read(gameStreakProvider.notifier).completeGame('navon_hierarchical');
         _showWinDialog();
         return;
       }

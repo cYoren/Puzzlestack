@@ -24,7 +24,7 @@ class _WordSurgeScreenState extends ConsumerState<WordSurgeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(wordSurgeNotifierProvider.notifier).initGame();
+      ref.read(wordSurgeProvider.notifier).initGame();
     });
   }
 
@@ -45,7 +45,7 @@ class _WordSurgeScreenState extends ConsumerState<WordSurgeScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(wordSurgeNotifierProvider.notifier).initGame();
+          ref.read(wordSurgeProvider.notifier).initGame();
         },
       ),
     );
@@ -55,15 +55,15 @@ class _WordSurgeScreenState extends ConsumerState<WordSurgeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(wordSurgeNotifierProvider);
-    final notifier = ref.read(wordSurgeNotifierProvider.notifier);
+    final state = ref.watch(wordSurgeProvider);
+    final notifier = ref.read(wordSurgeProvider.notifier);
 
-    ref.listen(wordSurgeNotifierProvider, (previous, next) {
+    ref.listen(wordSurgeProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         final isVictory = next.score >= next.targetScore;
         if (isVictory) {
           HapticFeedbackUtil.victory();
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('word_surge');
+          ref.read(gameStreakProvider.notifier).completeGame('word_surge');
         } else {
           HapticFeedbackUtil.lightImpact();
         }

@@ -26,7 +26,7 @@ class _FindWordScreenState extends ConsumerState<FindWordScreen>
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(findWordNotifierProvider.notifier).initGame());
+        () => ref.read(findWordProvider.notifier).initGame());
 
     _shakeController = AnimationController(
       duration: const Duration(milliseconds: 300),
@@ -53,11 +53,11 @@ class _FindWordScreenState extends ConsumerState<FindWordScreen>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(findWordNotifierProvider);
-    final notifier = ref.read(findWordNotifierProvider.notifier);
+    final state = ref.watch(findWordProvider);
+    final notifier = ref.read(findWordProvider.notifier);
     final l10n = AppLocalizations.of(context)!;
 
-    ref.listen(findWordNotifierProvider, (previous, next) {
+    ref.listen(findWordProvider, (previous, next) {
       if (next.isInvalidGuess && !(previous?.isInvalidGuess ?? false)) {
         HapticFeedbackUtil.heavyImpact();
         _shakeController.forward(from: 0);
@@ -325,7 +325,7 @@ class _FindWordScreenState extends ConsumerState<FindWordScreen>
     final l10n = AppLocalizations.of(context)!;
     if (state.isGameWon) {
       await ref
-          .read(gameStreakNotifierProvider.notifier)
+          .read(gameStreakProvider.notifier)
           .completeGame('find_word');
       if (!context.mounted) return;
       showDialog(
@@ -337,7 +337,7 @@ class _FindWordScreenState extends ConsumerState<FindWordScreen>
             Navigator.of(context).pop();
           },
           onPlayAgain: () {
-            ref.read(findWordNotifierProvider.notifier).initGame();
+            ref.read(findWordProvider.notifier).initGame();
             Navigator.of(context).pop();
           },
           title: l10n.congrats,
@@ -361,7 +361,7 @@ class _FindWordScreenState extends ConsumerState<FindWordScreen>
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(findWordNotifierProvider.notifier).initGame();
+          ref.read(findWordProvider.notifier).initGame();
           Navigator.of(context).pop();
         },
       ),

@@ -17,11 +17,11 @@ class SpotlightTrackScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(spotlightTrackNotifierProvider);
-    final notifier = ref.read(spotlightTrackNotifierProvider.notifier);
+    final state = ref.watch(spotlightTrackProvider);
+    final notifier = ref.read(spotlightTrackProvider.notifier);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    ref.listen(spotlightTrackNotifierProvider, (previous, next) {
+    ref.listen(spotlightTrackProvider, (previous, next) {
       if (next.isCompleted && !(previous?.isCompleted ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(

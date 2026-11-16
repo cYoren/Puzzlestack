@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -5446,7 +5447,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String snackbarIncorrectInequality(
-      String left, int leftVal, String correct, String right, int rightVal) {
+    String left,
+    int leftVal,
+    String correct,
+    String right,
+    int rightVal,
+  ) {
     return 'Falsch! $left ($leftVal) $correct $right ($rightVal)';
   }
 

@@ -68,7 +68,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          sudokuNotifierProvider.overrideWith(() => _FixedSudoku(_state())),
+          sudokuProvider.overrideWith(() => _FixedSudoku(_state())),
         ],
         child: MaterialApp(
           theme: DesignSystem.lightTheme,
@@ -107,7 +107,7 @@ void main() {
     final container = ProviderScope.containerOf(
       tester.element(find.byType(SudokuScreen)),
     );
-    final played = container.read(sudokuNotifierProvider).value!;
+    final played = container.read(sudokuProvider).value!;
     expect(played.currentBoard[0][1], 3,
         reason: 'the tap reached the notifier through the board');
   });
@@ -128,7 +128,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          waterSortNotifierProvider.overrideWith(() => _FixedWater(start)),
+          waterSortProvider.overrideWith(() => _FixedWater(start)),
         ],
         child: MaterialApp(
           theme: DesignSystem.lightTheme,
@@ -163,7 +163,7 @@ void main() {
     final container = ProviderScope.containerOf(
       tester.element(find.byType(WaterSortScreen)),
     );
-    final played = container.read(waterSortNotifierProvider);
+    final played = container.read(waterSortProvider);
     expect(played.tubes[0], [red]);
     expect(played.tubes[1], [blue, blue]);
   });
@@ -190,7 +190,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          slitherlinkNotifierProvider.overrideWith(
+          slitherlinkProvider.overrideWith(
             () => _FixedSlitherlink(start),
           ),
         ],
@@ -220,7 +220,7 @@ void main() {
     final container = ProviderScope.containerOf(
       tester.element(find.byType(SlitherlinkScreen)),
     );
-    expect(container.read(slitherlinkNotifierProvider).currentHEdges[0][0],
+    expect(container.read(slitherlinkProvider).currentHEdges[0][0],
         isTrue);
   });
 }

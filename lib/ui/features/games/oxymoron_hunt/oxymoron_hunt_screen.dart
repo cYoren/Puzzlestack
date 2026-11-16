@@ -24,13 +24,13 @@ class _OxymoronHuntScreenState extends ConsumerState<OxymoronHuntScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(oxymoronHuntNotifierProvider.notifier).startGame();
+      ref.read(oxymoronHuntProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final score = ref.read(oxymoronHuntNotifierProvider).score;
+    final score = ref.read(oxymoronHuntProvider).score;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -44,7 +44,7 @@ class _OxymoronHuntScreenState extends ConsumerState<OxymoronHuntScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(oxymoronHuntNotifierProvider.notifier).startGame();
+          ref.read(oxymoronHuntProvider.notifier).startGame();
         },
       ),
     );
@@ -53,13 +53,13 @@ class _OxymoronHuntScreenState extends ConsumerState<OxymoronHuntScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(oxymoronHuntNotifierProvider);
-    final notifier = ref.read(oxymoronHuntNotifierProvider.notifier);
+    final state = ref.watch(oxymoronHuntProvider);
+    final notifier = ref.read(oxymoronHuntProvider.notifier);
 
-    ref.listen(oxymoronHuntNotifierProvider, (previous, next) {
+    ref.listen(oxymoronHuntProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('oxymoron_hunt');
+        ref.read(gameStreakProvider.notifier).completeGame('oxymoron_hunt');
         _showCompletionDialog();
       }
       if (next.foundWords.length > (previous?.foundWords.length ?? 0)) {

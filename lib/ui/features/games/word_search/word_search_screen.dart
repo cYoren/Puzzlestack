@@ -21,17 +21,17 @@ class _WordSearchScreenState extends ConsumerState<WordSearchScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(wordSearchNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(wordSearchProvider.notifier).initGame());
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(wordSearchNotifierProvider);
-    final notifier = ref.read(wordSearchNotifierProvider.notifier);
+    final state = ref.watch(wordSearchProvider);
+    final notifier = ref.read(wordSearchProvider.notifier);
 
-    ref.listen(wordSearchNotifierProvider, (previous, next) {
+    ref.listen(wordSearchProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         _showVictoryDialog(context, ref);
@@ -255,7 +255,7 @@ class _WordSearchScreenState extends ConsumerState<WordSearchScreen> {
   }
 
   void _showVictoryDialog(BuildContext context, WidgetRef ref) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('word_search');
+    await ref.read(gameStreakProvider.notifier).completeGame('word_search');
 
     if (!context.mounted) return;
 
@@ -268,7 +268,7 @@ class _WordSearchScreenState extends ConsumerState<WordSearchScreen> {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(wordSearchNotifierProvider.notifier).initGame();
+          ref.read(wordSearchProvider.notifier).initGame();
           Navigator.of(context).pop();
         },
         message: AppLocalizations.of(context)!.wordSearchMessage,

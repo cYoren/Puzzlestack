@@ -157,7 +157,7 @@ class _DualTaskMemoryScreenState extends ConsumerState<DualTaskMemoryScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('dual_task_memory');
+    await ref.read(gameStreakProvider.notifier).completeGame('dual_task_memory');
     if (!mounted) return;
     showDialog(
       context: context,

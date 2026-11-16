@@ -71,7 +71,7 @@ class NumericalEstimationNotifier extends _$NumericalEstimationNotifier {
 
   void startGame() {
     _timer?.cancel();
-    final isTrialMode = ref.read(userDataNotifierProvider).isTrialModeEnabled ?? false;
+    final isTrialMode = ref.read(userDataProvider).isTrialModeEnabled ?? false;
     
     state = NumericalEstimationState(
       currentPuzzle: _engine.generatePuzzle(),
@@ -111,7 +111,7 @@ class NumericalEstimationNotifier extends _$NumericalEstimationNotifier {
     );
 
     Future.delayed(const Duration(milliseconds: 300), () {
-      if (!ref.exists(numericalEstimationNotifierProvider)) return;
+      if (!ref.read(numericalEstimationProvider.exists)) return;
       if (state.isGameOver) return;
 
       if (state.isTrialMode && newTotalTrials >= state.targetTrials) {

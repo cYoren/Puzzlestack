@@ -60,7 +60,7 @@ class BaseShiftNotifier extends _$BaseShiftNotifier {
       final nextScore = state.score + 1;
       if (nextScore >= 5) {
         state = state.copyWith(score: nextScore, isGameOver: true);
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('base_shift', xpAmount: 25);
+        ref.read(gameStreakProvider.notifier).completeGame('base_shift', xpAmount: 25);
       } else {
         state = state.copyWith(
           score: nextScore,

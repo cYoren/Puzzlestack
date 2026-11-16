@@ -6,23 +6,61 @@ part of 'sentence_unscramble_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(SentenceUnscrambleNotifier)
+final sentenceUnscrambleProvider = SentenceUnscrambleNotifierProvider._();
+
+final class SentenceUnscrambleNotifierProvider
+    extends
+        $NotifierProvider<SentenceUnscrambleNotifier, SentenceUnscrambleState> {
+  SentenceUnscrambleNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sentenceUnscrambleProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sentenceUnscrambleNotifierHash();
+
+  @$internal
+  @override
+  SentenceUnscrambleNotifier create() => SentenceUnscrambleNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SentenceUnscrambleState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SentenceUnscrambleState>(value),
+    );
+  }
+}
+
 String _$sentenceUnscrambleNotifierHash() =>
     r'46c99d30105c3cf4df5b4848f317f7fa2d5724c4';
 
-/// See also [SentenceUnscrambleNotifier].
-@ProviderFor(SentenceUnscrambleNotifier)
-final sentenceUnscrambleNotifierProvider = AutoDisposeNotifierProvider<
-    SentenceUnscrambleNotifier, SentenceUnscrambleState>.internal(
-  SentenceUnscrambleNotifier.new,
-  name: r'sentenceUnscrambleNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$sentenceUnscrambleNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SentenceUnscrambleNotifier
-    = AutoDisposeNotifier<SentenceUnscrambleState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$SentenceUnscrambleNotifier
+    extends $Notifier<SentenceUnscrambleState> {
+  SentenceUnscrambleState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<SentenceUnscrambleState, SentenceUnscrambleState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SentenceUnscrambleState, SentenceUnscrambleState>,
+              SentenceUnscrambleState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

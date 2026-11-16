@@ -24,13 +24,13 @@ class _SemanticLinkScreenState extends ConsumerState<SemanticLinkScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(semanticLinkNotifierProvider.notifier).startGame();
+      ref.read(semanticLinkProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    final score = ref.read(semanticLinkNotifierProvider).score;
+    final score = ref.read(semanticLinkProvider).score;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -44,7 +44,7 @@ class _SemanticLinkScreenState extends ConsumerState<SemanticLinkScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(semanticLinkNotifierProvider.notifier).startGame();
+          ref.read(semanticLinkProvider.notifier).startGame();
         },
       ),
     );
@@ -54,13 +54,13 @@ class _SemanticLinkScreenState extends ConsumerState<SemanticLinkScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(semanticLinkNotifierProvider);
-    final notifier = ref.read(semanticLinkNotifierProvider.notifier);
+    final state = ref.watch(semanticLinkProvider);
+    final notifier = ref.read(semanticLinkProvider.notifier);
 
-    ref.listen(semanticLinkNotifierProvider, (previous, next) {
+    ref.listen(semanticLinkProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('semantic_link');
+        ref.read(gameStreakProvider.notifier).completeGame('semantic_link');
         _showCompletionDialog();
       }
       if (previous != null) {

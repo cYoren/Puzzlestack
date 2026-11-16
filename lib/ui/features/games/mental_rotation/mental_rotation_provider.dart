@@ -64,7 +64,7 @@ class MentalRotationNotifier extends _$MentalRotationNotifier {
 
   void startGame() {
     _timer?.cancel();
-    final isTrialMode = ref.read(userDataNotifierProvider).isTrialModeEnabled ?? false;
+    final isTrialMode = ref.read(userDataProvider).isTrialModeEnabled ?? false;
 
     state = MentalRotationState(
       puzzle: _engine.generatePuzzle(),

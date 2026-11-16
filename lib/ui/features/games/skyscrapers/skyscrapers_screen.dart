@@ -24,7 +24,7 @@ class SkyscrapersScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('skyscrapers', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class SkyscrapersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(skyscrapersNotifierProvider);
-    final notifier = ref.read(skyscrapersNotifierProvider.notifier);
+    final state = ref.watch(skyscrapersProvider);
+    final notifier = ref.read(skyscrapersProvider.notifier);
 
     return GameScaffold(
       title: l10n.skyscrapersTitle,

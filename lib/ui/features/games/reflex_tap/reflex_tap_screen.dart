@@ -20,14 +20,14 @@ class _ReflexTapScreenState extends ConsumerState<ReflexTapScreen> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(reflexTapNotifierProvider.notifier).initGame());
+        () => ref.read(reflexTapProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 15;
     final l10n = AppLocalizations.of(context)!;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('reflex_tap');
+      ref.read(gameStreakProvider.notifier).completeGame('reflex_tap');
     }
     showDialog(
       context: context,
@@ -36,7 +36,7 @@ class _ReflexTapScreenState extends ConsumerState<ReflexTapScreen> {
         title: won ? l10n.winSharpReflexes : l10n.loseOutOfTime,
         message: AppLocalizations.of(context)!.reflexTapMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(reflexTapNotifierProvider.notifier).initGame();
+          ref.read(reflexTapProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -51,10 +51,10 @@ class _ReflexTapScreenState extends ConsumerState<ReflexTapScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(reflexTapNotifierProvider);
-    final notifier = ref.read(reflexTapNotifierProvider.notifier);
+    final state = ref.watch(reflexTapProvider);
+    final notifier = ref.read(reflexTapProvider.notifier);
 
-    ref.listen(reflexTapNotifierProvider, (previous, next) {
+    ref.listen(reflexTapProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

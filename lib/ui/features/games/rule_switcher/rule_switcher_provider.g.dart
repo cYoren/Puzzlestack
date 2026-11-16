@@ -6,22 +6,58 @@ part of 'rule_switcher_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ruleSwitcherNotifierHash() =>
-    r'78c53ba5d7efcfa761f38013adb0ecbad6260e63';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [RuleSwitcherNotifier].
 @ProviderFor(RuleSwitcherNotifier)
-final ruleSwitcherNotifierProvider = AutoDisposeNotifierProvider<
-    RuleSwitcherNotifier, RuleSwitcherState>.internal(
-  RuleSwitcherNotifier.new,
-  name: r'ruleSwitcherNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$ruleSwitcherNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final ruleSwitcherProvider = RuleSwitcherNotifierProvider._();
 
-typedef _$RuleSwitcherNotifier = AutoDisposeNotifier<RuleSwitcherState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class RuleSwitcherNotifierProvider
+    extends $NotifierProvider<RuleSwitcherNotifier, RuleSwitcherState> {
+  RuleSwitcherNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'ruleSwitcherProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$ruleSwitcherNotifierHash();
+
+  @$internal
+  @override
+  RuleSwitcherNotifier create() => RuleSwitcherNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(RuleSwitcherState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<RuleSwitcherState>(value),
+    );
+  }
+}
+
+String _$ruleSwitcherNotifierHash() =>
+    r'b3965230cd1f2d8705e2b443babceed9f2b75937';
+
+abstract class _$RuleSwitcherNotifier extends $Notifier<RuleSwitcherState> {
+  RuleSwitcherState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<RuleSwitcherState, RuleSwitcherState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<RuleSwitcherState, RuleSwitcherState>,
+              RuleSwitcherState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

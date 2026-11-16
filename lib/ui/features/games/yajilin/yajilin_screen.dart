@@ -98,7 +98,7 @@ class _YajilinScreenState extends ConsumerState<YajilinScreen> {
       setState(() {
         _isCompleted = true;
       });
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('yajilin');
+      ref.read(gameStreakProvider.notifier).completeGame('yajilin');
       _showWinDialog();
     }
   }

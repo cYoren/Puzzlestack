@@ -24,7 +24,7 @@ class SameGameScreen extends ConsumerWidget {
   ) async {
     final l10n = AppLocalizations.of(context)!;
     await ref
-        .read(gameStreakNotifierProvider.notifier)
+        .read(gameStreakProvider.notifier)
         .completeGame('same_game', xpAmount: 30);
     if (!context.mounted) return;
     await showDialog(
@@ -48,8 +48,8 @@ class SameGameScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(sameGameNotifierProvider);
-    final notifier = ref.read(sameGameNotifierProvider.notifier);
+    final state = ref.watch(sameGameProvider);
+    final notifier = ref.read(sameGameProvider.notifier);
 
     return GameScaffold(
       title: l10n.sameGameTitle,

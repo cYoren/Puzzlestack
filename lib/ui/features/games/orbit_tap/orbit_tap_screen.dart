@@ -27,11 +27,11 @@ class _OrbitTapScreenState extends ConsumerState<OrbitTapScreen> with SingleTick
       vsync: this,
       duration: const Duration(seconds: 4),
     )..addListener(() {
-      ref.read(orbitTapNotifierProvider.notifier).updateAngle(_controller.value * 2 * pi);
+      ref.read(orbitTapProvider.notifier).updateAngle(_controller.value * 2 * pi);
     });
     
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(orbitTapNotifierProvider.notifier).initGame();
+      ref.read(orbitTapProvider.notifier).initGame();
       _controller.repeat();
     });
   }
@@ -46,7 +46,7 @@ class _OrbitTapScreenState extends ConsumerState<OrbitTapScreen> with SingleTick
     bool won = score >= 10;
     final l10n = AppLocalizations.of(context)!;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('orbit_tap');
+      ref.read(gameStreakProvider.notifier).completeGame('orbit_tap');
     }
     showDialog(
       context: context,
@@ -56,7 +56,7 @@ class _OrbitTapScreenState extends ConsumerState<OrbitTapScreen> with SingleTick
         message: AppLocalizations.of(context)!.orbitTapMessage((score).toString()),
         isVictory: won,
         onPlayAgain: () {
-          ref.read(orbitTapNotifierProvider.notifier).initGame();
+          ref.read(orbitTapProvider.notifier).initGame();
           _controller.repeat();
           Navigator.pop(context);
         },
@@ -72,9 +72,9 @@ class _OrbitTapScreenState extends ConsumerState<OrbitTapScreen> with SingleTick
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(orbitTapNotifierProvider);
+    final state = ref.watch(orbitTapProvider);
     
-    ref.listen(orbitTapNotifierProvider, (previous, next) {
+    ref.listen(orbitTapProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         _controller.stop();
         HapticFeedbackUtil.vibrate();
@@ -92,7 +92,7 @@ class _OrbitTapScreenState extends ConsumerState<OrbitTapScreen> with SingleTick
       body: GestureDetector(
         onTapDown: (_) {
           HapticFeedbackUtil.lightImpact();
-          ref.read(orbitTapNotifierProvider.notifier).onTap();
+          ref.read(orbitTapProvider.notifier).onTap();
         },
         child: Container(
           color: Colors.transparent,

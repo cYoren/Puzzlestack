@@ -22,12 +22,12 @@ class _MentalRotationScreenState extends ConsumerState<MentalRotationScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(mentalRotationNotifierProvider.notifier).startGame();
+      ref.read(mentalRotationProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(mentalRotationNotifierProvider);
+    final state = ref.read(mentalRotationProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,7 +41,7 @@ class _MentalRotationScreenState extends ConsumerState<MentalRotationScreen> {
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(mentalRotationNotifierProvider.notifier).startGame();
+          ref.read(mentalRotationProvider.notifier).startGame();
         },
       ),
     );
@@ -51,13 +51,13 @@ class _MentalRotationScreenState extends ConsumerState<MentalRotationScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(mentalRotationNotifierProvider);
-    final notifier = ref.read(mentalRotationNotifierProvider.notifier);
+    final state = ref.watch(mentalRotationProvider);
+    final notifier = ref.read(mentalRotationProvider.notifier);
 
-    ref.listen(mentalRotationNotifierProvider, (previous, next) {
+    ref.listen(mentalRotationProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('mental_rotation');
+        ref.read(gameStreakProvider.notifier).completeGame('mental_rotation');
         _showCompletionDialog();
       }
       if (next.lastResult != null && next.lastResult != previous?.lastResult) {

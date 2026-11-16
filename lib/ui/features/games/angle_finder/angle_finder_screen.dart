@@ -21,20 +21,20 @@ class _AngleFinderScreenState extends ConsumerState<AngleFinderScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(angleFinderNotifierProvider.notifier).initGame();
+      ref.read(angleFinderProvider.notifier).initGame();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(angleFinderNotifierProvider);
-    final notifier = ref.read(angleFinderNotifierProvider.notifier);
+    final state = ref.watch(angleFinderProvider);
+    final notifier = ref.read(angleFinderProvider.notifier);
 
-    ref.listen(angleFinderNotifierProvider, (previous, next) {
+    ref.listen(angleFinderProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('angle_finder');
+        ref.read(gameStreakProvider.notifier).completeGame('angle_finder');
         showDialog(
           context: context,
           barrierDismissible: false,

@@ -51,14 +51,14 @@ class _LockPatternScreenState extends ConsumerState<LockPatternScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(lockPatternNotifierProvider);
-    final notifier = ref.read(lockPatternNotifierProvider.notifier);
+    final state = ref.watch(lockPatternProvider);
+    final notifier = ref.read(lockPatternProvider.notifier);
 
-    ref.listen(lockPatternNotifierProvider, (previous, next) {
+    ref.listen(lockPatternProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isWon) {
           HapticFeedbackUtil.victory();
-          ref.read(gameStreakNotifierProvider.notifier).completeGame('lock_pattern');
+          ref.read(gameStreakProvider.notifier).completeGame('lock_pattern');
         } else {
           HapticFeedbackUtil.vibrate();
         }

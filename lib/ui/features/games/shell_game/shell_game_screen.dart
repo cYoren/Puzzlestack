@@ -102,7 +102,7 @@ class _ShellGameScreenState extends ConsumerState<ShellGameScreen> {
 
     if (isCorrect) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('shell_game');
+      ref.read(gameStreakProvider.notifier).completeGame('shell_game');
       showDialog(
           context: context,
           barrierDismissible: false,

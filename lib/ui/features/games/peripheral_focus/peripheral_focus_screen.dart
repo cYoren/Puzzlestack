@@ -128,7 +128,7 @@ class _PeripheralFocusScreenState extends ConsumerState<PeripheralFocusScreen> {
   void _onGameComplete() async {
     _flashTimer.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('peripheral_focus');
+    await ref.read(gameStreakProvider.notifier).completeGame('peripheral_focus');
     if (!mounted) return;
     showDialog(
       context: context,

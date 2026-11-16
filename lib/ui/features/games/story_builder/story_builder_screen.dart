@@ -207,7 +207,7 @@ class _StoryBuilderScreenState extends ConsumerState<StoryBuilderScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('story_builder');
+    await ref.read(gameStreakProvider.notifier).completeGame('story_builder');
     if (!mounted) return;
     showDialog(
       context: context,

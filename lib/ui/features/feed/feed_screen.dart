@@ -81,7 +81,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   @override
   void initState() {
     super.initState();
-    final hidden = ref.read(userDataNotifierProvider
+    final hidden = ref.read(userDataProvider
         .select((d) => (d.hiddenGameIds ?? const []).toSet()));
     _deck = FeedDeck(categoryId: widget.categoryId, hidden: hidden);
 
@@ -204,12 +204,12 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     setState(() => _restartEpochs[index] = (_restartEpochs[index] ?? 0) + 1);
   }
 
-  bool _isLiked(GameMetadata game) => ref.watch(userDataNotifierProvider
+  bool _isLiked(GameMetadata game) => ref.watch(userDataProvider
       .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
 
   void _toggleLike(GameMetadata game) {
     HapticFeedbackUtil.lightImpact();
-    ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
+    ref.read(userDataProvider.notifier).toggleFavorite(game.id);
   }
 
   /// Blocking removes a game from this player's deal and from the browse
@@ -218,7 +218,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   void _block(GameMetadata game) {
     final l10n = AppLocalizations.of(context);
     HapticFeedbackUtil.mediumImpact();
-    ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
+    ref.read(userDataProvider.notifier).toggleHideGame(game.id);
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(
@@ -229,7 +229,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
           action: SnackBarAction(
             label: l10n?.undo ?? 'Undo',
             onPressed: () => ref
-                .read(userDataNotifierProvider.notifier)
+                .read(userDataProvider.notifier)
                 .toggleHideGame(game.id),
           ),
           duration: const Duration(seconds: 4),

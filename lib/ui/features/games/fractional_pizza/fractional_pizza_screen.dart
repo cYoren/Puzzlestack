@@ -111,7 +111,7 @@ class _FractionalPizzaScreenState extends ConsumerState<FractionalPizzaScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('fractional_pizza');
+    await ref.read(gameStreakProvider.notifier).completeGame('fractional_pizza');
     if (!mounted) return;
     showDialog(
       context: context,

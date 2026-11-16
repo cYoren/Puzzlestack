@@ -333,7 +333,7 @@ it is the record of what was pumped.
 fail in ways that look like test failures. One `flutter test` at a time, `-j 4`.
 
 If the game has Riverpod providers, regenerate their `.g.dart` with
-`dart run build_runner build --delete-conflicting-outputs` (the repo commits them; a provider whose
+`dart run build_runner build` (the repo commits them; a provider whose
 `.g.dart` is stale fails at compile time, not at runtime).
 
 ## Best Practices

@@ -20,14 +20,14 @@ class _CommonDenominatorScreenState extends ConsumerState<CommonDenominatorScree
   void initState() {
     super.initState();
     Future.microtask(
-        () => ref.read(commonDenominatorNotifierProvider.notifier).initGame());
+        () => ref.read(commonDenominatorProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     final l10n = AppLocalizations.of(context)!;
     final won = score >= 5;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('common_denominator');
+      ref.read(gameStreakProvider.notifier).completeGame('common_denominator');
     }
     showDialog(
       context: context,
@@ -36,7 +36,7 @@ class _CommonDenominatorScreenState extends ConsumerState<CommonDenominatorScree
         title: won ? 'MATH WIZARD!' : l10n.timeUp.toUpperCase(),
         message: AppLocalizations.of(context)!.commonDenominatorMessage((score).toString()),
         onPlayAgain: () {
-          ref.read(commonDenominatorNotifierProvider.notifier).initGame();
+          ref.read(commonDenominatorProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -51,10 +51,10 @@ class _CommonDenominatorScreenState extends ConsumerState<CommonDenominatorScree
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(commonDenominatorNotifierProvider);
-    final notifier = ref.read(commonDenominatorNotifierProvider.notifier);
+    final state = ref.watch(commonDenominatorProvider);
+    final notifier = ref.read(commonDenominatorProvider.notifier);
 
-    ref.listen(commonDenominatorNotifierProvider, (previous, next) {
+    ref.listen(commonDenominatorProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }

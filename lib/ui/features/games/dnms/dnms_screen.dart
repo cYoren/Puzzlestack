@@ -22,14 +22,14 @@ class _DnmsScreenState extends ConsumerState<DnmsScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(dnmsNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(dnmsProvider.notifier).initGame());
   }
 
   void _showGameOverDialog(int score) {
     bool won = score >= 12;
     if (won) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('dnms');
+      ref.read(gameStreakProvider.notifier).completeGame('dnms');
     } else {
       HapticFeedbackUtil.heavyImpact();
     }
@@ -43,7 +43,7 @@ class _DnmsScreenState extends ConsumerState<DnmsScreen> {
           message: l10n.dnmsGameOverMessage(score),
           isVictory: won,
           onPlayAgain: () {
-            ref.read(dnmsNotifierProvider.notifier).initGame();
+            ref.read(dnmsProvider.notifier).initGame();
             Navigator.pop(context);
           },
           onHome: () {
@@ -57,9 +57,9 @@ class _DnmsScreenState extends ConsumerState<DnmsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(dnmsNotifierProvider);
+    final state = ref.watch(dnmsProvider);
 
-    ref.listen(dnmsNotifierProvider, (previous, next) {
+    ref.listen(dnmsProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showGameOverDialog(next.score);
       }
@@ -164,7 +164,7 @@ class _DnmsScreenState extends ConsumerState<DnmsScreen> {
                   ? null
                   : () {
                       HapticFeedbackUtil.lightImpact();
-                      ref.read(dnmsNotifierProvider.notifier).onSelectCard(card);
+                      ref.read(dnmsProvider.notifier).onSelectCard(card);
                     },
               color: Theme.of(context).colorScheme.surface,
               shadowColor: Theme.of(context).colorScheme.outline,

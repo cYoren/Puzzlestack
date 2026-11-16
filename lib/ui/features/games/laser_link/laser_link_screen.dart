@@ -21,7 +21,7 @@ class _LaserLinkScreenState extends ConsumerState<LaserLinkScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(laserLinkNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(laserLinkProvider.notifier).initGame());
   }
 
   void _showCompletionDialog(bool isVictory) {
@@ -39,7 +39,7 @@ class _LaserLinkScreenState extends ConsumerState<LaserLinkScreen> {
         },
         onPlayAgain: () {
           Navigator.of(dialogCtx).pop();
-          ref.read(laserLinkNotifierProvider.notifier).initGame();
+          ref.read(laserLinkProvider.notifier).initGame();
         },
       ),
     );
@@ -47,10 +47,10 @@ class _LaserLinkScreenState extends ConsumerState<LaserLinkScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(laserLinkNotifierProvider);
+    final state = ref.watch(laserLinkProvider);
     final theme = Theme.of(context);
 
-    ref.listen(laserLinkNotifierProvider, (previous, next) {
+    ref.listen(laserLinkProvider, (previous, next) {
       if (next.isSolved && !(previous?.isSolved ?? false)) {
         HapticFeedbackUtil.victory();
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -61,7 +61,7 @@ class _LaserLinkScreenState extends ConsumerState<LaserLinkScreen> {
 
     return GameScaffold(
       title: L10nGameHelpers.getGameTitle(context, 'laser_link'),
-      onReset: () => ref.read(laserLinkNotifierProvider.notifier).initGame(),
+      onReset: () => ref.read(laserLinkProvider.notifier).initGame(),
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Column(
@@ -118,7 +118,7 @@ class _LaserLinkScreenState extends ConsumerState<LaserLinkScreen> {
         return GestureDetector(
           onTap: () {
             HapticFeedbackUtil.selection();
-            ref.read(laserLinkNotifierProvider.notifier).toggleMirror(r, c);
+            ref.read(laserLinkProvider.notifier).toggleMirror(r, c);
           },
           child: Container(
             decoration: BoxDecoration(

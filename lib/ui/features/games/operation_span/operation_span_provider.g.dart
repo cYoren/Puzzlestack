@@ -6,22 +6,58 @@ part of 'operation_span_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(OperationSpanNotifier)
+final operationSpanProvider = OperationSpanNotifierProvider._();
+
+final class OperationSpanNotifierProvider
+    extends $NotifierProvider<OperationSpanNotifier, OperationSpanState> {
+  OperationSpanNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'operationSpanProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$operationSpanNotifierHash();
+
+  @$internal
+  @override
+  OperationSpanNotifier create() => OperationSpanNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(OperationSpanState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<OperationSpanState>(value),
+    );
+  }
+}
+
 String _$operationSpanNotifierHash() =>
     r'e0f7968c78d27bc9cb779face11b46dfed904b25';
 
-/// See also [OperationSpanNotifier].
-@ProviderFor(OperationSpanNotifier)
-final operationSpanNotifierProvider = AutoDisposeNotifierProvider<
-    OperationSpanNotifier, OperationSpanState>.internal(
-  OperationSpanNotifier.new,
-  name: r'operationSpanNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$operationSpanNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$OperationSpanNotifier = AutoDisposeNotifier<OperationSpanState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$OperationSpanNotifier extends $Notifier<OperationSpanState> {
+  OperationSpanState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<OperationSpanState, OperationSpanState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<OperationSpanState, OperationSpanState>,
+              OperationSpanState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

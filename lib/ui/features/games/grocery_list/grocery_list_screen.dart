@@ -22,7 +22,7 @@ class _GroceryListScreenState extends ConsumerState<GroceryListScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(groceryListNotifierProvider.notifier).initGame();
+      ref.read(groceryListProvider.notifier).initGame();
     });
   }
 
@@ -30,7 +30,7 @@ class _GroceryListScreenState extends ConsumerState<GroceryListScreen> {
     final l10n = AppLocalizations.of(context)!;
     bool won = score >= 50;
     if (won) {
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('grocery_list');
+      ref.read(gameStreakProvider.notifier).completeGame('grocery_list');
     }
     showDialog(
       context: context,
@@ -40,7 +40,7 @@ class _GroceryListScreenState extends ConsumerState<GroceryListScreen> {
         message: l10n.groceryListScoreMessage(score),
         isVictory: won,
         onPlayAgain: () {
-          ref.read(groceryListNotifierProvider.notifier).initGame();
+          ref.read(groceryListProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -54,10 +54,10 @@ class _GroceryListScreenState extends ConsumerState<GroceryListScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(groceryListNotifierProvider);
-    final notifier = ref.read(groceryListNotifierProvider.notifier);
+    final state = ref.watch(groceryListProvider);
+    final notifier = ref.read(groceryListProvider.notifier);
 
-    ref.listen(groceryListNotifierProvider, (previous, next) {
+    ref.listen(groceryListProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.vibrate();
         _showGameOverDialog(next.score);

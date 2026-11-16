@@ -17,10 +17,10 @@ class LetterBridgeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(letterBridgeNotifierProvider);
-    final notifier = ref.read(letterBridgeNotifierProvider.notifier);
+    final state = ref.watch(letterBridgeProvider);
+    final notifier = ref.read(letterBridgeProvider.notifier);
 
-    ref.listen(letterBridgeNotifierProvider, (previous, next) {
+    ref.listen(letterBridgeProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isCorrect) {
           HapticFeedbackUtil.victory();
@@ -182,7 +182,7 @@ class LetterBridgeScreen extends ConsumerWidget {
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, LetterBridgeState state) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('letter_bridge', xpAmount: 20);
+    await ref.read(gameStreakProvider.notifier).completeGame('letter_bridge', xpAmount: 20);
 
     if (!context.mounted) return;
 
@@ -197,7 +197,7 @@ class LetterBridgeScreen extends ConsumerWidget {
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(letterBridgeNotifierProvider.notifier).reset();
+          ref.read(letterBridgeProvider.notifier).reset();
           Navigator.of(context).pop();
         },
       ),

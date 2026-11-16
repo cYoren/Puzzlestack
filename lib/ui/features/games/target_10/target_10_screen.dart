@@ -22,13 +22,13 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(target10NotifierProvider.notifier).initGame();
+      ref.read(target10Provider.notifier).initGame();
     });
   }
 
   void _handleTileTap(int index, int num, int currentSum) {
-    final notifier = ref.read(target10NotifierProvider.notifier);
-    final targetState = ref.read(target10NotifierProvider);
+    final notifier = ref.read(target10Provider.notifier);
+    final targetState = ref.read(target10Provider);
     final isSelected = targetState.selectedIndices.contains(index);
 
     if (isSelected) {
@@ -52,10 +52,10 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(target10NotifierProvider);
+    final state = ref.watch(target10Provider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(target10NotifierProvider, (previous, next) {
+    ref.listen(target10Provider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         showDialog(
@@ -70,7 +70,7 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(target10NotifierProvider.notifier).reset();
+              ref.read(target10Provider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -99,7 +99,7 @@ class _Target10ScreenState extends ConsumerState<Target10Screen> {
       subtitle: L10nGameHelpers.getGameTitle(context, 'target_10'),
       onReset: () {
         HapticFeedbackUtil.mediumImpact();
-        ref.read(target10NotifierProvider.notifier).reset();
+        ref.read(target10Provider.notifier).reset();
       },
       body: LayoutBuilder(
         builder: (context, constraints) {

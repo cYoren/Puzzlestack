@@ -109,7 +109,7 @@ class SilhouetteMatchOrthoNotifier extends _$SilhouetteMatchOrthoNotifier {
     
     if (state.selectedIndex == state.correctOptionIndex) {
       state = state.copyWith(isVictory: true);
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('silhouette_match_ortho', xpAmount: 25);
+      ref.read(gameStreakProvider.notifier).completeGame('silhouette_match_ortho', xpAmount: 25);
       return true;
     } else {
       state = state.copyWith(isFailed: true);

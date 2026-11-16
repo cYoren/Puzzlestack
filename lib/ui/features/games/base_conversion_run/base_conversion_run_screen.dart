@@ -114,7 +114,7 @@ class _BaseConversionRunScreenState extends ConsumerState<BaseConversionRunScree
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('base_conversion_run');
+    await ref.read(gameStreakProvider.notifier).completeGame('base_conversion_run');
     if (!mounted) return;
     showDialog(
       context: context,

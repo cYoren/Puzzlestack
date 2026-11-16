@@ -6,22 +6,58 @@ part of 'mandala_recall_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(MandalaRecallNotifier)
+final mandalaRecallProvider = MandalaRecallNotifierProvider._();
+
+final class MandalaRecallNotifierProvider
+    extends $NotifierProvider<MandalaRecallNotifier, MandalaRecallState> {
+  MandalaRecallNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mandalaRecallProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mandalaRecallNotifierHash();
+
+  @$internal
+  @override
+  MandalaRecallNotifier create() => MandalaRecallNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(MandalaRecallState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<MandalaRecallState>(value),
+    );
+  }
+}
+
 String _$mandalaRecallNotifierHash() =>
     r'2e138fde92ffc223bdc9a1150133207ac2268bee';
 
-/// See also [MandalaRecallNotifier].
-@ProviderFor(MandalaRecallNotifier)
-final mandalaRecallNotifierProvider = AutoDisposeNotifierProvider<
-    MandalaRecallNotifier, MandalaRecallState>.internal(
-  MandalaRecallNotifier.new,
-  name: r'mandalaRecallNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$mandalaRecallNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$MandalaRecallNotifier = AutoDisposeNotifier<MandalaRecallState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$MandalaRecallNotifier extends $Notifier<MandalaRecallState> {
+  MandalaRecallState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<MandalaRecallState, MandalaRecallState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<MandalaRecallState, MandalaRecallState>,
+              MandalaRecallState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

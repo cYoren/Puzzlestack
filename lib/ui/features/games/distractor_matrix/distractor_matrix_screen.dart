@@ -15,10 +15,10 @@ class DistractorMatrixScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(distractorMatrixNotifierProvider);
+    final state = ref.watch(distractorMatrixProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
-    ref.listen(distractorMatrixNotifierProvider, (previous, next) {
+    ref.listen(distractorMatrixProvider, (previous, next) {
       if (next.status == DistractorMatrixStatus.completed &&
           previous?.status != DistractorMatrixStatus.completed) {
         HapticFeedbackUtil.victory();
@@ -33,7 +33,7 @@ class DistractorMatrixScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(distractorMatrixNotifierProvider.notifier).reset();
+              ref.read(distractorMatrixProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -53,7 +53,7 @@ class DistractorMatrixScreen extends ConsumerWidget {
               Navigator.of(context).pop();
             },
             onPlayAgain: () {
-              ref.read(distractorMatrixNotifierProvider.notifier).reset();
+              ref.read(distractorMatrixProvider.notifier).reset();
               Navigator.of(context).pop();
             },
           ),
@@ -79,7 +79,7 @@ class DistractorMatrixScreen extends ConsumerWidget {
           shadowColor: colorScheme.outline,
           onTap: () {
             HapticFeedbackUtil.mediumImpact();
-            ref.read(distractorMatrixNotifierProvider.notifier).reset();
+            ref.read(distractorMatrixProvider.notifier).reset();
           },
           padding: const EdgeInsets.all(12),
           child: Icon(
@@ -213,7 +213,7 @@ class DistractorMatrixScreen extends ConsumerWidget {
                   child: TangibleButton(
                     onTap: () {
                       HapticFeedbackUtil.lightImpact();
-                      ref.read(distractorMatrixNotifierProvider.notifier).answerMath(option);
+                      ref.read(distractorMatrixProvider.notifier).answerMath(option);
                     },
                     color: btnColor,
                     depth: 2,
@@ -296,7 +296,7 @@ class DistractorMatrixScreen extends ConsumerWidget {
       color: tileColor,
       onTap: () {
         HapticFeedbackUtil.lightImpact();
-        ref.read(distractorMatrixNotifierProvider.notifier).selectTile(index);
+        ref.read(distractorMatrixProvider.notifier).selectTile(index);
       },
       child: const SizedBox.expand(),
     );

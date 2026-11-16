@@ -21,12 +21,12 @@ class _AnagramDefinitionScreenState extends ConsumerState<AnagramDefinitionScree
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(anagramDefinitionNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(anagramDefinitionProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(anagramDefinitionNotifierProvider);
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('anagram_definition');
+    final state = ref.read(anagramDefinitionProvider);
+    ref.read(gameStreakProvider.notifier).completeGame('anagram_definition');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -34,7 +34,7 @@ class _AnagramDefinitionScreenState extends ConsumerState<AnagramDefinitionScree
         title: L10nGameHelpers.getGameTitle(context, 'anagram_definition'),
         message: AppLocalizations.of(context)!.anagramDefinitionMessage((state.target).toString()),
         onPlayAgain: () {
-          ref.read(anagramDefinitionNotifierProvider.notifier).initGame();
+          ref.read(anagramDefinitionProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -48,10 +48,10 @@ class _AnagramDefinitionScreenState extends ConsumerState<AnagramDefinitionScree
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(anagramDefinitionNotifierProvider);
-    final notifier = ref.read(anagramDefinitionNotifierProvider.notifier);
+    final state = ref.watch(anagramDefinitionProvider);
+    final notifier = ref.read(anagramDefinitionProvider.notifier);
 
-    ref.listen(anagramDefinitionNotifierProvider, (previous, next) {
+    ref.listen(anagramDefinitionProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver) {
         _showCompletionDialog();
       }

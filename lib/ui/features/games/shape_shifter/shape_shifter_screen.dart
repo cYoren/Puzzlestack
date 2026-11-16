@@ -157,7 +157,7 @@ class _ShapeShifterScreenState extends ConsumerState<ShapeShifterScreen> {
     _gameTimer.cancel();
     _targetTimer.cancel();
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('shape_shifter');
+    await ref.read(gameStreakProvider.notifier).completeGame('shape_shifter');
     if (!mounted) return;
     showDialog(
       context: context,

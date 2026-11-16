@@ -90,7 +90,7 @@ class _GraphCoordinatePlotScreenState extends ConsumerState<GraphCoordinatePlotS
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('graph_coordinate_plot');
+    await ref.read(gameStreakProvider.notifier).completeGame('graph_coordinate_plot');
     if (!mounted) return;
     showDialog(
       context: context,

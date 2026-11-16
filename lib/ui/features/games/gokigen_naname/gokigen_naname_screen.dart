@@ -169,7 +169,7 @@ class _GokigenNanameScreenState extends ConsumerState<GokigenNanameScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('gokigen_naname');
+    await ref.read(gameStreakProvider.notifier).completeGame('gokigen_naname');
     if (!mounted) return;
     showDialog(
       context: context,

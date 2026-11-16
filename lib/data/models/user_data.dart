@@ -1,12 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 
 part 'user_data.freezed.dart';
 part 'user_data.g.dart';
 
 @freezed
-class UserData with _$UserData {
+abstract class UserData with _$UserData {
+  const UserData._();
+
+  // hive_ce targets HiveType at classes; freezed needs it on the factory.
+  // ignore: invalid_annotation_target
   @HiveType(typeId: 0, adapterName: 'UserDataAdapter')
   const factory UserData({
     @HiveField(0) required int xp,

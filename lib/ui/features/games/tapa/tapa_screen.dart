@@ -57,7 +57,7 @@ class _TapaScreenState extends ConsumerState<TapaScreen> {
       setState(() {
         _isCompleted = true;
       });
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('tapa');
+      ref.read(gameStreakProvider.notifier).completeGame('tapa');
       _showWinDialog();
     }
   }

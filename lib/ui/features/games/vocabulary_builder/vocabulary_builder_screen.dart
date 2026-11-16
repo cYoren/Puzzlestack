@@ -21,7 +21,7 @@ class _VocabularyBuilderScreenState extends ConsumerState<VocabularyBuilderScree
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(vocabularyBuilderNotifierProvider.notifier).startGame());
+    Future.microtask(() => ref.read(vocabularyBuilderProvider.notifier).startGame());
   }
 
   void _showHowToPlay(BuildContext context, AppLocalizations l10n) {
@@ -43,10 +43,10 @@ class _VocabularyBuilderScreenState extends ConsumerState<VocabularyBuilderScree
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final state = ref.watch(vocabularyBuilderNotifierProvider);
-    final notifier = ref.read(vocabularyBuilderNotifierProvider.notifier);
+    final state = ref.watch(vocabularyBuilderProvider);
+    final notifier = ref.read(vocabularyBuilderProvider.notifier);
 
-    ref.listen(vocabularyBuilderNotifierProvider, (previous, next) {
+    ref.listen(vocabularyBuilderProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
         _showGameOverDialog(context, ref, next.score);
@@ -169,7 +169,7 @@ class _VocabularyBuilderScreenState extends ConsumerState<VocabularyBuilderScree
   }
 
   void _showGameOverDialog(BuildContext context, WidgetRef ref, int score) async {
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('vocabulary_builder');
+    await ref.read(gameStreakProvider.notifier).completeGame('vocabulary_builder');
 
     if (!context.mounted) return;
 
@@ -182,7 +182,7 @@ class _VocabularyBuilderScreenState extends ConsumerState<VocabularyBuilderScree
           Navigator.of(context).pop();
         },
         onPlayAgain: () {
-          ref.read(vocabularyBuilderNotifierProvider.notifier).startGame();
+          ref.read(vocabularyBuilderProvider.notifier).startGame();
           Navigator.of(context).pop();
         },
         message: AppLocalizations.of(context)!.vocabularyBuilderMessage((score).toString()),

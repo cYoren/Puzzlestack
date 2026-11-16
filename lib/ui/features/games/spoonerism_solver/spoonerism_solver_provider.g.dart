@@ -6,22 +6,59 @@ part of 'spoonerism_solver_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(SpoonerismSolverNotifier)
+final spoonerismSolverProvider = SpoonerismSolverNotifierProvider._();
+
+final class SpoonerismSolverNotifierProvider
+    extends $NotifierProvider<SpoonerismSolverNotifier, SpoonerismSolverState> {
+  SpoonerismSolverNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'spoonerismSolverProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$spoonerismSolverNotifierHash();
+
+  @$internal
+  @override
+  SpoonerismSolverNotifier create() => SpoonerismSolverNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SpoonerismSolverState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<SpoonerismSolverState>(value),
+    );
+  }
+}
+
 String _$spoonerismSolverNotifierHash() =>
     r'c70b410d9a9b21e4dd8cf4619bce2cdbd54dd0f3';
 
-/// See also [SpoonerismSolverNotifier].
-@ProviderFor(SpoonerismSolverNotifier)
-final spoonerismSolverNotifierProvider = AutoDisposeNotifierProvider<
-    SpoonerismSolverNotifier, SpoonerismSolverState>.internal(
-  SpoonerismSolverNotifier.new,
-  name: r'spoonerismSolverNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$spoonerismSolverNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SpoonerismSolverNotifier = AutoDisposeNotifier<SpoonerismSolverState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$SpoonerismSolverNotifier
+    extends $Notifier<SpoonerismSolverState> {
+  SpoonerismSolverState build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<SpoonerismSolverState, SpoonerismSolverState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<SpoonerismSolverState, SpoonerismSolverState>,
+              SpoonerismSolverState,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

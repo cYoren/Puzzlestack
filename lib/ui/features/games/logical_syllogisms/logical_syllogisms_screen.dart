@@ -22,12 +22,12 @@ class _LogicalSyllogismsScreenState extends ConsumerState<LogicalSyllogismsScree
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(logicalSyllogismsNotifierProvider.notifier).startGame();
+      ref.read(logicalSyllogismsProvider.notifier).startGame();
     });
   }
 
   void _showCompletionDialog() {
-    final state = ref.read(logicalSyllogismsNotifierProvider);
+    final state = ref.read(logicalSyllogismsProvider);
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,7 +41,7 @@ class _LogicalSyllogismsScreenState extends ConsumerState<LogicalSyllogismsScree
         },
         onPlayAgain: () {
           Navigator.of(context).pop();
-          ref.read(logicalSyllogismsNotifierProvider.notifier).startGame();
+          ref.read(logicalSyllogismsProvider.notifier).startGame();
         },
       ),
     );
@@ -51,13 +51,13 @@ class _LogicalSyllogismsScreenState extends ConsumerState<LogicalSyllogismsScree
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(logicalSyllogismsNotifierProvider);
-    final notifier = ref.read(logicalSyllogismsNotifierProvider.notifier);
+    final state = ref.watch(logicalSyllogismsProvider);
+    final notifier = ref.read(logicalSyllogismsProvider.notifier);
 
-    ref.listen(logicalSyllogismsNotifierProvider, (previous, next) {
+    ref.listen(logicalSyllogismsProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('logical_syllogisms');
+        ref.read(gameStreakProvider.notifier).completeGame('logical_syllogisms');
         _showCompletionDialog();
       }
       if (next.lastResult != null && next.lastResult != previous?.lastResult) {

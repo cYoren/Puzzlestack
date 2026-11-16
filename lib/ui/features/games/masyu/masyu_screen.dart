@@ -360,7 +360,7 @@ class _MasyuScreenState extends ConsumerState<MasyuScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('masyu');
+    await ref.read(gameStreakProvider.notifier).completeGame('masyu');
     if (!mounted) return;
     showDialog(
       context: context,

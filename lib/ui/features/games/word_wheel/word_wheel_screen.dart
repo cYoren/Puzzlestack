@@ -281,7 +281,7 @@ class _WordWheelScreenState extends ConsumerState<WordWheelScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('word_wheel');
+    await ref.read(gameStreakProvider.notifier).completeGame('word_wheel');
     if (!mounted) return;
     showDialog(
       context: context,

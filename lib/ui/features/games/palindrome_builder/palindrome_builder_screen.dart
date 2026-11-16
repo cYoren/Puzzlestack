@@ -19,12 +19,12 @@ class _PalindromeBuilderScreenState extends ConsumerState<PalindromeBuilderScree
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(palindromeBuilderNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(palindromeBuilderProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
     final l10n = AppLocalizations.of(context)!;
-    ref.read(gameStreakNotifierProvider.notifier).completeGame('palindrome_builder');
+    ref.read(gameStreakProvider.notifier).completeGame('palindrome_builder');
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -34,12 +34,12 @@ class _PalindromeBuilderScreenState extends ConsumerState<PalindromeBuilderScree
         // single `replaceAll('..')` only ever filled a two-letter gap.
         message: l10n.wordFoundMessage(
           ref
-              .read(palindromeBuilderNotifierProvider)
+              .read(palindromeBuilderProvider)
               .display
-              .replaceAll(RegExp(r'\.+'), ref.read(palindromeBuilderNotifierProvider).solution),
+              .replaceAll(RegExp(r'\.+'), ref.read(palindromeBuilderProvider).solution),
         ),
         onPlayAgain: () {
-          ref.read(palindromeBuilderNotifierProvider.notifier).initGame();
+          ref.read(palindromeBuilderProvider.notifier).initGame();
           Navigator.pop(context);
         },
         onHome: () {
@@ -54,10 +54,10 @@ class _PalindromeBuilderScreenState extends ConsumerState<PalindromeBuilderScree
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
-    final state = ref.watch(palindromeBuilderNotifierProvider);
-    final notifier = ref.read(palindromeBuilderNotifierProvider.notifier);
+    final state = ref.watch(palindromeBuilderProvider);
+    final notifier = ref.read(palindromeBuilderProvider.notifier);
 
-    ref.listen(palindromeBuilderNotifierProvider, (previous, next) {
+    ref.listen(palindromeBuilderProvider, (previous, next) {
       if (previous != null && !previous.isGameOver && next.isGameOver && next.isGameWon) {
         _showCompletionDialog();
       }
