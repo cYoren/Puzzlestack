@@ -48,6 +48,8 @@ test in `main`; they are named here so a reader does not start them again.
 | `deck-allowlist` | `lib/data/game_profiles.dart`, generated from CATALOG.md by `tool/gen_game_profiles.py`; `GameFeed.feedPool` is the Deck minus hidden | `test/content/game_profiles_test.dart` re-parses the catalog; G1 |
 | `archive` | `visibleIds` in the profile map; rooms, search, counts and the deal read it | `test/content/game_profiles_test.dart` (rooms, counts and search skip the archive), `test/content/feed_pool_test.dart` |
 | `nonogram-uniqueness` | `nonogram_model.dart` is the board as a deduction problem; the generator retries up to 500 deals and throws rather than ship an ambiguous grid | `test/content/nonogram_test.dart`, and the Logic triage reads `nonogram` as `pass` |
+| `game-previews` | `lib/ui/core/preview/game_preview.dart`: every game tile, quick-play card and search result draws a mini board of the game, not an icon; fifteen motifs, one per family, chosen by a rule list over ids | `test/ui/game_preview_test.dart`: all 319 ids resolve, every visible preview paints, the same id draws the same picture, no two ids share a seed; contact sheet `docs/previews/previews.png` |
+| `archive-switch` | `showArchivedGames` on `UserData`, one switch in settings; `GameFeed.browse` is the single decider for rooms, search and the "next game" after a solve, so a lab task can no longer be dealt after a win | `test/content/archive_visibility_test.dart` |
 | `minesweeper-no-guess` | `MinesweeperEngine.isSolvableWithoutGuess` plays out the deduction a player has from the first tap; the deal is accepted only if that finishes the board, so no deal can need a guess | `test/engines/minesweeper_engine_test.dart`: thirty deals at each of the app's four sizes, and a solver that answers no when the boards are not fair |
 
 ### B. The Deck
@@ -136,6 +138,7 @@ them says the registry total again.
 | `store-shots` | Eight shots, every board mid-solve, the first one the Deal. Play 1080x1920, App Store 1290x2796 |
 | `readme-docs` | README, PUZZLE_STYLE header, GAME_DEV_GUIDE and CONTENT-AUDIT rule 2 brought in line with docs/PRODUCT.md; delete what is finished |
 | `device-pass` | A person plays 50 dealt cards on a cheap Android and an iPhone; every stumble becomes a fix before the build (G6) |
+| `site` | Generated website in `docs/` (238 pages: one per puzzle, six rooms, an index, a hub) with `sitemap.xml`, `robots.txt` and JSON-LD. `dart run tool/site_export.dart` then `python3 tool/gen_site.py`; `test/content/site_test.dart` is the contract. `tool/deploy_pages.sh` publishes `docs/` plus the Flutter web build to the `gh-pages` branch, which Pages serves. **Left:** flip `PLAY_ANDROID`/`PLAY_IOS` when 1.1.0 is live, submit the sitemap in Search Console and Bing, and keep the page count in step with the catalog |
 | `ship` | Data Safety form, both store builds from one commit, version 1.1.0. Shorebird stays off |
 
 ## After 1.1.0
@@ -147,7 +150,15 @@ Not started until the release is out. In this order.
    Tatham's remaining and unreleased puzzles first, then Nikoli types proven by a solver.
 3. **Rebuilds from the Archive**: the candidates listed at the end of CATALOG.md.
 4. **Word content in a second language** (Portuguese first), curated, so Word cards deal there.
-5. **Web**: the Deal as a playable page, as the store listing's best advert.
+5. **Web, built for search** (Gus, 2026-11-15). Not a marketing page: a real site in the shape of
+   <https://8puzzle.org/> — one page per game (`/games/<slug>`, the game playable in the browser),
+   a page per room, a hub, and the guides we already wrote as the unique text on each page. Static
+   HTML generated from the repo's own data, not hand-written: `game_guides.dart` (313 guides),
+   the registry, `docs/CATALOG.md`. Plus sitemap/robots, canonical URLs, JSON-LD
+   (`SoftwareApplication`, `FAQPage`, `BreadcrumbList`), internal linking between a game and its
+   room and its neighbours, and the Flutter web build behind the playable routes. The repo being
+   open and the catalogue being public is the feature: the code is the proof the game is real, and
+   GPL-3.0 asks for it anyway. The store listing's best advert is the playable page, not a video.
 
 Notes kept from the old roadmap for the three optional Tatham ports, all of which need
 `lib/core/deduction.dart`: Black Box needs half-cell ray entry and deflection or it collapses

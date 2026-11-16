@@ -10,6 +10,7 @@ import '../../../utils/design_system.dart';
 import '../../../utils/haptic_feedback.dart';
 import '../../../widgets/deck.dart';
 import '../../core/assist/game_launch.dart';
+import '../../core/preview/game_preview.dart';
 import '../feed/feed_screen.dart';
 
 /// One room of the stack: every puzzle in a category, filed as cards.
@@ -38,9 +39,14 @@ class CategoryRoomScreen extends ConsumerWidget {
     final CategoryInfo cat = GameCategories.info(categoryId);
     final List<String> hidden = ref.watch(
         userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []));
-    final List<GameMetadata> games = GameCategories.inCategory(categoryId)
-        .where((g) => !hidden.contains(g.id))
-        .toList(growable: false);
+    // Off by default: the archive is material for rebuilding a puzzle, not a
+    // shelf. The switch in settings is the only way to see it.
+    final bool showArchived = ref.watch(
+        userDataNotifierProvider.select((d) => d.showArchivedGames ?? false));
+    final List<GameMetadata> games =
+        GameCategories.inCategory(categoryId, includeArchived: showArchived)
+            .where((g) => !hidden.contains(g.id))
+            .toList(growable: false);
 
     return Scaffold(
       backgroundColor: DesignSystem.paperOf(context),
@@ -62,11 +68,10 @@ class CategoryRoomScreen extends ConsumerWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: DesignSystem.spaceSM,
                   crossAxisSpacing: DesignSystem.spaceSM,
-                  mainAxisExtent: 96,
+                  mainAxisExtent: 148,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, i) =>
-                      _gameTile(context, ref, games[i], i + 1),
+                  (context, i) => _gameTile(context, ref, games[i], i + 1),
                   childCount: games.length,
                 ),
               ),
@@ -159,14 +164,20 @@ class CategoryRoomScreen extends ConsumerWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                (l10n?.shuffleCategory ?? 'Deal this room').toUpperCase(),
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue',
-                  fontSize: DesignSystem.fontSizeLG,
-                  letterSpacing: 1.2,
-                  height: 1,
-                  color: DesignSystem.onAccent(context),
+              // 22 locales on a 320dp phone: the label is the thing that gives
+              // way, never the button's shape.
+              Flexible(
+                child: Text(
+                  (l10n?.shuffleCategory ?? 'Deal this room').toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: 'Bebas Neue',
+                    fontSize: DesignSystem.fontSizeLG,
+                    letterSpacing: 1.2,
+                    height: 1,
+                    color: DesignSystem.onAccent(context),
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -179,42 +190,75 @@ class CategoryRoomScreen extends ConsumerWidget {
     );
   }
 
-  Widget _gameTile(BuildContext context, WidgetRef ref, GameMetadata game,
-      int position) {
+  Widget _gameTile(
+      BuildContext context, WidgetRef ref, GameMetadata game, int position) {
     final bool isFavorite = ref.watch(userDataNotifierProvider
         .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
+    final bool archived = GameCategories.isArchived(game.id);
+    final String title = game.titleGetter(context);
     return DeckCard(
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
       radius: 16,
       onTap: () => _openGame(context, ref, game),
       onLongPress: () => _hideGame(context, ref, game),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
             children: [
-              Icon(game.icon, size: 18, color: DesignSystem.muted(context)),
-              const Spacer(),
-              _favoriteStar(context, ref, game, isFavorite),
-              const SizedBox(width: 6),
-              DeckNumber(
-                position.toString().padLeft(2, '0'),
-                size: 16,
-                color: DesignSystem.hairline(context),
+              // The tile's whole job: show what the game is. The mini board is
+              // the game's own shape (see `GamePreview`), drawn in ink so forty
+              // tiles in one room do not read as forty identical cards.
+              Expanded(
+                child: Center(
+                  child: GameCardPreview(
+                    game: game,
+                    title: title,
+                    size: 62,
+                    dimmed: archived,
+                  ),
+                ),
               ),
+              const SizedBox(height: 4),
+              Text(
+                title,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: DesignSystem.fontSizeXS,
+                  height: 1.2,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+              if (archived) ...[
+                const SizedBox(height: 2),
+                Text(
+                  AppLocalizations.of(context)?.archived ?? 'ARCHIVED',
+                  style: TextStyle(
+                    fontFamily: 'Bebas Neue',
+                    fontSize: DesignSystem.fontSize2XS,
+                    letterSpacing: 1.2,
+                    height: 1,
+                    color: DesignSystem.hairline(context),
+                  ),
+                ),
+              ],
             ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            game.titleGetter(context),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: DesignSystem.fontSizeSM,
-              height: 1.2,
-              fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.onSurface,
+          Positioned(
+            top: 0,
+            right: 0,
+            child: _favoriteStar(context, ref, game, isFavorite),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: DeckNumber(
+              position.toString().padLeft(2, '0'),
+              size: 14,
+              color: DesignSystem.hairline(context),
             ),
           ),
         ],

@@ -58,7 +58,8 @@ not apply everywhere · `[ ]` still open.
       313-game audit runs in both themes (`AUDIT_DARK=1`): 313 checked, 0 overflow, 0 throws
       at 320dp.
 - [x] **No coffee for someone else.** The upstream author's Ko-fi link is gone from the
-      completion dialog.
+      completion dialog, and `.github/FUNDING.yml` no longer lists his Liberapay and Buy Me a
+      Coffee accounts either, so the repo's Sponsor button cannot pay somebody else.
 
 ---
 

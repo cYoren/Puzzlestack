@@ -132,6 +132,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get keepScreenAwakeDescription => '게임 플레이 중 화면이 꺼지는 것을 방지합니다';
 
   @override
+  String get showArchivedGames => 'Show archived puzzles';
+
+  @override
+  String get showArchivedGamesDescription =>
+      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+
+  @override
+  String get archived => 'ARCHIVED';
+
+  @override
   String get appearance => '외형';
 
   @override

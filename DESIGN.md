@@ -59,6 +59,30 @@ Every surface is a card from `lib/widgets/deck.dart`:
   game, playable in place) and a **footer** (title, one-line subtitle, restart / guide / lock,
   and the one primary action: `NEXT`).
 
+## The tiles
+
+A room is a grid of game cards, and every card shows a **mini board** of the game it opens
+(`lib/ui/core/preview/game_preview.dart`). A tile used to be an icon and a title, which made
+forty cards in one room read as forty identical cards: an icon says "puzzle", not "Nonogram".
+
+The preview is a diagram, not a screenshot: ink, hairline and the one signal colour on paper,
+drawn from a hash of the game id so it is the same picture on every launch and never repeats
+twice in a room. Fifteen motifs cover the catalogue — grid, maze, ball, path, letters, word,
+numbers, cards, dots, target, arrows, bars, clock, stack, shapes — and the mapping is a rule list
+over ids, with the room as the fallback (`previewKindFor`). A new port gets a picture the day the
+id lands, and a rule can be corrected in one line if a game is filed wrong.
+
+Rules for the motifs:
+
+- Recognisable at 40dp (search results) and at 62dp (room tiles). If it only reads at 90dp it is
+  too detailed; drop cells, not stroke width.
+- It must be true to the game. A maze shows a route, a grid shows cells that are decided, a word
+game shows letter tiles. Never decorate: no stars, no sparkles, no trophy.
+- Archived games are drawn at half weight and labelled `ARCHIVED`, because the archive is
+  reference material behind a switch in settings, not a shelf.
+- `docs/previews/previews.png` is the contact sheet of all 319 (`PREVIEW_SHEET=1 flutter test
+test/ui/preview_sheet_test.dart`). Look at it before changing a motif.
+
 The wordmark is `PUZZLE` over `STACK`, with the deck mark to its left: three cards, the live
 one filled in indigo. It is drawn (`DeckMark`), not iconified, because it is the shape the
 whole app is built from.
@@ -114,7 +138,8 @@ A new surface is on brand when all of these are true:
 
 - The feed card is capped at 560dp and centred; on a tablet an uncapped card turns a puzzle
   into a poster with a postage stamp of content in the middle.
-- The stack is capped at 760dp; the room grid goes from two columns to three above 620dp and
-  keeps its tiles between 88 and 104dp tall.
+- The stack is capped at 760dp. The six room tiles are 88 to 104dp tall; a game tile is
+  148dp, because it carries a 62dp preview, a two-line title and, for an archived game, a label.
+  Three columns above 620dp, two below.
 - On phones shorter than 720dp the deal drops the tab bar and keeps a grid button in its top
   bar; below 760dp the card footer loses the subtitle. The board is the product; chrome yields.

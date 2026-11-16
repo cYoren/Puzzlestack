@@ -386,6 +386,24 @@ abstract class AppLocalizations {
   /// **'Prevent screen from turning off during gameplay'**
   String get keepScreenAwakeDescription;
 
+  /// No description provided for @showArchivedGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Show archived puzzles'**
+  String get showArchivedGames;
+
+  /// No description provided for @showArchivedGamesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.'**
+  String get showArchivedGamesDescription;
+
+  /// No description provided for @archived.
+  ///
+  /// In en, this message translates to:
+  /// **'ARCHIVED'**
+  String get archived;
+
   /// No description provided for @appearance.
   ///
   /// In en, this message translates to:
