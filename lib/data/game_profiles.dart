@@ -55,7 +55,7 @@ class GameProfile {
   final ArchiveReason? reason;
 }
 
-/// 320 games: 89 archive, 139 deck, 92 library.
+/// 321 games: 89 archive, 139 deck, 93 library.
 const Map<String, GameProfile> gameProfiles = {
   'ab_reversal_oddball': GameProfile(tier: GameTier.archive, kind: CardKind.snap, origin: GameOrigin.lab, family: 'rule_switcher', reason: ArchiveReason.twin),
   'abcd': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
@@ -87,6 +87,7 @@ const Map<String, GameProfile> gameProfiles = {
   'block_stacking_physics': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'boats': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'box_completion': GameProfile(tier: GameTier.archive, kind: CardKind.think, origin: GameOrigin.puzzle, family: 'cube_net_fold', reason: ArchiveReason.twin),
+  'bricks': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.puzzle),
   'bridges': GameProfile(tier: GameTier.deck, kind: CardKind.think, origin: GameOrigin.puzzle),
   'calculation_sprint': GameProfile(tier: GameTier.library, kind: CardKind.think, origin: GameOrigin.worksheet),
   'card_counting_memory': GameProfile(tier: GameTier.deck, kind: CardKind.snap, origin: GameOrigin.lab),
