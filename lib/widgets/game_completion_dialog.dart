@@ -63,6 +63,15 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
       feed.next();
     }
 
+    /// Re-deal this card.
+    ///
+    /// Every game's `onPlayAgain` already closes this sheet and rebuilds its own
+    /// board, which is why the two buttons on the standing card call it and
+    /// nothing else. The feed used to close the sheet *and* call it, so the
+    /// second pop removed the feed (or the whole tab, when the deal is the front
+    /// door) and read as the app closing.
+    void replay() => widget.onPlayAgain();
+
     return Dialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -90,14 +99,20 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
                         : muted,
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    widget.title.toUpperCase(),
-                    style: TextStyle(
-                      fontFamily: 'Bebas Neue',
-                      fontSize: DesignSystem.fontSize2XL,
-                      letterSpacing: 1.2,
-                      height: 1,
-                      color: colors.onSurface,
+                  // Long titles and 22 locales: the line gives way, the layout
+                  // does not.
+                  Flexible(
+                    child: Text(
+                      widget.title.toUpperCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue',
+                        fontSize: DesignSystem.fontSize2XL,
+                        letterSpacing: 1.2,
+                        height: 1,
+                        color: colors.onSurface,
+                      ),
                     ),
                   ),
                 ],
@@ -118,10 +133,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
                     context,
                     icon: Icons.refresh_rounded,
                     tooltip: l10n.playAgain,
-                    onTap: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                      widget.onPlayAgain();
-                    },
+                    onTap: replay,
                   ),
                   const SizedBox(width: 10),
                   Expanded(

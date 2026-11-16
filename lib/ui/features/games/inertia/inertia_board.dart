@@ -224,6 +224,22 @@ class InertiaBoard extends GridBoard<InertiaState> {
     }
   }
 
+  @override
+  void paintElement(
+      PuzzleCanvas canvas, InertiaState state, ElementRef element) {
+    // The engine lifts the element a drag started on, which for this game is a
+    // *cell*. Drawing that cell would carry a square of the board around the
+    // screen with the ball, which is exactly what a lifted copy must not do: the
+    // thing being moved is the ball, so that is what follows the finger (and
+    // what pops in the win cascade).
+    if (isCell(element) &&
+        element.a * cols + element.b == state.position.cell) {
+      _paintBall(canvas, state, state.position.cell);
+      return;
+    }
+    super.paintElement(canvas, state, element);
+  }
+
   // -------------------------------------------------------------- transition
 
   @override
