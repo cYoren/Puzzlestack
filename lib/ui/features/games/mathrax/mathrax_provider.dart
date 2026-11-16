@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/board/next_board.dart';
 import '../../../core/board/puzzle_board.dart';
 import 'mathrax_engine.dart';
 import 'mathrax_puzzle.dart';
@@ -60,21 +61,47 @@ class MathraxState extends PuzzleState {
 class MathraxNotifier extends _$MathraxNotifier {
   final MathraxEngine _engine = const MathraxEngine();
 
+  /// One board ahead, per size.
+  ///
+  /// Mathrax makes a board in 2–4ms, which is not the 270ms Salad pays, but it
+  /// is still work that lands on the tap that asked for it, and the cache that
+  /// keeps Salad's chips instant costs nothing to point at a cheap generator
+  /// too.
+  NextBoard<MathraxSize, MathraxPuzzle>? _boards;
+
+  NextBoard<MathraxSize, MathraxPuzzle> get _next => _boards ??=
+      NextBoard<MathraxSize, MathraxPuzzle>((size) => _engine.generate(size));
+
+  /// How many boards this game has built. Warm-ups count; a tap that finds its
+  /// board ready does not.
+  int get boardsBuilt => _boards?.built ?? 0;
+
   @override
-  MathraxState build() => _newPuzzle(MathraxSize.medium);
+  MathraxState build() {
+    _boards?.dispose();
+    _boards = null;
+    final boards = _next;
+    ref.onDispose(boards.dispose);
+    return _newPuzzle(MathraxSize.medium);
+  }
 
   /// Every cell starts blank: Mathrax has no printed cells, only printed
   /// corners. The clue set lives in the puzzle and never in the values, so the
   /// win test ("every cell holds its digit") and the player's board cannot drift
   /// apart.
   MathraxState _newPuzzle(MathraxSize size) {
-    final puzzle = _engine.generate(size);
+    final puzzle = _next.take(size);
+    _warm(size);
     return MathraxState(
       puzzle: puzzle,
       values: List<int>.filled(size.cellCount, kMathraxBlank),
       size: size,
     );
   }
+
+  /// Makes the board the next tap will ask for: the size in hand first, then
+  /// every other size the chips offer.
+  void _warm(MathraxSize first) => _next.fill(MathraxSize.values, first: first);
 
   void newGame() => state = _newPuzzle(state.size);
 
@@ -102,7 +129,8 @@ class MathraxNotifier extends _$MathraxNotifier {
             : state.values[cell] + 1;
     final values = [...state.values];
     values[cell] = next;
-    final updated = state.copyWith(values: values, selected: cell, clearHint: true);
+    final updated =
+        state.copyWith(values: values, selected: cell, clearHint: true);
     state = updated.copyWith(isSolved: _engine.isSolved(state.puzzle, values));
   }
 

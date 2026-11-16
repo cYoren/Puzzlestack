@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/board/next_board.dart';
 import '../../../core/board/puzzle_board.dart';
 import 'salad_engine.dart';
 import 'salad_puzzle.dart';
@@ -64,20 +65,49 @@ class SaladState extends PuzzleState {
 class SaladNotifier extends _$SaladNotifier {
   final SaladEngine _engine = const SaladEngine();
 
+  /// One board ahead, per size.
+  ///
+  /// Salad's generator costs about 12ms at 5x5 and 270ms at 7x7 (measured, see
+  /// [SaladEngine.generate]), and paying that on the tap is what made "play
+  /// again" and the size chips feel like a screen that had stopped. The cache
+  /// builds them after the board on screen has been painted, so both taps take
+  /// a board that already exists.
+  NextBoard<SaladSize, SaladPuzzle>? _boards;
+
+  NextBoard<SaladSize, SaladPuzzle> get _next => _boards ??=
+      NextBoard<SaladSize, SaladPuzzle>((size) => _engine.generate(size));
+
+  /// How many boards this game has built. Warm-ups count; a tap that finds its
+  /// board ready does not.
+  int get boardsBuilt => _boards?.built ?? 0;
+
   @override
-  SaladState build() => _newPuzzle(SaladSize.medium);
+  SaladState build() {
+    // A rebuild starts the cache over; the old one's queued warm-ups go with
+    // it, so nothing is generated for a board nobody will see.
+    _boards?.dispose();
+    _boards = null;
+    final boards = _next;
+    ref.onDispose(boards.dispose);
+    return _newPuzzle(SaladSize.medium);
+  }
 
   /// Every cell starts blank. Salad prints its clues on the border, so nothing
   /// in the grid is given and the values start empty — the three vocabularies
   /// never meet in one array until the player writes.
   SaladState _newPuzzle(SaladSize size) {
-    final puzzle = _engine.generate(size);
+    final puzzle = _next.take(size);
+    _warm(size);
     return SaladState(
       puzzle: puzzle,
       values: List<int>.filled(size.cellCount, kSaladBlank),
       size: size,
     );
   }
+
+  /// Makes the board the next tap will ask for: the size in hand first, then
+  /// every other size the chips offer.
+  void _warm(SaladSize first) => _next.fill(SaladSize.values, first: first);
 
   void newGame() => state = _newPuzzle(state.size);
 
