@@ -1711,6 +1711,26 @@ class AppLocalizationsBn extends AppLocalizations {
       'Every shape holds 1 to its size, with no two numbers too close.';
 
   @override
+  String get mathraxTitle => 'Mathrax';
+
+  @override
+  String get mathraxSubtitle =>
+      'Fill every row and column with 1 to the side of the board. Each corner clue binds the four cells around it on both diagonals.';
+
+  @override
+  String get mathraxFilled => 'Filled';
+
+  @override
+  String get mathraxDepth => 'Depth';
+
+  @override
+  String get mathraxWinTitle => 'EVERY CORNER AGREES!';
+
+  @override
+  String get mathraxWinMessage =>
+      'A Latin square that satisfies every corner clue.';
+
+  @override
   String get ascentTitle => 'Number Path';
 
   @override
