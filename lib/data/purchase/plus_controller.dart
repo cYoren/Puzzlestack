@@ -117,19 +117,20 @@ class PlusController {
     onChanged?.call(next);
   }
 
-  /// Starts listening and re-checks a purchase this device already has.
+  /// Starts listening, and re-checks a purchase this device already has.
   ///
   /// Runs once, after the first frame, so it can never slow the first card down
   /// and can never put a store dialog in front of a player who just opened the
-  /// app.
+  /// app. The subscription comes first and happens whether or not this device
+  /// owns Plus: a purchase that completed while the app was closed — an Ask to
+  /// Buy approval, an interrupted payment, a promo code — is delivered on the
+  /// store's stream without the player tapping anything, and this is the only
+  /// place it is caught. It is kept for the app's lifetime and cancelled in
+  /// [dispose].
   Future<void> start() async {
+    _listen();
     if (_state.ownsPlus) {
       await verifyOnLaunch();
-    } else {
-      // A purchase can be waiting from a previous session, or arrive from
-      // another device. Listening is how it gets picked up without the player
-      // having to press anything.
-      _listen();
     }
     await ensurePrice();
   }
@@ -137,11 +138,42 @@ class PlusController {
   void _listen() {
     if (_events != null) return;
     final PlusGateway gateway = _connection();
-    _events = gateway.events.listen((PurchaseEvent event) {
-      if (event == PurchaseEvent.owned) {
-        unawaited(_grant(PlusNotice.purchased));
-      }
-    });
+    _events = gateway.events.listen(
+      (PurchaseEvent event) => unawaited(_onEvent(event)),
+      onError: (Object error) {
+        // The stream itself failed, not a purchase. Nothing changes: the local
+        // row stands, and the next buy, restore or launch check retries.
+        debugPrint('Purchase events error: $error');
+      },
+    );
+  }
+
+  /// One purchase update, as it arrives: no button started it, and none is
+  /// needed. Every status is handled, the entitlement is written down, and
+  /// whatever the store is waiting on is completed.
+  Future<void> _onEvent(PurchaseEvent event) async {
+    switch (event.status) {
+      case PurchaseEventStatus.purchased:
+      case PurchaseEventStatus.restored:
+        await _grant(PlusNotice.purchased);
+      case PurchaseEventStatus.pending:
+        _tell(PlusNotice.pending);
+      case PurchaseEventStatus.canceled:
+        _tell(PlusNotice.cancelled);
+      case PurchaseEventStatus.error:
+        if (event.alreadyOwned) {
+          await _grant(PlusNotice.alreadyOwned);
+        } else {
+          _tell(PlusNotice.failed);
+        }
+    }
+    // Deliver first, then tell the store it can forget the purchase: an
+    // uncompleted purchase is re-delivered on every launch, and a failed one
+    // blocks the next. Completing is owed whenever the store is waiting,
+    // whatever the outcome was.
+    if (event.pendingComplete) {
+      await _connection().completePurchase(event);
+    }
   }
 
   PlusGateway _connection() => _storeConnection ??= _gateway();
@@ -205,8 +237,9 @@ class PlusController {
         await _revoke();
         return PlusNotice.revoked;
       case RestoreAnswer.noAnswer:
-        // The store never answered. Keeping Plus is the only safe reading: a
-        // network failure is not a refund.
+        // The store could not be reached, or did not answer in time. Keeping
+        // Plus is the only safe reading: a failed request is not a refund. The
+        // player is told it failed, and a retry can still resolve it.
         return _tell(PlusNotice.failed);
     }
   }

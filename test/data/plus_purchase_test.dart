@@ -23,6 +23,9 @@ class _FakeStore implements PlusGateway {
   int restoreCalls = 0;
   int priceCalls = 0;
 
+  /// The events the app told the store it can forget, in that order.
+  final List<PurchaseEvent> completed = [];
+
   final StreamController<PurchaseEvent> _events =
       StreamController<PurchaseEvent>.broadcast();
 
@@ -48,6 +51,10 @@ class _FakeStore implements PlusGateway {
     restoreCalls++;
     return restoreAnswer;
   }
+
+  @override
+  Future<void> completePurchase(PurchaseEvent event) async =>
+      completed.add(event);
 
   @override
   Future<void> dispose() async => _events.close();
@@ -232,12 +239,133 @@ void main() {
     });
   });
 
+  group('a purchase that completes on its own', () {
+    // Ask to Buy approved after a restart, an interrupted payment, a promo
+    // code redeemed: the store delivers these with no buy or restore tap, so
+    // the subscription that catches them is what makes them ever arrive.
+    test(
+        'a purchased update with no buy or restore tap unlocks Plus and is '
+        'completed', () async {
+      await plus.start();
+      expect(plus.state.ownsPlus, isFalse);
+
+      store.emit(const PurchaseEvent.purchased(pendingComplete: true));
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isTrue);
+      expect(plus.state.notice, PlusNotice.purchased);
+      expect(store.completed, hasLength(1));
+      expect(store.completed.single.status, PurchaseEventStatus.purchased);
+
+      // The row is the unlock: a new launch reads it back.
+      expect(controller().state.ownsPlus, isTrue);
+    });
+
+    test('a restored update with no buy or restore tap unlocks Plus too',
+        () async {
+      await plus.start();
+
+      store.emit(const PurchaseEvent.restored(pendingComplete: true));
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isTrue);
+      expect(store.completed, hasLength(1));
+    });
+
+    test(
+        'a purchase the store is still processing does not unlock, and the '
+        'completed update after it does', () async {
+      await plus.start();
+
+      store.emit(const PurchaseEvent.pending());
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isFalse);
+      expect(plus.state.notice, PlusNotice.pending);
+      expect(store.completed, isEmpty,
+          reason: 'a pending purchase is not completed; the store is not done');
+
+      store.emit(const PurchaseEvent.purchased(pendingComplete: true));
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isTrue);
+      expect(store.completed, hasLength(1));
+    });
+
+    test('a cancelled update unlocks nothing', () async {
+      await plus.start();
+
+      store.emit(const PurchaseEvent.canceled());
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isFalse);
+      expect(plus.state.notice, PlusNotice.cancelled);
+      expect(store.completed, isEmpty);
+    });
+
+    test('an error the store reports is a failure, and is still completed',
+        () async {
+      await plus.start();
+
+      store.emit(const PurchaseEvent.error(pendingComplete: true));
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isFalse);
+      expect(plus.state.notice, PlusNotice.failed);
+      // A failed purchase that is never completed is re-delivered forever.
+      expect(store.completed, hasLength(1));
+    });
+
+    test('an error that says the account already owns it grants Plus',
+        () async {
+      await plus.start();
+
+      store.emit(
+        const PurchaseEvent.error(pendingComplete: true, alreadyOwned: true),
+      );
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isTrue);
+      expect(plus.state.notice, PlusNotice.alreadyOwned);
+      expect(store.completed, hasLength(1));
+    });
+
+    test('an update the store is not waiting on completes nothing', () async {
+      await plus.start();
+
+      store.emit(const PurchaseEvent.purchased());
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.ownsPlus, isTrue);
+      expect(store.completed, isEmpty);
+    });
+
+    test('arrives even on a device that already owns Plus', () async {
+      store.buyAnswer = PurchaseAnswer.purchased;
+      await plus.buy();
+      await plus.dispose();
+
+      // A new session on a device that already owns Plus: the subscription is
+      // still made, so a purchase that completed elsewhere still lands.
+      final _FakeStore nextStore =
+          _FakeStore(restoreAnswer: RestoreAnswer.owned);
+      final PlusController next = controller(gateway: nextStore);
+      await next.start();
+
+      nextStore.emit(const PurchaseEvent.purchased(pendingComplete: true));
+      await Future<void>.delayed(Duration.zero);
+
+      expect(next.state.ownsPlus, isTrue);
+      expect(nextStore.completed, hasLength(1));
+    });
+  });
+
   group('start', () {
     test('a purchase that arrives while the app is open is adopted', () async {
       await plus.start();
       expect(plus.state.ownsPlus, isFalse);
 
-      store.emit(PurchaseEvent.owned);
+      store.emit(const PurchaseEvent.purchased());
       await Future<void>.delayed(Duration.zero);
 
       expect(plus.state.ownsPlus, isTrue);

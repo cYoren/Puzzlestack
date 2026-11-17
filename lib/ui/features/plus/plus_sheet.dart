@@ -311,7 +311,7 @@ String? plusNoticeText(PlusNotice notice) {
     case PlusNotice.unavailable:
       return 'This store is not available on this device.';
     case PlusNotice.failed:
-      return 'The store did not answer. Nothing was changed.';
+      return 'Could not reach the store. Nothing was changed; try again.';
   }
 }
 
