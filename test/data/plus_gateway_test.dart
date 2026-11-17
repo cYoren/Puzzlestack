@@ -27,6 +27,12 @@ class _FakeIap implements InAppPurchase {
   bool available = true;
   Object? restoreError;
 
+  /// How many times the store was asked for product details, and what it
+  /// answers. A throw here is a store that could not be reached.
+  int productQueries = 0;
+  Object? productError;
+  List<ProductDetails> products = const <ProductDetails>[];
+
   /// A purchase the store delivers, with no button pressed by anyone.
   void deliver(List<PurchaseDetails> purchases) => _purchases.add(purchases);
 
@@ -40,8 +46,16 @@ class _FakeIap implements InAppPurchase {
   Future<bool> isAvailable() async => available;
 
   @override
-  Future<ProductDetailsResponse> queryProductDetails(Set<String> identifiers) =>
-      throw UnimplementedError();
+  Future<ProductDetailsResponse> queryProductDetails(
+      Set<String> identifiers) async {
+    productQueries++;
+    final Object? error = productError;
+    if (error != null) throw error;
+    return ProductDetailsResponse(
+      productDetails: products,
+      notFoundIDs: <String>[plusProductId],
+    );
+  }
 
   @override
   Future<bool> buyNonConsumable({required PurchaseParam purchaseParam}) =>
@@ -268,6 +282,43 @@ void main() {
       expect(await g.restore(), RestoreAnswer.noAnswer);
     });
 
+    test('a restore the store answers with an empty list is nothing owned',
+        () async {
+      final InAppPurchaseGateway g =
+          gateway(settle: const Duration(milliseconds: 200));
+      addTearDown(g.dispose);
+      final List<PurchaseEvent> received = await collect(g);
+
+      final Future<RestoreAnswer> answer = g.restore();
+      await Future<void>.delayed(Duration.zero);
+      // What every store sends when a restore finished and the account owns
+      // nothing: StoreKit's empty end-of-restore list, StoreKit 2's empty
+      // entitlements, Play's empty ownership query.
+      iap.deliver(const <PurchaseDetails>[]);
+
+      expect(await answer, RestoreAnswer.nothingOwned,
+          reason: 'a refunded purchase must be revocable, which needs one '
+              'explicit store answer that lists nothing');
+      expect(received, isEmpty,
+          reason: 'the empty list is an answer to a restore, not a purchase');
+    });
+
+    test('an empty list with no restore open changes nothing', () async {
+      final InAppPurchaseGateway g =
+          gateway(settle: const Duration(milliseconds: 50));
+      addTearDown(g.dispose);
+      final List<PurchaseEvent> received = await collect(g);
+
+      iap.deliver(const <PurchaseDetails>[]);
+      await Future<void>.delayed(Duration.zero);
+
+      expect(received, isEmpty);
+      expect(await g.restore(), RestoreAnswer.noAnswer,
+          reason: 'a list that arrived on its own is not this restore\'s '
+              'answer; only the store finishing the restore it was asked for '
+              'may revoke');
+    });
+
     test('a store that is not there is no answer, and asks nothing', () async {
       iap.available = false;
       final InAppPurchaseGateway g = gateway();
@@ -275,6 +326,53 @@ void main() {
 
       expect(await g.restore(), RestoreAnswer.noAnswer);
       expect(iap.completed, isEmpty);
+    });
+  });
+
+  group('product details', () {
+    test('a lookup that failed is asked again instead of remembered', () async {
+      iap.productError = Exception('no connection');
+      final InAppPurchaseGateway g = gateway();
+      addTearDown(g.dispose);
+
+      expect(await g.price(), isNull);
+      expect(iap.productQueries, 1);
+
+      // The connection came back: the next price reads the store, without the
+      // app being restarted.
+      iap.productError = null;
+      iap.products = <ProductDetails>[
+        ProductDetails(
+          id: plusProductId,
+          title: 'Puzzlestack Plus',
+          description: 'One purchase',
+          price: 'R\$ 29,90',
+          rawPrice: 29.9,
+          currencyCode: 'BRL',
+        ),
+      ];
+
+      expect(await g.price(), 'R\$ 29,90');
+      expect(iap.productQueries, 2);
+    });
+
+    test('a product the store did answer is kept', () async {
+      iap.products = <ProductDetails>[
+        ProductDetails(
+          id: plusProductId,
+          title: 'Puzzlestack Plus',
+          description: 'One purchase',
+          price: 'R\$ 29,90',
+          rawPrice: 29.9,
+          currencyCode: 'BRL',
+        ),
+      ];
+      final InAppPurchaseGateway g = gateway();
+      addTearDown(g.dispose);
+
+      expect(await g.price(), 'R\$ 29,90');
+      expect(await g.price(), 'R\$ 29,90');
+      expect(iap.productQueries, 1, reason: 'the store is asked once');
     });
   });
 }

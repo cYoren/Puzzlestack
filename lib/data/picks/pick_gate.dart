@@ -79,11 +79,24 @@ class PickGate {
   final PickLedger _ledger;
   final bool Function() _hasPlus;
 
-  /// Asks to open [gameId]. Records what the answer used, so the caller must
-  /// not call this twice for the same opening.
+  /// Asks to open [gameId] and records what the answer used.
+  ///
+  /// For a caller that opens the board straight away. A surface that asks the
+  /// player something before the board exists — the size chooser, the rules
+  /// page — uses [preview] and [commit] instead, so walking away costs nothing.
   Future<PickDecision> request(String gameId) async {
+    final PickDecision decision = await preview(gameId);
+    await commit(gameId, decision);
+    return decision;
+  }
+
+  /// Asks whether [gameId] may open, and writes nothing down.
+  ///
+  /// The answer is only good until [commit]: nothing has been spent yet, so
+  /// the same opening can be asked about again, and a player who dismisses the
+  /// sheet in front of the board keeps their pick and keeps the first play.
+  Future<PickDecision> preview(String gameId) async {
     if (!_ledger.hasOpened(gameId)) {
-      await _ledger.markOpened(gameId);
       return const PickAllowed(PickReason.firstPlay);
     }
     if (_hasPlus()) {
@@ -91,9 +104,26 @@ class PickGate {
     }
     final PickDay day = await _ledger.today();
     if (!day.exhausted) {
-      await _ledger.spend();
       return const PickAllowed(PickReason.freeAllowance);
     }
     return PickRefused(usedToday: day.used, freePerDay: freePicksPerDay);
+  }
+
+  /// Writes down what [decision] used, once the opening is actually happening.
+  ///
+  /// A refusal and a Plus opening write nothing. A first play is remembered so
+  /// the second opening of that game is not free; a free pick is spent. Calling
+  /// this twice for one opening would charge twice, so it is called at the one
+  /// point where the board is about to be built.
+  Future<void> commit(String gameId, PickDecision decision) async {
+    if (decision is! PickAllowed) return;
+    switch (decision.reason) {
+      case PickReason.firstPlay:
+        await _ledger.markOpened(gameId);
+      case PickReason.freeAllowance:
+        await _ledger.spend();
+      case PickReason.plus:
+        break;
+    }
   }
 }

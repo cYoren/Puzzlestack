@@ -151,7 +151,7 @@ class InAppPurchaseGateway implements PlusGateway {
   Completer<PurchaseAnswer>? _buy;
   Completer<RestoreAnswer>? _restored;
   ProductDetails? _product;
-  bool _productLookedUp = false;
+  Future<ProductDetails?>? _looking;
 
   @override
   Stream<PurchaseEvent> get events => _events.stream;
@@ -196,6 +196,18 @@ class InAppPurchaseGateway implements PlusGateway {
   }
 
   Future<void> _onPurchases(List<PurchaseDetails> purchases) async {
+    if (purchases.isEmpty) {
+      // The end of a restore that found nothing, told by each store in its own
+      // way: StoreKit 1 emits an empty list when the restore session finishes
+      // without a transaction, StoreKit 2 sends the entitlements it found (an
+      // empty list when there are none), and Google Play always reports the
+      // result of the ownership query it ran. An empty list here is therefore
+      // the store's own answer, not silence and not an error, so it is the one
+      // thing allowed to say the account owns nothing.
+      _settleRestore(RestoreAnswer.nothingOwned);
+      return;
+    }
+
     for (final PurchaseDetails purchase in purchases) {
       // An empty id is an error that belongs to no product; it can still be a
       // failure of this one, so it is read rather than skipped.
@@ -273,9 +285,29 @@ class InAppPurchaseGateway implements PlusGateway {
     }
   }
 
-  Future<ProductDetails?> _details() async {
-    if (_productLookedUp) return _product;
-    _productLookedUp = true;
+  /// The product, asked for until the store answers.
+  ///
+  /// A lookup that failed is not a fact about the product, so it is not
+  /// remembered as one: a store that was unreachable when the app started is
+  /// asked again the next time a price or a buy is needed, and buying Plus
+  /// never needs the app restarted. Only an answer is kept.
+  Future<ProductDetails?> _details() {
+    final ProductDetails? known = _product;
+    if (known != null) return Future<ProductDetails?>.value(known);
+
+    // One lookup in flight at a time: a sheet and a buy can ask at once, and
+    // the store should be asked once.
+    final Future<ProductDetails?>? running = _looking;
+    if (running != null) return running;
+
+    final Future<ProductDetails?> lookup = _lookup();
+    _looking = lookup;
+    return lookup.whenComplete(() {
+      if (identical(_looking, lookup)) _looking = null;
+    });
+  }
+
+  Future<ProductDetails?> _lookup() async {
     try {
       final ProductDetailsResponse response =
           await _iap.queryProductDetails({plusProductId});
@@ -349,10 +381,12 @@ class InAppPurchaseGateway implements PlusGateway {
     try {
       return await settled.future.timeout(_restoreSettle);
     } on TimeoutException {
-      // No receipt in time is not the store confirming this account owns
-      // nothing. It is no answer: the device keeps what it has, the player is
+      // A restore that finished answers either with a receipt or with the
+      // store's empty list, both of which settle this above; reaching the
+      // timeout means the store never finished at all. Silence is not the
+      // account owning nothing: the device keeps what it has, the player is
       // told the store could not be reached, and a retry can still deliver the
-      // receipt. Only an explicit answer may take Plus away.
+      // receipt.
       return RestoreAnswer.noAnswer;
     } finally {
       if (identical(_restored, settled)) _restored = null;
@@ -365,6 +399,7 @@ class InAppPurchaseGateway implements PlusGateway {
     _subscription = null;
     _buy = null;
     _restored = null;
+    _looking = null;
     _undelivered.clear();
     await _events.close();
   }

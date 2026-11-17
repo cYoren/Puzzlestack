@@ -198,6 +198,64 @@ void main() {
     });
   });
 
+  group('asking is not spending', () {
+    test('a preview the player walks away from costs nothing', () async {
+      final PickGate picks = gate();
+
+      // The size chooser opens before the board; the player closes it. Twice.
+      expect(await picks.preview('sudoku'),
+          const PickAllowed(PickReason.firstPlay));
+      expect(await picks.preview('sudoku'),
+          const PickAllowed(PickReason.firstPlay));
+
+      final PickLedger ledger = PickLedger(rows, now: () => now);
+      expect(ledger.hasOpened('sudoku'), isFalse,
+          reason: 'a game whose board never opened was never played');
+      expect((await ledger.today()).used, 0);
+
+      // And the free first play is still there when the player does open it.
+      expect(await picks.request('sudoku'),
+          const PickAllowed(PickReason.firstPlay));
+      expect(await picks.request('sudoku'),
+          const PickAllowed(PickReason.freeAllowance));
+    });
+
+    test('a pick is charged once, when the opening is committed', () async {
+      final PickGate picks = gate();
+      await picks.request('sudoku'); // first play, remembered
+
+      final PickDecision decision = await picks.preview('sudoku');
+      expect(decision, const PickAllowed(PickReason.freeAllowance));
+      expect((await PickLedger(rows, now: () => now).today()).used, 0,
+          reason: 'nothing is spent until the board opens');
+
+      await picks.commit('sudoku', decision);
+      expect((await PickLedger(rows, now: () => now).today()).used, 1);
+    });
+
+    test('committing a refusal, and Plus, writes nothing', () async {
+      final PickGate picks = gate();
+      await picks.request('sudoku'); // first play, remembered
+      for (int i = 0; i < freePicksPerDay; i++) {
+        await picks.commit('sudoku', await picks.preview('sudoku'));
+      }
+      expect((await PickLedger(rows, now: () => now).today()).used, 3);
+
+      final PickDecision refused = await picks.preview('sudoku');
+      expect(refused, isA<PickRefused>());
+      await picks.commit('sudoku', refused);
+      expect((await PickLedger(rows, now: () => now).today()).used, 3,
+          reason: 'a refusal spends nothing');
+
+      plus = true;
+      await picks.commit('sudoku', await picks.preview('sudoku'));
+      expect((await PickLedger(rows, now: () => now).today()).used, 3,
+          reason: 'a Plus opening costs no pick');
+      expect(await picks.preview('sudoku'),
+          const PickAllowed(PickReason.plus));
+    });
+  });
+
   group('persistence', () {
     test('a relaunch remembers today\'s picks and the games opened', () async {
       final PickGate before = gate();

@@ -36,8 +36,11 @@ Future<void> launchGame(
   WidgetRef ref,
   GameMetadata game,
 ) async {
-  final PickDecision decision =
-      await ref.read(pickGateProvider).request(game.id);
+  // Only asked about, not spent: everything below can still end with no board
+  // (the player closes the rules page or the size chooser), and a pick spent on
+  // an opening that never happened is a pick taken for nothing.
+  final PickGate gate = ref.read(pickGateProvider);
+  final PickDecision decision = await gate.preview(game.id);
   if (!context.mounted) return;
 
   if (decision is PickRefused) {
@@ -90,6 +93,10 @@ Future<void> launchGame(
     await ref.rememberTier(game.id, chosen.id);
     if (!context.mounted) return;
   }
+
+  // The opening is happening: now the pick, or the first play, is written down.
+  await gate.commit(game.id, decision);
+  if (!context.mounted) return;
 
   _open(context, game);
 }
