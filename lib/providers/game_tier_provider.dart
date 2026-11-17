@@ -10,6 +10,21 @@ final Provider<GameTierStore> gameTierStoreProvider = Provider<GameTierStore>(
   (ref) => GameTierStore(MemoryKeyValueStore()),
 );
 
+/// Bumped when a size is chosen for a board that is about to open.
+///
+/// The remembered row in [gameTierStoreProvider] is what every later launch
+/// reads, and a stored row cannot tell a live board that it changed. A board's
+/// provider is built once, and the Deal keeps the current card mounted behind
+/// its tabs, so a game opened from the Stack can find its provider already
+/// alive with the board built at the old size. Watching this counter is how
+/// that board hears about the choice: [GameTierRef.startTier] reads the row on
+/// every build, so one bump rebuilds the boards at the size just chosen.
+///
+/// Only a launch bumps it. A player changing the size inside a game is already
+/// building the new board in `setDifficulty`; bumping there as well would deal
+/// the puzzle a second time under them.
+final StateProvider<int> tierRevisionProvider = StateProvider<int>((ref) => 0);
+
 /// The tier [gameId] should open at, read once from storage.
 ///
 /// [tiers] is the game's own enum values and [key] reads the stored id from one
@@ -49,8 +64,10 @@ extension GameTierRef on Ref {
     List<T> tiers,
     T fallback,
     String Function(T tier) key,
-  ) =>
-      _startTier(read(gameTierStoreProvider), gameId, tiers, fallback, key);
+  ) {
+    watch(tierRevisionProvider);
+    return _startTier(read(gameTierStoreProvider), gameId, tiers, fallback, key);
+  }
 
   /// Remembers the tier the player just chose, for every later launch.
   ///
@@ -73,8 +90,10 @@ extension GameTierNotifierRef on AutoDisposeNotifierProviderRef<dynamic> {
     List<T> tiers,
     T fallback,
     String Function(T tier) key,
-  ) =>
-      _startTier(read(gameTierStoreProvider), gameId, tiers, fallback, key);
+  ) {
+    watch(tierRevisionProvider);
+    return _startTier(read(gameTierStoreProvider), gameId, tiers, fallback, key);
+  }
 
   /// Remembers the tier the player just chose, for every later launch.
   Future<void> rememberTier(String gameId, String tierId) =>
@@ -89,8 +108,10 @@ extension GameTierWidgetRef on WidgetRef {
     List<T> tiers,
     T fallback,
     String Function(T tier) key,
-  ) =>
-      _startTier(read(gameTierStoreProvider), gameId, tiers, fallback, key);
+  ) {
+    watch(tierRevisionProvider);
+    return _startTier(read(gameTierStoreProvider), gameId, tiers, fallback, key);
+  }
 
   /// Remembers the tier the player just chose, for every later launch.
   Future<void> rememberTier(String gameId, String tierId) =>

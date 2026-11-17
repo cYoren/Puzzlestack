@@ -159,6 +159,28 @@ void main() {
       }
     }, timeout: const Timeout(Duration(minutes: 5)));
 
+    test('a board that is already alive takes the size just chosen', () async {
+      final MemoryKeyValueStore rows = MemoryKeyValueStore();
+      final ProviderContainer container = _open(rows, 'cube');
+
+      // The Deal keeps the current card mounted behind its tabs, so this board
+      // exists before the player opens the same game from the Stack.
+      expect(container.read(cubeNotifierProvider).difficulty,
+          CubeDifficulty.medium);
+
+      // What the chooser's write alone leaves behind: the row is stored, the
+      // live board has not heard about it. That was the defect.
+      await GameTierStore(rows).remember('cube', 'hard');
+      expect(container.read(cubeNotifierProvider).difficulty,
+          CubeDifficulty.medium);
+
+      // The launch bumps the revision, and the board that is opening is rebuilt
+      // at the size the player just picked.
+      container.read(tierRevisionProvider.notifier).state++;
+      expect(
+          container.read(cubeNotifierProvider).difficulty, CubeDifficulty.hard);
+    });
+
     test('is one row per game, beside the first-play flag', () {
       final MemoryKeyValueStore rows = MemoryKeyValueStore();
       final GameTierStore store = GameTierStore(rows);

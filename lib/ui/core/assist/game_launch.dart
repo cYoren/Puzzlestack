@@ -89,8 +89,13 @@ Future<void> launchGame(
     if (!context.mounted || chosen == null) return;
 
     // Written before the board is built, which is how the chosen size reaches
-    // it: the provider reads this row in `build` and nowhere else.
+    // a board that starts now: the provider reads this row in `build`.
     await ref.rememberTier(game.id, chosen.id);
+    // And this is how it reaches a board that is already alive — the Deal keeps
+    // the current card mounted behind its tabs, so this game's provider can
+    // exist with the old size. Every game watches the counter, so bumping it
+    // rebuilds the board that is opening at the size just chosen.
+    ref.read(tierRevisionProvider.notifier).state++;
     if (!context.mounted) return;
   }
 
