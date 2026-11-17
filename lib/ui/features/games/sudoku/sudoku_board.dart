@@ -28,6 +28,24 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
   @override
   double get aspectRatio => 1 / gridHeight;
 
+  /// A listener hears the grid and the tray it carries, not a count of pieces.
+  @override
+  String get semanticsShape => '9 by 9 grid with a digit tray';
+
+  /// The digit in a cell, and nothing for the tray: a tray digit already says
+  /// its value in its label.
+  @override
+  String? valueOf(ElementRef element) {
+    if (element.kind != 'cell') return null;
+    final value = state.currentBoard[element.a][element.b];
+    return value == 0 ? null : '$value';
+  }
+
+  /// A given cannot be changed, and a listener says so.
+  @override
+  bool isFixed(ElementRef element) =>
+      element.kind == 'cell' && _isGiven(element.a, element.b);
+
   @override
   bool get isSolved => state.isSolved;
 
@@ -90,7 +108,8 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
     );
   }
 
-  PuzzleMove<SudokuState> _place(ElementRef source, int row, int col, int value) {
+  PuzzleMove<SudokuState> _place(
+      ElementRef source, int row, int col, int value) {
     return PuzzleMove<SudokuState>(
       kind: value == 0 ? MoveKind.clear : MoveKind.place,
       source: source,
@@ -109,7 +128,8 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
       return [
         for (var row = 0; row < _size; row++)
           for (var col = 0; col < _size; col++)
-            if (_editable(state, row, col) && state.currentBoard[row][col] != value)
+            if (_editable(state, row, col) &&
+                state.currentBoard[row][col] != value)
               _place(element, row, col, value),
       ];
     }
@@ -132,7 +152,8 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
       return PuzzleMove<SudokuState>(
         kind: MoveKind.select,
         source: element,
-        apply: (current) => current.copyWith(selectedRow: row, selectedCol: col),
+        apply: (current) =>
+            current.copyWith(selectedRow: row, selectedCol: col),
       );
     }
 
@@ -173,8 +194,7 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
       final y = i * 3 / _size * gridHeight;
       canvas.line(Offset(x, 0), Offset(x, gridHeight),
           color: palette.ink, width: 2.5);
-      canvas.line(Offset(0, y), Offset(1, y),
-          color: palette.ink, width: 2.5);
+      canvas.line(Offset(0, y), Offset(1, y), color: palette.ink, width: 2.5);
     }
 
     for (var value = 1; value <= _size; value++) {
@@ -189,8 +209,7 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
     final rect = _cellRect(row, col);
     final value = state.currentBoard[row][col];
     final given = _isGiven(row, col);
-    final selected =
-        state.selectedRow == row && state.selectedCol == col;
+    final selected = state.selectedRow == row && state.selectedCol == col;
     final selectedValue = _selectedValue(state);
     final sameDigit = selectedValue != 0 && value == selectedValue;
     final related = _isRelated(state, row, col);
@@ -209,7 +228,8 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
       canvas.cell(rect, fill: palette.outline.withValues(alpha: 0.45));
     }
     if (zone > 0) {
-      canvas.cell(rect, fill: palette.primary.withValues(alpha: 0.08 * zone * 2));
+      canvas.cell(rect,
+          fill: palette.primary.withValues(alpha: 0.08 * zone * 2));
     }
     if (conflict) {
       canvas.cell(
@@ -260,9 +280,7 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
 
     canvas.cell(
       rect.deflate(0.008),
-      fill: done
-          ? palette.success.withValues(alpha: 0.12)
-          : palette.surface,
+      fill: done ? palette.success.withValues(alpha: 0.12) : palette.surface,
       stroke: zone > 0
           ? palette.primary.withValues(alpha: 0.4 + 0.6 * zone)
           : palette.outline,
@@ -300,7 +318,8 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
   }
 
   @override
-  void paintElement(PuzzleCanvas canvas, SudokuState state, ElementRef element) {
+  void paintElement(
+      PuzzleCanvas canvas, SudokuState state, ElementRef element) {
     switch (element.kind) {
       case 'cell':
         _paintCell(canvas, state, element.a, element.b);

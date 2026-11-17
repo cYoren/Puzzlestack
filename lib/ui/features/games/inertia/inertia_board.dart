@@ -150,7 +150,13 @@ class InertiaBoard extends GridBoard<InertiaState> {
       _paintLandings(canvas, state);
     }
 
-    _paintBall(canvas, state, state.position.cell);
+    // The engine floats the marble itself while a drag or the win cascade owns
+    // it; drawing it here as well left a second marble parked at the origin.
+    final ballRow = state.position.cell ~/ cols;
+    final ballCol = state.position.cell % cols;
+    if (!isCellHidden(canvas, ballRow, ballCol)) {
+      _paintBall(canvas, state, state.position.cell);
+    }
 
     final hint = state.hint;
     if (hint == null) return;

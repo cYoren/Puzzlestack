@@ -68,6 +68,27 @@ class KurodokoBoard extends GridBoard<KurodokoState> {
   @override
   bool get isSolved => state.isSolved;
 
+  /// A clue is the cell's value and is fixed; a player's mark is a value that
+  /// is not. An empty cell says nothing.
+  @override
+  String? valueOf(ElementRef element) {
+    if (!isCell(element) || !inBounds(element.a, element.b)) return null;
+    final cell = state.puzzle.index(element.a, element.b);
+    final clue = state.puzzle.clues[cell];
+    if (clue > 0) return '$clue';
+    return switch (state.grid[cell]) {
+      KurodokoCell.black => 'black',
+      KurodokoCell.white => 'white',
+      KurodokoCell.unknown => null,
+    };
+  }
+
+  @override
+  bool isFixed(ElementRef element) {
+    if (!isCell(element) || !inBounds(element.a, element.b)) return false;
+    return state.puzzle.clues[state.puzzle.index(element.a, element.b)] > 0;
+  }
+
   @override
   void paintCell(PuzzleCanvas canvas, KurodokoState state, int row, int col) {
     final cell = state.puzzle.index(row, col);
