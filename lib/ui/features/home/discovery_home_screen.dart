@@ -67,10 +67,6 @@ class DiscoveryHomeScreen extends ConsumerWidget {
         .watch(
             userDataNotifierProvider.select((d) => d.hiddenGameIds ?? const []))
         .toSet();
-    // The daily pick is the same for everyone, so it is not drawn from this
-    // player's hidden games; the card is what a hidden game suppresses.
-    final GameMetadata daily = GameFeed.dailyPick();
-    final bool dailyHidden = GameFeed.dailyPickIsHidden(exclude: hidden);
     final List<GameMetadata> quick = GameFeed.quickPlay
         .where((g) => !hidden.contains(g.id))
         .toList(growable: false);
@@ -100,8 +96,6 @@ class DiscoveryHomeScreen extends ConsumerWidget {
                   SliverToBoxAdapter(
                       child: _favoritesRow(context, ref, favorites)),
                 ],
-                if (!dailyHidden)
-                  SliverToBoxAdapter(child: _todayCard(context, ref, daily)),
                 if (quick.isNotEmpty) ...[
                   SliverToBoxAdapter(
                     child: _section(
@@ -242,9 +236,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  progress.isComplete
-                      ? 'DONE'
-                      : '${progress.solvedCount} / 5',
+                  progress.isComplete ? 'DONE' : '${progress.solvedCount} / 5',
                   style: TextStyle(
                     fontFamily: 'Bebas Neue',
                     fontSize: DesignSystem.fontSize2XL,
@@ -340,65 +332,6 @@ class DiscoveryHomeScreen extends ConsumerWidget {
                   ),
                 ),
               ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _todayCard(BuildContext context, WidgetRef ref, GameMetadata game) {
-    final Color accent = DesignSystem.accent(context);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        DesignSystem.spaceLG,
-        DesignSystem.spaceSM,
-        DesignSystem.spaceLG,
-        DesignSystem.spaceSM,
-      ),
-      child: DeckCard(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-        onTap: () => _openGame(context, ref, game),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    game.titleGetter(context),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'Bebas Neue',
-                      fontSize: DesignSystem.fontSize2XL,
-                      height: 1,
-                      letterSpacing: 0.4,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                DeckChip(
-                  label: (AppLocalizations.of(context)?.todaysCard ??
-                          "Today's card")
-                      .toUpperCase(),
-                  icon: Icons.wb_sunny_outlined,
-                  tint: accent,
-                  dense: true,
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Text(
-              game.subtitleGetter(context),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: DesignSystem.fontSizeXS,
-                height: 1.35,
-                color: DesignSystem.muted(context),
-              ),
             ),
           ],
         ),

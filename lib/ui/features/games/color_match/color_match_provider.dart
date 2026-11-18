@@ -60,7 +60,9 @@ class ColorMatchNotifier extends _$ColorMatchNotifier {
   }
 
   void reset() {
-    final target = _engine.generateTargetColor();
+    final target = _engine.generateTargetColor(
+      random: FeedSession.randomFor('color_match'),
+    );
     state = ColorMatchState(
       targetColor: target,
       currentColor: const Color(0xFF808080),

@@ -19,6 +19,7 @@ class FeedDeck {
     Random? random,
     DealHistory? history,
     this.includeFirstTen = false,
+    this.pinnedFirstId,
     SeedHistoryStore? seedStore,
     DateTime Function()? now,
   })  : _random = random ?? Random(),
@@ -37,6 +38,10 @@ class FeedDeck {
   /// first pass leads with [firstTenIds].
   final bool includeFirstTen;
 
+  /// Optional game pinned to slot 0 (`FeedScreen.startGameId`) so slots 1..N
+  /// never collide with slot 0.
+  final String? pinnedFirstId;
+
   final Random _random;
   final Set<String> _hidden;
   DealHistory _history;
@@ -51,9 +56,10 @@ class FeedDeck {
   /// Dealt cards, by feed index.
   final Map<int, GameMetadata> _dealt = {};
 
-  /// Per-card deterministic seeds so revisiting a card or stepping one card
-  /// back deals the exact same board, and new deals avoid 30-day repeats.
-  final Map<int, int> _seeds = {};
+  /// Per-card deterministic seeds keyed by `index:gameId` so revisiting a card
+  /// or previewing upcoming cards deals the exact same board per slot, and new
+  /// deals avoid 30-day repeats.
+  final Map<String, int> _seeds = {};
 
   List<GameMetadata> _buildPool() {
     final Set<String> combinedHidden = <String>{
@@ -115,7 +121,8 @@ class FeedDeck {
   /// [SeedHistoryStore] is attached.
   int seedAt(int index, String gameId) {
     final int safeIndex = index < 0 ? 0 : index;
-    return _seeds.putIfAbsent(safeIndex, () {
+    final String key = '$safeIndex:$gameId';
+    return _seeds.putIfAbsent(key, () {
       final SeedHistoryStore? store = _seedStore;
       if (store != null) {
         return store.nextSeed(
@@ -128,6 +135,13 @@ class FeedDeck {
     });
   }
 
+  /// Drops the cached seed for [index] so an explicit replay in the Deal draws
+  /// a fresh puzzle instance.
+  void rerollSeed(int index, String gameId) {
+    final int safeIndex = index < 0 ? 0 : index;
+    _seeds.remove('$safeIndex:$gameId');
+  }
+
   /// Where this card sits in its pass (1-based), for the "042 / 115" counter.
   int positionInDeck(int index) => index.abs() % deckSize + 1;
 
@@ -136,15 +150,21 @@ class FeedDeck {
         _dealt.isEmpty ? null : _dealt[_dealt.length - 1]?.id;
     final bool leadFirstTen = firstPass &&
         includeFirstTen &&
+        pinnedFirstId == null &&
         categoryId == null &&
         _history.cardsSeen == 0;
+    final List<String> leadingIds = leadFirstTen
+        ? firstTenIds
+        : (firstPass && pinnedFirstId != null
+            ? <String>[pinnedFirstId!]
+            : const <String>[]);
     final List<GameMetadata> ordered = orderPassByRhythm<GameMetadata>(
       pool: _pool,
       idOf: (g) => g.id,
       history: _history,
       random: _random,
       previousLastId: lastId,
-      leadingIds: leadFirstTen ? firstTenIds : const <String>[],
+      leadingIds: leadingIds,
     );
     // `_bag.removeLast()` deals from the end, so store reversed.
     _bag

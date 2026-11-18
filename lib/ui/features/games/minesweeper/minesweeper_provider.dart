@@ -74,6 +74,16 @@ class MinesweeperNotifier extends _$MinesweeperNotifier {
   }
 
   void reset() {
+    final bool inFeed = FeedSession.inFeed;
+    final int r = inFeed ? feedRows : rows;
+    final int c = inFeed ? feedCols : cols;
+    _activeMines = inFeed ? feedMines : totalMines;
+    _engine = MinesweeperEngine(
+      rows: r,
+      cols: c,
+      mineCount: _activeMines,
+      random: FeedSession.randomFor('minesweeper'),
+    );
     state = MinesweeperState(
       board: _engine.generateBoard(),
       minesRemaining: _activeMines,

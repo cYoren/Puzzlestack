@@ -113,8 +113,9 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
       restart: () => _restart(_index),
       close: _close,
       isRoute: widget.isRoute,
-      seedFor: (String gameId) => _deck.seedAt(_index, gameId),
+      seedFor: _seedForCard,
       onSolved: (_) => _currentCardSolved = true,
+      onReplay: () => _deck.rerollSeed(_index, _gameAt(_index).id),
     );
     if (widget.isActive) {
       FeedSession.activate(_session);
@@ -135,6 +136,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
         history: initialHistory,
         includeFirstTen:
             widget.startGameId == null && widget.categoryId == null,
+        pinnedFirstId: widget.startGameId,
         seedStore: SeedHistoryStore(ref.read(pickStoreProvider)),
       );
       _seenThisSession.add(_gameAt(0).id);
@@ -193,6 +195,19 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
       if (pinned != null) return pinned;
     }
     return _deck.gameAt(index);
+  }
+
+  /// Resolves the deterministic seed for [gameId] from the card slot that owns
+  /// it (`_index`, upcoming preview cards `_index + 1` / `_index + 2`, or the
+  /// previous card `_index - 1`) rather than the mutable live `_index`.
+  int _seedForCard(String gameId) {
+    for (final int delta in const <int>[0, 1, 2, -1]) {
+      final int candidate = _index + delta;
+      if (candidate >= 0 && _gameAt(candidate).id == gameId) {
+        return _deck.seedAt(candidate, gameId);
+      }
+    }
+    return _deck.seedAt(_index, gameId);
   }
 
   // --- The deal ------------------------------------------------------------
@@ -316,6 +331,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   void _restart(int index) {
     if (!mounted) return;
     HapticFeedbackUtil.mediumImpact();
+    _deck.rerollSeed(index, _gameAt(index).id);
     setState(() => _restartEpochs[index] = (_restartEpochs[index] ?? 0) + 1);
   }
 

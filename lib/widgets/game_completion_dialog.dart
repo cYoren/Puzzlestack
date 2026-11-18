@@ -90,7 +90,12 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
       feed.next();
     }
 
-    void replay() => widget.onPlayAgain();
+    void replay() {
+      if (!feed.fixedFeedSize) {
+        feed.onReplay?.call();
+      }
+      widget.onPlayAgain();
+    }
 
     return SafeArea(
       child: Align(

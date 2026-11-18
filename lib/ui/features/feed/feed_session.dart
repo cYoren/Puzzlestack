@@ -18,6 +18,7 @@ class FeedSession {
     this.seedFor,
     this.fixedFeedSize = false,
     this.onSolved,
+    this.onReplay,
   });
 
   static final List<FeedSession> _stack = <FeedSession>[];
@@ -85,4 +86,9 @@ class FeedSession {
 
   /// Optional hook notified when the current card completes in the feed.
   final void Function(String? detail)? onSolved;
+
+  /// Optional hook notified before replaying a card in the Deal so the card can
+  /// draw a fresh seed while Daily Five (`fixedFeedSize == true`) keeps its
+  /// fixed daily seed.
+  final VoidCallback? onReplay;
 }

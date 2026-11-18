@@ -109,7 +109,9 @@ class SchulteTableNotifier extends _$SchulteTableNotifier {
   void reset() {
     _timer?.cancel();
     state = SchulteTableState(
-      grid: _engine.generateGrid(),
+      grid: _engine.generateGrid(
+        random: FeedSession.randomFor('schulte_table'),
+      ),
       bestTime: state.bestTime,
     );
   }
