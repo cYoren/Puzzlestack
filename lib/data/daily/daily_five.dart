@@ -299,8 +299,12 @@ class DailyFiveStore {
   /// If today is not finished yet, an unbroken chain ending yesterday still
   /// stands so the player sees the streak they are extending today; missing a
   /// full calendar day resets it to 0.
-  int streakAt(DateTime today) {
-    final Map<String, DailyFiveProgress> all = readAll();
+  int streakAt(DateTime today) => computeStreak(readAll(), today);
+
+  static int computeStreak(
+    Map<String, DailyFiveProgress> all,
+    DateTime today,
+  ) {
     DateTime cursor = DateTime(today.year, today.month, today.day);
     final String todayKey = pickDayKey(cursor);
     if (!(all[todayKey]?.isComplete ?? false)) {

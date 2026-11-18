@@ -13,16 +13,23 @@ final Provider<DailyFiveStore> dailyFiveStoreProvider =
   (ref) => DailyFiveStore(ref.watch(pickStoreProvider)),
 );
 
+/// Summary state for Daily Five.
+///
+/// Evaluates [todayKey], [today], and [streak] against [_clock] on every read
+/// so an app left open across midnight never treats the new calendar day as a
+/// Plus-only archive date or reports a stale streak.
 class DailyFiveSummaryState {
   const DailyFiveSummaryState({
-    required this.todayKey,
     required this.days,
-    required this.streak,
-  });
+    required DateTime Function() clock,
+  }) : _clock = clock;
 
-  final String todayKey;
   final Map<String, DailyFiveProgress> days;
-  final int streak;
+  final DateTime Function() _clock;
+
+  String get todayKey => pickDayKey(_clock());
+
+  int get streak => DailyFiveStore.computeStreak(days, _clock());
 
   DailyFiveProgress progressFor(String dayKey) =>
       days[dayKey] ?? DailyFiveProgress(dayKey: dayKey);
@@ -40,11 +47,9 @@ class DailyFiveController extends StateNotifier<DailyFiveSummaryState> {
     DailyFiveStore store,
     DateTime Function() clock,
   ) {
-    final DateTime now = clock();
     return DailyFiveSummaryState(
-      todayKey: pickDayKey(now),
       days: store.readAll(),
-      streak: store.streakAt(now),
+      clock: clock,
     );
   }
 

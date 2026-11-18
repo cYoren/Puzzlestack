@@ -21,6 +21,7 @@ import 'package:puzzle/ui/features/feed/feed_session.dart';
 import 'package:puzzle/ui/features/games/futoshiki/futoshiki_provider.dart';
 import 'package:puzzle/ui/features/games/lights_out/lights_out_provider.dart';
 import 'package:puzzle/utils/design_system.dart';
+import 'package:puzzle/widgets/game_completion_dialog.dart';
 
 class _ScriptedPlusGateway implements PlusGateway {
   _ScriptedPlusGateway({this.buyAnswer = PurchaseAnswer.purchased});
@@ -314,8 +315,10 @@ void main() {
       final FutoshikiState dealBefore = root.read(futoshikiNotifierProvider);
 
       // Advance clock to targetDay without restarting the app or container,
-      // then open Daily Five from the Deal header chip.
+      // verify dailyFiveProvider.todayKey updates immediately, and open Daily
+      // Five from the Deal header chip.
       now = DateTime.parse('${targetDay}T08:00:00');
+      expect(root.read(dailyFiveProvider).todayKey, targetDay);
       await tester
           .tap(find.byKey(const ValueKey<String>('feed_daily_five_chip')));
       await tester.pumpAndSettle();
@@ -332,6 +335,35 @@ void main() {
       await tester.pump();
       expect(
           identical(root.read(futoshikiNotifierProvider), dealBefore), isTrue);
+
+      // Showing a loss dialog (isVictory: false) and tapping NEXT PUZZLE
+      // advances to slot 2 WITHOUT marking slot 0 solved.
+      final BuildContext dailyCtx =
+          tester.element(find.byType(DailyFiveScreen));
+      showDialog<void>(
+        context: dailyCtx,
+        builder: (_) => GameCompletionDialog(
+          isVictory: false,
+          title: 'Game over',
+          message: 'Hit a mine.',
+          onHome: () {},
+          onPlayAgain: () {},
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('NEXT PUZZLE'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.text('2 / 5'), findsOneWidget);
+      expect(
+        root
+            .read(dailyFiveProvider)
+            .progressFor(targetDay)
+            .timesMs
+            .containsKey(0),
+        isFalse,
+      );
 
       await tester.pumpWidget(const SizedBox());
       await tester.pump(const Duration(milliseconds: 100));

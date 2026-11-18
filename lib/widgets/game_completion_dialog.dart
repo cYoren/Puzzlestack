@@ -64,7 +64,7 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
         final String formatted = formatDailyDuration(latestMs);
         return isBest ? '$formatted \u00b7 BEST' : formatted;
       }
-      final Duration? live = GameClock.elapsed(gameId);
+      final Duration? live = GameClock.completedElapsed(gameId);
       if (live != null && live.inMilliseconds > 0) {
         return formatDailyDuration(live.inMilliseconds);
       }

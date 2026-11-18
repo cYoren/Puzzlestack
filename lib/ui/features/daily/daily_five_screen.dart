@@ -45,6 +45,7 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
   FeedSession? _session;
   ProviderContainer? _slotContainer;
   String? _slotContainerKey;
+  final Stopwatch _slotWatch = Stopwatch();
 
   @override
   void initState() {
@@ -92,6 +93,9 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     );
     _slotContainer = fresh;
     _slotContainerKey = wantedKey;
+    _slotWatch
+      ..reset()
+      ..start();
     return fresh;
   }
 
@@ -124,8 +128,13 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     final List<String> hand = _handForDay(context);
     if (_slot < 0 || _slot >= hand.length) return;
     final String gameId = hand[_slot];
-    final int elapsedMs = (GameClock.elapsed(gameId)?.inMilliseconds ?? 1000)
-        .clamp(1000, 3600000);
+    _slotWatch.stop();
+    final Duration? gameClockDuration = GameClock.completedElapsed(gameId);
+    final int measuredMs =
+        gameClockDuration != null && gameClockDuration.inMilliseconds >= 1000
+            ? gameClockDuration.inMilliseconds
+            : _slotWatch.elapsedMilliseconds;
+    final int elapsedMs = measuredMs.clamp(1000, 3600000);
     ref.read(dailyFiveProvider.notifier).recordSlot(
           dayKey: _dayKey,
           slot: _slot,
@@ -136,11 +145,8 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
 
   void _advanceSlot() {
     if (!mounted) return;
-    final DailyFiveProgress progress =
-        ref.read(dailyFiveProvider).progressFor(_dayKey);
-    if (!progress.timesMs.containsKey(_slot)) {
-      _recordCurrentSolve(null);
-    }
+    // Never mark an unsolved or lost slot as solved here: only [onSolved]
+    // (invoked strictly when `isVictory == true`) records a completed slot.
     final DailyFiveProgress after =
         ref.read(dailyFiveProvider).progressFor(_dayKey);
     if (after.isComplete) {
