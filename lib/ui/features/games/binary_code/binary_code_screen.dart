@@ -109,14 +109,16 @@ class _BinaryCodeScreenState extends ConsumerState<BinaryCodeScreen> {
               _score = 0;
               _correctAnswers = 0;
               _timeLeft = 30;
+              _generateNextRound();
             });
-            _generateNextRound();
             _startTimer();
           },
         ),
       );
     } else {
-      _generateNextRound();
+      setState(() {
+        _generateNextRound();
+      });
     }
   }
 
