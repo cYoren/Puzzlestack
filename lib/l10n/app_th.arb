@@ -1,9 +1,6 @@
 {
   "@@locale": "th",
   "appTitle": "Puzzlestack",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
   "home": "หน้าแรก",
   "settings": "การตั้งค่า",
   "playAgain": "เล่นอีกครั้ง",
@@ -44,6 +41,9 @@
   "trialModeDescription": "แก้ให้ได้ 20 ข้อเพื่อจบแทนการจับเวลา 60 วินาที",
   "keepScreenAwake": "เปิดหน้าจอค้างไว้",
   "keepScreenAwakeDescription": "ป้องกันไม่ให้หน้าจอดับระหว่างเล่นเกม",
+  "showArchivedGames": "แสดงปริศนาที่เก็บถาวร",
+  "showArchivedGamesDescription": "แบบฝึกหัดที่เก็บไว้เป็นข้อมูลอ้างอิง",
+  "archived": "เก็บถาวร",
   "appearance": "รูปลักษณ์",
   "language": "ภาษา",
   "gameplay": "เกมเพลย์",
@@ -73,32 +73,8 @@
   "termsOfService": "ข้อกำหนดการให้บริการ",
   "licenses": "ใบอนุญาต",
   "findWordSubtitle": "คุณมีโอกาส {maxTries} ครั้งในการหาคำศัพท์ {wordLength} ตัวอักษรที่ซ่อนอยู่",
-  "@findWordSubtitle": {
-    "placeholders": {
-      "maxTries": {
-        "type": "int"
-      },
-      "wordLength": {
-        "type": "int"
-      }
-    }
-  },
   "wordFoundMessage": "พบคำศัพท์แล้ว: {word}",
-  "@wordFoundMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOverMessage": "คำศัพท์คือ: {word}",
-  "@gameOverMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOver": "จบเกม",
   "crosswordTitle": "อักษรไขว้",
   "crosswordSubtitle": "เติมคำในตารางให้ถูกต้องตามคำใบ้ที่ให้ไว้",
@@ -108,21 +84,7 @@
   "radicalRootsGoalReached": "บรรลุเป้าหมาย!",
   "radicalRootsTimeUp": "หมดเวลา!",
   "radicalRootsScoreMessage": "คุณคำนวณรากได้ถูกต้อง {score} ข้อ!",
-  "@radicalRootsScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsTryAgainMessage": "ฝึกฝนต่อไป! คุณคำนวณรากได้ {score} ข้อ",
-  "@radicalRootsTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsStart": "เริ่มคำนวณ",
   "radicalRootsDescription": "คุณมีเวลา 60 วินาทีในการแก้ให้ได้มากที่สุด",
   "radicalRootsBest": "ดีที่สุด",
@@ -132,21 +94,7 @@
   "romanArithmeticGoalReached": "ระดับเซ็นจูเรียน!",
   "romanArithmeticTimeUp": "หมดเวลา!",
   "romanArithmeticScoreMessage": "คุณแก้โจทย์โรมันได้ {score} ข้อ!",
-  "@romanArithmeticScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticTryAgainMessage": "Veni, Vidi, Vici! คุณแก้โจทย์ได้ {score} ข้อ",
-  "@romanArithmeticTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticStart": "เริ่มภารกิจ",
   "romanArithmeticDescription": "แปลงค่าและแก้โจทย์ คุณมีเวลา 60 วินาที",
   "romanArithmeticBest": "ดีที่สุด",
@@ -181,6 +129,45 @@
   "magnetsHowToPlay": "เติมคอนเทนเนอร์ขนาดเท่าโดมิโนด้วยแม่เหล็ก '+' และ '-' หรือปล่อยว่างไว้ คำใบ้ในแถวและคอลัมน์จะระบุจำนวนรวมของแต่ละขั้วในเส้นนั้น ขั้วที่เหมือนกันไม่สามารถอยู่ติดกันในแนวตั้งหรือแนวนอนได้",
   "magnetsWinTitle": "ปรับสมดุลขั้วแม่เหล็กแล้ว!",
   "magnetsWinMessage": "แม่เหล็กทั้งหมดถูกจัดเรียงอย่างสมบูรณ์แบบ!",
+  "magnetsPlaced": "Magnets",
+  "magnetsLevel": "Depth",
+  "cubeTitle": "Cube",
+  "cubeSubtitle": "Roll the cube to collect every blue square.",
+  "cubeWinTitle": "SIX BLUES!",
+  "cubeWinMessage": "Every face of the cube is blue.",
+  "cubeHowToPlay": "Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube's bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.",
+  "cubeFaces": "Faces",
+  "cubeMoves": "Moves",
+  "cubeBest": "Best",
+  "mapTitle": "Four Colours",
+  "mapSubtitle": "Colour every region so touching regions never match.",
+  "mapWinTitle": "MAP COLOURED!",
+  "mapWinMessage": "Every region has a colour, and no neighbours clash.",
+  "mapHowToPlay": "Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.",
+  "mapRegions": "Regions",
+  "mapColoured": "Coloured",
+  "inertiaTitle": "Inertia",
+  "inertiaSubtitle": "Slide the ball to collect every gem and miss mines.",
+  "inertiaWinTitle": "ALL GEMS!",
+  "inertiaWinMessage": "Every gem collected and not a mine touched.",
+  "inertiaHowToPlay": "Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.",
+  "inertiaGems": "Gems",
+  "inertiaMoves": "Moves",
+  "inertiaExploded": "MINE! Tap to retry",
+  "netslideTitle": "Netslide",
+  "netslideSubtitle": "Slide rows and columns until every pipe connects.",
+  "netslideWinTitle": "NET COMPLETE!",
+  "netslideWinMessage": "Every pipe is connected.",
+  "netslideHowToPlay": "Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.",
+  "netslideMoves": "Slides",
+  "netslideScramble": "Depth",
+  "signpostTitle": "Signpost",
+  "signpostSubtitle": "Link cells in order by following their arrows.",
+  "signpostWinTitle": "EVERY NUMBER PLACED!",
+  "signpostWinMessage": "One chain from 1 to the last, every arrow pointing the way.",
+  "signpostHowToPlay": "Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.",
+  "signpostMoves": "Links",
+  "signpostGivens": "Givens",
   "lighthousesTitle": "ประภาคาร",
   "lighthousesSubtitle": "วางเรือตามคำใบ้ของประภาคาร",
   "lighthousesHowToPlay": "วางเรือขนาด 1x1 ในตาราง ประภาคารจะระบุจำนวนรวมของเรือที่มองเห็นได้ในแนวตั้งและแนวนอน เรือไม่สามารถสัมผัสประภาคารหรือสัมผัสกันเองได้ แม้แต่ในแนวทแยง",
@@ -191,6 +178,10 @@
   "dominosaHowToPlay": "จัดเรียงชุดโดมิโนที่สมบูรณ์บนตารางตัวเลข โดยที่ตัวเลขคู่ที่อยู่ติดกันแต่ละคู่จะถูกครอบคลุมด้วยโดมิโนเพียงหนึ่งตัวเท่านั้น ตัวเลขแต่ละคู่จะมีเพียงครั้งเดียวในชุด",
   "dominosaWinTitle": "ปรมาจารย์โดมิโน!",
   "dominosaWinMessage": "พบและวางโดมิโนทุกตัวแล้ว!",
+  "dominosaPlaced": "Placed",
+  "dominosaTypes": "Types",
+  "skyscrapersClues": "Clues",
+  "skyscrapersFilled": "Filled",
   "skyscrapersTitle": "ตึกระฟ้า",
   "skyscrapersSubtitle": "เติมความสูงของตึกลงในตาราง",
   "skyscrapersHowToPlay": "เติมความสูง (1-N) ลงในตาราง โดยที่แต่ละแถวและคอลัมน์จะต้องมีความสูงแต่ละค่าเพียงครั้งเดียวเท่านั้น คำใบ้ที่ขอบจะระบุจำนวนตึกที่มองเห็นได้จากทิศทางนั้น โดยตึกที่สูงกว่าจะบังตึกที่เตี้ยกว่า",
@@ -227,26 +218,12 @@
   "arithmeticChainWinMessage": "การคำนวณในใจของคุณเฉียบคมมาก!",
   "arithmeticChainLoseTitle": "ลองอีกครั้ง",
   "arithmeticChainLoseMessage": "คำตอบที่ถูกต้องคือ {answer}",
-  "@arithmeticChainLoseMessage": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "arithmeticChainStart": "เริ่ม",
   "arithmeticChainNext": "ถัดไป",
   "attentionalBlinkTitle": "สมาธิฉับพลัน",
   "attentionalBlinkSubtitleWatch": "มองหาตัวเลข",
   "attentionalBlinkSubtitleInput": "ใส่ตัวเลขสองตัวที่คุณเห็น",
   "attentionalBlinkScoreMessage": "คุณทำคะแนนเป้าหมายได้ {score} แต้ม!",
-  "@attentionalBlinkScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "balanceScaleTitle": "ตาชั่งสมดุล",
   "balanceScaleSubtitle": "สรุปน้ำหนักของชิ้นสุดท้ายตามตาชั่ง",
   "balanceScaleWinTitle": "สมดุล!",
@@ -266,16 +243,6 @@
   "boxCompletionTitle": "ประกอบกล่อง",
   "boxCompletionSubtitle": "ลูกบาศก์ใดที่สามารถประกอบได้?",
   "boxCompletionScoreMessage": "คุณตอบถูก {score} จาก {totalTrials} ข้อ!",
-  "@boxCompletionScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "totalTrials": {
-        "type": "int"
-      }
-    }
-  },
   "boxCompletionOptions": "ตัวเลือก",
   "bridgesTitle": "สะพาน",
   "bridgesSubtitle": "เชื่อมต่อเกาะด้วยสะพาน แต่ละเกาะต้องการจำนวนสะพานที่เจาะจง สะพานห้ามตัดกัน",
@@ -286,21 +253,7 @@
   "calculationSprintGoalReached": "บรรลุเป้าหมาย!",
   "calculationSprintTimeUp": "หมดเวลา",
   "calculationSprintScoreMessage": "ความเร็วในการคำนวณยอดเยี่ยมมาก! คุณได้ {score} คะแนน",
-  "@calculationSprintScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintTryAgainMessage": "คุณได้ {score} คะแนน ลองทำลายสถิติเดิมดู!",
-  "@calculationSprintTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintBest": "ดีที่สุด",
   "calculationSprintSeconds": "60 วินาที",
   "calculationSprintDescription": "แก้สมการอย่างรวดเร็ว\nคำตอบผิดจะหักเวลา 3 วินาที!",
@@ -311,82 +264,20 @@
   "categoryFluencyTimeUp": "หมดเวลา!",
   "categoryFluencyWinMessage": "คุณมีคลังคำศัพท์ที่กว้างขวางมาก!",
   "categoryFluencyFoundMessage": "คุณพบคำศัพท์ {count} คำ",
-  "@categoryFluencyFoundMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "categoryFluencyCategoryLabel": "หมวดหมู่:",
   "categoryFluencyEnterItem": "ระบุสิ่งของ...",
   "categoryFluencyWordCount": "{entered} / {target} คำ",
-  "@categoryFluencyWordCount": {
-    "placeholders": {
-      "entered": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessTitle": "การตาบอดต่อการเปลี่ยนแปลง",
   "changeBlindnessSubtitle": "จับผิดภาพที่เปลี่ยนไป",
   "changeBlindnessScore": "คะแนน: {score}",
-  "@changeBlindnessScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessFoundMessage": "คุณพบจุดเปลี่ยน {score} จุด!",
-  "@changeBlindnessFoundMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTitle": "เวลาตอบสนองเชิงเลือก",
   "choiceRtSubtitle": "แตะช่องที่ใช้งานให้เร็วที่สุดเท่าที่จะทำได้",
   "choiceRtAvgMessage": "เวลาตอบสนองเฉลี่ยของคุณ: {avg}ms",
-  "@choiceRtAvgMessage": {
-    "placeholders": {
-      "avg": {
-        "type": "String"
-      }
-    }
-  },
   "choiceRtTimeRemaining": "เวลาที่เหลือ: {time}s",
-  "@choiceRtTimeRemaining": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTaps": "การแตะ: {count}",
-  "@choiceRtTaps": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodTitle": "สีท่วม",
   "colorFloodSubtitle": "จำนวนครั้ง: {moves} / {maxMoves}",
-  "@colorFloodSubtitle": {
-    "placeholders": {
-      "moves": {
-        "type": "int"
-      },
-      "maxMoves": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodSuccess": "สีท่วมสำเร็จ!",
   "colorFloodDryLand": "แผ่นดินแห้งผาก...",
   "colorFloodWinMessage": "คุณเติมสีจนเต็มตารางแล้ว!",
@@ -398,28 +289,11 @@
   "colorMatchCheck": "ตรวจสอบความใกล้เคียง",
   "colorMatchResult": "ผลลัพธ์",
   "colorMatchAccuracy": "ความแม่นยำของคุณ: {accuracy}%",
-  "@colorMatchAccuracy": {
-    "placeholders": {
-      "accuracy": {
-        "type": "String"
-      }
-    }
-  },
   "corsiBlocksTitle": "บล็อกคอร์ซี่",
   "corsiBlocksSubtitle": "ดูบล็อกที่สว่างขึ้นแล้วแตะตามลำดับเดิม",
   "corsiBlocksWinTitle": "ปรมาจารย์ด้านมิติสัมพันธ์!",
   "corsiBlocksLoseTitle": "หลงทางในอวกาศ",
   "corsiBlocksMessage": "คุณจำลำดับได้ {score} ชุด! ระดับความจำด้านมิติสัมพันธ์ของคุณถึง {span}",
-  "@corsiBlocksMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "span": {
-        "type": "int"
-      }
-    }
-  },
   "corsiBlocksWatch": "จดจำรูปแบบ",
   "corsiBlocksRepeat": "ทำตามรูปแบบ",
   "corsiBlocksExcellent": "ยอดเยี่ยม!",
@@ -441,58 +315,16 @@
   "digitSpanReverseWinMessage": "ความจำระยะสั้นของคุณน่าประทับใจมาก!",
   "digitSpanReverseLoseTitle": "ลองอีกครั้ง",
   "digitSpanReverseLoseMessage": "ลำดับย้อนกลับที่ถูกต้องคือ {sequence}",
-  "@digitSpanReverseLoseMessage": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
   "dividedAttentionTitle": "การแบ่งสมาธิ",
   "dividedAttentionSubtitle": "แตะซ้ายเพื่อ ดาว ⭐ | แตะขวาเพื่อ แดง 🔴",
   "dividedAttentionGameOverTitle": "เสียสมาธิ",
   "dividedAttentionGameOverMessage": "การทำหลายอย่างพร้อมกันมันยากนะ! คะแนนของคุณคือ {score}",
-  "@dividedAttentionGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "dividedAttentionScore": "คะแนน: {score}",
-  "@dividedAttentionScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackTitle": "Double N-Back",
   "doubleNBackSubtitle": "จับคู่สิ่งเร้าถอยหลังไป {n} ขั้น",
-  "@doubleNBackSubtitle": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackGameOverTitle": "จบเกม",
   "doubleNBackGameOverMessage": "คุณได้ {score} คะแนนใน Double N-Back!",
-  "@doubleNBackGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackScore": "คะแนน: {score}",
-  "@doubleNBackScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackPositionMatch": "ตำแหน่งตรงกัน",
   "doubleNBackLetterMatch": "ตัวอักษรตรงกัน",
   "faceNameAssociationTitle": "ชื่อและใบหน้า",
@@ -502,27 +334,10 @@
   "faceNameAssociationGameOver": "จบเกม",
   "faceNameAssociationWinMessage": "คุณมีความจำด้านใบหน้าและชื่อที่ยอดเยี่ยมมาก!",
   "faceNameAssociationLoseMessage": "คุณทำถูก {correct} จากทั้งหมด {total} ข้อ",
-  "@faceNameAssociationLoseMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceNameAssociationStartTest": "เริ่มแบบทดสอบ",
   "flankerTestWinTitle": "สมาธิเฉียบคม!",
   "flankerTestLoseTitle": "วอกแวก",
   "flankerTestScoreMessage": "คุณทำได้ถูกต้อง {score} ข้อ!",
-  "@flankerTestScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "flankerTestTitle": "การทดสอบแฟรงเกอร์",
   "flankerTestSubtitle": "ระบุทิศทางของลูกศรตรงกลาง โดยไม่ต้องสนใจลูกศรด้านข้าง",
   "flankerTestLeft": "ซ้าย",
@@ -531,13 +346,6 @@
   "fractionMatchSubtitle": "จับคู่รูปภาพกับเศษส่วนให้ถูกต้อง",
   "fractionMatchLoseTitle": "เศษส่วนไม่ตรงกัน",
   "fractionMatchLoseMessage": "คำตอบที่ถูกต้องคือ {correctAnswer}",
-  "@fractionMatchLoseMessage": {
-    "placeholders": {
-      "correctAnswer": {
-        "type": "String"
-      }
-    }
-  },
   "goNoGoTitle": "ไป / ไม่ไป",
   "goNoGoSubtitle": "แตะเมื่อเป็นสีเขียว ข้ามเมื่อเป็นสีแดง!",
   "goNoGoLoseTitle": "การตอบสนองหยุดชะงัก",
@@ -549,13 +357,6 @@
   "groceryListWinTitle": "กูรูด้านการช้อป!",
   "groceryListLoseTitle": "ลืมอะไรไปหรือเปล่า?",
   "groceryListScoreMessage": "คุณได้ {score} คะแนนในรายการซื้อของ!",
-  "@groceryListScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "groceryListReady": "ฉันพร้อมแล้ว",
   "groceryListWhereBelong": "สิ่งนี้ควรอยู่ที่ไหน?",
   "hueSortTitle": "เรียงเฉดสี",
@@ -563,44 +364,16 @@
   "hueSortWinTitle": "ไล่เฉดสีได้สมบูรณ์แบบ!",
   "hueSortWinMessage": "คุณจัดเรียงสเปกตรัมสีได้สมบูรณ์แบบ!",
   "hueSortWrongTiles": "แผ่นสีที่อยู่ในตำแหน่งผิด: {count}",
-  "@hueSortWrongTiles": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "kenkenTitle": "เคนเคน",
   "kenkenWinTitle": "อัจฉริยะ!",
   "kenkenLoseTitle": "จบเกม",
   "kenkenWinMessage": "คุณแก้ปริศนาเคนเคนสำเร็จ!",
   "kenkenLoseMessage": "ตรวจสอบแถว คอลัมน์ และกฎในกรง",
   "kenkenSubtitle": "เติมตัวเลข 1-{size} โดยไม่ซ้ำในแถว/คอลัมน์",
-  "@kenkenSubtitle": {
-    "placeholders": {
-      "size": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationTitle": "ยกเลิกตัวอักษร",
   "letterCancellationTitleFull": "การยกเลิกตัวอักษร",
   "letterCancellationScoreMessage": "คุณพบตัวอักษร {score} ตัว!",
-  "@letterCancellationScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationSubtitle": "ค้นหาตัวอักษร \"{target}\" ทั้งหมด",
-  "@letterCancellationSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "String"
-      }
-    }
-  },
   "letterCancellationFound": "พบแล้ว",
   "letterCancellationTime": "เวลา",
   "lightsOutTitle": "ปิดไฟ",
@@ -615,6 +388,7 @@
   "visualStatisticalLearningTitle": "การเรียนรู้ทางสถิติด้วยภาพ",
   "orbitTapTitle": "แตะวงโคจร",
   "orbitTapSubtitle": "แตะเมื่อลูกบอลตรงกับประตู",
+  "orbitTapTapToHit": "แตะเมื่อลูกบอลเข้าประตู",
   "schulteTableTitle": "ตารางชูลเต",
   "multipleObjectTrackingTitle": "ติดตามวัตถุ",
   "multipleObjectTrackingSubtitle": "ดูวัตถุที่ไฮไลต์ ติดตามวัตถุขณะเคลื่อนที่ แล้วเลือกวัตถุเหล่านั้น",
@@ -639,13 +413,6 @@
   "sternbergTaskMemorize": "จดจำตัวอักษร",
   "sternbergTaskWasLetterSet": "ตัวอักษรนี้อยู่ในชุดก่อนหน้าหรือไม่?",
   "sternbergTaskScore": "คุณได้ {score} คะแนนในแบบทดสอบสเติร์นเบิร์ก!",
-  "@sternbergTaskScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "verbalAnalogiesTitle": "การเปรียบเทียบคำพูด",
   "verbalAnalogiesSubtitle": "เติมความสัมพันธ์ให้สมบูรณ์",
   "typingSpeedTitle": "ความเร็วในการพิมพ์",
@@ -671,13 +438,6 @@
   "pixelMimicTitle": "เลียนแบบพิกเซล",
   "targetNumberTitle": "เป้าหมาย 24",
   "targetNumberSubtitle": "ใช้ตัวเลขทั้ง 4 ตัวเพื่อให้ได้ผลลัพธ์เป็น {target}",
-  "@targetNumberSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "mirrorTracingTitle": "การลากเส้นในกระจก",
   "mirrorTracingSubtitle": "ลากเส้นตามรูปดาว! การควบคุมจะถูกสะท้อนแบบกระจกเงา",
   "wordSurgeTitle": "คำศัพท์ถาโถม",
@@ -687,13 +447,6 @@
   "perspectiveTakingChoosePerspective": "เลือกมุมมอง",
   "perspectiveTakingCongrats": "คุณมีสายตาที่เฉียบคมสำหรับความสัมพันธ์เชิงพื้นที่",
   "perspectiveTakingSubtitle": "มุมมองไหนมาจากทิศ {targetDirName}?",
-  "@perspectiveTakingSubtitle": {
-    "placeholders": {
-      "targetDirName": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingTitle": "พับกระดาษ",
   "paperFoldingSubtitle": "เมื่อคลี่ออกมาแล้วจะเป็นอย่างไร?",
   "waterSortTitle": "แยกสีน้ำ",
@@ -729,13 +482,6 @@
   "operationSpanRecallPhase": "ระลึกตัวอักษรตามลำดับ",
   "operationSpanRoundComplete": "จบรอบ!",
   "operationSpanScore": "คุณได้ {score} คะแนนในความจำช่วงการทำงาน!",
-  "@operationSpanScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "slidePuzzleTitle": "เกมเลื่อนภาพ",
   "slidePuzzleNewGame": "เริ่มเกมใหม่",
   "slidePuzzleInstructions": "จัดเรียงแผ่นตัวเลขตามลำดับโดยเลื่อนเข้าไปในที่ว่าง",
@@ -747,18 +493,63 @@
   "trailMakingSubtitle": "เชื่อมต่อตัวเลขตามลำดับ (1 -> 2 -> 3...) ให้เร็วที่สุดเท่าที่จะทำได้",
   "matrixReasoningTitle": "การใช้เหตุผลแบบเมทริกซ์",
   "matrixReasoningSubtitle": "เติมรูปแบบที่หายไปในตาราง 3x3",
+  "abcdTitle": "Four Letters",
+  "abcdSubtitle": "Place A, B, C, or D to match the edge counts.",
+  "abcdFilled": "Cells",
+  "abcdDepth": "Depth",
+  "abcdWinTitle": "EVERY CELL LETTERED!",
+  "abcdWinMessage": "Every count met, no two identical letters touching.",
+  "boatsTitle": "Boats",
+  "boatsSubtitle": "Place the fleet to match the row and column counts.",
+  "boatsShipsFound": "Boat cells",
+  "boatsDepth": "Depth",
+  "boatsWinTitle": "FLEET FOUND!",
+  "boatsWinMessage": "Every boat placed and nothing touching.",
+  "seismicTitle": "Ripple Effect",
+  "seismicSubtitle": "Fill regions 1..N; equal digits keep N cells apart.",
+  "seismicClues": "Clues",
+  "seismicDepth": "Depth",
+  "seismicWinTitle": "RIPPLE SETTLED!",
+  "seismicWinMessage": "Every shape holds 1 to its size, with no two numbers too close.",
+  "mathraxTitle": "Mathrax",
+  "mathraxSubtitle": "Fill a Latin square obeying every corner rule.",
+  "mathraxFilled": "Filled",
+  "mathraxDepth": "Depth",
+  "mathraxWinTitle": "EVERY CORNER AGREES!",
+  "mathraxWinMessage": "A Latin square that satisfies every corner clue.",
+  "saladTitle": "Salad",
+  "saladSubtitle": "Place each letter once per line; edges show first seen.",
+  "saladWritten": "Written",
+  "saladWinTitle": "EVERY LINE AGREES!",
+  "saladWinMessage": "Every letter once in every line, and every border clue reads true.",
+  "romeTitle": "Rome",
+  "romeSubtitle": "Point arrows so every path reaches a goal.",
+  "romeWritten": "Arrows",
+  "romeWinTitle": "EVERY CHAIN ARRIVES!",
+  "romeWinMessage": "One arrow per cell, no repeats in an area, and every chain ends at a goal.",
+  "ascentTitle": "Number Path",
+  "ascentSubtitle": "Place 1 to N so consecutive numbers touch.",
+  "ascentNext": "Next",
+  "ascentDepth": "Depth",
+  "ascentWinTitle": "PATH COMPLETE!",
+  "ascentWinMessage": "One number per cell, every step touching the one before it.",
+  "clustersTitle": "Clusters",
+  "clustersSubtitle": "Two colours: dots touch one mate, others touch two.",
+  "clustersDots": "Dots",
+  "clustersDepth": "Depth",
+  "clustersWinTitle": "CLUSTERS SETTLED!",
+  "clustersWinMessage": "Two colours, every dot true, every cluster of two or more.",
+  "bricksTitle": "Bricks",
+  "bricksSubtitle": "Shade supported cells with no three in a row.",
+  "bricksShaded": "Shaded",
+  "bricksDepth": "Depth",
+  "bricksWinTitle": "THE PILE HOLDS!",
+  "bricksWinMessage": "Every shaded cell is held up, no run of three, and every number reads true.",
   "tentsAndTreesTitle": "เต็นท์และต้นไม้",
   "tentsAndTreesSubtitle": "วางเต็นท์ข้างต้นไม้ ตัวเลขจะบอกว่ามีเต็นท์ในแต่ละแถว/คอลัมน์กี่อัน เต็นท์ห้ามวางติดกัน",
   "quickMathTitle": "คิดเลขเร็ว",
   "magicSquaresTitle": "จัตุรัสกล",
   "magicSquaresSubtitle": "ทุกแถว คอลัมน์ และแนวทแยงต้องมีผลรวมเท่ากับ {targetSum}",
-  "@magicSquaresSubtitle": {
-    "placeholders": {
-      "targetSum": {
-        "type": "int"
-      }
-    }
-  },
   "objectShuffleTitle": "สลับวัตถุ",
   "pipesTitle": "ท่อประปา",
   "pipesSubtitle": "เชื่อมต่อจุดสีที่ตรงกันด้วยท่อ",
@@ -840,13 +631,6 @@
   "blockCount3DNotQuite": "ยังไม่ถูก! ลองหมุนเพื่อนับใหม่อีกครั้งนะ",
   "blockCount3DExcellent": "ยอดเยี่ยม",
   "blockCount3DWinMessage": "คุณระบุจำนวนบล็อกทั้ง {count} อันได้ถูกต้อง!",
-  "@blockCount3DWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "blockCount3DHowToPlayDescription": "1. ลากนิ้วบนหน้าจอ 3 มิติเพื่อหมุนกองบล็อก\n\n2. นับบล็อกทั้งหมดในกอง\n\n3. จำไว้ว่า: บล็อกที่ลอยอยู่ในอากาศต้องมีบล็อกรองรับอยู่ข้างล่าง (บล็อกที่ซ่อนอยู่!)\n\n4. พิมพ์คำตอบในช่องใส่ข้อมูลแล้วแตะ \"ส่งคำตอบ\" เพื่อตรวจสอบ",
   "alphabetSudokuTitle": "ซูโดกุตัวอักษร",
   "alphabetSudokuSubtitle": "เติมตัวอักษร A-I ลงในตารางโดยไม่ซ้ำในแถว คอลัมน์ และบล็อก",
@@ -856,13 +640,6 @@
   "classicMazeSubtitle": "สำรวจและหาทางออก • เขาวงกตใหม่ทุกเกม",
   "classicMazeWinTitle": "ผ่านเขาวงกต!",
   "classicMazeWinMessage": "นำทางได้ยอดเยี่ยมมาก! คุณผ่านเขาวงกตได้ใน {count} ครั้ง",
-  "@classicMazeWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "classicMazeMoves": "จำนวนครั้ง: ",
   "classicMazeHowToPlayDescription": "1. นำทางลูกหินสีเหลือง (ผู้เล่น) ไปยังพอร์ทัลสีเขียว (ทางออก) ที่มุมขวาล่าง\n\n2. ปัดหน้าจอ ใช้ปุ่มลูกศรบนคีย์บอร์ด หรือปุ่มลูกศรด้านล่างเพื่อเคลื่อนที่\n\n3. เส้นสีม่วงแสดงเส้นทางที่คุณเคยผ่าน คุณสามารถเดินย้อนกลับเพื่อลบเส้นทางได้!\n\n4. เปลี่ยนระดับความยากจากแถบด้านบนเพื่อท้าทายตัวเองด้วยเขาวงกตที่ใหญ่ขึ้น!",
   "conjunctionSearchTitle": "การค้นหาแบบเชื่อมโยง",
@@ -877,6 +654,9 @@
   "shapeSquare": "สี่เหลี่ยม",
   "shapeTriangle": "สามเหลี่ยม",
   "shapeStar": "ดาว",
+  "shapeRectangle": "สี่เหลี่ยมผืนผ้า",
+  "shapeEllipse": "วงรี",
+  "shapeTrapezoid": "สี่เหลี่ยมคางหมู",
   "colorRedLabel": "สีแดง",
   "colorBlueLabel": "สีน้ำเงิน",
   "colorGreenLabel": "สีเขียว",
@@ -893,31 +673,11 @@
   "cubeNetFoldFailed": "พลาดแล้ว (แตะรีเซ็ต)",
   "faceTraitAssociationMemorize": "จดจำทั้ง 4 คนนี้",
   "faceTraitAssociationPersonOf": "คนที่ {current} จาก {total}",
-  "@faceTraitAssociationPersonOf": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceTraitAssociationWhatOccupation": "พวกเขาทำอาชีพอะไร?",
   "faceTraitAssociationWhatHobby": "งานอดิเรกของพวกเขาคืออะไร?",
   "faceTraitAssociationWinTitle": "ปรมาจารย์ความจำ!",
   "faceTraitAssociationLoseTitle": "จบเกม",
   "faceTraitAssociationScoreMessage": "คุณทำถูก {correct} จากทั้งหมด {total} ข้อ",
-  "@faceTraitAssociationScoreMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "topologyTitle": "ทอพอโลยี",
   "topologySubtitle": "รูปร่างเหล่านี้เหมือนกันทางทอพอโลยีหรือไม่? (สามารถเปลี่ยนรูปหนึ่งเป็นอีกรูปหนึ่งได้โดยไม่ตัดหรือดึง?)",
   "topologyWinTitle": "อัจฉริยะเรขาคณิต!",
@@ -975,828 +735,157 @@
   "oneLetterShiftTitle": "เปลี่ยนหนึ่งอักษร",
   "oneLetterShiftSubtitle": "เปลี่ยนคำหนึ่งให้เป็นอีกคำหนึ่งโดยการเปลี่ยนตัวอักษรเพียงตัวเดียว",
   "vocabularyBuilderMessage": "ยอดเยี่ยมมาก! คลังคำศัพท์ของคุณน่าประทับใจมาก คะแนน: {arg0}",
-  "@vocabularyBuilderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "symmetryMessage": "คุณสะท้อนรูปแบบได้อย่างสมบูรณ์แบบด้วยความแม่นยำสูง",
   "temporalOrderMessage": "น่าทึ่งมาก! ความจำลำดับเหตุการณ์ของคุณมีความแม่นยำสูง",
   "temporalOrderMessage1": "ความจำลำดับไม่ถูกต้อง ฝึกฝนบ่อยๆ นะ!",
   "wordSearchMessage": "พบคำศัพท์ทั้งหมดแล้วด้วยการสังเกตที่เฉียบคม",
   "colorMatchMessage": "ความแม่นยำของคุณ: {arg0}%",
-  "@colorMatchMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "semanticLinkMessage": "คุณทำได้ {arg0} คะแนน!",
-  "@semanticLinkMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "reflexTapMessage": "คุณแตะเป้าหมายได้ {arg0} ครั้ง!",
-  "@reflexTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderMessage": "สัญชาตญาณทางเรขาคณิตของคุณสมบูรณ์แบบ!",
   "angleFinderMessage1": "คำตอบที่ถูกต้องคือ {arg0}°",
-  "@angleFinderMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderText": "{arg0}°",
-  "@angleFinderText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "visualStatisticalLearningMessage": "คุณทำคะแนนรูปแบบที่ถูกต้องได้ {arg0} รูปแบบ!",
-  "@visualStatisticalLearningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nonogramText": "ข้อผิดพลาด: {arg0}",
-  "@nonogramText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalCalendarMessage": "คุณทำถูก {arg0} จาก 10 ข้อ!",
-  "@mentalCalendarMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "orbitTapMessage": "คุณแตะสำเร็จ {arg0} ครั้ง!",
-  "@orbitTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableMessage": "คุณทำตารางเสร็จในเวลา {arg0}\nฝึกฝนต่อไปเพื่อขยายการมองเห็นรอบข้างของคุณ!",
-  "@schulteTableMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableText": "เริ่มการทดสอบ",
   "relationalMemoryMessage": "ความแม่นยำของความจำเชิงสัมพันธ์เชิงพื้นที่ยอดเยี่ยมมาก!",
   "sudokuText": "ข้อผิดพลาด: {arg0}",
-  "@sudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sdmtMessage": "คุณจับคู่สัญลักษณ์ได้ {arg0} ตัว! การทดสอบนี้วัดความเร็วในการสแกนและการจดจ่อทางสายตาของคุณ",
-  "@sdmtMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "futoshikiMessage": "เหลือเชื่อ! คุณแก้โจทย์ตาราง Futoshiki Latin Square ได้สำเร็จ",
+  "futoshikiWinTitle": "SQUARE SOLVED!",
+  "futoshikiGivens": "Givens",
+  "futoshikiEdges": "Edges",
   "letterFrequencyScanMessage": "คุณนับจำนวนการปรากฏของ \"{arg1}\" ได้ถูกต้อง {arg0} ครั้ง",
-  "@letterFrequencyScanMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "letterFrequencyScanText": "ไม่ถูกต้อง จำนวนจริงคือ {arg0}",
-  "@letterFrequencyScanText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "memoryMatrixMessage": "น่าประทับใจ! ความจำใช้งานของคุณเฉียบคมมาก บรรลุเป้าหมายรายวันแล้ว!",
   "memoryMatrixMessage1": "ตั้งสติแล้วลองอีกครั้งเพื่อเพิ่มคะแนนความจำของคุณ",
   "contextCluesMessage": "ยอดเยี่ยม! คลังคำศัพท์และการวิเคราะห์บริบทของคุณอยู่ในระดับสูงสุด",
   "contextCluesMessage1": "เลือกคำผิด! ฝึกการใช้เหตุผลตามบริบทของคำแล้วลองอีกครั้ง",
   "oneLetterShiftMessage": "คุณเปลี่ยนจาก {arg0} เป็น {arg1} ได้ถูกต้อง",
-  "@oneLetterShiftMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "mentalAbacusMessage": "การคิดเลขในใจของคุณอยู่ในระดับสูงสุด",
   "fractionMatcherMessage": "คุณทำได้ {arg0} คะแนนจากการจับคู่รูปแบบเศษส่วน!",
-  "@fractionMatcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spellingSprintMessage": "คุณสะกดคำทั้ง 10 คำได้ถูกต้อง!",
   "spellingSprintMessage1": "คุณสะกดคำได้ {arg0} คำ",
-  "@spellingSprintMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "stopSignalMessage": "คุณตอบสนองถูกต้อง {arg0} ครั้ง! การทดสอบนี้วัดความสามารถในการยับยั้งการกระทำที่วางแผนไว้",
-  "@stopSignalMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarPoliceMessage": "จบเกม! คุณรักษาความระเบียบเรียบร้อยในโลกของไวยากรณ์ คะแนน: {arg0}",
-  "@grammarPoliceMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "consonantReconstructMessage": "คุณสร้างคำใหม่ได้คะแนน {arg0}!",
-  "@consonantReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhymeMasterMessage": "คุณหาคำคล้องจองได้ {arg0} จาก {arg1} คำ!",
-  "@rhymeMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "vigilanceTaskMessage": "สำเร็จ: {arg0}, พลาด: {arg1}\nแจ้งเตือนผิดพลาด: {arg2}",
-  "@vigilanceTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "silhouetteMatchOrthoMessage": "คุณมีทักษะการจัดตำแหน่งออร์โธกราฟิกที่ไร้ที่ติ!",
   "silhouetteMatchOrthoText": "รับทราบ",
   "silhouetteMatchOrthoText1": "การฉายภาพทัศนียภาพไม่ถูกต้อง! แตะรีเซ็ตเพื่อลองอีกครั้ง",
   "fibonacciMergeMessage": "{arg0}: {arg1}",
-  "@fibonacciMergeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "factorFinderMessage": "คุณได้ {arg0} คะแนนจากการหาตัวประกอบทั้งหมด!",
-  "@factorFinderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "logicalSyllogismsMessage": "คุณแก้โจทย์ตรรกบทถูกต้อง {arg0} ข้อ!",
-  "@logicalSyllogismsMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rotatingMazeMessage": "คุณผ่านเขาวงกตที่หมุนอยู่ได้สำเร็จ!",
   "rotatingMazeText": "รับทราบ",
   "rotatingMazeText1": "🌀 เขาวงกตหมุน 90°! ตารางขยับแล้ว!",
   "mathPathMessage": "คุณพบเส้นทางที่รวมกันได้เท่ากับเป้าหมายแล้ว!",
   "bridgesMessage": "คุณเชื่อมต่อเกาะทั้งหมดได้สำเร็จ!",
   "compoundConnectMessage": "คำผสมคือ {arg0}{arg1}",
-  "@compoundConnectMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "pangramSprintMessage": "คุณสร้างประโยคโดยใช้ตัวอักษรครบทั้ง 26 ตัว",
   "mirrorImageMessage": "คุณระบุภาพสะท้อนได้อย่างสมบูรณ์แบบ",
   "mirrorImageText": "ภาพกระจกเงา",
   "reverseStroopMessage": "คุณทำได้ {arg0} คะแนน! อย่าลืมดูคำแนะนำให้ดี",
-  "@reverseStroopMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "verbalAnalogiesMessage": "คุณมีความคิดที่เฉียบแหลมในเรื่องความสัมพันธ์",
   "corsiBlocksMessage1": "คุณจำลำดับได้ {arg1} ชุด! ระดับความจำเชิงพื้นที่ของคุณถึง {arg0} แล้ว",
-  "@corsiBlocksMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "wordLadderMessage": "คุณเชื่อมต่อ {arg0} กับ {arg1} ได้สำเร็จใน {arg2} ขั้นตอน",
-  "@wordLadderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionMessage": "การสแกนแบบเลือกสรรที่น่าทึ่ง! คะแนนสุดท้าย: {arg0}",
-  "@d2AttentionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionText": "วิธีเล่น",
   "d2AttentionText1": "เข้าใจแล้ว",
   "tangleFixMessage": "เส้นทั้งหมดชัดเจนและราบรื่นแล้ว",
   "distractorMatrixMessage": "เหลือเชื่อ! คุณจำรูปแบบได้แม้จะมีตัวเลขคณิตศาสตร์มาดึงดูดความสนใจ!",
   "distractorMatrixMessage1": "คุณโดนตัวดึงดูดความสนใจหลอกซะแล้ว! ฝึกฝนความจำขณะทำงานของคุณใหม่นะ",
   "sentenceUnscrambleMessage": "คุณถอดรหัสประโยคได้คะแนน {arg0}!",
-  "@sentenceUnscrambleMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "kakuroMessage": "ยอดเยี่ยม! คุณจับคู่ส่วนรวมของตัวเลขทั้งหมดได้อย่างสมบูรณ์แบบ",
   "symbolicFlankerMessage": "คุณตอบถูก {arg0} จาก {arg1}!",
-  "@symbolicFlankerMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "stroopTestMessage": "คุณตอบถูก {arg0} ข้อ! จดจ่อที่สีของน้ำหมึก ไม่ใช่ตัวหนังสือ",
-  "@stroopTestMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wisconsinCardSortingMessage": "คุณแยกประเภทการ์ดได้ถูกต้อง {arg0} ใบ!",
-  "@wisconsinCardSortingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nBackMessage": "คุณทำ 2-back แมตช์ได้ {arg0} ครั้ง! ความจำขณะทำงานของคุณสำคัญมากสำหรับการทำงานหลายอย่างพร้อมกัน",
-  "@nBackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhythmMasterMessage": "คุณทำ Perfect ได้ {arg0} ครั้ง และได้ {arg1} คะแนน!",
-  "@rhythmMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListMessage": "คุณทำได้ {arg0} คะแนนในรายการซื้อของ!",
-  "@groceryListMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListText": "ฉัน",
   "mirrorTracingMessage": "สมองของคุณปรับจูนการประสานงานใหม่ได้สำเร็จ",
   "moduloClockMessage": "ยอดเยี่ยมสำหรับการคำนวณเลขมอดูโลในใจ! คะแนน: {arg0}",
-  "@moduloClockMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "moduloClockMessage1": "คุณแก้โจทย์นาฬิกามอดูโลได้ {arg0} จาก {arg1} ข้อ คะแนน: {arg2}",
-  "@moduloClockMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "crownMessage": "วางมงกุฎทั้งหมดได้สำเร็จด้วยตรรกะที่สมบูรณ์แบบ",
   "dualCodingMessage": "ประสิทธิภาพการทำงานสองอย่างพร้อมกันที่ยอดเยี่ยม! คะแนนความจำขณะทำงานของคุณ: {arg0}",
-  "@dualCodingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "inequalityDashMessage": "คุณได้ {arg0} คะแนนจากการจับคู่อสมการ!",
-  "@inequalityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringMessage": "คุณทำได้ {arg0} จาก {arg1} คะแนน!",
-  "@sourceMonitoringMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringText": "เริ่มการระลึกความจำ",
   "memoryPalaceText": "คำที่มีอยู่",
   "target10Message": "คุณได้ {arg0} คะแนนจากการจับคู่ตัวเลขให้รวมกันได้ 10!",
-  "@target10Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingMessage": "คุณมองเห็นรูปแบบในจินตนาการของคุณได้",
   "topologyText": "{arg0}{arg1} / 10",
-  "@topologyText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "waterSortMessage": "คุณแยกสีทั้งหมดได้อย่างสมบูรณ์แบบ!",
   "anagramDefinitionMessage": "คำนั้นคือ \"{arg0}\" จริงๆ",
-  "@anagramDefinitionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message": "{arg0}: {arg1}\n{arg2}",
-  "@game2048Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message1": "{arg0}: {arg1}",
-  "@game2048Message1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "numericalEstimationMessage": "คุณประมาณค่าได้ถูกต้อง {arg0} ครั้ง",
-  "@numericalEstimationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarSortMessage": "คุณจัดหมวดหมู่คำศัพท์ได้ถูกต้อง {arg0} คำ!",
-  "@grammarSortMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vowelReconstructMessage": "คุณประกอบสระใหม่ได้คะแนน {arg0}!",
-  "@vowelReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictMessage": "คุณทำคะแนนได้ {arg0} โดยมีข้อผิดพลาด {arg1} ครั้ง!",
-  "@spatialConflictMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictText": "วิธีเล่น",
   "spatialConflictText1": "เข้าใจแล้ว",
   "tracePathMessage": "ความแม่นยำของคุณคือ {arg0}%!",
-  "@tracePathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "ruleSwitcherMessage": "คุณตอบถูก {arg0} จาก {arg1}!",
-  "@ruleSwitcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzMessage": "คุณใช้ {arg0} ขั้นตอน ขั้นต่ำที่เป็นไปได้คือ {arg1}",
-  "@collatzMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzText": "/ 2",
   "collatzText1": "+ 1",
   "collatzText2": "3n + 1",
   "divisibilityDashMessage": "คุณแก้โจทย์ตัวเลขได้ {arg0} จำนวน!",
-  "@divisibilityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "switchTaskMessage": "คุณตอบถูก {arg0} ข้อ! การสลับงานอย่างรวดเร็วคือหัวใจของความยืดหยุ่นทางความคิด",
-  "@switchTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sequenceSleuthMessage": "คุณหาคำตอบลำดับตัวเลขได้ {arg0} ชุด!",
-  "@sequenceSleuthMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "changeBlindnessMessage": "คุณพบการเปลี่ยนแปลง {arg0} จุด!",
-  "@changeBlindnessMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalRotationMessage": "คุณหมุนรูปทรงได้ถูกต้อง {arg0} รูป!",
-  "@mentalRotationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage": "คุณถอดรหัสได้แล้ว!\nคำนั้นคือ: {arg0}",
-  "@wordMastermindMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage1": "คำที่ซ่อนอยู่คือ: {arg0}",
-  "@wordMastermindMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindText": "{arg0}",
-  "@wordMastermindText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonSequenceMessage": "คุณจำแผ่นป้ายได้ครบทั้ง 10 แผ่น!",
   "simonSequenceMessage1": "ลองอีกครั้งเพื่อฝึกฝนลำดับให้แม่นยำ",
   "oxymoronHuntMessage": "คุณพบคำที่ขัดแย้งในตัวเอง {arg0} คำ!",
-  "@oxymoronHuntMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackMessage": "การติดตามเชิงพื้นที่ที่น่าทึ่ง! คุณทำได้ {arg0} คะแนน",
-  "@spotlightTrackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackText": "วิธีเล่น",
   "spotlightTrackText1": "เข้าใจแล้ว",
   "spotlightTrackText2": "เริ่มรอบ",
   "vennNumbersMessage": "คุณจัดหมวดหมู่ตัวเลขได้ {arg0} จำนวน!",
-  "@vennNumbersMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vennNumbersText": "ไม่ใช่ทั้งสองอย่าง",
   "vennNumbersText1": "ทั้งสองอย่าง",
   "silhouetteMatchMessage": "สมองของคุณยอดเยี่ยมในการแปลงภาพ 3 มิติเป็น 2 มิติ",
   "sumSnakeMessage": "บรรลุเป้าหมาย {arg0} ด้วยความแม่นยำที่สมบูรณ์แบบ!",
-  "@sumSnakeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumSnakeText": "ล้างเส้นทาง",
   "percentagePeakMessage": "คุณแก้โจทย์ร้อยละได้ {arg0} ข้อ!",
-  "@percentagePeakMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "trailMakingMessage": "คุณลากเส้นได้ {arg0} เส้น! แบบทดสอบนี้วัดความเร็วในการค้นหาด้วยสายตาและความยืดหยุ่นทางความคิดของคุณ",
-  "@trailMakingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "matrixReasoningMessage": "คุณทำโจทย์เมทริกซ์เสร็จสมบูรณ์ {arg0} ชุด!",
-  "@matrixReasoningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "tentsAndTreesMessage": "คุณกางเต็นท์ทั้งหมดได้สำเร็จแล้ว",
+  "tentsAndTreesWinTitle": "CAMP READY!",
+  "tentsAndTreesTents": "Tents",
+  "tentsAndTreesDepth": "Depth",
   "klotskiMessage": "การเลื่อนที่ยอดเยี่ยม! คุณพาบล็อกฮีโร่ออกมาได้ใน {arg0} การเคลื่อนที่",
-  "@klotskiMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumPyramidMessage": "คุณแก้โจทย์พีระมิดตัวเลขได้ {arg0} พีระมิดสำเร็จ!",
-  "@sumPyramidMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage": "การตอบสนองแบบเลือกสรรและสมาธิที่ยอดเยี่ยม! คะแนนรวม: {arg0}",
-  "@simonCommandMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage1": "คุณทำได้ {arg0} คะแนน แต่ยังไม่ถึง {arg1} คู่ในเวลาที่กำหนด",
-  "@simonCommandMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "syllableStackMessage": "คุณสะสมคะแนนได้ {arg0}!",
-  "@syllableStackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "slitherlinkMessage": "สุดยอด! คุณไขปริศนาห่วงโซ่ได้สำเร็จ",
   "quickMathMessage": "คุณแก้โจทย์ได้ {arg0} ข้อ!",
-  "@quickMathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "commonDenominatorMessage": "คุณแก้โจทย์ ห.ร.ม./ค.ร.น. ได้ {arg0} ข้อ!",
-  "@commonDenominatorMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionMessage": "คะแนนสุดท้ายของคุณคือ {arg0} คุณสร้างโซ่คำศัพท์ได้ {arg1} คำ",
-  "@chainReactionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionText": "{arg0}",
-  "@chainReactionText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "associativePairsMessage": "ยอดเยี่ยม! คุณเชื่อมโยงลักษณะทางสายตาได้อย่างไร้ที่ติ",
   "associativePairsMessage1": "การเชื่อมโยงผิดพลาด! ฝึกฝนความจำในการเชื่อมโยงและลองใหม่อีกครั้ง",
   "portmanteauSplitMessage": "คุณแยกคำสนธิได้ {arg0} คำ!",
-  "@portmanteauSplitMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "magicSquaresText": "ล้าง",
   "alphabetSudokuText": "ข้อผิดพลาด: {arg0}",
-  "@alphabetSudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "pipesMessage": "คุณเชื่อมต่อท่อทั้งหมดและเติมเต็มตารางแล้ว",
   "dualMirrorMessage": "คุณนำทางไอคอนทั้งสองไปยังเป้าหมายได้สำเร็จ!",
   "binaryCodeMessage": "การแปลงเลขฐานสิบอย่างรวดเร็วที่น่าทึ่ง! คะแนนสุดท้าย: {arg0}",
-  "@binaryCodeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "binaryCodeMessage1": "คุณแปลงเลขฐานสองได้ถูกต้อง {arg0} จำนวน คะแนน: {arg1}",
-  "@binaryCodeMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage": "คุณหาจุดที่ต่างกันได้ 50 จุด! คะแนนสุดท้าย: {arg0}",
-  "@oddOneOutMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage1": "คะแนนของคุณ: {arg0}",
-  "@oddOneOutMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "letterBridgeMessage": "คุณพบตัวอักษรเชื่อมโยงแล้ว: {arg0}",
-  "@letterBridgeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "imReady": "ฉันพร้อมแล้ว",
   "soptTitle": "การชี้คำสั่งด้วยตนเอง",
   "soptSubtitle": "แตะการ์ดอื่นในแต่ละครั้ง สลับตำแหน่ง!",
@@ -1926,125 +1015,6 @@
   "cabinetItemLock": "ล็อค",
   "cabinetItemPet": "สัตว์เลี้ยง",
   "cabinetItemCar": "รถ",
-  "@soptGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@contRecogGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dnmsGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@symSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@countingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@countingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@objDispGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@mandalaGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanPrepareRecall": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEnterLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanRecallLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEntered": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialCabinetGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@spatialCabinetWhereIs": {
-    "placeholders": {
-      "itemName": {
-        "type": "String"
-      }
-    }
-  },
   "gamesTitleLabel": "เกม",
   "yourFavorites": "รายการโปรดของคุณ",
   "readyForWorkout": "พร้อมสำหรับการฝึกสมองประจำวันของคุณหรือยัง?",
@@ -2143,35 +1113,282 @@
   "klotskiTitle": "หลบหนีคลอตสกี้",
   "klotskiSubtitle": "เลื่อนบล็อกเพื่อไปให้ถึงทางออก",
   "homophoneHuntSubtitle": "เลือกคำพ้องเสียงที่สะกดถูกต้อง",
-  "compassMazeCongrats": "การนำทางระดับผู้เชี่ยวชาญ! คุณพบทางออกผ่านทิศทางที่เปลี่ยนแปลงตลอดเวลา",
-  "compassMazeMessage": "นำทางในเขาวงกตโดยใช้เข็มทิศ",
-  "compassMazeSubtitle": "นำทางในเขาวงกตที่ทิศทางการเคลื่อนที่เปลี่ยนไปตามการวางแนวของเข็มทิศของคุณ",
-  "compassMazeTitle": "เขาวงกตเข็มทิศ",
-  "complexFoldingNetsCongrats": "ตรรกะการพับขั้นสูง! คุณจินตนาการถึงรูปแบบ 3 มิติได้สำเร็จ",
-  "complexFoldingNetsSubtitle": "กำหนดว่ารูปทรง 3 มิติที่ซับซ้อนใดจะเกิดขึ้นจากการพับตาข่าย 2 มิติที่ไม่เป็นมาตรฐาน",
-  "complexFoldingNetsTitle": "ตาข่ายพับ",
-  "crossSectionSliceCongrats": "การสร้างภาพ 3 มิติที่น่าทึ่ง! คุณมองทะลุรูปร่างนั้นได้ทันที",
-  "crossSectionSliceSubtitle": "ระบุภาพตัดขวาง 2 มิติที่ถูกต้องของวัตถุ 3 มิติจากมุมที่กำหนด",
-  "crossSectionSliceTitle": "แผ่นภาพตัดขวาง",
-  "interlockPuzzleCongrats": "การถอดรหัสเชิงตรรกะ! คุณคลี่คลายปริศนาได้อย่างสมบูรณ์แบบ",
-  "interlockPuzzleSubtitle": "ถอดประกอบหรือประกอบบล็อกที่เชื่อมต่อกันอย่างซับซ้อนตามลำดับที่ถูกต้อง",
-  "interlockPuzzleTitle": "ปริศนาเชื่อมโยง",
-  "laserLinkCongrats": "การสะท้อนที่แม่นยำ! คุณจ่ายไฟให้คนทั้งกริดได้สำเร็จ",
-  "laserLinkSubtitle": "หมุนกระจกเพื่อสะท้อนเลเซอร์และเพิ่มพลังให้กับเป้าหมายทั้งหมด",
   "laserLinkTitle": "เลเซอร์ลิงก์",
-  "negativeSpaceDetectionCongrats": "การรับรู้ที่เฉียบคม! คุณเชี่ยวชาญศิลปะแห่งการมองเห็นสิ่งที่ไม่ได้อยู่ตรงนั้น",
-  "negativeSpaceDetectionMessage": "ระบุวัตถุที่ซ่อนอยู่ในพื้นที่",
-  "negativeSpaceDetectionSubtitle": "ระบุรูปร่างที่เกิดจากพื้นที่ว่างระหว่างวัตถุ",
-  "negativeSpaceDetectionTitle": "พื้นที่ว่างเชิงลบ",
-  "pathIntersectCongrats": "การนำทางที่สอดประสานกัน! คุณบรรลุเป้าหมายทั้งหมดอย่างไร้ที่ติ",
-  "pathIntersectSubtitle": "นำทางหลายเส้นทางพร้อมกันเพื่อไปยังเป้าหมายของแต่ละเส้นทางโดยไม่ชนกัน",
-  "pathIntersectTitle": "ทางแยกเส้นทาง",
+  "laserLinkSubtitle": "หมุนกระจกเพื่อสะท้อนเลเซอร์และเพิ่มพลังให้กับเป้าหมายทั้งหมด",
+  "laserLinkCongrats": "การสะท้อนที่แม่นยำ! คุณจ่ายไฟให้คนทั้งกริดได้สำเร็จ",
+  "crossSectionSliceTitle": "แผ่นภาพตัดขวาง",
+  "crossSectionSliceSubtitle": "ระบุภาพตัดขวาง 2 มิติที่ถูกต้องของวัตถุ 3 มิติจากมุมที่กำหนด",
+  "crossSectionSliceCongrats": "การสร้างภาพ 3 มิติที่น่าทึ่ง! คุณมองทะลุรูปร่างนั้นได้ทันที",
+  "shadowPivotTitle": "จุดหมุนเงา",
   "shadowPivotCongrats": "การใช้เหตุผลเชิงพื้นที่แบบไดนามิก! คุณเชี่ยวชาญเรื่องแสงและเงา",
   "shadowPivotSubtitle": "ทำนายเงาที่ทอดโดยวัตถุ 3 มิติขณะที่มันหมุนในแกนต่างๆ",
-  "shadowPivotTitle": "จุดหมุนเงา",
-  "shapeEllipse": "วงรี",
-  "shapeRectangle": "สี่เหลี่ยมผืนผ้า",
-  "shapeTrapezoid": "สี่เหลี่ยมคางหมู",
+  "interlockPuzzleTitle": "ปริศนาเชื่อมโยง",
+  "interlockPuzzleSubtitle": "ถอดประกอบหรือประกอบบล็อกที่เชื่อมต่อกันอย่างซับซ้อนตามลำดับที่ถูกต้อง",
+  "interlockPuzzleCongrats": "การถอดรหัสเชิงตรรกะ! คุณคลี่คลายปริศนาได้อย่างสมบูรณ์แบบ",
+  "pathIntersectTitle": "ทางแยกเส้นทาง",
+  "pathIntersectSubtitle": "นำทางหลายเส้นทางพร้อมกันเพื่อไปยังเป้าหมายของแต่ละเส้นทางโดยไม่ชนกัน",
+  "pathIntersectCongrats": "การนำทางที่สอดประสานกัน! คุณบรรลุเป้าหมายทั้งหมดอย่างไร้ที่ติ",
+  "negativeSpaceDetectionTitle": "พื้นที่ว่างเชิงลบ",
+  "negativeSpaceDetectionSubtitle": "ระบุรูปร่างที่เกิดจากพื้นที่ว่างระหว่างวัตถุ",
+  "negativeSpaceDetectionCongrats": "การรับรู้ที่เฉียบคม! คุณเชี่ยวชาญศิลปะแห่งการมองเห็นสิ่งที่ไม่ได้อยู่ตรงนั้น",
+  "compassMazeTitle": "เขาวงกตเข็มทิศ",
+  "compassMazeSubtitle": "นำทางในเขาวงกตที่ทิศทางการเคลื่อนที่เปลี่ยนไปตามการวางแนวของเข็มทิศของคุณ",
+  "compassMazeCongrats": "การนำทางระดับผู้เชี่ยวชาญ! คุณพบทางออกผ่านทิศทางที่เปลี่ยนแปลงตลอดเวลา",
+  "complexFoldingNetsTitle": "ตาข่ายพับ",
+  "complexFoldingNetsSubtitle": "กำหนดว่ารูปทรง 3 มิติที่ซับซ้อนใดจะเกิดขึ้นจากการพับตาข่าย 2 มิติที่ไม่เป็นมาตรฐาน",
+  "complexFoldingNetsCongrats": "ตรรกะการพับขั้นสูง! คุณจินตนาการถึงรูปแบบ 3 มิติได้สำเร็จ",
+  "compassMazeMessage": "นำทางในเขาวงกตโดยใช้เข็มทิศ",
+  "negativeSpaceDetectionMessage": "ระบุวัตถุที่ซ่อนอยู่ในพื้นที่",
+  "shikakuTitle": "ชิคาคุ",
+  "shikakuSubtitle": "แบ่งตารางออกเป็นสี่เหลี่ยมจัตุรัสและสี่เหลี่ยมที่ตรงกับตัวเลข",
+  "countdownMathTitle": "คณิตศาสตร์นับถอยหลัง",
+  "countdownMathSubtitle": "รวมตัวเลขสุ่มเพื่อคำนวณเป้าหมายสามหลัก",
+  "narrativeRecallTitle": "การเรียกคืนเรื่องเล่า",
+  "narrativeRecallSubtitle": "อ่านเรื่องราวและจดจำรายละเอียดเชิงปริมาณและข้อเท็จจริงที่เฉพาะเจาะจง",
+  "shellGameTitle": "เกมเชลล์",
+  "shellGameSubtitle": "ติดตามลูกบอลที่ซ่อนอยู่ในฐานะสถานที่สลับถ้วยสับ",
+  "typoglycemiaDecoderTitle": "ตัวถอดรหัสภาวะน้ำตาลในเลือดต่ำ",
+  "typoglycemiaDecoderSubtitle": "ถอดรหัสและอ่านประโยคที่สับสนได้อย่างรวดเร็ว",
+  "shapeShifterTitle": "ตัวเปลี่ยนรูปร่าง",
+  "shapeShifterSubtitle": "แตะการผสมรูปร่างและสีเป้าหมาย",
+  "gokigenNanameTitle": "โกกิเก็น นานาเมะ",
+  "gokigenNanameSubtitle": "วาดเส้นทแยงมุมเพื่อเชื่อมต่อจุดต่างๆ โดยไม่ต้องวนซ้ำ",
+  "matrixMultiplierTitle": "ตัวคูณเมทริกซ์",
+  "matrixMultiplierSubtitle": "เลือกแถวและคอลัมน์ที่จะคูณกับเป้าหมาย",
+  "wordAssociationRecallTitle": "สมาคมคำ",
+  "wordAssociationRecallSubtitle": "เรียกคืนการเชื่อมโยงคำที่จับคู่จากหน่วยความจำ",
+  "gearRotationTitle": "การหมุนเกียร์",
+  "gearRotationSubtitle": "ทำนายทิศทางการหมุนของเกียร์สุดท้าย",
+  "wordWheelTitle": "วงล้อคำ",
+  "wordWheelSubtitle": "สร้างคำโดยใช้ตัวอักษรบนวงล้อรวมทั้งอักษรตรงกลางด้วย",
+  "oddEvenFlashTitle": "แฟลชคี่คู่",
+  "oddEvenFlashSubtitle": "จับคู่ความเท่าเทียมกันของตัวเลขกับกฎสีอย่างรวดเร็ว",
+  "norinoriTitle": "โนริโนริ",
+  "norinoriSubtitle": "แรเงาเซลล์ที่เชื่อมต่อกันสองเซลล์ในแต่ละห้อง",
+  "algebraicBalanceTitle": "สมดุลพีชคณิต",
+  "algebraicBalanceSubtitle": "แก้สมการเพื่อหาผลรวมเป้าหมาย",
+  "patternSequenceDrawTitle": "การเรียกคืนรูปแบบ",
+  "patternSequenceDrawSubtitle": "ทำซ้ำลำดับเส้นทางแบบเคลื่อนไหวบนตาราง",
+  "tangramTitle": "ปริศนาแทนแกรม",
+  "tangramSubtitle": "จัดเรียงรูปร่างเพื่อเติมเต็มภาพเงาของเป้าหมาย",
+  "semanticAssociationTitle": "คำว่าสมาคม",
+  "semanticAssociationSubtitle": "ค้นหาคำที่เชื่อมโยงทั้งสามเบาะแส",
+  "peripheralFocusTitle": "โฟกัสอุปกรณ์ต่อพ่วง",
+  "peripheralFocusSubtitle": "ตอบสนองต่อแผงด้านข้างที่กระพริบขณะแก้คณิตศาสตร์",
+  "masyuTitle": "มาชูลูป",
+  "masyuSubtitle": "วาดวงเดียวที่ตรงกับกฎวงกลม Masyu",
+  "mathMazeTitle": "เขาวงกตคณิตศาสตร์",
+  "mathMazeSubtitle": "ติดตามเส้นทางที่ประเมินผลรวมเป้าหมาย",
+  "storyBuilderTitle": "ตัวสร้างเรื่องราว",
+  "storyBuilderSubtitle": "สร้างลำดับเหตุการณ์ของเรื่องขึ้นใหม่",
+  "mirrorMazeTitle": "เขาวงกตกระจก",
+  "mirrorMazeSubtitle": "เปลี่ยนเส้นทางลำแสงเลเซอร์โดยใช้กระจกแนวทแยง",
+  "wordGridConnectionTitle": "การเชื่อมต่อคำ",
+  "wordGridConnectionSubtitle": "จัดกลุ่มคำ 16 คำเป็น 4 หมวดหมู่ กลุ่มละ 4 คำ",
+  "shapeShifterPeripheralTitle": "รูปร่างอุปกรณ์ต่อพ่วง",
+  "shapeShifterPeripheralSubtitle": "ติดตามการเปลี่ยนแปลงรูปร่างส่วนต่อพ่วงในขณะที่จับคู่ค่าส่วนกลาง",
+  "soundWaveMatchTitle": "การจับคู่คลื่นเสียง",
+  "soundWaveMatchSubtitle": "แตะเมื่อความถี่คลื่นภาพสอดคล้องกับการเปลี่ยนแปลงระดับเสียง",
+  "multiTrackCounterTitle": "เคาน์เตอร์หลายแทร็ก",
+  "multiTrackCounterSubtitle": "แตะเมื่อตัวนับเพิ่มขึ้นเป็นตัวคูณเป้าหมาย",
+  "colorWordMatchUpTitle": "การจับคู่สี",
+  "colorWordMatchUpSubtitle": "ตรวจสอบว่าคำที่มีสีสองคำตรงกันตามกฎที่เปลี่ยนแปลงหรือไม่",
+  "signalAndNoiseTitle": "สัญญาณและเสียงรบกวน",
+  "signalAndNoiseSubtitle": "ค้นหาอักขระตัวอักษรและตัวเลขเป้าหมายที่ซ่อนอยู่ในสัญญาณรบกวนคงที่",
+  "focusTunnelTitle": "อุโมงค์โฟกัส",
+  "focusTunnelSubtitle": "ระบุสัญลักษณ์ที่ตรงกันที่ปรากฏบนผนังอุโมงค์ที่กำลังเคลื่อนที่",
+  "targetPursuerTitle": "ผู้ตามเป้าหมาย",
+  "targetPursuerSubtitle": "ติดตามวงกลมหลายวงที่ทับซ้อนกันและเลือกเป้าหมายเดิม",
+  "gridGazeTitle": "กริดจ้องมอง",
+  "gridGazeSubtitle": "ระบุว่าเซลล์กริดใดที่กะพริบโดยมีระยะเวลาต่างกัน",
+  "doubleTroubleTitle": "ปัญหาสองเท่า",
+  "doubleTroubleSubtitle": "เล่นเกมง่ายๆ สองเกมแยกกันพร้อมกันบนหน้าจอแยก",
+  "syncRhythmTitle": "ซิงค์จังหวะ",
+  "syncRhythmSubtitle": "แตะเมื่อการกวาดเครื่องเมตรอนอมแบบภาพตรงกับจังหวะที่ซิงค์กัน",
+  "ghostTapTitle": "ผีแตะ",
+  "ghostTapSubtitle": "แตะเมื่อชีพจรที่มองไม่เห็นถึงความสูงสูงสุด",
+  "attentionalRsvpTitle": "ตอบรับคำเชิญอย่างตั้งใจ",
+  "attentionalRsvpSubtitle": "ระบุตัวเลขที่ปรากฏในตัวอักษรอนุกรมแบบรวดเร็ว",
+  "colorMazeNavTitle": "นำทางเขาวงกตสี",
+  "colorMazeNavSubtitle": "นำทางแผ่นเขาวงกตที่ตรงกับสีการอนุญาตแบบไดนามิก",
+  "dynamicSalienceTitle": "ความโดดเด่นแบบไดนามิก",
+  "dynamicSalienceSubtitle": "ค้นหารูปร่างที่เคลื่อนไหวด้วยไดนามิกที่แตกต่างกันเล็กน้อย",
+  "chalkAndTalkTitle": "ชอล์กและพูดคุย",
+  "chalkAndTalkSubtitle": "พิมพ์คำที่ได้ยินเป็นเสียงโดยไม่สนใจสิ่งรบกวนการมองเห็น",
+  "blinkDetectorTitle": "เครื่องตรวจจับการกะพริบตา",
+  "blinkDetectorSubtitle": "แตะหน้าตารางที่กะพริบสองครั้งติดต่อกันอย่างรวดเร็ว",
+  "frequencyTapTitle": "แตะความถี่",
+  "frequencyTapSubtitle": "แตะปุ่มที่ตรงกับความถี่พัลส์แสงเป้าหมาย",
+  "yajilinTitle": "Yajilin",
+  "yajilinSubtitle": "วางเซลล์สีดำและวาดเบาะแสการจับคู่วงเดียว",
+  "heyawakeTitle": "Heyawake",
+  "heyawakeSubtitle": "ห้องกริดบังแดดโดยไม่มีเซลล์สีดำที่อยู่ติดกัน",
+  "gokigenVariantTitle": "รุ่นโกกิเก็น",
+  "gokigenVariantSubtitle": "วาดเส้นทแยงมุมแบบไม่วนซ้ำตามจำนวนจุดยอด",
+  "sheepAndWolvesTitle": "แกะและหมาป่า",
+  "sheepAndWolvesSubtitle": "วาดวงแยกแกะจากหมาป่า",
+  "islandNurikabeTitle": "เกาะนูริคาเบะ",
+  "islandNurikabeSubtitle": "สร้างเกาะที่ตรงกับข้อจำกัดด้านขนาดตัวเลข",
+  "shakashakaTitle": "Shakashaka Rects",
+  "shakashakaSubtitle": "วางกระเบื้องสามเหลี่ยมเพื่อสร้างพื้นที่สีขาวเป็นรูปสี่เหลี่ยมผืนผ้า",
+  "litsTetrisTitle": "ลิทส์ เทโตรมิโน",
+  "litsTetrisSubtitle": "วางเทโตรมิโนไว้ในห้องที่ไม่มีสิ่งที่ซ้ำกันติดกัน",
+  "tapaWallTitle": "กำแพงทาปา",
+  "tapaWallSubtitle": "แรเงาเซลล์เพื่อสร้างลวดลายผนังสีดำต่อเนื่อง",
+  "triangularBridgesTitle": "สะพานสามเหลี่ยม",
+  "triangularBridgesSubtitle": "เชื่อมต่อเกาะต่างๆ ใน 3 ทิศทางที่ตรงตามข้อกำหนด",
+  "rippleEffectTitle": "ระลอกคลื่น",
+  "rippleEffectSubtitle": "กรอกตัวเลขในห้องโดยคำนึงถึงข้อจำกัดของระยะห่าง",
+  "suguruTectonicTitle": "ซูกุรุกริด",
+  "suguruTectonicSubtitle": "เติมบล็อคห้องด้วยตัวเลข 1 ถึง K โดยไม่มีเพื่อนบ้านเท่ากัน",
+  "tennerGridTitle": "เทนเนอร์กริด",
+  "tennerGridSubtitle": "เติมแถวด้วยผลรวมของคอลัมน์ที่ตรงกัน 0-9",
+  "kakurasuSumsTitle": "ผลรวมคาคุระสึ",
+  "kakurasuSumsSubtitle": "แรเงาเซลล์เพื่อให้ตรงกับผลรวมดัชนีแถว/คอลัมน์แบบถ่วงน้ำหนัก",
+  "corralLoopTitle": "คอร์รัลลูป",
+  "corralLoopSubtitle": "วาดวงเดียวล้อมรอบตัวเลขที่ตรงกับการมองเห็น",
+  "stostoneTitle": "แรงโน้มถ่วงของสโตสโตน",
+  "stostoneSubtitle": "แรเงาเซลล์ที่เลื่อนลงมาเพื่อเติมแถวด้านล่างให้สมบูรณ์",
+  "tripletsLogicTitle": "แฝดสาม ทริโอ",
+  "tripletsLogicSubtitle": "เติมตารางด้วยรูปร่างสามแบบโดยหลีกเลี่ยงสามแบบติดต่อกัน",
+  "galaxiesSymTitle": "สมมาตรของกาแล็กซี",
+  "galaxiesSymSubtitle": "แบ่งตารางออกเป็นรูปร่างกาแล็กซีที่สมมาตรในการหมุน",
+  "matrixMultiplierMatchTitle": "เมทริกซ์แมทเชอร์",
+  "matrixMultiplierMatchSubtitle": "คูณค่าแถวและคอลัมน์เพื่อให้ตรงกับผลคูณจุดเป้าหมาย",
+  "primeFactorTreesTitle": "ต้นไม้ปัจจัยสำคัญ",
+  "primeFactorTreesSubtitle": "แยกจำนวนประกอบออกเป็นคู่แฟกเตอร์ไพรม์ลีฟ",
+  "vektorVectorTitle": "เวกเตอร์",
+  "vektorVectorSubtitle": "ปรับขนาดเวกเตอร์เพื่อทำให้ผลรวมของพวกมันอยู่บนเป้าหมาย",
+  "binomialMatchTitle": "การจับคู่ทวินาม",
+  "binomialMatchSubtitle": "จับคู่สูตรกำลังสองกับค่าทวินามแบบแยกตัวประกอบ",
+  "percentageShoppingTitle": "ช้อปปิ้งเปอร์เซ็นต์",
+  "percentageShoppingSubtitle": "คำนวณเปอร์เซ็นต์ส่วนลดและยอดรวมในการชำระเงินขั้นสุดท้าย",
+  "cryptoArithmeticTitle": "Crypto-เลขคณิต",
+  "cryptoArithmeticSubtitle": "ถอดรหัสปัญหาคณิตศาสตร์การเข้ารหัสการแทนที่อักขระและหลัก",
+  "fractionalPizzaTitle": "พิซซ่าเศษส่วน",
+  "fractionalPizzaSubtitle": "แบ่งชิ้นพิซซ่าให้ตรงกับเศษส่วนผลรวมเป้าหมาย",
+  "numberBondsTitle": "พันธบัตรจำนวน",
+  "numberBondsSubtitle": "เชื่อมโยงค่าโหนดให้เท่ากับผลรวมการเชื่อมต่อเป้าหมาย",
+  "gridSumLineTitle": "เส้นรวมตาราง",
+  "gridSumLineSubtitle": "วาดเส้นทางที่มีค่าประเมินตรงกับเป้าหมาย",
+  "binaryScaleBalanceTitle": "เครื่องชั่งไบนารี่",
+  "binaryScaleBalanceSubtitle": "ถ่วงน้ำหนักทศนิยมโดยใช้บล็อกยกกำลังสอง",
+  "moduloPathTitle": "เส้นทางโมดูโล่",
+  "moduloPathSubtitle": "ทราเวิร์สเซลล์กริดที่ตรงกับค่าส่วนที่เหลือแบบโมดูโล",
+  "digitSwapEqTitle": "สมการสลับตัวเลข",
+  "digitSwapEqSubtitle": "สลับเลขหลักเดียวระหว่างสมการเพื่อแก้ไขทั้งสองหลัก",
+  "areaPerimeterMatchTitle": "พื้นที่และปริมณฑล",
+  "areaPerimeterMatchSubtitle": "วาดรูปสี่เหลี่ยมที่ตรงกับพื้นที่เป้าหมายและค่าเส้นรอบวง",
+  "inequalityBalanceOpsTitle": "ความสมดุลของความไม่เท่าเทียมกัน",
+  "inequalityBalanceOpsSubtitle": "วางสัญลักษณ์อสมการระหว่างคำศัพท์ทางคณิตศาสตร์ที่ซับซ้อน",
+  "graphCoordinatePlotTitle": "พลอตเตอร์กราฟ",
+  "graphCoordinatePlotSubtitle": "พิกัดกริดพล็อตที่ตรงกับเส้นโค้งเชิงเส้น/กำลังสอง",
+  "baseConversionRunTitle": "การแปลงฐาน",
+  "baseConversionRunSubtitle": "แปลงค่าระหว่างไบนารี ทศนิยม ฐานสิบหก และฐานแปด",
+  "unitConverterProTitle": "ตัวแปลงหน่วย",
+  "unitConverterProSubtitle": "ตอบการแปลงหน่วยอย่างรวดเร็วภายใต้กำหนดเวลา",
+  "auditoryNBackTitle": "การได้ยิน N-Back",
+  "auditoryNBackSubtitle": "จับคู่ตัวอักษรที่ได้ยิน N ก้าวถอยหลังจากความทรงจำ",
+  "abstractPatternRecallTitle": "การแบ่งชั้นรูปแบบ",
+  "abstractPatternRecallSubtitle": "สร้างรูปทรงหลากสีเป็นชั้นขึ้นมาใหม่จากการศึกษาความจำ",
+  "roomInspectorTitle": "สารวัตรห้อง",
+  "roomInspectorSubtitle": "ระบุการดัดแปลงเฟอร์นิเจอร์ที่ทำในขณะที่หน้าจอว่างเปล่า",
+  "voiceToFaceMatchTitle": "การจับคู่เสียงและใบหน้า",
+  "voiceToFaceMatchSubtitle": "เลือกใบหน้าที่ถูกต้องที่เกี่ยวข้องกับคลิปเสียงพูด",
+  "spatialGridMemory3DTitle": "หน่วยความจำเชิงพื้นที่ 3 มิติ",
+  "spatialGridMemory3DSubtitle": "เรียกคืนบล็อกที่วาววับในโครงสร้างตารางลูกบาศก์ 3 มิติที่หมุนได้",
+  "sequenceStackTitle": "ลำดับสแต็ก",
+  "sequenceStackSubtitle": "สร้างการเพิ่มเติมและการถอดปึกแผ่นตามลำดับ",
+  "semanticCategoryRecallTitle": "การเรียกคืนหมวดหมู่",
+  "semanticCategoryRecallSubtitle": "ระบุคำศึกษาที่ตรงกับเป้าหมายหมวดหมู่ที่ร้องขอ",
+  "gridDisplacementTitle": "การกระจัดของกริด",
+  "gridDisplacementSubtitle": "ระบุไอคอนที่เลื่อนโดยเปรียบเทียบเค้าโครงกับต้นฉบับ",
+  "soundSequenceMatchTitle": "การจับคู่ลำดับเสียง",
+  "soundSequenceMatchSubtitle": "ทำซ้ำลำดับโน้ตที่เล่นบนแป้นพิมพ์เสมือน",
+  "cardCountingMemoryTitle": "เคาน์เตอร์บัตร",
+  "cardCountingMemorySubtitle": "ระบุไพ่ที่แจกไปแล้วในการแจกไพ่อย่างต่อเนื่อง",
+  "directionsRecallTitle": "ทิศทางการเรียกคืน",
+  "directionsRecallSubtitle": "นำทางแผนที่กริดที่ตรงกับทิศทางเส้นทางจากหน่วยความจำ",
+  "eventTimelineMemoryTitle": "เส้นเวลาของเหตุการณ์",
+  "eventTimelineMemorySubtitle": "จัดเรียงการ์ดเหตุการณ์ทางประวัติศาสตร์/ตัวละครตามลำดับเวลา",
+  "featureMatrixRecallTitle": "คุณลักษณะเมทริกซ์",
+  "featureMatrixRecallSubtitle": "ตอบคำถามพร้อมท์เกี่ยวกับแอตทริบิวต์รูปร่าง-สีของเซลล์",
+  "delayedMatchSampleTitle": "การแข่งขันล่าช้า",
+  "delayedMatchSampleSubtitle": "จับคู่สัญลักษณ์เป้าหมายหลังจากแก้ไขสิ่งที่กวนใจทางคณิตศาสตร์",
+  "symbolDigitAssocTitle": "รศ.สัญลักษณ์-หลัก",
+  "symbolDigitAssocSubtitle": "แก้แผ่นแปลสัญลักษณ์ที่ตรงกับคีย์หลัก",
+  "dualTaskMemoryTitle": "หน่วยความจำแบบสองงาน",
+  "dualTaskMemorySubtitle": "จดจำชุดคำไปพร้อมกับแก้โจทย์เลขคณิตอย่างรวดเร็ว",
+  "actionSequenceRecallTitle": "การเรียกคืนการดำเนินการ",
+  "actionSequenceRecallSubtitle": "ทำซ้ำลำดับภาพเคลื่อนไหวท่าทางตัวละครตามลำดับ",
+  "tangramPolygonTitle": "แทนแกรมพอดี",
+  "tangramPolygonSubtitle": "จัดเรียงรูปร่างหลายเหลี่ยมเพื่อเติมเต็มโครงร่างภาพเงา",
+  "mazeNav3DTitle": "การนำทางเขาวงกต 3 มิติ",
+  "mazeNav3DSubtitle": "นำทางเส้นทางเขาวงกตสามมิติสามมิติจากมุมมองบุคคลที่หนึ่ง",
+  "isometricProjectionTitle": "เครื่องฉายภาพสามมิติ",
+  "isometricProjectionSubtitle": "จับคู่ตัวเลขบล็อก 3 มิติกับมุมมองด้านบน/ด้านหน้าแบบออโธกราฟิก 2 มิติ",
+  "polyominoPackingTitle": "การบรรจุโพลีโอมิโน",
+  "polyominoPackingSubtitle": "บรรจุชิ้นส่วนบล็อกโพลีโอมิโนแบบสุ่มลงในพื้นที่เป้าหมาย",
+  "spatialGridRotationTitle": "การหมุนตารางเชิงพื้นที่",
+  "spatialGridRotationSubtitle": "จับคู่การจัดเรียงบล็อก 3 มิติที่หมุนไปตามพิกัดแกน",
+  "wireLoopGameTitle": "ห่วงลวด",
+  "wireLoopGameSubtitle": "ลากวงแหวนโลหะไปตามร่องลวดโดยไม่ต้องสัมผัสกัน",
+  "origamiUnfoldTitle": "Origami แฉ",
+  "origamiUnfoldSubtitle": "ระบุรูปแบบการเจาะรูหลังจากคลี่แผ่นพับออก",
+  "ropeTangleSolverTitle": "เชือกแก้ให้หาย",
+  "ropeTangleSolverSubtitle": "ลากโหนดเพื่อจัดวางกราฟระนาบโดยมีเส้นกากบาทเป็นศูนย์",
+  "gridFitTetrisTitle": "ตัวแก้ไขตารางพอดี",
+  "gridFitTetrisSubtitle": "จัดเรียงบล็อกที่ผิดปกติแบบคงที่เพื่อให้พอดีกับขอบเขตของคอนเทนเนอร์",
+  "vectorGridAlignmentTitle": "การจัดแนวเวกเตอร์",
+  "vectorGridAlignmentSubtitle": "ปรับขนาดและหมุนรูปร่างเพื่อให้ตรงกับเป้าหมายเทมเพลตเงา",
+  "blockStackingPhysicsTitle": "บล็อกซ้อน",
+  "blockStackingPhysicsSubtitle": "วางแผงบล็อกที่ผิดปกติเพื่อปรับสมดุลน้ำหนักแรงโน้มถ่วง",
+  "crossSectionMatch3DTitle": "ภาพตัดขวาง 3 มิติ",
+  "crossSectionMatch3DSubtitle": "ระบุรูปทรงชิ้น 2 มิติที่ตัดจากรูปร่าง 3 มิติ",
+  "symmetryPaintTitle": "สีสมมาตร",
+  "symmetryPaintSubtitle": "วาดส่วนของภาพสะท้อนในกระจกที่สะท้อนผ่านแกนสมมาตร",
+  "rollingBlockBloxTitle": "บล็อกกลิ้ง",
+  "rollingBlockBloxSubtitle": "ม้วนชิ้นส่วนบล็อกเพื่อลงจอดในแนวตั้งในช่องเป้าหมาย",
+  "perspectiveShiftViewTitle": "การเปลี่ยนแปลงมุมมอง",
+  "perspectiveShiftViewSubtitle": "หมุนกลุ่มบล็อกจนกว่าจะสะกดตัวอักษร/คำ",
+  "networkFlowSphericalTitle": "การไหลของเครือข่าย",
+  "networkFlowSphericalSubtitle": "เชื่อมต่อการไหลของกริดบนพิกัดทรงกระบอกที่ตัด",
+  "layeredSilhouetteBlendTitle": "ซิลลูเตผสมผสาน",
+  "layeredSilhouetteBlendSubtitle": "ซ้อนเลเยอร์สีเพื่อให้เข้ากับรูปร่างโปร่งแสงของเป้าหมาย",
+  "wordWheelPangramTitle": "คำว่าแอนนาแกรม",
+  "wordWheelPangramSubtitle": "สร้างคำที่มีตัวอักษรเป้าหมายตรงกลางจากล้อ",
+  "letterGridSwapperTitle": "จดหมายแลกเปลี่ยน",
+  "letterGridSwapperSubtitle": "สลับไทล์ตัวอักษรที่อยู่ติดกันเพื่อเติมแถวและคำคอลัมน์ให้สมบูรณ์",
+  "synonymMatchTitle": "การจับคู่คำพ้อง",
+  "synonymMatchSubtitle": "จับคู่เป้าหมายคำที่ล้มด้วยคำพ้องหรือคำตรงข้าม",
+  "vowelDropTitle": "สระหล่น",
+  "vowelDropSubtitle": "วางสระลงในตารางพิกัดเพื่อเติมคำให้สมบูรณ์",
+  "letterBalanceScaleTitle": "ระดับความสมดุลของคำ",
+  "letterBalanceScaleSubtitle": "สะกดคำที่มีค่าตัวอักษรสมดุลน้ำหนัก",
+  "wordChainShiritoriTitle": "ห่วงโซ่คำ",
+  "wordChainShiritoriSubtitle": "เชื่อมโยงคำวนซ้ำเริ่มต้นด้วยผลลัพธ์ตัวอักษรก่อนหน้า",
+  "affixBuilderTitle": "ตัวสร้างส่วนต่อท้าย",
+  "affixBuilderSubtitle": "รวมคำนำหน้า/คำต่อท้ายเพื่อสร้างคำศัพท์เป้าหมาย",
+  "decipherCrypticCluesTitle": "ถอดรหัสลับ",
+  "decipherCrypticCluesSubtitle": "แก้ปริศนาการเล่นคำศัพท์และถอดรหัสปริศนาการสะกดคำ",
+  "boggleWordSearchTitle": "สับสนการเชื่อมต่อ",
+  "boggleWordSearchSubtitle": "ติดตามเส้นทางที่เชื่อมต่อที่อยู่ติดกันเพื่อค้นหาคำที่ซ่อนอยู่",
+  "idiomUnscrambleTitle": "สำนวนถอดรหัส",
+  "idiomUnscrambleSubtitle": "จัดเรียงอาร์เรย์คำที่มีสัญญาณรบกวนเพื่อให้ตรงกับความหมายของสำนวน",
+  "letterPyramidsTitle": "ปิรามิดจดหมาย",
+  "letterPyramidsSubtitle": "สร้างอาคารคำโดยเพิ่มตัวอักษรแอนนาแกรมเดี่ยวต่อชั้น",
+  "soundAlikeHomophonesTitle": "การจับคู่คำพ้องเสียง",
+  "soundAlikeHomophonesSubtitle": "ระบุการสะกดคำพ้องเสียงที่ถูกต้องสำหรับประโยค",
+  "wordGridSudokuTitle": "คำว่าซูโดกุ",
+  "wordGridSudokuSubtitle": "เรียงตัวอักษรในแถวกริดเพื่อสร้างคำ",
+  "portmanteauFactoryTitle": "โรงงานปอร์ตมันโต",
+  "portmanteauFactorySubtitle": "ผสานองค์ประกอบความหมายเพื่อสร้างคำประสม",
+  "codedCrosswordsCodeTitle": "โค้ดเวิร์ด ครอสเวิร์ด",
+  "codedCrosswordsCodeSubtitle": "แก้ปริศนาอักษรไขว้ตารางที่ตรงกับรหัสตัวเลขต่อตัวอักษร",
+  "wordSnakeTrailTitle": "คำว่างู",
+  "wordSnakeTrailSubtitle": "ติดตามตัวอักษรเหมือนงูสะกดคำเฉพาะเรื่อง",
+  "typingRhythmSpeedTitle": "การพิมพ์โฟลว์",
+  "typingRhythmSpeedSubtitle": "พิมพ์คำศัพท์ที่ตรงกับจังหวะจังหวะเครื่องเมตรอนอม",
   "errorSomethingWrong": "Something went wrong",
   "errorUnexpected": "An unexpected error occurred",
   "errorTryAgain": "Try Again",
@@ -2181,35 +1398,11 @@
   "statsAchievements": "Achievements",
   "statsWeeklyActivity": "Weekly Activity",
   "statsDayStreak": "{days} Day Streak",
-  "@statsDayStreak": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
   "statsTotalXp": "Total XP",
   "statsSolved": "Solved",
   "statsLevel": "Level {level}",
-  "@statsLevel": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsMaintainStreak": "Maintain your streak!",
   "statsPercentToLevel": "{percent}% to Level {level}",
-  "@statsPercentToLevel": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      },
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsCognitiveProfile": "Cognitive Profile",
   "statsLocked": "Locked",
   "achievementSeeker": "Seeker",
@@ -2333,24 +1526,19 @@
   "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
   "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
   "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
-  "@snackbarWordMustContainCentral": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarWordAlreadyFound": "Word already found!",
   "snackbarNotAValidWord": "Not a valid word!",
   "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
   "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectCorrectAnswer": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
+  "hideGame": "ซ่อน",
+  "unhideGame": "ยกเลิกการซ่อน",
+  "favoriteGame": "รายการโปรด",
+  "unfavoriteGame": "ลบออกจากรายการโปรด",
+  "hiddenGames": "เกมที่ซ่อนอยู่",
+  "showHiddenGames": "แสดงเกมที่ซ่อนอยู่ ({count})",
+  "noHiddenGames": "ไม่มีเกมที่ซ่อนอยู่",
+  "gameHidden": "ซ่อนเกมแล้ว",
+  "undo": "เลิกทำ",
   "snackbarCorrect": "Correct!",
   "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
   "snackbarAllCorrect": "All associations correct!",
@@ -2360,165 +1548,31 @@
   "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
   "snackbarPieceDoesNotFit": "Piece does not fit there!",
   "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
-  "@snackbarInvalidStep": {
-    "placeholders": {
-      "mod": {
-        "type": "int"
-      },
-      "modulus": {
-        "type": "int"
-      },
-      "remainder": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
-  "@snackbarIncorrectGroup": {
-    "placeholders": {
-      "tries": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
   "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
-  "@snackbarIncorrectDestination": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
-  "@snackbarIncorrectCorrectCount": {
-    "placeholders": {
-      "suit": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
   "snackbarSequenceMatched": "Sequence matched! Increasing length...",
   "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
   "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
-  "@snackbarIncorrectCorrectValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
-  "@snackbarIncorrectSlices": {
-    "placeholders": {
-      "selected": {
-        "type": "int"
-      },
-      "required": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
   "snackbarCorrectOrder": "Correct chronological order!",
   "snackbarIncorrectOrder": "Incorrect order! Study again.",
   "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
-  "@snackbarIncorrectMissingValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
-  "@snackbarIncorrectLetterDigit": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      },
-      "digit": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
-  "@snackbarIncorrectCorrectPoint": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarReachedExit": "Reached the exit! Generating next maze...",
   "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
   "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
-  "@snackbarIncorrectCorrectStack": {
-    "placeholders": {
-      "stack": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
   "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
-  "@snackbarScaleNotBalanced": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
   "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
   "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
-  "@snackbarIncorrectCorrectForm": {
-    "placeholders": {
-      "form": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
-  "@snackbarIncorrectInequality": {
-    "placeholders": {
-      "left": {
-        "type": "String"
-      },
-      "leftVal": {
-        "type": "int"
-      },
-      "correct": {
-        "type": "String"
-      },
-      "right": {
-        "type": "String"
-      },
-      "rightVal": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectBaseConversion": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
   "snackbarAlignedCorrectly": "Aligned and correctly identified!",
   "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
@@ -2538,6 +1592,8 @@
   "btnImReadyToAnswer": "I'm Ready to Answer",
   "btnNoMatch": "No Match",
   "btnMatch": "Match",
+  "btnMatchColor": "จับคู่สี",
+  "btnMatchWord": "จับคู่คำ",
   "btnGuess": "Guess",
   "btnPlayNow": "Play Now",
   "btnClear": "Clear",
@@ -2560,13 +1616,6 @@
   "phaseTapToAdd": "Tap to Add",
   "phaseCalculationLabel": "Calculation:",
   "phaseTimeLeft": "Time: {time}s",
-  "@phaseTimeLeft": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "phaseRemember2Back": "Remember 2 steps back",
   "phaseMatch": "Match",
   "hintTypeRhymingWord": "Type a rhyming word...",
@@ -2586,54 +1635,13 @@
   "feedbackFindNumber": "Find the number between 1 and 10,000!",
   "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
   "feedbackCorrectExcl": "Correct! The number was {number}.",
-  "@feedbackCorrectExcl": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackCorrectEmoji": "Correct!",
   "feedbackTooLow": "Too Low",
   "feedbackTooHigh": "Too High",
   "feedbackGameOver": "Game Over! The number was {number}.",
-  "@feedbackGameOver": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackGuessResult": "{guess} is {result}!",
-  "@feedbackGuessResult": {
-    "placeholders": {
-      "guess": {
-        "type": "int"
-      },
-      "result": {
-        "type": "String"
-      }
-    }
-  },
   "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
-  "@feedbackWinMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      },
-      "guesses": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackLoseMessage": "Out of guesses! The number was {number}.",
-  "@feedbackLoseMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "statTime": "Time",
   "statScore": "Score",
   "statGrid": "Grid",
@@ -2731,275 +1739,6 @@
   "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
   "correctExclEmoji": "Correct!",
   "wrongExcl": "Wrong!",
-  "abstractPatternRecallSubtitle": "สร้างรูปทรงหลากสีเป็นชั้นขึ้นมาใหม่จากการศึกษาความจำ",
-  "abstractPatternRecallTitle": "การแบ่งชั้นรูปแบบ",
-  "actionSequenceRecallSubtitle": "ทำซ้ำลำดับภาพเคลื่อนไหวท่าทางตัวละครตามลำดับ",
-  "actionSequenceRecallTitle": "การเรียกคืนการดำเนินการ",
-  "affixBuilderSubtitle": "รวมคำนำหน้า/คำต่อท้ายเพื่อสร้างคำศัพท์เป้าหมาย",
-  "affixBuilderTitle": "ตัวสร้างส่วนต่อท้าย",
-  "algebraicBalanceSubtitle": "แก้สมการเพื่อหาผลรวมเป้าหมาย",
-  "algebraicBalanceTitle": "สมดุลพีชคณิต",
-  "areaPerimeterMatchSubtitle": "วาดรูปสี่เหลี่ยมที่ตรงกับพื้นที่เป้าหมายและค่าเส้นรอบวง",
-  "areaPerimeterMatchTitle": "พื้นที่และปริมณฑล",
-  "attentionalRsvpSubtitle": "ระบุตัวเลขที่ปรากฏในตัวอักษรอนุกรมแบบรวดเร็ว",
-  "attentionalRsvpTitle": "ตอบรับคำเชิญอย่างตั้งใจ",
-  "auditoryNBackSubtitle": "จับคู่ตัวอักษรที่ได้ยิน N ก้าวถอยหลังจากความทรงจำ",
-  "auditoryNBackTitle": "การได้ยิน N-Back",
-  "baseConversionRunSubtitle": "แปลงค่าระหว่างไบนารี ทศนิยม ฐานสิบหก และฐานแปด",
-  "baseConversionRunTitle": "การแปลงฐาน",
-  "binaryScaleBalanceSubtitle": "ถ่วงน้ำหนักทศนิยมโดยใช้บล็อกยกกำลังสอง",
-  "binaryScaleBalanceTitle": "เครื่องชั่งไบนารี่",
-  "binomialMatchSubtitle": "จับคู่สูตรกำลังสองกับค่าทวินามแบบแยกตัวประกอบ",
-  "binomialMatchTitle": "การจับคู่ทวินาม",
-  "blinkDetectorSubtitle": "แตะหน้าตารางที่กะพริบสองครั้งติดต่อกันอย่างรวดเร็ว",
-  "blinkDetectorTitle": "เครื่องตรวจจับการกะพริบตา",
-  "blockStackingPhysicsSubtitle": "วางแผงบล็อกที่ผิดปกติเพื่อปรับสมดุลน้ำหนักแรงโน้มถ่วง",
-  "blockStackingPhysicsTitle": "บล็อกซ้อน",
-  "boggleWordSearchSubtitle": "ติดตามเส้นทางที่เชื่อมต่อที่อยู่ติดกันเพื่อค้นหาคำที่ซ่อนอยู่",
-  "boggleWordSearchTitle": "สับสนการเชื่อมต่อ",
-  "cardCountingMemorySubtitle": "ระบุไพ่ที่แจกไปแล้วในการแจกไพ่อย่างต่อเนื่อง",
-  "cardCountingMemoryTitle": "เคาน์เตอร์บัตร",
-  "chalkAndTalkSubtitle": "พิมพ์คำที่ได้ยินเป็นเสียงโดยไม่สนใจสิ่งรบกวนการมองเห็น",
-  "chalkAndTalkTitle": "ชอล์กและพูดคุย",
-  "codedCrosswordsCodeSubtitle": "แก้ปริศนาอักษรไขว้ตารางที่ตรงกับรหัสตัวเลขต่อตัวอักษร",
-  "codedCrosswordsCodeTitle": "โค้ดเวิร์ด ครอสเวิร์ด",
-  "colorMazeNavSubtitle": "นำทางแผ่นเขาวงกตที่ตรงกับสีการอนุญาตแบบไดนามิก",
-  "colorMazeNavTitle": "นำทางเขาวงกตสี",
-  "colorWordMatchUpSubtitle": "ตรวจสอบว่าคำที่มีสีสองคำตรงกันตามกฎที่เปลี่ยนแปลงหรือไม่",
-  "colorWordMatchUpTitle": "การจับคู่สี",
-  "corralLoopSubtitle": "วาดวงเดียวล้อมรอบตัวเลขที่ตรงกับการมองเห็น",
-  "corralLoopTitle": "คอร์รัลลูป",
-  "countdownMathSubtitle": "รวมตัวเลขสุ่มเพื่อคำนวณเป้าหมายสามหลัก",
-  "countdownMathTitle": "คณิตศาสตร์นับถอยหลัง",
-  "crossSectionMatch3DSubtitle": "ระบุรูปทรงชิ้น 2 มิติที่ตัดจากรูปร่าง 3 มิติ",
-  "crossSectionMatch3DTitle": "ภาพตัดขวาง 3 มิติ",
-  "cryptoArithmeticSubtitle": "ถอดรหัสปัญหาคณิตศาสตร์การเข้ารหัสการแทนที่อักขระและหลัก",
-  "cryptoArithmeticTitle": "Crypto-เลขคณิต",
-  "decipherCrypticCluesSubtitle": "แก้ปริศนาการเล่นคำศัพท์และถอดรหัสปริศนาการสะกดคำ",
-  "decipherCrypticCluesTitle": "ถอดรหัสลับ",
-  "delayedMatchSampleSubtitle": "จับคู่สัญลักษณ์เป้าหมายหลังจากแก้ไขสิ่งที่กวนใจทางคณิตศาสตร์",
-  "delayedMatchSampleTitle": "การแข่งขันล่าช้า",
-  "digitSwapEqSubtitle": "สลับเลขหลักเดียวระหว่างสมการเพื่อแก้ไขทั้งสองหลัก",
-  "digitSwapEqTitle": "สมการสลับตัวเลข",
-  "directionsRecallSubtitle": "นำทางแผนที่กริดที่ตรงกับทิศทางเส้นทางจากหน่วยความจำ",
-  "directionsRecallTitle": "ทิศทางการเรียกคืน",
-  "doubleTroubleSubtitle": "เล่นเกมง่ายๆ สองเกมแยกกันพร้อมกันบนหน้าจอแยก",
-  "doubleTroubleTitle": "ปัญหาสองเท่า",
-  "dualTaskMemorySubtitle": "จดจำชุดคำไปพร้อมกับแก้โจทย์เลขคณิตอย่างรวดเร็ว",
-  "dualTaskMemoryTitle": "หน่วยความจำแบบสองงาน",
-  "dynamicSalienceSubtitle": "ค้นหารูปร่างที่เคลื่อนไหวด้วยไดนามิกที่แตกต่างกันเล็กน้อย",
-  "dynamicSalienceTitle": "ความโดดเด่นแบบไดนามิก",
-  "eventTimelineMemorySubtitle": "จัดเรียงการ์ดเหตุการณ์ทางประวัติศาสตร์/ตัวละครตามลำดับเวลา",
-  "eventTimelineMemoryTitle": "เส้นเวลาของเหตุการณ์",
-  "featureMatrixRecallSubtitle": "ตอบคำถามพร้อมท์เกี่ยวกับแอตทริบิวต์รูปร่าง-สีของเซลล์",
-  "featureMatrixRecallTitle": "คุณลักษณะเมทริกซ์",
-  "focusTunnelSubtitle": "ระบุสัญลักษณ์ที่ตรงกันที่ปรากฏบนผนังอุโมงค์ที่กำลังเคลื่อนที่",
-  "focusTunnelTitle": "อุโมงค์โฟกัส",
-  "fractionalPizzaSubtitle": "แบ่งชิ้นพิซซ่าให้ตรงกับเศษส่วนผลรวมเป้าหมาย",
-  "fractionalPizzaTitle": "พิซซ่าเศษส่วน",
-  "frequencyTapSubtitle": "แตะปุ่มที่ตรงกับความถี่พัลส์แสงเป้าหมาย",
-  "frequencyTapTitle": "แตะความถี่",
-  "galaxiesSymSubtitle": "แบ่งตารางออกเป็นรูปร่างกาแล็กซีที่สมมาตรในการหมุน",
-  "galaxiesSymTitle": "สมมาตรของกาแล็กซี",
-  "gearRotationSubtitle": "ทำนายทิศทางการหมุนของเกียร์สุดท้าย",
-  "gearRotationTitle": "การหมุนเกียร์",
-  "ghostTapSubtitle": "แตะเมื่อชีพจรที่มองไม่เห็นถึงความสูงสูงสุด",
-  "ghostTapTitle": "ผีแตะ",
-  "gokigenNanameSubtitle": "วาดเส้นทแยงมุมเพื่อเชื่อมต่อจุดต่างๆ โดยไม่ต้องวนซ้ำ",
-  "gokigenNanameTitle": "โกกิเก็น นานาเมะ",
-  "gokigenVariantSubtitle": "วาดเส้นทแยงมุมแบบไม่วนซ้ำตามจำนวนจุดยอด",
-  "gokigenVariantTitle": "รุ่นโกกิเก็น",
-  "graphCoordinatePlotSubtitle": "พิกัดกริดพล็อตที่ตรงกับเส้นโค้งเชิงเส้น/กำลังสอง",
-  "graphCoordinatePlotTitle": "พลอตเตอร์กราฟ",
-  "gridDisplacementSubtitle": "ระบุไอคอนที่เลื่อนโดยเปรียบเทียบเค้าโครงกับต้นฉบับ",
-  "gridDisplacementTitle": "การกระจัดของกริด",
-  "gridFitTetrisSubtitle": "จัดเรียงบล็อกที่ผิดปกติแบบคงที่เพื่อให้พอดีกับขอบเขตของคอนเทนเนอร์",
-  "gridFitTetrisTitle": "ตัวแก้ไขตารางพอดี",
-  "gridGazeSubtitle": "ระบุว่าเซลล์กริดใดที่กะพริบโดยมีระยะเวลาต่างกัน",
-  "gridGazeTitle": "กริดจ้องมอง",
-  "gridSumLineSubtitle": "วาดเส้นทางที่มีค่าประเมินตรงกับเป้าหมาย",
-  "gridSumLineTitle": "เส้นรวมตาราง",
-  "heyawakeSubtitle": "ห้องกริดบังแดดโดยไม่มีเซลล์สีดำที่อยู่ติดกัน",
-  "heyawakeTitle": "Heyawake",
-  "idiomUnscrambleSubtitle": "จัดเรียงอาร์เรย์คำที่มีสัญญาณรบกวนเพื่อให้ตรงกับความหมายของสำนวน",
-  "idiomUnscrambleTitle": "สำนวนถอดรหัส",
-  "inequalityBalanceOpsSubtitle": "วางสัญลักษณ์อสมการระหว่างคำศัพท์ทางคณิตศาสตร์ที่ซับซ้อน",
-  "inequalityBalanceOpsTitle": "ความสมดุลของความไม่เท่าเทียมกัน",
-  "islandNurikabeSubtitle": "สร้างเกาะที่ตรงกับข้อจำกัดด้านขนาดตัวเลข",
-  "islandNurikabeTitle": "เกาะนูริคาเบะ",
-  "isometricProjectionSubtitle": "จับคู่ตัวเลขบล็อก 3 มิติกับมุมมองด้านบน/ด้านหน้าแบบออโธกราฟิก 2 มิติ",
-  "isometricProjectionTitle": "เครื่องฉายภาพสามมิติ",
-  "kakurasuSumsSubtitle": "แรเงาเซลล์เพื่อให้ตรงกับผลรวมดัชนีแถว/คอลัมน์แบบถ่วงน้ำหนัก",
-  "kakurasuSumsTitle": "ผลรวมคาคุระสึ",
-  "layeredSilhouetteBlendSubtitle": "ซ้อนเลเยอร์สีเพื่อให้เข้ากับรูปร่างโปร่งแสงของเป้าหมาย",
-  "layeredSilhouetteBlendTitle": "ซิลลูเตผสมผสาน",
-  "letterBalanceScaleSubtitle": "สะกดคำที่มีค่าตัวอักษรสมดุลน้ำหนัก",
-  "letterBalanceScaleTitle": "ระดับความสมดุลของคำ",
-  "letterGridSwapperSubtitle": "สลับไทล์ตัวอักษรที่อยู่ติดกันเพื่อเติมแถวและคำคอลัมน์ให้สมบูรณ์",
-  "letterGridSwapperTitle": "จดหมายแลกเปลี่ยน",
-  "letterPyramidsSubtitle": "สร้างอาคารคำโดยเพิ่มตัวอักษรแอนนาแกรมเดี่ยวต่อชั้น",
-  "letterPyramidsTitle": "ปิรามิดจดหมาย",
-  "litsTetrisSubtitle": "วางเทโตรมิโนไว้ในห้องที่ไม่มีสิ่งที่ซ้ำกันติดกัน",
-  "litsTetrisTitle": "ลิทส์ เทโตรมิโน",
-  "masyuSubtitle": "วาดวงเดียวที่ตรงกับกฎวงกลม Masyu",
-  "masyuTitle": "มาชูลูป",
-  "mathMazeSubtitle": "ติดตามเส้นทางที่ประเมินผลรวมเป้าหมาย",
-  "mathMazeTitle": "เขาวงกตคณิตศาสตร์",
-  "matrixMultiplierMatchSubtitle": "คูณค่าแถวและคอลัมน์เพื่อให้ตรงกับผลคูณจุดเป้าหมาย",
-  "matrixMultiplierMatchTitle": "เมทริกซ์แมทเชอร์",
-  "matrixMultiplierSubtitle": "เลือกแถวและคอลัมน์ที่จะคูณกับเป้าหมาย",
-  "matrixMultiplierTitle": "ตัวคูณเมทริกซ์",
-  "mazeNav3DSubtitle": "นำทางเส้นทางเขาวงกตสามมิติสามมิติจากมุมมองบุคคลที่หนึ่ง",
-  "mazeNav3DTitle": "การนำทางเขาวงกต 3 มิติ",
-  "mirrorMazeSubtitle": "เปลี่ยนเส้นทางลำแสงเลเซอร์โดยใช้กระจกแนวทแยง",
-  "mirrorMazeTitle": "เขาวงกตกระจก",
-  "moduloPathSubtitle": "ทราเวิร์สเซลล์กริดที่ตรงกับค่าส่วนที่เหลือแบบโมดูโล",
-  "moduloPathTitle": "เส้นทางโมดูโล่",
-  "multiTrackCounterSubtitle": "แตะเมื่อตัวนับเพิ่มขึ้นเป็นตัวคูณเป้าหมาย",
-  "multiTrackCounterTitle": "เคาน์เตอร์หลายแทร็ก",
-  "narrativeRecallSubtitle": "อ่านเรื่องราวและจดจำรายละเอียดเชิงปริมาณและข้อเท็จจริงที่เฉพาะเจาะจง",
-  "narrativeRecallTitle": "การเรียกคืนเรื่องเล่า",
-  "networkFlowSphericalSubtitle": "เชื่อมต่อการไหลของกริดบนพิกัดทรงกระบอกที่ตัด",
-  "networkFlowSphericalTitle": "การไหลของเครือข่าย",
-  "norinoriSubtitle": "แรเงาเซลล์ที่เชื่อมต่อกันสองเซลล์ในแต่ละห้อง",
-  "norinoriTitle": "โนริโนริ",
-  "numberBondsSubtitle": "เชื่อมโยงค่าโหนดให้เท่ากับผลรวมการเชื่อมต่อเป้าหมาย",
-  "numberBondsTitle": "พันธบัตรจำนวน",
-  "oddEvenFlashSubtitle": "จับคู่ความเท่าเทียมกันของตัวเลขกับกฎสีอย่างรวดเร็ว",
-  "oddEvenFlashTitle": "แฟลชคี่คู่",
-  "origamiUnfoldSubtitle": "ระบุรูปแบบการเจาะรูหลังจากคลี่แผ่นพับออก",
-  "origamiUnfoldTitle": "Origami แฉ",
-  "patternSequenceDrawSubtitle": "ทำซ้ำลำดับเส้นทางแบบเคลื่อนไหวบนตาราง",
-  "patternSequenceDrawTitle": "การเรียกคืนรูปแบบ",
-  "percentageShoppingSubtitle": "คำนวณเปอร์เซ็นต์ส่วนลดและยอดรวมในการชำระเงินขั้นสุดท้าย",
-  "percentageShoppingTitle": "ช้อปปิ้งเปอร์เซ็นต์",
-  "peripheralFocusSubtitle": "ตอบสนองต่อแผงด้านข้างที่กระพริบขณะแก้คณิตศาสตร์",
-  "peripheralFocusTitle": "โฟกัสอุปกรณ์ต่อพ่วง",
-  "perspectiveShiftViewSubtitle": "หมุนกลุ่มบล็อกจนกว่าจะสะกดตัวอักษร/คำ",
-  "perspectiveShiftViewTitle": "การเปลี่ยนแปลงมุมมอง",
-  "polyominoPackingSubtitle": "บรรจุชิ้นส่วนบล็อกโพลีโอมิโนแบบสุ่มลงในพื้นที่เป้าหมาย",
-  "polyominoPackingTitle": "การบรรจุโพลีโอมิโน",
-  "portmanteauFactorySubtitle": "ผสานองค์ประกอบความหมายเพื่อสร้างคำประสม",
-  "portmanteauFactoryTitle": "โรงงานปอร์ตมันโต",
-  "primeFactorTreesSubtitle": "แยกจำนวนประกอบออกเป็นคู่แฟกเตอร์ไพรม์ลีฟ",
-  "primeFactorTreesTitle": "ต้นไม้ปัจจัยสำคัญ",
-  "rippleEffectSubtitle": "กรอกตัวเลขในห้องโดยคำนึงถึงข้อจำกัดของระยะห่าง",
-  "rippleEffectTitle": "ระลอกคลื่น",
-  "rollingBlockBloxSubtitle": "ม้วนชิ้นส่วนบล็อกเพื่อลงจอดในแนวตั้งในช่องเป้าหมาย",
-  "rollingBlockBloxTitle": "บล็อกกลิ้ง",
-  "roomInspectorSubtitle": "ระบุการดัดแปลงเฟอร์นิเจอร์ที่ทำในขณะที่หน้าจอว่างเปล่า",
-  "roomInspectorTitle": "สารวัตรห้อง",
-  "ropeTangleSolverSubtitle": "ลากโหนดเพื่อจัดวางกราฟระนาบโดยมีเส้นกากบาทเป็นศูนย์",
-  "ropeTangleSolverTitle": "เชือกแก้ให้หาย",
-  "semanticAssociationSubtitle": "ค้นหาคำที่เชื่อมโยงทั้งสามเบาะแส",
-  "semanticAssociationTitle": "คำว่าสมาคม",
-  "semanticCategoryRecallSubtitle": "ระบุคำศึกษาที่ตรงกับเป้าหมายหมวดหมู่ที่ร้องขอ",
-  "semanticCategoryRecallTitle": "การเรียกคืนหมวดหมู่",
-  "sequenceStackSubtitle": "สร้างการเพิ่มเติมและการถอดปึกแผ่นตามลำดับ",
-  "sequenceStackTitle": "ลำดับสแต็ก",
-  "shakashakaSubtitle": "วางกระเบื้องสามเหลี่ยมเพื่อสร้างพื้นที่สีขาวเป็นรูปสี่เหลี่ยมผืนผ้า",
-  "shakashakaTitle": "Shakashaka Rects",
-  "shapeShifterPeripheralSubtitle": "ติดตามการเปลี่ยนแปลงรูปร่างส่วนต่อพ่วงในขณะที่จับคู่ค่าส่วนกลาง",
-  "shapeShifterPeripheralTitle": "รูปร่างอุปกรณ์ต่อพ่วง",
-  "shapeShifterSubtitle": "แตะการผสมรูปร่างและสีเป้าหมาย",
-  "shapeShifterTitle": "ตัวเปลี่ยนรูปร่าง",
-  "sheepAndWolvesSubtitle": "วาดวงแยกแกะจากหมาป่า",
-  "sheepAndWolvesTitle": "แกะและหมาป่า",
-  "shellGameSubtitle": "ติดตามลูกบอลที่ซ่อนอยู่ในฐานะสถานที่สลับถ้วยสับ",
-  "shellGameTitle": "เกมเชลล์",
-  "shikakuSubtitle": "แบ่งตารางออกเป็นสี่เหลี่ยมจัตุรัสและสี่เหลี่ยมที่ตรงกับตัวเลข",
-  "shikakuTitle": "ชิคาคุ",
-  "signalAndNoiseSubtitle": "ค้นหาอักขระตัวอักษรและตัวเลขเป้าหมายที่ซ่อนอยู่ในสัญญาณรบกวนคงที่",
-  "signalAndNoiseTitle": "สัญญาณและเสียงรบกวน",
-  "soundAlikeHomophonesSubtitle": "ระบุการสะกดคำพ้องเสียงที่ถูกต้องสำหรับประโยค",
-  "soundAlikeHomophonesTitle": "การจับคู่คำพ้องเสียง",
-  "soundSequenceMatchSubtitle": "ทำซ้ำลำดับโน้ตที่เล่นบนแป้นพิมพ์เสมือน",
-  "soundSequenceMatchTitle": "การจับคู่ลำดับเสียง",
-  "soundWaveMatchSubtitle": "แตะเมื่อความถี่คลื่นภาพสอดคล้องกับการเปลี่ยนแปลงระดับเสียง",
-  "soundWaveMatchTitle": "การจับคู่คลื่นเสียง",
-  "spatialGridMemory3DSubtitle": "เรียกคืนบล็อกที่วาววับในโครงสร้างตารางลูกบาศก์ 3 มิติที่หมุนได้",
-  "spatialGridMemory3DTitle": "หน่วยความจำเชิงพื้นที่ 3 มิติ",
-  "spatialGridRotationSubtitle": "จับคู่การจัดเรียงบล็อก 3 มิติที่หมุนไปตามพิกัดแกน",
-  "spatialGridRotationTitle": "การหมุนตารางเชิงพื้นที่",
-  "storyBuilderSubtitle": "สร้างลำดับเหตุการณ์ของเรื่องขึ้นใหม่",
-  "storyBuilderTitle": "ตัวสร้างเรื่องราว",
-  "stostoneSubtitle": "แรเงาเซลล์ที่เลื่อนลงมาเพื่อเติมแถวด้านล่างให้สมบูรณ์",
-  "stostoneTitle": "แรงโน้มถ่วงของสโตสโตน",
-  "suguruTectonicSubtitle": "เติมบล็อคห้องด้วยตัวเลข 1 ถึง K โดยไม่มีเพื่อนบ้านเท่ากัน",
-  "suguruTectonicTitle": "ซูกุรุกริด",
-  "symbolDigitAssocSubtitle": "แก้แผ่นแปลสัญลักษณ์ที่ตรงกับคีย์หลัก",
-  "symbolDigitAssocTitle": "รศ.สัญลักษณ์-หลัก",
-  "symmetryPaintSubtitle": "วาดส่วนของภาพสะท้อนในกระจกที่สะท้อนผ่านแกนสมมาตร",
-  "symmetryPaintTitle": "สีสมมาตร",
-  "syncRhythmSubtitle": "แตะเมื่อการกวาดเครื่องเมตรอนอมแบบภาพตรงกับจังหวะที่ซิงค์กัน",
-  "syncRhythmTitle": "ซิงค์จังหวะ",
-  "synonymMatchSubtitle": "จับคู่เป้าหมายคำที่ล้มด้วยคำพ้องหรือคำตรงข้าม",
-  "synonymMatchTitle": "การจับคู่คำพ้อง",
-  "tangramPolygonSubtitle": "จัดเรียงรูปร่างหลายเหลี่ยมเพื่อเติมเต็มโครงร่างภาพเงา",
-  "tangramPolygonTitle": "แทนแกรมพอดี",
-  "tangramSubtitle": "จัดเรียงรูปร่างเพื่อเติมเต็มภาพเงาของเป้าหมาย",
-  "tangramTitle": "ปริศนาแทนแกรม",
-  "tapaWallSubtitle": "แรเงาเซลล์เพื่อสร้างลวดลายผนังสีดำต่อเนื่อง",
-  "tapaWallTitle": "กำแพงทาปา",
-  "targetPursuerSubtitle": "ติดตามวงกลมหลายวงที่ทับซ้อนกันและเลือกเป้าหมายเดิม",
-  "targetPursuerTitle": "ผู้ตามเป้าหมาย",
-  "tennerGridSubtitle": "เติมแถวด้วยผลรวมของคอลัมน์ที่ตรงกัน 0-9",
-  "tennerGridTitle": "เทนเนอร์กริด",
-  "triangularBridgesSubtitle": "เชื่อมต่อเกาะต่างๆ ใน 3 ทิศทางที่ตรงตามข้อกำหนด",
-  "triangularBridgesTitle": "สะพานสามเหลี่ยม",
-  "tripletsLogicSubtitle": "เติมตารางด้วยรูปร่างสามแบบโดยหลีกเลี่ยงสามแบบติดต่อกัน",
-  "tripletsLogicTitle": "แฝดสาม ทริโอ",
-  "typingRhythmSpeedSubtitle": "พิมพ์คำศัพท์ที่ตรงกับจังหวะจังหวะเครื่องเมตรอนอม",
-  "typingRhythmSpeedTitle": "การพิมพ์โฟลว์",
-  "typoglycemiaDecoderSubtitle": "ถอดรหัสและอ่านประโยคที่สับสนได้อย่างรวดเร็ว",
-  "typoglycemiaDecoderTitle": "ตัวถอดรหัสภาวะน้ำตาลในเลือดต่ำ",
-  "unitConverterProSubtitle": "ตอบการแปลงหน่วยอย่างรวดเร็วภายใต้กำหนดเวลา",
-  "unitConverterProTitle": "ตัวแปลงหน่วย",
-  "vectorGridAlignmentSubtitle": "ปรับขนาดและหมุนรูปร่างเพื่อให้ตรงกับเป้าหมายเทมเพลตเงา",
-  "vectorGridAlignmentTitle": "การจัดแนวเวกเตอร์",
-  "vektorVectorSubtitle": "ปรับขนาดเวกเตอร์เพื่อทำให้ผลรวมของพวกมันอยู่บนเป้าหมาย",
-  "vektorVectorTitle": "เวกเตอร์",
-  "voiceToFaceMatchSubtitle": "เลือกใบหน้าที่ถูกต้องที่เกี่ยวข้องกับคลิปเสียงพูด",
-  "voiceToFaceMatchTitle": "การจับคู่เสียงและใบหน้า",
-  "vowelDropSubtitle": "วางสระลงในตารางพิกัดเพื่อเติมคำให้สมบูรณ์",
-  "vowelDropTitle": "สระหล่น",
-  "wireLoopGameSubtitle": "ลากวงแหวนโลหะไปตามร่องลวดโดยไม่ต้องสัมผัสกัน",
-  "wireLoopGameTitle": "ห่วงลวด",
-  "wordAssociationRecallSubtitle": "เรียกคืนการเชื่อมโยงคำที่จับคู่จากหน่วยความจำ",
-  "wordAssociationRecallTitle": "สมาคมคำ",
-  "wordChainShiritoriSubtitle": "เชื่อมโยงคำวนซ้ำเริ่มต้นด้วยผลลัพธ์ตัวอักษรก่อนหน้า",
-  "wordChainShiritoriTitle": "ห่วงโซ่คำ",
-  "wordGridConnectionSubtitle": "จัดกลุ่มคำ 16 คำเป็น 4 หมวดหมู่ กลุ่มละ 4 คำ",
-  "wordGridConnectionTitle": "การเชื่อมต่อคำ",
-  "wordGridSudokuSubtitle": "เรียงตัวอักษรในแถวกริดเพื่อสร้างคำ",
-  "wordGridSudokuTitle": "คำว่าซูโดกุ",
-  "wordSnakeTrailSubtitle": "ติดตามตัวอักษรเหมือนงูสะกดคำเฉพาะเรื่อง",
-  "wordSnakeTrailTitle": "คำว่างู",
-  "wordWheelPangramSubtitle": "สร้างคำที่มีตัวอักษรเป้าหมายตรงกลางจากล้อ",
-  "wordWheelPangramTitle": "คำว่าแอนนาแกรม",
-  "wordWheelSubtitle": "สร้างคำโดยใช้ตัวอักษรบนวงล้อรวมทั้งอักษรตรงกลางด้วย",
-  "wordWheelTitle": "วงล้อคำ",
-  "yajilinSubtitle": "วางเซลล์สีดำและวาดเบาะแสการจับคู่วงเดียว",
-  "yajilinTitle": "Yajilin",
-  "btnMatchColor": "จับคู่สี",
-  "btnMatchWord": "จับคู่คำ",
-  "favoriteGame": "รายการโปรด",
-  "gameHidden": "ซ่อนเกมแล้ว",
-  "hiddenGames": "เกมที่ซ่อนอยู่",
-  "hideGame": "ซ่อน",
-  "noHiddenGames": "ไม่มีเกมที่ซ่อนอยู่",
-  "orbitTapTapToHit": "แตะเมื่อลูกบอลเข้าประตู",
-  "showHiddenGames": "แสดงเกมที่ซ่อนอยู่ ({count})",
-  "@showHiddenGames": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "undo": "เลิกทำ",
-  "unfavoriteGame": "ลบออกจากรายการโปรด",
-  "unhideGame": "ยกเลิกการซ่อน",
   "kurodokoTitle": "Kurodoko",
   "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
   "kurodokoCongrats": "ทุกตัวเลขเห็นครบตามที่ควรเห็น",
@@ -3121,6 +1860,13 @@
   "pegsTitle": "หมุด",
   "pegsSubtitle": "กระโดดหมุดข้ามหมุดข้างเคียงเพื่อกิน ให้เหลือเพียงหมุดเดียว",
   "pegsCongrats": "เหลือหมุดเดียว กระดานสะอาดหมดจด",
+  "lightsOutPresses": "Presses",
+  "lightsOutLit": "Lit",
+  "sameGameTitle": "Same Game",
+  "sameGameSubtitle": "Clear groups of matching blocks to empty the board.",
+  "sameGameCongrats": "Board cleared. Every square gone.",
+  "sameGameLeft": "Left",
+  "sameGameStuck": "No groups left. Start a new board.",
   "galaxiesTitle": "Galaxies",
   "galaxiesSubtitle": "Give every dot its own symmetric region",
   "galaxiesCongrats": "Every dot has its own galaxy.",
@@ -3131,5 +1877,28 @@
   "twiddleCongrats": "ทุกตัวเลขอยู่ถูกที่",
   "difficultyEasy": "ง่าย",
   "difficultyMedium": "ปานกลาง",
-  "difficultyHard": "ยาก"
+  "difficultyHard": "ยาก",
+  "crossingTitle": "Number Crossing",
+  "crossingSubtitle": "Fit every listed number into the crossing slots.",
+  "crossingPlaced": "Placed",
+  "crossingWinTitle": "EVERY NUMBER FITS!",
+  "crossingWinMessage": "Each number once, and every crossing agrees digit for digit.",
+  "navDeal": "แจกไพ่",
+  "navStack": "คลัง",
+  "navYou": "คุณ",
+  "next": "ถัดไป",
+  "nextPuzzle": "ปริศนาถัดไป",
+  "restartPuzzle": "เริ่มใหม่",
+  "lockScroll": "ล็อกการเลื่อน",
+  "unlockScroll": "ปลดล็อกการเลื่อน",
+  "feedScrollLocked": "ล็อกการเลื่อนแล้ว",
+  "dealTitle": "แจกไพ่",
+  "dealSubtitle": "ทุกปริศนา ทีละใบ",
+  "yourCards": "การ์ดของคุณ",
+  "todaysCard": "การ์ดวันนี้",
+  "quickPlay": "ไม่เกินสองนาที",
+  "rooms": "หกห้อง",
+  "puzzles": "ปริศนา",
+  "shuffleCategory": "แจกเฉพาะห้องนี้",
+  "deckProgress": "{position} จาก {total}"
 }

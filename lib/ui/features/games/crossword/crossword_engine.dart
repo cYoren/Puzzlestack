@@ -1,6 +1,8 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 class CrosswordWord {
   final String word;
@@ -33,28 +35,31 @@ class CrosswordBoard {
 }
 
 class CrosswordEngine {
+  static const int miniBoardSize = 5;
   static const int defaultBoardSize = 8;
 
   static List<Map<String, String>> _parseJson(String response) {
     final data = json.decode(response) as List<dynamic>;
-    return data.map((item) => {
-      "word": item['word'].toString().toUpperCase(),
-      "clue": item['clue'].toString()
-    }).toList();
+    return data
+        .map((item) => {
+              'word': item['word'].toString().toUpperCase(),
+              'clue': item['clue'].toString(),
+            })
+        .toList();
   }
 
-  /// Clue text is English (assets/crossword_data.json); the parameter this used
-  /// to accept was never read.
+  /// Clue text is English (`assets/crossword_data.json`).
   Future<List<Map<String, String>>> loadData() async {
     try {
-      final String response = await rootBundle.loadString('assets/crossword_data.json');
+      final String response =
+          await rootBundle.loadString('assets/crossword_data.json');
       return await compute(_parseJson, response);
     } catch (e) {
       return [
-        {"word": "ACE", "clue": "A top-ranking playing card"},
-        {"word": "BED", "clue": "A piece of furniture for sleep"},
-        {"word": "CAT", "clue": "A small domesticated carnivorous mammal"},
-        {"word": "DOG", "clue": "A domesticated carnivorous mammal"}
+        {'word': 'ACE', 'clue': 'A top-ranking playing card'},
+        {'word': 'BED', 'clue': 'A piece of furniture for sleep'},
+        {'word': 'CAT', 'clue': 'A small domesticated carnivorous mammal'},
+        {'word': 'DOG', 'clue': 'A domesticated carnivorous mammal'},
       ];
     }
   }
@@ -63,46 +68,100 @@ class CrosswordEngine {
     final List<Map<String, String>> allWords = (args[0] as List).map((item) {
       final map = item as Map;
       return {
-        "word": map['word'].toString().toUpperCase(),
-        "clue": map['clue'].toString(),
+        'word': map['word'].toString().toUpperCase(),
+        'clue': map['clue'].toString(),
       };
     }).toList();
     final int size = args[1] as int;
+    final int? seed = args.length > 2 ? args[2] as int? : null;
+    final Random rng = seed == null ? Random() : Random(seed);
 
-    final validWords = allWords.where((w) => w['word']!.length <= size).toList();
+    final validWords =
+        allWords.where((w) => w['word']!.length <= size).toList();
 
     if (validWords.isEmpty) {
       return CrosswordBoard(
         size: size,
         grid: List.generate(size, (_) => List.filled(size, ' ')),
-        words: []
+        words: [],
       );
     }
 
-    List<List<String>> bestGrid = List.generate(size, (_) => List.filled(size, ' '));
+    final int wantedWords = max(1, size - 1);
+    final int capWords = min(15, size * 2);
+    List<List<String>> bestGrid =
+        List.generate(size, (_) => List.filled(size, ' '));
     List<CrosswordWord> bestPlacedWords = [];
 
-    for (int attempt = 0; attempt < 200; attempt++) {
-      validWords.shuffle();
-      List<List<String>> grid = List.generate(size, (_) => List.filled(size, ' '));
-      List<CrosswordWord> placedWords = [];
+    final List<Map<String, String>> spinePool = validWords
+        .where(
+          (w) =>
+              w['word']!.length >= max(3, size - 2) &&
+              w['word']!.length <= size,
+        )
+        .toList();
 
-      var seedList = validWords.where((w) => w['word']!.length >= size - 2 && w['word']!.length <= size).toList();
-      var seed = seedList.isNotEmpty ? seedList[0] : validWords[0];
+    for (int attempt = 0; attempt < 400; attempt++) {
+      validWords.shuffle(rng);
+      final List<List<String>> grid =
+          List.generate(size, (_) => List.filled(size, ' '));
+      final List<CrosswordWord> placedWords = [];
 
-      var first = CrosswordWord(word: seed['word']!, clue: seed['clue']!);
-      first.x = (size - first.word.length) ~/ 2;
-      first.y = size ~/ 2;
-      first.isHorizontal = true;
+      final Map<String, String> seedEntry = spinePool.isNotEmpty
+          ? spinePool[rng.nextInt(spinePool.length)]
+          : validWords.first;
+
+      final CrosswordWord first = CrosswordWord(
+        word: seedEntry['word']!,
+        clue: seedEntry['clue']!,
+      );
+      first.isHorizontal = attempt.isEven;
+      final int slack = size - first.word.length;
+      final int along = slack <= 0 ? 0 : rng.nextInt(slack + 1);
+      // Vary the perpendicular row/col so vertical and horizontal crossings
+      // have room on both sides across retries.
+      final int acrossPos = size <= 3 ? 0 : (attempt % size);
+      if (first.isHorizontal) {
+        first.x = along;
+        first.y = acrossPos;
+      } else {
+        first.x = acrossPos;
+        first.y = along;
+      }
 
       _place(grid, first);
       placedWords.add(first);
 
-      for (int i = 0; i < validWords.length && placedWords.length < 15; i++) {
-        if (placedWords.any((pw) => pw.word == validWords[i]['word'])) continue;
+      // Prefer longer crossing words early so long lines do not get blocked by
+      // tiny 3-letter stubs, then fill remaining lines with shorter words.
+      final List<Map<String, String>> ordered = List.from(validWords)
+        ..sort((a, b) {
+          final int target = max(4, size - 2);
+          final int da = (a['word']!.length - target).abs();
+          final int db = (b['word']!.length - target).abs();
+          return da.compareTo(db);
+        });
+      // Lightly permute within bands so boards stay fresh.
+      for (int i = 0; i + 3 < ordered.length; i += 4) {
+        final int j = i + rng.nextInt(4);
+        final tmp = ordered[i];
+        ordered[i] = ordered[j];
+        ordered[j] = tmp;
+      }
 
-        var candidate = CrosswordWord(word: validWords[i]['word']!, clue: validWords[i]['clue']!);
-        _tryPlaceCandidate(grid, candidate, placedWords, size);
+      for (int pass = 0; pass < 2 && placedWords.length < capWords; pass++) {
+        for (int i = 0;
+            i < ordered.length && placedWords.length < capWords;
+            i++) {
+          final String wText = ordered[i]['word']!;
+          if (placedWords.any((pw) => pw.word == wText)) continue;
+
+          final candidate = CrosswordWord(
+            word: wText,
+            clue: ordered[i]['clue']!,
+          );
+          _tryPlaceCandidate(grid, candidate, placedWords, size, rng);
+        }
       }
 
       if (placedWords.length > bestPlacedWords.length) {
@@ -110,27 +169,36 @@ class CrosswordEngine {
         bestGrid = List.generate(size, (y) => List<String>.from(grid[y]));
       }
 
-      if (placedWords.length >= 10) break;
+      if (bestPlacedWords.length >= wantedWords + 1) break;
+      if (attempt >= 80 && bestPlacedWords.length >= wantedWords) break;
     }
 
     _assignNumbers(bestPlacedWords);
     return CrosswordBoard(size: size, grid: bestGrid, words: bestPlacedWords);
   }
 
-  static void _tryPlaceCandidate(List<List<String>> grid, CrosswordWord candidate, List<CrosswordWord> placedWords, int size) {
-    var targets = List.from(placedWords)..shuffle();
+  static void _tryPlaceCandidate(
+    List<List<String>> grid,
+    CrosswordWord candidate,
+    List<CrosswordWord> placedWords,
+    int size,
+    Random rng,
+  ) {
+    final List<CrosswordWord> targets = List.from(placedWords)..shuffle(rng);
 
-    for (var target in targets) {
+    for (final target in targets) {
       for (int tIdx = 0; tIdx < target.word.length; tIdx++) {
         for (int cIdx = 0; cIdx < candidate.word.length; cIdx++) {
           if (target.word[tIdx] == candidate.word[cIdx]) {
             candidate.isHorizontal = !target.isHorizontal;
             if (candidate.isHorizontal) {
-              candidate.x = (target.isHorizontal ? target.x + tIdx : target.x) - cIdx;
+              candidate.x =
+                  (target.isHorizontal ? target.x + tIdx : target.x) - cIdx;
               candidate.y = target.isHorizontal ? target.y : target.y + tIdx;
             } else {
               candidate.x = target.isHorizontal ? target.x + tIdx : target.x;
-              candidate.y = (target.isHorizontal ? target.y : target.y + tIdx) - cIdx;
+              candidate.y =
+                  (target.isHorizontal ? target.y : target.y + tIdx) - cIdx;
             }
 
             if (_canPlaceSafely(grid, candidate, placedWords, size)) {
@@ -144,16 +212,30 @@ class CrosswordEngine {
     }
   }
 
-  static bool _canPlaceSafely(List<List<String>> grid, CrosswordWord w, List<CrosswordWord> placedWords, int size) {
+  static bool _canPlaceSafely(
+    List<List<String>> grid,
+    CrosswordWord w,
+    List<CrosswordWord> placedWords,
+    int size,
+  ) {
     if (w.x < 0 || w.y < 0) return false;
     if (w.isHorizontal && w.x + w.word.length > size) return false;
     if (!w.isHorizontal && w.y + w.word.length > size) return false;
 
+    // At most one horizontal word per row and one vertical word per column
+    // (`test/engines/crossword_engine_test.dart`).
+    for (final existing in placedWords) {
+      if (existing.isHorizontal == w.isHorizontal) {
+        if (w.isHorizontal && existing.y == w.y) return false;
+        if (!w.isHorizontal && existing.x == w.x) return false;
+      }
+    }
+
     int intersectionCount = 0;
 
     for (int i = 0; i < w.word.length; i++) {
-      int cx = w.isHorizontal ? w.x + i : w.x;
-      int cy = w.isHorizontal ? w.y : w.y + i;
+      final int cx = w.isHorizontal ? w.x + i : w.x;
+      final int cy = w.isHorizontal ? w.y : w.y + i;
 
       if (grid[cy][cx] != ' ' && grid[cy][cx] != w.word[i]) return false;
 
@@ -172,22 +254,16 @@ class CrosswordEngine {
 
     if (intersectionCount < 1) return false;
 
-    for (var existing in placedWords) {
-      if (existing.isHorizontal == w.isHorizontal) {
-        if (w.isHorizontal && existing.y == w.y) {
-          if (!(w.x + w.word.length <= existing.x || existing.x + existing.word.length <= w.x)) return false;
-        } else if (!w.isHorizontal && existing.x == w.x) {
-          if (!(w.y + w.word.length <= existing.y || existing.y + existing.word.length <= w.y)) return false;
-        }
-      } else {
+    for (final existing in placedWords) {
+      if (existing.isHorizontal != w.isHorizontal) {
         int sharedCells = 0;
         for (int i = 0; i < w.word.length; i++) {
-          int cx = w.isHorizontal ? w.x + i : w.x;
-          int cy = w.isHorizontal ? w.y : w.y + i;
+          final int cx = w.isHorizontal ? w.x + i : w.x;
+          final int cy = w.isHorizontal ? w.y : w.y + i;
 
           for (int j = 0; j < existing.word.length; j++) {
-            int ex = existing.isHorizontal ? existing.x + j : existing.x;
-            int ey = existing.isHorizontal ? existing.y : existing.y + j;
+            final int ex = existing.isHorizontal ? existing.x + j : existing.x;
+            final int ey = existing.isHorizontal ? existing.y : existing.y + j;
 
             if (cx == ex && cy == ey) {
               sharedCells++;
@@ -200,10 +276,14 @@ class CrosswordEngine {
 
     if (w.isHorizontal) {
       if (w.x > 0 && grid[w.y][w.x - 1] != ' ') return false;
-      if (w.x + w.word.length < size && grid[w.y][w.x + w.word.length] != ' ') return false;
+      if (w.x + w.word.length < size && grid[w.y][w.x + w.word.length] != ' ') {
+        return false;
+      }
     } else {
       if (w.y > 0 && grid[w.y - 1][w.x] != ' ') return false;
-      if (w.y + w.word.length < size && grid[w.y + w.word.length][w.x] != ' ') return false;
+      if (w.y + w.word.length < size && grid[w.y + w.word.length][w.x] != ' ') {
+        return false;
+      }
     }
 
     return true;
@@ -211,8 +291,8 @@ class CrosswordEngine {
 
   static void _place(List<List<String>> grid, CrosswordWord w) {
     for (int i = 0; i < w.word.length; i++) {
-      int cx = w.isHorizontal ? w.x + i : w.x;
-      int cy = w.isHorizontal ? w.y : w.y + i;
+      final int cx = w.isHorizontal ? w.x + i : w.x;
+      final int cy = w.isHorizontal ? w.y : w.y + i;
       grid[cy][cx] = w.word[i];
     }
   }
@@ -224,9 +304,9 @@ class CrosswordEngine {
     });
 
     int currentNum = 1;
-    Map<String, int> posToNum = {};
-    for (var w in words) {
-      String key = "${w.x},${w.y}";
+    final Map<String, int> posToNum = {};
+    for (final w in words) {
+      final String key = '${w.x},${w.y}';
       if (posToNum.containsKey(key)) {
         w.number = posToNum[key]!;
       } else {

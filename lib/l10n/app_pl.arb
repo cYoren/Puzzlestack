@@ -1,9 +1,6 @@
 {
   "@@locale": "pl",
   "appTitle": "Puzzlestack",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
   "home": "Główna",
   "settings": "Ustawienia",
   "playAgain": "Graj ponownie",
@@ -44,6 +41,9 @@
   "trialModeDescription": "Rozwiąż 20, aby zakończyć, zamiast timera 60s",
   "keepScreenAwake": "Nie wygaszaj ekranu",
   "keepScreenAwakeDescription": "Zapobiegaj wyłączaniu ekranu podczas rozgrywki",
+  "showArchivedGames": "Pokaż zarchiwizowane łamigłówki",
+  "showArchivedGamesDescription": "Zadania poznawcze i ćwiczenia zachowane jako materiał.",
+  "archived": "ARCHIWUM",
   "appearance": "Wygląd",
   "language": "Język",
   "gameplay": "Rozgrywka",
@@ -73,32 +73,8 @@
   "termsOfService": "Regulamin",
   "licenses": "Licencje",
   "findWordSubtitle": "Masz {maxTries} prób, aby znaleźć ukryte słowo o długości {wordLength} liter.",
-  "@findWordSubtitle": {
-    "placeholders": {
-      "maxTries": {
-        "type": "int"
-      },
-      "wordLength": {
-        "type": "int"
-      }
-    }
-  },
   "wordFoundMessage": "Słowo znalezione pomyślnie: {word}",
-  "@wordFoundMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOverMessage": "Słowem było: {word}",
-  "@gameOverMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOver": "Koniec gry",
   "crosswordTitle": "Krzyżówka",
   "crosswordSubtitle": "Uzupełnij siatkę poprawnymi słowami na podstawie podanych wskazówek.",
@@ -108,21 +84,7 @@
   "radicalRootsGoalReached": "Cel osiągnięty!",
   "radicalRootsTimeUp": "Czas minął!",
   "radicalRootsScoreMessage": "Obliczyłeś poprawnie {score} pierwiastków!",
-  "@radicalRootsScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsTryAgainMessage": "Ćwicz dalej! Obliczyłeś {score} pierwiastków.",
-  "@radicalRootsTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsStart": "Zacznij obliczać",
   "radicalRootsDescription": "Masz 60 sekund, aby rozwiązać jak najwięcej.",
   "radicalRootsBest": "Najlepszy",
@@ -132,21 +94,7 @@
   "romanArithmeticGoalReached": "Poziom Centuriona!",
   "romanArithmeticTimeUp": "Czas minął!",
   "romanArithmeticScoreMessage": "Rozwiązałeś {score} rzymskich zadań!",
-  "@romanArithmeticScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticTryAgainMessage": "Veni, Vidi, Vici! Rozwiązałeś {score} zadań.",
-  "@romanArithmeticTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticStart": "Rozpocznij misję",
   "romanArithmeticDescription": "Konwertuj i rozwiązuj. Masz 60 sekund.",
   "romanArithmeticBest": "Najlepszy",
@@ -181,6 +129,45 @@
   "magnetsHowToPlay": "Wypełnij pojemniki wielkości domina magnesami „+” i „-” lub pozostaw je puste. Wskazówki w wierszach i kolumnach określają całkowitą liczbę każdego bieguna w danej linii. Identyczne bieguny nie mogą sąsiadować ze sobą prostopadle.",
   "magnetsWinTitle": "POLARYZACJA ZRÓWNOWAŻONA!",
   "magnetsWinMessage": "Wszystkie magnesy są idealnie ułożone!",
+  "magnetsPlaced": "Magnets",
+  "magnetsLevel": "Depth",
+  "cubeTitle": "Cube",
+  "cubeSubtitle": "Roll the cube to collect every blue square.",
+  "cubeWinTitle": "SIX BLUES!",
+  "cubeWinMessage": "Every face of the cube is blue.",
+  "cubeHowToPlay": "Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube's bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.",
+  "cubeFaces": "Faces",
+  "cubeMoves": "Moves",
+  "cubeBest": "Best",
+  "mapTitle": "Four Colours",
+  "mapSubtitle": "Colour every region so touching regions never match.",
+  "mapWinTitle": "MAP COLOURED!",
+  "mapWinMessage": "Every region has a colour, and no neighbours clash.",
+  "mapHowToPlay": "Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.",
+  "mapRegions": "Regions",
+  "mapColoured": "Coloured",
+  "inertiaTitle": "Inertia",
+  "inertiaSubtitle": "Slide the ball to collect every gem and miss mines.",
+  "inertiaWinTitle": "ALL GEMS!",
+  "inertiaWinMessage": "Every gem collected and not a mine touched.",
+  "inertiaHowToPlay": "Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.",
+  "inertiaGems": "Gems",
+  "inertiaMoves": "Moves",
+  "inertiaExploded": "MINE! Tap to retry",
+  "netslideTitle": "Netslide",
+  "netslideSubtitle": "Slide rows and columns until every pipe connects.",
+  "netslideWinTitle": "NET COMPLETE!",
+  "netslideWinMessage": "Every pipe is connected.",
+  "netslideHowToPlay": "Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.",
+  "netslideMoves": "Slides",
+  "netslideScramble": "Depth",
+  "signpostTitle": "Signpost",
+  "signpostSubtitle": "Link cells in order by following their arrows.",
+  "signpostWinTitle": "EVERY NUMBER PLACED!",
+  "signpostWinMessage": "One chain from 1 to the last, every arrow pointing the way.",
+  "signpostHowToPlay": "Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.",
+  "signpostMoves": "Links",
+  "signpostGivens": "Givens",
   "lighthousesTitle": "LATARNIE MORSKIE",
   "lighthousesSubtitle": "Rozmieść statki na podstawie wskazówek z latarń.",
   "lighthousesHowToPlay": "Umieść statki 1x1 w siatce. Latarnie wskazują całkowitą liczbę statków widocznych w poziomie i pionie. Statki nie mogą dotykać latarń ani siebie nawzajem, nawet po przekątnej.",
@@ -191,6 +178,10 @@
   "dominosaHowToPlay": "Ułóż kompletny zestaw kostek domina na siatce liczb tak, aby każda para sąsiednich liczb była zakryta dokładnie jedną kostką. Każda para liczb występuje w zestawie tylko raz.",
   "dominosaWinTitle": "MISTRZ DOMINA!",
   "dominosaWinMessage": "Każda kostka domina została znaleziona i umieszczona!",
+  "dominosaPlaced": "Placed",
+  "dominosaTypes": "Types",
+  "skyscrapersClues": "Clues",
+  "skyscrapersFilled": "Filled",
   "skyscrapersTitle": "WIEŻOWCE",
   "skyscrapersSubtitle": "Wypełnij siatkę wysokościami budynków.",
   "skyscrapersHowToPlay": "Wypełnij siatkę wysokościami (1-N) tak, aby każdy wiersz i kolumna zawierały każdą wysokość dokładnie raz. Wskazówki na krawędziach informują, ile budynków jest widocznych z danego kierunku, przy czym wyższe budynki zasłaniają niższe.",
@@ -227,26 +218,12 @@
   "arithmeticChainWinMessage": "Twoje obliczenia w pamięci są błyskawiczne!",
   "arithmeticChainLoseTitle": "SPRÓBUJ PONOWNIE",
   "arithmeticChainLoseMessage": "Poprawna odpowiedź to {answer}.",
-  "@arithmeticChainLoseMessage": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "arithmeticChainStart": "START",
   "arithmeticChainNext": "DALEJ",
   "attentionalBlinkTitle": "Mrugnięcie uwagowe",
   "attentionalBlinkSubtitleWatch": "UWAŻAJ NA LICZBY",
   "attentionalBlinkSubtitleInput": "WPROWADŹ DWIE LICZBY, KTÓRE WIDZIAŁEŚ",
   "attentionalBlinkScoreMessage": "Zdobyłeś {score} celów!",
-  "@attentionalBlinkScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "balanceScaleTitle": "WAGA SZALKOWA",
   "balanceScaleSubtitle": "Wnioskuj o wadze ostatniego przedmiotu na podstawie wag.",
   "balanceScaleWinTitle": "W RÓWNOWADZE!",
@@ -266,16 +243,6 @@
   "boxCompletionTitle": "Dopełnianie pudełka",
   "boxCompletionSubtitle": "Który sześcian można utworzyć?",
   "boxCompletionScoreMessage": "Zdobyłeś {score} poprawnych na {totalTrials}!",
-  "@boxCompletionScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "totalTrials": {
-        "type": "int"
-      }
-    }
-  },
   "boxCompletionOptions": "OPCJE",
   "bridgesTitle": "MOSTY",
   "bridgesSubtitle": "Połącz wyspy mostami. Każda wyspa potrzebuje określonej liczby mostów. Mosty nie mogą się przecinać.",
@@ -286,21 +253,7 @@
   "calculationSprintGoalReached": "CEL OSIĄGNIĘTY!",
   "calculationSprintTimeUp": "CZAS MINĄŁ",
   "calculationSprintScoreMessage": "Doskonała prędkość obliczeń! Zdobyłeś {score} punktów.",
-  "@calculationSprintScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintTryAgainMessage": "Zdobyłeś {score} punktów. Spróbuj pobić swój rekord!",
-  "@calculationSprintTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintBest": "REKORD",
   "calculationSprintSeconds": "60 SEKUND",
   "calculationSprintDescription": "Rozwiązuj równania szybko.\nBłędne odpowiedzi odejmują 3 sekundy!",
@@ -311,82 +264,20 @@
   "categoryFluencyTimeUp": "CZAS MINĄŁ!",
   "categoryFluencyWinMessage": "Masz bogate słownictwo!",
   "categoryFluencyFoundMessage": "Znaleziono {count} słów.",
-  "@categoryFluencyFoundMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "categoryFluencyCategoryLabel": "Kategoria:",
   "categoryFluencyEnterItem": "Wprowadź element...",
   "categoryFluencyWordCount": "{entered} / {target} słów",
-  "@categoryFluencyWordCount": {
-    "placeholders": {
-      "entered": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessTitle": "Ślepota na zmiany",
   "changeBlindnessSubtitle": "ZNAJDŹ ZMIENIAJĄCY SIĘ ELEMENT",
   "changeBlindnessScore": "WYNIK: {score}",
-  "@changeBlindnessScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessFoundMessage": "Znaleziono {score} zmian!",
-  "@changeBlindnessFoundMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTitle": "Czas reakcji z wyborem",
   "choiceRtSubtitle": "Dotknij aktywnego kwadratu tak szybko, jak potrafisz",
   "choiceRtAvgMessage": "Twój średni czas reakcji: {avg}ms",
-  "@choiceRtAvgMessage": {
-    "placeholders": {
-      "avg": {
-        "type": "String"
-      }
-    }
-  },
   "choiceRtTimeRemaining": "Pozostały czas: {time}s",
-  "@choiceRtTimeRemaining": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTaps": "Dotknięcia: {count}",
-  "@choiceRtTaps": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodTitle": "Zalewanie kolorem",
   "colorFloodSubtitle": "Ruchy: {moves} / {maxMoves}",
-  "@colorFloodSubtitle": {
-    "placeholders": {
-      "moves": {
-        "type": "int"
-      },
-      "maxMoves": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodSuccess": "SUKCES ZALEWANIA!",
   "colorFloodDryLand": "SUCHY LĄD...",
   "colorFloodWinMessage": "Nasyciłeś całą siatkę kolorem!",
@@ -398,28 +289,11 @@
   "colorMatchCheck": "SPRAWDŹ DOPASOWANIE",
   "colorMatchResult": "WYNIK DOPASOWANIA",
   "colorMatchAccuracy": "Twoja dokładność: {accuracy}%",
-  "@colorMatchAccuracy": {
-    "placeholders": {
-      "accuracy": {
-        "type": "String"
-      }
-    }
-  },
   "corsiBlocksTitle": "BLOKI CORSYEGO",
   "corsiBlocksSubtitle": "Obserwuj ulatujące bloki i dotykaj ich w tej samej kolejności.",
   "corsiBlocksWinTitle": "MISTRZ PRZESTRZENI!",
   "corsiBlocksLoseTitle": "ZAGUBIONY W PRZESTRZENI",
   "corsiBlocksMessage": "Zapamiętałeś {score} sekwencji! Twoja rozpiętość pamięci przestrzennej osiągnęła {span}.",
-  "@corsiBlocksMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "span": {
-        "type": "int"
-      }
-    }
-  },
   "corsiBlocksWatch": "OBSERWUJ WZÓR",
   "corsiBlocksRepeat": "POWTÓRZ WZÓR",
   "corsiBlocksExcellent": "DOSKONALE!",
@@ -441,58 +315,16 @@
   "digitSpanReverseWinMessage": "Twoja pamięć robocza jest imponująca!",
   "digitSpanReverseLoseTitle": "SPRÓBUJ PONOWNIE",
   "digitSpanReverseLoseMessage": "Poprawna odwrócona sekwencja to {sequence}.",
-  "@digitSpanReverseLoseMessage": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
   "dividedAttentionTitle": "Podzielność uwagi",
   "dividedAttentionSubtitle": "Dotknij LEWO dla GWIAZDY ⭐ | Dotknij PRAWO dla CZERWONEGO 🔴",
   "dividedAttentionGameOverTitle": "SKUPIENIE PRZERWANE",
   "dividedAttentionGameOverMessage": "Wielozadaniowość jest trudna! Twój wynik to {score}.",
-  "@dividedAttentionGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "dividedAttentionScore": "WYNIK: {score}",
-  "@dividedAttentionScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackTitle": "Podwójne N-Wstecz",
   "doubleNBackSubtitle": "Dopasuj bodźce o {n} kroków wstecz",
-  "@doubleNBackSubtitle": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackGameOverTitle": "KONIEC GRY",
   "doubleNBackGameOverMessage": "Zdobyłeś {score} punktów w Podwójnym N-Wstecz!",
-  "@doubleNBackGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackScore": "Wynik: {score}",
-  "@doubleNBackScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackPositionMatch": "DOPASOWANIE POZYCJI",
   "doubleNBackLetterMatch": "DOPASOWANIE LITERY",
   "faceNameAssociationTitle": "Twarz-Imię",
@@ -502,27 +334,10 @@
   "faceNameAssociationGameOver": "KONIEC GRY",
   "faceNameAssociationWinMessage": "Masz świetną pamięć do twarzy i imion!",
   "faceNameAssociationLoseMessage": "Uzyskałeś {correct} poprawnych na {total}.",
-  "@faceNameAssociationLoseMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceNameAssociationStartTest": "ROZPOCZNIJ TEST",
   "flankerTestWinTitle": "LASEROWE SKUPIENIE!",
   "flankerTestLoseTitle": "ROZPROSZONY",
   "flankerTestScoreMessage": "Zdobyłeś {score} poprawnych!",
-  "@flankerTestScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "flankerTestTitle": "TEST FLANKERÓW",
   "flankerTestSubtitle": "Wskaż kierunek środkowej strzałki, ignorując strzałki boczne.",
   "flankerTestLeft": "LEWO",
@@ -531,13 +346,6 @@
   "fractionMatchSubtitle": "Dopasuj obrazek do jego ułamka",
   "fractionMatchLoseTitle": "BŁĄD DOPASOWANIA",
   "fractionMatchLoseMessage": "Poprawna odpowiedź to {correctAnswer}.",
-  "@fractionMatchLoseMessage": {
-    "placeholders": {
-      "correctAnswer": {
-        "type": "String"
-      }
-    }
-  },
   "goNoGoTitle": "Go / No-Go",
   "goNoGoSubtitle": "Dotknij dla zielonego, IGNORUJ czerwone!",
   "goNoGoLoseTitle": "REAKCJA ZATRZYMANA",
@@ -549,13 +357,6 @@
   "groceryListWinTitle": "GURU ZAKUPÓW!",
   "groceryListLoseTitle": "O czymś zapomniałeś?",
   "groceryListScoreMessage": "Zdobyłeś {score} punktów w Liście zakupów!",
-  "@groceryListScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "groceryListReady": "JESTEM GOTOWY",
   "groceryListWhereBelong": "GDZIE TO NALEŻY?",
   "hueSortTitle": "SORTOWANIE BARW",
@@ -563,44 +364,16 @@
   "hueSortWinTitle": "IDEALNY GRADIENT!",
   "hueSortWinMessage": "Idealnie posortowałeś spektrum kolorów!",
   "hueSortWrongTiles": "Kafelki w złej pozycji: {count}",
-  "@hueSortWrongTiles": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "kenkenTitle": "KenKen",
   "kenkenWinTitle": "GENIUSZ!",
   "kenkenLoseTitle": "KONIEC GRY",
   "kenkenWinMessage": "Rozwiązałeś łamigłówkę KenKen!",
   "kenkenLoseMessage": "Sprawdź zasady wiersza/kolumny i klatki.",
   "kenkenSubtitle": "Wypełnij 1-{size} bez powtórzeń w wierszach/kolumnach",
-  "@kenkenSubtitle": {
-    "placeholders": {
-      "size": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationTitle": "Anulowanie liter",
   "letterCancellationTitleFull": "Test anulowania liter",
   "letterCancellationScoreMessage": "Znaleziono {score} liter!",
-  "@letterCancellationScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationSubtitle": "Znajdź wszystkie litery \"{target}\"",
-  "@letterCancellationSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "String"
-      }
-    }
-  },
   "letterCancellationFound": "ZNALEZIONO",
   "letterCancellationTime": "CZAS",
   "lightsOutTitle": "ZGAŚ ŚWIATŁA",
@@ -615,6 +388,7 @@
   "visualStatisticalLearningTitle": "Wizualne uczenie statystyczne",
   "orbitTapTitle": "Orbit Tap",
   "orbitTapSubtitle": "Dotknij, gdy kulki zrównają się z bramką",
+  "orbitTapTapToHit": "Dotknij, gdy kula wpadnie do bramki",
   "schulteTableTitle": "Tabela Schultego",
   "multipleObjectTrackingTitle": "Śledzenie obiektów",
   "multipleObjectTrackingSubtitle": "Obserwuj podświetlone obiekty. Śledź je podczas ruchu, a następnie je wybierz.",
@@ -639,13 +413,6 @@
   "sternbergTaskMemorize": "Zapamiętaj litery",
   "sternbergTaskWasLetterSet": "Czy ta litera była w zestawie?",
   "sternbergTaskScore": "Zdobyłeś {score} punktów w Zadaniu Sternberga!",
-  "@sternbergTaskScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "verbalAnalogiesTitle": "Analogie słowne",
   "verbalAnalogiesSubtitle": "Uzupełnij relację",
   "typingSpeedTitle": "Prędkość pisania",
@@ -671,13 +438,6 @@
   "pixelMimicTitle": "Pikselowy mimik",
   "targetNumberTitle": "Cel 24",
   "targetNumberSubtitle": "Użyj wszystkich 4 liczb, aby uzyskać {target}",
-  "@targetNumberSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "mirrorTracingTitle": "Rysowanie lustrzane",
   "mirrorTracingSubtitle": "Odrysuj gwiazdę! Sterowanie jest ODWROTNE.",
   "wordSurgeTitle": "Fala słów",
@@ -687,13 +447,6 @@
   "perspectiveTakingChoosePerspective": "WYBIERZ PERSPEKTYWĘ",
   "perspectiveTakingCongrats": "Masz bystre oko do relacji przestrzennych.",
   "perspectiveTakingSubtitle": "Który widok jest z kierunku {targetDirName}?",
-  "@perspectiveTakingSubtitle": {
-    "placeholders": {
-      "targetDirName": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingTitle": "Składanie papieru",
   "paperFoldingSubtitle": "Jak to będzie wyglądać po rozłożeniu?",
   "waterSortTitle": "Sortowanie wody",
@@ -729,13 +482,6 @@
   "operationSpanRecallPhase": "Przypomnij sobie litery w kolejności",
   "operationSpanRoundComplete": "Runda zakończona!",
   "operationSpanScore": "Zdobyłeś {score} punktów w Rozpiętości operacyjnej!",
-  "@operationSpanScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "slidePuzzleTitle": "Układanka przesuwana",
   "slidePuzzleNewGame": "NOWA GRA",
   "slidePuzzleInstructions": "Ułóż kafelki w kolejności numerycznej, przesuwając je w puste miejsce.",
@@ -747,18 +493,63 @@
   "trailMakingSubtitle": "Połącz liczby w kolejności (1 -> 2 -> 3...) tak szybko, jak potrafisz.",
   "matrixReasoningTitle": "Rozumowanie matrycowe",
   "matrixReasoningSubtitle": "Uzupełnij wzór w siatce 3x3",
+  "abcdTitle": "Four Letters",
+  "abcdSubtitle": "Place A, B, C, or D to match the edge counts.",
+  "abcdFilled": "Cells",
+  "abcdDepth": "Depth",
+  "abcdWinTitle": "EVERY CELL LETTERED!",
+  "abcdWinMessage": "Every count met, no two identical letters touching.",
+  "boatsTitle": "Boats",
+  "boatsSubtitle": "Place the fleet to match the row and column counts.",
+  "boatsShipsFound": "Boat cells",
+  "boatsDepth": "Depth",
+  "boatsWinTitle": "FLEET FOUND!",
+  "boatsWinMessage": "Every boat placed and nothing touching.",
+  "seismicTitle": "Ripple Effect",
+  "seismicSubtitle": "Fill regions 1..N; equal digits keep N cells apart.",
+  "seismicClues": "Clues",
+  "seismicDepth": "Depth",
+  "seismicWinTitle": "RIPPLE SETTLED!",
+  "seismicWinMessage": "Every shape holds 1 to its size, with no two numbers too close.",
+  "mathraxTitle": "Mathrax",
+  "mathraxSubtitle": "Fill a Latin square obeying every corner rule.",
+  "mathraxFilled": "Filled",
+  "mathraxDepth": "Depth",
+  "mathraxWinTitle": "EVERY CORNER AGREES!",
+  "mathraxWinMessage": "A Latin square that satisfies every corner clue.",
+  "saladTitle": "Salad",
+  "saladSubtitle": "Place each letter once per line; edges show first seen.",
+  "saladWritten": "Written",
+  "saladWinTitle": "EVERY LINE AGREES!",
+  "saladWinMessage": "Every letter once in every line, and every border clue reads true.",
+  "romeTitle": "Rome",
+  "romeSubtitle": "Point arrows so every path reaches a goal.",
+  "romeWritten": "Arrows",
+  "romeWinTitle": "EVERY CHAIN ARRIVES!",
+  "romeWinMessage": "One arrow per cell, no repeats in an area, and every chain ends at a goal.",
+  "ascentTitle": "Number Path",
+  "ascentSubtitle": "Place 1 to N so consecutive numbers touch.",
+  "ascentNext": "Next",
+  "ascentDepth": "Depth",
+  "ascentWinTitle": "PATH COMPLETE!",
+  "ascentWinMessage": "One number per cell, every step touching the one before it.",
+  "clustersTitle": "Clusters",
+  "clustersSubtitle": "Two colours: dots touch one mate, others touch two.",
+  "clustersDots": "Dots",
+  "clustersDepth": "Depth",
+  "clustersWinTitle": "CLUSTERS SETTLED!",
+  "clustersWinMessage": "Two colours, every dot true, every cluster of two or more.",
+  "bricksTitle": "Bricks",
+  "bricksSubtitle": "Shade supported cells with no three in a row.",
+  "bricksShaded": "Shaded",
+  "bricksDepth": "Depth",
+  "bricksWinTitle": "THE PILE HOLDS!",
+  "bricksWinMessage": "Every shaded cell is held up, no run of three, and every number reads true.",
   "tentsAndTreesTitle": "Namioty i drzewa",
   "tentsAndTreesSubtitle": "Umieść namioty obok drzew. Liczby wskazują, ile namiotów znajduje się w każdym wierszu/kolumnie. Namioty nie mogą się dotykać.",
   "quickMathTitle": "Szybka matematyka",
   "magicSquaresTitle": "Magiczny kwadrat",
   "magicSquaresSubtitle": "Każdy wiersz, kolumna i przekątna muszą sumować się do {targetSum}",
-  "@magicSquaresSubtitle": {
-    "placeholders": {
-      "targetSum": {
-        "type": "int"
-      }
-    }
-  },
   "objectShuffleTitle": "Tasowanie obiektów",
   "pipesTitle": "Rury",
   "pipesSubtitle": "Połącz pasujące kolorowe kropki rurami.",
@@ -840,13 +631,6 @@
   "blockCount3DNotQuite": "Niezupełnie! Spróbuj obrócić, aby policzyć ponownie.",
   "blockCount3DExcellent": "DOSKONALE",
   "blockCount3DWinMessage": "Poprawnie zidentyfikowałeś wszystkie {count} bloki!",
-  "@blockCount3DWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "blockCount3DHowToPlayDescription": "1. Przeciągnij palcem po rzutni 3D, aby obrócić stos bloków.\n\n2. Policz wszystkie bloki w stosie.\n\n3. Pamiętaj: blok w powietrzu musi mieć bloki konstrukcyjne pod spodem (ukryte bloki!).\n\n4. Wpisz swoją odpowiedź w polu wejściowym i dotknij \"WYŚLIJ WYNIK\", aby sprawdzić.",
   "alphabetSudokuTitle": "SUDOKU ALFABETYCZNE",
   "alphabetSudokuSubtitle": "Wypełnij siatkę tak, aby każdy wiersz, kolumna i kwadrat zawierały litery A-I.",
@@ -856,13 +640,6 @@
   "classicMazeSubtitle": "EKSPLORUJ I ROZWIĄZUJ • NOWY LABIRYNT W KAŻDEJ GRZE",
   "classicMazeWinTitle": "LABIRYNT POKONANY",
   "classicMazeWinMessage": "Niesamowita nawigacja! Rozwiązałeś labirynt w {count} ruchach.",
-  "@classicMazeWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "classicMazeMoves": "RUCHY: ",
   "classicMazeHowToPlayDescription": "1. Poprowadź świecącą żółtą kulkę (gracza) do zielonego portalu (wyjścia) w prawym dolnym rogu.\n\n2. Użyj przesunięć palcem po labiryncie, klawiszy strzałek na klawiaturze fizycznej lub przycisków strzałek na dole, aby się poruszać.\n\n3. Fioletowy ślad pokazuje ścieżkę, którą zbadałeś. Cofnij się po swoim śladzie, aby go dynamicznie wymazać!",
   "conjunctionSearchTitle": "Wyszukiwanie koniunkcyjne",
@@ -877,6 +654,9 @@
   "shapeSquare": "KWADRAT",
   "shapeTriangle": "TRÓJKĄT",
   "shapeStar": "GWIAZDA",
+  "shapeRectangle": "PROSTOKĄT",
+  "shapeEllipse": "ELIPSA",
+  "shapeTrapezoid": "TRAPEZ",
   "colorRedLabel": "CZERWONY",
   "colorBlueLabel": "NIEBIESKI",
   "colorGreenLabel": "ZIELONY",
@@ -893,31 +673,11 @@
   "cubeNetFoldFailed": "NIEPOWODZENIE (DOTKNIJ RESETUJ)",
   "faceTraitAssociationMemorize": "ZAPAMIĘTAJ WSZYSTKIE 4 OSOBY",
   "faceTraitAssociationPersonOf": "OSOBA {current} Z {total}",
-  "@faceTraitAssociationPersonOf": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceTraitAssociationWhatOccupation": "JAKI JEST ICH ZAWÓD?",
   "faceTraitAssociationWhatHobby": "JAKIE JEST ICH HOBBY?",
   "faceTraitAssociationWinTitle": "MISTRZ PAMIĘCI!",
   "faceTraitAssociationLoseTitle": "KONIEC GRY",
   "faceTraitAssociationScoreMessage": "Uzyskałeś {correct} poprawnych na {total}.",
-  "@faceTraitAssociationScoreMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "topologyTitle": "TOPOLOGIA",
   "topologySubtitle": "Czy te kształty są topologicznie równoważne? (Czy jeden można przekształcić w drugi bez przecinania lub sklejania?)",
   "topologyWinTitle": "GENIUSZ GEOMETRII!",
@@ -975,828 +735,157 @@
   "oneLetterShiftTitle": "Przesunięcie o jedną literę",
   "oneLetterShiftSubtitle": "Przekształć jedno słowo w drugie, zmieniając jedną literę",
   "vocabularyBuilderMessage": "Świetna robota! Twoje słownictwo jest imponujące. Wynik: {arg0}",
-  "@vocabularyBuilderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "symmetryMessage": "Idealnie odzwierciedliłeś wzór z chirurgiczną precyzją.",
   "temporalOrderMessage": "Niesamowite! Twoja pamięć sekwencji czasowych jest bardzo dokładna.",
   "temporalOrderMessage1": "Nieprawidłowa pamięć sekwencji. Trening czyni mistrza!",
   "wordSearchMessage": "Wszystkie słowa znalezione dzięki bystrej obserwacji.",
   "colorMatchMessage": "Twoja dokładność: {arg0}%",
-  "@colorMatchMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "semanticLinkMessage": "Zdobyłeś {arg0} punktów!",
-  "@semanticLinkMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "reflexTapMessage": "Dotknąłeś {arg0} celów!",
-  "@reflexTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderMessage": "Twoja geometryczna intuicja jest doskonała!",
   "angleFinderMessage1": "Poprawna odpowiedź to {arg0}°",
-  "@angleFinderMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderText": "{arg0}°",
-  "@angleFinderText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "visualStatisticalLearningMessage": "Zdobyłeś {arg0} poprawnych wzorów!",
-  "@visualStatisticalLearningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nonogramText": "Błąd: {arg0}",
-  "@nonogramText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalCalendarMessage": "Masz {arg0} poprawnych odpowiedzi na 10!",
-  "@mentalCalendarMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "orbitTapMessage": "Udało Ci się kliknąć {arg0} razy!",
-  "@orbitTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableMessage": "Ukończyłeś tabelę w czasie {arg0}.\nĆwicz dalej, aby poszerzyć widzenie peryferyjne!",
-  "@schulteTableMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableText": "ROZPOCZNIJ TEST",
   "relationalMemoryMessage": "Wspaniała dokładność pamięci relacji przestrzennych!",
   "sudokuText": "Błąd: {arg0}",
-  "@sudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sdmtMessage": "Dopasowałeś {arg0} symboli! Ten test mierzy szybkość skanowania i uwagę wizualną.",
-  "@sdmtMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "futoshikiMessage": "Niesamowite! Rozwiązałeś kwadrat łaciński Futoshiki.",
+  "futoshikiWinTitle": "SQUARE SOLVED!",
+  "futoshikiGivens": "Givens",
+  "futoshikiEdges": "Edges",
   "letterFrequencyScanMessage": "Poprawnie policzyłeś {arg0} wystąpień „{arg1}”.",
-  "@letterFrequencyScanMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "letterFrequencyScanText": "Niepoprawnie. Liczba wynosiła {arg0}.",
-  "@letterFrequencyScanText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "memoryMatrixMessage": "Imponujące! Twoja pamięć operacyjna jest świetna. Cel dzienny osiągnięty!",
   "memoryMatrixMessage1": "Skup się i spróbuj ponownie, aby poprawić wynik pamięci.",
   "contextCluesMessage": "Wyjątkowo! Twoje słownictwo i analiza kontekstowa są na najwyższym poziomie.",
   "contextCluesMessage1": "Wybrano błędne słowo! Trenuj rozumowanie w kontekście werbalnym i spróbuj ponownie.",
   "oneLetterShiftMessage": "Poprawnie zmieniłeś {arg0} na {arg1}.",
-  "@oneLetterShiftMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "mentalAbacusMessage": "Twoja arytmetyka mentalna jest na najwyższym poziomie.",
   "fractionMatcherMessage": "Zdobyłeś {arg0} punktów za dopasowanie reprezentacji!",
-  "@fractionMatcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spellingSprintMessage": "Wszystkie 10 słów przeliterowanych poprawnie!",
   "spellingSprintMessage1": "Przeliterowałeś {arg0} słów.",
-  "@spellingSprintMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "stopSignalMessage": "Osiągnąłeś {arg0} poprawnych odpowiedzi! Ten test mierzy Twoją zdolność do hamowania zaplanowanego działania.",
-  "@stopSignalMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarPoliceMessage": "Koniec gry! Utrzymałeś porządek w świecie gramatyki. Wynik: {arg0}",
-  "@grammarPoliceMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "consonantReconstructMessage": "Zrekonstruowałeś wynik {arg0}!",
-  "@consonantReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhymeMasterMessage": "Znaleziono {arg0} z {arg1} rymów!",
-  "@rhymeMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "vigilanceTaskMessage": "Trafienia: {arg0}, Pominięcia: {arg1}\nFałszywe alarmy: {arg2}",
-  "@vigilanceTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "silhouetteMatchOrthoMessage": "Posiadasz nienaganne umiejętności wyrównywania ortograficznego!",
   "silhouetteMatchOrthoText": "MAM TO",
   "silhouetteMatchOrthoText1": "Nieprawidłowe rzutowanie perspektywiczne! Dotknij Reset, aby spróbować ponownie.",
   "fibonacciMergeMessage": "{arg0}: {arg1}",
-  "@fibonacciMergeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "factorFinderMessage": "Zdobyłeś {arg0} punktów za znalezienie wszystkich dzielników!",
-  "@factorFinderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "logicalSyllogismsMessage": "Rozwiązałeś poprawnie {arg0} sylogizmów!",
-  "@logicalSyllogismsMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rotatingMazeMessage": "Udało Ci się przejść przez kinetyczny obracający się labirynt!",
   "rotatingMazeText": "MAM TO",
   "rotatingMazeText1": "🌀 Labirynt obrócony o 90°! Siatka się przesunęła!",
   "mathPathMessage": "Odnalazłeś ścieżkę, która sumuje się do celu!",
   "bridgesMessage": "Udało Ci się połączyć wszystkie wyspy!",
   "compoundConnectMessage": "Słowo złożone to {arg0}{arg1}.",
-  "@compoundConnectMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "pangramSprintMessage": "Zbudowałeś zdanie używając wszystkich 26 liter.",
   "mirrorImageMessage": "Idealnie zidentyfikowałeś odbicie.",
   "mirrorImageText": "OBRAZ LUSTRZANY",
   "reverseStroopMessage": "Zdobyłeś {arg0} punktów! Skup się na instrukcjach.",
-  "@reverseStroopMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "verbalAnalogiesMessage": "Masz bystry umysł do dostrzegania relacji.",
   "corsiBlocksMessage1": "Zapamiętałeś {arg1} sekwencji! Twoja rozpiętość pamięci przestrzennej wyniosła {arg0}.",
-  "@corsiBlocksMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "wordLadderMessage": "Udało Ci się połączyć {arg0} z {arg1} w {arg2} krokach.",
-  "@wordLadderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionMessage": "Niesamowite skanowanie selektywne! Wynik końcowy: {arg0}.",
-  "@d2AttentionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionText": "JAK GRAĆ",
   "d2AttentionText1": "ROZUMIEM",
   "tangleFixMessage": "Wszystkie linie są wyraźne i gładkie.",
   "distractorMatrixMessage": "Niesamowite! Zapamiętałeś wzory pomimo dystraktorów matematycznych!",
   "distractorMatrixMessage1": "Dystraktory Cię dopadły! Wyćwicz swoją pamięć operacyjną.",
   "sentenceUnscrambleMessage": "Ułożyłeś zdanie z wynikiem {arg0}!",
-  "@sentenceUnscrambleMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "kakuroMessage": "Niesamowite! Idealnie dopasowałeś wszystkie segmenty sum.",
   "symbolicFlankerMessage": "Uzyskałeś {arg0} poprawnych odpowiedzi na {arg1}!",
-  "@symbolicFlankerMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "stroopTestMessage": "Zdobyłeś {arg0} poprawnych odpowiedzi! Skup się na kolorze czcionki, a nie na słowie.",
-  "@stroopTestMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wisconsinCardSortingMessage": "Poprawnie posortowałeś {arg0} kart!",
-  "@wisconsinCardSortingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nBackMessage": "Osiągnąłeś {arg0} dopasowań w zadaniu 2-back! Pamięć operacyjna jest kluczowa dla wielozadaniowości.",
-  "@nBackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhythmMasterMessage": "Uzyskałeś {arg0} idealnych trafień i {arg1} punktów!",
-  "@rhythmMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListMessage": "Zdobyłeś {arg0} punktów w Liście Zakupów!",
-  "@groceryListMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListText": "Ja",
   "mirrorTracingMessage": "Twój mózg pomyślnie zreorganizował swoją koordynację.",
   "moduloClockMessage": "Doskonała koordynacja umysłowa w matematyce modularnej! Wynik: {arg0}",
-  "@moduloClockMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "moduloClockMessage1": "Rozwiązałeś {arg0} z {arg1} zadań z zegarem modularnym. Wynik: {arg2}",
-  "@moduloClockMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "crownMessage": "Wszystkie korony umieszczone pomyślnie dzięki doskonałej logice.",
   "dualCodingMessage": "Fantastyczne wykonanie podwójnego zadania! Twój wynik pamięci operacyjnej: {arg0}",
-  "@dualCodingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "inequalityDashMessage": "Zdobyłeś {arg0} punktów w dopasowywaniu nierówności!",
-  "@inequalityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringMessage": "Zdobyłeś {arg0} z {arg1}!",
-  "@sourceMonitoringMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringText": "ZACZNIJ PRZYPOMINANIE",
   "memoryPalaceText": "DOSTĘPNE SŁOWA",
   "target10Message": "Zdobyłeś {arg0} punktów w dopasowywaniu liczb do 10!",
-  "@target10Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingMessage": "Potrafisz dostrzec wzory w swojej wyobraźni.",
   "topologyText": "{arg0}{arg1} / 10",
-  "@topologyText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "waterSortMessage": "Idealnie posortowałeś wszystkie kolory!",
   "anagramDefinitionMessage": "To słowo to rzeczywiście \"{arg0}\".",
-  "@anagramDefinitionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message": "{arg0}: {arg1}\n{arg2}",
-  "@game2048Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message1": "{arg0}: {arg1}",
-  "@game2048Message1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "numericalEstimationMessage": "Dokonałeś {arg0} poprawnych szacunków.",
-  "@numericalEstimationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarSortMessage": "Poprawnie posortowałeś {arg0} słów!",
-  "@grammarSortMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vowelReconstructMessage": "Zrekonstruowałeś wynik {arg0}!",
-  "@vowelReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictMessage": "Osiągnąłeś wynik {arg0} z {arg1} błędami!",
-  "@spatialConflictMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictText": "JAK GRAĆ",
   "spatialConflictText1": "ROZUMIEM",
   "tracePathMessage": "Twoja dokładność wyniosła {arg0}%!",
-  "@tracePathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "ruleSwitcherMessage": "Uzyskałeś {arg0} poprawnych odpowiedzi na {arg1}!",
-  "@ruleSwitcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzMessage": "Wykonałeś {arg0} kroków. Minimalna możliwa liczba to {arg1}.",
-  "@collatzMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzText": "/ 2",
   "collatzText1": "+ 1",
   "collatzText2": "3n + 1",
   "divisibilityDashMessage": "Rozwiązałeś {arg0} liczb!",
-  "@divisibilityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "switchTaskMessage": "Zdobyłeś {arg0} poprawnych odpowiedzi! Szybkie przełączanie jest kluczem do elastyczności umysłowej.",
-  "@switchTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sequenceSleuthMessage": "Rozwiązałeś {arg0} sekwencji!",
-  "@sequenceSleuthMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "changeBlindnessMessage": "Znalazłeś {arg0} zmian!",
-  "@changeBlindnessMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalRotationMessage": "Poprawnie obróciłeś {arg0} kształtów!",
-  "@mentalRotationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage": "Opanowałeś kod!\nSłowo to: {arg0}",
-  "@wordMastermindMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage1": "Ukryte słowo to: {arg0}",
-  "@wordMastermindMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindText": "{arg0}",
-  "@wordMastermindText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonSequenceMessage": "Zapamiętałeś wszystkie 10 płytek!",
   "simonSequenceMessage1": "Spróbuj ponownie, aby opanować sekwencję.",
   "oxymoronHuntMessage": "Znalazłeś {arg0} oksymoronów!",
-  "@oxymoronHuntMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackMessage": "Niesamowite śledzenie przestrzenne! Zdobyłeś {arg0} punktów.",
-  "@spotlightTrackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackText": "JAK GRAĆ",
   "spotlightTrackText1": "ROZUMIEM",
   "spotlightTrackText2": "ROZPOCZNIJ RUNDĘ",
   "vennNumbersMessage": "Skategoryzowałeś {arg0} liczb!",
-  "@vennNumbersMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vennNumbersText": "ŻADNE",
   "vennNumbersText1": "OBA",
   "silhouetteMatchMessage": "Twój mózg doskonale radzi sobie z przekształcaniem 3D na 2D.",
   "sumSnakeMessage": "Cel {arg0} osiągnięty z doskonałą precyzją!",
-  "@sumSnakeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumSnakeText": "WYCZYŚĆ ŚCIEŻKĘ",
   "percentagePeakMessage": "Rozwiązałeś {arg0} zadań z procentami!",
-  "@percentagePeakMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "trailMakingMessage": "Ukończyłeś {arg0} ścieżek! Ten test mierzy szybkość wyszukiwania wizualnego i elastyczność umysłową.",
-  "@trailMakingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "matrixReasoningMessage": "Poprawnie ukończyłeś {arg0} macierzy!",
-  "@matrixReasoningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "tentsAndTreesMessage": "Udało Ci się rozstawić wszystkie namioty.",
+  "tentsAndTreesWinTitle": "CAMP READY!",
+  "tentsAndTreesTents": "Tents",
+  "tentsAndTreesDepth": "Depth",
   "klotskiMessage": "Rewelacyjne przesuwanie! Uwolniłeś blok Bohatera w {arg0} ruchach.",
-  "@klotskiMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumPyramidMessage": "Pomyślnie rozwiązałeś {arg0} piramid sum!",
-  "@sumPyramidMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage": "Doskonała reakcja selektywna i skupienie! Całkowity wynik: {arg0}",
-  "@simonCommandMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage1": "Zdobyłeś {arg0}, ale nie osiągnąłeś {arg1} dopasowań w czasie.",
-  "@simonCommandMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "syllableStackMessage": "Ułożyłeś wynik {arg0}!",
-  "@syllableStackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "slitherlinkMessage": "Świetnie! Udało Ci się ukończyć zagadkę pętli.",
   "quickMathMessage": "Rozwiązałeś {arg0} zadań!",
-  "@quickMathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "commonDenominatorMessage": "Rozwiązałeś {arg0} zadań z NWD/NWW!",
-  "@commonDenominatorMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionMessage": "Twój końcowy wynik to {arg0}. Zbudowałeś łańcuch {arg1} słów.",
-  "@chainReactionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionText": "{arg0}",
-  "@chainReactionText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "associativePairsMessage": "Genialnie! Bezbłędnie powiązałeś cechy wizualne.",
   "associativePairsMessage1": "Błędne powiązanie! Wyostrz swoją pamięć skojarzeniową i spróbuj ponownie.",
   "portmanteauSplitMessage": "Rozdzieliłeś {arg0} zbitek wyrazowych!",
-  "@portmanteauSplitMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "magicSquaresText": "WYCZYŚĆ",
   "alphabetSudokuText": "Błąd: {arg0}",
-  "@alphabetSudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "pipesMessage": "Połączyłeś wszystkie rury i wypełniłeś siatkę.",
   "dualMirrorMessage": "Doprowadziłeś obie ikony do ich celów!",
   "binaryCodeMessage": "Rewelacyjne szybkie tłumaczenie na system dziesiętny! Wynik końcowy: {arg0}",
-  "@binaryCodeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "binaryCodeMessage1": "Poprawnie skonwertowałeś {arg0} liczb binarnych. Wynik: {arg1}",
-  "@binaryCodeMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage": "Znalazłeś 50 niepasujących elementów! Wynik końcowy: {arg0}",
-  "@oddOneOutMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage1": "Twój wynik: {arg0}",
-  "@oddOneOutMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "letterBridgeMessage": "Znalazłeś literę mostu: {arg0}",
-  "@letterBridgeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "imReady": "JESTEM GOTÓW",
   "soptTitle": "Wskazywanie na zamówienie",
   "soptSubtitle": "Za każdym razem dotknij innej karty. Pozycje się mieszają!",
@@ -1845,7 +934,7 @@
   "readingSpanRecallLetters": "Przypomnij sobie litery po kolei",
   "readingSpanGreatJob": "Świetna robota!",
   "readingSpanTryAgain": "Spróbuj ponownie!",
-  "readingSpanYourSequence": "Twoja sekwencja: __SEKWENCJA__",
+  "readingSpanYourSequence": "Your sequence: {sequence}",
   "readingSpanLength": "Długość",
   "readingSpanSentence1": "Słońce wschodzi na wschodzie.",
   "readingSpanSentence2": "Lód jest wrzący.",
@@ -1873,7 +962,7 @@
   "countingSpanRecallCounts": "Liczby przywołań we właściwej kolejności",
   "countingSpanGreatJob": "Świetna robota!",
   "countingSpanTryAgain": "Spróbuj ponownie!",
-  "countingSpanYourSequence": "Twoja sekwencja: __SEKWENCJA__",
+  "countingSpanYourSequence": "Your sequence: {sequence}",
   "countingSpanLength": "Długość",
   "objDispTitle": "Przemieszczenie obiektu",
   "objDispSubtitle": "Zapamiętaj układ. Znajdź i dotknij obiektu, który zmienia położenie.",
@@ -1906,7 +995,7 @@
   "runningSpanIncorrectBuffer": "Nieprawidłowy bufor!",
   "runningSpanRecallLast": "Przypomnij sobie ostatnie {count}",
   "runningSpanStopsRandomly": "Strumień zatrzymuje się losowo!",
-  "runningSpanEntered": "Wprowadzono: __SEKWENCJA__",
+  "runningSpanEntered": "Entered: {sequence}",
   "runningSpanNItems": "N-przedmioty",
   "spatialCabinetTitle": "Szafy przestrzenne",
   "spatialCabinetSubtitle": "Zapamiętaj, która szuflada szafki zawiera dany przedmiot.",
@@ -1926,125 +1015,6 @@
   "cabinetItemLock": "Zamek",
   "cabinetItemPet": "Zwierzak domowy",
   "cabinetItemCar": "Samochód",
-  "@soptGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@contRecogGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dnmsGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@symSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@countingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@countingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@objDispGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@mandalaGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanPrepareRecall": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEnterLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanRecallLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEntered": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialCabinetGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@spatialCabinetWhereIs": {
-    "placeholders": {
-      "itemName": {
-        "type": "String"
-      }
-    }
-  },
   "gamesTitleLabel": "GRY",
   "yourFavorites": "TWOJE ULUBIONE",
   "readyForWorkout": "GOTOWY NA CODZIENNY TRENING?",
@@ -2143,35 +1113,282 @@
   "klotskiTitle": "Ucieczka Klotski",
   "klotskiSubtitle": "PRZESUWAJ BLOKI, ABY DOTRZEĆ DO WYJŚĆ.",
   "homophoneHuntSubtitle": "Wybierz poprawnie zapisaną formę homofonu",
-  "compassMazeCongrats": "Ekspercka nawigacja! Znaleźliście wyjście pomimo zmieniających się kierunków.",
-  "compassMazeMessage": "Nawiguj w labiryncie za pomocą kompasu.",
-  "compassMazeSubtitle": "Nawiguj w labiryncie, w którym kierunki ruchu zmieniają się w zależności od orientacji kompasu.",
-  "compassMazeTitle": "Labirynt z kompasem",
-  "complexFoldingNetsCongrats": "Zaawansowana logika składania! Udało Ci się zwizualizować formę 3D.",
-  "complexFoldingNetsSubtitle": "Określ, jaki złożony kształt 3D powstanie po złożeniu niestandardowej siatki 2D.",
-  "complexFoldingNetsTitle": "Siatki składane",
-  "crossSectionSliceCongrats": "Niesamowita wizualizacja 3D! Przejrzałeś ten kształt na wylot.",
-  "crossSectionSliceSubtitle": "Zidentyfikuj poprawny przekrój 2D obiektu 3D pod określonym kątem.",
-  "crossSectionSliceTitle": "Przekrój poprzeczny",
-  "interlockPuzzleCongrats": "Logiczna dekonstrukcja! Idealnie rozwiązałeś zagadkę.",
-  "interlockPuzzleSubtitle": "Zdemontuj lub zmontuj złożone bloki blokujące się w odpowiedniej kolejności.",
-  "interlockPuzzleTitle": "Puzzle blokujące",
-  "laserLinkCongrats": "Precyzyjne odbicie! Udało Ci się zasilić całą siatkę.",
-  "laserLinkSubtitle": "Obracaj lustra, aby odbijać lasery i zasilać wszystkie cele.",
   "laserLinkTitle": "Laser Link",
-  "negativeSpaceDetectionCongrats": "Bystra percepcja! Opanowałeś sztukę widzenia tego, czego nie ma.",
-  "negativeSpaceDetectionMessage": "Zidentyfikuj ukryty obiekt w przestrzeni.",
-  "negativeSpaceDetectionSubtitle": "Zidentyfikuj kształt utworzony przez pustą przestrzeń między obiektami.",
-  "negativeSpaceDetectionTitle": "Negatywna przestrzeń",
-  "pathIntersectCongrats": "Zsynchronizowana nawigacja! Bezbłędnie dotarłeś do wszystkich celów.",
-  "pathIntersectSubtitle": "Nawiguj wieloma ścieżkami jednocześnie, aby dotrzeć do ich celów bez kolizji.",
-  "pathIntersectTitle": "Przecięcie ścieżek",
+  "laserLinkSubtitle": "Obracaj lustra, aby odbijać lasery i zasilać wszystkie cele.",
+  "laserLinkCongrats": "Precyzyjne odbicie! Udało Ci się zasilić całą siatkę.",
+  "crossSectionSliceTitle": "Przekrój poprzeczny",
+  "crossSectionSliceSubtitle": "Zidentyfikuj poprawny przekrój 2D obiektu 3D pod określonym kątem.",
+  "crossSectionSliceCongrats": "Niesamowita wizualizacja 3D! Przejrzałeś ten kształt na wylot.",
+  "shadowPivotTitle": "Pivot cienia",
   "shadowPivotCongrats": "Dynamiczne rozumowanie przestrzenne! Opanowałeś światło i cień.",
   "shadowPivotSubtitle": "Przewiduj cień rzucany przez obiekt 3D podczas jego obrotu wokół różnych osi.",
-  "shadowPivotTitle": "Pivot cienia",
-  "shapeEllipse": "ELIPSA",
-  "shapeRectangle": "PROSTOKĄT",
-  "shapeTrapezoid": "TRAPEZ",
+  "interlockPuzzleTitle": "Puzzle blokujące",
+  "interlockPuzzleSubtitle": "Zdemontuj lub zmontuj złożone bloki blokujące się w odpowiedniej kolejności.",
+  "interlockPuzzleCongrats": "Logiczna dekonstrukcja! Idealnie rozwiązałeś zagadkę.",
+  "pathIntersectTitle": "Przecięcie ścieżek",
+  "pathIntersectSubtitle": "Nawiguj wieloma ścieżkami jednocześnie, aby dotrzeć do ich celów bez kolizji.",
+  "pathIntersectCongrats": "Zsynchronizowana nawigacja! Bezbłędnie dotarłeś do wszystkich celów.",
+  "negativeSpaceDetectionTitle": "Negatywna przestrzeń",
+  "negativeSpaceDetectionSubtitle": "Zidentyfikuj kształt utworzony przez pustą przestrzeń między obiektami.",
+  "negativeSpaceDetectionCongrats": "Bystra percepcja! Opanowałeś sztukę widzenia tego, czego nie ma.",
+  "compassMazeTitle": "Labirynt z kompasem",
+  "compassMazeSubtitle": "Nawiguj w labiryncie, w którym kierunki ruchu zmieniają się w zależności od orientacji kompasu.",
+  "compassMazeCongrats": "Ekspercka nawigacja! Znaleźliście wyjście pomimo zmieniających się kierunków.",
+  "complexFoldingNetsTitle": "Siatki składane",
+  "complexFoldingNetsSubtitle": "Określ, jaki złożony kształt 3D powstanie po złożeniu niestandardowej siatki 2D.",
+  "complexFoldingNetsCongrats": "Zaawansowana logika składania! Udało Ci się zwizualizować formę 3D.",
+  "compassMazeMessage": "Nawiguj w labiryncie za pomocą kompasu.",
+  "negativeSpaceDetectionMessage": "Zidentyfikuj ukryty obiekt w przestrzeni.",
+  "shikakuTitle": "Shikaku",
+  "shikakuSubtitle": "PODZIEL SIATKĘ NA KWADRATY I PROSTOKĄTY DOPASOWANE DO LICZB.",
+  "countdownMathTitle": "Odliczanie, matematyka",
+  "countdownMathSubtitle": "POŁĄCZ LICZBY LOSOWE, ABY OBLICZYĆ TRZYCYFROWY CEL.",
+  "narrativeRecallTitle": "Przypomnienie narracji",
+  "narrativeRecallSubtitle": "PRZECZYTAJ HISTORIĘ I PRZYPOMINAJ sobie KONKRETNE SZCZEGÓŁY ILOŚCIOWE I FAKTYCZNE.",
+  "shellGameTitle": "Gra Shell",
+  "shellGameSubtitle": "ŚLEDŹ UKRYTĄ PIŁKĘ PODCZAS TASUJENIA MIEJSC.",
+  "typoglycemiaDecoderTitle": "Dekoder typoglikemii",
+  "typoglycemiaDecoderSubtitle": "ROZKODUJ I SZYBKO CZYTAJ POmieszane zdania.",
+  "shapeShifterTitle": "Zmieniacz kształtu",
+  "shapeShifterSubtitle": "Kliknij docelową kombinację kształtu i koloru.",
+  "gokigenNanameTitle": "Gokigen Naname",
+  "gokigenNanameSubtitle": "Narysuj przekątne, aby połączyć punkty bez pętli.",
+  "matrixMultiplierTitle": "Mnożnik macierzy",
+  "matrixMultiplierSubtitle": "Wybierz wiersz i kolumnę, aby pomnożyć do wartości docelowej.",
+  "wordAssociationRecallTitle": "Stowarzyszenie Słowo",
+  "wordAssociationRecallSubtitle": "Przywołaj z pamięci skojarzenia sparowanych słów.",
+  "gearRotationTitle": "Obrót przekładni",
+  "gearRotationSubtitle": "Przewiduj kierunek obrotu ostatniego biegu.",
+  "wordWheelTitle": "Koło Słowa",
+  "wordWheelSubtitle": "Twórz słowa, używając liter na kole, łącznie z literą środkową.",
+  "oddEvenFlashTitle": "Flash nieparzysty i parzysty",
+  "oddEvenFlashSubtitle": "Szybko dopasuj parzystość liczb do reguły koloru.",
+  "norinoriTitle": "Norinori",
+  "norinoriSubtitle": "Zacień dokładnie dwie połączone komórki w każdym pokoju.",
+  "algebraicBalanceTitle": "Równowaga algebraiczna",
+  "algebraicBalanceSubtitle": "Rozwiąż równania, aby znaleźć sumę docelową.",
+  "patternSequenceDrawTitle": "Przypomnienie wzoru",
+  "patternSequenceDrawSubtitle": "Powtórz animowaną sekwencję ścieżek na siatce.",
+  "tangramTitle": "Tangramowa łamigłówka",
+  "tangramSubtitle": "Ułóż kształty tak, aby wypełnić docelową sylwetkę.",
+  "semanticAssociationTitle": "Słowo stowarzyszenia",
+  "semanticAssociationSubtitle": "Znajdź słowo łączące wszystkie trzy wskazówki.",
+  "peripheralFocusTitle": "Peryferyjne skupienie",
+  "peripheralFocusSubtitle": "Reaguj na migające panele boczne podczas rozwiązywania zadań matematycznych.",
+  "masyuTitle": "Pętla Masyu",
+  "masyuSubtitle": "Narysuj pojedynczą pętlę pasującą do zasad okręgu Masyu.",
+  "mathMazeTitle": "Labirynt matematyczny",
+  "mathMazeSubtitle": "Śledź ścieżkę, która prowadzi do sumy docelowej.",
+  "storyBuilderTitle": "Konstruktor opowieści",
+  "storyBuilderSubtitle": "Odtwórz chronologiczną sekwencję opowieści.",
+  "mirrorMazeTitle": "Lustrzany labirynt",
+  "mirrorMazeSubtitle": "Przekieruj wiązkę lasera za pomocą zwierciadeł ukośnych.",
+  "wordGridConnectionTitle": "Połączenia słów",
+  "wordGridConnectionSubtitle": "Pogrupuj 16 słów w cztery kategorie po cztery.",
+  "shapeShifterPeripheralTitle": "Kształty peryferyjne",
+  "shapeShifterPeripheralSubtitle": "Śledź zmiany kształtu peryferii, dopasowując wartości centralne.",
+  "soundWaveMatchTitle": "Mecz fali dźwiękowej",
+  "soundWaveMatchSubtitle": "Stuknij, gdy częstotliwość fali wizualnej dopasowuje się do zmian wysokości dźwięku.",
+  "multiTrackCounterTitle": "Licznik wielościeżkowy",
+  "multiTrackCounterSubtitle": "Stuknij, gdy dowolny licznik osiągnie docelowy mnożnik.",
+  "colorWordMatchUpTitle": "Dopasowanie kolorów",
+  "colorWordMatchUpSubtitle": "Na podstawie zmieniających się reguł określ, czy dwa kolorowe słowa pasują do siebie.",
+  "signalAndNoiseTitle": "Sygnał i szum",
+  "signalAndNoiseSubtitle": "Zlokalizuj docelowe znaki alfanumeryczne ukryte w szumie statycznym.",
+  "focusTunnelTitle": "Tunel ostrości",
+  "focusTunnelSubtitle": "Znajdź pasujące symbole pojawiające się na ruchomych ścianach tunelu.",
+  "targetPursuerTitle": "Prześladowca celu",
+  "targetPursuerSubtitle": "Śledź wiele nakładających się okręgów i wybierz oryginalny cel.",
+  "gridGazeTitle": "Siatkowe spojrzenie",
+  "gridGazeSubtitle": "Zidentyfikuj, która komórka siatki migała z różnym czasem trwania.",
+  "doubleTroubleTitle": "Podwójne kłopoty",
+  "doubleTroubleSubtitle": "Graj jednocześnie w dwie oddzielne proste gry na podzielonym ekranie.",
+  "syncRhythmTitle": "Synchronizuj rytm",
+  "syncRhythmSubtitle": "Stuknij, gdy przesunięcie wizualnego metronomu pasuje do synkopowanego rytmu.",
+  "ghostTapTitle": "Stuknięcie Ducha",
+  "ghostTapSubtitle": "Stuknij, gdy niewidzialny impuls osiągnie maksymalną wysokość.",
+  "attentionalRsvpTitle": "Uważna odpowiedź",
+  "attentionalRsvpSubtitle": "Zidentyfikuj cyfry pojawiające się w szybkim miganiu liter seryjnych.",
+  "colorMazeNavTitle": "Kolorowa nawigacja labiryntu",
+  "colorMazeNavSubtitle": "Poruszaj się po kafelkach labiryntu, dopasowując dynamiczne kolory uprawnień.",
+  "dynamicSalienceTitle": "Dynamiczna istotność",
+  "dynamicSalienceSubtitle": "Znajdź kształt poruszający się z nieco inną dynamiką.",
+  "chalkAndTalkTitle": "Kreda i rozmowa",
+  "chalkAndTalkSubtitle": "Wpisz słowa usłyszane w dźwięku, ignorując wizualne czynniki rozpraszające.",
+  "blinkDetectorTitle": "Detektor mrugnięć",
+  "blinkDetectorSubtitle": "Kliknij powierzchnię siatki, która miga dwukrotnie w krótkich odstępach czasu.",
+  "frequencyTapTitle": "Częstotliwość",
+  "frequencyTapSubtitle": "Naciśnij przycisk odpowiadający częstotliwości impulsu światła docelowego.",
+  "yajilinTitle": "Yajilin",
+  "yajilinSubtitle": "Umieść czarne komórki i narysuj pojedynczą pętlę pasującą do wskazówek.",
+  "heyawakeTitle": "Heyawake",
+  "heyawakeSubtitle": "Pomieszczenia z siatką cieniującą bez sąsiadujących czarnych komórek.",
+  "gokigenVariantTitle": "Wariant Gokigena",
+  "gokigenVariantSubtitle": "Narysuj przekątne bez pętli, spełniając liczbę wierzchołków.",
+  "sheepAndWolvesTitle": "Owce i wilki",
+  "sheepAndWolvesSubtitle": "Narysuj pętlę oddzielającą owce od wilków.",
+  "islandNurikabeTitle": "Wyspa Nurikabe",
+  "islandNurikabeSubtitle": "Utwórz wyspy odpowiadające ograniczeniom liczbowym.",
+  "shakashakaTitle": "Prostoty Shakashaki",
+  "shakashakaSubtitle": "Ułóż trójkątne płytki, aby utworzyć prostokątne białe obszary.",
+  "litsTetrisTitle": "LITS Tetromino",
+  "litsTetrisSubtitle": "Umieść tetromino w pokojach bez sąsiadujących duplikatów.",
+  "tapaWallTitle": "Ściana Tapy",
+  "tapaWallSubtitle": "Zacień komórki, aby utworzyć ciągły czarny wzór ściany.",
+  "triangularBridgesTitle": "Trójkątne mosty",
+  "triangularBridgesSubtitle": "Połącz wyspy w 3 kierunkach, spełniając wymagania.",
+  "rippleEffectTitle": "Efekt falowania",
+  "rippleEffectSubtitle": "Wpisz liczby w pomieszczeniach, przestrzegając ograniczeń odległości.",
+  "suguruTectonicTitle": "Siatka Suguru",
+  "suguruTectonicSubtitle": "Wypełnij bloki pomieszczeń liczbami od 1 do K, tak aby żaden z sąsiadów nie był sobie równy.",
+  "tennerGridTitle": "Siatka Tennera",
+  "tennerGridSubtitle": "Wypełnij wiersze cyframi 0–9 odpowiadającymi sumie kolumn.",
+  "kakurasuSumsTitle": "Sumy Kakurasu",
+  "kakurasuSumsSubtitle": "Zacień komórki, aby uzyskać ważone sumy indeksów wierszy/kolumn.",
+  "corralLoopTitle": "Pętla Corralowa",
+  "corralLoopSubtitle": "Narysuj pojedynczą pętlę zawierającą liczby odpowiadające widoczności.",
+  "stostoneTitle": "Stostone Grawitacja",
+  "stostoneSubtitle": "Zacień komórki opadające, aby idealnie wypełnić dolne rzędy.",
+  "tripletsLogicTitle": "Trio Trojaczków",
+  "tripletsLogicSubtitle": "Wypełnij siatkę trzema kształtami, unikając trzech w rzędzie.",
+  "galaxiesSymTitle": "Symetria galaktyk",
+  "galaxiesSymSubtitle": "Podziel siatkę na rotacyjnie symetryczne kształty galaktyk.",
+  "matrixMultiplierMatchTitle": "Dopasowujący matrycę",
+  "matrixMultiplierMatchSubtitle": "Pomnóż wartości wierszy i kolumn, aby dopasować docelowy iloczyn skalarny.",
+  "primeFactorTreesTitle": "Drzewa Prime Factor",
+  "primeFactorTreesSubtitle": "Rozłóż liczby złożone na pary czynników liści pierwszych.",
+  "vektorVectorTitle": "Wektor Wektor",
+  "vektorVectorSubtitle": "Skaluj wektory tak, aby ich suma znalazła się na celu.",
+  "binomialMatchTitle": "Dopasowanie dwumianowe",
+  "binomialMatchSubtitle": "Dopasuj formuły kwadratowe do rozłożonych na czynniki wartości dwumianowych.",
+  "percentageShoppingTitle": "Zakupy procentowe",
+  "percentageShoppingSubtitle": "Oblicz procent rabatów i końcową sumę transakcji.",
+  "cryptoArithmeticTitle": "Krypto-arytmetyka",
+  "cryptoArithmeticSubtitle": "Rozwiąż problemy matematyczne związane z szyfrem podstawieniowym znak-cyfra.",
+  "fractionalPizzaTitle": "Ułamkowa pizza",
+  "fractionalPizzaSubtitle": "Podziel plasterki pizzy, aby dopasować docelowe ułamki sumy.",
+  "numberBondsTitle": "Więzy liczbowe",
+  "numberBondsSubtitle": "Wartości węzłów łącza są równe docelowej sumie połączeń.",
+  "gridSumLineTitle": "Linia sumy siatki",
+  "gridSumLineSubtitle": "Narysuj ścieżkę, której wartości dokładnie prowadzą do celu.",
+  "binaryScaleBalanceTitle": "Bilans skali binarnej",
+  "binaryScaleBalanceSubtitle": "Zrównoważ wagę dziesiętną za pomocą potęgi dwóch bloków.",
+  "moduloPathTitle": "Ścieżka Modulo",
+  "moduloPathSubtitle": "Przemierzaj komórki siatki dopasowując wartości reszty modulo.",
+  "digitSwapEqTitle": "Równania zamiany cyfr",
+  "digitSwapEqSubtitle": "Zamień pojedyncze cyfry między równaniami, aby poprawić oba.",
+  "areaPerimeterMatchTitle": "Powierzchnia i obwód",
+  "areaPerimeterMatchSubtitle": "Narysuj prostokąty odpowiadające wartościom obszaru docelowego i obwodu.",
+  "inequalityBalanceOpsTitle": "Bilans nierówności",
+  "inequalityBalanceOpsSubtitle": "Umieść symbole nierówności pomiędzy złożonymi terminami matematycznymi.",
+  "graphCoordinatePlotTitle": "Ploter wykresów",
+  "graphCoordinatePlotSubtitle": "Wykreśl współrzędne siatki pasujące do krzywych liniowych/kwadratowych.",
+  "baseConversionRunTitle": "Konwersja podstawowa",
+  "baseConversionRunSubtitle": "Konwertuj wartości między binarnym, dziesiętnym, szesnastkowym i ósemkowym.",
+  "unitConverterProTitle": "Konwerter jednostek",
+  "unitConverterProSubtitle": "Odpowiadaj na szybkie konwersje jednostek w ramach limitów czasowych.",
+  "auditoryNBackTitle": "Słuchowy N-Back",
+  "auditoryNBackSubtitle": "Dopasuj wymawiane litery, które N wycofuje się z pamięci.",
+  "abstractPatternRecallTitle": "Nakładanie warstw wzoru",
+  "abstractPatternRecallSubtitle": "Rekonstruuj warstwowe kolorowe kształty na podstawie badania pamięci.",
+  "roomInspectorTitle": "Inspektor pokoju",
+  "roomInspectorSubtitle": "Zidentyfikuj modyfikacje mebli dokonane, gdy ekran był pusty.",
+  "voiceToFaceMatchTitle": "Dopasowanie głosu do twarzy",
+  "voiceToFaceMatchSubtitle": "Wybierz poprawną twarz powiązaną z mówionym klipem głosowym.",
+  "spatialGridMemory3DTitle": "Pamięć przestrzenna 3D",
+  "spatialGridMemory3DSubtitle": "Przywołaj migające bloki w obróconej strukturze siatki sześcianów 3D.",
+  "sequenceStackTitle": "Stos sekwencji",
+  "sequenceStackSubtitle": "Odtwórz kolejność dodawania i usuwania stosu płyt.",
+  "semanticCategoryRecallTitle": "Przypomnienie kategorii",
+  "semanticCategoryRecallSubtitle": "Zidentyfikuj badane słowa pasujące do żądanych celów kategorii.",
+  "gridDisplacementTitle": "Przemieszczenie siatki",
+  "gridDisplacementSubtitle": "Zidentyfikuj przesunięte ikony, porównując układ z oryginałem.",
+  "soundSequenceMatchTitle": "Dopasowanie sekwencji dźwiękowej",
+  "soundSequenceMatchSubtitle": "Powtarzaj sekwencje nut granych na wirtualnej klawiaturze.",
+  "cardCountingMemoryTitle": "Licznik kart",
+  "cardCountingMemorySubtitle": "Zidentyfikuj karty już rozdane w ciągłych seriach rozdawania kart.",
+  "directionsRecallTitle": "Przypomnienie wskazówek",
+  "directionsRecallSubtitle": "Nawiguj po mapach siatkowych, dopasowując kierunki ścieżek z pamięci.",
+  "eventTimelineMemoryTitle": "Kalendarium wydarzenia",
+  "eventTimelineMemorySubtitle": "Ułóż karty wydarzeń historycznych/fikcyjnych chronologicznie.",
+  "featureMatrixRecallTitle": "Matryca funkcji",
+  "featureMatrixRecallSubtitle": "Odpowiadaj na zapytania dotyczące atrybutów kształtu i koloru komórki.",
+  "delayedMatchSampleTitle": "Opóźniony mecz",
+  "delayedMatchSampleSubtitle": "Dopasuj symbol celu po rozwiązaniu czynników rozpraszających matematycznych.",
+  "symbolDigitAssocTitle": "Symbol-Digit Assoc",
+  "symbolDigitAssocSubtitle": "Rozwiąż arkusze tłumaczeń symboli pasujące do kluczy cyfrowych.",
+  "dualTaskMemoryTitle": "Pamięć dwuzadaniowa",
+  "dualTaskMemorySubtitle": "Zapamiętuj zestawy słów podczas rozwiązywania szybkich zadań arytmetycznych.",
+  "actionSequenceRecallTitle": "Przypomnienie akcji",
+  "actionSequenceRecallSubtitle": "Powtarzaj sekwencje animacji gestów postaci w podanej kolejności.",
+  "tangramPolygonTitle": "Dopasowanie Tangramu",
+  "tangramPolygonSubtitle": "Ułóż kształty wielokątów, aby wypełnić kontury sylwetki.",
+  "mazeNav3DTitle": "Nawigacja w labiryncie 3D",
+  "mazeNav3DSubtitle": "Nawiguj po izometrycznych trasach labiryntu 3D z widoku pierwszoosobowego.",
+  "isometricProjectionTitle": "Projektor izometryczny",
+  "isometricProjectionSubtitle": "Dopasuj figury bloków 3D do ortograficznych widoków 2D z góry/z przodu.",
+  "polyominoPackingTitle": "Opakowanie Polyomino",
+  "polyominoPackingSubtitle": "Spakuj losowe kawałki bloków Polyomino w docelowe obszary.",
+  "spatialGridRotationTitle": "Obrót siatki przestrzennej",
+  "spatialGridRotationSubtitle": "Dopasuj układy bloków 3D obrócone wzdłuż współrzędnych osi.",
+  "wireLoopGameTitle": "Pętla z drutu",
+  "wireLoopGameSubtitle": "Przeciągnij metalowe pierścienie wzdłuż splotów drutu bez kontaktu.",
+  "origamiUnfoldTitle": "Rozłóż origami",
+  "origamiUnfoldSubtitle": "Zidentyfikuj wzory dziurkowania po rozłożeniu złożonych arkuszy.",
+  "ropeTangleSolverTitle": "Rozplątywacz lin",
+  "ropeTangleSolverSubtitle": "Przeciągnij węzły, aby ułożyć wykresy planarne z liniami zerowymi.",
+  "gridFitTetrisTitle": "Narzędzie dopasowujące się do siatki",
+  "gridFitTetrisSubtitle": "Ułóż statyczne, nieregularne bloki, aby dopasować je do granic kontenera.",
+  "vectorGridAlignmentTitle": "Wyrównanie wektora",
+  "vectorGridAlignmentSubtitle": "Skaluj i obracaj kształty, aby dopasować je do docelowych szablonów cieni.",
+  "blockStackingPhysicsTitle": "Układanie bloków",
+  "blockStackingPhysicsSubtitle": "Układaj nieregularne panele blokowe, równoważąc ciężar grawitacyjny.",
+  "crossSectionMatch3DTitle": "Przekrój 3D",
+  "crossSectionMatch3DSubtitle": "Identyfikuj geometrie plasterków 2D wycięte z kształtów 3D.",
+  "symmetryPaintTitle": "Farba symetryczna",
+  "symmetryPaintSubtitle": "Narysuj segmenty odbicia lustrzanego odbijające się wzdłuż osi symetrii.",
+  "rollingBlockBloxTitle": "Blok toczący się",
+  "rollingBlockBloxSubtitle": "Rzuć kawałki bloków, aby wylądować pionowo w docelowych gniazdach.",
+  "perspectiveShiftViewTitle": "Zmiana perspektywy",
+  "perspectiveShiftViewSubtitle": "Obracaj grupy bloków, aż ułożą się w litery/słowa.",
+  "networkFlowSphericalTitle": "Przepływ sieci",
+  "networkFlowSphericalSubtitle": "Połącz przepływy siatki podczas owijania współrzędnych cylindrycznych.",
+  "layeredSilhouetteBlendTitle": "Mieszanka sylwetki",
+  "layeredSilhouetteBlendSubtitle": "Układaj kolorowe warstwy, aby dopasować docelowe półprzezroczyste kształty.",
+  "wordWheelPangramTitle": "Anagramy słów",
+  "wordWheelPangramSubtitle": "Konstruuj słowa zawierające centralne litery docelowe z kół.",
+  "letterGridSwapperTitle": "Zmiennik listów",
+  "letterGridSwapperSubtitle": "Zamień sąsiadujące kafelki z literami, aby uzupełnić słowa w rzędach i kolumnach.",
+  "synonymMatchTitle": "Dopasowanie synonimów",
+  "synonymMatchSubtitle": "Dopasuj spadające słowa docelowe do synonimów lub antonimów.",
+  "vowelDropTitle": "Spadek samogłoski",
+  "vowelDropSubtitle": "Upuść samogłoski w siatkach współrzędnych, uzupełniając słowa.",
+  "letterBalanceScaleTitle": "Skala równowagi słów",
+  "letterBalanceScaleSubtitle": "Przeliteruj słowa, których wartości liter równoważą wagi.",
+  "wordChainShiritoriTitle": "Łańcuch słów",
+  "wordChainShiritoriSubtitle": "Połącz pętle słów, zaczynając od poprzedzających liter.",
+  "affixBuilderTitle": "Konstruktor afiksów",
+  "affixBuilderSubtitle": "Łącz przedrostki/sufiksy, aby skonstruować słowniki docelowe.",
+  "decipherCrypticCluesTitle": "Tajemnicze rozszyfrowanie",
+  "decipherCrypticCluesSubtitle": "Rozwiązuj łamigłówki polegające na grach słownych i odszyfruj zagadki ortograficzne.",
+  "boggleWordSearchTitle": "Boggle Połącz",
+  "boggleWordSearchSubtitle": "Śledź sąsiednie, połączone ścieżki, aby znaleźć ukryte słowa.",
+  "idiomUnscrambleTitle": "Rozszyfrowanie idiomu",
+  "idiomUnscrambleSubtitle": "Ułóż pomieszane tablice słów, aby dopasować je do znaczeń idiomów.",
+  "letterPyramidsTitle": "Piramidy literowe",
+  "letterPyramidsSubtitle": "Buduj wieże słów, dodając pojedyncze litery anagramów na każdy poziom.",
+  "soundAlikeHomophonesTitle": "Dopasowania homofoniczne",
+  "soundAlikeHomophonesSubtitle": "Wskaż poprawną pisownię homofoniczną zdań.",
+  "wordGridSudokuTitle": "Słowo Sudoku",
+  "wordGridSudokuSubtitle": "Litery mozaikowe w rzędach siatki tworzące słowa.",
+  "portmanteauFactoryTitle": "Fabryka Portmanteau",
+  "portmanteauFactorySubtitle": "Łącz elementy semantyczne, tworząc słowa złożone.",
+  "codedCrosswordsCodeTitle": "Krzyżówka słów kodowych",
+  "codedCrosswordsCodeSubtitle": "Rozwiązuj krzyżówki w siatce, dopasowując kody liczbowe do liter.",
+  "wordSnakeTrailTitle": "Słowo Wąż",
+  "wordSnakeTrailSubtitle": "Śledź wężowe ślady liter, wpisując słowa tematyczne.",
+  "typingRhythmSpeedTitle": "Przebieg pisania",
+  "typingRhythmSpeedSubtitle": "Wpisz słowniki odpowiadające uderzeniom rytmu metronomu.",
   "errorSomethingWrong": "Something went wrong",
   "errorUnexpected": "An unexpected error occurred",
   "errorTryAgain": "Try Again",
@@ -2181,35 +1398,11 @@
   "statsAchievements": "Achievements",
   "statsWeeklyActivity": "Weekly Activity",
   "statsDayStreak": "{days} Day Streak",
-  "@statsDayStreak": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
   "statsTotalXp": "Total XP",
   "statsSolved": "Solved",
   "statsLevel": "Level {level}",
-  "@statsLevel": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsMaintainStreak": "Maintain your streak!",
   "statsPercentToLevel": "{percent}% to Level {level}",
-  "@statsPercentToLevel": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      },
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsCognitiveProfile": "Cognitive Profile",
   "statsLocked": "Locked",
   "achievementSeeker": "Seeker",
@@ -2333,24 +1526,19 @@
   "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
   "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
   "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
-  "@snackbarWordMustContainCentral": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarWordAlreadyFound": "Word already found!",
   "snackbarNotAValidWord": "Not a valid word!",
   "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
   "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectCorrectAnswer": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
+  "hideGame": "Ukryj",
+  "unhideGame": "Odkryj",
+  "favoriteGame": "Ulubione",
+  "unfavoriteGame": "Usuń z ulubionych",
+  "hiddenGames": "UKRYTE GRY",
+  "showHiddenGames": "Pokaż ukryte gry ({count})",
+  "noHiddenGames": "Brak ukrytych gier",
+  "gameHidden": "Gra ukryta",
+  "undo": "Cofnij",
   "snackbarCorrect": "Correct!",
   "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
   "snackbarAllCorrect": "All associations correct!",
@@ -2360,165 +1548,31 @@
   "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
   "snackbarPieceDoesNotFit": "Piece does not fit there!",
   "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
-  "@snackbarInvalidStep": {
-    "placeholders": {
-      "mod": {
-        "type": "int"
-      },
-      "modulus": {
-        "type": "int"
-      },
-      "remainder": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
-  "@snackbarIncorrectGroup": {
-    "placeholders": {
-      "tries": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
   "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
-  "@snackbarIncorrectDestination": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
-  "@snackbarIncorrectCorrectCount": {
-    "placeholders": {
-      "suit": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
   "snackbarSequenceMatched": "Sequence matched! Increasing length...",
   "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
   "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
-  "@snackbarIncorrectCorrectValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
-  "@snackbarIncorrectSlices": {
-    "placeholders": {
-      "selected": {
-        "type": "int"
-      },
-      "required": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
   "snackbarCorrectOrder": "Correct chronological order!",
   "snackbarIncorrectOrder": "Incorrect order! Study again.",
   "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
-  "@snackbarIncorrectMissingValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
-  "@snackbarIncorrectLetterDigit": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      },
-      "digit": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
-  "@snackbarIncorrectCorrectPoint": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarReachedExit": "Reached the exit! Generating next maze...",
   "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
   "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
-  "@snackbarIncorrectCorrectStack": {
-    "placeholders": {
-      "stack": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
   "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
-  "@snackbarScaleNotBalanced": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
   "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
   "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
-  "@snackbarIncorrectCorrectForm": {
-    "placeholders": {
-      "form": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
-  "@snackbarIncorrectInequality": {
-    "placeholders": {
-      "left": {
-        "type": "String"
-      },
-      "leftVal": {
-        "type": "int"
-      },
-      "correct": {
-        "type": "String"
-      },
-      "right": {
-        "type": "String"
-      },
-      "rightVal": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectBaseConversion": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
   "snackbarAlignedCorrectly": "Aligned and correctly identified!",
   "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
@@ -2538,6 +1592,8 @@
   "btnImReadyToAnswer": "I'm Ready to Answer",
   "btnNoMatch": "No Match",
   "btnMatch": "Match",
+  "btnMatchColor": "DOPASUJ KOLOR",
+  "btnMatchWord": "DOPASUJ SŁOWO",
   "btnGuess": "Guess",
   "btnPlayNow": "Play Now",
   "btnClear": "Clear",
@@ -2560,13 +1616,6 @@
   "phaseTapToAdd": "Tap to Add",
   "phaseCalculationLabel": "Calculation:",
   "phaseTimeLeft": "Time: {time}s",
-  "@phaseTimeLeft": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "phaseRemember2Back": "Remember 2 steps back",
   "phaseMatch": "Match",
   "hintTypeRhymingWord": "Type a rhyming word...",
@@ -2586,54 +1635,13 @@
   "feedbackFindNumber": "Find the number between 1 and 10,000!",
   "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
   "feedbackCorrectExcl": "Correct! The number was {number}.",
-  "@feedbackCorrectExcl": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackCorrectEmoji": "Correct!",
   "feedbackTooLow": "Too Low",
   "feedbackTooHigh": "Too High",
   "feedbackGameOver": "Game Over! The number was {number}.",
-  "@feedbackGameOver": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackGuessResult": "{guess} is {result}!",
-  "@feedbackGuessResult": {
-    "placeholders": {
-      "guess": {
-        "type": "int"
-      },
-      "result": {
-        "type": "String"
-      }
-    }
-  },
   "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
-  "@feedbackWinMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      },
-      "guesses": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackLoseMessage": "Out of guesses! The number was {number}.",
-  "@feedbackLoseMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "statTime": "Time",
   "statScore": "Score",
   "statGrid": "Grid",
@@ -2731,275 +1739,6 @@
   "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
   "correctExclEmoji": "Correct!",
   "wrongExcl": "Wrong!",
-  "abstractPatternRecallSubtitle": "Rekonstruuj warstwowe kolorowe kształty na podstawie badania pamięci.",
-  "abstractPatternRecallTitle": "Nakładanie warstw wzoru",
-  "actionSequenceRecallSubtitle": "Powtarzaj sekwencje animacji gestów postaci w podanej kolejności.",
-  "actionSequenceRecallTitle": "Przypomnienie akcji",
-  "affixBuilderSubtitle": "Łącz przedrostki/sufiksy, aby skonstruować słowniki docelowe.",
-  "affixBuilderTitle": "Konstruktor afiksów",
-  "algebraicBalanceSubtitle": "Rozwiąż równania, aby znaleźć sumę docelową.",
-  "algebraicBalanceTitle": "Równowaga algebraiczna",
-  "areaPerimeterMatchSubtitle": "Narysuj prostokąty odpowiadające wartościom obszaru docelowego i obwodu.",
-  "areaPerimeterMatchTitle": "Powierzchnia i obwód",
-  "attentionalRsvpSubtitle": "Zidentyfikuj cyfry pojawiające się w szybkim miganiu liter seryjnych.",
-  "attentionalRsvpTitle": "Uważna odpowiedź",
-  "auditoryNBackSubtitle": "Dopasuj wymawiane litery, które N wycofuje się z pamięci.",
-  "auditoryNBackTitle": "Słuchowy N-Back",
-  "baseConversionRunSubtitle": "Konwertuj wartości między binarnym, dziesiętnym, szesnastkowym i ósemkowym.",
-  "baseConversionRunTitle": "Konwersja podstawowa",
-  "binaryScaleBalanceSubtitle": "Zrównoważ wagę dziesiętną za pomocą potęgi dwóch bloków.",
-  "binaryScaleBalanceTitle": "Bilans skali binarnej",
-  "binomialMatchSubtitle": "Dopasuj formuły kwadratowe do rozłożonych na czynniki wartości dwumianowych.",
-  "binomialMatchTitle": "Dopasowanie dwumianowe",
-  "blinkDetectorSubtitle": "Kliknij powierzchnię siatki, która miga dwukrotnie w krótkich odstępach czasu.",
-  "blinkDetectorTitle": "Detektor mrugnięć",
-  "blockStackingPhysicsSubtitle": "Układaj nieregularne panele blokowe, równoważąc ciężar grawitacyjny.",
-  "blockStackingPhysicsTitle": "Układanie bloków",
-  "boggleWordSearchSubtitle": "Śledź sąsiednie, połączone ścieżki, aby znaleźć ukryte słowa.",
-  "boggleWordSearchTitle": "Boggle Połącz",
-  "cardCountingMemorySubtitle": "Zidentyfikuj karty już rozdane w ciągłych seriach rozdawania kart.",
-  "cardCountingMemoryTitle": "Licznik kart",
-  "chalkAndTalkSubtitle": "Wpisz słowa usłyszane w dźwięku, ignorując wizualne czynniki rozpraszające.",
-  "chalkAndTalkTitle": "Kreda i rozmowa",
-  "codedCrosswordsCodeSubtitle": "Rozwiązuj krzyżówki w siatce, dopasowując kody liczbowe do liter.",
-  "codedCrosswordsCodeTitle": "Krzyżówka słów kodowych",
-  "colorMazeNavSubtitle": "Poruszaj się po kafelkach labiryntu, dopasowując dynamiczne kolory uprawnień.",
-  "colorMazeNavTitle": "Kolorowa nawigacja labiryntu",
-  "colorWordMatchUpSubtitle": "Na podstawie zmieniających się reguł określ, czy dwa kolorowe słowa pasują do siebie.",
-  "colorWordMatchUpTitle": "Dopasowanie kolorów",
-  "corralLoopSubtitle": "Narysuj pojedynczą pętlę zawierającą liczby odpowiadające widoczności.",
-  "corralLoopTitle": "Pętla Corralowa",
-  "countdownMathSubtitle": "POŁĄCZ LICZBY LOSOWE, ABY OBLICZYĆ TRZYCYFROWY CEL.",
-  "countdownMathTitle": "Odliczanie, matematyka",
-  "crossSectionMatch3DSubtitle": "Identyfikuj geometrie plasterków 2D wycięte z kształtów 3D.",
-  "crossSectionMatch3DTitle": "Przekrój 3D",
-  "cryptoArithmeticSubtitle": "Rozwiąż problemy matematyczne związane z szyfrem podstawieniowym znak-cyfra.",
-  "cryptoArithmeticTitle": "Krypto-arytmetyka",
-  "decipherCrypticCluesSubtitle": "Rozwiązuj łamigłówki polegające na grach słownych i odszyfruj zagadki ortograficzne.",
-  "decipherCrypticCluesTitle": "Tajemnicze rozszyfrowanie",
-  "delayedMatchSampleSubtitle": "Dopasuj symbol celu po rozwiązaniu czynników rozpraszających matematycznych.",
-  "delayedMatchSampleTitle": "Opóźniony mecz",
-  "digitSwapEqSubtitle": "Zamień pojedyncze cyfry między równaniami, aby poprawić oba.",
-  "digitSwapEqTitle": "Równania zamiany cyfr",
-  "directionsRecallSubtitle": "Nawiguj po mapach siatkowych, dopasowując kierunki ścieżek z pamięci.",
-  "directionsRecallTitle": "Przypomnienie wskazówek",
-  "doubleTroubleSubtitle": "Graj jednocześnie w dwie oddzielne proste gry na podzielonym ekranie.",
-  "doubleTroubleTitle": "Podwójne kłopoty",
-  "dualTaskMemorySubtitle": "Zapamiętuj zestawy słów podczas rozwiązywania szybkich zadań arytmetycznych.",
-  "dualTaskMemoryTitle": "Pamięć dwuzadaniowa",
-  "dynamicSalienceSubtitle": "Znajdź kształt poruszający się z nieco inną dynamiką.",
-  "dynamicSalienceTitle": "Dynamiczna istotność",
-  "eventTimelineMemorySubtitle": "Ułóż karty wydarzeń historycznych/fikcyjnych chronologicznie.",
-  "eventTimelineMemoryTitle": "Kalendarium wydarzenia",
-  "featureMatrixRecallSubtitle": "Odpowiadaj na zapytania dotyczące atrybutów kształtu i koloru komórki.",
-  "featureMatrixRecallTitle": "Matryca funkcji",
-  "focusTunnelSubtitle": "Znajdź pasujące symbole pojawiające się na ruchomych ścianach tunelu.",
-  "focusTunnelTitle": "Tunel ostrości",
-  "fractionalPizzaSubtitle": "Podziel plasterki pizzy, aby dopasować docelowe ułamki sumy.",
-  "fractionalPizzaTitle": "Ułamkowa pizza",
-  "frequencyTapSubtitle": "Naciśnij przycisk odpowiadający częstotliwości impulsu światła docelowego.",
-  "frequencyTapTitle": "Częstotliwość",
-  "galaxiesSymSubtitle": "Podziel siatkę na rotacyjnie symetryczne kształty galaktyk.",
-  "galaxiesSymTitle": "Symetria galaktyk",
-  "gearRotationSubtitle": "Przewiduj kierunek obrotu ostatniego biegu.",
-  "gearRotationTitle": "Obrót przekładni",
-  "ghostTapSubtitle": "Stuknij, gdy niewidzialny impuls osiągnie maksymalną wysokość.",
-  "ghostTapTitle": "Stuknięcie Ducha",
-  "gokigenNanameSubtitle": "Narysuj przekątne, aby połączyć punkty bez pętli.",
-  "gokigenNanameTitle": "Gokigen Naname",
-  "gokigenVariantSubtitle": "Narysuj przekątne bez pętli, spełniając liczbę wierzchołków.",
-  "gokigenVariantTitle": "Wariant Gokigena",
-  "graphCoordinatePlotSubtitle": "Wykreśl współrzędne siatki pasujące do krzywych liniowych/kwadratowych.",
-  "graphCoordinatePlotTitle": "Ploter wykresów",
-  "gridDisplacementSubtitle": "Zidentyfikuj przesunięte ikony, porównując układ z oryginałem.",
-  "gridDisplacementTitle": "Przemieszczenie siatki",
-  "gridFitTetrisSubtitle": "Ułóż statyczne, nieregularne bloki, aby dopasować je do granic kontenera.",
-  "gridFitTetrisTitle": "Narzędzie dopasowujące się do siatki",
-  "gridGazeSubtitle": "Zidentyfikuj, która komórka siatki migała z różnym czasem trwania.",
-  "gridGazeTitle": "Siatkowe spojrzenie",
-  "gridSumLineSubtitle": "Narysuj ścieżkę, której wartości dokładnie prowadzą do celu.",
-  "gridSumLineTitle": "Linia sumy siatki",
-  "heyawakeSubtitle": "Pomieszczenia z siatką cieniującą bez sąsiadujących czarnych komórek.",
-  "heyawakeTitle": "Heyawake",
-  "idiomUnscrambleSubtitle": "Ułóż pomieszane tablice słów, aby dopasować je do znaczeń idiomów.",
-  "idiomUnscrambleTitle": "Rozszyfrowanie idiomu",
-  "inequalityBalanceOpsSubtitle": "Umieść symbole nierówności pomiędzy złożonymi terminami matematycznymi.",
-  "inequalityBalanceOpsTitle": "Bilans nierówności",
-  "islandNurikabeSubtitle": "Utwórz wyspy odpowiadające ograniczeniom liczbowym.",
-  "islandNurikabeTitle": "Wyspa Nurikabe",
-  "isometricProjectionSubtitle": "Dopasuj figury bloków 3D do ortograficznych widoków 2D z góry/z przodu.",
-  "isometricProjectionTitle": "Projektor izometryczny",
-  "kakurasuSumsSubtitle": "Zacień komórki, aby uzyskać ważone sumy indeksów wierszy/kolumn.",
-  "kakurasuSumsTitle": "Sumy Kakurasu",
-  "layeredSilhouetteBlendSubtitle": "Układaj kolorowe warstwy, aby dopasować docelowe półprzezroczyste kształty.",
-  "layeredSilhouetteBlendTitle": "Mieszanka sylwetki",
-  "letterBalanceScaleSubtitle": "Przeliteruj słowa, których wartości liter równoważą wagi.",
-  "letterBalanceScaleTitle": "Skala równowagi słów",
-  "letterGridSwapperSubtitle": "Zamień sąsiadujące kafelki z literami, aby uzupełnić słowa w rzędach i kolumnach.",
-  "letterGridSwapperTitle": "Zmiennik listów",
-  "letterPyramidsSubtitle": "Buduj wieże słów, dodając pojedyncze litery anagramów na każdy poziom.",
-  "letterPyramidsTitle": "Piramidy literowe",
-  "litsTetrisSubtitle": "Umieść tetromino w pokojach bez sąsiadujących duplikatów.",
-  "litsTetrisTitle": "LITS Tetromino",
-  "masyuSubtitle": "Narysuj pojedynczą pętlę pasującą do zasad okręgu Masyu.",
-  "masyuTitle": "Pętla Masyu",
-  "mathMazeSubtitle": "Śledź ścieżkę, która prowadzi do sumy docelowej.",
-  "mathMazeTitle": "Labirynt matematyczny",
-  "matrixMultiplierMatchSubtitle": "Pomnóż wartości wierszy i kolumn, aby dopasować docelowy iloczyn skalarny.",
-  "matrixMultiplierMatchTitle": "Dopasowujący matrycę",
-  "matrixMultiplierSubtitle": "Wybierz wiersz i kolumnę, aby pomnożyć do wartości docelowej.",
-  "matrixMultiplierTitle": "Mnożnik macierzy",
-  "mazeNav3DSubtitle": "Nawiguj po izometrycznych trasach labiryntu 3D z widoku pierwszoosobowego.",
-  "mazeNav3DTitle": "Nawigacja w labiryncie 3D",
-  "mirrorMazeSubtitle": "Przekieruj wiązkę lasera za pomocą zwierciadeł ukośnych.",
-  "mirrorMazeTitle": "Lustrzany labirynt",
-  "moduloPathSubtitle": "Przemierzaj komórki siatki dopasowując wartości reszty modulo.",
-  "moduloPathTitle": "Ścieżka Modulo",
-  "multiTrackCounterSubtitle": "Stuknij, gdy dowolny licznik osiągnie docelowy mnożnik.",
-  "multiTrackCounterTitle": "Licznik wielościeżkowy",
-  "narrativeRecallSubtitle": "PRZECZYTAJ HISTORIĘ I PRZYPOMINAJ sobie KONKRETNE SZCZEGÓŁY ILOŚCIOWE I FAKTYCZNE.",
-  "narrativeRecallTitle": "Przypomnienie narracji",
-  "networkFlowSphericalSubtitle": "Połącz przepływy siatki podczas owijania współrzędnych cylindrycznych.",
-  "networkFlowSphericalTitle": "Przepływ sieci",
-  "norinoriSubtitle": "Zacień dokładnie dwie połączone komórki w każdym pokoju.",
-  "norinoriTitle": "Norinori",
-  "numberBondsSubtitle": "Wartości węzłów łącza są równe docelowej sumie połączeń.",
-  "numberBondsTitle": "Więzy liczbowe",
-  "oddEvenFlashSubtitle": "Szybko dopasuj parzystość liczb do reguły koloru.",
-  "oddEvenFlashTitle": "Flash nieparzysty i parzysty",
-  "origamiUnfoldSubtitle": "Zidentyfikuj wzory dziurkowania po rozłożeniu złożonych arkuszy.",
-  "origamiUnfoldTitle": "Rozłóż origami",
-  "patternSequenceDrawSubtitle": "Powtórz animowaną sekwencję ścieżek na siatce.",
-  "patternSequenceDrawTitle": "Przypomnienie wzoru",
-  "percentageShoppingSubtitle": "Oblicz procent rabatów i końcową sumę transakcji.",
-  "percentageShoppingTitle": "Zakupy procentowe",
-  "peripheralFocusSubtitle": "Reaguj na migające panele boczne podczas rozwiązywania zadań matematycznych.",
-  "peripheralFocusTitle": "Peryferyjne skupienie",
-  "perspectiveShiftViewSubtitle": "Obracaj grupy bloków, aż ułożą się w litery/słowa.",
-  "perspectiveShiftViewTitle": "Zmiana perspektywy",
-  "polyominoPackingSubtitle": "Spakuj losowe kawałki bloków Polyomino w docelowe obszary.",
-  "polyominoPackingTitle": "Opakowanie Polyomino",
-  "portmanteauFactorySubtitle": "Łącz elementy semantyczne, tworząc słowa złożone.",
-  "portmanteauFactoryTitle": "Fabryka Portmanteau",
-  "primeFactorTreesSubtitle": "Rozłóż liczby złożone na pary czynników liści pierwszych.",
-  "primeFactorTreesTitle": "Drzewa Prime Factor",
-  "rippleEffectSubtitle": "Wpisz liczby w pomieszczeniach, przestrzegając ograniczeń odległości.",
-  "rippleEffectTitle": "Efekt falowania",
-  "rollingBlockBloxSubtitle": "Rzuć kawałki bloków, aby wylądować pionowo w docelowych gniazdach.",
-  "rollingBlockBloxTitle": "Blok toczący się",
-  "roomInspectorSubtitle": "Zidentyfikuj modyfikacje mebli dokonane, gdy ekran był pusty.",
-  "roomInspectorTitle": "Inspektor pokoju",
-  "ropeTangleSolverSubtitle": "Przeciągnij węzły, aby ułożyć wykresy planarne z liniami zerowymi.",
-  "ropeTangleSolverTitle": "Rozplątywacz lin",
-  "semanticAssociationSubtitle": "Znajdź słowo łączące wszystkie trzy wskazówki.",
-  "semanticAssociationTitle": "Słowo stowarzyszenia",
-  "semanticCategoryRecallSubtitle": "Zidentyfikuj badane słowa pasujące do żądanych celów kategorii.",
-  "semanticCategoryRecallTitle": "Przypomnienie kategorii",
-  "sequenceStackSubtitle": "Odtwórz kolejność dodawania i usuwania stosu płyt.",
-  "sequenceStackTitle": "Stos sekwencji",
-  "shakashakaSubtitle": "Ułóż trójkątne płytki, aby utworzyć prostokątne białe obszary.",
-  "shakashakaTitle": "Prostoty Shakashaki",
-  "shapeShifterPeripheralSubtitle": "Śledź zmiany kształtu peryferii, dopasowując wartości centralne.",
-  "shapeShifterPeripheralTitle": "Kształty peryferyjne",
-  "shapeShifterSubtitle": "Kliknij docelową kombinację kształtu i koloru.",
-  "shapeShifterTitle": "Zmieniacz kształtu",
-  "sheepAndWolvesSubtitle": "Narysuj pętlę oddzielającą owce od wilków.",
-  "sheepAndWolvesTitle": "Owce i wilki",
-  "shellGameSubtitle": "ŚLEDŹ UKRYTĄ PIŁKĘ PODCZAS TASUJENIA MIEJSC.",
-  "shellGameTitle": "Gra Shell",
-  "shikakuSubtitle": "PODZIEL SIATKĘ NA KWADRATY I PROSTOKĄTY DOPASOWANE DO LICZB.",
-  "shikakuTitle": "Shikaku",
-  "signalAndNoiseSubtitle": "Zlokalizuj docelowe znaki alfanumeryczne ukryte w szumie statycznym.",
-  "signalAndNoiseTitle": "Sygnał i szum",
-  "soundAlikeHomophonesSubtitle": "Wskaż poprawną pisownię homofoniczną zdań.",
-  "soundAlikeHomophonesTitle": "Dopasowania homofoniczne",
-  "soundSequenceMatchSubtitle": "Powtarzaj sekwencje nut granych na wirtualnej klawiaturze.",
-  "soundSequenceMatchTitle": "Dopasowanie sekwencji dźwiękowej",
-  "soundWaveMatchSubtitle": "Stuknij, gdy częstotliwość fali wizualnej dopasowuje się do zmian wysokości dźwięku.",
-  "soundWaveMatchTitle": "Mecz fali dźwiękowej",
-  "spatialGridMemory3DSubtitle": "Przywołaj migające bloki w obróconej strukturze siatki sześcianów 3D.",
-  "spatialGridMemory3DTitle": "Pamięć przestrzenna 3D",
-  "spatialGridRotationSubtitle": "Dopasuj układy bloków 3D obrócone wzdłuż współrzędnych osi.",
-  "spatialGridRotationTitle": "Obrót siatki przestrzennej",
-  "storyBuilderSubtitle": "Odtwórz chronologiczną sekwencję opowieści.",
-  "storyBuilderTitle": "Konstruktor opowieści",
-  "stostoneSubtitle": "Zacień komórki opadające, aby idealnie wypełnić dolne rzędy.",
-  "stostoneTitle": "Stostone Grawitacja",
-  "suguruTectonicSubtitle": "Wypełnij bloki pomieszczeń liczbami od 1 do K, tak aby żaden z sąsiadów nie był sobie równy.",
-  "suguruTectonicTitle": "Siatka Suguru",
-  "symbolDigitAssocSubtitle": "Rozwiąż arkusze tłumaczeń symboli pasujące do kluczy cyfrowych.",
-  "symbolDigitAssocTitle": "Symbol-Digit Assoc",
-  "symmetryPaintSubtitle": "Narysuj segmenty odbicia lustrzanego odbijające się wzdłuż osi symetrii.",
-  "symmetryPaintTitle": "Farba symetryczna",
-  "syncRhythmSubtitle": "Stuknij, gdy przesunięcie wizualnego metronomu pasuje do synkopowanego rytmu.",
-  "syncRhythmTitle": "Synchronizuj rytm",
-  "synonymMatchSubtitle": "Dopasuj spadające słowa docelowe do synonimów lub antonimów.",
-  "synonymMatchTitle": "Dopasowanie synonimów",
-  "tangramPolygonSubtitle": "Ułóż kształty wielokątów, aby wypełnić kontury sylwetki.",
-  "tangramPolygonTitle": "Dopasowanie Tangramu",
-  "tangramSubtitle": "Ułóż kształty tak, aby wypełnić docelową sylwetkę.",
-  "tangramTitle": "Tangramowa łamigłówka",
-  "tapaWallSubtitle": "Zacień komórki, aby utworzyć ciągły czarny wzór ściany.",
-  "tapaWallTitle": "Ściana Tapy",
-  "targetPursuerSubtitle": "Śledź wiele nakładających się okręgów i wybierz oryginalny cel.",
-  "targetPursuerTitle": "Prześladowca celu",
-  "tennerGridSubtitle": "Wypełnij wiersze cyframi 0–9 odpowiadającymi sumie kolumn.",
-  "tennerGridTitle": "Siatka Tennera",
-  "triangularBridgesSubtitle": "Połącz wyspy w 3 kierunkach, spełniając wymagania.",
-  "triangularBridgesTitle": "Trójkątne mosty",
-  "tripletsLogicSubtitle": "Wypełnij siatkę trzema kształtami, unikając trzech w rzędzie.",
-  "tripletsLogicTitle": "Trio Trojaczków",
-  "typingRhythmSpeedSubtitle": "Wpisz słowniki odpowiadające uderzeniom rytmu metronomu.",
-  "typingRhythmSpeedTitle": "Przebieg pisania",
-  "typoglycemiaDecoderSubtitle": "ROZKODUJ I SZYBKO CZYTAJ POmieszane zdania.",
-  "typoglycemiaDecoderTitle": "Dekoder typoglikemii",
-  "unitConverterProSubtitle": "Odpowiadaj na szybkie konwersje jednostek w ramach limitów czasowych.",
-  "unitConverterProTitle": "Konwerter jednostek",
-  "vectorGridAlignmentSubtitle": "Skaluj i obracaj kształty, aby dopasować je do docelowych szablonów cieni.",
-  "vectorGridAlignmentTitle": "Wyrównanie wektora",
-  "vektorVectorSubtitle": "Skaluj wektory tak, aby ich suma znalazła się na celu.",
-  "vektorVectorTitle": "Wektor Wektor",
-  "voiceToFaceMatchSubtitle": "Wybierz poprawną twarz powiązaną z mówionym klipem głosowym.",
-  "voiceToFaceMatchTitle": "Dopasowanie głosu do twarzy",
-  "vowelDropSubtitle": "Upuść samogłoski w siatkach współrzędnych, uzupełniając słowa.",
-  "vowelDropTitle": "Spadek samogłoski",
-  "wireLoopGameSubtitle": "Przeciągnij metalowe pierścienie wzdłuż splotów drutu bez kontaktu.",
-  "wireLoopGameTitle": "Pętla z drutu",
-  "wordAssociationRecallSubtitle": "Przywołaj z pamięci skojarzenia sparowanych słów.",
-  "wordAssociationRecallTitle": "Stowarzyszenie Słowo",
-  "wordChainShiritoriSubtitle": "Połącz pętle słów, zaczynając od poprzedzających liter.",
-  "wordChainShiritoriTitle": "Łańcuch słów",
-  "wordGridConnectionSubtitle": "Pogrupuj 16 słów w cztery kategorie po cztery.",
-  "wordGridConnectionTitle": "Połączenia słów",
-  "wordGridSudokuSubtitle": "Litery mozaikowe w rzędach siatki tworzące słowa.",
-  "wordGridSudokuTitle": "Słowo Sudoku",
-  "wordSnakeTrailSubtitle": "Śledź wężowe ślady liter, wpisując słowa tematyczne.",
-  "wordSnakeTrailTitle": "Słowo Wąż",
-  "wordWheelPangramSubtitle": "Konstruuj słowa zawierające centralne litery docelowe z kół.",
-  "wordWheelPangramTitle": "Anagramy słów",
-  "wordWheelSubtitle": "Twórz słowa, używając liter na kole, łącznie z literą środkową.",
-  "wordWheelTitle": "Koło Słowa",
-  "yajilinSubtitle": "Umieść czarne komórki i narysuj pojedynczą pętlę pasującą do wskazówek.",
-  "yajilinTitle": "Yajilin",
-  "btnMatchColor": "DOPASUJ KOLOR",
-  "btnMatchWord": "DOPASUJ SŁOWO",
-  "favoriteGame": "Ulubione",
-  "gameHidden": "Gra ukryta",
-  "hiddenGames": "UKRYTE GRY",
-  "hideGame": "Ukryj",
-  "noHiddenGames": "Brak ukrytych gier",
-  "orbitTapTapToHit": "Dotknij, gdy kula wpadnie do bramki",
-  "showHiddenGames": "Pokaż ukryte gry ({count})",
-  "@showHiddenGames": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "undo": "Cofnij",
-  "unfavoriteGame": "Usuń z ulubionych",
-  "unhideGame": "Odkryj",
   "kurodokoTitle": "Kurodoko",
   "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
   "kurodokoCongrats": "Każda liczba widzi dokładnie tyle, ile powinna.",
@@ -3121,6 +1860,13 @@
   "pegsTitle": "Pegs",
   "pegsSubtitle": "Przeskocz pionkiem nad sąsiadem, aby go zbić. Zostaw jeden.",
   "pegsCongrats": "Został jeden pionek. Czysta plansza.",
+  "lightsOutPresses": "Presses",
+  "lightsOutLit": "Lit",
+  "sameGameTitle": "Same Game",
+  "sameGameSubtitle": "Clear groups of matching blocks to empty the board.",
+  "sameGameCongrats": "Board cleared. Every square gone.",
+  "sameGameLeft": "Left",
+  "sameGameStuck": "No groups left. Start a new board.",
   "galaxiesTitle": "Galaxies",
   "galaxiesSubtitle": "Give every dot its own symmetric region",
   "galaxiesCongrats": "Every dot has its own galaxy.",
@@ -3131,5 +1877,28 @@
   "twiddleCongrats": "Każda liczba na swoim miejscu.",
   "difficultyEasy": "ŁATWY",
   "difficultyMedium": "ŚREDNI",
-  "difficultyHard": "TRUDNY"
+  "difficultyHard": "TRUDNY",
+  "crossingTitle": "Number Crossing",
+  "crossingSubtitle": "Fit every listed number into the crossing slots.",
+  "crossingPlaced": "Placed",
+  "crossingWinTitle": "EVERY NUMBER FITS!",
+  "crossingWinMessage": "Each number once, and every crossing agrees digit for digit.",
+  "navDeal": "Rozdanie",
+  "navStack": "Kolekcja",
+  "navYou": "Ty",
+  "next": "Dalej",
+  "nextPuzzle": "Następna łamigłówka",
+  "restartPuzzle": "Od nowa",
+  "lockScroll": "Zablokuj przewijanie",
+  "unlockScroll": "Odblokuj przewijanie",
+  "feedScrollLocked": "Przewijanie zablokowane.",
+  "dealTitle": "Rozdanie",
+  "dealSubtitle": "Każda łamigłówka, karta po karcie.",
+  "yourCards": "Twoje karty",
+  "todaysCard": "Karta dnia",
+  "quickPlay": "Poniżej dwóch minut",
+  "rooms": "Sześć pokoi",
+  "puzzles": "łamigłówki",
+  "shuffleCategory": "Rozdaj ten pokój",
+  "deckProgress": "{position} z {total}"
 }

@@ -4,12 +4,15 @@
   "home": "होम",
   "settings": "सेटिंग्स",
   "playAgain": "फिर से खेलें",
+  "playNext": "अगला खेलें",
   "seeCompleted": "पहेली की समीक्षा करें",
   "finish": "समाप्त करें",
   "congrats": "बधाई हो",
   "perfectGradient": "सही ग्रेडिएंट!",
   "wellDone": "बहुत बढ़िया",
   "timeUp": "समय समाप्त!",
+  "victory": "विजय!",
+  "gameWin": "बहुत बढ़िया!",
   "completed": "पूरा हुआ!",
   "score": "स्कोर",
   "timeLeft": "समय",
@@ -38,6 +41,9 @@
   "trialModeDescription": "60 सेकंड के टाइमर के बजाय 20 हल करें",
   "keepScreenAwake": "स्क्रीन चालू रखें",
   "keepScreenAwakeDescription": "गेमप्ले के दौरान स्क्रीन को बंद होने से रोकें",
+  "showArchivedGames": "संग्रहीत पहेलियाँ दिखाएँ",
+  "showArchivedGamesDescription": "संदर्भ के लिए रखे गए अभ्यास और कार्य।",
+  "archived": "संग्रहीत",
   "appearance": "दिखावट",
   "language": "भाषा",
   "gameplay": "गेमप्ले",
@@ -118,6 +124,84 @@
   "nonogramTitle": "नोनोग्राम",
   "nonogramSubtitle": "तर्क सुराग का उपयोग करके छिपी हुई छवि को प्रकट करें।",
   "nonogramWin": "छवि प्रकट हुई!",
+  "magnetsTitle": "मैग्नेट",
+  "magnetsSubtitle": "ध्रुव गणना के आधार पर ग्रिड में मैग्नेट रखें।",
+  "magnetsHowToPlay": "डोमिनोज़ के आकार के कंटेनरों को '+' और '-' मैग्नेट से भरें या उन्हें खाली छोड़ दें। पंक्ति और स्तंभ संकेत उस रेखा में प्रत्येक ध्रुव की कुल संख्या निर्दिष्ट करते हैं। समान ध्रुव ऑर्थोगोनली (लंबवत या क्षैतिज रूप से) आसन्न नहीं हो सकते।",
+  "magnetsWinTitle": "ध्रुवीयता संतुलित!",
+  "magnetsWinMessage": "सभी मैग्नेट पूरी तरह से व्यवस्थित हैं!",
+  "magnetsPlaced": "Magnets",
+  "magnetsLevel": "Depth",
+  "cubeTitle": "Cube",
+  "cubeSubtitle": "Roll the cube to collect every blue square.",
+  "cubeWinTitle": "SIX BLUES!",
+  "cubeWinMessage": "Every face of the cube is blue.",
+  "cubeHowToPlay": "Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube's bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.",
+  "cubeFaces": "Faces",
+  "cubeMoves": "Moves",
+  "cubeBest": "Best",
+  "mapTitle": "Four Colours",
+  "mapSubtitle": "Colour every region so touching regions never match.",
+  "mapWinTitle": "MAP COLOURED!",
+  "mapWinMessage": "Every region has a colour, and no neighbours clash.",
+  "mapHowToPlay": "Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.",
+  "mapRegions": "Regions",
+  "mapColoured": "Coloured",
+  "inertiaTitle": "Inertia",
+  "inertiaSubtitle": "Slide the ball to collect every gem and miss mines.",
+  "inertiaWinTitle": "ALL GEMS!",
+  "inertiaWinMessage": "Every gem collected and not a mine touched.",
+  "inertiaHowToPlay": "Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.",
+  "inertiaGems": "Gems",
+  "inertiaMoves": "Moves",
+  "inertiaExploded": "MINE! Tap to retry",
+  "netslideTitle": "Netslide",
+  "netslideSubtitle": "Slide rows and columns until every pipe connects.",
+  "netslideWinTitle": "NET COMPLETE!",
+  "netslideWinMessage": "Every pipe is connected.",
+  "netslideHowToPlay": "Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.",
+  "netslideMoves": "Slides",
+  "netslideScramble": "Depth",
+  "signpostTitle": "Signpost",
+  "signpostSubtitle": "Link cells in order by following their arrows.",
+  "signpostWinTitle": "EVERY NUMBER PLACED!",
+  "signpostWinMessage": "One chain from 1 to the last, every arrow pointing the way.",
+  "signpostHowToPlay": "Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.",
+  "signpostMoves": "Links",
+  "signpostGivens": "Givens",
+  "lighthousesTitle": "लाइटहाउस",
+  "lighthousesSubtitle": "लाइटहाउस संकेतों के आधार पर जहाज रखें।",
+  "lighthousesHowToPlay": "ग्रिड में 1x1 जहाज रखें। लाइटहाउस क्षैतिज और ऊर्ध्वाधर रूप से दिखाई देने वाले जहाजों की कुल संख्या का संकेत देते हैं। जहाज लाइटहाउस या एक-दूसरे को नहीं छू सकते, यहाँ तक कि तिरछे भी नहीं।",
+  "lighthousesWinTitle": "सुरक्षित समुद्र!",
+  "lighthousesWinMessage": "सभी लाइटहाउस जहाजों का पूरी तरह से मार्गदर्शन कर रहे हैं!",
+  "dominosaTitle": "डोमिनोसा",
+  "dominosaSubtitle": "ग्रिड में छिपे हुए सभी डोमिनोज़ खोजें।",
+  "dominosaHowToPlay": "संख्याओं के ग्रिड पर डोमिनोज़ का एक पूरा सेट इस तरह व्यवस्थित करें कि आसन्न संख्याओं का प्रत्येक जोड़ा बिल्कुल एक डोमिनोज़ से ढका हो। प्रत्येक संख्या युग्म सेट में केवल एक बार मौजूद होता है।",
+  "dominosaWinTitle": "डोमिनोज़ मास्टर!",
+  "dominosaWinMessage": "हर डोमिनोज़ मिल गया है और रख दिया गया है!",
+  "dominosaPlaced": "Placed",
+  "dominosaTypes": "Types",
+  "skyscrapersClues": "Clues",
+  "skyscrapersFilled": "Filled",
+  "skyscrapersTitle": "स्काईस्क्रेपर्स",
+  "skyscrapersSubtitle": "ग्रिड को इमारतों की ऊंचाई से भरें।",
+  "skyscrapersHowToPlay": "ग्रिड को ऊंचाई (1-N) से भरें ताकि प्रत्येक पंक्ति और स्तंभ में प्रत्येक ऊंचाई बिल्कुल एक बार हो। किनारों पर संकेत बताते हैं कि उस दिशा से कितनी इमारतें दिखाई दे रही हैं, जिसमें ऊंची इमारतें छोटी इमारतों को रोकती हैं।",
+  "skyscrapersWinTitle": "क्षितिज बहाल!",
+  "skyscrapersWinMessage": "सभी इमारतें पूरी तरह से स्थित हैं!",
+  "nurikabeTitle": "नुरिकाबे",
+  "nurikabeSubtitle": "एक जुड़ा हुआ समुद्र और अलग द्वीप बनाएं।",
+  "nurikabeHowToPlay": "एक एकल जुड़ा हुआ 'समुद्र' (कोई 2x2 ब्लॉक नहीं) बनाने के लिए सेल को शेड करें। बिना शेड वाले सेल 'द्वीप' बनाते हैं, जिनमें से प्रत्येक में बिल्कुल एक संख्या होती है जो उसके कुल क्षेत्रफल का प्रतिनिधित्व करती है।",
+  "nurikabeWinTitle": "बहता हुआ समुद्र!",
+  "nurikabeWinMessage": "द्वीप अलग हो गए, समुद्र जुड़ गया!",
+  "fillominoTitle": "फिलोमिनो",
+  "fillominoSubtitle": "ग्रिड को निर्दिष्ट आकार के पॉलिमिनो में विभाजित करें।",
+  "fillominoHowToPlay": "ग्रिड को पॉलिमिनो में विभाजित करें ताकि आकार N के प्रत्येक पॉलिमिनो में उसके सभी सेल में संख्या N हो। समान आकार के पॉलिमिनो ऑर्थोगोनली आसन्न नहीं हो सकते।",
+  "fillominoWinTitle": "ग्रिड विभाजित!",
+  "fillominoWinMessage": "तर्क के साथ पूरी तरह से टाइल किया गया!",
+  "hitoriTitle": "हितोरी",
+  "hitoriSubtitle": "प्रत्येक पंक्ति और स्तंभ में डुप्लिकेट नंबरों को शेड करें।",
+  "hitoriHowToPlay": "सेल को शेड करें ताकि कोई भी नंबर किसी भी पंक्ति या स्तंभ में एक से अधिक बार न आए। शेड किए गए सेल आसन्न (ऑर्थोगोनली) नहीं हो सकते, और सभी बिना शेड वाले सेल को एक एकल जुड़ा हुआ समूह बनाना चाहिए।",
+  "hitoriWinTitle": "हितोरी मास्टर!",
+  "hitoriWinMessage": "आपने सफलतापूर्वक सभी डुप्लिकेट को हल कर लिया है!",
   "pathFinderTitle": "पाथ फाइंडर",
   "pathFinderSubtitle": "S से E तक का छिपा हुआ रास्ता खोजें।",
   "pathFinderWin": "रास्ता मिल गया!",
@@ -279,6 +363,7 @@
   "hueSortSubtitle": "कोने के रंगों के बीच एक सुचारु परिवर्तन बनाने के लिए टाइल्स को बदलें। बिंदु निश्चित टाइल्स को दर्शाते हैं।",
   "hueSortWinTitle": "सही ग्रेडिएंट!",
   "hueSortWinMessage": "आपने रंग स्पेक्ट्रम को पूरी तरह से व्यवस्थित किया!",
+  "hueSortWrongTiles": "गलत स्थिति में टाइलें: {count}",
   "kenkenTitle": "केनकेन",
   "kenkenWinTitle": "प्रतिभाशाली!",
   "kenkenLoseTitle": "खेल समाप्त",
@@ -303,6 +388,7 @@
   "visualStatisticalLearningTitle": "विजुअल स्टैटिस्टिकल लर्निंग",
   "orbitTapTitle": "ऑर्बिट टैप",
   "orbitTapSubtitle": "जब गेंदें गेट के साथ संरेखित हों तब टैप करें",
+  "orbitTapTapToHit": "जब गेंद गेट में प्रवेश करे तब टैप करें",
   "schulteTableTitle": "शल्टे टेबल",
   "multipleObjectTrackingTitle": "ऑब्जेक्ट ट्रैकर",
   "multipleObjectTrackingSubtitle": "हाइलाइट की गई वस्तुओं को देखें। उनके हिलने पर उन्हें ट्रैक करें, फिर उन्हें चुनें।",
@@ -407,6 +493,58 @@
   "trailMakingSubtitle": "संख्याओं को क्रम में (1 -> 2 -> 3...) जितनी जल्दी हो सके जोड़ें।",
   "matrixReasoningTitle": "मैट्रिक्स रीजनिंग",
   "matrixReasoningSubtitle": "3x3 ग्रिड में पैटर्न को पूरा करें",
+  "abcdTitle": "Four Letters",
+  "abcdSubtitle": "Place A, B, C, or D to match the edge counts.",
+  "abcdFilled": "Cells",
+  "abcdDepth": "Depth",
+  "abcdWinTitle": "EVERY CELL LETTERED!",
+  "abcdWinMessage": "Every count met, no two identical letters touching.",
+  "boatsTitle": "Boats",
+  "boatsSubtitle": "Place the fleet to match the row and column counts.",
+  "boatsShipsFound": "Boat cells",
+  "boatsDepth": "Depth",
+  "boatsWinTitle": "FLEET FOUND!",
+  "boatsWinMessage": "Every boat placed and nothing touching.",
+  "seismicTitle": "Ripple Effect",
+  "seismicSubtitle": "Fill regions 1..N; equal digits keep N cells apart.",
+  "seismicClues": "Clues",
+  "seismicDepth": "Depth",
+  "seismicWinTitle": "RIPPLE SETTLED!",
+  "seismicWinMessage": "Every shape holds 1 to its size, with no two numbers too close.",
+  "mathraxTitle": "Mathrax",
+  "mathraxSubtitle": "Fill a Latin square obeying every corner rule.",
+  "mathraxFilled": "Filled",
+  "mathraxDepth": "Depth",
+  "mathraxWinTitle": "EVERY CORNER AGREES!",
+  "mathraxWinMessage": "A Latin square that satisfies every corner clue.",
+  "saladTitle": "Salad",
+  "saladSubtitle": "Place each letter once per line; edges show first seen.",
+  "saladWritten": "Written",
+  "saladWinTitle": "EVERY LINE AGREES!",
+  "saladWinMessage": "Every letter once in every line, and every border clue reads true.",
+  "romeTitle": "Rome",
+  "romeSubtitle": "Point arrows so every path reaches a goal.",
+  "romeWritten": "Arrows",
+  "romeWinTitle": "EVERY CHAIN ARRIVES!",
+  "romeWinMessage": "One arrow per cell, no repeats in an area, and every chain ends at a goal.",
+  "ascentTitle": "Number Path",
+  "ascentSubtitle": "Place 1 to N so consecutive numbers touch.",
+  "ascentNext": "Next",
+  "ascentDepth": "Depth",
+  "ascentWinTitle": "PATH COMPLETE!",
+  "ascentWinMessage": "One number per cell, every step touching the one before it.",
+  "clustersTitle": "Clusters",
+  "clustersSubtitle": "Two colours: dots touch one mate, others touch two.",
+  "clustersDots": "Dots",
+  "clustersDepth": "Depth",
+  "clustersWinTitle": "CLUSTERS SETTLED!",
+  "clustersWinMessage": "Two colours, every dot true, every cluster of two or more.",
+  "bricksTitle": "Bricks",
+  "bricksSubtitle": "Shade supported cells with no three in a row.",
+  "bricksShaded": "Shaded",
+  "bricksDepth": "Depth",
+  "bricksWinTitle": "THE PILE HOLDS!",
+  "bricksWinMessage": "Every shaded cell is held up, no run of three, and every number reads true.",
   "tentsAndTreesTitle": "तंबू और पेड़",
   "tentsAndTreesSubtitle": "पेड़ों के पास तंबू लगाएं। संख्याएं बताती हैं कि प्रत्येक पंक्ति/कॉलम में कितने तंबू हैं। तंबू एक-दूसरे को छू नहीं सकते।",
   "quickMathTitle": "क्विक मैथ",
@@ -447,6 +585,8 @@
   "vocabularyBuilderTitle": "शब्दावली निर्माता",
   "vocabularyBuilderSubtitle": "समय के दबाव में पर्यायवाची और विलोम शब्दों का मिलान करें।",
   "vocabularyBuilderHowToPlay": "आपको एक लक्ष्य शब्द और एक संबंध (पर्यायवाची या विलोम) दिखाया जाएगा। विकल्पों में से सही शब्द चुनें जो संबंध से मेल खाता हो। जल्दी करें, घड़ी चल रही है!",
+  "correct": "सही",
+  "incorrect": "गलत",
   "grammarPoliceTitle": "ग्रामर पुलिस",
   "grammarPoliceSubtitle": "पहचानें कि वाक्य व्याकरण की दृष्टि से सही है या उसमें त्रुटियां हैं।",
   "grammarPoliceHowToPlay": "स्क्रीन के बीच में एक वाक्य दिखाई देगा। तय करें कि क्या यह व्याकरणिक रूप से सही है या इसमें कोई त्रुटि है। यदि यह ठीक है तो 'सही' पर टैप करें, या यदि आपको कोई गलती दिखती है तो 'गलत' पर टैप करें। अपनी सभी जानें न गवाएं!",
@@ -514,6 +654,9 @@
   "shapeSquare": "वर्ग (SQUARE)",
   "shapeTriangle": "त्रिकोण (TRIANGLE)",
   "shapeStar": "तारा (STAR)",
+  "shapeRectangle": "आयताकार",
+  "shapeEllipse": "अंडाकार",
+  "shapeTrapezoid": "समलम्ब",
   "colorRedLabel": "लाल (RED)",
   "colorBlueLabel": "नीला (BLUE)",
   "colorGreenLabel": "हरा (GREEN)",
@@ -540,47 +683,6 @@
   "topologyWinTitle": "ज्यामिति के जादूगर!",
   "topologyWinMessage": "आपने 10 टोपोलॉजिकल जोड़ों की सही पहचान की!",
   "topologyScore": "स्कोर: ",
-  "hueSortWrongTiles": "गलत स्थिति में टाइलें: {count}",
-  "playNext": "अगला खेलें",
-  "correct": "सही",
-  "incorrect": "गलत",
-  "magnetsTitle": "मैग्नेट",
-  "magnetsSubtitle": "ध्रुव गणना के आधार पर ग्रिड में मैग्नेट रखें।",
-  "magnetsHowToPlay": "डोमिनोज़ के आकार के कंटेनरों को '+' और '-' मैग्नेट से भरें या उन्हें खाली छोड़ दें। पंक्ति और स्तंभ संकेत उस रेखा में प्रत्येक ध्रुव की कुल संख्या निर्दिष्ट करते हैं। समान ध्रुव ऑर्थोगोनली (लंबवत या क्षैतिज रूप से) आसन्न नहीं हो सकते।",
-  "magnetsWinTitle": "ध्रुवीयता संतुलित!",
-  "magnetsWinMessage": "सभी मैग्नेट पूरी तरह से व्यवस्थित हैं!",
-  "lighthousesTitle": "लाइटहाउस",
-  "lighthousesSubtitle": "लाइटहाउस संकेतों के आधार पर जहाज रखें।",
-  "lighthousesHowToPlay": "ग्रिड में 1x1 जहाज रखें। लाइटहाउस क्षैतिज और ऊर्ध्वाधर रूप से दिखाई देने वाले जहाजों की कुल संख्या का संकेत देते हैं। जहाज लाइटहाउस या एक-दूसरे को नहीं छू सकते, यहाँ तक कि तिरछे भी नहीं।",
-  "lighthousesWinTitle": "सुरक्षित समुद्र!",
-  "lighthousesWinMessage": "सभी लाइटहाउस जहाजों का पूरी तरह से मार्गदर्शन कर रहे हैं!",
-  "dominosaTitle": "डोमिनोसा",
-  "dominosaSubtitle": "ग्रिड में छिपे हुए सभी डोमिनोज़ खोजें।",
-  "dominosaHowToPlay": "संख्याओं के ग्रिड पर डोमिनोज़ का एक पूरा सेट इस तरह व्यवस्थित करें कि आसन्न संख्याओं का प्रत्येक जोड़ा बिल्कुल एक डोमिनोज़ से ढका हो। प्रत्येक संख्या युग्म सेट में केवल एक बार मौजूद होता है।",
-  "dominosaWinTitle": "डोमिनोज़ मास्टर!",
-  "dominosaWinMessage": "हर डोमिनोज़ मिल गया है और रख दिया गया है!",
-  "skyscrapersTitle": "स्काईस्क्रेपर्स",
-  "skyscrapersSubtitle": "ग्रिड को इमारतों की ऊंचाई से भरें।",
-  "skyscrapersHowToPlay": "ग्रिड को ऊंचाई (1-N) से भरें ताकि प्रत्येक पंक्ति और स्तंभ में प्रत्येक ऊंचाई बिल्कुल एक बार हो। किनारों पर संकेत बताते हैं कि उस दिशा से कितनी इमारतें दिखाई दे रही हैं, जिसमें ऊंची इमारतें छोटी इमारतों को रोकती हैं।",
-  "skyscrapersWinTitle": "क्षितिज बहाल!",
-  "skyscrapersWinMessage": "सभी इमारतें पूरी तरह से स्थित हैं!",
-  "nurikabeTitle": "नुरिकाबे",
-  "nurikabeSubtitle": "एक जुड़ा हुआ समुद्र और अलग द्वीप बनाएं।",
-  "nurikabeHowToPlay": "एक एकल जुड़ा हुआ 'समुद्र' (कोई 2x2 ब्लॉक नहीं) बनाने के लिए सेल को शेड करें। बिना शेड वाले सेल 'द्वीप' बनाते हैं, जिनमें से प्रत्येक में बिल्कुल एक संख्या होती है जो उसके कुल क्षेत्रफल का प्रतिनिधित्व करती है।",
-  "nurikabeWinTitle": "बहता हुआ समुद्र!",
-  "nurikabeWinMessage": "द्वीप अलग हो गए, समुद्र जुड़ गया!",
-  "fillominoTitle": "फिलोमिनो",
-  "fillominoSubtitle": "ग्रिड को निर्दिष्ट आकार के पॉलिमिनो में विभाजित करें।",
-  "fillominoHowToPlay": "ग्रिड को पॉलिमिनो में विभाजित करें ताकि आकार N के प्रत्येक पॉलिमिनो में उसके सभी सेल में संख्या N हो। समान आकार के पॉलिमिनो ऑर्थोगोनली आसन्न नहीं हो सकते।",
-  "fillominoWinTitle": "ग्रिड विभाजित!",
-  "fillominoWinMessage": "तर्क के साथ पूरी तरह से टाइल किया गया!",
-  "hitoriTitle": "हितोरी",
-  "hitoriSubtitle": "प्रत्येक पंक्ति और स्तंभ में डुप्लिकेट नंबरों को शेड करें।",
-  "hitoriHowToPlay": "सेल को शेड करें ताकि कोई भी नंबर किसी भी पंक्ति या स्तंभ में एक से अधिक बार न आए। शेड किए गए सेल आसन्न (ऑर्थोगोनली) नहीं हो सकते, और सभी बिना शेड वाले सेल को एक एकल जुड़ा हुआ समूह बनाना चाहिए।",
-  "hitoriWinTitle": "हितोरी मास्टर!",
-  "hitoriWinMessage": "आपने सफलतापूर्वक सभी डुप्लिकेट को हल कर लिया है!",
-  "victory": "विजय!",
-  "gameWin": "बहुत बढ़िया!",
   "semanticDistanceTitle": "सिमेंटिक दूरी",
   "semanticDistanceSubtitle": "शब्दों के बीच वैचारिक दूरी को मापें",
   "oxymoronHuntTitle": "ऑक्सीमोरोन हंट",
@@ -653,6 +755,9 @@
   "sudokuText": "त्रुटि: {arg0}",
   "sdmtMessage": "आपने {arg0} प्रतीकों का मिलान किया! यह परीक्षण आपकी स्कैनिंग गति और दृश्य ध्यान को मापता है।",
   "futoshikiMessage": "अविश्वसनीय! आपने फुतोशिकी लैटिन स्क्वायर को हल कर लिया।",
+  "futoshikiWinTitle": "SQUARE SOLVED!",
+  "futoshikiGivens": "Givens",
+  "futoshikiEdges": "Edges",
   "letterFrequencyScanMessage": "आपने \"{arg1}\" की {arg0} बार होने वाली घटनाओं को सही ढंग से गिना।",
   "letterFrequencyScanText": "गलत। गिनती {arg0} थी।",
   "memoryMatrixMessage": "प्रभावशाली! आपकी वर्किंग मेमोरी तेज है। दैनिक लक्ष्य पूरा हुआ!",
@@ -756,6 +861,9 @@
   "trailMakingMessage": "आपने {arg0} ट्रेल्स पूरे किए! यह परीक्षण आपकी दृश्य खोज गति और मानसिक लचीलेपन को मापता है।",
   "matrixReasoningMessage": "आपने {arg0} मेट्रिसेस को सही ढंग से पूरा किया!",
   "tentsAndTreesMessage": "आपने सभी तंबू सफलतापूर्वक लगा दिए हैं।",
+  "tentsAndTreesWinTitle": "CAMP READY!",
+  "tentsAndTreesTents": "Tents",
+  "tentsAndTreesDepth": "Depth",
   "klotskiMessage": "शानदार स्लाइडिंग! आपने {arg0} चालों में हीरो ब्लॉक को मुक्त कर दिया।",
   "sumPyramidMessage": "आपने {arg0} योग पिरामिडों को सफलतापूर्वक हल किया!",
   "simonCommandMessage": "उत्कृष्ट चयनात्मक प्रतिक्रिया और ध्यान! कुल स्कोर: {arg0}",
@@ -779,1029 +887,10 @@
   "oddOneOutMessage1": "आपका स्कोर: {arg0}",
   "letterBridgeMessage": "आपको ब्रिज अक्षर मिल गया: {arg0}",
   "imReady": "मैं तैयार हूँ",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
-  "@findWordSubtitle": {
-    "placeholders": {
-      "maxTries": {
-        "type": "int"
-      },
-      "wordLength": {
-        "type": "int"
-      }
-    }
-  },
-  "@wordFoundMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
-  "@gameOverMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
-  "@radicalRootsScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@radicalRootsTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@romanArithmeticScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@romanArithmeticTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@arithmeticChainLoseMessage": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
-  "@attentionalBlinkScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@boxCompletionScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "totalTrials": {
-        "type": "int"
-      }
-    }
-  },
-  "@calculationSprintScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@calculationSprintTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@categoryFluencyFoundMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@categoryFluencyWordCount": {
-    "placeholders": {
-      "entered": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
-  "@changeBlindnessScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@changeBlindnessFoundMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@choiceRtAvgMessage": {
-    "placeholders": {
-      "avg": {
-        "type": "String"
-      }
-    }
-  },
-  "@choiceRtTimeRemaining": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
-  "@choiceRtTaps": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@colorFloodSubtitle": {
-    "placeholders": {
-      "moves": {
-        "type": "int"
-      },
-      "maxMoves": {
-        "type": "int"
-      }
-    }
-  },
-  "@colorMatchAccuracy": {
-    "placeholders": {
-      "accuracy": {
-        "type": "String"
-      }
-    }
-  },
-  "@corsiBlocksMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "span": {
-        "type": "int"
-      }
-    }
-  },
-  "@digitSpanReverseLoseMessage": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@dividedAttentionGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dividedAttentionScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@doubleNBackSubtitle": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@doubleNBackGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@doubleNBackScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@faceNameAssociationLoseMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@flankerTestScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@fractionMatchLoseMessage": {
-    "placeholders": {
-      "correctAnswer": {
-        "type": "String"
-      }
-    }
-  },
-  "@groceryListScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@hueSortWrongTiles": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@kenkenSubtitle": {
-    "placeholders": {
-      "size": {
-        "type": "int"
-      }
-    }
-  },
-  "@letterCancellationScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@letterCancellationSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "String"
-      }
-    }
-  },
-  "@sternbergTaskScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@targetNumberSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "int"
-      }
-    }
-  },
-  "@perspectiveTakingSubtitle": {
-    "placeholders": {
-      "targetDirName": {
-        "type": "String"
-      }
-    }
-  },
-  "@operationSpanScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@magicSquaresSubtitle": {
-    "placeholders": {
-      "targetSum": {
-        "type": "int"
-      }
-    }
-  },
-  "@blockCount3DWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@classicMazeWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@faceTraitAssociationPersonOf": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@faceTraitAssociationScoreMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@vocabularyBuilderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@colorMatchMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@semanticLinkMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@reflexTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@angleFinderMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@angleFinderText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@visualStatisticalLearningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@nonogramText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@mentalCalendarMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@orbitTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@schulteTableMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sdmtMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@letterFrequencyScanMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@letterFrequencyScanText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@oneLetterShiftMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@fractionMatcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@spellingSprintMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@stopSignalMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@grammarPoliceMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@consonantReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@rhymeMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@vigilanceTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@fibonacciMergeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@factorFinderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@logicalSyllogismsMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@compoundConnectMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@reverseStroopMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@corsiBlocksMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordLadderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@d2AttentionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sentenceUnscrambleMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@symbolicFlankerMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@stroopTestMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wisconsinCardSortingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@nBackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@rhythmMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@groceryListMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@moduloClockMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@moduloClockMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@dualCodingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@inequalityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sourceMonitoringMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@target10Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@topologyText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@anagramDefinitionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@game2048Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@game2048Message1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@numericalEstimationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@grammarSortMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@vowelReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialConflictMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@tracePathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@ruleSwitcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@collatzMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@divisibilityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@switchTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sequenceSleuthMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@changeBlindnessMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@mentalRotationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordMastermindMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordMastermindMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordMastermindText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@oxymoronHuntMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@spotlightTrackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@vennNumbersMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sumSnakeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@percentagePeakMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@trailMakingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@matrixReasoningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@klotskiMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sumPyramidMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@simonCommandMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@simonCommandMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@syllableStackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@quickMathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@commonDenominatorMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@chainReactionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@chainReactionText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@portmanteauSplitMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@alphabetSudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@binaryCodeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@binaryCodeMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@oddOneOutMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@oddOneOutMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@letterBridgeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "soptTitle": "स्व-आदेशित इशारा",
   "soptSubtitle": "हर बार एक अलग कार्ड टैप करें। पदों में फेरबदल!",
   "soptWinTitle": "अनुक्रम मास्टर!",
-  "soptGameOverMessage": "आपने फेरबदल किए गए कार्डों को सफलतापूर्वक ट्रैक करके __स्कोर__ अंक अर्जित किए!",
+  "soptGameOverMessage": "You scored {score} points by successfully tracking shuffled cards!",
   "soptChooseNovel": "एक नया कार्ड टैप करें",
   "soptGreatJob": "अच्छा काम!",
   "soptAlreadyTapped": "पहले ही टैप किया जा चुका है!",
@@ -1809,7 +898,7 @@
   "contRecogTitle": "निरंतर पहचान",
   "contRecogSubtitle": "क्या आपने इस सत्र में यह कार्ड पहले देखा है?",
   "contRecogWinTitle": "पहचान प्रतिभा!",
-  "contRecogGameOverMessage": "आपने __स्कोर__ सही मान्यता प्राप्त की है!",
+  "contRecogGameOverMessage": "You scored {score} correct recognitions!",
   "contRecogCorrect": "सही!",
   "contRecogWrong": "गलत!",
   "contRecogOldOrNew": "क्या यह पुराना है या नया?",
@@ -1819,7 +908,7 @@
   "dnmsTitle": "मेल न खाने वाली मेमोरी",
   "dnmsSubtitle": "उस कार्ड को टैप करें जो याद किए गए नमूने में नहीं था।",
   "dnmsWinTitle": "गैर-मिलान विशेषज्ञ!",
-  "dnmsGameOverMessage": "आपने विलंबित गैर-मिलान में सही उत्तरों में __स्कोर__ अंक प्राप्त किए!",
+  "dnmsGameOverMessage": "You scored {score} correct answers in Delayed Non-Matching!",
   "dnmsChooseNovel": "नया कार्ड टैप करें",
   "dnmsMemorizeSample": "इस कार्ड को याद रखें",
   "dnmsWaitForIt": "इसके लिए प्रतीक्षा कीजिए...",
@@ -1829,7 +918,7 @@
   "symSpanTitle": "समरूपता अवधि",
   "symSpanSubtitle": "ऊर्ध्वाधर समरूपता की पहचान करते समय सेल पैटर्न को याद करें।",
   "symSpanWinTitle": "समरूपता मास्टर!",
-  "symSpanGameOverMessage": "आपने लेआउट को याद करके और समरूपता की पहचान करके __स्कोर__ अंक अर्जित किए!",
+  "symSpanGameOverMessage": "You scored {score} points by recalling layouts and identifying symmetry!",
   "symSpanMemorizeRed": "लाल कोशिका स्थान याद रखें",
   "symSpanIsSymmetric": "क्या पैटर्न सममित है?",
   "symSpanRecallSequence": "अनुक्रम को सही क्रम में याद करें",
@@ -1845,7 +934,7 @@
   "readingSpanRecallLetters": "अक्षरों को क्रम से याद करें",
   "readingSpanGreatJob": "अच्छा काम!",
   "readingSpanTryAgain": "पुनः प्रयास करें!",
-  "readingSpanYourSequence": "आपका क्रम: __अनुक्रम__",
+  "readingSpanYourSequence": "Your sequence: {sequence}",
   "readingSpanLength": "लंबाई",
   "readingSpanSentence1": "सूरज पूर्व में उगता है।",
   "readingSpanSentence2": "बर्फ गरम होकर उबल रही है.",
@@ -1873,7 +962,7 @@
   "countingSpanRecallCounts": "सही क्रम में गिनती याद रखें",
   "countingSpanGreatJob": "अच्छा काम!",
   "countingSpanTryAgain": "पुनः प्रयास करें!",
-  "countingSpanYourSequence": "आपका क्रम: __अनुक्रम__",
+  "countingSpanYourSequence": "Your sequence: {sequence}",
   "countingSpanLength": "लंबाई",
   "objDispTitle": "वस्तु विस्थापन",
   "objDispSubtitle": "लेआउट याद रखें. उस एक ऑब्जेक्ट को ढूंढें और टैप करें जो स्थिति बदलता है।",
@@ -1888,7 +977,7 @@
   "mandalaTitle": "मंडला स्मरण",
   "mandalaSubtitle": "रंग विन्यास याद रखें. रंग चुनें और टाइल्स को फिर से रंगें।",
   "mandalaWinTitle": "मंडला कलाकार!",
-  "mandalaGameOverMessage": "आपने रंगीन ज्यामितीय लेआउट को फिर से बनाकर __स्कोर__ अंक अर्जित किए!",
+  "mandalaGameOverMessage": "You scored {score} points by recreating colored geometric layouts!",
   "mandalaMemorizeColors": "टाइल के रंग याद रखें",
   "mandalaPaintCells": "मूल से मेल खाने के लिए कोशिकाओं को पेंट करें",
   "mandalaExcellent": "उत्कृष्ट!",
@@ -1898,7 +987,7 @@
   "runningSpanTitle": "रनिंग स्पैन",
   "runningSpanSubtitle": "पत्र देखो. जब वे रुकें, तो क्रम से अंतिम N अक्षर दर्ज करें।",
   "runningSpanWinTitle": "बफर मास्टर!",
-  "runningSpanGameOverMessage": "आपने रनिंग मेमोरी स्पैन में __स्कोर__ अंक अर्जित किए!",
+  "runningSpanGameOverMessage": "You scored {score} points in Running Memory Span!",
   "runningSpanPrepareRecall": "पिछले {count} अक्षरों को याद करने की तैयारी करें",
   "runningSpanWatchCarefully": "ध्यान से देखो...",
   "runningSpanEnterLast": "अंतिम {count} अक्षर दर्ज करें",
@@ -1906,14 +995,14 @@
   "runningSpanIncorrectBuffer": "ग़लत बफ़र!",
   "runningSpanRecallLast": "अंतिम {count} याद करें",
   "runningSpanStopsRandomly": "धारा बेतरतीब ढंग से रुक जाती है!",
-  "runningSpanEntered": "प्रविष्ट: __अनुक्रम__",
+  "runningSpanEntered": "Entered: {sequence}",
   "runningSpanNItems": "एन-आइटम",
   "spatialCabinetTitle": "स्थानिक मंत्रिमंडल",
   "spatialCabinetSubtitle": "याद रखें कि किस कैबिनेट दराज में कौन सी वस्तु है।",
   "spatialCabinetWinTitle": "कैबिनेट विशेषज्ञ!",
   "spatialCabinetGameOverMessage": "आपने स्थानिक कैबिनेट मेमोरी में {score} अंक अर्जित किए!",
   "spatialCabinetMemorize": "आइटम स्थान याद रखें",
-  "spatialCabinetWhereIs": "__आइटमनाम__ कहां है?",
+  "spatialCabinetWhereIs": "Where is the {itemName}?",
   "spatialCabinetCorrect": "सही!",
   "spatialCabinetWrongDrawer": "गलत दराज!",
   "spatialCabinetItems": "सामान",
@@ -1926,125 +1015,6 @@
   "cabinetItemLock": "ताला",
   "cabinetItemPet": "पालतू",
   "cabinetItemCar": "कार",
-  "@soptGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@contRecogGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dnmsGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@symSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@countingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@countingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@objDispGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@mandalaGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanPrepareRecall": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEnterLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanRecallLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEntered": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialCabinetGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@spatialCabinetWhereIs": {
-    "placeholders": {
-      "itemName": {
-        "type": "String"
-      }
-    }
-  },
   "gamesTitleLabel": "खेल",
   "yourFavorites": "आपके पसंदीदा",
   "readyForWorkout": "अपने दैनिक कसरत के लिए तैयार हैं?",
@@ -2143,35 +1113,282 @@
   "klotskiTitle": "क्लोत्स्की एस्केप",
   "klotskiSubtitle": "निकास तक पहुँचने के लिए ब्लॉकों को स्लाइड करें।",
   "homophoneHuntSubtitle": "सही वर्तनी वाले होमोफोन का चयन करें",
-  "compassMazeCongrats": "विशेषज्ञ नेविगेशन! आपने बदलती दिशाओं के माध्यम से निकास पा लिया है।",
-  "compassMazeMessage": "कंपास का उपयोग करके भूलभुलैया में नेविगेट करें।",
-  "compassMazeSubtitle": "ऐसी भूलभुलैया में नेविगेट करें जहाँ आपके कंपास के ओरिएंटेशन के आधार पर गति की दिशाएँ बदलती हैं।",
-  "compassMazeTitle": "कंपास भूलभुलैया",
-  "complexFoldingNetsCongrats": "उन्नत फोल्डिंग तर्क! आपने सफलतापूर्वक 3D रूप की कल्पना की है।",
-  "complexFoldingNetsSubtitle": "निर्धारित करें कि एक गैर-मानक 2D नेट को फोल्ड करके कौन सा जटिल 3D आकार बनेगा।",
-  "complexFoldingNetsTitle": "फोल्डिंग नेट्स",
-  "crossSectionSliceCongrats": "अविश्वसनीय 3D विज़ुअलाइज़ेशन! आपने उस आकार के बिल्कुल पार देखा।",
-  "crossSectionSliceSubtitle": "एक विशिष्ट कोण से 3D वस्तु के सही 2D क्रॉस-सेक्शन की पहचान करें।",
-  "crossSectionSliceTitle": "क्रॉस-सेक्शन स्लाइस",
-  "interlockPuzzleCongrats": "तार्किक डिकंस्ट्रक्शन! आपने पहेली को पूरी तरह से सुलझा लिया है।",
-  "interlockPuzzleSubtitle": "सही क्रम में जटिल इंटरलॉकिंग ब्लॉकों को अलग करें या इकट्ठा करें।",
-  "interlockPuzzleTitle": "इंटरलॉक पहेली",
-  "laserLinkCongrats": "सटीक परावर्तन! आपने सफलतापूर्वक पूरे ग्रिड को सक्रिय कर दिया है।",
-  "laserLinkSubtitle": "लेज़र को परावर्तित करने और सभी लक्ष्यों को सक्रिय करने के लिए दर्पणों को घुमाएँ।",
   "laserLinkTitle": "लेज़र लिंक",
-  "negativeSpaceDetectionCongrats": "तीक्ष्ण धारणा! आपने वह देखने की कला में महारत हासिल कर ली है जो वहां नहीं है।",
-  "negativeSpaceDetectionMessage": "स्थान में छिपी वस्तु की पहचान करें।",
-  "negativeSpaceDetectionSubtitle": "वस्तुओं के बीच खाली स्थान द्वारा बने आकार की पहचान करें।",
-  "negativeSpaceDetectionTitle": "नकारात्मक स्थान",
-  "pathIntersectCongrats": "सिंक्रोनाइज़्ड नेविगेशन! आप बिना किसी गलती के सभी लक्ष्यों तक पहुँच गए हैं।",
-  "pathIntersectSubtitle": "बिना किसी टक्कर के अपने संबंधित लक्ष्यों तक पहुँचने के लिए एक साथ कई पथों पर नेविगेट करें।",
-  "pathIntersectTitle": "पथ प्रतिच्छेदन",
+  "laserLinkSubtitle": "लेज़र को परावर्तित करने और सभी लक्ष्यों को सक्रिय करने के लिए दर्पणों को घुमाएँ।",
+  "laserLinkCongrats": "सटीक परावर्तन! आपने सफलतापूर्वक पूरे ग्रिड को सक्रिय कर दिया है।",
+  "crossSectionSliceTitle": "क्रॉस-सेक्शन स्लाइस",
+  "crossSectionSliceSubtitle": "एक विशिष्ट कोण से 3D वस्तु के सही 2D क्रॉस-सेक्शन की पहचान करें।",
+  "crossSectionSliceCongrats": "अविश्वसनीय 3D विज़ुअलाइज़ेशन! आपने उस आकार के बिल्कुल पार देखा।",
+  "shadowPivotTitle": "शैडो पिवट",
   "shadowPivotCongrats": "गतिशील स्थानिक तर्क! आपने प्रकाश और छाया पर महारत हासिल की।",
   "shadowPivotSubtitle": "एक 3D वस्तु द्वारा डाली गई छाया का अनुमान लगाएं क्योंकि यह विभिन्न अक्षों पर घूमती है।",
-  "shadowPivotTitle": "शैडो पिवट",
-  "shapeEllipse": "अंडाकार",
-  "shapeRectangle": "आयताकार",
-  "shapeTrapezoid": "समलम्ब",
+  "interlockPuzzleTitle": "इंटरलॉक पहेली",
+  "interlockPuzzleSubtitle": "सही क्रम में जटिल इंटरलॉकिंग ब्लॉकों को अलग करें या इकट्ठा करें।",
+  "interlockPuzzleCongrats": "तार्किक डिकंस्ट्रक्शन! आपने पहेली को पूरी तरह से सुलझा लिया है।",
+  "pathIntersectTitle": "पथ प्रतिच्छेदन",
+  "pathIntersectSubtitle": "बिना किसी टक्कर के अपने संबंधित लक्ष्यों तक पहुँचने के लिए एक साथ कई पथों पर नेविगेट करें।",
+  "pathIntersectCongrats": "सिंक्रोनाइज़्ड नेविगेशन! आप बिना किसी गलती के सभी लक्ष्यों तक पहुँच गए हैं।",
+  "negativeSpaceDetectionTitle": "नकारात्मक स्थान",
+  "negativeSpaceDetectionSubtitle": "वस्तुओं के बीच खाली स्थान द्वारा बने आकार की पहचान करें।",
+  "negativeSpaceDetectionCongrats": "तीक्ष्ण धारणा! आपने वह देखने की कला में महारत हासिल कर ली है जो वहां नहीं है।",
+  "compassMazeTitle": "कंपास भूलभुलैया",
+  "compassMazeSubtitle": "ऐसी भूलभुलैया में नेविगेट करें जहाँ आपके कंपास के ओरिएंटेशन के आधार पर गति की दिशाएँ बदलती हैं।",
+  "compassMazeCongrats": "विशेषज्ञ नेविगेशन! आपने बदलती दिशाओं के माध्यम से निकास पा लिया है।",
+  "complexFoldingNetsTitle": "फोल्डिंग नेट्स",
+  "complexFoldingNetsSubtitle": "निर्धारित करें कि एक गैर-मानक 2D नेट को फोल्ड करके कौन सा जटिल 3D आकार बनेगा।",
+  "complexFoldingNetsCongrats": "उन्नत फोल्डिंग तर्क! आपने सफलतापूर्वक 3D रूप की कल्पना की है।",
+  "compassMazeMessage": "कंपास का उपयोग करके भूलभुलैया में नेविगेट करें।",
+  "negativeSpaceDetectionMessage": "स्थान में छिपी वस्तु की पहचान करें।",
+  "shikakuTitle": "शिकाकु",
+  "shikakuSubtitle": "ग्रिड को संख्याओं से मेल खाने वाले वर्गों और आयतों में विभाजित करें।",
+  "countdownMathTitle": "उलटी गिनती गणित",
+  "countdownMathSubtitle": "तीन अंकीय लक्ष्य की गणना करने के लिए यादृच्छिक संख्याओं को संयोजित करें।",
+  "narrativeRecallTitle": "आख्यान स्मरण",
+  "narrativeRecallSubtitle": "एक कहानी पढ़ें और विशिष्ट मात्रात्मक और तथ्यात्मक विवरण याद करें।",
+  "shellGameTitle": "शैल खेल",
+  "shellGameSubtitle": "शफ़लिंग कप स्वैप स्थानों के रूप में एक छिपी हुई गेंद को ट्रैक करें।",
+  "typoglycemiaDecoderTitle": "टाइपोग्लाइसीमिया डिकोडर",
+  "typoglycemiaDecoderSubtitle": "उलझे हुए वाक्यों को सुलझाएं और तेजी से पढ़ें।",
+  "shapeShifterTitle": "आकार बदलनेवाला",
+  "shapeShifterSubtitle": "लक्ष्य आकार-रंग संयोजन को टैप करें।",
+  "gokigenNanameTitle": "गोकिजेन नानामे",
+  "gokigenNanameSubtitle": "बिना लूप वाले बिंदुओं को जोड़ने के लिए विकर्ण बनाएं।",
+  "matrixMultiplierTitle": "मैट्रिक्स गुणक",
+  "matrixMultiplierSubtitle": "लक्ष्य से गुणा करने के लिए एक पंक्ति और स्तंभ का चयन करें।",
+  "wordAssociationRecallTitle": "शब्द संघ",
+  "wordAssociationRecallSubtitle": "स्मृति से युग्मित शब्द संघों को याद करें।",
+  "gearRotationTitle": "गियर रोटेशन",
+  "gearRotationSubtitle": "अंतिम गियर की घूर्णन दिशा की भविष्यवाणी करें।",
+  "wordWheelTitle": "शब्द चक्र",
+  "wordWheelSubtitle": "केंद्र अक्षर सहित, पहिये पर अक्षरों का उपयोग करके शब्द बनाएं।",
+  "oddEvenFlashTitle": "सम-विषम फ़्लैश",
+  "oddEvenFlashSubtitle": "रंग नियम के साथ संख्या समता का तुरंत मिलान करें।",
+  "norinoriTitle": "नोरिनोरी",
+  "norinoriSubtitle": "प्रत्येक कमरे में बिल्कुल दो जुड़ी हुई कोशिकाओं को छायांकित करें।",
+  "algebraicBalanceTitle": "बीजगणितीय संतुलन",
+  "algebraicBalanceSubtitle": "लक्ष्य योग ज्ञात करने के लिए समीकरणों को हल करें।",
+  "patternSequenceDrawTitle": "पैटर्न स्मरण",
+  "patternSequenceDrawSubtitle": "ग्रिड पर एनिमेटेड पथ अनुक्रम दोहराएँ।",
+  "tangramTitle": "टेंग्राम पहेली",
+  "tangramSubtitle": "लक्ष्य सिल्हूट को भरने के लिए आकृतियों को व्यवस्थित करें।",
+  "semanticAssociationTitle": "एसोसिएशन शब्द",
+  "semanticAssociationSubtitle": "तीनों सुरागों को जोड़ने वाला शब्द ढूंढें।",
+  "peripheralFocusTitle": "परिधीय फोकस",
+  "peripheralFocusSubtitle": "गणित हल करते समय चमकते साइड पैनल पर प्रतिक्रिया करें।",
+  "masyuTitle": "मास्यु लूप",
+  "masyuSubtitle": "मास्यु सर्कल नियमों से मेल खाते हुए एक एकल लूप बनाएं।",
+  "mathMazeTitle": "गणित भूलभुलैया",
+  "mathMazeSubtitle": "उस पथ का पता लगाएं जो लक्ष्य कुल का मूल्यांकन करता है।",
+  "storyBuilderTitle": "कहानी निर्माता",
+  "storyBuilderSubtitle": "कहानी के कालानुक्रमिक क्रम का पुनर्निर्माण करें।",
+  "mirrorMazeTitle": "दर्पण भूलभुलैया",
+  "mirrorMazeSubtitle": "विकर्ण दर्पणों का उपयोग करके लेजर बीम को पुनर्निर्देशित करें।",
+  "wordGridConnectionTitle": "शब्द कनेक्शन",
+  "wordGridConnectionSubtitle": "16 शब्दों को चार-चार श्रेणियों में समूहित करें।",
+  "shapeShifterPeripheralTitle": "परिधीय आकार",
+  "shapeShifterPeripheralSubtitle": "केंद्रीय मूल्यों का मिलान करते हुए परिधीय आकार में परिवर्तन को ट्रैक करें।",
+  "soundWaveMatchTitle": "ध्वनि तरंग मिलान",
+  "soundWaveMatchSubtitle": "जब दृश्य तरंग आवृत्ति पिच परिवर्तन के साथ संरेखित हो तो टैप करें।",
+  "multiTrackCounterTitle": "मल्टी-ट्रैक काउंटर",
+  "multiTrackCounterSubtitle": "जब कोई काउंटर लक्ष्य गुणक में वृद्धि करता है तो टैप करें।",
+  "colorWordMatchUpTitle": "रंग मिलान-अप",
+  "colorWordMatchUpSubtitle": "बदलते नियमों के आधार पर निर्धारित करें कि दो रंगीन शब्द मेल खाते हैं या नहीं।",
+  "signalAndNoiseTitle": "संकेत एवं शोर",
+  "signalAndNoiseSubtitle": "स्थैतिक शोर में छिपे लक्ष्य अल्फ़ान्यूमेरिक वर्णों का पता लगाएँ।",
+  "focusTunnelTitle": "फोकस सुरंग",
+  "focusTunnelSubtitle": "चलती सुरंग की दीवारों पर दिखाई देने वाले मिलान प्रतीकों की पहचान करें।",
+  "targetPursuerTitle": "लक्ष्य का पीछा करने वाला",
+  "targetPursuerSubtitle": "एकाधिक अतिव्यापी मंडलियों को ट्रैक करें और मूल लक्ष्य का चयन करें।",
+  "gridGazeTitle": "ग्रिड टकटकी",
+  "gridGazeSubtitle": "पहचानें कि कौन सा ग्रिड सेल भिन्न अवधि के साथ फ्लैश हुआ।",
+  "doubleTroubleTitle": "दोहरी मुसीबत",
+  "doubleTroubleSubtitle": "स्प्लिट-स्क्रीन पर एक साथ दो अलग-अलग सरल गेम खेलें।",
+  "syncRhythmTitle": "सिंक ताल",
+  "syncRhythmSubtitle": "जब विज़ुअल मेट्रोनोम स्वीप सिंकोपेटेड बीट से मेल खाता हो तो टैप करें।",
+  "ghostTapTitle": "भूत टैप",
+  "ghostTapSubtitle": "जब अदृश्य पल्स अपनी अधिकतम ऊंचाई पर पहुंच जाए तो टैप करें।",
+  "attentionalRsvpTitle": "ध्यानपूर्ण आरएसवीपी",
+  "attentionalRsvpSubtitle": "तेजी से क्रमबद्ध अक्षर फ्लैश में दिखाई देने वाले अंकों को पहचानें।",
+  "colorMazeNavTitle": "रंग भूलभुलैया नव",
+  "colorMazeNavSubtitle": "गतिशील अनुमति रंगों से मेल खाती भूलभुलैया टाइलें नेविगेट करें।",
+  "dynamicSalienceTitle": "गतिशील प्रमुखता",
+  "dynamicSalienceSubtitle": "थोड़ी भिन्न गतिशीलता के साथ गतिमान आकृति का पता लगाएं।",
+  "chalkAndTalkTitle": "चाक और बात",
+  "chalkAndTalkSubtitle": "दृश्य विकर्षणों को अनदेखा करते हुए ऑडियो में सुने गए शब्दों को टाइप करें।",
+  "blinkDetectorTitle": "ब्लिंक डिटेक्टर",
+  "blinkDetectorSubtitle": "ग्रिड फेस को टैप करें जो तेजी से लगातार दो बार झपकाता है।",
+  "frequencyTapTitle": "फ़्रीक्वेंसी टैप",
+  "frequencyTapSubtitle": "लक्ष्य प्रकाश पल्स आवृत्ति से मेल खाने वाले बटन को टैप करें।",
+  "yajilinTitle": "Yajilin",
+  "yajilinSubtitle": "काली कोशिकाएँ रखें और सुरागों से मेल खाने वाला एक लूप बनाएँ।",
+  "heyawakeTitle": "Heyawake",
+  "heyawakeSubtitle": "आसन्न काली कोशिकाओं के बिना शेड ग्रिड कमरे।",
+  "gokigenVariantTitle": "गोकिजेन वैरिएंट",
+  "gokigenVariantSubtitle": "शीर्ष गणनाओं को पूरा करने वाले लूप-मुक्त विकर्ण बनाएं।",
+  "sheepAndWolvesTitle": "भेड़ और भेड़िये",
+  "sheepAndWolvesSubtitle": "भेड़ों को भेड़ियों से अलग करने वाला एक लूप बनाएं।",
+  "islandNurikabeTitle": "द्वीप नूरिकाबे",
+  "islandNurikabeSubtitle": "संख्यात्मक आकार की बाधाओं से मेल खाते द्वीप बनाएं।",
+  "shakashakaTitle": "शकशाका रेक्ट्स",
+  "shakashakaSubtitle": "आयताकार सफेद क्षेत्र बनाने के लिए त्रिकोणीय टाइलें लगाएं।",
+  "litsTetrisTitle": "लिट्स टेट्रोमिनो",
+  "litsTetrisSubtitle": "टेट्रोमिनो को उन कमरों में रखें जहां कोई निकटवर्ती डुप्लिकेट न हो।",
+  "tapaWallTitle": "तापा दीवार",
+  "tapaWallSubtitle": "एक सतत काली दीवार पैटर्न बनाने के लिए कोशिकाओं को छायांकित करें।",
+  "triangularBridgesTitle": "त्रिकोणीय पुल",
+  "triangularBridgesSubtitle": "आवश्यकताओं को पूरा करते हुए द्वीपों को 3 दिशाओं में जोड़ें।",
+  "rippleEffectTitle": "तरंग प्रभाव",
+  "rippleEffectSubtitle": "कमरों में दूरी की कमी का ध्यान रखते हुए संख्याएँ भरें।",
+  "suguruTectonicTitle": "सुगुरु ग्रिड",
+  "suguruTectonicSubtitle": "कमरे के ब्लॉक को 1 से K तक की संख्या से भरें, जिसमें कोई भी पड़ोसी समान न हो।",
+  "tennerGridTitle": "टेनर ग्रिड",
+  "tennerGridSubtitle": "पंक्तियों को कॉलम के कुल योग से मेल खाने वाले अंक 0-9 से भरें।",
+  "kakurasuSumsTitle": "काकुरासु सम्स",
+  "kakurasuSumsSubtitle": "भारित पंक्ति/कॉल इंडेक्स रकम को पूरा करने के लिए शेड सेल।",
+  "corralLoopTitle": "कोरल लूप",
+  "corralLoopSubtitle": "दृश्यता से मेल खाने वाली संख्याओं को शामिल करते हुए एक एकल लूप बनाएं।",
+  "stostoneTitle": "स्टोस्टोन ग्रेविटी",
+  "stostoneSubtitle": "छाया कोशिकाएं जो निचली पंक्तियों को पूरी तरह से भरने के लिए नीचे गिरती हैं।",
+  "tripletsLogicTitle": "त्रिगुण तिकड़ी",
+  "tripletsLogicSubtitle": "ग्रिड को एक पंक्ति में तीन से बचाकर तीन आकृतियों से भरें।",
+  "galaxiesSymTitle": "आकाशगंगा समरूपता",
+  "galaxiesSymSubtitle": "ग्रिड को घूर्णी रूप से सममित आकाशगंगा आकृतियों में विभाजित करें।",
+  "matrixMultiplierMatchTitle": "मैट्रिक्स मैचर",
+  "matrixMultiplierMatchSubtitle": "लक्ष्य बिंदु उत्पाद से मिलान करने के लिए पंक्ति और स्तंभ मानों को गुणा करें।",
+  "primeFactorTreesTitle": "प्रधान कारक वृक्ष",
+  "primeFactorTreesSubtitle": "भाज्य संख्याओं को अभाज्य पत्ती कारक युग्मों में विघटित करें।",
+  "vektorVectorTitle": "सदिश सदिश",
+  "vektorVectorSubtitle": "अपने योग को लक्ष्य पर लाने के लिए स्केल वैक्टर।",
+  "binomialMatchTitle": "द्विपद मिलान",
+  "binomialMatchSubtitle": "गुणनखंडित द्विपद मानों के साथ द्विघात सूत्रों का मिलान करें।",
+  "percentageShoppingTitle": "प्रतिशत खरीदारी",
+  "percentageShoppingSubtitle": "छूट प्रतिशत और अंतिम चेकआउट योग की गणना करें।",
+  "cryptoArithmeticTitle": "क्रिप्टो-अंकगणित",
+  "cryptoArithmeticSubtitle": "वर्ण-अंक प्रतिस्थापन सिफर गणित समस्याओं को हल करें।",
+  "fractionalPizzaTitle": "फ्रैक्शनल पिज़्ज़ा",
+  "fractionalPizzaSubtitle": "लक्ष्य योग अंशों से मिलान करने के लिए पिज़्ज़ा स्लाइस का विभाजन करें।",
+  "numberBondsTitle": "संख्या बांड",
+  "numberBondsSubtitle": "लक्ष्य कनेक्शन योग के बराबर करने के लिए लिंक नोड मान।",
+  "gridSumLineTitle": "ग्रिड सम रेखा",
+  "gridSumLineSubtitle": "एक ऐसा पथ बनाएं जिसके मान बिल्कुल लक्ष्य के अनुरूप हों।",
+  "binaryScaleBalanceTitle": "बाइनरी स्केल बैलेंस",
+  "binaryScaleBalanceSubtitle": "दो ब्लॉकों की शक्ति का उपयोग करके दशमलव वजन को संतुलित करें।",
+  "moduloPathTitle": "मॉड्यूलो पथ",
+  "moduloPathSubtitle": "ट्रैवर्स ग्रिड कोशिकाएं मॉड्यूलो शेष मूल्यों से मेल खाती हैं।",
+  "digitSwapEqTitle": "अंक स्वैप समीकरण",
+  "digitSwapEqSubtitle": "दोनों को सही करने के लिए समीकरणों के बीच एकल अंकों की अदला-बदली करें।",
+  "areaPerimeterMatchTitle": "क्षेत्रफल एवं परिधि",
+  "areaPerimeterMatchSubtitle": "लक्ष्य क्षेत्र और परिधि मानों से मेल खाते आयत बनाएं।",
+  "inequalityBalanceOpsTitle": "असमानता संतुलन",
+  "inequalityBalanceOpsSubtitle": "जटिल गणित शब्दों के बीच असमानता प्रतीक रखें।",
+  "graphCoordinatePlotTitle": "ग्राफ प्लॉटर",
+  "graphCoordinatePlotSubtitle": "प्लॉट ग्रिड मिलान रैखिक/द्विघात वक्रों का समन्वय करता है।",
+  "baseConversionRunTitle": "आधार रूपांतरण",
+  "baseConversionRunSubtitle": "बाइनरी, दशमलव, हेक्स और ऑक्टल के बीच मान बदलें।",
+  "unitConverterProTitle": "इकाई परिवर्तक",
+  "unitConverterProSubtitle": "समय सीमा के अंतर्गत त्वरित इकाई रूपांतरण का उत्तर दें।",
+  "auditoryNBackTitle": "श्रवण एन-बैक",
+  "auditoryNBackSubtitle": "स्मृति से एन कदम पीछे सुने गए बोले गए अक्षरों का मिलान करें।",
+  "abstractPatternRecallTitle": "पैटर्न लेयरिंग",
+  "abstractPatternRecallSubtitle": "स्मृति अध्ययन से स्तरित रंगीन आकृतियों का पुनर्निर्माण करें।",
+  "roomInspectorTitle": "कक्ष निरीक्षक",
+  "roomInspectorSubtitle": "स्क्रीन खाली होने पर किए गए फर्नीचर संशोधनों की पहचान करें।",
+  "voiceToFaceMatchTitle": "आवाज-चेहरा मिलान",
+  "voiceToFaceMatchSubtitle": "बोले गए ऑडियो वॉयस क्लिप से जुड़े सही चेहरे का चयन करें।",
+  "spatialGridMemory3DTitle": "3डी स्थानिक मेमोरी",
+  "spatialGridMemory3DSubtitle": "घुमाए गए 3डी क्यूब ग्रिड संरचना में फ्लैश किए गए ब्लॉकों को याद करें।",
+  "sequenceStackTitle": "अनुक्रम ढेर",
+  "sequenceStackSubtitle": "प्लेट स्टैक को जोड़ने और हटाने को क्रम में फिर से बनाएँ।",
+  "semanticCategoryRecallTitle": "श्रेणी स्मरण",
+  "semanticCategoryRecallSubtitle": "अनुरोधित श्रेणी लक्ष्यों से मेल खाने वाले अध्ययन शब्दों को पहचानें।",
+  "gridDisplacementTitle": "ग्रिड विस्थापन",
+  "gridDisplacementSubtitle": "लेआउट की मूल से तुलना करते हुए स्थानांतरित किए गए आइकन की पहचान करें।",
+  "soundSequenceMatchTitle": "ध्वनि अनुक्रम मिलान",
+  "soundSequenceMatchSubtitle": "वर्चुअल कीबोर्ड पर चलाए गए नोट अनुक्रमों को दोहराएं।",
+  "cardCountingMemoryTitle": "कार्ड काउंटर",
+  "cardCountingMemorySubtitle": "निरंतर कार्ड डील रन में पहले से ही बांटे गए कार्डों की पहचान करें।",
+  "directionsRecallTitle": "दिशानिर्देश स्मरण",
+  "directionsRecallSubtitle": "मेमोरी से पथ दिशाओं से मेल खाते ग्रिड मानचित्रों को नेविगेट करें।",
+  "eventTimelineMemoryTitle": "इवेंट टाइमलाइन",
+  "eventTimelineMemorySubtitle": "ऐतिहासिक/काल्पनिक घटना कार्डों को कालानुक्रमिक रूप से व्यवस्थित करें।",
+  "featureMatrixRecallTitle": "फ़ीचर मैट्रिक्स",
+  "featureMatrixRecallSubtitle": "सेल आकार-रंग विशेषताओं के बारे में प्रश्नों का उत्तर दें।",
+  "delayedMatchSampleTitle": "विलंबित मैच",
+  "delayedMatchSampleSubtitle": "गणित का ध्यान भटकाने वाली समस्याओं को हल करने के बाद लक्ष्य चिह्न का मिलान करें।",
+  "symbolDigitAssocTitle": "प्रतीक-अंक सह",
+  "symbolDigitAssocSubtitle": "अंक कुंजियों से मेल खाती प्रतीक अनुवाद शीट को हल करें।",
+  "dualTaskMemoryTitle": "डुअल-टास्क मेमोरी",
+  "dualTaskMemorySubtitle": "त्वरित अंकगणितीय कार्यों को हल करते समय शब्द सेट याद रखें।",
+  "actionSequenceRecallTitle": "एक्शन रिकॉल",
+  "actionSequenceRecallSubtitle": "वर्ण हावभाव एनीमेशन अनुक्रमों को क्रम से दोहराएं।",
+  "tangramPolygonTitle": "टेंग्राम फ़िट",
+  "tangramPolygonSubtitle": "सिल्हूट की रूपरेखा को भरने के लिए बहुभुज आकृतियों को व्यवस्थित करें।",
+  "mazeNav3DTitle": "3डी भूलभुलैया नेविगेशन",
+  "mazeNav3DSubtitle": "प्रथम-व्यक्ति दृश्य से 3डी आइसोमेट्रिक भूलभुलैया मार्गों पर नेविगेट करें।",
+  "isometricProjectionTitle": "आइसोमेट्रिक प्रोजेक्टर",
+  "isometricProjectionSubtitle": "3डी ब्लॉक आकृतियों का ऑर्थोग्राफ़िक 2डी शीर्ष/सामने के दृश्यों से मिलान करें।",
+  "polyominoPackingTitle": "पॉलीओमिनो पैकिंग",
+  "polyominoPackingSubtitle": "लक्ष्य क्षेत्रों में यादृच्छिक पॉलीओमिनो ब्लॉक टुकड़े पैक करें।",
+  "spatialGridRotationTitle": "स्थानिक ग्रिड रोटेशन",
+  "spatialGridRotationSubtitle": "अक्ष निर्देशांक के साथ घुमाए गए 3डी ब्लॉक व्यवस्थाओं का मिलान करें।",
+  "wireLoopGameTitle": "तार का लूप",
+  "wireLoopGameSubtitle": "संपर्क के बिना धातु के छल्ले को तार के स्प्लिन के साथ खींचें।",
+  "origamiUnfoldTitle": "ओरिगेमी अनफोल्ड",
+  "origamiUnfoldSubtitle": "मुड़ी हुई शीटों को खोलने के बाद छेद पंच पैटर्न को पहचानें।",
+  "ropeTangleSolverTitle": "रस्सी सुलझाना",
+  "ropeTangleSolverSubtitle": "शून्य रेखा क्रॉस के साथ समतलीय ग्राफ़ लेआउट करने के लिए नोड्स खींचें।",
+  "gridFitTetrisTitle": "ग्रिड फ़िट सॉल्वर",
+  "gridFitTetrisSubtitle": "कंटेनर सीमा में फिट होने के लिए स्थिर अनियमित ब्लॉकों को व्यवस्थित करें।",
+  "vectorGridAlignmentTitle": "वेक्टर संरेखण",
+  "vectorGridAlignmentSubtitle": "छाया टेम्पलेट लक्ष्यों से मिलान करने के लिए आकृतियों को स्केल करें और घुमाएँ।",
+  "blockStackingPhysicsTitle": "ब्लॉक स्टैकिंग",
+  "blockStackingPhysicsSubtitle": "गुरुत्वाकर्षण भार को संतुलित करते हुए अनियमित ब्लॉक पैनलों को ढेर करें।",
+  "crossSectionMatch3DTitle": "3डी क्रॉस सेक्शन",
+  "crossSectionMatch3DSubtitle": "3डी आकृतियों से काटी गई 2डी स्लाइस ज्यामिति को पहचानें।",
+  "symmetryPaintTitle": "समरूपता पेंट",
+  "symmetryPaintSubtitle": "समरूपता अक्षों पर प्रतिबिंबित दर्पण छवि खंड बनाएं।",
+  "rollingBlockBloxTitle": "रोलिंग ब्लॉक",
+  "rollingBlockBloxSubtitle": "लक्ष्य स्लॉट में लंबवत उतरने के लिए ब्लॉक के टुकड़ों को रोल करें।",
+  "perspectiveShiftViewTitle": "परिप्रेक्ष्य परिवर्तन",
+  "perspectiveShiftViewSubtitle": "ब्लॉक क्लस्टरों को तब तक घुमाएँ जब तक वे अक्षरों/शब्दों की वर्तनी न बना दें।",
+  "networkFlowSphericalTitle": "नेटवर्क प्रवाह",
+  "networkFlowSphericalSubtitle": "बेलनाकार निर्देशांक लपेटने पर ग्रिड प्रवाह कनेक्ट करें।",
+  "layeredSilhouetteBlendTitle": "सिल्हूट मिश्रण",
+  "layeredSilhouetteBlendSubtitle": "लक्ष्य पारभासी आकृतियों से मेल खाने के लिए रंगीन परतों को ढेर करें।",
+  "wordWheelPangramTitle": "शब्द अनाग्राम",
+  "wordWheelPangramSubtitle": "पहियों से केंद्रीय लक्ष्य अक्षरों वाले शब्दों का निर्माण करें।",
+  "letterGridSwapperTitle": "पत्र स्वैपर",
+  "letterGridSwapperSubtitle": "पंक्ति और कॉलम शब्दों को पूरा करने के लिए आसन्न अक्षर टाइलों को बदलें।",
+  "synonymMatchTitle": "समानार्थी मिलान",
+  "synonymMatchSubtitle": "गिरते हुए शब्द लक्ष्यों को पर्यायवाची या विलोम शब्द से मिलाएँ।",
+  "vowelDropTitle": "स्वर ड्रॉप",
+  "vowelDropSubtitle": "शब्दों को पूरा करने वाले समन्वय ग्रिड में स्वरों को छोड़ें।",
+  "letterBalanceScaleTitle": "शब्द संतुलन पैमाना",
+  "letterBalanceScaleSubtitle": "उन शब्दों का उच्चारण करें जिनके अक्षर का मान वजन संतुलित करता है।",
+  "wordChainShiritoriTitle": "शब्द शृंखला",
+  "wordChainShiritoriSubtitle": "पूर्ववर्ती अक्षर आउटपुट से प्रारंभ करते हुए शब्द लूप को लिंक करें।",
+  "affixBuilderTitle": "एफ़िक्स बिल्डर",
+  "affixBuilderSubtitle": "लक्ष्य शब्दावली बनाने के लिए उपसर्गों/प्रत्ययों को मिलाएं।",
+  "decipherCrypticCluesTitle": "गूढ़ गूढ़ व्याख्याकार",
+  "decipherCrypticCluesSubtitle": "शब्द-खेल पहेलियों को हल करें और वर्तनी पहेलियों को डिक्रिप्ट करें।",
+  "boggleWordSearchTitle": "बोगल कनेक्ट",
+  "boggleWordSearchSubtitle": "छिपे हुए शब्दों को खोजने के लिए निकटवर्ती जुड़े हुए पथों का पता लगाएं।",
+  "idiomUnscrambleTitle": "मुहावरा सुलझाना",
+  "idiomUnscrambleSubtitle": "मुहावरे के अर्थों से मेल खाने के लिए क्रमबद्ध शब्द सारणी व्यवस्थित करें।",
+  "letterPyramidsTitle": "पत्र पिरामिड",
+  "letterPyramidsSubtitle": "प्रति स्तर एकल विपर्यय अक्षर जोड़कर शब्द टावर बनाएं।",
+  "soundAlikeHomophonesTitle": "होमोफ़ोन मिलान",
+  "soundAlikeHomophonesSubtitle": "वाक्यों के लिए सही होमोफोन वर्तनी की पहचान करें।",
+  "wordGridSudokuTitle": "शब्द सुडोकू",
+  "wordGridSudokuSubtitle": "शब्द बनाने वाली ग्रिड पंक्तियों में टेसलेट अक्षर।",
+  "portmanteauFactoryTitle": "पोर्टमांटेउ फ़ैक्टरी",
+  "portmanteauFactorySubtitle": "यौगिक शब्द बनाते हुए शब्दार्थ घटकों को मिलाएं।",
+  "codedCrosswordsCodeTitle": "कोडवर्ड क्रॉसवर्ड",
+  "codedCrosswordsCodeSubtitle": "संख्या-से-अक्षर कोड से मेल खाने वाले ग्रिड क्रॉसवर्ड को हल करें।",
+  "wordSnakeTrailTitle": "शब्द साँप",
+  "wordSnakeTrailSubtitle": "विषयगत शब्दों की वर्तनी वाले साँप-जैसे अक्षर ट्रेल्स का पता लगाएं।",
+  "typingRhythmSpeedTitle": "टाइपिंग प्रवाह",
+  "typingRhythmSpeedSubtitle": "मेट्रोनोम लय ताल से मेल खाने वाली शब्दावली टाइप करें।",
   "errorSomethingWrong": "Something went wrong",
   "errorUnexpected": "An unexpected error occurred",
   "errorTryAgain": "Try Again",
@@ -2181,35 +1398,11 @@
   "statsAchievements": "Achievements",
   "statsWeeklyActivity": "Weekly Activity",
   "statsDayStreak": "{days} Day Streak",
-  "@statsDayStreak": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
   "statsTotalXp": "Total XP",
   "statsSolved": "Solved",
   "statsLevel": "Level {level}",
-  "@statsLevel": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsMaintainStreak": "Maintain your streak!",
   "statsPercentToLevel": "{percent}% to Level {level}",
-  "@statsPercentToLevel": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      },
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsCognitiveProfile": "Cognitive Profile",
   "statsLocked": "Locked",
   "achievementSeeker": "Seeker",
@@ -2333,24 +1526,19 @@
   "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
   "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
   "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
-  "@snackbarWordMustContainCentral": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarWordAlreadyFound": "Word already found!",
   "snackbarNotAValidWord": "Not a valid word!",
   "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
   "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectCorrectAnswer": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
+  "hideGame": "छिपाएं",
+  "unhideGame": "सामने लाएं",
+  "favoriteGame": "पसंदीदा",
+  "unfavoriteGame": "पसंदीदा से हटाएं",
+  "hiddenGames": "छिपे हुए खेल",
+  "showHiddenGames": "छिपे हुए खेल दिखाएं ({count})",
+  "noHiddenGames": "कोई छिपा हुआ खेल नहीं है",
+  "gameHidden": "खेल छिपा दिया गया",
+  "undo": "पूर्ववत करें",
   "snackbarCorrect": "Correct!",
   "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
   "snackbarAllCorrect": "All associations correct!",
@@ -2360,165 +1548,31 @@
   "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
   "snackbarPieceDoesNotFit": "Piece does not fit there!",
   "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
-  "@snackbarInvalidStep": {
-    "placeholders": {
-      "mod": {
-        "type": "int"
-      },
-      "modulus": {
-        "type": "int"
-      },
-      "remainder": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
-  "@snackbarIncorrectGroup": {
-    "placeholders": {
-      "tries": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
   "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
-  "@snackbarIncorrectDestination": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
-  "@snackbarIncorrectCorrectCount": {
-    "placeholders": {
-      "suit": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
   "snackbarSequenceMatched": "Sequence matched! Increasing length...",
   "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
   "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
-  "@snackbarIncorrectCorrectValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
-  "@snackbarIncorrectSlices": {
-    "placeholders": {
-      "selected": {
-        "type": "int"
-      },
-      "required": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
   "snackbarCorrectOrder": "Correct chronological order!",
   "snackbarIncorrectOrder": "Incorrect order! Study again.",
   "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
-  "@snackbarIncorrectMissingValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
-  "@snackbarIncorrectLetterDigit": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      },
-      "digit": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
-  "@snackbarIncorrectCorrectPoint": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarReachedExit": "Reached the exit! Generating next maze...",
   "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
   "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
-  "@snackbarIncorrectCorrectStack": {
-    "placeholders": {
-      "stack": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
   "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
-  "@snackbarScaleNotBalanced": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
   "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
   "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
-  "@snackbarIncorrectCorrectForm": {
-    "placeholders": {
-      "form": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
-  "@snackbarIncorrectInequality": {
-    "placeholders": {
-      "left": {
-        "type": "String"
-      },
-      "leftVal": {
-        "type": "int"
-      },
-      "correct": {
-        "type": "String"
-      },
-      "right": {
-        "type": "String"
-      },
-      "rightVal": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectBaseConversion": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
   "snackbarAlignedCorrectly": "Aligned and correctly identified!",
   "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
@@ -2538,6 +1592,8 @@
   "btnImReadyToAnswer": "I'm Ready to Answer",
   "btnNoMatch": "No Match",
   "btnMatch": "Match",
+  "btnMatchColor": "रंग मिलाएं",
+  "btnMatchWord": "शब्द मिलाएं",
   "btnGuess": "Guess",
   "btnPlayNow": "Play Now",
   "btnClear": "Clear",
@@ -2560,13 +1616,6 @@
   "phaseTapToAdd": "Tap to Add",
   "phaseCalculationLabel": "Calculation:",
   "phaseTimeLeft": "Time: {time}s",
-  "@phaseTimeLeft": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "phaseRemember2Back": "Remember 2 steps back",
   "phaseMatch": "Match",
   "hintTypeRhymingWord": "Type a rhyming word...",
@@ -2586,54 +1635,13 @@
   "feedbackFindNumber": "Find the number between 1 and 10,000!",
   "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
   "feedbackCorrectExcl": "Correct! The number was {number}.",
-  "@feedbackCorrectExcl": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackCorrectEmoji": "Correct!",
   "feedbackTooLow": "Too Low",
   "feedbackTooHigh": "Too High",
   "feedbackGameOver": "Game Over! The number was {number}.",
-  "@feedbackGameOver": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackGuessResult": "{guess} is {result}!",
-  "@feedbackGuessResult": {
-    "placeholders": {
-      "guess": {
-        "type": "int"
-      },
-      "result": {
-        "type": "String"
-      }
-    }
-  },
   "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
-  "@feedbackWinMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      },
-      "guesses": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackLoseMessage": "Out of guesses! The number was {number}.",
-  "@feedbackLoseMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "statTime": "Time",
   "statScore": "Score",
   "statGrid": "Grid",
@@ -2731,275 +1739,6 @@
   "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
   "correctExclEmoji": "Correct!",
   "wrongExcl": "Wrong!",
-  "abstractPatternRecallSubtitle": "स्मृति अध्ययन से स्तरित रंगीन आकृतियों का पुनर्निर्माण करें।",
-  "abstractPatternRecallTitle": "पैटर्न लेयरिंग",
-  "actionSequenceRecallSubtitle": "वर्ण हावभाव एनीमेशन अनुक्रमों को क्रम से दोहराएं।",
-  "actionSequenceRecallTitle": "एक्शन रिकॉल",
-  "affixBuilderSubtitle": "लक्ष्य शब्दावली बनाने के लिए उपसर्गों/प्रत्ययों को मिलाएं।",
-  "affixBuilderTitle": "एफ़िक्स बिल्डर",
-  "algebraicBalanceSubtitle": "लक्ष्य योग ज्ञात करने के लिए समीकरणों को हल करें।",
-  "algebraicBalanceTitle": "बीजगणितीय संतुलन",
-  "areaPerimeterMatchSubtitle": "लक्ष्य क्षेत्र और परिधि मानों से मेल खाते आयत बनाएं।",
-  "areaPerimeterMatchTitle": "क्षेत्रफल एवं परिधि",
-  "attentionalRsvpSubtitle": "तेजी से क्रमबद्ध अक्षर फ्लैश में दिखाई देने वाले अंकों को पहचानें।",
-  "attentionalRsvpTitle": "ध्यानपूर्ण आरएसवीपी",
-  "auditoryNBackSubtitle": "स्मृति से एन कदम पीछे सुने गए बोले गए अक्षरों का मिलान करें।",
-  "auditoryNBackTitle": "श्रवण एन-बैक",
-  "baseConversionRunSubtitle": "बाइनरी, दशमलव, हेक्स और ऑक्टल के बीच मान बदलें।",
-  "baseConversionRunTitle": "आधार रूपांतरण",
-  "binaryScaleBalanceSubtitle": "दो ब्लॉकों की शक्ति का उपयोग करके दशमलव वजन को संतुलित करें।",
-  "binaryScaleBalanceTitle": "बाइनरी स्केल बैलेंस",
-  "binomialMatchSubtitle": "गुणनखंडित द्विपद मानों के साथ द्विघात सूत्रों का मिलान करें।",
-  "binomialMatchTitle": "द्विपद मिलान",
-  "blinkDetectorSubtitle": "ग्रिड फेस को टैप करें जो तेजी से लगातार दो बार झपकाता है।",
-  "blinkDetectorTitle": "ब्लिंक डिटेक्टर",
-  "blockStackingPhysicsSubtitle": "गुरुत्वाकर्षण भार को संतुलित करते हुए अनियमित ब्लॉक पैनलों को ढेर करें।",
-  "blockStackingPhysicsTitle": "ब्लॉक स्टैकिंग",
-  "boggleWordSearchSubtitle": "छिपे हुए शब्दों को खोजने के लिए निकटवर्ती जुड़े हुए पथों का पता लगाएं।",
-  "boggleWordSearchTitle": "बोगल कनेक्ट",
-  "cardCountingMemorySubtitle": "निरंतर कार्ड डील रन में पहले से ही बांटे गए कार्डों की पहचान करें।",
-  "cardCountingMemoryTitle": "कार्ड काउंटर",
-  "chalkAndTalkSubtitle": "दृश्य विकर्षणों को अनदेखा करते हुए ऑडियो में सुने गए शब्दों को टाइप करें।",
-  "chalkAndTalkTitle": "चाक और बात",
-  "codedCrosswordsCodeSubtitle": "संख्या-से-अक्षर कोड से मेल खाने वाले ग्रिड क्रॉसवर्ड को हल करें।",
-  "codedCrosswordsCodeTitle": "कोडवर्ड क्रॉसवर्ड",
-  "colorMazeNavSubtitle": "गतिशील अनुमति रंगों से मेल खाती भूलभुलैया टाइलें नेविगेट करें।",
-  "colorMazeNavTitle": "रंग भूलभुलैया नव",
-  "colorWordMatchUpSubtitle": "बदलते नियमों के आधार पर निर्धारित करें कि दो रंगीन शब्द मेल खाते हैं या नहीं।",
-  "colorWordMatchUpTitle": "रंग मिलान-अप",
-  "corralLoopSubtitle": "दृश्यता से मेल खाने वाली संख्याओं को शामिल करते हुए एक एकल लूप बनाएं।",
-  "corralLoopTitle": "कोरल लूप",
-  "countdownMathSubtitle": "तीन अंकीय लक्ष्य की गणना करने के लिए यादृच्छिक संख्याओं को संयोजित करें।",
-  "countdownMathTitle": "उलटी गिनती गणित",
-  "crossSectionMatch3DSubtitle": "3डी आकृतियों से काटी गई 2डी स्लाइस ज्यामिति को पहचानें।",
-  "crossSectionMatch3DTitle": "3डी क्रॉस सेक्शन",
-  "cryptoArithmeticSubtitle": "वर्ण-अंक प्रतिस्थापन सिफर गणित समस्याओं को हल करें।",
-  "cryptoArithmeticTitle": "क्रिप्टो-अंकगणित",
-  "decipherCrypticCluesSubtitle": "शब्द-खेल पहेलियों को हल करें और वर्तनी पहेलियों को डिक्रिप्ट करें।",
-  "decipherCrypticCluesTitle": "गूढ़ गूढ़ व्याख्याकार",
-  "delayedMatchSampleSubtitle": "गणित का ध्यान भटकाने वाली समस्याओं को हल करने के बाद लक्ष्य चिह्न का मिलान करें।",
-  "delayedMatchSampleTitle": "विलंबित मैच",
-  "digitSwapEqSubtitle": "दोनों को सही करने के लिए समीकरणों के बीच एकल अंकों की अदला-बदली करें।",
-  "digitSwapEqTitle": "अंक स्वैप समीकरण",
-  "directionsRecallSubtitle": "मेमोरी से पथ दिशाओं से मेल खाते ग्रिड मानचित्रों को नेविगेट करें।",
-  "directionsRecallTitle": "दिशानिर्देश स्मरण",
-  "doubleTroubleSubtitle": "स्प्लिट-स्क्रीन पर एक साथ दो अलग-अलग सरल गेम खेलें।",
-  "doubleTroubleTitle": "दोहरी मुसीबत",
-  "dualTaskMemorySubtitle": "त्वरित अंकगणितीय कार्यों को हल करते समय शब्द सेट याद रखें।",
-  "dualTaskMemoryTitle": "डुअल-टास्क मेमोरी",
-  "dynamicSalienceSubtitle": "थोड़ी भिन्न गतिशीलता के साथ गतिमान आकृति का पता लगाएं।",
-  "dynamicSalienceTitle": "गतिशील प्रमुखता",
-  "eventTimelineMemorySubtitle": "ऐतिहासिक/काल्पनिक घटना कार्डों को कालानुक्रमिक रूप से व्यवस्थित करें।",
-  "eventTimelineMemoryTitle": "इवेंट टाइमलाइन",
-  "featureMatrixRecallSubtitle": "सेल आकार-रंग विशेषताओं के बारे में प्रश्नों का उत्तर दें।",
-  "featureMatrixRecallTitle": "फ़ीचर मैट्रिक्स",
-  "focusTunnelSubtitle": "चलती सुरंग की दीवारों पर दिखाई देने वाले मिलान प्रतीकों की पहचान करें।",
-  "focusTunnelTitle": "फोकस सुरंग",
-  "fractionalPizzaSubtitle": "लक्ष्य योग अंशों से मिलान करने के लिए पिज़्ज़ा स्लाइस का विभाजन करें।",
-  "fractionalPizzaTitle": "फ्रैक्शनल पिज़्ज़ा",
-  "frequencyTapSubtitle": "लक्ष्य प्रकाश पल्स आवृत्ति से मेल खाने वाले बटन को टैप करें।",
-  "frequencyTapTitle": "फ़्रीक्वेंसी टैप",
-  "galaxiesSymSubtitle": "ग्रिड को घूर्णी रूप से सममित आकाशगंगा आकृतियों में विभाजित करें।",
-  "galaxiesSymTitle": "आकाशगंगा समरूपता",
-  "gearRotationSubtitle": "अंतिम गियर की घूर्णन दिशा की भविष्यवाणी करें।",
-  "gearRotationTitle": "गियर रोटेशन",
-  "ghostTapSubtitle": "जब अदृश्य पल्स अपनी अधिकतम ऊंचाई पर पहुंच जाए तो टैप करें।",
-  "ghostTapTitle": "भूत टैप",
-  "gokigenNanameSubtitle": "बिना लूप वाले बिंदुओं को जोड़ने के लिए विकर्ण बनाएं।",
-  "gokigenNanameTitle": "गोकिजेन नानामे",
-  "gokigenVariantSubtitle": "शीर्ष गणनाओं को पूरा करने वाले लूप-मुक्त विकर्ण बनाएं।",
-  "gokigenVariantTitle": "गोकिजेन वैरिएंट",
-  "graphCoordinatePlotSubtitle": "प्लॉट ग्रिड मिलान रैखिक/द्विघात वक्रों का समन्वय करता है।",
-  "graphCoordinatePlotTitle": "ग्राफ प्लॉटर",
-  "gridDisplacementSubtitle": "लेआउट की मूल से तुलना करते हुए स्थानांतरित किए गए आइकन की पहचान करें।",
-  "gridDisplacementTitle": "ग्रिड विस्थापन",
-  "gridFitTetrisSubtitle": "कंटेनर सीमा में फिट होने के लिए स्थिर अनियमित ब्लॉकों को व्यवस्थित करें।",
-  "gridFitTetrisTitle": "ग्रिड फ़िट सॉल्वर",
-  "gridGazeSubtitle": "पहचानें कि कौन सा ग्रिड सेल भिन्न अवधि के साथ फ्लैश हुआ।",
-  "gridGazeTitle": "ग्रिड टकटकी",
-  "gridSumLineSubtitle": "एक ऐसा पथ बनाएं जिसके मान बिल्कुल लक्ष्य के अनुरूप हों।",
-  "gridSumLineTitle": "ग्रिड सम रेखा",
-  "heyawakeSubtitle": "आसन्न काली कोशिकाओं के बिना शेड ग्रिड कमरे।",
-  "heyawakeTitle": "Heyawake",
-  "idiomUnscrambleSubtitle": "मुहावरे के अर्थों से मेल खाने के लिए क्रमबद्ध शब्द सारणी व्यवस्थित करें।",
-  "idiomUnscrambleTitle": "मुहावरा सुलझाना",
-  "inequalityBalanceOpsSubtitle": "जटिल गणित शब्दों के बीच असमानता प्रतीक रखें।",
-  "inequalityBalanceOpsTitle": "असमानता संतुलन",
-  "islandNurikabeSubtitle": "संख्यात्मक आकार की बाधाओं से मेल खाते द्वीप बनाएं।",
-  "islandNurikabeTitle": "द्वीप नूरिकाबे",
-  "isometricProjectionSubtitle": "3डी ब्लॉक आकृतियों का ऑर्थोग्राफ़िक 2डी शीर्ष/सामने के दृश्यों से मिलान करें।",
-  "isometricProjectionTitle": "आइसोमेट्रिक प्रोजेक्टर",
-  "kakurasuSumsSubtitle": "भारित पंक्ति/कॉल इंडेक्स रकम को पूरा करने के लिए शेड सेल।",
-  "kakurasuSumsTitle": "काकुरासु सम्स",
-  "layeredSilhouetteBlendSubtitle": "लक्ष्य पारभासी आकृतियों से मेल खाने के लिए रंगीन परतों को ढेर करें।",
-  "layeredSilhouetteBlendTitle": "सिल्हूट मिश्रण",
-  "letterBalanceScaleSubtitle": "उन शब्दों का उच्चारण करें जिनके अक्षर का मान वजन संतुलित करता है।",
-  "letterBalanceScaleTitle": "शब्द संतुलन पैमाना",
-  "letterGridSwapperSubtitle": "पंक्ति और कॉलम शब्दों को पूरा करने के लिए आसन्न अक्षर टाइलों को बदलें।",
-  "letterGridSwapperTitle": "पत्र स्वैपर",
-  "letterPyramidsSubtitle": "प्रति स्तर एकल विपर्यय अक्षर जोड़कर शब्द टावर बनाएं।",
-  "letterPyramidsTitle": "पत्र पिरामिड",
-  "litsTetrisSubtitle": "टेट्रोमिनो को उन कमरों में रखें जहां कोई निकटवर्ती डुप्लिकेट न हो।",
-  "litsTetrisTitle": "लिट्स टेट्रोमिनो",
-  "masyuSubtitle": "मास्यु सर्कल नियमों से मेल खाते हुए एक एकल लूप बनाएं।",
-  "masyuTitle": "मास्यु लूप",
-  "mathMazeSubtitle": "उस पथ का पता लगाएं जो लक्ष्य कुल का मूल्यांकन करता है।",
-  "mathMazeTitle": "गणित भूलभुलैया",
-  "matrixMultiplierMatchSubtitle": "लक्ष्य बिंदु उत्पाद से मिलान करने के लिए पंक्ति और स्तंभ मानों को गुणा करें।",
-  "matrixMultiplierMatchTitle": "मैट्रिक्स मैचर",
-  "matrixMultiplierSubtitle": "लक्ष्य से गुणा करने के लिए एक पंक्ति और स्तंभ का चयन करें।",
-  "matrixMultiplierTitle": "मैट्रिक्स गुणक",
-  "mazeNav3DSubtitle": "प्रथम-व्यक्ति दृश्य से 3डी आइसोमेट्रिक भूलभुलैया मार्गों पर नेविगेट करें।",
-  "mazeNav3DTitle": "3डी भूलभुलैया नेविगेशन",
-  "mirrorMazeSubtitle": "विकर्ण दर्पणों का उपयोग करके लेजर बीम को पुनर्निर्देशित करें।",
-  "mirrorMazeTitle": "दर्पण भूलभुलैया",
-  "moduloPathSubtitle": "ट्रैवर्स ग्रिड कोशिकाएं मॉड्यूलो शेष मूल्यों से मेल खाती हैं।",
-  "moduloPathTitle": "मॉड्यूलो पथ",
-  "multiTrackCounterSubtitle": "जब कोई काउंटर लक्ष्य गुणक में वृद्धि करता है तो टैप करें।",
-  "multiTrackCounterTitle": "मल्टी-ट्रैक काउंटर",
-  "narrativeRecallSubtitle": "एक कहानी पढ़ें और विशिष्ट मात्रात्मक और तथ्यात्मक विवरण याद करें।",
-  "narrativeRecallTitle": "आख्यान स्मरण",
-  "networkFlowSphericalSubtitle": "बेलनाकार निर्देशांक लपेटने पर ग्रिड प्रवाह कनेक्ट करें।",
-  "networkFlowSphericalTitle": "नेटवर्क प्रवाह",
-  "norinoriSubtitle": "प्रत्येक कमरे में बिल्कुल दो जुड़ी हुई कोशिकाओं को छायांकित करें।",
-  "norinoriTitle": "नोरिनोरी",
-  "numberBondsSubtitle": "लक्ष्य कनेक्शन योग के बराबर करने के लिए लिंक नोड मान।",
-  "numberBondsTitle": "संख्या बांड",
-  "oddEvenFlashSubtitle": "रंग नियम के साथ संख्या समता का तुरंत मिलान करें।",
-  "oddEvenFlashTitle": "सम-विषम फ़्लैश",
-  "origamiUnfoldSubtitle": "मुड़ी हुई शीटों को खोलने के बाद छेद पंच पैटर्न को पहचानें।",
-  "origamiUnfoldTitle": "ओरिगेमी अनफोल्ड",
-  "patternSequenceDrawSubtitle": "ग्रिड पर एनिमेटेड पथ अनुक्रम दोहराएँ।",
-  "patternSequenceDrawTitle": "पैटर्न स्मरण",
-  "percentageShoppingSubtitle": "छूट प्रतिशत और अंतिम चेकआउट योग की गणना करें।",
-  "percentageShoppingTitle": "प्रतिशत खरीदारी",
-  "peripheralFocusSubtitle": "गणित हल करते समय चमकते साइड पैनल पर प्रतिक्रिया करें।",
-  "peripheralFocusTitle": "परिधीय फोकस",
-  "perspectiveShiftViewSubtitle": "ब्लॉक क्लस्टरों को तब तक घुमाएँ जब तक वे अक्षरों/शब्दों की वर्तनी न बना दें।",
-  "perspectiveShiftViewTitle": "परिप्रेक्ष्य परिवर्तन",
-  "polyominoPackingSubtitle": "लक्ष्य क्षेत्रों में यादृच्छिक पॉलीओमिनो ब्लॉक टुकड़े पैक करें।",
-  "polyominoPackingTitle": "पॉलीओमिनो पैकिंग",
-  "portmanteauFactorySubtitle": "यौगिक शब्द बनाते हुए शब्दार्थ घटकों को मिलाएं।",
-  "portmanteauFactoryTitle": "पोर्टमांटेउ फ़ैक्टरी",
-  "primeFactorTreesSubtitle": "भाज्य संख्याओं को अभाज्य पत्ती कारक युग्मों में विघटित करें।",
-  "primeFactorTreesTitle": "प्रधान कारक वृक्ष",
-  "rippleEffectSubtitle": "कमरों में दूरी की कमी का ध्यान रखते हुए संख्याएँ भरें।",
-  "rippleEffectTitle": "तरंग प्रभाव",
-  "rollingBlockBloxSubtitle": "लक्ष्य स्लॉट में लंबवत उतरने के लिए ब्लॉक के टुकड़ों को रोल करें।",
-  "rollingBlockBloxTitle": "रोलिंग ब्लॉक",
-  "roomInspectorSubtitle": "स्क्रीन खाली होने पर किए गए फर्नीचर संशोधनों की पहचान करें।",
-  "roomInspectorTitle": "कक्ष निरीक्षक",
-  "ropeTangleSolverSubtitle": "शून्य रेखा क्रॉस के साथ समतलीय ग्राफ़ लेआउट करने के लिए नोड्स खींचें।",
-  "ropeTangleSolverTitle": "रस्सी सुलझाना",
-  "semanticAssociationSubtitle": "तीनों सुरागों को जोड़ने वाला शब्द ढूंढें।",
-  "semanticAssociationTitle": "एसोसिएशन शब्द",
-  "semanticCategoryRecallSubtitle": "अनुरोधित श्रेणी लक्ष्यों से मेल खाने वाले अध्ययन शब्दों को पहचानें।",
-  "semanticCategoryRecallTitle": "श्रेणी स्मरण",
-  "sequenceStackSubtitle": "प्लेट स्टैक को जोड़ने और हटाने को क्रम में फिर से बनाएँ।",
-  "sequenceStackTitle": "अनुक्रम ढेर",
-  "shakashakaSubtitle": "आयताकार सफेद क्षेत्र बनाने के लिए त्रिकोणीय टाइलें लगाएं।",
-  "shakashakaTitle": "शकशाका रेक्ट्स",
-  "shapeShifterPeripheralSubtitle": "केंद्रीय मूल्यों का मिलान करते हुए परिधीय आकार में परिवर्तन को ट्रैक करें।",
-  "shapeShifterPeripheralTitle": "परिधीय आकार",
-  "shapeShifterSubtitle": "लक्ष्य आकार-रंग संयोजन को टैप करें।",
-  "shapeShifterTitle": "आकार बदलनेवाला",
-  "sheepAndWolvesSubtitle": "भेड़ों को भेड़ियों से अलग करने वाला एक लूप बनाएं।",
-  "sheepAndWolvesTitle": "भेड़ और भेड़िये",
-  "shellGameSubtitle": "शफ़लिंग कप स्वैप स्थानों के रूप में एक छिपी हुई गेंद को ट्रैक करें।",
-  "shellGameTitle": "शैल खेल",
-  "shikakuSubtitle": "ग्रिड को संख्याओं से मेल खाने वाले वर्गों और आयतों में विभाजित करें।",
-  "shikakuTitle": "शिकाकु",
-  "signalAndNoiseSubtitle": "स्थैतिक शोर में छिपे लक्ष्य अल्फ़ान्यूमेरिक वर्णों का पता लगाएँ।",
-  "signalAndNoiseTitle": "संकेत एवं शोर",
-  "soundAlikeHomophonesSubtitle": "वाक्यों के लिए सही होमोफोन वर्तनी की पहचान करें।",
-  "soundAlikeHomophonesTitle": "होमोफ़ोन मिलान",
-  "soundSequenceMatchSubtitle": "वर्चुअल कीबोर्ड पर चलाए गए नोट अनुक्रमों को दोहराएं।",
-  "soundSequenceMatchTitle": "ध्वनि अनुक्रम मिलान",
-  "soundWaveMatchSubtitle": "जब दृश्य तरंग आवृत्ति पिच परिवर्तन के साथ संरेखित हो तो टैप करें।",
-  "soundWaveMatchTitle": "ध्वनि तरंग मिलान",
-  "spatialGridMemory3DSubtitle": "घुमाए गए 3डी क्यूब ग्रिड संरचना में फ्लैश किए गए ब्लॉकों को याद करें।",
-  "spatialGridMemory3DTitle": "3डी स्थानिक मेमोरी",
-  "spatialGridRotationSubtitle": "अक्ष निर्देशांक के साथ घुमाए गए 3डी ब्लॉक व्यवस्थाओं का मिलान करें।",
-  "spatialGridRotationTitle": "स्थानिक ग्रिड रोटेशन",
-  "storyBuilderSubtitle": "कहानी के कालानुक्रमिक क्रम का पुनर्निर्माण करें।",
-  "storyBuilderTitle": "कहानी निर्माता",
-  "stostoneSubtitle": "छाया कोशिकाएं जो निचली पंक्तियों को पूरी तरह से भरने के लिए नीचे गिरती हैं।",
-  "stostoneTitle": "स्टोस्टोन ग्रेविटी",
-  "suguruTectonicSubtitle": "कमरे के ब्लॉक को 1 से K तक की संख्या से भरें, जिसमें कोई भी पड़ोसी समान न हो।",
-  "suguruTectonicTitle": "सुगुरु ग्रिड",
-  "symbolDigitAssocSubtitle": "अंक कुंजियों से मेल खाती प्रतीक अनुवाद शीट को हल करें।",
-  "symbolDigitAssocTitle": "प्रतीक-अंक सह",
-  "symmetryPaintSubtitle": "समरूपता अक्षों पर प्रतिबिंबित दर्पण छवि खंड बनाएं।",
-  "symmetryPaintTitle": "समरूपता पेंट",
-  "syncRhythmSubtitle": "जब विज़ुअल मेट्रोनोम स्वीप सिंकोपेटेड बीट से मेल खाता हो तो टैप करें।",
-  "syncRhythmTitle": "सिंक ताल",
-  "synonymMatchSubtitle": "गिरते हुए शब्द लक्ष्यों को पर्यायवाची या विलोम शब्द से मिलाएँ।",
-  "synonymMatchTitle": "समानार्थी मिलान",
-  "tangramPolygonSubtitle": "सिल्हूट की रूपरेखा को भरने के लिए बहुभुज आकृतियों को व्यवस्थित करें।",
-  "tangramPolygonTitle": "टेंग्राम फ़िट",
-  "tangramSubtitle": "लक्ष्य सिल्हूट को भरने के लिए आकृतियों को व्यवस्थित करें।",
-  "tangramTitle": "टेंग्राम पहेली",
-  "tapaWallSubtitle": "एक सतत काली दीवार पैटर्न बनाने के लिए कोशिकाओं को छायांकित करें।",
-  "tapaWallTitle": "तापा दीवार",
-  "targetPursuerSubtitle": "एकाधिक अतिव्यापी मंडलियों को ट्रैक करें और मूल लक्ष्य का चयन करें।",
-  "targetPursuerTitle": "लक्ष्य का पीछा करने वाला",
-  "tennerGridSubtitle": "पंक्तियों को कॉलम के कुल योग से मेल खाने वाले अंक 0-9 से भरें।",
-  "tennerGridTitle": "टेनर ग्रिड",
-  "triangularBridgesSubtitle": "आवश्यकताओं को पूरा करते हुए द्वीपों को 3 दिशाओं में जोड़ें।",
-  "triangularBridgesTitle": "त्रिकोणीय पुल",
-  "tripletsLogicSubtitle": "ग्रिड को एक पंक्ति में तीन से बचाकर तीन आकृतियों से भरें।",
-  "tripletsLogicTitle": "त्रिगुण तिकड़ी",
-  "typingRhythmSpeedSubtitle": "मेट्रोनोम लय ताल से मेल खाने वाली शब्दावली टाइप करें।",
-  "typingRhythmSpeedTitle": "टाइपिंग प्रवाह",
-  "typoglycemiaDecoderSubtitle": "उलझे हुए वाक्यों को सुलझाएं और तेजी से पढ़ें।",
-  "typoglycemiaDecoderTitle": "टाइपोग्लाइसीमिया डिकोडर",
-  "unitConverterProSubtitle": "समय सीमा के अंतर्गत त्वरित इकाई रूपांतरण का उत्तर दें।",
-  "unitConverterProTitle": "इकाई परिवर्तक",
-  "vectorGridAlignmentSubtitle": "छाया टेम्पलेट लक्ष्यों से मिलान करने के लिए आकृतियों को स्केल करें और घुमाएँ।",
-  "vectorGridAlignmentTitle": "वेक्टर संरेखण",
-  "vektorVectorSubtitle": "अपने योग को लक्ष्य पर लाने के लिए स्केल वैक्टर।",
-  "vektorVectorTitle": "सदिश सदिश",
-  "voiceToFaceMatchSubtitle": "बोले गए ऑडियो वॉयस क्लिप से जुड़े सही चेहरे का चयन करें।",
-  "voiceToFaceMatchTitle": "आवाज-चेहरा मिलान",
-  "vowelDropSubtitle": "शब्दों को पूरा करने वाले समन्वय ग्रिड में स्वरों को छोड़ें।",
-  "vowelDropTitle": "स्वर ड्रॉप",
-  "wireLoopGameSubtitle": "संपर्क के बिना धातु के छल्ले को तार के स्प्लिन के साथ खींचें।",
-  "wireLoopGameTitle": "तार का लूप",
-  "wordAssociationRecallSubtitle": "स्मृति से युग्मित शब्द संघों को याद करें।",
-  "wordAssociationRecallTitle": "शब्द संघ",
-  "wordChainShiritoriSubtitle": "पूर्ववर्ती अक्षर आउटपुट से प्रारंभ करते हुए शब्द लूप को लिंक करें।",
-  "wordChainShiritoriTitle": "शब्द शृंखला",
-  "wordGridConnectionSubtitle": "16 शब्दों को चार-चार श्रेणियों में समूहित करें।",
-  "wordGridConnectionTitle": "शब्द कनेक्शन",
-  "wordGridSudokuSubtitle": "शब्द बनाने वाली ग्रिड पंक्तियों में टेसलेट अक्षर।",
-  "wordGridSudokuTitle": "शब्द सुडोकू",
-  "wordSnakeTrailSubtitle": "विषयगत शब्दों की वर्तनी वाले साँप-जैसे अक्षर ट्रेल्स का पता लगाएं।",
-  "wordSnakeTrailTitle": "शब्द साँप",
-  "wordWheelPangramSubtitle": "पहियों से केंद्रीय लक्ष्य अक्षरों वाले शब्दों का निर्माण करें।",
-  "wordWheelPangramTitle": "शब्द अनाग्राम",
-  "wordWheelSubtitle": "केंद्र अक्षर सहित, पहिये पर अक्षरों का उपयोग करके शब्द बनाएं।",
-  "wordWheelTitle": "शब्द चक्र",
-  "yajilinSubtitle": "काली कोशिकाएँ रखें और सुरागों से मेल खाने वाला एक लूप बनाएँ।",
-  "yajilinTitle": "Yajilin",
-  "btnMatchColor": "रंग मिलाएं",
-  "btnMatchWord": "शब्द मिलाएं",
-  "favoriteGame": "पसंदीदा",
-  "gameHidden": "खेल छिपा दिया गया",
-  "hiddenGames": "छिपे हुए खेल",
-  "hideGame": "छिपाएं",
-  "noHiddenGames": "कोई छिपा हुआ खेल नहीं है",
-  "orbitTapTapToHit": "जब गेंद गेट में प्रवेश करे तब टैप करें",
-  "showHiddenGames": "छिपे हुए खेल दिखाएं ({count})",
-  "@showHiddenGames": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "undo": "पूर्ववत करें",
-  "unfavoriteGame": "पसंदीदा से हटाएं",
-  "unhideGame": "सामने लाएं",
   "kurodokoTitle": "Kurodoko",
   "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
   "kurodokoCongrats": "हर संख्या ठीक वही देखती है जो उसे देखना चाहिए।",
@@ -3121,6 +1860,13 @@
   "pegsTitle": "पेग्स",
   "pegsSubtitle": "एक पेग को उसके पड़ोसी के ऊपर से कूदाकर हटाएँ। केवल एक बचाएँ।",
   "pegsCongrats": "एक पेग बचा। साफ़ बोर्ड।",
+  "lightsOutPresses": "Presses",
+  "lightsOutLit": "Lit",
+  "sameGameTitle": "Same Game",
+  "sameGameSubtitle": "Clear groups of matching blocks to empty the board.",
+  "sameGameCongrats": "Board cleared. Every square gone.",
+  "sameGameLeft": "Left",
+  "sameGameStuck": "No groups left. Start a new board.",
   "galaxiesTitle": "Galaxies",
   "galaxiesSubtitle": "Give every dot its own symmetric region",
   "galaxiesCongrats": "Every dot has its own galaxy.",
@@ -3131,5 +1877,28 @@
   "twiddleCongrats": "हर संख्या अपनी जगह पर।",
   "difficultyEasy": "आसान",
   "difficultyMedium": "मध्यम",
-  "difficultyHard": "कठिन"
+  "difficultyHard": "कठिन",
+  "crossingTitle": "Number Crossing",
+  "crossingSubtitle": "Fit every listed number into the crossing slots.",
+  "crossingPlaced": "Placed",
+  "crossingWinTitle": "EVERY NUMBER FITS!",
+  "crossingWinMessage": "Each number once, and every crossing agrees digit for digit.",
+  "navDeal": "डील",
+  "navStack": "संग्रह",
+  "navYou": "आप",
+  "next": "अगला",
+  "nextPuzzle": "अगली पहेली",
+  "restartPuzzle": "फिर से शुरू करें",
+  "lockScroll": "स्क्रॉल लॉक करें",
+  "unlockScroll": "स्क्रॉल अनलॉक करें",
+  "feedScrollLocked": "स्क्रॉल लॉक है।",
+  "dealTitle": "डील",
+  "dealSubtitle": "हर पहेली, एक-एक कार्ड।",
+  "yourCards": "आपके कार्ड",
+  "todaysCard": "आज का कार्ड",
+  "quickPlay": "दो मिनट से कम",
+  "rooms": "छह कमरे",
+  "puzzles": "पहेलियाँ",
+  "shuffleCategory": "इस कमरे से डील करें",
+  "deckProgress": "{total} में से {position}"
 }
