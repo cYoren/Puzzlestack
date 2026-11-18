@@ -5,11 +5,13 @@ A cross-platform suite of **184 playable brain puzzles**, built with Flutter. Lo
 Two ideas sit at the heart of Puzzlestack:
 
 1. **The deal.** The app opens on a puzzle, not on a menu. One full-screen card, playable
-   where it lands; swipe up and the next card is dealt. The deck is a real shuffled pass over
-   every playable puzzle, so nothing repeats until the bag is empty and the counter on the card
-   (`042 / 184`) is true. Solving a card offers one thing: the next card.
-2. **The stack.** When you know what you want, the second room files every puzzle by
-   category: six rooms, today's card, a row for when you have two minutes, and search.
+   where it lands; swipe up and the next card is dealt. The deck deals verified one-minute
+   puzzles in a balanced rhythm (`Think, Word, Think, Snap`), with a seeded **Daily Five**
+   that is the same for everyone each day. Solving a card offers one thing: the next card.
+2. **The stack.** When you know what you want, the second room files all **184** playable
+   puzzles across six rooms with Daily Five, quick play, search, and per-game size and
+   difficulty choices. Three picks and three hints a day are free; **Puzzlestack Plus** is
+   one optional, one-time unlock for unlimited picks, hints, and the Daily Five archive.
 
 The look is a deck of paper cards: warm paper, ink, hairlines, Bebas display numerals, and one
 live colour (indigo) that only appears where something is active. See [DESIGN.md](DESIGN.md).
