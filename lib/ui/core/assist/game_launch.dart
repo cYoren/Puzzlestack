@@ -3,12 +3,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../data/game_guides.dart';
 import '../../../data/game_metadata.dart';
+import '../../../data/game_tiers.dart';
+import '../../../data/picks/pick_gate.dart';
 import '../../../data/repositories/game_stats_repository.dart';
+import '../../../providers/game_tier_provider.dart';
+import '../../../providers/pick_providers.dart';
 import '../../../utils/navigation_utils.dart';
 import '../../../widgets/game_guide_screen.dart';
+import '../../features/home/stack_chooser_sheet.dart';
+import '../../features/plus/plus_sheet.dart';
 import '../juice/game_scope.dart';
 
-/// Opens a game, rules first if this is the first time.
+/// Opens a game, asking the pick gate first, the rules second, and the size
+/// last.
+///
+/// Every surface that opens a game from the Stack — a room, a search result,
+/// the home screen — goes through here, which is what makes "three picks a day"
+/// one rule instead of one per screen. The Deal never calls this: a dealt card
+/// is free and always was.
+///
+/// The size question comes last for the same reason the rules do: it is about
+/// the board that is not built yet. A game with one size is never asked, and a
+/// game with a ladder opens at the size last chosen (`lib/data/game_tiers.dart`)
+/// without this file knowing which sizes that game has.
 ///
 /// "Show the rules first" has to happen before the game screen exists: a timed
 /// game starts its clock in `initState`, so a guide painted on top of it would
@@ -19,6 +36,37 @@ Future<void> launchGame(
   WidgetRef ref,
   GameMetadata game,
 ) async {
+  // Only asked about, not spent: everything below can still end with no board
+  // (the player closes the rules page or the size chooser), and a pick spent on
+  // an opening that never happened is a pick taken for nothing.
+  final PickGate gate = ref.read(pickGateProvider);
+  PickDecision decision = await gate.preview(game.id);
+  if (!context.mounted) return;
+
+  if (decision is PickRefused) {
+    // The board is opened first, so the sheet sits over the game the player is
+    // being asked to pay for rather than over a list. Declining closes it
+    // again; buying removes that preview route and continues through the shared
+    // flow below, so a ladder game still offers its size choice and every game
+    // starts with a fresh clock.
+    final Route<void> backdrop = _open(context, game);
+    final bool bought = await showPlusSheet(context);
+    if (!context.mounted) return;
+    if (!bought) {
+      if (backdrop.isCurrent) {
+        Navigator.of(context).pop();
+      } else if (backdrop.isActive) {
+        Navigator.of(context).removeRoute(backdrop);
+      }
+      return;
+    }
+    if (backdrop.isActive) {
+      Navigator.of(context).removeRoute(backdrop);
+    }
+    decision = await gate.preview(game.id);
+    if (!context.mounted || decision is PickRefused) return;
+  }
+
   final repository = GameStatsRepository.instance;
   final firstTime = repository.isReady && !repository.hasSeen(game.id);
   if (firstTime && gameGuides.containsKey(game.id)) {
@@ -40,13 +88,44 @@ Future<void> launchGame(
   }
 
   if (!context.mounted) return;
-  // The id travels with the page: four games share a localised title, and a
-  // screen that resolves to the wrong registry entry gets the wrong guide, the
-  // wrong assists, and a clock that `completeGame` can never stop.
-  Navigator.push(
-    context,
-    CustomPageRoute(
-      page: GameScope(gameId: game.id, child: game.builder(context)),
-    ),
+
+  if (offersTierChoice(game.id)) {
+    final GameLadder ladder = gameLadders[game.id]!;
+    final GameTier? chosen = await showStackChooserSheet(
+      context,
+      ladder: ladder,
+      gameTitle: game.titleGetter(context),
+      currentTierId: ref.read(gameTierStoreProvider).startFor(game.id) ??
+          ladder.defaultTier,
+    );
+    // Closing the sheet opens nothing: the board is chosen before it exists.
+    if (!context.mounted || chosen == null) return;
+
+    // Written before the board is built, which is how the chosen size reaches
+    // a board that starts now: the provider reads this row in `build`.
+    await ref.rememberTier(game.id, chosen.id);
+    // And this is how it reaches a board of this game that is already alive —
+    // the Deal keeps the current card mounted behind its tabs, so this game's
+    // provider can exist with the old size. Scoped by id so every other live
+    // game keeps its puzzle untouched.
+    ref.read(tierRevisionProvider(game.id).notifier).state++;
+    if (!context.mounted) return;
+  }
+
+  // The opening is happening: now the pick, or the first play, is written down.
+  await gate.commit(game.id, decision);
+  if (!context.mounted) return;
+
+  _open(context, game);
+}
+
+/// The game itself. The id travels with the page: four games share a localised
+/// title, and a screen that resolves to the wrong registry entry gets the wrong
+/// guide, the wrong assists, and a clock that `completeGame` can never stop.
+Route<void> _open(BuildContext context, GameMetadata game) {
+  final Route<void> route = CustomPageRoute<void>(
+    page: GameScope(gameId: game.id, child: game.builder(context)),
   );
+  Navigator.of(context).push(route);
+  return route;
 }

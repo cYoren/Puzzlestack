@@ -7,8 +7,15 @@ import 'package:window_manager/window_manager.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'data/models/user_data.dart';
 import 'data/models/game_streak.dart';
+import 'data/key_value_store.dart';
+import 'data/game_tiers.dart';
+import 'data/picks/pick_ledger.dart';
+import 'data/purchase/plus_store.dart';
 import 'data/repositories/game_stats_repository.dart';
 import 'data/repositories/user_repository.dart';
+import 'providers/pick_providers.dart';
+import 'providers/game_tier_provider.dart';
+import 'providers/plus_providers.dart';
 import 'providers/user_providers.dart';
 import 'providers/theme_provider.dart';
 import 'providers/locale_provider.dart';
@@ -90,6 +97,26 @@ void main() async {
   // app falls back to a session without a memory.
   await GameStatsRepository.instance.init();
 
+  // The Plus row. Opened before the first frame because the pick gate reads it
+  // while a screen builds; a device whose storage will not open still runs,
+  // with Plus off and nothing remembered.
+  final KeyValueStore plusStore =
+      await HiveKeyValueStore.open(PlusStore.boxName) ?? MemoryKeyValueStore();
+
+  // Today's picks. The gate reads it before a screen builds, so it is opened
+  // here; a device that cannot store anything gets three free picks every
+  // launch rather than none.
+  final KeyValueStore pickStore =
+      await HiveKeyValueStore.open(PickLedger.boxName) ?? MemoryKeyValueStore();
+
+  // The size last chosen per game. The rows share the stats box, which is
+  // already open, so this reads synchronously while a board builds; a device
+  // that cannot store anything still plays, at each game's default size.
+  final GameTierStore gameTierStore = GameTierStore(
+    await HiveKeyValueStore.open(GameTierStore.boxName) ??
+        MemoryKeyValueStore(),
+  );
+
   // Log app startup time
   stopwatch.stop();
   debugPrint('App startup time (sync): ${stopwatch.elapsedMilliseconds}ms');
@@ -106,6 +133,9 @@ void main() async {
     ProviderScope(
       overrides: [
         userRepositoryProvider.overrideWithValue(userRepository),
+        plusStoreProvider.overrideWithValue(plusStore),
+        pickStoreProvider.overrideWithValue(pickStore),
+        gameTierStoreProvider.overrideWithValue(gameTierStore),
       ],
       child: ErrorBoundary(
         child: MyApp(startGameId: startGameId),
@@ -114,14 +144,31 @@ void main() async {
   );
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key, this.startGameId});
 
   /// The puzzle the launch URL named, if any (`lib/utils/deep_link.dart`).
   final String? startGameId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    // After the first frame on purpose: the store check is a network call, and
+    // the first card must never wait for it. The local row is already read, so
+    // a purchase made yesterday works before this finishes.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(plusProvider.notifier).start();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final appThemeMode = ref.watch(themeNotifierProvider);
     final appLocale = ref.watch(localeNotifierProvider);
 
@@ -168,7 +215,7 @@ class MyApp extends ConsumerWidget {
         }
         return const Locale('en');
       },
-      home: MainShell(startGameId: startGameId),
+      home: MainShell(startGameId: widget.startGameId),
     );
   }
 }

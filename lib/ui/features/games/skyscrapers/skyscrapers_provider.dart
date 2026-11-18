@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/deduction.dart';
 import '../../../../core/latin.dart';
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'skyscrapers_engine.dart';
 
 part 'skyscrapers_provider.g.dart';
@@ -91,7 +92,10 @@ class SkyscrapersNotifier extends _$SkyscrapersNotifier {
   final SkyscrapersEngine _engine = const SkyscrapersEngine();
 
   @override
-  SkyscrapersState build() => _newPuzzle(SkyscrapersDifficulty.medium);
+  SkyscrapersState build() => _newPuzzle(
+        ref.startTier('skyscrapers', SkyscrapersDifficulty.values,
+            SkyscrapersDifficulty.medium, (tier) => tier.name),
+      );
 
   SkyscrapersState _newPuzzle(SkyscrapersDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -106,6 +110,7 @@ class SkyscrapersNotifier extends _$SkyscrapersNotifier {
 
   void setDifficulty(SkyscrapersDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('skyscrapers', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 
