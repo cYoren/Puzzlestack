@@ -1,9 +1,6 @@
 {
   "@@locale": "te",
   "appTitle": "Puzzlestack",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
   "home": "హోమ్",
   "settings": "సెట్టింగ్స్",
   "playAgain": "మళ్ళీ ఆడండి",
@@ -44,6 +41,9 @@
   "trialModeDescription": "60 సెకన్ల టైమర్ బదులుగా 20 పరిష్కరించి ముగించండి",
   "keepScreenAwake": "స్క్రీన్ ఆన్‌లో ఉంచండి",
   "keepScreenAwakeDescription": "గేమ్‌ప్లే సమయంలో స్క్రీన్ ఆఫ్ కాకుండా నిరోధించండి",
+  "showArchivedGames": "ఆర్కైవ్ చేసిన పజిల్స్ చూపు",
+  "showArchivedGamesDescription": "సూచన కోసం ఉంచిన అభ్యాసాలు.",
+  "archived": "ఆర్కైవ్",
   "appearance": "రూపురేఖలు",
   "language": "భాష",
   "gameplay": "గేమ్ ప్లే",
@@ -73,32 +73,8 @@
   "termsOfService": "సేవా నిబంధనలు",
   "licenses": "లైసెన్సులు",
   "findWordSubtitle": "దాగి ఉన్న {wordLength}-అక్షరాల పదాన్ని కనుగొనడానికి మీకు {maxTries} ప్రయత్నాలు ఉన్నాయి.",
-  "@findWordSubtitle": {
-    "placeholders": {
-      "maxTries": {
-        "type": "int"
-      },
-      "wordLength": {
-        "type": "int"
-      }
-    }
-  },
   "wordFoundMessage": "పదం విజయవంతంగా కనుగొనబడింది: {word}",
-  "@wordFoundMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOverMessage": "ఆ పదం: {word}",
-  "@gameOverMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOver": "ఆట ముగిసింది",
   "crosswordTitle": "క్రాస్ వర్డ్",
   "crosswordSubtitle": "ఇచ్చిన ఆధారాల ఆధారంగా సరైన పదాలతో గ్రిడ్‌ను పూర్తి చేయండి.",
@@ -108,21 +84,7 @@
   "radicalRootsGoalReached": "లక్ష్యాన్ని చేరుకున్నారు!",
   "radicalRootsTimeUp": "సమయం ముగిసింది!",
   "radicalRootsScoreMessage": "మీరు {score} మూలాలను సరిగ్గా లెక్కించారు!",
-  "@radicalRootsScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsTryAgainMessage": "ప్రాక్టీస్ చేస్తూ ఉండండి! మీరు {score} మూలాలను లెక్కించారు.",
-  "@radicalRootsTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsStart": "లెక్కించడం ప్రారంభించండి",
   "radicalRootsDescription": "మీకు వీలైనన్ని పరిష్కరించడానికి 60 సెకన్ల సమయం ఉంది.",
   "radicalRootsBest": "ఉత్తమ",
@@ -132,21 +94,7 @@
   "romanArithmeticGoalReached": "సెంచూరియన్ స్థాయి!",
   "romanArithmeticTimeUp": "సమయం ముగిసింది!",
   "romanArithmeticScoreMessage": "మీరు {score} రోమన్ సమస్యలను పరిష్కరించారు!",
-  "@romanArithmeticScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticTryAgainMessage": "వేని, వీడి, వీచి! మీరు {score} సమస్యలను పరిష్కరించారు.",
-  "@romanArithmeticTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticStart": "అన్వేషణ ప్రారంభించండి",
   "romanArithmeticDescription": "మార్చండి మరియు పరిష్కరించండి. మీకు 60 సెకన్లు ఉన్నాయి.",
   "romanArithmeticBest": "ఉత్తమ",
@@ -181,6 +129,45 @@
   "magnetsHowToPlay": "డొమినో పరిమాణపు కంటైనర్‌లను '+' మరియు '-' అయస్కాంతాలతో నింపండి లేదా ఖాళీగా వదిలివేయండి. అడ్డు వరుస మరియు నిలువు వరుస ఆధారాలు ఆ లైన్‌లోని ప్రతి పోల్ యొక్క మొత్తం సంఖ్యను తెలియజేస్తాయి. ఒకే రకమైన పోల్స్ పక్కపక్కనే ఉండకూడదు.",
   "magnetsWinTitle": "ధృవణత సమతుల్యం!",
   "magnetsWinMessage": "అన్ని అయస్కాంతాలు సరిగ్గా అమర్చబడ్డాయి!",
+  "magnetsPlaced": "Magnets",
+  "magnetsLevel": "Depth",
+  "cubeTitle": "Cube",
+  "cubeSubtitle": "Roll the cube to collect every blue square.",
+  "cubeWinTitle": "SIX BLUES!",
+  "cubeWinMessage": "Every face of the cube is blue.",
+  "cubeHowToPlay": "Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube's bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.",
+  "cubeFaces": "Faces",
+  "cubeMoves": "Moves",
+  "cubeBest": "Best",
+  "mapTitle": "Four Colours",
+  "mapSubtitle": "Colour every region so touching regions never match.",
+  "mapWinTitle": "MAP COLOURED!",
+  "mapWinMessage": "Every region has a colour, and no neighbours clash.",
+  "mapHowToPlay": "Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.",
+  "mapRegions": "Regions",
+  "mapColoured": "Coloured",
+  "inertiaTitle": "Inertia",
+  "inertiaSubtitle": "Slide the ball to collect every gem and miss mines.",
+  "inertiaWinTitle": "ALL GEMS!",
+  "inertiaWinMessage": "Every gem collected and not a mine touched.",
+  "inertiaHowToPlay": "Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.",
+  "inertiaGems": "Gems",
+  "inertiaMoves": "Moves",
+  "inertiaExploded": "MINE! Tap to retry",
+  "netslideTitle": "Netslide",
+  "netslideSubtitle": "Slide rows and columns until every pipe connects.",
+  "netslideWinTitle": "NET COMPLETE!",
+  "netslideWinMessage": "Every pipe is connected.",
+  "netslideHowToPlay": "Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.",
+  "netslideMoves": "Slides",
+  "netslideScramble": "Depth",
+  "signpostTitle": "Signpost",
+  "signpostSubtitle": "Link cells in order by following their arrows.",
+  "signpostWinTitle": "EVERY NUMBER PLACED!",
+  "signpostWinMessage": "One chain from 1 to the last, every arrow pointing the way.",
+  "signpostHowToPlay": "Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.",
+  "signpostMoves": "Links",
+  "signpostGivens": "Givens",
   "lighthousesTitle": "లైట్‌హౌస్‌లు",
   "lighthousesSubtitle": "లైట్‌హౌస్ క్లూల ఆధారంగా షిప్పులను ఉంచండి.",
   "lighthousesHowToPlay": "గ్రిడ్‌లో 1x1 షిప్పులను ఉంచండి. లైట్‌హౌస్‌లు అడ్డంగా మరియు నిలువుగా కనిపించే షిప్పుల మొత్తం సంఖ్యను సూచిస్తాయి. షిప్పులు లైట్‌హౌస్‌లను లేదా ఒకదానికొకటి తాకకూడదు, వికర్ణంగా కూడా.",
@@ -191,6 +178,10 @@
   "dominosaHowToPlay": "సంఖ్యల గ్రిడ్‌పై పూర్తి డొమినోల సెట్‌ను అమర్చండి, తద్వారా పక్కపక్కనే ఉన్న సంఖ్యల ప్రతి జంట సరిగ్గా ఒక డొమినోతో కప్పబడి ఉంటుంది. ప్రతి సంఖ్య జంట సెట్‌లో ఒకసారి మాత్రమే ఉంటుంది.",
   "dominosaWinTitle": "డొమినో మాస్టర్!",
   "dominosaWinMessage": "ప్రతి డొమినో కనుగొనబడింది మరియు ఉంచబడింది!",
+  "dominosaPlaced": "Placed",
+  "dominosaTypes": "Types",
+  "skyscrapersClues": "Clues",
+  "skyscrapersFilled": "Filled",
   "skyscrapersTitle": "స్కైస్క్రాపర్స్",
   "skyscrapersSubtitle": "గ్రిడ్‌ను భవనాల ఎత్తులతో నింపండి.",
   "skyscrapersHowToPlay": "ప్రతి అడ్డు వరుస మరియు నిలువు వరుసలో ప్రతి ఎత్తు సరిగ్గా ఒకసారి ఉండేలా గ్రిడ్‌ను ఎత్తులతో (1-N) నింపండి. అంచులలోని క్లూలు ఆ దిశ నుండి ఎన్ని భవనాలు కనిపిస్తాయో సూచిస్తాయి, ఎత్తైన భవనాలు తక్కువ ఎత్తు ఉన్న భవనాలను అడ్డుకుంటాయి.",
@@ -227,26 +218,12 @@
   "arithmeticChainWinMessage": "మీ మానసిక గణన పదునుగా ఉంది!",
   "arithmeticChainLoseTitle": "మళ్ళీ ప్రయత్నించండి",
   "arithmeticChainLoseMessage": "సరైన సమాధానం {answer}.",
-  "@arithmeticChainLoseMessage": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "arithmeticChainStart": "ప్రారంభించు",
   "arithmeticChainNext": "తదుపరి",
   "attentionalBlinkTitle": "అటెన్షనల్ బ్లింక్",
   "attentionalBlinkSubtitleWatch": "సంఖ్యల కోసం చూడండి",
   "attentionalBlinkSubtitleInput": "మీరు చూసిన రెండు సంఖ్యలను నమోదు చేయండి",
   "attentionalBlinkScoreMessage": "మీరు {score} లక్ష్యాలను స్కోర్ చేశారు!",
-  "@attentionalBlinkScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "balanceScaleTitle": "బ్యాలెన్స్ స్కేల్",
   "balanceScaleSubtitle": "త్రాసుల ఆధారంగా చివరి వస్తువు బరువును ఊహించండి.",
   "balanceScaleWinTitle": "సమతుల్యం!",
@@ -266,16 +243,6 @@
   "boxCompletionTitle": "బాక్స్ కంప్లీషన్",
   "boxCompletionSubtitle": "ఏ ఘనాన్ని ఏర్పరచవచ్చు?",
   "boxCompletionScoreMessage": "మీరు {totalTrials} ప్రయత్నాలలో {score} సరైనవి సాధించారు!",
-  "@boxCompletionScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "totalTrials": {
-        "type": "int"
-      }
-    }
-  },
   "boxCompletionOptions": "ఆప్షన్స్",
   "bridgesTitle": "బ్రిడ్జెస్",
   "bridgesSubtitle": "ద్వీపాలను వంతెనలతో అనుసంధానించండి. ప్రతి ద్వీపానికి నిర్దిష్ట సంఖ్యలో వంతెనలు అవసరం. వంతెనలు ఒకదానికొకటి దాటకూడదు.",
@@ -286,21 +253,7 @@
   "calculationSprintGoalReached": "లక్ష్యాన్ని చేరుకున్నారు!",
   "calculationSprintTimeUp": "సమయం ముగిసింది",
   "calculationSprintScoreMessage": "అద్భుతమైన గణన వేగం! మీరు {score} పాయింట్లు సాధించారు.",
-  "@calculationSprintScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintTryAgainMessage": "మీరు {score} పాయింట్లు సాధించారు. మీ ఉత్తమ స్కోరును అధిగమించడానికి ప్రయత్నించండి!",
-  "@calculationSprintTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintBest": "ఉత్తమ",
   "calculationSprintSeconds": "60 సెకన్లు",
   "calculationSprintDescription": "సమీకరణాలను వేగంగా పరిష్కరించండి.\nతప్పు సమాధానాలకు 3 సెకన్లు తగ్గుతాయి!",
@@ -311,82 +264,20 @@
   "categoryFluencyTimeUp": "సమయం ముగిసింది!",
   "categoryFluencyWinMessage": "మీకు విస్తారమైన పదజాలం ఉంది!",
   "categoryFluencyFoundMessage": "మీరు {count} పదాలను కనుగొన్నారు.",
-  "@categoryFluencyFoundMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "categoryFluencyCategoryLabel": "కేటగిరీ:",
   "categoryFluencyEnterItem": "ఒక వస్తువును నమోదు చేయండి...",
   "categoryFluencyWordCount": "{entered} / {target} పదాలు",
-  "@categoryFluencyWordCount": {
-    "placeholders": {
-      "entered": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessTitle": "ఛేంజ్ బ్లైండ్‌నెస్",
   "changeBlindnessSubtitle": "మారుతున్న వస్తువును గుర్తించండి",
   "changeBlindnessScore": "స్కోరు: {score}",
-  "@changeBlindnessScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessFoundMessage": "మీరు {score} మార్పులను కనుగొన్నారు!",
-  "@changeBlindnessFoundMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTitle": "చాయిస్ RT",
   "choiceRtSubtitle": "యాక్టివ్ స్క్వేర్‌ను వీలైనంత వేగంగా నొక్కండి",
   "choiceRtAvgMessage": "మీ సగటు ప్రతిచర్య సమయం: {avg}ms",
-  "@choiceRtAvgMessage": {
-    "placeholders": {
-      "avg": {
-        "type": "String"
-      }
-    }
-  },
   "choiceRtTimeRemaining": "మిగిలి ఉన్న సమయం: {time}s",
-  "@choiceRtTimeRemaining": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTaps": "నొక్కినవి: {count}",
-  "@choiceRtTaps": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodTitle": "కలర్ ఫ్లడ్",
   "colorFloodSubtitle": "ఎత్తుగడలు: {moves} / {maxMoves}",
-  "@colorFloodSubtitle": {
-    "placeholders": {
-      "moves": {
-        "type": "int"
-      },
-      "maxMoves": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodSuccess": "ఫ్లడ్ సక్సెస్!",
   "colorFloodDryLand": "డ్రై ల్యాండ్...",
   "colorFloodWinMessage": "మీరు మొత్తం గ్రిడ్‌ను రంగుతో నింపారు!",
@@ -398,28 +289,11 @@
   "colorMatchCheck": "మ్యాచ్ తనిఖీ చేయండి",
   "colorMatchResult": "మ్యాచ్ ఫలితం",
   "colorMatchAccuracy": "మీ ఖచ్చితత్వం: {accuracy}%",
-  "@colorMatchAccuracy": {
-    "placeholders": {
-      "accuracy": {
-        "type": "String"
-      }
-    }
-  },
   "corsiBlocksTitle": "కోర్సీ బ్లాక్స్",
   "corsiBlocksSubtitle": "బ్లాక్స్ వెలగడం చూడండి మరియు అదే క్రమంలో వాటిని నొక్కండి.",
   "corsiBlocksWinTitle": "స్థలసంబంధిత మాస్టర్!",
   "corsiBlocksLoseTitle": "స్థలంలో తప్పిపోయారు",
   "corsiBlocksMessage": "మీరు {score} వరుస క్రమాలను గుర్తుంచుకున్నారు! మీ జ్ఞాపకశక్తి సామర్థ్యం {span} కి చేరుకుంది.",
-  "@corsiBlocksMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "span": {
-        "type": "int"
-      }
-    }
-  },
   "corsiBlocksWatch": "నమూనాను చూడండి",
   "corsiBlocksRepeat": "నమూనాను పునరావృతం చేయండి",
   "corsiBlocksExcellent": "అద్భుతం!",
@@ -441,58 +315,16 @@
   "digitSpanReverseWinMessage": "మీ జ్ఞాపకశక్తి ఆకట్టుకుంటుంది!",
   "digitSpanReverseLoseTitle": "మళ్ళీ ప్రయత్నించండి",
   "digitSpanReverseLoseMessage": "సరైన రివర్స్ క్రమం {sequence}.",
-  "@digitSpanReverseLoseMessage": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
   "dividedAttentionTitle": "డివైడెడ్ అటెన్షన్",
   "dividedAttentionSubtitle": "స్టార్ ⭐ కోసం ఎడమవైపు నొక్కండి | ఎరుపు 🔴 కోసం కుడివైపు నొక్కండి",
   "dividedAttentionGameOverTitle": "ఏకాగ్రత దెబ్బతింది",
   "dividedAttentionGameOverMessage": "మల్టీటాస్కింగ్ కష్టం! మీ స్కోరు {score}.",
-  "@dividedAttentionGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "dividedAttentionScore": "స్కోరు: {score}",
-  "@dividedAttentionScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackTitle": "డబుల్ N-బ్యాక్",
   "doubleNBackSubtitle": "{n} అడుగుల వెనుక ఉన్న ఉద్దీపనలతో సరిపోల్చండి",
-  "@doubleNBackSubtitle": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackGameOverTitle": "ఆట ముగిసింది",
   "doubleNBackGameOverMessage": "మీరు డబుల్ N-బ్యాక్‌లో {score} పాయింట్లు సాధించారు!",
-  "@doubleNBackGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackScore": "స్కోరు: {score}",
-  "@doubleNBackScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackPositionMatch": "స్థానం మ్యాచ్",
   "doubleNBackLetterMatch": "అక్షరం మ్యాచ్",
   "faceNameAssociationTitle": "ముఖం-పేరు",
@@ -502,27 +334,10 @@
   "faceNameAssociationGameOver": "ఆట ముగిసింది",
   "faceNameAssociationWinMessage": "ముఖాలను మరియు పేర్లను గుర్తుంచుకోవడంలో మీకు గొప్ప జ్ఞాపకశక్తి ఉంది!",
   "faceNameAssociationLoseMessage": "మీరు {total} కి {correct} సరైనవి సాధించారు.",
-  "@faceNameAssociationLoseMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceNameAssociationStartTest": "పరీక్ష ప్రారంభించండి",
   "flankerTestWinTitle": "లేజర్ ఫోకస్!",
   "flankerTestLoseTitle": "ఏకాగ్రత తప్పింది",
   "flankerTestScoreMessage": "మీరు {score} సరైనవి సాధించారు!",
-  "@flankerTestScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "flankerTestTitle": "ఫ్లాంకర్ టెస్ట్",
   "flankerTestSubtitle": "పక్కన ఉన్న బాణాలను విస్మరించి, మధ్యలో ఉన్న బాణం దిశను సూచించండి.",
   "flankerTestLeft": "ఎడమ",
@@ -531,13 +346,6 @@
   "fractionMatchSubtitle": "చిత్రాన్ని దాని భిన్నంతో సరిపోల్చండి",
   "fractionMatchLoseTitle": "భిన్నం సరిపోలలేదు",
   "fractionMatchLoseMessage": "సరైన సమాధానం {correctAnswer}.",
-  "@fractionMatchLoseMessage": {
-    "placeholders": {
-      "correctAnswer": {
-        "type": "String"
-      }
-    }
-  },
   "goNoGoTitle": "గో / నో-గో",
   "goNoGoSubtitle": "ఆకుపచ్చ కోసం నొక్కండి, ఎరుపును విస్మరించండి!",
   "goNoGoLoseTitle": "ప్రతిచర్య ఆగిపోయింది",
@@ -549,13 +357,6 @@
   "groceryListWinTitle": "గ్రోసరీ గురు!",
   "groceryListLoseTitle": "ఏదైనా మర్చిపోయారా?",
   "groceryListScoreMessage": "మీరు సరుకుల జాబితాలో {score} పాయింట్లు సాధించారు!",
-  "@groceryListScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "groceryListReady": "నేను సిద్ధం",
   "groceryListWhereBelong": "ఇది ఎక్కడ ఉండాలి?",
   "hueSortTitle": "హ్యూ సార్ట్",
@@ -563,44 +364,16 @@
   "hueSortWinTitle": "ఖచ్చితమైన గ్రేడియంట్!",
   "hueSortWinMessage": "మీరు రంగులను ఖచ్చితంగా క్రమబద్ధీకరించారు!",
   "hueSortWrongTiles": "తప్పు స్థానంలో ఉన్న టైల్స్: {count}",
-  "@hueSortWrongTiles": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "kenkenTitle": "కెన్‌కెన్",
   "kenkenWinTitle": "మేధావి!",
   "kenkenLoseTitle": "ఆట ముగిసింది",
   "kenkenWinMessage": "మీరు కెన్‌కెన్ పజిల్‌ను పరిష్కరించారు!",
   "kenkenLoseMessage": "అడ్డు/నిలువు వరుస మరియు కేజ్ నియమాలను తనిఖీ చేయండి.",
   "kenkenSubtitle": "అడ్డు/నిలువు వరుసలలో పునరావృతం కాకుండా 1-{size} నింపండి",
-  "@kenkenSubtitle": {
-    "placeholders": {
-      "size": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationTitle": "లెటర్ క్యాన్సిల్",
   "letterCancellationTitleFull": "లెటర్ క్యాన్సిలేషన్",
   "letterCancellationScoreMessage": "మీరు {score} అక్షరాలను కనుగొన్నారు!",
-  "@letterCancellationScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationSubtitle": "\"{target}\" అక్షరాలన్నీ కనుగొనండి",
-  "@letterCancellationSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "String"
-      }
-    }
-  },
   "letterCancellationFound": "కనుగొన్నారు",
   "letterCancellationTime": "సమయం",
   "lightsOutTitle": "లైట్స్ అవుట్",
@@ -615,6 +388,7 @@
   "visualStatisticalLearningTitle": "విజువల్ స్టాటిస్టికల్ లెర్నింగ్",
   "orbitTapTitle": "ఆర్బిట్ ట్యాప్",
   "orbitTapSubtitle": "బంతులు గేటుతో సమలేఖనం అయినప్పుడు నొక్కండి",
+  "orbitTapTapToHit": "బంతి గేట్లోకి ప్రవేశించినప్పుడు నొక్కండి",
   "schulteTableTitle": "షుల్టే టేబుల్",
   "multipleObjectTrackingTitle": "ఆబ్జెక్ట్ ట్రాకర్",
   "multipleObjectTrackingSubtitle": "హైలైట్ చేసిన వస్తువులను చూడండి. అవి కదులుతున్నప్పుడు వాటిని ట్రాక్ చేయండి, ఆపై వాటిని ఎంచుకోండి.",
@@ -639,13 +413,6 @@
   "sternbergTaskMemorize": "అక్షరాలను గుర్తుంచుకోండి",
   "sternbergTaskWasLetterSet": "ఈ అక్షరం సెట్‌లో ఉందా?",
   "sternbergTaskScore": "మీరు స్టెర్న్‌బర్గ్ టాస్క్‌లో {score} పాయింట్లు సాధించారు!",
-  "@sternbergTaskScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "verbalAnalogiesTitle": "శాబ్దిక పోలికలు",
   "verbalAnalogiesSubtitle": "సంబంధాన్ని పూర్తి చేయండి",
   "typingSpeedTitle": "టైపింగ్ వేగం",
@@ -671,13 +438,6 @@
   "pixelMimicTitle": "పిక్సెల్ మిమిక్",
   "targetNumberTitle": "టార్గెట్ 24",
   "targetNumberSubtitle": "{target} కి చేరుకోవడానికి మొత్తం 4 సంఖ్యలను ఉపయోగించండి",
-  "@targetNumberSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "mirrorTracingTitle": "మిర్రర్ ట్రేసింగ్",
   "mirrorTracingSubtitle": "స్టార్‌ను ట్రేస్ చేయండి! నియంత్రణలు ప్రతిబింబించబడతాయి.",
   "wordSurgeTitle": "వర్డ్ సర్జ్",
@@ -687,13 +447,6 @@
   "perspectiveTakingChoosePerspective": "దృక్పథాన్ని ఎంచుకోండి",
   "perspectiveTakingCongrats": "స్థలసంబంధిత సంబంధాలపై మీకు మంచి అవగాహన ఉంది.",
   "perspectiveTakingSubtitle": "{targetDirName} నుండి ఏ వ్యూ కనిపిస్తుంది?",
-  "@perspectiveTakingSubtitle": {
-    "placeholders": {
-      "targetDirName": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingTitle": "పేపర్ ఫోల్డింగ్",
   "paperFoldingSubtitle": "విప్పినప్పుడు ఇది ఎలా కనిపిస్తుంది?",
   "waterSortTitle": "వాటర్ సార్టింగ్",
@@ -729,13 +482,6 @@
   "operationSpanRecallPhase": "అక్షరాలను క్రమంలో గుర్తుకు తెచ్చుకోండి",
   "operationSpanRoundComplete": "రౌండ్ పూర్తయింది!",
   "operationSpanScore": "మీరు ఆపరేషన్ స్పాన్‌లో {score} పాయింట్లు సాధించారు!",
-  "@operationSpanScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "slidePuzzleTitle": "స్లైడ్ పజిల్",
   "slidePuzzleNewGame": "కొత్త ఆట",
   "slidePuzzleInstructions": "టైల్స్‌ను ఖాళీ ప్రదేశంలోకి జరుపుతూ సంఖ్యా క్రమంలో అమర్చండి.",
@@ -747,18 +493,63 @@
   "trailMakingSubtitle": "సంఖ్యలను క్రమంలో (1 -> 2 -> 3...) వీలైనంత వేగంగా అనుసంధానించండి.",
   "matrixReasoningTitle": "మ్యాట్రిక్స్ రీజనింగ్",
   "matrixReasoningSubtitle": "3x3 గ్రిడ్‌లో నమూనాను పూర్తి చేయండి",
+  "abcdTitle": "Four Letters",
+  "abcdSubtitle": "Place A, B, C, or D to match the edge counts.",
+  "abcdFilled": "Cells",
+  "abcdDepth": "Depth",
+  "abcdWinTitle": "EVERY CELL LETTERED!",
+  "abcdWinMessage": "Every count met, no two identical letters touching.",
+  "boatsTitle": "Boats",
+  "boatsSubtitle": "Place the fleet to match the row and column counts.",
+  "boatsShipsFound": "Boat cells",
+  "boatsDepth": "Depth",
+  "boatsWinTitle": "FLEET FOUND!",
+  "boatsWinMessage": "Every boat placed and nothing touching.",
+  "seismicTitle": "Ripple Effect",
+  "seismicSubtitle": "Fill regions 1..N; equal digits keep N cells apart.",
+  "seismicClues": "Clues",
+  "seismicDepth": "Depth",
+  "seismicWinTitle": "RIPPLE SETTLED!",
+  "seismicWinMessage": "Every shape holds 1 to its size, with no two numbers too close.",
+  "mathraxTitle": "Mathrax",
+  "mathraxSubtitle": "Fill a Latin square obeying every corner rule.",
+  "mathraxFilled": "Filled",
+  "mathraxDepth": "Depth",
+  "mathraxWinTitle": "EVERY CORNER AGREES!",
+  "mathraxWinMessage": "A Latin square that satisfies every corner clue.",
+  "saladTitle": "Salad",
+  "saladSubtitle": "Place each letter once per line; edges show first seen.",
+  "saladWritten": "Written",
+  "saladWinTitle": "EVERY LINE AGREES!",
+  "saladWinMessage": "Every letter once in every line, and every border clue reads true.",
+  "romeTitle": "Rome",
+  "romeSubtitle": "Point arrows so every path reaches a goal.",
+  "romeWritten": "Arrows",
+  "romeWinTitle": "EVERY CHAIN ARRIVES!",
+  "romeWinMessage": "One arrow per cell, no repeats in an area, and every chain ends at a goal.",
+  "ascentTitle": "Number Path",
+  "ascentSubtitle": "Place 1 to N so consecutive numbers touch.",
+  "ascentNext": "Next",
+  "ascentDepth": "Depth",
+  "ascentWinTitle": "PATH COMPLETE!",
+  "ascentWinMessage": "One number per cell, every step touching the one before it.",
+  "clustersTitle": "Clusters",
+  "clustersSubtitle": "Two colours: dots touch one mate, others touch two.",
+  "clustersDots": "Dots",
+  "clustersDepth": "Depth",
+  "clustersWinTitle": "CLUSTERS SETTLED!",
+  "clustersWinMessage": "Two colours, every dot true, every cluster of two or more.",
+  "bricksTitle": "Bricks",
+  "bricksSubtitle": "Shade supported cells with no three in a row.",
+  "bricksShaded": "Shaded",
+  "bricksDepth": "Depth",
+  "bricksWinTitle": "THE PILE HOLDS!",
+  "bricksWinMessage": "Every shaded cell is held up, no run of three, and every number reads true.",
   "tentsAndTreesTitle": "టెంట్లు & చెట్లు",
   "tentsAndTreesSubtitle": "చెట్ల పక్కన టెంట్లను ఉంచండి. సంఖ్యలు ప్రతి అడ్డు/నిలువు వరుసలో ఎన్ని టెంట్లు ఉన్నాయో సూచిస్తాయి. టెంట్లు ఒకదానికొకటి తాకకూడదు.",
   "quickMathTitle": "క్విక్ మ్యాథ్",
   "magicSquaresTitle": "మ్యాజిక్ స్క్వేర్",
   "magicSquaresSubtitle": "ప్రతి అడ్డు వరుస, నిలువు వరుస మరియు కర్ణం మొత్తం {targetSum} ఉండాలి",
-  "@magicSquaresSubtitle": {
-    "placeholders": {
-      "targetSum": {
-        "type": "int"
-      }
-    }
-  },
   "objectShuffleTitle": "ఆబ్జెక్ట్ షఫుల్",
   "pipesTitle": "పైప్స్",
   "pipesSubtitle": "సరిపోలే రంగు చుక్కలను పైపులతో అనుసంధానించండి.",
@@ -840,13 +631,6 @@
   "blockCount3DNotQuite": "సరైనది కాదు! మళ్ళీ లెక్కించడానికి తిప్పండి.",
   "blockCount3DExcellent": "అద్భుతం",
   "blockCount3DWinMessage": "మీరు అన్ని {count} బ్లాకులను సరిగ్గా గుర్తించారు!",
-  "@blockCount3DWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "blockCount3DHowToPlayDescription": "1. బ్లాక్ స్టాక్ తిప్పడానికి 3D వ్యూపోర్ట్ పై మీ వేలిని డ్రాగ్ చేయండి.\n\n2. స్టాక్ లో ఉన్న అన్ని బ్లాకులను లెక్కించండి.\n\n3. గుర్తుంచుకోండి: గాలిలో ఉన్న బ్లాక్ కింద కచ్చితంగా సపోర్ట్ బ్లాకులు ఉండాలి (దాగి ఉన్న బ్లాకులు!).\n\n4. ఇన్‌పుట్ ఫీల్డ్ లో మీ సమాధానాన్ని టైప్ చేసి, తనిఖీ చేయడానికి \"ఊహను సమర్పించండి\" నొక్కండి.",
   "alphabetSudokuTitle": "ఆల్ఫాబెట్ సుడోకు",
   "alphabetSudokuSubtitle": "ప్రతి అడ్డు, నిలువు వరుస మరియు బాక్స్ లో A-I అక్షరాలు ఉండేలా గ్రిడ్ నింపండి.",
@@ -856,13 +640,6 @@
   "classicMazeSubtitle": "అన్వేషించండి & పరిష్కరించండి • ప్రతి ఆటలో ఒక కొత్త మేజ్",
   "classicMazeWinTitle": "మేజ్ క్లియర్ చేయబడింది",
   "classicMazeWinMessage": "అద్భుతమైన నావిగేషన్! మీరు {count} ఎత్తుగడలలో మేజ్ పరిష్కరించారు.",
-  "@classicMazeWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "classicMazeMoves": "ఎత్తుగడలు: ",
   "classicMazeHowToPlayDescription": "1. పసుపు రంగు మార్బుల్ ను (ప్లేయర్) కుడి వైపు కింద ఉన్న గ్రీన్ పోర్టల్ (ఎగ్జిట్) కి చేర్చండి.\n\n2. కదలడానికి మేజ్ పై స్వైప్ చేయండి, కీబోర్డ్ బాణం గుర్తులు లేదా కింద ఉన్న బటన్లను ఉపయోగించండి.\n\n3. ఊదా రంగు దారి మీరు అన్వేషించిన మార్గాన్ని చూపుతుంది. మార్గంపై వెనక్కి వెళ్తే అది చెరిగిపోతుంది!\n\n4. పెద్ద మేజ్ లతో మిమ్మల్ని మీరు సవాలు చేసుకోవడానికి పైన ఉన్న కష్టతర స్థాయిలను మార్చుకోండి!",
   "conjunctionSearchTitle": "కంజంక్షన్ సెర్చ్",
@@ -877,6 +654,9 @@
   "shapeSquare": "చతురస్రం",
   "shapeTriangle": "త్రిభుజం",
   "shapeStar": "నక్షత్రం",
+  "shapeRectangle": "దీర్ఘచతురస్రం",
+  "shapeEllipse": "దీర్ఘవృత్తం",
+  "shapeTrapezoid": "ట్రాపెజాయిడ్",
   "colorRedLabel": "ఎరుపు",
   "colorBlueLabel": "నీలం",
   "colorGreenLabel": "ఆకుపచ్చ",
@@ -893,31 +673,11 @@
   "cubeNetFoldFailed": "విఫలమైంది (రీసెట్ నొక్కండి)",
   "faceTraitAssociationMemorize": "నలుగురినీ గుర్తుంచుకోండి",
   "faceTraitAssociationPersonOf": "{total} లో {current} వ్యక్తి",
-  "@faceTraitAssociationPersonOf": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceTraitAssociationWhatOccupation": "వారి వృత్తి ఏమిటి?",
   "faceTraitAssociationWhatHobby": "వారి అభిరుచి ఏమిటి?",
   "faceTraitAssociationWinTitle": "మెమరీ మాస్టర్!",
   "faceTraitAssociationLoseTitle": "ఆట ముగిసింది",
   "faceTraitAssociationScoreMessage": "మీరు {total} కి {correct} సరైనవి సాధించారు.",
-  "@faceTraitAssociationScoreMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "topologyTitle": "టొపాలజీ",
   "topologySubtitle": "ఈ ఆకారాలు టొపాలజికల్ గా సమానమా? (ఒక దానిని కోయకుండా లేదా అతికించకుండా మరొక ఆకారంలోకి మార్చవచ్చా?)",
   "topologyWinTitle": "జ్యామితి మేధావి!",
@@ -975,828 +735,157 @@
   "oneLetterShiftTitle": "వన్-లెటర్ షిఫ్ట్",
   "oneLetterShiftSubtitle": "ఒక అక్షరం మార్పుతో ఒక పదాన్ని మరొక పదంగా మార్చండి",
   "vocabularyBuilderMessage": "చాలా బాగుంది! మీ పదజాలం ఆకట్టుకునేలా ఉంది. స్కోరు: {arg0}",
-  "@vocabularyBuilderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "symmetryMessage": "మీరు నమూనాను అత్యంత ఖచ్చితత్వంతో ప్రతిబింబించారు.",
   "temporalOrderMessage": "అద్భుతం! మీ టెంపోరల్ సీక్వెన్స్ మెమరీ అసాధారణంగా ఉంది.",
   "temporalOrderMessage1": "తప్పు సీక్వెన్స్ మెమరీ. సాధన చేస్తే అంతా సాధ్యమే!",
   "wordSearchMessage": "సూక్ష్మ పరిశీలనతో అన్ని పదాలు విజయవంతంగా కనుగొనబడ్డాయి.",
   "colorMatchMessage": "మీ ఖచ్చితత్వం: {arg0}%",
-  "@colorMatchMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "semanticLinkMessage": "మీరు {arg0} పాయింట్లు సాధించారు!",
-  "@semanticLinkMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "reflexTapMessage": "మీరు {arg0} టార్గెట్‌లను ట్యాప్ చేశారు!",
-  "@reflexTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderMessage": "మీ రేఖాగణిత అంతర్ దృష్టి సంపూర్ణంగా ఉంది!",
   "angleFinderMessage1": "సరైన సమాధానం {arg0}°",
-  "@angleFinderMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderText": "{arg0}°",
-  "@angleFinderText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "visualStatisticalLearningMessage": "మీరు {arg0} సరైన నమూనాలను సాధించారు!",
-  "@visualStatisticalLearningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nonogramText": "లోపం: {arg0}",
-  "@nonogramText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalCalendarMessage": "మీరు 10కి {arg0} సరైనవి సాధించారు!",
-  "@mentalCalendarMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "orbitTapMessage": "మీరు విజయవంతంగా {arg0} సార్లు ట్యాప్ చేశారు!",
-  "@orbitTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableMessage": "మీరు {arg0}లో పట్టికను పూర్తి చేశారు.\nమీ పెరిఫెరల్ విజన్‌ను పెంచుకోవడానికి సాధన చేస్తూ ఉండండి!",
-  "@schulteTableMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableText": "పరీక్షను ప్రారంభించండి",
   "relationalMemoryMessage": "అద్భుతమైన స్పేషియల్ రిలేషనల్ మెమరీ ఖచ్చితత్వం!",
   "sudokuText": "లోపం: {arg0}",
-  "@sudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sdmtMessage": "మీరు {arg0} చిహ్నాలను జత చేశారు! ఈ పరీక్ష మీ స్కానింగ్ వేగం మరియు విజువల్ అటెన్షన్‌ను కొలుస్తుంది.",
-  "@sdmtMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "futoshikiMessage": "అద్భుతం! మీరు ఫుతోషికి లాటిన్ స్క్వేర్‌ను పరిష్కరించారు.",
+  "futoshikiWinTitle": "SQUARE SOLVED!",
+  "futoshikiGivens": "Givens",
+  "futoshikiEdges": "Edges",
   "letterFrequencyScanMessage": "మీరు \"{arg1}\" యొక్క {arg0} ఉనికిని సరిగ్గా లెక్కించారు.",
-  "@letterFrequencyScanMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "letterFrequencyScanText": "తప్పు. లెక్కింపు {arg0}.",
-  "@letterFrequencyScanText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "memoryMatrixMessage": "ఆకట్టుకునేలా ఉంది! మీ వర్కింగ్ మెమరీ షార్ప్‌గా ఉంది. రోజువారీ లక్ష్యం పూర్తయింది!",
   "memoryMatrixMessage1": "ఏకాగ్రత వహించండి మరియు మీ మెమరీ స్కోర్‌ను మెరుగుపరచుకోవడానికి మళ్ళీ ప్రయత్నించండి.",
   "contextCluesMessage": "అసాధారణం! మీ పదజాలం మరియు సందర్భోచిత విశ్లేషణ అద్భుతంగా ఉన్నాయి.",
   "contextCluesMessage1": "తప్పు పదం ఎంచుకోబడింది! మీ వెర్బల్ కాంటెక్స్ట్ రీజనింగ్‌ను మెరుగుపరుచుకోండి మరియు మళ్ళీ ప్రయత్నించండి.",
   "oneLetterShiftMessage": "మీరు {arg0}ని {arg1}కి సరిగ్గా మార్చారు.",
-  "@oneLetterShiftMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "mentalAbacusMessage": "మీ మెంటల్ అరిథ్మెటిక్ అత్యుత్తమ స్థాయిలో ఉంది.",
   "fractionMatcherMessage": "రిప్రజెంటేషన్‌లను జత చేయడం ద్వారా మీరు {arg0} పాయింట్లు సాధించారు!",
-  "@fractionMatcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spellingSprintMessage": "మీరు మొత్తం 10 పదాలను సరిగ్గా స్పెల్లింగ్ చేశారు!",
   "spellingSprintMessage1": "మీరు {arg0} పదాలను స్పెల్లింగ్ చేశారు.",
-  "@spellingSprintMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "stopSignalMessage": "మీరు {arg0} సరైన ప్రతిస్పందనలను సాధించారు! ఈ పరీక్ష ఒక ప్రణాళికాబద్ధమైన చర్యను అడ్డుకునే మీ సామర్థ్యాన్ని కొలుస్తుంది.",
-  "@stopSignalMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarPoliceMessage": "ఆట ముగిసింది! వ్యాకరణ ప్రపంచంలో మీరు క్రమశిక్షణను కాపాడారు. స్కోరు: {arg0}",
-  "@grammarPoliceMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "consonantReconstructMessage": "మీరు {arg0} స్కోరును పునర్నిర్మించారు!",
-  "@consonantReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhymeMasterMessage": "మీరు {arg1}కి {arg0} ప్రాసలను కనుగొన్నారు!",
-  "@rhymeMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "vigilanceTaskMessage": "హిట్‌లు: {arg0}, మిస్సులు: {arg1}\nతప్పుడు అలారాలు: {arg2}",
-  "@vigilanceTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "silhouetteMatchOrthoMessage": "మీకు అద్భుతమైన ఆర్థోగ్రాఫిక్ అలైన్‌మెంట్ నైపుణ్యాలు ఉన్నాయి!",
   "silhouetteMatchOrthoText": "అర్థమైంది",
   "silhouetteMatchOrthoText1": "తప్పు పర్స్పెక్టివ్ ప్రొజెక్షన్! మళ్ళీ ప్రయత్నించడానికి రీసెట్ (Reset) ట్యాప్ చేయండి.",
   "fibonacciMergeMessage": "{arg0}: {arg1}",
-  "@fibonacciMergeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "factorFinderMessage": "అన్ని కారణాంకాలను కనుగొనడం ద్వారా మీరు {arg0} పాయింట్లు సాధించారు!",
-  "@factorFinderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "logicalSyllogismsMessage": "మీరు {arg0} సిలోజిజంలను సరిగ్గా పరిష్కరించారు!",
-  "@logicalSyllogismsMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rotatingMazeMessage": "మీరు కైనెటిక్ రొటేటింగ్ మేజ్‌ను విజయవంతంగా దాటారు!",
   "rotatingMazeText": "అర్థమైంది",
   "rotatingMazeText1": "🌀 మేజ్ 90° తిరిగింది! గ్రిడ్ మారింది!",
   "mathPathMessage": "మీరు లక్ష్యానికి చేర్చే మార్గాన్ని కనుగొన్నారు!",
   "bridgesMessage": "మీరు అన్ని ద్వీపాలను విజయవంతంగా కలిపారు!",
   "compoundConnectMessage": "ఆ సంయుక్త పదం {arg0}{arg1}.",
-  "@compoundConnectMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "pangramSprintMessage": "మీరు మొత్తం 26 అక్షరాలను ఉపయోగించి ఒక వాక్యాన్ని రూపొందించారు.",
   "mirrorImageMessage": "మీరు ప్రతిబింబాన్ని సరిగ్గా గుర్తించారు.",
   "mirrorImageText": "అద్దం ప్రతిబింబం",
   "reverseStroopMessage": "మీరు {arg0} పాయింట్లు సాధించారు! సూచనలను గమనిస్తూ ఉండండి.",
-  "@reverseStroopMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "verbalAnalogiesMessage": "సంబంధాలను గుర్తించడంలో మీకు చురుకైన మేధస్సు ఉంది.",
   "corsiBlocksMessage1": "మీరు {arg1} క్రమాలను గుర్తుంచుకున్నారు! మీ స్పేషియల్ మెమరీ స్పాన్ {arg0} కి చేరుకుంది.",
-  "@corsiBlocksMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "wordLadderMessage": "మీరు {arg0} నుండి {arg1} కి {arg2} అడుగులలో విజయవంతంగా కలిపారు.",
-  "@wordLadderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionMessage": "అద్భుతమైన సెలెక్టివ్ స్కానింగ్! తుది స్కోరు: {arg0}.",
-  "@d2AttentionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionText": "ఎలా ఆడాలి",
   "d2AttentionText1": "అర్థమైంది",
   "tangleFixMessage": "అన్ని గీతలు స్పష్టంగా మరియు సాఫీగా ఉన్నాయి.",
   "distractorMatrixMessage": "అద్భుతం! గణిత పరమైన ఆటంకాలు ఉన్నప్పటికీ మీరు నమూనాలను గుర్తుంచుకున్నారు!",
   "distractorMatrixMessage1": "ఆటంకాల వల్ల మీరు విఫలమయ్యారు! మీ వర్కింగ్ మెమరీకి మళ్ళీ శిక్షణ ఇవ్వండి.",
   "sentenceUnscrambleMessage": "మీరు {arg0} స్కోరుతో వాక్యాన్ని సరిచేశారు!",
-  "@sentenceUnscrambleMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "kakuroMessage": "అద్భుతం! మీరు అన్ని సమ్ సెగ్మెంట్లను సరిగ్గా జత చేశారు.",
   "symbolicFlankerMessage": "మీరు {arg1} కి గాను {arg0} సరిగ్గా పూర్తి చేశారు!",
-  "@symbolicFlankerMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "stroopTestMessage": "మీరు {arg0} సరిగ్గా సాధించారు! పదం మీద కాకుండా, రంగు మీద దృష్టి పెట్టండి.",
-  "@stroopTestMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wisconsinCardSortingMessage": "మీరు {arg0} కార్డులను సరిగ్గా వర్గీకరించారు!",
-  "@wisconsinCardSortingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nBackMessage": "మీరు {arg0} 2-back మ్యాచులను సాధించారు! మల్టీటాస్కింగ్ కోసం మీ వర్కింగ్ మెమరీ చాలా ముఖ్యం.",
-  "@nBackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhythmMasterMessage": "మీరు {arg0} ఖచ్చితమైన హిట్స్ మరియు {arg1} పాయింట్లు సాధించారు!",
-  "@rhythmMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListMessage": "మీరు గ్రోసరీ లిస్ట్‌లో {arg0} పాయింట్లు సాధించారు!",
-  "@groceryListMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListText": "నేను\\",
   "mirrorTracingMessage": "మీ మెదడు దాని సమన్వయాన్ని విజయవంతంగా పునర్నిర్మించుకుంది.",
   "moduloClockMessage": "అద్భుతమైన మోడ్యులర్ మెంటల్ మ్యాథ్ సమన్వయం! స్కోరు: {arg0}",
-  "@moduloClockMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "moduloClockMessage1": "మీరు {arg1} మోడ్యులర్ క్లాక్ పరిష్కారాలలో {arg0} సాధించారు. స్కోరు: {arg2}",
-  "@moduloClockMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "crownMessage": "సరైన లాజిక్‌తో అన్ని కిరీటాలను విజయవంతంగా అమర్చారు.",
   "dualCodingMessage": "అద్భుతమైన డ్యూయల్-టాస్క్ ప్రదర్శన! మీ వర్కింగ్ మెమరీ స్కోరు: {arg0}",
-  "@dualCodingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "inequalityDashMessage": "అసమానతలను జత చేయడంలో మీరు {arg0} పాయింట్లు సాధించారు!",
-  "@inequalityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringMessage": "మీరు {arg1} కి గాను {arg0} సాధించారు!",
-  "@sourceMonitoringMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringText": "గుర్తు తెచ్చుకోవడం ప్రారంభించండి",
   "memoryPalaceText": "అందుబాటులో ఉన్న పదాలు",
   "target10Message": "సంఖ్యలను 10 కి జత చేయడంలో మీరు {arg0} పాయింట్లు సాధించారు!",
-  "@target10Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingMessage": "మీరు మీ మనస్సులో నమూనాలను చూడగలరు.",
   "topologyText": "{arg0}{arg1} / 10",
-  "@topologyText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "waterSortMessage": "మీరు అన్ని రంగులను సరిగ్గా వర్గీకరించారు!",
   "anagramDefinitionMessage": "ఆ పదం నిజంగా \"{arg0}\".",
-  "@anagramDefinitionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message": "{arg0}: {arg1}\n{arg2}",
-  "@game2048Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message1": "{arg0}: {arg1}",
-  "@game2048Message1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "numericalEstimationMessage": "మీరు {arg0} సరైన అంచనాలు వేశారు.",
-  "@numericalEstimationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarSortMessage": "మీరు {arg0} పదాలను సరిగ్గా వర్గీకరించారు!",
-  "@grammarSortMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vowelReconstructMessage": "మీరు {arg0} స్కోరుతో పునర్నిర్మించారు!",
-  "@vowelReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictMessage": "మీరు {arg1} తప్పులతో {arg0} స్కోరు సాధించారు!",
-  "@spatialConflictMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictText": "ఎలా ఆడాలి",
   "spatialConflictText1": "అర్థమైంది",
   "tracePathMessage": "మీ ఖచ్చితత్వం {arg0}%!",
-  "@tracePathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "ruleSwitcherMessage": "మీరు {arg1} కి గాను {arg0} సరిగ్గా సాధించారు!",
-  "@ruleSwitcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzMessage": "మీరు {arg0} అడుగులు తీసుకున్నారు. సాధ్యమైన కనిష్ట అడుగులు {arg1}.",
-  "@collatzMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzText": "/ 2",
   "collatzText1": "+ 1",
   "collatzText2": "3n + 1",
   "divisibilityDashMessage": "మీరు {arg0} సంఖ్యలను పరిష్కరించారు!",
-  "@divisibilityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "switchTaskMessage": "మీరు {arg0} సరిగ్గా సాధించారు! వేగంగా మారడం మానసిక సౌలభ్యానికి కీలకం.",
-  "@switchTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sequenceSleuthMessage": "మీరు {arg0} క్రమాలను పరిష్కరించారు!",
-  "@sequenceSleuthMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "changeBlindnessMessage": "మీరు {arg0} మార్పులను కనుగొన్నారు!",
-  "@changeBlindnessMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalRotationMessage": "మీరు {arg0} ఆకారాలను సరిగ్గా తిప్పారు!",
-  "@mentalRotationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage": "మీరు కోడ్‌ను ఛేదించారు!\nఆ పదం: {arg0}",
-  "@wordMastermindMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage1": "దాగి ఉన్న పదం: {arg0}",
-  "@wordMastermindMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindText": "{arg0}",
-  "@wordMastermindText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonSequenceMessage": "మీరు మొత్తం 10 టైల్స్ గుర్తుంచుకున్నారు!",
   "simonSequenceMessage1": "ఆ క్రమాన్ని నేర్చుకోవడానికి మళ్ళీ ప్రయత్నించండి.",
   "oxymoronHuntMessage": "మీరు {arg0} ఆక్సిమోరాన్‌లను కనుగొన్నారు!",
-  "@oxymoronHuntMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackMessage": "అద్భుతమైన స్పేషియల్ ట్రాకింగ్! మీరు {arg0} పాయింట్లు సాధించారు.",
-  "@spotlightTrackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackText": "ఎలా ఆడాలి",
   "spotlightTrackText1": "అర్థమైంది",
   "spotlightTrackText2": "రౌండ్ ప్రారంభించండి",
   "vennNumbersMessage": "మీరు {arg0} సంఖ్యలను వర్గీకరించారు!",
-  "@vennNumbersMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vennNumbersText": "రెండూ కాదు",
   "vennNumbersText1": "రెండూ",
   "silhouetteMatchMessage": "మీ మెదడు 3D నుండి 2D కి మార్చడంలో అద్భుతంగా పనిచేస్తుంది.",
   "sumSnakeMessage": "సంపూర్ణ ఖచ్చితత్వంతో లక్ష్యం {arg0} చేరుకున్నారు!",
-  "@sumSnakeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumSnakeText": "మార్గాన్ని శుభ్రం చేయండి",
   "percentagePeakMessage": "మీరు {arg0} శాతానికి సంబంధించిన సమస్యలను పరిష్కరించారు!",
-  "@percentagePeakMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "trailMakingMessage": "మీరు {arg0} ట్రయల్స్ పూర్తి చేశారు! ఈ పరీక్ష మీ విజువల్ సెర్చ్ స్పీడ్ మరియు మానసిక సౌలభ్యాన్ని కొలుస్తుంది.",
-  "@trailMakingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "matrixReasoningMessage": "మీరు {arg0} మ్యాట్రిక్స్‌లను సరిగ్గా పూర్తి చేశారు!",
-  "@matrixReasoningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "tentsAndTreesMessage": "మీరు అన్ని టెంట్లను విజయవంతంగా అమర్చారు.",
+  "tentsAndTreesWinTitle": "CAMP READY!",
+  "tentsAndTreesTents": "Tents",
+  "tentsAndTreesDepth": "Depth",
   "klotskiMessage": "అద్భుతమైన స్లైడింగ్! మీరు హీరో బ్లాక్‌ను {arg0} కదలికలలో విడిపించారు.",
-  "@klotskiMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumPyramidMessage": "మీరు {arg0} సమ్ పిరమిడ్లను విజయవంతంగా పరిష్కరించారు!",
-  "@sumPyramidMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage": "అద్భుతమైన సెలెక్టివ్ రెస్పాన్స్ మరియు ఫోకస్! మొత్తం స్కోరు: {arg0}",
-  "@simonCommandMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage1": "మీరు {arg0} సాధించారు, కానీ సమయానికి {arg1} మ్యాచులను చేరుకోలేదు.",
-  "@simonCommandMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "syllableStackMessage": "మీరు {arg0} స్కోరును పేర్చారు!",
-  "@syllableStackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "slitherlinkMessage": "అద్భుతం! మీరు లూప్ పజిల్ విజయవంతంగా పూర్తి చేశారు.",
   "quickMathMessage": "మీరు {arg0} సమస్యలను పరిష్కరించారు!",
-  "@quickMathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "commonDenominatorMessage": "మీరు {arg0} GCD/LCM సమస్యలను పరిష్కరించారు!",
-  "@commonDenominatorMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionMessage": "మీ తుది స్కోరు {arg0}. మీరు {arg1} పదాల గొలుసును నిర్మించారు.",
-  "@chainReactionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionText": "{arg0}",
-  "@chainReactionText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "associativePairsMessage": "అద్భుతం! మీరు విజువల్ లక్షణాలను ఖచ్చితంగా జత చేశారు.",
   "associativePairsMessage1": "తప్పుడు కలయిక! మీ లింక్ మెమరీని మెరుగుపరచుకుని మళ్ళీ ప్రయత్నించండి.",
   "portmanteauSplitMessage": "మీరు {arg0} పోర్ట్‌మాంట్యూలను విడదీశారు!",
-  "@portmanteauSplitMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "magicSquaresText": "క్లియర్",
   "alphabetSudokuText": "లోపం: {arg0}",
-  "@alphabetSudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "pipesMessage": "మీరు అన్ని పైపులను కలిపి గ్రిడ్ నింపారు.",
   "dualMirrorMessage": "మీరు రెండు ఐకాన్లను వాటి లక్ష్యాలకు చేర్చారు!",
   "binaryCodeMessage": "అద్భుతమైన వేగవంతమైన డెసిమల్ అనువాదం! తుది స్కోరు: {arg0}",
-  "@binaryCodeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "binaryCodeMessage1": "మీరు {arg0} బైనరీ సంఖ్యలను సరిగ్గా మార్చారు. స్కోరు: {arg1}",
-  "@binaryCodeMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage": "మీరు 50 విభిన్నమైన వాటిని కనుగొన్నారు! తుది స్కోరు: {arg0}",
-  "@oddOneOutMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage1": "మీ స్కోరు: {arg0}",
-  "@oddOneOutMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "letterBridgeMessage": "మీరు వారధి అక్షరాన్ని కనుగొన్నారు: {arg0}",
-  "@letterBridgeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "imReady": "నేను సిద్ధంగా ఉన్నాను",
   "soptTitle": "స్వీయ-ఆర్డర్ చేసిన పాయింటింగ్",
   "soptSubtitle": "ప్రతిసారీ వేరే కార్డ్‌ని ట్యాప్ చేయండి. స్థానాలు షఫుల్!",
@@ -1926,125 +1015,6 @@
   "cabinetItemLock": "తాళం వేయండి",
   "cabinetItemPet": "పెంపుడు జంతువు",
   "cabinetItemCar": "కారు",
-  "@soptGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@contRecogGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dnmsGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@symSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@countingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@countingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@objDispGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@mandalaGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanPrepareRecall": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEnterLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanRecallLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEntered": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialCabinetGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@spatialCabinetWhereIs": {
-    "placeholders": {
-      "itemName": {
-        "type": "String"
-      }
-    }
-  },
   "gamesTitleLabel": "ఆటలు",
   "yourFavorites": "మీ ఇష్టమైనవి",
   "readyForWorkout": "మీ రోజువారీ వ్యాయామం కోసం సిద్ధంగా ఉన్నారా?",
@@ -2143,35 +1113,282 @@
   "klotskiTitle": "క్లోట్స్కీ ఎస్కేప్",
   "klotskiSubtitle": "నిష్క్రమణను చేరుకోవడానికి బ్లాక్‌లను స్లైడ్ చేయండి.",
   "homophoneHuntSubtitle": "సరైన స్పెల్లింగ్ ఉన్న హోమోఫోన్‌ను ఎంచుకోండి",
-  "compassMazeCongrats": "నిపుణుల నావిగేషన్! మారుతున్న దిశల ద్వారా మీరు నిష్క్రమణను కనుగొన్నారు.",
-  "compassMazeMessage": "దిక్సూచిని ఉపయోగించి చిట్టడవిని నావిగేట్ చేయండి.",
-  "compassMazeSubtitle": "మీ దిక్సూచి విన్యాసం ఆధారంగా కదలిక దిశలు మారే చిట్టడవిని నావిగేట్ చేయండి.",
-  "compassMazeTitle": "దిక్సూచి చిట్టడవి",
-  "complexFoldingNetsCongrats": "అధునాతన ఫోల్డింగ్ లాజిక్! మీరు 3D రూపాన్ని విజయవంతంగా ఊహించారు.",
-  "complexFoldingNetsSubtitle": "ప్రామాణికం కాని 2D నెట్‌ను మడతపెట్టడం ద్వారా ఏ సంక్లిష్టమైన 3D ఆకృతి ఏర్పడుతుందో నిర్ణయించండి.",
-  "complexFoldingNetsTitle": "ఫోల్డింగ్ నెట్స్",
-  "crossSectionSliceCongrats": "అద్భుతమైన 3D విజువలైజేషన్! మీరు ఆ ఆకారం గుండా సరిగ్గా చూశారు.",
-  "crossSectionSliceSubtitle": "నిర్దిష్ట కోణం నుండి 3D వస్తువు యొక్క సరైన 2D క్రాస్-సెక్షన్‌ను గుర్తించండి.",
-  "crossSectionSliceTitle": "క్రాస్-సెక్షన్ స్లైస్",
-  "interlockPuzzleCongrats": "లాజికల్ డికన్స్ట్రక్షన్! మీరు పజిల్‌ను ఖచ్చితంగా విప్పారు.",
-  "interlockPuzzleSubtitle": "సంక్లిష్టమైన ఇంటర్‌లాకింగ్ బ్లాక్‌లను సరైన క్రమంలో విడదీయండి లేదా సమీకరించండి.",
-  "interlockPuzzleTitle": "ఇంటర్‌లాక్ పజిల్",
-  "laserLinkCongrats": "ఖచ్చితమైన ప్రతిబింబం! మీరు మొత్తం గ్రిడ్‌ను విజయవంతంగా శక్తివంతం చేశారు.",
-  "laserLinkSubtitle": "లేజర్‌లను ప్రతిబింబించేలా అద్దాలను తిప్పండి మరియు అన్ని లక్ష్యాలను శక్తివంతం చేయండి.",
   "laserLinkTitle": "లేజర్ లింక్",
-  "negativeSpaceDetectionCongrats": "తీక్షణమైన అవగాహన! అక్కడ లేని వాటిని చూసే కళలో మీరు ప్రావీణ్యం సంపాదించారు.",
-  "negativeSpaceDetectionMessage": "అంతరాళంలో దాగి ఉన్న వస్తువును గుర్తించండి.",
-  "negativeSpaceDetectionSubtitle": "వస్తువుల మధ్య ఖాళీ స్థలం ద్వారా ఏర్పడిన ఆకారాన్ని గుర్తించండి.",
-  "negativeSpaceDetectionTitle": "నెగటివ్ స్పేస్",
-  "pathIntersectCongrats": "సింక్రొనైజ్డ్ నావిగేషన్! మీరు అన్ని లక్ష్యాలను దోషరహితంగా చేరుకున్నారు.",
-  "pathIntersectSubtitle": "ఢీకొనకుండా వాటి లక్ష్యాలను చేరుకోవడానికి ఒకేసారి బహుళ మార్గాలను నావిగేట్ చేయండి.",
-  "pathIntersectTitle": "పాత్ ఇంటర్సెక్ట్",
+  "laserLinkSubtitle": "లేజర్‌లను ప్రతిబింబించేలా అద్దాలను తిప్పండి మరియు అన్ని లక్ష్యాలను శక్తివంతం చేయండి.",
+  "laserLinkCongrats": "ఖచ్చితమైన ప్రతిబింబం! మీరు మొత్తం గ్రిడ్‌ను విజయవంతంగా శక్తివంతం చేశారు.",
+  "crossSectionSliceTitle": "క్రాస్-సెక్షన్ స్లైస్",
+  "crossSectionSliceSubtitle": "నిర్దిష్ట కోణం నుండి 3D వస్తువు యొక్క సరైన 2D క్రాస్-సెక్షన్‌ను గుర్తించండి.",
+  "crossSectionSliceCongrats": "అద్భుతమైన 3D విజువలైజేషన్! మీరు ఆ ఆకారం గుండా సరిగ్గా చూశారు.",
+  "shadowPivotTitle": "షాడో పివట్",
   "shadowPivotCongrats": "డైనమిక్ స్పేషియల్ రీజనింగ్! మీరు కాంతి మరియు నీడపై పట్టు సాధించారు.",
   "shadowPivotSubtitle": "విభిన్న అక్షాలపై తిరుగుతున్నప్పుడు 3D వస్తువు ద్వారా పడే నీడను అంచనా వేయండి.",
-  "shadowPivotTitle": "షాడో పివట్",
-  "shapeEllipse": "దీర్ఘవృత్తం",
-  "shapeRectangle": "దీర్ఘచతురస్రం",
-  "shapeTrapezoid": "ట్రాపెజాయిడ్",
+  "interlockPuzzleTitle": "ఇంటర్‌లాక్ పజిల్",
+  "interlockPuzzleSubtitle": "సంక్లిష్టమైన ఇంటర్‌లాకింగ్ బ్లాక్‌లను సరైన క్రమంలో విడదీయండి లేదా సమీకరించండి.",
+  "interlockPuzzleCongrats": "లాజికల్ డికన్స్ట్రక్షన్! మీరు పజిల్‌ను ఖచ్చితంగా విప్పారు.",
+  "pathIntersectTitle": "పాత్ ఇంటర్సెక్ట్",
+  "pathIntersectSubtitle": "ఢీకొనకుండా వాటి లక్ష్యాలను చేరుకోవడానికి ఒకేసారి బహుళ మార్గాలను నావిగేట్ చేయండి.",
+  "pathIntersectCongrats": "సింక్రొనైజ్డ్ నావిగేషన్! మీరు అన్ని లక్ష్యాలను దోషరహితంగా చేరుకున్నారు.",
+  "negativeSpaceDetectionTitle": "నెగటివ్ స్పేస్",
+  "negativeSpaceDetectionSubtitle": "వస్తువుల మధ్య ఖాళీ స్థలం ద్వారా ఏర్పడిన ఆకారాన్ని గుర్తించండి.",
+  "negativeSpaceDetectionCongrats": "తీక్షణమైన అవగాహన! అక్కడ లేని వాటిని చూసే కళలో మీరు ప్రావీణ్యం సంపాదించారు.",
+  "compassMazeTitle": "దిక్సూచి చిట్టడవి",
+  "compassMazeSubtitle": "మీ దిక్సూచి విన్యాసం ఆధారంగా కదలిక దిశలు మారే చిట్టడవిని నావిగేట్ చేయండి.",
+  "compassMazeCongrats": "నిపుణుల నావిగేషన్! మారుతున్న దిశల ద్వారా మీరు నిష్క్రమణను కనుగొన్నారు.",
+  "complexFoldingNetsTitle": "ఫోల్డింగ్ నెట్స్",
+  "complexFoldingNetsSubtitle": "ప్రామాణికం కాని 2D నెట్‌ను మడతపెట్టడం ద్వారా ఏ సంక్లిష్టమైన 3D ఆకృతి ఏర్పడుతుందో నిర్ణయించండి.",
+  "complexFoldingNetsCongrats": "అధునాతన ఫోల్డింగ్ లాజిక్! మీరు 3D రూపాన్ని విజయవంతంగా ఊహించారు.",
+  "compassMazeMessage": "దిక్సూచిని ఉపయోగించి చిట్టడవిని నావిగేట్ చేయండి.",
+  "negativeSpaceDetectionMessage": "అంతరాళంలో దాగి ఉన్న వస్తువును గుర్తించండి.",
+  "shikakuTitle": "షికాకు",
+  "shikakuSubtitle": "సంఖ్యలకు సరిపోలే చతురస్రాలు మరియు దీర్ఘచతురస్రాలుగా గ్రిడ్‌ను విభజించండి.",
+  "countdownMathTitle": "కౌంట్‌డౌన్ మఠం",
+  "countdownMathSubtitle": "మూడు అంకెల లక్ష్యాన్ని లెక్కించడానికి యాదృచ్ఛిక సంఖ్యలను కలపండి.",
+  "narrativeRecallTitle": "కథనం రీకాల్",
+  "narrativeRecallSubtitle": "ఒక కథనాన్ని చదవండి మరియు నిర్దిష్ట పరిమాణాత్మక మరియు వాస్తవ వివరాలను గుర్తుకు తెచ్చుకోండి.",
+  "shellGameTitle": "షెల్ గేమ్",
+  "shellGameSubtitle": "ఒక దాచిన బంతిని షఫుల్ చేసే కప్పుల మార్పిడి స్థలాల వలె ట్రాక్ చేయండి.",
+  "typoglycemiaDecoderTitle": "టైపోగ్లైసీమియా డీకోడర్",
+  "typoglycemiaDecoderSubtitle": "స్క్రాంబుల్ చేసి, గందరగోళ వాక్యాలను వేగంగా చదవండి.",
+  "shapeShifterTitle": "షేప్ షిఫ్టర్",
+  "shapeShifterSubtitle": "లక్ష్యం ఆకారం-రంగు కలయికను నొక్కండి.",
+  "gokigenNanameTitle": "గోకిగెన్ నామే",
+  "gokigenNanameSubtitle": "లూప్‌లు లేకుండా పాయింట్‌లను కనెక్ట్ చేయడానికి వికర్ణాలను గీయండి.",
+  "matrixMultiplierTitle": "మాతృక గుణకం",
+  "matrixMultiplierSubtitle": "లక్ష్యానికి గుణించడం కోసం అడ్డు వరుస మరియు నిలువు వరుసను ఎంచుకోండి.",
+  "wordAssociationRecallTitle": "వర్డ్ అసోసియేషన్",
+  "wordAssociationRecallSubtitle": "మెమరీ నుండి జత చేసిన పద అనుబంధాలను రీకాల్ చేయండి.",
+  "gearRotationTitle": "గేర్ రొటేషన్",
+  "gearRotationSubtitle": "చివరి గేర్ యొక్క భ్రమణ దిశను అంచనా వేయండి.",
+  "wordWheelTitle": "పద చక్రం",
+  "wordWheelSubtitle": "మధ్యలో అక్షరంతో సహా చక్రంలో అక్షరాలను ఉపయోగించి పదాలను రూపొందించండి.",
+  "oddEvenFlashTitle": "బేసి-సరి ఫ్లాష్",
+  "oddEvenFlashSubtitle": "రంగు నియమంతో సంఖ్య సమానత్వాన్ని త్వరగా సరిపోల్చండి.",
+  "norinoriTitle": "నోరినోరి",
+  "norinoriSubtitle": "ప్రతి గదిలో సరిగ్గా రెండు కనెక్ట్ చేయబడిన సెల్‌లను షేడ్ చేయండి.",
+  "algebraicBalanceTitle": "బీజగణిత సంతులనం",
+  "algebraicBalanceSubtitle": "లక్ష్య మొత్తాన్ని కనుగొనడానికి సమీకరణాలను పరిష్కరించండి.",
+  "patternSequenceDrawTitle": "నమూనా రీకాల్",
+  "patternSequenceDrawSubtitle": "గ్రిడ్‌లో యానిమేటెడ్ పాత్ క్రమాన్ని పునరావృతం చేయండి.",
+  "tangramTitle": "తంగ్రామ్ పజిల్",
+  "tangramSubtitle": "లక్ష్య సిల్హౌట్‌ను పూరించడానికి ఆకారాలను అమర్చండి.",
+  "semanticAssociationTitle": "అసోసియేషన్ పదం",
+  "semanticAssociationSubtitle": "మూడు ఆధారాలను అనుసంధానించే పదాన్ని కనుగొనండి.",
+  "peripheralFocusTitle": "పరిధీయ ఫోకస్",
+  "peripheralFocusSubtitle": "గణితాన్ని పరిష్కరించేటప్పుడు సైడ్ ప్యానెల్‌లను ఫ్లాషింగ్ చేయడానికి ప్రతిస్పందించండి.",
+  "masyuTitle": "మస్యు లూప్",
+  "masyuSubtitle": "Masyu సర్కిల్ నియమాలకు సరిపోలే ఒకే లూప్‌ను గీయండి.",
+  "mathMazeTitle": "గణితం మేజ్",
+  "mathMazeSubtitle": "లక్ష్యం మొత్తానికి మూల్యాంకనం చేసే మార్గాన్ని కనుగొనండి.",
+  "storyBuilderTitle": "స్టోరీ బిల్డర్",
+  "storyBuilderSubtitle": "కథ యొక్క కాలక్రమ క్రమాన్ని పునర్నిర్మించండి.",
+  "mirrorMazeTitle": "మిర్రర్ మేజ్",
+  "mirrorMazeSubtitle": "వికర్ణ అద్దాలను ఉపయోగించి లేజర్ పుంజాన్ని దారి మళ్లించండి.",
+  "wordGridConnectionTitle": "పద కనెక్షన్లు",
+  "wordGridConnectionSubtitle": "16 పదాలను నాలుగు విభాగాలుగా విభజించండి.",
+  "shapeShifterPeripheralTitle": "పరిధీయ ఆకారాలు",
+  "shapeShifterPeripheralSubtitle": "కేంద్ర విలువలను సరిపోల్చేటప్పుడు పరిధీయ ఆకార మార్పులను ట్రాక్ చేయండి.",
+  "soundWaveMatchTitle": "సౌండ్ వేవ్ మ్యాచ్",
+  "soundWaveMatchSubtitle": "దృశ్య తరంగ ఫ్రీక్వెన్సీ పిచ్ మార్పులతో సమలేఖనం అయినప్పుడు నొక్కండి.",
+  "multiTrackCounterTitle": "మల్టీ-ట్రాక్ కౌంటర్",
+  "multiTrackCounterSubtitle": "లక్ష్య గుణకారానికి ఏదైనా కౌంటర్ పెరిగినప్పుడు నొక్కండి.",
+  "colorWordMatchUpTitle": "రంగు మ్యాచ్-అప్",
+  "colorWordMatchUpSubtitle": "మారుతున్న నిబంధనల ఆధారంగా రెండు రంగుల పదాలు సరిపోతాయో లేదో నిర్ణయించండి.",
+  "signalAndNoiseTitle": "సిగ్నల్ & నాయిస్",
+  "signalAndNoiseSubtitle": "స్టాటిక్ నాయిస్‌లో దాగి ఉన్న లక్ష్య ఆల్ఫాన్యూమరిక్ అక్షరాలను గుర్తించండి.",
+  "focusTunnelTitle": "ఫోకస్ టన్నెల్",
+  "focusTunnelSubtitle": "కదిలే సొరంగం గోడలపై కనిపించే సరిపోలే చిహ్నాలను గుర్తించండి.",
+  "targetPursuerTitle": "టార్గెట్ వెంబడించేవాడు",
+  "targetPursuerSubtitle": "బహుళ అతివ్యాప్తి చెందుతున్న సర్కిల్‌లను ట్రాక్ చేయండి మరియు అసలు లక్ష్యాన్ని ఎంచుకోండి.",
+  "gridGazeTitle": "గ్రిడ్ చూపులు",
+  "gridGazeSubtitle": "వేరొక వ్యవధితో ఏ గ్రిడ్ సెల్ ఫ్లాష్ అయిందో గుర్తించండి.",
+  "doubleTroubleTitle": "డబుల్ ట్రబుల్",
+  "doubleTroubleSubtitle": "స్ప్లిట్ స్క్రీన్‌పై ఏకకాలంలో రెండు వేర్వేరు సాధారణ గేమ్‌లను ఆడండి.",
+  "syncRhythmTitle": "సమకాలీకరణ రిథమ్",
+  "syncRhythmSubtitle": "విజువల్ మెట్రోనొమ్ స్వీప్ సింకోపేటెడ్ బీట్‌తో సరిపోలినప్పుడు నొక్కండి.",
+  "ghostTapTitle": "ఘోస్ట్ ట్యాప్",
+  "ghostTapSubtitle": "అదృశ్య పల్స్ గరిష్ట ఎత్తుకు చేరుకున్నప్పుడు నొక్కండి.",
+  "attentionalRsvpTitle": "శ్రద్ధగల RSVP",
+  "attentionalRsvpSubtitle": "రాపిడ్ సీరియల్ లెటర్ ఫ్లాష్‌లో కనిపించే అంకెలను గుర్తించండి.",
+  "colorMazeNavTitle": "రంగు మేజ్ నవ్",
+  "colorMazeNavSubtitle": "డైనమిక్ అనుమతి రంగులతో సరిపోలే మేజ్ టైల్స్‌ను నావిగేట్ చేయండి.",
+  "dynamicSalienceTitle": "డైనమిక్ సాలియెన్స్",
+  "dynamicSalienceSubtitle": "కొద్దిగా భిన్నమైన డైనమిక్స్‌తో కదిలే ఆకారాన్ని కనుగొనండి.",
+  "chalkAndTalkTitle": "సుద్ద & మాట్లాడండి",
+  "chalkAndTalkSubtitle": "విజువల్ డిస్ట్రాక్టర్లను విస్మరిస్తూ ఆడియోలో వినిపించే పదాలను టైప్ చేయండి.",
+  "blinkDetectorTitle": "బ్లింక్ డిటెక్టర్",
+  "blinkDetectorSubtitle": "త్వరితగతిన రెండుసార్లు బ్లింక్ అయ్యే గ్రిడ్ ముఖాన్ని నొక్కండి.",
+  "frequencyTapTitle": "ఫ్రీక్వెన్సీ ట్యాప్",
+  "frequencyTapSubtitle": "టార్గెట్ లైట్ పల్స్ ఫ్రీక్వెన్సీకి సరిపోలే బటన్‌ను నొక్కండి.",
+  "yajilinTitle": "Yajilin",
+  "yajilinSubtitle": "నల్ల కణాలను ఉంచండి మరియు ఒకే లూప్ మ్యాచింగ్ క్లూలను గీయండి.",
+  "heyawakeTitle": "Heyawake",
+  "heyawakeSubtitle": "ప్రక్కనే బ్లాక్ సెల్స్ లేకుండా షేడ్ గ్రిడ్ గదులు.",
+  "gokigenVariantTitle": "గోకిజెన్ వేరియంట్",
+  "gokigenVariantSubtitle": "శీర్ష గణనలను కలిసే లూప్-రహిత వికర్ణాలను గీయండి.",
+  "sheepAndWolvesTitle": "గొర్రెలు & తోడేళ్ళు",
+  "sheepAndWolvesSubtitle": "తోడేళ్ళ నుండి గొర్రెలను వేరుచేసే లూప్ గీయండి.",
+  "islandNurikabeTitle": "నూరికాబే ద్వీపం",
+  "islandNurikabeSubtitle": "సంఖ్యా పరిమాణ పరిమితులకు సరిపోలే ఫారమ్ ద్వీపాలు.",
+  "shakashakaTitle": "షకషక రెక్ట్స్",
+  "shakashakaSubtitle": "దీర్ఘచతురస్రాకార తెల్లటి ప్రాంతాలను రూపొందించడానికి త్రిభుజాకార పలకలను ఉంచండి.",
+  "litsTetrisTitle": "LITS టెట్రోమినో",
+  "litsTetrisSubtitle": "టెట్రోమినోలను ప్రక్కనే ఉన్న నకిలీలు లేని గదులలో ఉంచండి.",
+  "tapaWallTitle": "టపా వాల్",
+  "tapaWallSubtitle": "నిరంతర నలుపు గోడ నమూనాను రూపొందించడానికి షేడ్ కణాలు.",
+  "triangularBridgesTitle": "త్రిభుజాకార వంతెనలు",
+  "triangularBridgesSubtitle": "అవసరాలకు అనుగుణంగా ద్వీపాలను 3 దిశల్లో కనెక్ట్ చేయండి.",
+  "rippleEffectTitle": "అలల ప్రభావం",
+  "rippleEffectSubtitle": "స్పేసింగ్ దూర పరిమితులకు సంబంధించి గదుల్లో సంఖ్యలను పూరించండి.",
+  "suguruTectonicTitle": "సుగురు గ్రిడ్",
+  "suguruTectonicSubtitle": "గది బ్లాక్‌లను 1 నుండి K వరకు సంఖ్యలతో పూరించండి, పొరుగువారు సమానంగా ఉండరు.",
+  "tennerGridTitle": "టెన్నర్ గ్రిడ్",
+  "tennerGridSubtitle": "నిలువు వరుసల మొత్తాలకు సరిపోలే 0-9 అంకెలతో అడ్డు వరుసలను పూరించండి.",
+  "kakurasuSumsTitle": "కాకురాసు మొత్తాలు",
+  "kakurasuSumsSubtitle": "వెయిటెడ్ రో/కోల్ ఇండెక్స్ మొత్తాలను చేరుకోవడానికి సెల్‌లను షేడ్ చేయండి.",
+  "corralLoopTitle": "కారల్ లూప్",
+  "corralLoopSubtitle": "విజిబిలిటీకి సరిపోలే సంఖ్యలను కలుపుతూ ఒకే లూప్‌ను గీయండి.",
+  "stostoneTitle": "స్టోస్టోన్ గ్రావిటీ",
+  "stostoneSubtitle": "దిగువ వరుసలను సంపూర్ణంగా పూరించడానికి క్రిందికి పడిపోయే షేడ్ సెల్‌లు.",
+  "tripletsLogicTitle": "త్రిపాది త్రయం",
+  "tripletsLogicSubtitle": "గ్రిడ్‌ని మూడు ఆకారాలతో పూరించండి.",
+  "galaxiesSymTitle": "గెలాక్సీల సమరూపత",
+  "galaxiesSymSubtitle": "గ్రిడ్‌ను భ్రమణ సౌష్టవమైన గెలాక్సీ ఆకారాలుగా విభజించండి.",
+  "matrixMultiplierMatchTitle": "మ్యాట్రిక్స్ మ్యాచర్",
+  "matrixMultiplierMatchSubtitle": "లక్ష్య చుక్క ఉత్పత్తిని సరిపోల్చడానికి అడ్డు వరుస మరియు నిలువు వరుస విలువలను గుణించండి.",
+  "primeFactorTreesTitle": "ప్రధాన కారకం చెట్లు",
+  "primeFactorTreesSubtitle": "మిశ్రమ సంఖ్యలను ప్రైమ్ లీఫ్ ఫ్యాక్టర్ జతలుగా విడదీయండి.",
+  "vektorVectorTitle": "వెక్టర్ వెక్టర్",
+  "vektorVectorSubtitle": "వెక్టర్‌లను స్కేల్ చేయడం ద్వారా వాటి మొత్తాన్ని లక్ష్యానికి చేరుస్తుంది.",
+  "binomialMatchTitle": "ద్విపద సరిపోలిక",
+  "binomialMatchSubtitle": "వర్గీకరణ ద్విపద విలువలతో చతురస్రాకార సూత్రాలను సరిపోల్చండి.",
+  "percentageShoppingTitle": "శాతం షాపింగ్",
+  "percentageShoppingSubtitle": "తగ్గింపు శాతాలు మరియు చివరి చెక్అవుట్ మొత్తాలను లెక్కించండి.",
+  "cryptoArithmeticTitle": "క్రిప్టో-అరిథ్మెటిక్",
+  "cryptoArithmeticSubtitle": "అక్షర-అంకెల ప్రత్యామ్నాయం సాంకేతికలిపి గణిత సమస్యలను క్రాక్ చేయండి.",
+  "fractionalPizzaTitle": "పాక్షిక పిజ్జా",
+  "fractionalPizzaSubtitle": "లక్ష్య మొత్తం భిన్నాలతో సరిపోలడానికి పిజ్జా ముక్కలను విభజించండి.",
+  "numberBondsTitle": "సంఖ్య బాండ్లు",
+  "numberBondsSubtitle": "లక్ష్య కనెక్షన్ మొత్తానికి సమానమైన లింక్ నోడ్ విలువలు.",
+  "gridSumLineTitle": "గ్రిడ్ సమ్ లైన్",
+  "gridSumLineSubtitle": "లక్ష్యాన్ని సరిగ్గా అంచనా వేసే మార్గాన్ని గీయండి.",
+  "binaryScaleBalanceTitle": "బైనరీ స్కేల్ బ్యాలెన్స్",
+  "binaryScaleBalanceSubtitle": "పవర్-ఆఫ్-టూ బ్లాక్‌లను ఉపయోగించి దశాంశ బరువును బ్యాలెన్స్ చేయండి.",
+  "moduloPathTitle": "మాడ్యులో మార్గం",
+  "moduloPathSubtitle": "ట్రావర్స్ గ్రిడ్ సెల్‌లు మాడ్యులో మిగిలిన విలువలకు సరిపోతాయి.",
+  "digitSwapEqTitle": "అంకెల స్వాప్ సమీకరణాలు",
+  "digitSwapEqSubtitle": "రెండింటినీ సరిచేయడానికి సమీకరణాల మధ్య ఒకే అంకెలను మార్చుకోండి.",
+  "areaPerimeterMatchTitle": "ప్రాంతం & చుట్టుకొలత",
+  "areaPerimeterMatchSubtitle": "లక్ష్య ప్రాంతం మరియు చుట్టుకొలత విలువలకు సరిపోలే దీర్ఘచతురస్రాలను గీయండి.",
+  "inequalityBalanceOpsTitle": "అసమానత సంతులనం",
+  "inequalityBalanceOpsSubtitle": "సంక్లిష్ట గణిత నిబంధనల మధ్య అసమానత చిహ్నాలను ఉంచండి.",
+  "graphCoordinatePlotTitle": "గ్రాఫ్ ప్లాటర్",
+  "graphCoordinatePlotSubtitle": "ప్లాట్ గ్రిడ్ సరిపోలే సరళ/చతురస్రాకార వక్రతలను సమన్వయపరుస్తుంది.",
+  "baseConversionRunTitle": "బేస్ మార్పిడి",
+  "baseConversionRunSubtitle": "బైనరీ, దశాంశ, హెక్స్ మరియు అష్టాంశాల మధ్య విలువలను మార్చండి.",
+  "unitConverterProTitle": "యూనిట్ కన్వర్టర్",
+  "unitConverterProSubtitle": "సమయ పరిమితులలో త్వరిత యూనిట్ మార్పిడికి సమాధానం ఇవ్వండి.",
+  "auditoryNBackTitle": "శ్రవణ N-వెనుక",
+  "auditoryNBackSubtitle": "వినిపించిన మాట్లాడే అక్షరాలను సరిపోల్చండి N మెమొరీ నుండి వెనుకకు అడుగులు వేయండి.",
+  "abstractPatternRecallTitle": "నమూనా లేయరింగ్",
+  "abstractPatternRecallSubtitle": "మెమరీ స్టడీ నుండి లేయర్డ్ రంగుల ఆకారాలను పునర్నిర్మించండి.",
+  "roomInspectorTitle": "రూమ్ ఇన్‌స్పెక్టర్",
+  "roomInspectorSubtitle": "స్క్రీన్ ఖాళీగా ఉన్నప్పుడు చేసిన ఫర్నిచర్ సవరణలను గుర్తించండి.",
+  "voiceToFaceMatchTitle": "వాయిస్-ఫేస్ మ్యాచ్",
+  "voiceToFaceMatchSubtitle": "మాట్లాడే ఆడియో వాయిస్ క్లిప్‌తో అనుబంధించబడిన సరైన ముఖాన్ని ఎంచుకోండి.",
+  "spatialGridMemory3DTitle": "3D ప్రాదేశిక మెమరీ",
+  "spatialGridMemory3DSubtitle": "తిప్పబడిన 3D క్యూబ్ గ్రిడ్ నిర్మాణంలో ఫ్లాష్డ్ బ్లాక్‌లను రీకాల్ చేయండి.",
+  "sequenceStackTitle": "సీక్వెన్స్ స్టాక్",
+  "sequenceStackSubtitle": "ప్లేట్ స్టాక్ జోడింపులు మరియు తొలగింపులను క్రమంలో పునర్నిర్మించండి.",
+  "semanticCategoryRecallTitle": "వర్గం రీకాల్",
+  "semanticCategoryRecallSubtitle": "అభ్యర్థించిన వర్గ లక్ష్యాలకు సరిపోలే అధ్యయన పదాలను గుర్తించండి.",
+  "gridDisplacementTitle": "గ్రిడ్ స్థానభ్రంశం",
+  "gridDisplacementSubtitle": "లేఅవుట్‌ని ఒరిజినల్‌తో పోల్చడం ద్వారా మార్చబడిన చిహ్నాలను గుర్తించండి.",
+  "soundSequenceMatchTitle": "సౌండ్ సీక్వెన్స్ మ్యాచ్",
+  "soundSequenceMatchSubtitle": "వర్చువల్ కీబోర్డ్‌లో ప్లే చేయబడిన రిపీట్ నోట్ సీక్వెన్స్‌లు.",
+  "cardCountingMemoryTitle": "కార్డ్ కౌంటర్",
+  "cardCountingMemorySubtitle": "నిరంతర కార్డ్ డీల్ పరుగులలో ఇప్పటికే డీల్ చేయబడిన కార్డ్‌లను గుర్తించండి.",
+  "directionsRecallTitle": "దిశలు రీకాల్",
+  "directionsRecallSubtitle": "మెమరీ నుండి మార్గ దిశలకు సరిపోలే గ్రిడ్ మ్యాప్‌లను నావిగేట్ చేయండి.",
+  "eventTimelineMemoryTitle": "ఈవెంట్ టైమ్‌లైన్",
+  "eventTimelineMemorySubtitle": "చారిత్రక/కల్పిత ఈవెంట్ కార్డ్‌లను కాలక్రమానుసారంగా అమర్చండి.",
+  "featureMatrixRecallTitle": "ఫీచర్ మ్యాట్రిక్స్",
+  "featureMatrixRecallSubtitle": "సెల్ ఆకారం-రంగు లక్షణాల గురించి ప్రశ్నకు సమాధానం అడుగుతుంది.",
+  "delayedMatchSampleTitle": "ఆలస్యమైన మ్యాచ్",
+  "delayedMatchSampleSubtitle": "గణిత అవాంతరాలను పరిష్కరించిన తర్వాత లక్ష్య చిహ్నాన్ని సరిపోల్చండి.",
+  "symbolDigitAssocTitle": "సింబల్-డిజిట్ అసోక్",
+  "symbolDigitAssocSubtitle": "అంకెల కీలకు సరిపోలే చిహ్న అనువాద షీట్‌లను పరిష్కరించండి.",
+  "dualTaskMemoryTitle": "డ్యూయల్-టాస్క్ మెమరీ",
+  "dualTaskMemorySubtitle": "త్వరిత అంకగణిత పనులను పరిష్కరిస్తున్నప్పుడు వర్డ్ సెట్‌లను గుర్తుంచుకోండి.",
+  "actionSequenceRecallTitle": "యాక్షన్ రీకాల్",
+  "actionSequenceRecallSubtitle": "అక్షర సంజ్ఞ యానిమేషన్ సన్నివేశాలను క్రమంలో పునరావృతం చేయండి.",
+  "tangramPolygonTitle": "టాంగ్రామ్ ఫిట్",
+  "tangramPolygonSubtitle": "సిల్హౌట్ అవుట్‌లైన్‌లను పూరించడానికి బహుభుజి ఆకారాలను అమర్చండి.",
+  "mazeNav3DTitle": "3D మేజ్ నవ్",
+  "mazeNav3DSubtitle": "మొదటి వ్యక్తి వీక్షణ నుండి 3D ఐసోమెట్రిక్ చిట్టడవి మార్గాలను నావిగేట్ చేయండి.",
+  "isometricProjectionTitle": "ఐసోమెట్రిక్ ప్రొజెక్టర్",
+  "isometricProjectionSubtitle": "3D బ్లాక్ ఫిగర్‌లను ఆర్థోగ్రాఫిక్ 2D టాప్/ఫ్రంట్ వీక్షణలకు సరిపోల్చండి.",
+  "polyominoPackingTitle": "పాలియోమినో ప్యాకింగ్",
+  "polyominoPackingSubtitle": "యాదృచ్ఛిక పాలియోమినో బ్లాక్ ముక్కలను లక్ష్య ప్రాంతాలలో ప్యాక్ చేయండి.",
+  "spatialGridRotationTitle": "ప్రాదేశిక గ్రిడ్ రొటేషన్",
+  "spatialGridRotationSubtitle": "యాక్సిస్ కోఆర్డినేట్‌ల వెంట తిప్పబడిన 3D బ్లాక్ ఏర్పాట్‌లను సరిపోల్చండి.",
+  "wireLoopGameTitle": "వైర్ లూప్",
+  "wireLoopGameSubtitle": "పరిచయం లేకుండా వైర్ స్ప్లైన్ల వెంట మెటల్ రింగులను లాగండి.",
+  "origamiUnfoldTitle": "ఒరిగామి విప్పు",
+  "origamiUnfoldSubtitle": "మడతపెట్టిన షీట్లను విప్పిన తర్వాత రంధ్రం పంచ్ నమూనాలను గుర్తించండి.",
+  "ropeTangleSolverTitle": "రోప్ అన్టాంగ్లర్",
+  "ropeTangleSolverSubtitle": "జీరో లైన్ క్రాస్‌లతో ప్లానర్ గ్రాఫ్‌లను లేఅవుట్ చేయడానికి నోడ్‌లను లాగండి.",
+  "gridFitTetrisTitle": "గ్రిడ్ ఫిట్ సాల్వర్",
+  "gridFitTetrisSubtitle": "కంటైనర్ సరిహద్దులకు సరిపోయేలా స్థిరమైన క్రమరహిత బ్లాక్‌లను అమర్చండి.",
+  "vectorGridAlignmentTitle": "వెక్టర్ అమరిక",
+  "vectorGridAlignmentSubtitle": "షాడో టెంప్లేట్ లక్ష్యాలను సరిపోల్చడానికి ఆకారాలను స్కేల్ చేయండి మరియు తిప్పండి.",
+  "blockStackingPhysicsTitle": "బ్లాక్ స్టాకింగ్",
+  "blockStackingPhysicsSubtitle": "గురుత్వాకర్షణ బరువును సమతుల్యం చేసే క్రమరహిత బ్లాక్ ప్యానెల్‌లను పేర్చండి.",
+  "crossSectionMatch3DTitle": "3D క్రాస్ సెక్షన్",
+  "crossSectionMatch3DSubtitle": "3D ఆకారాల నుండి కత్తిరించిన 2D స్లైస్ జ్యామితిని గుర్తించండి.",
+  "symmetryPaintTitle": "సిమెట్రీ పెయింట్",
+  "symmetryPaintSubtitle": "సమరూప అక్షాలలో ప్రతిబింబించే అద్దం చిత్ర విభాగాలను గీయండి.",
+  "rollingBlockBloxTitle": "రోలింగ్ బ్లాక్",
+  "rollingBlockBloxSubtitle": "టార్గెట్ స్లాట్‌లలో నిలువుగా ల్యాండ్ చేయడానికి బ్లాక్ ముక్కలను రోల్ చేయండి.",
+  "perspectiveShiftViewTitle": "పెర్స్పెక్టివ్ షిఫ్ట్",
+  "perspectiveShiftViewSubtitle": "బ్లాక్ క్లస్టర్‌లు అక్షరాలు/పదాలు చెప్పే వరకు వాటిని తిప్పండి.",
+  "networkFlowSphericalTitle": "నెట్‌వర్క్ ఫ్లో",
+  "networkFlowSphericalSubtitle": "స్థూపాకార కోఆర్డినేట్‌లను చుట్టడంపై గ్రిడ్ ప్రవాహాలను కనెక్ట్ చేయండి.",
+  "layeredSilhouetteBlendTitle": "సిల్హౌట్ బ్లెండ్",
+  "layeredSilhouetteBlendSubtitle": "లక్ష్య అపారదర్శక ఆకృతులను సరిపోల్చడానికి రంగు పొరలను పేర్చండి.",
+  "wordWheelPangramTitle": "పద అనగ్రామ్స్",
+  "wordWheelPangramSubtitle": "చక్రాల నుండి కేంద్ర లక్ష్య అక్షరాలను కలిగి ఉన్న పదాలను రూపొందించండి.",
+  "letterGridSwapperTitle": "లేఖ మార్పిడి",
+  "letterGridSwapperSubtitle": "అడ్డు వరుస మరియు కోల్ పదాలను పూర్తి చేయడానికి ప్రక్కనే ఉన్న అక్షరాల టైల్స్‌ను మార్చుకోండి.",
+  "synonymMatchTitle": "పర్యాయపదం మ్యాచ్",
+  "synonymMatchSubtitle": "పడిపోతున్న పద లక్ష్యాలను పర్యాయపదాలు లేదా వ్యతిరేక పదాలతో సరిపోల్చండి.",
+  "vowelDropTitle": "అచ్చు డ్రాప్",
+  "vowelDropSubtitle": "పదాలను పూర్తి చేసే కోఆర్డినేట్ గ్రిడ్‌లలోకి అచ్చులను వదలండి.",
+  "letterBalanceScaleTitle": "వర్డ్ బ్యాలెన్స్ స్కేల్",
+  "letterBalanceScaleSubtitle": "అక్షరాల విలువలు బ్యాలెన్స్ బరువులను కలిగి ఉన్న పదాలను స్పెల్ చేయండి.",
+  "wordChainShiritoriTitle": "పద గొలుసు",
+  "wordChainShiritoriSubtitle": "మునుపటి అక్షరాల అవుట్‌పుట్‌లతో ప్రారంభమయ్యే లింక్ వర్డ్ లూప్‌లు.",
+  "affixBuilderTitle": "అఫిక్స్ బిల్డర్",
+  "affixBuilderSubtitle": "లక్ష్య పదజాలాన్ని రూపొందించడానికి ఉపసర్గలు/ప్రత్యయాలను కలపండి.",
+  "decipherCrypticCluesTitle": "క్రిప్టిక్ డెసిఫర్",
+  "decipherCrypticCluesSubtitle": "వర్డ్-ప్లే పజిల్‌లను పరిష్కరించండి మరియు స్పెల్లింగ్ చిక్కులను డీక్రిప్ట్ చేయండి.",
+  "boggleWordSearchTitle": "Boggle కనెక్ట్",
+  "boggleWordSearchSubtitle": "దాచిన పదాలను కనుగొనడానికి ప్రక్కనే కనెక్ట్ చేయబడిన మార్గాలను కనుగొనండి.",
+  "idiomUnscrambleTitle": "ఇడియమ్ అన్‌స్క్రాంబుల్",
+  "idiomUnscrambleSubtitle": "ఇడియమ్ అర్థాలను సరిపోల్చడానికి గిలకొట్టిన పద శ్రేణులను అమర్చండి.",
+  "letterPyramidsTitle": "లెటర్ పిరమిడ్లు",
+  "letterPyramidsSubtitle": "ఒక్కో శ్రేణికి ఒకే అనగ్రామ్ అక్షరాలను జోడించి వర్డ్ టవర్‌లను రూపొందించండి.",
+  "soundAlikeHomophonesTitle": "హోమోఫోన్ మ్యాచ్‌లు",
+  "soundAlikeHomophonesSubtitle": "వాక్యాల కోసం సరైన హోమోఫోన్ స్పెల్లింగ్‌లను గుర్తించండి.",
+  "wordGridSudokuTitle": "పదం సుడోకు",
+  "wordGridSudokuSubtitle": "పదాలను ఏర్పరుచుకునే గ్రిడ్ వరుసలలో టెస్సెలేట్ అక్షరాలు.",
+  "portmanteauFactoryTitle": "పోర్ట్‌మాంటౌ ఫ్యాక్టరీ",
+  "portmanteauFactorySubtitle": "సమ్మేళన పదాలను సృష్టించే అర్థ భాగాలను విలీనం చేయండి.",
+  "codedCrosswordsCodeTitle": "కోడ్‌వర్డ్‌లు క్రాస్‌వర్డ్",
+  "codedCrosswordsCodeSubtitle": "నంబర్-టు-లెటర్ కోడ్‌లకు సరిపోలే గ్రిడ్ క్రాస్‌వర్డ్‌లను పరిష్కరించండి.",
+  "wordSnakeTrailTitle": "పద పాము",
+  "wordSnakeTrailSubtitle": "ఇతివృత్త పదాల స్పెల్లింగ్ పాము లాంటి అక్షర ట్రయల్స్‌ను కనుగొనండి.",
+  "typingRhythmSpeedTitle": "టైపింగ్ ఫ్లో",
+  "typingRhythmSpeedSubtitle": "మెట్రోనోమ్ రిథమ్ బీట్‌లకు సరిపోలే పదజాలాలను టైప్ చేయండి.",
   "errorSomethingWrong": "Something went wrong",
   "errorUnexpected": "An unexpected error occurred",
   "errorTryAgain": "Try Again",
@@ -2181,35 +1398,11 @@
   "statsAchievements": "Achievements",
   "statsWeeklyActivity": "Weekly Activity",
   "statsDayStreak": "{days} Day Streak",
-  "@statsDayStreak": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
   "statsTotalXp": "Total XP",
   "statsSolved": "Solved",
   "statsLevel": "Level {level}",
-  "@statsLevel": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsMaintainStreak": "Maintain your streak!",
   "statsPercentToLevel": "{percent}% to Level {level}",
-  "@statsPercentToLevel": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      },
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsCognitiveProfile": "Cognitive Profile",
   "statsLocked": "Locked",
   "achievementSeeker": "Seeker",
@@ -2333,24 +1526,19 @@
   "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
   "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
   "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
-  "@snackbarWordMustContainCentral": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarWordAlreadyFound": "Word already found!",
   "snackbarNotAValidWord": "Not a valid word!",
   "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
   "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectCorrectAnswer": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
+  "hideGame": "దాచు",
+  "unhideGame": "దాచవద్దు",
+  "favoriteGame": "ఇష్టమైనది",
+  "unfavoriteGame": "ఇష్టమైన వాటి నుండి తీసివేయి",
+  "hiddenGames": "దాచిన ఆటలు",
+  "showHiddenGames": "దాచిన ఆటలను చూపించు ({count})",
+  "noHiddenGames": "దాచిన ఆటలు లేవు",
+  "gameHidden": "ఆట దాచబడింది",
+  "undo": "రద్దు చేయి",
   "snackbarCorrect": "Correct!",
   "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
   "snackbarAllCorrect": "All associations correct!",
@@ -2360,165 +1548,31 @@
   "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
   "snackbarPieceDoesNotFit": "Piece does not fit there!",
   "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
-  "@snackbarInvalidStep": {
-    "placeholders": {
-      "mod": {
-        "type": "int"
-      },
-      "modulus": {
-        "type": "int"
-      },
-      "remainder": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
-  "@snackbarIncorrectGroup": {
-    "placeholders": {
-      "tries": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
   "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
-  "@snackbarIncorrectDestination": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
-  "@snackbarIncorrectCorrectCount": {
-    "placeholders": {
-      "suit": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
   "snackbarSequenceMatched": "Sequence matched! Increasing length...",
   "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
   "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
-  "@snackbarIncorrectCorrectValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
-  "@snackbarIncorrectSlices": {
-    "placeholders": {
-      "selected": {
-        "type": "int"
-      },
-      "required": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
   "snackbarCorrectOrder": "Correct chronological order!",
   "snackbarIncorrectOrder": "Incorrect order! Study again.",
   "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
-  "@snackbarIncorrectMissingValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
-  "@snackbarIncorrectLetterDigit": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      },
-      "digit": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
-  "@snackbarIncorrectCorrectPoint": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarReachedExit": "Reached the exit! Generating next maze...",
   "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
   "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
-  "@snackbarIncorrectCorrectStack": {
-    "placeholders": {
-      "stack": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
   "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
-  "@snackbarScaleNotBalanced": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
   "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
   "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
-  "@snackbarIncorrectCorrectForm": {
-    "placeholders": {
-      "form": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
-  "@snackbarIncorrectInequality": {
-    "placeholders": {
-      "left": {
-        "type": "String"
-      },
-      "leftVal": {
-        "type": "int"
-      },
-      "correct": {
-        "type": "String"
-      },
-      "right": {
-        "type": "String"
-      },
-      "rightVal": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectBaseConversion": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
   "snackbarAlignedCorrectly": "Aligned and correctly identified!",
   "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
@@ -2538,6 +1592,8 @@
   "btnImReadyToAnswer": "I'm Ready to Answer",
   "btnNoMatch": "No Match",
   "btnMatch": "Match",
+  "btnMatchColor": "రంగును సరిపోల్చండి",
+  "btnMatchWord": "పదాన్ని సరిపోల్చండి",
   "btnGuess": "Guess",
   "btnPlayNow": "Play Now",
   "btnClear": "Clear",
@@ -2560,13 +1616,6 @@
   "phaseTapToAdd": "Tap to Add",
   "phaseCalculationLabel": "Calculation:",
   "phaseTimeLeft": "Time: {time}s",
-  "@phaseTimeLeft": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "phaseRemember2Back": "Remember 2 steps back",
   "phaseMatch": "Match",
   "hintTypeRhymingWord": "Type a rhyming word...",
@@ -2586,54 +1635,13 @@
   "feedbackFindNumber": "Find the number between 1 and 10,000!",
   "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
   "feedbackCorrectExcl": "Correct! The number was {number}.",
-  "@feedbackCorrectExcl": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackCorrectEmoji": "Correct!",
   "feedbackTooLow": "Too Low",
   "feedbackTooHigh": "Too High",
   "feedbackGameOver": "Game Over! The number was {number}.",
-  "@feedbackGameOver": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackGuessResult": "{guess} is {result}!",
-  "@feedbackGuessResult": {
-    "placeholders": {
-      "guess": {
-        "type": "int"
-      },
-      "result": {
-        "type": "String"
-      }
-    }
-  },
   "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
-  "@feedbackWinMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      },
-      "guesses": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackLoseMessage": "Out of guesses! The number was {number}.",
-  "@feedbackLoseMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "statTime": "Time",
   "statScore": "Score",
   "statGrid": "Grid",
@@ -2731,275 +1739,6 @@
   "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
   "correctExclEmoji": "Correct!",
   "wrongExcl": "Wrong!",
-  "abstractPatternRecallSubtitle": "మెమరీ స్టడీ నుండి లేయర్డ్ రంగుల ఆకారాలను పునర్నిర్మించండి.",
-  "abstractPatternRecallTitle": "నమూనా లేయరింగ్",
-  "actionSequenceRecallSubtitle": "అక్షర సంజ్ఞ యానిమేషన్ సన్నివేశాలను క్రమంలో పునరావృతం చేయండి.",
-  "actionSequenceRecallTitle": "యాక్షన్ రీకాల్",
-  "affixBuilderSubtitle": "లక్ష్య పదజాలాన్ని రూపొందించడానికి ఉపసర్గలు/ప్రత్యయాలను కలపండి.",
-  "affixBuilderTitle": "అఫిక్స్ బిల్డర్",
-  "algebraicBalanceSubtitle": "లక్ష్య మొత్తాన్ని కనుగొనడానికి సమీకరణాలను పరిష్కరించండి.",
-  "algebraicBalanceTitle": "బీజగణిత సంతులనం",
-  "areaPerimeterMatchSubtitle": "లక్ష్య ప్రాంతం మరియు చుట్టుకొలత విలువలకు సరిపోలే దీర్ఘచతురస్రాలను గీయండి.",
-  "areaPerimeterMatchTitle": "ప్రాంతం & చుట్టుకొలత",
-  "attentionalRsvpSubtitle": "రాపిడ్ సీరియల్ లెటర్ ఫ్లాష్‌లో కనిపించే అంకెలను గుర్తించండి.",
-  "attentionalRsvpTitle": "శ్రద్ధగల RSVP",
-  "auditoryNBackSubtitle": "వినిపించిన మాట్లాడే అక్షరాలను సరిపోల్చండి N మెమొరీ నుండి వెనుకకు అడుగులు వేయండి.",
-  "auditoryNBackTitle": "శ్రవణ N-వెనుక",
-  "baseConversionRunSubtitle": "బైనరీ, దశాంశ, హెక్స్ మరియు అష్టాంశాల మధ్య విలువలను మార్చండి.",
-  "baseConversionRunTitle": "బేస్ మార్పిడి",
-  "binaryScaleBalanceSubtitle": "పవర్-ఆఫ్-టూ బ్లాక్‌లను ఉపయోగించి దశాంశ బరువును బ్యాలెన్స్ చేయండి.",
-  "binaryScaleBalanceTitle": "బైనరీ స్కేల్ బ్యాలెన్స్",
-  "binomialMatchSubtitle": "వర్గీకరణ ద్విపద విలువలతో చతురస్రాకార సూత్రాలను సరిపోల్చండి.",
-  "binomialMatchTitle": "ద్విపద సరిపోలిక",
-  "blinkDetectorSubtitle": "త్వరితగతిన రెండుసార్లు బ్లింక్ అయ్యే గ్రిడ్ ముఖాన్ని నొక్కండి.",
-  "blinkDetectorTitle": "బ్లింక్ డిటెక్టర్",
-  "blockStackingPhysicsSubtitle": "గురుత్వాకర్షణ బరువును సమతుల్యం చేసే క్రమరహిత బ్లాక్ ప్యానెల్‌లను పేర్చండి.",
-  "blockStackingPhysicsTitle": "బ్లాక్ స్టాకింగ్",
-  "boggleWordSearchSubtitle": "దాచిన పదాలను కనుగొనడానికి ప్రక్కనే కనెక్ట్ చేయబడిన మార్గాలను కనుగొనండి.",
-  "boggleWordSearchTitle": "Boggle కనెక్ట్",
-  "cardCountingMemorySubtitle": "నిరంతర కార్డ్ డీల్ పరుగులలో ఇప్పటికే డీల్ చేయబడిన కార్డ్‌లను గుర్తించండి.",
-  "cardCountingMemoryTitle": "కార్డ్ కౌంటర్",
-  "chalkAndTalkSubtitle": "విజువల్ డిస్ట్రాక్టర్లను విస్మరిస్తూ ఆడియోలో వినిపించే పదాలను టైప్ చేయండి.",
-  "chalkAndTalkTitle": "సుద్ద & మాట్లాడండి",
-  "codedCrosswordsCodeSubtitle": "నంబర్-టు-లెటర్ కోడ్‌లకు సరిపోలే గ్రిడ్ క్రాస్‌వర్డ్‌లను పరిష్కరించండి.",
-  "codedCrosswordsCodeTitle": "కోడ్‌వర్డ్‌లు క్రాస్‌వర్డ్",
-  "colorMazeNavSubtitle": "డైనమిక్ అనుమతి రంగులతో సరిపోలే మేజ్ టైల్స్‌ను నావిగేట్ చేయండి.",
-  "colorMazeNavTitle": "రంగు మేజ్ నవ్",
-  "colorWordMatchUpSubtitle": "మారుతున్న నిబంధనల ఆధారంగా రెండు రంగుల పదాలు సరిపోతాయో లేదో నిర్ణయించండి.",
-  "colorWordMatchUpTitle": "రంగు మ్యాచ్-అప్",
-  "corralLoopSubtitle": "విజిబిలిటీకి సరిపోలే సంఖ్యలను కలుపుతూ ఒకే లూప్‌ను గీయండి.",
-  "corralLoopTitle": "కారల్ లూప్",
-  "countdownMathSubtitle": "మూడు అంకెల లక్ష్యాన్ని లెక్కించడానికి యాదృచ్ఛిక సంఖ్యలను కలపండి.",
-  "countdownMathTitle": "కౌంట్‌డౌన్ మఠం",
-  "crossSectionMatch3DSubtitle": "3D ఆకారాల నుండి కత్తిరించిన 2D స్లైస్ జ్యామితిని గుర్తించండి.",
-  "crossSectionMatch3DTitle": "3D క్రాస్ సెక్షన్",
-  "cryptoArithmeticSubtitle": "అక్షర-అంకెల ప్రత్యామ్నాయం సాంకేతికలిపి గణిత సమస్యలను క్రాక్ చేయండి.",
-  "cryptoArithmeticTitle": "క్రిప్టో-అరిథ్మెటిక్",
-  "decipherCrypticCluesSubtitle": "వర్డ్-ప్లే పజిల్‌లను పరిష్కరించండి మరియు స్పెల్లింగ్ చిక్కులను డీక్రిప్ట్ చేయండి.",
-  "decipherCrypticCluesTitle": "క్రిప్టిక్ డెసిఫర్",
-  "delayedMatchSampleSubtitle": "గణిత అవాంతరాలను పరిష్కరించిన తర్వాత లక్ష్య చిహ్నాన్ని సరిపోల్చండి.",
-  "delayedMatchSampleTitle": "ఆలస్యమైన మ్యాచ్",
-  "digitSwapEqSubtitle": "రెండింటినీ సరిచేయడానికి సమీకరణాల మధ్య ఒకే అంకెలను మార్చుకోండి.",
-  "digitSwapEqTitle": "అంకెల స్వాప్ సమీకరణాలు",
-  "directionsRecallSubtitle": "మెమరీ నుండి మార్గ దిశలకు సరిపోలే గ్రిడ్ మ్యాప్‌లను నావిగేట్ చేయండి.",
-  "directionsRecallTitle": "దిశలు రీకాల్",
-  "doubleTroubleSubtitle": "స్ప్లిట్ స్క్రీన్‌పై ఏకకాలంలో రెండు వేర్వేరు సాధారణ గేమ్‌లను ఆడండి.",
-  "doubleTroubleTitle": "డబుల్ ట్రబుల్",
-  "dualTaskMemorySubtitle": "త్వరిత అంకగణిత పనులను పరిష్కరిస్తున్నప్పుడు వర్డ్ సెట్‌లను గుర్తుంచుకోండి.",
-  "dualTaskMemoryTitle": "డ్యూయల్-టాస్క్ మెమరీ",
-  "dynamicSalienceSubtitle": "కొద్దిగా భిన్నమైన డైనమిక్స్‌తో కదిలే ఆకారాన్ని కనుగొనండి.",
-  "dynamicSalienceTitle": "డైనమిక్ సాలియెన్స్",
-  "eventTimelineMemorySubtitle": "చారిత్రక/కల్పిత ఈవెంట్ కార్డ్‌లను కాలక్రమానుసారంగా అమర్చండి.",
-  "eventTimelineMemoryTitle": "ఈవెంట్ టైమ్‌లైన్",
-  "featureMatrixRecallSubtitle": "సెల్ ఆకారం-రంగు లక్షణాల గురించి ప్రశ్నకు సమాధానం అడుగుతుంది.",
-  "featureMatrixRecallTitle": "ఫీచర్ మ్యాట్రిక్స్",
-  "focusTunnelSubtitle": "కదిలే సొరంగం గోడలపై కనిపించే సరిపోలే చిహ్నాలను గుర్తించండి.",
-  "focusTunnelTitle": "ఫోకస్ టన్నెల్",
-  "fractionalPizzaSubtitle": "లక్ష్య మొత్తం భిన్నాలతో సరిపోలడానికి పిజ్జా ముక్కలను విభజించండి.",
-  "fractionalPizzaTitle": "పాక్షిక పిజ్జా",
-  "frequencyTapSubtitle": "టార్గెట్ లైట్ పల్స్ ఫ్రీక్వెన్సీకి సరిపోలే బటన్‌ను నొక్కండి.",
-  "frequencyTapTitle": "ఫ్రీక్వెన్సీ ట్యాప్",
-  "galaxiesSymSubtitle": "గ్రిడ్‌ను భ్రమణ సౌష్టవమైన గెలాక్సీ ఆకారాలుగా విభజించండి.",
-  "galaxiesSymTitle": "గెలాక్సీల సమరూపత",
-  "gearRotationSubtitle": "చివరి గేర్ యొక్క భ్రమణ దిశను అంచనా వేయండి.",
-  "gearRotationTitle": "గేర్ రొటేషన్",
-  "ghostTapSubtitle": "అదృశ్య పల్స్ గరిష్ట ఎత్తుకు చేరుకున్నప్పుడు నొక్కండి.",
-  "ghostTapTitle": "ఘోస్ట్ ట్యాప్",
-  "gokigenNanameSubtitle": "లూప్‌లు లేకుండా పాయింట్‌లను కనెక్ట్ చేయడానికి వికర్ణాలను గీయండి.",
-  "gokigenNanameTitle": "గోకిగెన్ నామే",
-  "gokigenVariantSubtitle": "శీర్ష గణనలను కలిసే లూప్-రహిత వికర్ణాలను గీయండి.",
-  "gokigenVariantTitle": "గోకిజెన్ వేరియంట్",
-  "graphCoordinatePlotSubtitle": "ప్లాట్ గ్రిడ్ సరిపోలే సరళ/చతురస్రాకార వక్రతలను సమన్వయపరుస్తుంది.",
-  "graphCoordinatePlotTitle": "గ్రాఫ్ ప్లాటర్",
-  "gridDisplacementSubtitle": "లేఅవుట్‌ని ఒరిజినల్‌తో పోల్చడం ద్వారా మార్చబడిన చిహ్నాలను గుర్తించండి.",
-  "gridDisplacementTitle": "గ్రిడ్ స్థానభ్రంశం",
-  "gridFitTetrisSubtitle": "కంటైనర్ సరిహద్దులకు సరిపోయేలా స్థిరమైన క్రమరహిత బ్లాక్‌లను అమర్చండి.",
-  "gridFitTetrisTitle": "గ్రిడ్ ఫిట్ సాల్వర్",
-  "gridGazeSubtitle": "వేరొక వ్యవధితో ఏ గ్రిడ్ సెల్ ఫ్లాష్ అయిందో గుర్తించండి.",
-  "gridGazeTitle": "గ్రిడ్ చూపులు",
-  "gridSumLineSubtitle": "లక్ష్యాన్ని సరిగ్గా అంచనా వేసే మార్గాన్ని గీయండి.",
-  "gridSumLineTitle": "గ్రిడ్ సమ్ లైన్",
-  "heyawakeSubtitle": "ప్రక్కనే బ్లాక్ సెల్స్ లేకుండా షేడ్ గ్రిడ్ గదులు.",
-  "heyawakeTitle": "Heyawake",
-  "idiomUnscrambleSubtitle": "ఇడియమ్ అర్థాలను సరిపోల్చడానికి గిలకొట్టిన పద శ్రేణులను అమర్చండి.",
-  "idiomUnscrambleTitle": "ఇడియమ్ అన్‌స్క్రాంబుల్",
-  "inequalityBalanceOpsSubtitle": "సంక్లిష్ట గణిత నిబంధనల మధ్య అసమానత చిహ్నాలను ఉంచండి.",
-  "inequalityBalanceOpsTitle": "అసమానత సంతులనం",
-  "islandNurikabeSubtitle": "సంఖ్యా పరిమాణ పరిమితులకు సరిపోలే ఫారమ్ ద్వీపాలు.",
-  "islandNurikabeTitle": "నూరికాబే ద్వీపం",
-  "isometricProjectionSubtitle": "3D బ్లాక్ ఫిగర్‌లను ఆర్థోగ్రాఫిక్ 2D టాప్/ఫ్రంట్ వీక్షణలకు సరిపోల్చండి.",
-  "isometricProjectionTitle": "ఐసోమెట్రిక్ ప్రొజెక్టర్",
-  "kakurasuSumsSubtitle": "వెయిటెడ్ రో/కోల్ ఇండెక్స్ మొత్తాలను చేరుకోవడానికి సెల్‌లను షేడ్ చేయండి.",
-  "kakurasuSumsTitle": "కాకురాసు మొత్తాలు",
-  "layeredSilhouetteBlendSubtitle": "లక్ష్య అపారదర్శక ఆకృతులను సరిపోల్చడానికి రంగు పొరలను పేర్చండి.",
-  "layeredSilhouetteBlendTitle": "సిల్హౌట్ బ్లెండ్",
-  "letterBalanceScaleSubtitle": "అక్షరాల విలువలు బ్యాలెన్స్ బరువులను కలిగి ఉన్న పదాలను స్పెల్ చేయండి.",
-  "letterBalanceScaleTitle": "వర్డ్ బ్యాలెన్స్ స్కేల్",
-  "letterGridSwapperSubtitle": "అడ్డు వరుస మరియు కోల్ పదాలను పూర్తి చేయడానికి ప్రక్కనే ఉన్న అక్షరాల టైల్స్‌ను మార్చుకోండి.",
-  "letterGridSwapperTitle": "లేఖ మార్పిడి",
-  "letterPyramidsSubtitle": "ఒక్కో శ్రేణికి ఒకే అనగ్రామ్ అక్షరాలను జోడించి వర్డ్ టవర్‌లను రూపొందించండి.",
-  "letterPyramidsTitle": "లెటర్ పిరమిడ్లు",
-  "litsTetrisSubtitle": "టెట్రోమినోలను ప్రక్కనే ఉన్న నకిలీలు లేని గదులలో ఉంచండి.",
-  "litsTetrisTitle": "LITS టెట్రోమినో",
-  "masyuSubtitle": "Masyu సర్కిల్ నియమాలకు సరిపోలే ఒకే లూప్‌ను గీయండి.",
-  "masyuTitle": "మస్యు లూప్",
-  "mathMazeSubtitle": "లక్ష్యం మొత్తానికి మూల్యాంకనం చేసే మార్గాన్ని కనుగొనండి.",
-  "mathMazeTitle": "గణితం మేజ్",
-  "matrixMultiplierMatchSubtitle": "లక్ష్య చుక్క ఉత్పత్తిని సరిపోల్చడానికి అడ్డు వరుస మరియు నిలువు వరుస విలువలను గుణించండి.",
-  "matrixMultiplierMatchTitle": "మ్యాట్రిక్స్ మ్యాచర్",
-  "matrixMultiplierSubtitle": "లక్ష్యానికి గుణించడం కోసం అడ్డు వరుస మరియు నిలువు వరుసను ఎంచుకోండి.",
-  "matrixMultiplierTitle": "మాతృక గుణకం",
-  "mazeNav3DSubtitle": "మొదటి వ్యక్తి వీక్షణ నుండి 3D ఐసోమెట్రిక్ చిట్టడవి మార్గాలను నావిగేట్ చేయండి.",
-  "mazeNav3DTitle": "3D మేజ్ నవ్",
-  "mirrorMazeSubtitle": "వికర్ణ అద్దాలను ఉపయోగించి లేజర్ పుంజాన్ని దారి మళ్లించండి.",
-  "mirrorMazeTitle": "మిర్రర్ మేజ్",
-  "moduloPathSubtitle": "ట్రావర్స్ గ్రిడ్ సెల్‌లు మాడ్యులో మిగిలిన విలువలకు సరిపోతాయి.",
-  "moduloPathTitle": "మాడ్యులో మార్గం",
-  "multiTrackCounterSubtitle": "లక్ష్య గుణకారానికి ఏదైనా కౌంటర్ పెరిగినప్పుడు నొక్కండి.",
-  "multiTrackCounterTitle": "మల్టీ-ట్రాక్ కౌంటర్",
-  "narrativeRecallSubtitle": "ఒక కథనాన్ని చదవండి మరియు నిర్దిష్ట పరిమాణాత్మక మరియు వాస్తవ వివరాలను గుర్తుకు తెచ్చుకోండి.",
-  "narrativeRecallTitle": "కథనం రీకాల్",
-  "networkFlowSphericalSubtitle": "స్థూపాకార కోఆర్డినేట్‌లను చుట్టడంపై గ్రిడ్ ప్రవాహాలను కనెక్ట్ చేయండి.",
-  "networkFlowSphericalTitle": "నెట్‌వర్క్ ఫ్లో",
-  "norinoriSubtitle": "ప్రతి గదిలో సరిగ్గా రెండు కనెక్ట్ చేయబడిన సెల్‌లను షేడ్ చేయండి.",
-  "norinoriTitle": "నోరినోరి",
-  "numberBondsSubtitle": "లక్ష్య కనెక్షన్ మొత్తానికి సమానమైన లింక్ నోడ్ విలువలు.",
-  "numberBondsTitle": "సంఖ్య బాండ్లు",
-  "oddEvenFlashSubtitle": "రంగు నియమంతో సంఖ్య సమానత్వాన్ని త్వరగా సరిపోల్చండి.",
-  "oddEvenFlashTitle": "బేసి-సరి ఫ్లాష్",
-  "origamiUnfoldSubtitle": "మడతపెట్టిన షీట్లను విప్పిన తర్వాత రంధ్రం పంచ్ నమూనాలను గుర్తించండి.",
-  "origamiUnfoldTitle": "ఒరిగామి విప్పు",
-  "patternSequenceDrawSubtitle": "గ్రిడ్‌లో యానిమేటెడ్ పాత్ క్రమాన్ని పునరావృతం చేయండి.",
-  "patternSequenceDrawTitle": "నమూనా రీకాల్",
-  "percentageShoppingSubtitle": "తగ్గింపు శాతాలు మరియు చివరి చెక్అవుట్ మొత్తాలను లెక్కించండి.",
-  "percentageShoppingTitle": "శాతం షాపింగ్",
-  "peripheralFocusSubtitle": "గణితాన్ని పరిష్కరించేటప్పుడు సైడ్ ప్యానెల్‌లను ఫ్లాషింగ్ చేయడానికి ప్రతిస్పందించండి.",
-  "peripheralFocusTitle": "పరిధీయ ఫోకస్",
-  "perspectiveShiftViewSubtitle": "బ్లాక్ క్లస్టర్‌లు అక్షరాలు/పదాలు చెప్పే వరకు వాటిని తిప్పండి.",
-  "perspectiveShiftViewTitle": "పెర్స్పెక్టివ్ షిఫ్ట్",
-  "polyominoPackingSubtitle": "యాదృచ్ఛిక పాలియోమినో బ్లాక్ ముక్కలను లక్ష్య ప్రాంతాలలో ప్యాక్ చేయండి.",
-  "polyominoPackingTitle": "పాలియోమినో ప్యాకింగ్",
-  "portmanteauFactorySubtitle": "సమ్మేళన పదాలను సృష్టించే అర్థ భాగాలను విలీనం చేయండి.",
-  "portmanteauFactoryTitle": "పోర్ట్‌మాంటౌ ఫ్యాక్టరీ",
-  "primeFactorTreesSubtitle": "మిశ్రమ సంఖ్యలను ప్రైమ్ లీఫ్ ఫ్యాక్టర్ జతలుగా విడదీయండి.",
-  "primeFactorTreesTitle": "ప్రధాన కారకం చెట్లు",
-  "rippleEffectSubtitle": "స్పేసింగ్ దూర పరిమితులకు సంబంధించి గదుల్లో సంఖ్యలను పూరించండి.",
-  "rippleEffectTitle": "అలల ప్రభావం",
-  "rollingBlockBloxSubtitle": "టార్గెట్ స్లాట్‌లలో నిలువుగా ల్యాండ్ చేయడానికి బ్లాక్ ముక్కలను రోల్ చేయండి.",
-  "rollingBlockBloxTitle": "రోలింగ్ బ్లాక్",
-  "roomInspectorSubtitle": "స్క్రీన్ ఖాళీగా ఉన్నప్పుడు చేసిన ఫర్నిచర్ సవరణలను గుర్తించండి.",
-  "roomInspectorTitle": "రూమ్ ఇన్‌స్పెక్టర్",
-  "ropeTangleSolverSubtitle": "జీరో లైన్ క్రాస్‌లతో ప్లానర్ గ్రాఫ్‌లను లేఅవుట్ చేయడానికి నోడ్‌లను లాగండి.",
-  "ropeTangleSolverTitle": "రోప్ అన్టాంగ్లర్",
-  "semanticAssociationSubtitle": "మూడు ఆధారాలను అనుసంధానించే పదాన్ని కనుగొనండి.",
-  "semanticAssociationTitle": "అసోసియేషన్ పదం",
-  "semanticCategoryRecallSubtitle": "అభ్యర్థించిన వర్గ లక్ష్యాలకు సరిపోలే అధ్యయన పదాలను గుర్తించండి.",
-  "semanticCategoryRecallTitle": "వర్గం రీకాల్",
-  "sequenceStackSubtitle": "ప్లేట్ స్టాక్ జోడింపులు మరియు తొలగింపులను క్రమంలో పునర్నిర్మించండి.",
-  "sequenceStackTitle": "సీక్వెన్స్ స్టాక్",
-  "shakashakaSubtitle": "దీర్ఘచతురస్రాకార తెల్లటి ప్రాంతాలను రూపొందించడానికి త్రిభుజాకార పలకలను ఉంచండి.",
-  "shakashakaTitle": "షకషక రెక్ట్స్",
-  "shapeShifterPeripheralSubtitle": "కేంద్ర విలువలను సరిపోల్చేటప్పుడు పరిధీయ ఆకార మార్పులను ట్రాక్ చేయండి.",
-  "shapeShifterPeripheralTitle": "పరిధీయ ఆకారాలు",
-  "shapeShifterSubtitle": "లక్ష్యం ఆకారం-రంగు కలయికను నొక్కండి.",
-  "shapeShifterTitle": "షేప్ షిఫ్టర్",
-  "sheepAndWolvesSubtitle": "తోడేళ్ళ నుండి గొర్రెలను వేరుచేసే లూప్ గీయండి.",
-  "sheepAndWolvesTitle": "గొర్రెలు & తోడేళ్ళు",
-  "shellGameSubtitle": "ఒక దాచిన బంతిని షఫుల్ చేసే కప్పుల మార్పిడి స్థలాల వలె ట్రాక్ చేయండి.",
-  "shellGameTitle": "షెల్ గేమ్",
-  "shikakuSubtitle": "సంఖ్యలకు సరిపోలే చతురస్రాలు మరియు దీర్ఘచతురస్రాలుగా గ్రిడ్‌ను విభజించండి.",
-  "shikakuTitle": "షికాకు",
-  "signalAndNoiseSubtitle": "స్టాటిక్ నాయిస్‌లో దాగి ఉన్న లక్ష్య ఆల్ఫాన్యూమరిక్ అక్షరాలను గుర్తించండి.",
-  "signalAndNoiseTitle": "సిగ్నల్ & నాయిస్",
-  "soundAlikeHomophonesSubtitle": "వాక్యాల కోసం సరైన హోమోఫోన్ స్పెల్లింగ్‌లను గుర్తించండి.",
-  "soundAlikeHomophonesTitle": "హోమోఫోన్ మ్యాచ్‌లు",
-  "soundSequenceMatchSubtitle": "వర్చువల్ కీబోర్డ్‌లో ప్లే చేయబడిన రిపీట్ నోట్ సీక్వెన్స్‌లు.",
-  "soundSequenceMatchTitle": "సౌండ్ సీక్వెన్స్ మ్యాచ్",
-  "soundWaveMatchSubtitle": "దృశ్య తరంగ ఫ్రీక్వెన్సీ పిచ్ మార్పులతో సమలేఖనం అయినప్పుడు నొక్కండి.",
-  "soundWaveMatchTitle": "సౌండ్ వేవ్ మ్యాచ్",
-  "spatialGridMemory3DSubtitle": "తిప్పబడిన 3D క్యూబ్ గ్రిడ్ నిర్మాణంలో ఫ్లాష్డ్ బ్లాక్‌లను రీకాల్ చేయండి.",
-  "spatialGridMemory3DTitle": "3D ప్రాదేశిక మెమరీ",
-  "spatialGridRotationSubtitle": "యాక్సిస్ కోఆర్డినేట్‌ల వెంట తిప్పబడిన 3D బ్లాక్ ఏర్పాట్‌లను సరిపోల్చండి.",
-  "spatialGridRotationTitle": "ప్రాదేశిక గ్రిడ్ రొటేషన్",
-  "storyBuilderSubtitle": "కథ యొక్క కాలక్రమ క్రమాన్ని పునర్నిర్మించండి.",
-  "storyBuilderTitle": "స్టోరీ బిల్డర్",
-  "stostoneSubtitle": "దిగువ వరుసలను సంపూర్ణంగా పూరించడానికి క్రిందికి పడిపోయే షేడ్ సెల్‌లు.",
-  "stostoneTitle": "స్టోస్టోన్ గ్రావిటీ",
-  "suguruTectonicSubtitle": "గది బ్లాక్‌లను 1 నుండి K వరకు సంఖ్యలతో పూరించండి, పొరుగువారు సమానంగా ఉండరు.",
-  "suguruTectonicTitle": "సుగురు గ్రిడ్",
-  "symbolDigitAssocSubtitle": "అంకెల కీలకు సరిపోలే చిహ్న అనువాద షీట్‌లను పరిష్కరించండి.",
-  "symbolDigitAssocTitle": "సింబల్-డిజిట్ అసోక్",
-  "symmetryPaintSubtitle": "సమరూప అక్షాలలో ప్రతిబింబించే అద్దం చిత్ర విభాగాలను గీయండి.",
-  "symmetryPaintTitle": "సిమెట్రీ పెయింట్",
-  "syncRhythmSubtitle": "విజువల్ మెట్రోనొమ్ స్వీప్ సింకోపేటెడ్ బీట్‌తో సరిపోలినప్పుడు నొక్కండి.",
-  "syncRhythmTitle": "సమకాలీకరణ రిథమ్",
-  "synonymMatchSubtitle": "పడిపోతున్న పద లక్ష్యాలను పర్యాయపదాలు లేదా వ్యతిరేక పదాలతో సరిపోల్చండి.",
-  "synonymMatchTitle": "పర్యాయపదం మ్యాచ్",
-  "tangramPolygonSubtitle": "సిల్హౌట్ అవుట్‌లైన్‌లను పూరించడానికి బహుభుజి ఆకారాలను అమర్చండి.",
-  "tangramPolygonTitle": "టాంగ్రామ్ ఫిట్",
-  "tangramSubtitle": "లక్ష్య సిల్హౌట్‌ను పూరించడానికి ఆకారాలను అమర్చండి.",
-  "tangramTitle": "తంగ్రామ్ పజిల్",
-  "tapaWallSubtitle": "నిరంతర నలుపు గోడ నమూనాను రూపొందించడానికి షేడ్ కణాలు.",
-  "tapaWallTitle": "టపా వాల్",
-  "targetPursuerSubtitle": "బహుళ అతివ్యాప్తి చెందుతున్న సర్కిల్‌లను ట్రాక్ చేయండి మరియు అసలు లక్ష్యాన్ని ఎంచుకోండి.",
-  "targetPursuerTitle": "టార్గెట్ వెంబడించేవాడు",
-  "tennerGridSubtitle": "నిలువు వరుసల మొత్తాలకు సరిపోలే 0-9 అంకెలతో అడ్డు వరుసలను పూరించండి.",
-  "tennerGridTitle": "టెన్నర్ గ్రిడ్",
-  "triangularBridgesSubtitle": "అవసరాలకు అనుగుణంగా ద్వీపాలను 3 దిశల్లో కనెక్ట్ చేయండి.",
-  "triangularBridgesTitle": "త్రిభుజాకార వంతెనలు",
-  "tripletsLogicSubtitle": "గ్రిడ్‌ని మూడు ఆకారాలతో పూరించండి.",
-  "tripletsLogicTitle": "త్రిపాది త్రయం",
-  "typingRhythmSpeedSubtitle": "మెట్రోనోమ్ రిథమ్ బీట్‌లకు సరిపోలే పదజాలాలను టైప్ చేయండి.",
-  "typingRhythmSpeedTitle": "టైపింగ్ ఫ్లో",
-  "typoglycemiaDecoderSubtitle": "స్క్రాంబుల్ చేసి, గందరగోళ వాక్యాలను వేగంగా చదవండి.",
-  "typoglycemiaDecoderTitle": "టైపోగ్లైసీమియా డీకోడర్",
-  "unitConverterProSubtitle": "సమయ పరిమితులలో త్వరిత యూనిట్ మార్పిడికి సమాధానం ఇవ్వండి.",
-  "unitConverterProTitle": "యూనిట్ కన్వర్టర్",
-  "vectorGridAlignmentSubtitle": "షాడో టెంప్లేట్ లక్ష్యాలను సరిపోల్చడానికి ఆకారాలను స్కేల్ చేయండి మరియు తిప్పండి.",
-  "vectorGridAlignmentTitle": "వెక్టర్ అమరిక",
-  "vektorVectorSubtitle": "వెక్టర్‌లను స్కేల్ చేయడం ద్వారా వాటి మొత్తాన్ని లక్ష్యానికి చేరుస్తుంది.",
-  "vektorVectorTitle": "వెక్టర్ వెక్టర్",
-  "voiceToFaceMatchSubtitle": "మాట్లాడే ఆడియో వాయిస్ క్లిప్‌తో అనుబంధించబడిన సరైన ముఖాన్ని ఎంచుకోండి.",
-  "voiceToFaceMatchTitle": "వాయిస్-ఫేస్ మ్యాచ్",
-  "vowelDropSubtitle": "పదాలను పూర్తి చేసే కోఆర్డినేట్ గ్రిడ్‌లలోకి అచ్చులను వదలండి.",
-  "vowelDropTitle": "అచ్చు డ్రాప్",
-  "wireLoopGameSubtitle": "పరిచయం లేకుండా వైర్ స్ప్లైన్ల వెంట మెటల్ రింగులను లాగండి.",
-  "wireLoopGameTitle": "వైర్ లూప్",
-  "wordAssociationRecallSubtitle": "మెమరీ నుండి జత చేసిన పద అనుబంధాలను రీకాల్ చేయండి.",
-  "wordAssociationRecallTitle": "వర్డ్ అసోసియేషన్",
-  "wordChainShiritoriSubtitle": "మునుపటి అక్షరాల అవుట్‌పుట్‌లతో ప్రారంభమయ్యే లింక్ వర్డ్ లూప్‌లు.",
-  "wordChainShiritoriTitle": "పద గొలుసు",
-  "wordGridConnectionSubtitle": "16 పదాలను నాలుగు విభాగాలుగా విభజించండి.",
-  "wordGridConnectionTitle": "పద కనెక్షన్లు",
-  "wordGridSudokuSubtitle": "పదాలను ఏర్పరుచుకునే గ్రిడ్ వరుసలలో టెస్సెలేట్ అక్షరాలు.",
-  "wordGridSudokuTitle": "పదం సుడోకు",
-  "wordSnakeTrailSubtitle": "ఇతివృత్త పదాల స్పెల్లింగ్ పాము లాంటి అక్షర ట్రయల్స్‌ను కనుగొనండి.",
-  "wordSnakeTrailTitle": "పద పాము",
-  "wordWheelPangramSubtitle": "చక్రాల నుండి కేంద్ర లక్ష్య అక్షరాలను కలిగి ఉన్న పదాలను రూపొందించండి.",
-  "wordWheelPangramTitle": "పద అనగ్రామ్స్",
-  "wordWheelSubtitle": "మధ్యలో అక్షరంతో సహా చక్రంలో అక్షరాలను ఉపయోగించి పదాలను రూపొందించండి.",
-  "wordWheelTitle": "పద చక్రం",
-  "yajilinSubtitle": "నల్ల కణాలను ఉంచండి మరియు ఒకే లూప్ మ్యాచింగ్ క్లూలను గీయండి.",
-  "yajilinTitle": "Yajilin",
-  "btnMatchColor": "రంగును సరిపోల్చండి",
-  "btnMatchWord": "పదాన్ని సరిపోల్చండి",
-  "favoriteGame": "ఇష్టమైనది",
-  "gameHidden": "ఆట దాచబడింది",
-  "hiddenGames": "దాచిన ఆటలు",
-  "hideGame": "దాచు",
-  "noHiddenGames": "దాచిన ఆటలు లేవు",
-  "orbitTapTapToHit": "బంతి గేట్లోకి ప్రవేశించినప్పుడు నొక్కండి",
-  "showHiddenGames": "దాచిన ఆటలను చూపించు ({count})",
-  "@showHiddenGames": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "undo": "రద్దు చేయి",
-  "unfavoriteGame": "ఇష్టమైన వాటి నుండి తీసివేయి",
-  "unhideGame": "దాచవద్దు",
   "kurodokoTitle": "Kurodoko",
   "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
   "kurodokoCongrats": "ప్రతి సంఖ్య చూడాల్సినదాన్ని సరిగ్గా చూస్తుంది.",
@@ -3121,6 +1860,13 @@
   "pegsTitle": "పెగ్స్",
   "pegsSubtitle": "ఒక పెగ్‌ను దాని పక్కదానిపై దూకించి తీసేయండి. ఒకటి మాత్రమే మిగలండి.",
   "pegsCongrats": "ఒక పెగ్ మిగిలింది. శుభ్రమైన బోర్డు.",
+  "lightsOutPresses": "Presses",
+  "lightsOutLit": "Lit",
+  "sameGameTitle": "Same Game",
+  "sameGameSubtitle": "Clear groups of matching blocks to empty the board.",
+  "sameGameCongrats": "Board cleared. Every square gone.",
+  "sameGameLeft": "Left",
+  "sameGameStuck": "No groups left. Start a new board.",
   "galaxiesTitle": "Galaxies",
   "galaxiesSubtitle": "Give every dot its own symmetric region",
   "galaxiesCongrats": "Every dot has its own galaxy.",
@@ -3131,5 +1877,28 @@
   "twiddleCongrats": "ప్రతి సంఖ్య తన స్థానంలో.",
   "difficultyEasy": "సులభం",
   "difficultyMedium": "మధ్యస్థం",
-  "difficultyHard": "కష్టం"
+  "difficultyHard": "కష్టం",
+  "crossingTitle": "Number Crossing",
+  "crossingSubtitle": "Fit every listed number into the crossing slots.",
+  "crossingPlaced": "Placed",
+  "crossingWinTitle": "EVERY NUMBER FITS!",
+  "crossingWinMessage": "Each number once, and every crossing agrees digit for digit.",
+  "navDeal": "డీల్",
+  "navStack": "సేకరణ",
+  "navYou": "మీరు",
+  "next": "తదుపరి",
+  "nextPuzzle": "తదుపరి పజిల్",
+  "restartPuzzle": "మళ్లీ ప్రారంభించు",
+  "lockScroll": "స్క్రోల్ లాక్",
+  "unlockScroll": "స్క్రోల్ అన్‌లాక్",
+  "feedScrollLocked": "స్క్రోల్ లాక్ చేయబడింది.",
+  "dealTitle": "డీల్",
+  "dealSubtitle": "ప్రతి పజిల్, ఒక్కో కార్డుగా.",
+  "yourCards": "మీ కార్డులు",
+  "todaysCard": "నేటి కార్డు",
+  "quickPlay": "రెండు నిమిషాల్లోపు",
+  "rooms": "ఆరు గదులు",
+  "puzzles": "పజిల్స్",
+  "shuffleCategory": "ఈ గదిని పంచు",
+  "deckProgress": "{total}లో {position}"
 }

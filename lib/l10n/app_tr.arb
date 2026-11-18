@@ -4,12 +4,15 @@
   "home": "Ana Sayfa",
   "settings": "Ayarlar",
   "playAgain": "Tekrar Oyna",
+  "playNext": "Sonrakini Oyna",
   "seeCompleted": "İncele",
   "finish": "Bitir",
   "congrats": "Tebrikler",
   "perfectGradient": "Mükemmel Gradyan!",
   "wellDone": "Aferin",
   "timeUp": "Süre Doldu!",
+  "victory": "Zafer!",
+  "gameWin": "AFERİN!",
   "completed": "Tamamlandı!",
   "score": "Puan",
   "timeLeft": "Süre",
@@ -38,6 +41,9 @@
   "trialModeDescription": "60 saniyelik zamanlayıcı yerine 20 tanesini çözerek bitir",
   "keepScreenAwake": "Ekranı Açık Tut",
   "keepScreenAwakeDescription": "Oyun sırasında ekranın kapanmasını önleyin",
+  "showArchivedGames": "Arşivlenen bulmacaları göster",
+  "showArchivedGamesDescription": "Referans için saklanan bilişsel görevler ve alıştırmalar.",
+  "archived": "ARŞİVLENDİ",
   "appearance": "Görünüm",
   "language": "Dil",
   "gameplay": "Oynanış",
@@ -118,6 +124,84 @@
   "nonogramTitle": "Nonogram",
   "nonogramSubtitle": "Mantık ipuçlarını kullanarak gizli resmi ortaya çıkar.",
   "nonogramWin": "Resim Ortaya Çıktı!",
+  "magnetsTitle": "MIKNATISLAR",
+  "magnetsSubtitle": "Mıknatısları kutup sayılarına göre ızgaraya yerleştirin.",
+  "magnetsHowToPlay": "Domino boyutundaki kapları '+' ve '-' mıknatıslarla doldurun veya boş bırakın. Satır ve sütun ipuçları, o hattaki her kutbun toplam sayısını belirtir. Özdeş kutuplar dikey veya yatay olarak bitişik olamaz.",
+  "magnetsWinTitle": "POLARİTE DENGELENDİ!",
+  "magnetsWinMessage": "Tüm mıknatıslar mükemmel bir şekilde düzenlendi!",
+  "magnetsPlaced": "Magnets",
+  "magnetsLevel": "Depth",
+  "cubeTitle": "Cube",
+  "cubeSubtitle": "Roll the cube to collect every blue square.",
+  "cubeWinTitle": "SIX BLUES!",
+  "cubeWinMessage": "Every face of the cube is blue.",
+  "cubeHowToPlay": "Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube's bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.",
+  "cubeFaces": "Faces",
+  "cubeMoves": "Moves",
+  "cubeBest": "Best",
+  "mapTitle": "Four Colours",
+  "mapSubtitle": "Colour every region so touching regions never match.",
+  "mapWinTitle": "MAP COLOURED!",
+  "mapWinMessage": "Every region has a colour, and no neighbours clash.",
+  "mapHowToPlay": "Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.",
+  "mapRegions": "Regions",
+  "mapColoured": "Coloured",
+  "inertiaTitle": "Inertia",
+  "inertiaSubtitle": "Slide the ball to collect every gem and miss mines.",
+  "inertiaWinTitle": "ALL GEMS!",
+  "inertiaWinMessage": "Every gem collected and not a mine touched.",
+  "inertiaHowToPlay": "Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.",
+  "inertiaGems": "Gems",
+  "inertiaMoves": "Moves",
+  "inertiaExploded": "MINE! Tap to retry",
+  "netslideTitle": "Netslide",
+  "netslideSubtitle": "Slide rows and columns until every pipe connects.",
+  "netslideWinTitle": "NET COMPLETE!",
+  "netslideWinMessage": "Every pipe is connected.",
+  "netslideHowToPlay": "Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.",
+  "netslideMoves": "Slides",
+  "netslideScramble": "Depth",
+  "signpostTitle": "Signpost",
+  "signpostSubtitle": "Link cells in order by following their arrows.",
+  "signpostWinTitle": "EVERY NUMBER PLACED!",
+  "signpostWinMessage": "One chain from 1 to the last, every arrow pointing the way.",
+  "signpostHowToPlay": "Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.",
+  "signpostMoves": "Links",
+  "signpostGivens": "Givens",
+  "lighthousesTitle": "DENİZ FENERLERİ",
+  "lighthousesSubtitle": "Deniz feneri ipuçlarına göre gemileri yerleştirin.",
+  "lighthousesHowToPlay": "Izgaraya 1x1 gemiler yerleştirin. Deniz fenerleri, yatay ve dikey olarak görülebilen toplam gemi sayısını gösterir. Gemiler deniz fenerlerine veya birbirlerine çapraz olarak bile dokunamazlar.",
+  "lighthousesWinTitle": "DENİZ GÜVENDE!",
+  "lighthousesWinMessage": "Tüm deniz fenerleri gemilere mükemmel bir şekilde rehberlik ediyor!",
+  "dominosaTitle": "DOMINOSA",
+  "dominosaSubtitle": "Izgaradaki tüm gizli dominoları bulun.",
+  "dominosaHowToPlay": "Komşu sayıların her bir çiftinin tam olarak bir domino ile kaplanacağı şekilde, sayıların olduğu bir ızgaraya tam bir domino seti yerleştirin. Her sayı çifti sette yalnızca bir kez bulunur.",
+  "dominosaWinTitle": "DOMİNO USTASI!",
+  "dominosaWinMessage": "Her domino bulundu ve yerleştirildi!",
+  "dominosaPlaced": "Placed",
+  "dominosaTypes": "Types",
+  "skyscrapersClues": "Clues",
+  "skyscrapersFilled": "Filled",
+  "skyscrapersTitle": "GÖKDELENLER",
+  "skyscrapersSubtitle": "Izgarayı bina yükseklikleriyle doldurun.",
+  "skyscrapersHowToPlay": "Izgarayı yüksekliklerle (1-N) doldurun; her satır ve sütun her yüksekliği tam olarak bir kez içermelidir. Kenarlardaki ipuçları, o yönden kaç binanın görülebildiğini gösterir; daha uzun binalar daha kısa olanları engeller.",
+  "skyscrapersWinTitle": "SİLUET RESTORE EDİLDİ!",
+  "skyscrapersWinMessage": "Tüm binalar mükemmel bir şekilde konumlandırıldı!",
+  "nurikabeTitle": "NURIKABE",
+  "nurikabeSubtitle": "Bağlantılı bir deniz ve ayrı adalar oluşturun.",
+  "nurikabeHowToPlay": "Tek bir bağlantılı 'deniz' oluşturmak için hücreleri gölgeleyin (2x2 blok olmamalıdır). Gölgelenmemiş hücreler, هر biri toplam alanını temsil eden tam olarak bir sayı içeren 'adalar' oluşturur.",
+  "nurikabeWinTitle": "DENİZ AKIYOR!",
+  "nurikabeWinMessage": "Adalar ayrıldı, deniz bağlandı!",
+  "fillominoTitle": "FILLOMINO",
+  "fillominoSubtitle": "Izgarayı belirtilen boyutlardaki poliominolara bölün.",
+  "fillominoHowToPlay": "Izgarayı poliominolara bölün; N boyutundaki her poliomino, tüm hücrelerinde N sayısını içermelidir. Aynı boyuttaki poliominolar dikey veya yatay olarak bitişik olamaz.",
+  "fillominoWinTitle": "IZGARA BÖLÜNDÜ!",
+  "fillominoWinMessage": "Mantıkla mükemmel bir şekilde döşendi!",
+  "hitoriTitle": "HITORI",
+  "hitoriSubtitle": "Her satır ve sütundaki yinelenen sayıları gölgeleyin.",
+  "hitoriHowToPlay": "Hücreleri gölgeleyin; böylece herhangi bir satır veya sütunda hiçbir sayı birden fazla görünmez. Gölgelenmiş hücreler dikey veya yatay olarak bitişik olamaz ve tüm gölgelenmemiş hücreler tek bir bağlantılı grup oluşturmalıdır.",
+  "hitoriWinTitle": "HITORI USTASI!",
+  "hitoriWinMessage": "Tüm yinelenenleri başarıyla çözdünüz!",
   "pathFinderTitle": "Yol Bulucu",
   "pathFinderSubtitle": "S'den E'ye gizli yolu bul.",
   "pathFinderWin": "Yol Tamamlandı!",
@@ -304,6 +388,7 @@
   "visualStatisticalLearningTitle": "Görsel İstatistiksel Öğrenme",
   "orbitTapTitle": "Yörünge Dokunuşu",
   "orbitTapSubtitle": "Toplar kapıyla hizalandığında dokun",
+  "orbitTapTapToHit": "Top kapıya girdiğinde dokun",
   "schulteTableTitle": "Schulte Tablosu",
   "multipleObjectTrackingTitle": "Nesne Takipçisi",
   "multipleObjectTrackingSubtitle": "Vurgulanan nesneleri izle. Hareket ederken onları takip et, sonra onları seç.",
@@ -408,6 +493,58 @@
   "trailMakingSubtitle": "Sayıları mümkün olduğunca hızlı bir şekilde sırayla (1 -> 2 -> 3...) bağla.",
   "matrixReasoningTitle": "Matris Muhakemesi",
   "matrixReasoningSubtitle": "3x3'lük ızgaradaki deseni tamamla",
+  "abcdTitle": "Four Letters",
+  "abcdSubtitle": "Place A, B, C, or D to match the edge counts.",
+  "abcdFilled": "Cells",
+  "abcdDepth": "Depth",
+  "abcdWinTitle": "EVERY CELL LETTERED!",
+  "abcdWinMessage": "Every count met, no two identical letters touching.",
+  "boatsTitle": "Boats",
+  "boatsSubtitle": "Place the fleet to match the row and column counts.",
+  "boatsShipsFound": "Boat cells",
+  "boatsDepth": "Depth",
+  "boatsWinTitle": "FLEET FOUND!",
+  "boatsWinMessage": "Every boat placed and nothing touching.",
+  "seismicTitle": "Ripple Effect",
+  "seismicSubtitle": "Fill regions 1..N; equal digits keep N cells apart.",
+  "seismicClues": "Clues",
+  "seismicDepth": "Depth",
+  "seismicWinTitle": "RIPPLE SETTLED!",
+  "seismicWinMessage": "Every shape holds 1 to its size, with no two numbers too close.",
+  "mathraxTitle": "Mathrax",
+  "mathraxSubtitle": "Fill a Latin square obeying every corner rule.",
+  "mathraxFilled": "Filled",
+  "mathraxDepth": "Depth",
+  "mathraxWinTitle": "EVERY CORNER AGREES!",
+  "mathraxWinMessage": "A Latin square that satisfies every corner clue.",
+  "saladTitle": "Salad",
+  "saladSubtitle": "Place each letter once per line; edges show first seen.",
+  "saladWritten": "Written",
+  "saladWinTitle": "EVERY LINE AGREES!",
+  "saladWinMessage": "Every letter once in every line, and every border clue reads true.",
+  "romeTitle": "Rome",
+  "romeSubtitle": "Point arrows so every path reaches a goal.",
+  "romeWritten": "Arrows",
+  "romeWinTitle": "EVERY CHAIN ARRIVES!",
+  "romeWinMessage": "One arrow per cell, no repeats in an area, and every chain ends at a goal.",
+  "ascentTitle": "Number Path",
+  "ascentSubtitle": "Place 1 to N so consecutive numbers touch.",
+  "ascentNext": "Next",
+  "ascentDepth": "Depth",
+  "ascentWinTitle": "PATH COMPLETE!",
+  "ascentWinMessage": "One number per cell, every step touching the one before it.",
+  "clustersTitle": "Clusters",
+  "clustersSubtitle": "Two colours: dots touch one mate, others touch two.",
+  "clustersDots": "Dots",
+  "clustersDepth": "Depth",
+  "clustersWinTitle": "CLUSTERS SETTLED!",
+  "clustersWinMessage": "Two colours, every dot true, every cluster of two or more.",
+  "bricksTitle": "Bricks",
+  "bricksSubtitle": "Shade supported cells with no three in a row.",
+  "bricksShaded": "Shaded",
+  "bricksDepth": "Depth",
+  "bricksWinTitle": "THE PILE HOLDS!",
+  "bricksWinMessage": "Every shaded cell is held up, no run of three, and every number reads true.",
   "tentsAndTreesTitle": "Çadırlar ve Ağaçlar",
   "tentsAndTreesSubtitle": "Ağaçların yanına çadırlar yerleştir. Sayılar her satır/sütunda kaç çadır olduğunu gösterir. Çadırlar birbirine değemez.",
   "quickMathTitle": "Hızlı Matematik",
@@ -448,6 +585,8 @@
   "vocabularyBuilderTitle": "Kelime Dağarcığı Geliştirici",
   "vocabularyBuilderSubtitle": "Zaman baskısı altında eş anlamlı ve zıt anlamlıları eşleştir.",
   "vocabularyBuilderHowToPlay": "Sana bir hedef kelime ve bir ilişki (Eş Anlamlı veya Zıt Anlamlı) gösterilecek. Seçenekler arasından ilişkiyle eşleşen doğru kelimeyi seç. Hızlı ol, zaman daralıyor!",
+  "correct": "DOĞRU",
+  "incorrect": "YANLIŞ",
   "grammarPoliceTitle": "Dilbilgisi Polisi",
   "grammarPoliceSubtitle": "Cümlenin dilbilgisi açısından doğru mu yoksa hatalı mı olduğunu belirleyin.",
   "grammarPoliceHowToPlay": "Ekranın ortasında bir cümle belirecektir. Dilbilgisi açısından doğru mu yoksa hata mı içerdiğine karar verin. Sorun yoksa 'DOĞRU'ya, hata fark ederseniz 'YANLIŞ'a dokunun. Tüm canlarınızı kaybetmeyin!",
@@ -515,6 +654,9 @@
   "shapeSquare": "KARE",
   "shapeTriangle": "ÜÇGEN",
   "shapeStar": "YILDIZ",
+  "shapeRectangle": "DİKDÖRTGEN",
+  "shapeEllipse": "ELİPS",
+  "shapeTrapezoid": "YAMUK",
   "colorRedLabel": "KIRMIZI",
   "colorBlueLabel": "MAVİ",
   "colorGreenLabel": "YEŞİL",
@@ -541,46 +683,6 @@
   "topologyWinTitle": "GEOMETRİ DAHİSİ!",
   "topologyWinMessage": "10 topolojik çifti doğru tanımladın!",
   "topologyScore": "PUAN: ",
-  "playNext": "Sonrakini Oyna",
-  "correct": "DOĞRU",
-  "incorrect": "YANLIŞ",
-  "magnetsTitle": "MIKNATISLAR",
-  "magnetsSubtitle": "Mıknatısları kutup sayılarına göre ızgaraya yerleştirin.",
-  "magnetsHowToPlay": "Domino boyutundaki kapları '+' ve '-' mıknatıslarla doldurun veya boş bırakın. Satır ve sütun ipuçları, o hattaki her kutbun toplam sayısını belirtir. Özdeş kutuplar dikey veya yatay olarak bitişik olamaz.",
-  "magnetsWinTitle": "POLARİTE DENGELENDİ!",
-  "magnetsWinMessage": "Tüm mıknatıslar mükemmel bir şekilde düzenlendi!",
-  "lighthousesTitle": "DENİZ FENERLERİ",
-  "lighthousesSubtitle": "Deniz feneri ipuçlarına göre gemileri yerleştirin.",
-  "lighthousesHowToPlay": "Izgaraya 1x1 gemiler yerleştirin. Deniz fenerleri, yatay ve dikey olarak görülebilen toplam gemi sayısını gösterir. Gemiler deniz fenerlerine veya birbirlerine çapraz olarak bile dokunamazlar.",
-  "lighthousesWinTitle": "DENİZ GÜVENDE!",
-  "lighthousesWinMessage": "Tüm deniz fenerleri gemilere mükemmel bir şekilde rehberlik ediyor!",
-  "dominosaTitle": "DOMINOSA",
-  "dominosaSubtitle": "Izgaradaki tüm gizli dominoları bulun.",
-  "dominosaHowToPlay": "Komşu sayıların her bir çiftinin tam olarak bir domino ile kaplanacağı şekilde, sayıların olduğu bir ızgaraya tam bir domino seti yerleştirin. Her sayı çifti sette yalnızca bir kez bulunur.",
-  "dominosaWinTitle": "DOMİNO USTASI!",
-  "dominosaWinMessage": "Her domino bulundu ve yerleştirildi!",
-  "skyscrapersTitle": "GÖKDELENLER",
-  "skyscrapersSubtitle": "Izgarayı bina yükseklikleriyle doldurun.",
-  "skyscrapersHowToPlay": "Izgarayı yüksekliklerle (1-N) doldurun; her satır ve sütun her yüksekliği tam olarak bir kez içermelidir. Kenarlardaki ipuçları, o yönden kaç binanın görülebildiğini gösterir; daha uzun binalar daha kısa olanları engeller.",
-  "skyscrapersWinTitle": "SİLUET RESTORE EDİLDİ!",
-  "skyscrapersWinMessage": "Tüm binalar mükemmel bir şekilde konumlandırıldı!",
-  "nurikabeTitle": "NURIKABE",
-  "nurikabeSubtitle": "Bağlantılı bir deniz ve ayrı adalar oluşturun.",
-  "nurikabeHowToPlay": "Tek bir bağlantılı 'deniz' oluşturmak için hücreleri gölgeleyin (2x2 blok olmamalıdır). Gölgelenmemiş hücreler, هر biri toplam alanını temsil eden tam olarak bir sayı içeren 'adalar' oluşturur.",
-  "nurikabeWinTitle": "DENİZ AKIYOR!",
-  "nurikabeWinMessage": "Adalar ayrıldı, deniz bağlandı!",
-  "fillominoTitle": "FILLOMINO",
-  "fillominoSubtitle": "Izgarayı belirtilen boyutlardaki poliominolara bölün.",
-  "fillominoHowToPlay": "Izgarayı poliominolara bölün; N boyutundaki her poliomino, tüm hücrelerinde N sayısını içermelidir. Aynı boyuttaki poliominolar dikey veya yatay olarak bitişik olamaz.",
-  "fillominoWinTitle": "IZGARA BÖLÜNDÜ!",
-  "fillominoWinMessage": "Mantıkla mükemmel bir şekilde döşendi!",
-  "hitoriTitle": "HITORI",
-  "hitoriSubtitle": "Her satır ve sütundaki yinelenen sayıları gölgeleyin.",
-  "hitoriHowToPlay": "Hücreleri gölgeleyin; böylece herhangi bir satır veya sütunda hiçbir sayı birden fazla görünmez. Gölgelenmiş hücreler dikey veya yatay olarak bitişik olamaz ve tüm gölgelenmemiş hücreler tek bir bağlantılı grup oluşturmalıdır.",
-  "hitoriWinTitle": "HITORI USTASI!",
-  "hitoriWinMessage": "Tüm yinelenenleri başarıyla çözdünüz!",
-  "victory": "Zafer!",
-  "gameWin": "AFERİN!",
   "semanticDistanceTitle": "Anlamsal Mesafe",
   "semanticDistanceSubtitle": "Kelimeler arasındaki kavramsal mesafeyi ölçün",
   "oxymoronHuntTitle": "Oksimoron Avı",
@@ -653,6 +755,9 @@
   "sudokuText": "Hata: {arg0}",
   "sdmtMessage": "{arg0} sembolü eşleştirdiniz! Bu test tarama hızınızı ve görsel dikkatinizi ölçer.",
   "futoshikiMessage": "İnanılmaz! Futoshiki Latin Karesini çözdünüz.",
+  "futoshikiWinTitle": "SQUARE SOLVED!",
+  "futoshikiGivens": "Givens",
+  "futoshikiEdges": "Edges",
   "letterFrequencyScanMessage": "\"{arg1}\" harfinin {arg0} kez geçtiğini doğru saydınız.",
   "letterFrequencyScanText": "Yanlış. Sayı {arg0} idi.",
   "memoryMatrixMessage": "Etkileyici! Çalışma belleğiniz keskin. Günlük hedef tamamlandı!",
@@ -756,6 +861,9 @@
   "trailMakingMessage": "{arg0} izi tamamladınız! Bu test görsel arama hızınızı ve zihinsel esnekliğinizi ölçer.",
   "matrixReasoningMessage": "{arg0} matrisi doğru tamamladınız!",
   "tentsAndTreesMessage": "Tüm çadırları başarıyla yerleştirdiniz.",
+  "tentsAndTreesWinTitle": "CAMP READY!",
+  "tentsAndTreesTents": "Tents",
+  "tentsAndTreesDepth": "Depth",
   "klotskiMessage": "Harika kaydırma! Kahraman bloğu {arg0} hamlede serbest bıraktınız.",
   "sumPyramidMessage": "{arg0} toplam piramidini başarıyla çözdünüz!",
   "simonCommandMessage": "Mükemmel seçici tepki ve odaklanma! Toplam Puan: {arg0}",
@@ -779,1025 +887,6 @@
   "oddOneOutMessage1": "Puanınız: {arg0}",
   "letterBridgeMessage": "Köprü harfini buldunuz: {arg0}",
   "imReady": "HAZIRIM",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
-  "@findWordSubtitle": {
-    "placeholders": {
-      "maxTries": {
-        "type": "int"
-      },
-      "wordLength": {
-        "type": "int"
-      }
-    }
-  },
-  "@wordFoundMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
-  "@gameOverMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
-  "@radicalRootsScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@radicalRootsTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@romanArithmeticScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@romanArithmeticTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@arithmeticChainLoseMessage": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
-  "@attentionalBlinkScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@boxCompletionScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "totalTrials": {
-        "type": "int"
-      }
-    }
-  },
-  "@calculationSprintScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@calculationSprintTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@categoryFluencyFoundMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@categoryFluencyWordCount": {
-    "placeholders": {
-      "entered": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
-  "@changeBlindnessScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@changeBlindnessFoundMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@choiceRtAvgMessage": {
-    "placeholders": {
-      "avg": {
-        "type": "String"
-      }
-    }
-  },
-  "@choiceRtTimeRemaining": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
-  "@choiceRtTaps": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@colorFloodSubtitle": {
-    "placeholders": {
-      "moves": {
-        "type": "int"
-      },
-      "maxMoves": {
-        "type": "int"
-      }
-    }
-  },
-  "@colorMatchAccuracy": {
-    "placeholders": {
-      "accuracy": {
-        "type": "String"
-      }
-    }
-  },
-  "@corsiBlocksMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "span": {
-        "type": "int"
-      }
-    }
-  },
-  "@digitSpanReverseLoseMessage": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@dividedAttentionGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dividedAttentionScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@doubleNBackSubtitle": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
-  "@doubleNBackGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@doubleNBackScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@faceNameAssociationLoseMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@flankerTestScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@fractionMatchLoseMessage": {
-    "placeholders": {
-      "correctAnswer": {
-        "type": "String"
-      }
-    }
-  },
-  "@groceryListScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@hueSortWrongTiles": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@kenkenSubtitle": {
-    "placeholders": {
-      "size": {
-        "type": "int"
-      }
-    }
-  },
-  "@letterCancellationScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@letterCancellationSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "String"
-      }
-    }
-  },
-  "@sternbergTaskScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@targetNumberSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "int"
-      }
-    }
-  },
-  "@perspectiveTakingSubtitle": {
-    "placeholders": {
-      "targetDirName": {
-        "type": "String"
-      }
-    }
-  },
-  "@operationSpanScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@magicSquaresSubtitle": {
-    "placeholders": {
-      "targetSum": {
-        "type": "int"
-      }
-    }
-  },
-  "@blockCount3DWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@classicMazeWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@faceTraitAssociationPersonOf": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@faceTraitAssociationScoreMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "@vocabularyBuilderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@colorMatchMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@semanticLinkMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@reflexTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@angleFinderMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@angleFinderText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@visualStatisticalLearningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@nonogramText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@mentalCalendarMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@orbitTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@schulteTableMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sdmtMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@letterFrequencyScanMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@letterFrequencyScanText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@oneLetterShiftMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@fractionMatcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@spellingSprintMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@stopSignalMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@grammarPoliceMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@consonantReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@rhymeMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@vigilanceTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@fibonacciMergeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@factorFinderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@logicalSyllogismsMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@compoundConnectMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@reverseStroopMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@corsiBlocksMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordLadderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@d2AttentionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sentenceUnscrambleMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@symbolicFlankerMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@stroopTestMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wisconsinCardSortingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@nBackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@rhythmMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@groceryListMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@moduloClockMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@moduloClockMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@dualCodingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@inequalityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sourceMonitoringMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@target10Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@topologyText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@anagramDefinitionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@game2048Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "@game2048Message1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@numericalEstimationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@grammarSortMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@vowelReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialConflictMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@tracePathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@ruleSwitcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@collatzMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@divisibilityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@switchTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sequenceSleuthMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@changeBlindnessMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@mentalRotationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordMastermindMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordMastermindMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@wordMastermindText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@oxymoronHuntMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@spotlightTrackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@vennNumbersMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sumSnakeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@percentagePeakMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@trailMakingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@matrixReasoningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@klotskiMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@sumPyramidMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@simonCommandMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@simonCommandMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@syllableStackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@quickMathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@commonDenominatorMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@chainReactionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@chainReactionText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@portmanteauSplitMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@alphabetSudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@binaryCodeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@binaryCodeMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "@oddOneOutMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@oddOneOutMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
-  "@letterBridgeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "soptTitle": "Kendi Kendine Sıralanan İşaretleme",
   "soptSubtitle": "Her seferinde farklı bir karta dokunun. Pozisyonlar değişiyor!",
   "soptWinTitle": "Sıra Ustası!",
@@ -1926,125 +1015,6 @@
   "cabinetItemLock": "Kilit",
   "cabinetItemPet": "Evcil Hayvan",
   "cabinetItemCar": "Araba",
-  "@soptGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@contRecogGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dnmsGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@symSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@countingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@countingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@objDispGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@mandalaGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanPrepareRecall": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEnterLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanRecallLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEntered": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialCabinetGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@spatialCabinetWhereIs": {
-    "placeholders": {
-      "itemName": {
-        "type": "String"
-      }
-    }
-  },
   "gamesTitleLabel": "OYUNLAR",
   "yourFavorites": "FAVORİLERİNİZ",
   "readyForWorkout": "GÜNLÜK ANTRENMANINIZ İÇİN HAZIR MISINIZ?",
@@ -2143,35 +1113,282 @@
   "klotskiTitle": "Klotski Kaçışı",
   "klotskiSubtitle": "ÇIKIŞLARA ULAŞMAK İÇİN BLOKLARI KAYDIRIN.",
   "homophoneHuntSubtitle": "Doğru yazılmış eşsesliyi seçin",
-  "compassMazeCongrats": "Uzman navigasyon! Değişen yönler arasından çıkışı buldunuz.",
-  "compassMazeMessage": "Pusulayı kullanarak labirentte yolunuzu bulun.",
-  "compassMazeSubtitle": "Hareket yönlerinin pusula yönünüze göre değiştiği bir labirentte gezinin.",
-  "compassMazeTitle": "Pusula Labirenti",
-  "complexFoldingNetsCongrats": "Gelişmiş katlama mantığı! 3D formu başarıyla görselleştirdiniz.",
-  "complexFoldingNetsSubtitle": "Standart olmayan bir 2D ağın katlanmasıyla hangi karmaşık 3D şeklin oluşacağını belirleyin.",
-  "complexFoldingNetsTitle": "Katlama Ağları",
-  "crossSectionSliceCongrats": "İnanılmaz 3D görselleştirme! O şeklin içini tam olarak gördünüz.",
-  "crossSectionSliceSubtitle": "Belirli bir açıdan bir 3D nesnenin doğru 2D kesitini belirleyin.",
-  "crossSectionSliceTitle": "Kesit Dilimi",
-  "interlockPuzzleCongrats": "Mantıksal yapısöküm! Bulmacayı mükemmel bir şekilde çözdünüz.",
-  "interlockPuzzleSubtitle": "Karmaşık kilitli blokları doğru sırayla sökün veya birleştirin.",
-  "interlockPuzzleTitle": "Kenetli Bulmaca",
-  "laserLinkCongrats": "Hassas yansıma! Tüm ızgaraya başarıyla güç verdiniz.",
-  "laserLinkSubtitle": "Lazerleri yansıtmak ve tüm hedefleri güçlendirmek için aynaları döndürün.",
   "laserLinkTitle": "Lazer Bağlantısı",
-  "negativeSpaceDetectionCongrats": "Keskin algı! Orada olmayanı görme sanatında ustalaştınız.",
-  "negativeSpaceDetectionMessage": "Boşluktaki gizli nesneyi tanımlayın.",
-  "negativeSpaceDetectionSubtitle": "Nesneler arasındaki boş alanın oluşturduğu şekli tanımlayın.",
-  "negativeSpaceDetectionTitle": "Negatif Alan",
-  "pathIntersectCongrats": "Senkronize navigasyon! Tüm hedeflere kusursuz bir şekilde ulaştınız.",
-  "pathIntersectSubtitle": "Çarpışma olmadan ilgili hedeflerine ulaşmak için aynı anda birden fazla yolda gezinin.",
-  "pathIntersectTitle": "Yol Kesişimi",
+  "laserLinkSubtitle": "Lazerleri yansıtmak ve tüm hedefleri güçlendirmek için aynaları döndürün.",
+  "laserLinkCongrats": "Hassas yansıma! Tüm ızgaraya başarıyla güç verdiniz.",
+  "crossSectionSliceTitle": "Kesit Dilimi",
+  "crossSectionSliceSubtitle": "Belirli bir açıdan bir 3D nesnenin doğru 2D kesitini belirleyin.",
+  "crossSectionSliceCongrats": "İnanılmaz 3D görselleştirme! O şeklin içini tam olarak gördünüz.",
+  "shadowPivotTitle": "Gölge Ekseni",
   "shadowPivotCongrats": "Dinamik mekansal akıl yürütme! Işık ve gölgede ustalaştınız.",
   "shadowPivotSubtitle": "Farklı eksenlerde dönerken bir 3D nesnenin oluşturduğu gölgeyi tahmin edin.",
-  "shadowPivotTitle": "Gölge Ekseni",
-  "shapeEllipse": "ELİPS",
-  "shapeRectangle": "DİKDÖRTGEN",
-  "shapeTrapezoid": "YAMUK",
+  "interlockPuzzleTitle": "Kenetli Bulmaca",
+  "interlockPuzzleSubtitle": "Karmaşık kilitli blokları doğru sırayla sökün veya birleştirin.",
+  "interlockPuzzleCongrats": "Mantıksal yapısöküm! Bulmacayı mükemmel bir şekilde çözdünüz.",
+  "pathIntersectTitle": "Yol Kesişimi",
+  "pathIntersectSubtitle": "Çarpışma olmadan ilgili hedeflerine ulaşmak için aynı anda birden fazla yolda gezinin.",
+  "pathIntersectCongrats": "Senkronize navigasyon! Tüm hedeflere kusursuz bir şekilde ulaştınız.",
+  "negativeSpaceDetectionTitle": "Negatif Alan",
+  "negativeSpaceDetectionSubtitle": "Nesneler arasındaki boş alanın oluşturduğu şekli tanımlayın.",
+  "negativeSpaceDetectionCongrats": "Keskin algı! Orada olmayanı görme sanatında ustalaştınız.",
+  "compassMazeTitle": "Pusula Labirenti",
+  "compassMazeSubtitle": "Hareket yönlerinin pusula yönünüze göre değiştiği bir labirentte gezinin.",
+  "compassMazeCongrats": "Uzman navigasyon! Değişen yönler arasından çıkışı buldunuz.",
+  "complexFoldingNetsTitle": "Katlama Ağları",
+  "complexFoldingNetsSubtitle": "Standart olmayan bir 2D ağın katlanmasıyla hangi karmaşık 3D şeklin oluşacağını belirleyin.",
+  "complexFoldingNetsCongrats": "Gelişmiş katlama mantığı! 3D formu başarıyla görselleştirdiniz.",
+  "compassMazeMessage": "Pusulayı kullanarak labirentte yolunuzu bulun.",
+  "negativeSpaceDetectionMessage": "Boşluktaki gizli nesneyi tanımlayın.",
+  "shikakuTitle": "Şikaku",
+  "shikakuSubtitle": "IZGARAYI RAKAMLARLA EŞLEŞEN KARELERE VE DİKDÖRTGENLERE BÖLÜN.",
+  "countdownMathTitle": "Geri Sayım Matematik",
+  "countdownMathSubtitle": "ÜÇ BASAMAKLI HEDEFİ HESAPLAMAK İÇİN RASTGELE SAYILARI BİRLEŞTİRİN.",
+  "narrativeRecallTitle": "Anlatı Hatırlama",
+  "narrativeRecallSubtitle": "BİR HİKAYEYİ OKUYUN VE BELİRLİ SAYISAL VE GERÇEK DETAYLARI HATIRLAYIN.",
+  "shellGameTitle": "Kabuk Oyunu",
+  "shellGameSubtitle": "KARIŞTIRMA BARDAKLARI YERLERİ DEĞİŞTİRİRKEN GİZLİ BİR TOPU TAKİP EDİN.",
+  "typoglycemiaDecoderTitle": "Tipoglisemi Kod Çözücü",
+  "typoglycemiaDecoderSubtitle": "KARIŞIK CÜMLELERİ ÇÖZÜN VE HIZLA OKUYUN.",
+  "shapeShifterTitle": "Şekil Değiştirici",
+  "shapeShifterSubtitle": "Hedef şekil-renk kombinasyonuna dokunun.",
+  "gokigenNanameTitle": "Gökigen Adı",
+  "gokigenNanameSubtitle": "Döngüler olmadan noktaları birleştirmek için köşegenler çizin.",
+  "matrixMultiplierTitle": "Matris Çarpanı",
+  "matrixMultiplierSubtitle": "Hedefe çarpmak için bir satır ve sütun seçin.",
+  "wordAssociationRecallTitle": "Kelime Derneği",
+  "wordAssociationRecallSubtitle": "Eşleştirilmiş sözcük ilişkilerini bellekten hatırlayın.",
+  "gearRotationTitle": "Dişli Dönüşü",
+  "gearRotationSubtitle": "Son dişlinin dönüş yönünü tahmin edin.",
+  "wordWheelTitle": "Kelime Çarkı",
+  "wordWheelSubtitle": "Ortadaki harf de dahil olmak üzere çarktaki harfleri kullanarak kelimeler oluşturun.",
+  "oddEvenFlashTitle": "Tek-Çift Flaş",
+  "oddEvenFlashSubtitle": "Sayı eşliğini hızla renk kuralıyla eşleştirin.",
+  "norinoriTitle": "Norinori",
+  "norinoriSubtitle": "Her odada tam olarak birbirine bağlı iki hücreyi gölgeleyin.",
+  "algebraicBalanceTitle": "Cebirsel Denge",
+  "algebraicBalanceSubtitle": "Hedef toplamı bulmak için denklemleri çözün.",
+  "patternSequenceDrawTitle": "Desen Hatırlama",
+  "patternSequenceDrawSubtitle": "Izgaradaki animasyonlu yol dizisini tekrarlayın.",
+  "tangramTitle": "Tangram Yapboz",
+  "tangramSubtitle": "Hedef silueti dolduracak şekilde şekilleri düzenleyin.",
+  "semanticAssociationTitle": "Dernek Kelimesi",
+  "semanticAssociationSubtitle": "Üç ipucunun hepsini birbirine bağlayan kelimeyi bulun.",
+  "peripheralFocusTitle": "Çevresel Odak",
+  "peripheralFocusSubtitle": "Matematik çözerken yanıp sönen yan panellere tepki verin.",
+  "masyuTitle": "Masyu Döngüsü",
+  "masyuSubtitle": "Masyu daire kurallarına uygun tek bir döngü çizin.",
+  "mathMazeTitle": "Matematik Labirenti",
+  "mathMazeSubtitle": "Hedef toplam olarak değerlendirilen bir yol izleyin.",
+  "storyBuilderTitle": "Hikaye Oluşturucu",
+  "storyBuilderSubtitle": "Hikayenin kronolojik sırasını yeniden oluşturun.",
+  "mirrorMazeTitle": "Ayna Labirenti",
+  "mirrorMazeSubtitle": "Çapraz aynalar kullanarak lazer ışınını yönlendirin.",
+  "wordGridConnectionTitle": "Kelime Bağlantıları",
+  "wordGridConnectionSubtitle": "16 kelimeyi dörtlü dört kategoriye ayırın.",
+  "shapeShifterPeripheralTitle": "Çevresel Şekiller",
+  "shapeShifterPeripheralSubtitle": "Merkezi değerleri eşleştirirken çevresel şekil değişikliklerini izleyin.",
+  "soundWaveMatchTitle": "Ses Dalgası Eşleşmesi",
+  "soundWaveMatchSubtitle": "Görsel dalga frekansı perde değişiklikleriyle aynı hizaya geldiğinde dokunun.",
+  "multiTrackCounterTitle": "Çok Kanallı Sayaç",
+  "multiTrackCounterSubtitle": "Herhangi bir sayaç hedef çarpana yükseldiğinde dokunun.",
+  "colorWordMatchUpTitle": "Renk Eşleştirme",
+  "colorWordMatchUpSubtitle": "Değişen kurallara göre iki renkli kelimenin eşleşip eşleşmediğini belirleyin.",
+  "signalAndNoiseTitle": "Sinyal ve Gürültü",
+  "signalAndNoiseSubtitle": "Statik gürültüde gizlenmiş hedef alfanümerik karakterleri bulun.",
+  "focusTunnelTitle": "Odak Tüneli",
+  "focusTunnelSubtitle": "Hareketli tünel duvarlarında görünen eşleşen sembolleri tanımlayın.",
+  "targetPursuerTitle": "Hedef Takipçisi",
+  "targetPursuerSubtitle": "Birden fazla örtüşen daireyi takip edin ve orijinal hedefi seçin.",
+  "gridGazeTitle": "Izgara Bakışı",
+  "gridGazeSubtitle": "Hangi ızgara hücresinin farklı bir süre ile yanıp söndüğünü belirleyin.",
+  "doubleTroubleTitle": "Çifte Sorun",
+  "doubleTroubleSubtitle": "Bölünmüş ekranda aynı anda iki ayrı basit oyunu oynayın.",
+  "syncRhythmTitle": "Ritim Senkronizasyonu",
+  "syncRhythmSubtitle": "Görsel metronom taraması senkoplu vuruşla eşleştiğinde dokunun.",
+  "ghostTapTitle": "Hayalet Musluk",
+  "ghostTapSubtitle": "Görünmez nabız maksimum yüksekliğe ulaştığında dokunun.",
+  "attentionalRsvpTitle": "Dikkatli RSVP",
+  "attentionalRsvpSubtitle": "Hızlı seri harf flaşında görünen rakamları tanımlayın.",
+  "colorMazeNavTitle": "Renkli Labirent Gezintisi",
+  "colorMazeNavSubtitle": "Dinamik izin renkleriyle eşleşen labirent döşemelerinde gezinin.",
+  "dynamicSalienceTitle": "Dinamik Belirginlik",
+  "dynamicSalienceSubtitle": "Biraz farklı dinamiklerle hareket eden şekli bulun.",
+  "chalkAndTalkTitle": "Tebeşir ve Konuşma",
+  "chalkAndTalkSubtitle": "Görsel dikkat dağıtıcı unsurları göz ardı ederek sesli olarak duyulan kelimeleri yazın.",
+  "blinkDetectorTitle": "Göz Kırpma Dedektörü",
+  "blinkDetectorSubtitle": "Art arda iki kez yanıp sönen ızgara yüzüne dokunun.",
+  "frequencyTapTitle": "Frekans Dokunuşu",
+  "frequencyTapSubtitle": "Hedef ışık darbe frekansıyla eşleşen düğmeye dokunun.",
+  "yajilinTitle": "Yajilin",
+  "yajilinSubtitle": "Siyah hücreleri yerleştirin ve ipuçlarıyla eşleşen tek bir döngü çizin.",
+  "heyawakeTitle": "Heyawake",
+  "heyawakeSubtitle": "Bitişik siyah hücreleri olmayan gölge ızgaralı odalar.",
+  "gokigenVariantTitle": "Gokigen Varyantı",
+  "gokigenVariantSubtitle": "Köşe sayılarını karşılayan döngü içermeyen köşegenler çizin.",
+  "sheepAndWolvesTitle": "Koyun ve Kurtlar",
+  "sheepAndWolvesSubtitle": "Koyunları kurtlardan ayıran bir halka çizin.",
+  "islandNurikabeTitle": "Nurikabe Adası",
+  "islandNurikabeSubtitle": "Sayısal boyut kısıtlamalarına uyan adalar oluşturun.",
+  "shakashakaTitle": "Shakashaka Rektleri",
+  "shakashakaSubtitle": "Dikdörtgen beyaz alanlar oluşturacak şekilde üçgen fayanslar yerleştirin.",
+  "litsTetrisTitle": "LITS Tetromino",
+  "litsTetrisSubtitle": "Tetrominoları bitişik kopyaların bulunmadığı odalara yerleştirin.",
+  "tapaWallTitle": "Tapa Duvarı",
+  "tapaWallSubtitle": "Sürekli bir siyah duvar deseni oluşturmak için hücreleri gölgeleyin.",
+  "triangularBridgesTitle": "Üçgen Köprüler",
+  "triangularBridgesSubtitle": "Gereksinimleri karşılayan adaları 3 yönde bağlayın.",
+  "rippleEffectTitle": "Dalgalanma Etkisi",
+  "rippleEffectSubtitle": "Odalardaki sayıları aralık mesafesi sınırlamalarına uygun şekilde doldurun.",
+  "suguruTectonicTitle": "Suguru Izgarası",
+  "suguruTectonicSubtitle": "Oda bloklarını, komşuları eşit olmayan 1'den K'ye kadar olan sayılarla doldurun.",
+  "tennerGridTitle": "Tenner Izgarası",
+  "tennerGridSubtitle": "Satırları, sütun toplamlarıyla eşleşen 0-9 arasındaki rakamlarla doldurun.",
+  "kakurasuSumsTitle": "Kakurasu Toplamları",
+  "kakurasuSumsSubtitle": "Ağırlıklı satır/sütun dizin toplamlarını karşılamak için hücreleri gölgeleyin.",
+  "corralLoopTitle": "Ağıl Döngüsü",
+  "corralLoopSubtitle": "Görünürlükle eşleşen sayıları çevreleyen tek bir döngü çizin.",
+  "stostoneTitle": "Stostone Yerçekimi",
+  "stostoneSubtitle": "Alt satırları mükemmel şekilde doldurmak için aşağı açılan hücreleri gölgeleyin.",
+  "tripletsLogicTitle": "Üçüzler Üçlüsü",
+  "tripletsLogicSubtitle": "Izgarayı arka arkaya üçten kaçınarak üç şekille doldurun.",
+  "galaxiesSymTitle": "Galaksi Simetrisi",
+  "galaxiesSymSubtitle": "Izgarayı dönme simetrik galaksi şekillerine bölün.",
+  "matrixMultiplierMatchTitle": "Matris Eşleştirici",
+  "matrixMultiplierMatchSubtitle": "Hedef nokta çarpımını eşleştirmek için satır ve sütun değerlerini çarpın.",
+  "primeFactorTreesTitle": "Prime Faktör Ağaçları",
+  "primeFactorTreesSubtitle": "Bileşik sayıları asal yaprak faktörü çiftlerine ayrıştırın.",
+  "vektorVectorTitle": "vektör vektör",
+  "vektorVectorSubtitle": "Toplamlarının hedefe ulaşması için vektörleri ölçeklendirin.",
+  "binomialMatchTitle": "Binom Eşleşmesi",
+  "binomialMatchSubtitle": "İkinci dereceden formülleri çarpanlara ayrılmış binom değerleriyle eşleştirin.",
+  "percentageShoppingTitle": "Yüzde Alışveriş",
+  "percentageShoppingSubtitle": "İndirim yüzdelerini ve son ödeme toplamlarını hesaplayın.",
+  "cryptoArithmeticTitle": "Kripto-Aritmetik",
+  "cryptoArithmeticSubtitle": "Karakter-rakam ikamesi şifre matematik problemlerini kırın.",
+  "fractionalPizzaTitle": "Fraksiyonel Pizza",
+  "fractionalPizzaSubtitle": "Hedef toplam kesirlerine uyacak şekilde pizza dilimlerini bölümlere ayırın.",
+  "numberBondsTitle": "Sayı Tahvili",
+  "numberBondsSubtitle": "Düğüm değerlerini hedef bağlantı toplamına eşit olacak şekilde bağlayın.",
+  "gridSumLineTitle": "Izgara Toplama Çizgisi",
+  "gridSumLineSubtitle": "Değerleri tam olarak hedefe göre değerlendirilen bir yol çizin.",
+  "binaryScaleBalanceTitle": "İkili Ölçek Dengesi",
+  "binaryScaleBalanceSubtitle": "İki bloğun kuvvetini kullanarak ondalık ağırlığı dengeleyin.",
+  "moduloPathTitle": "Modulo Yolu",
+  "moduloPathSubtitle": "Modülo kalan değerleriyle eşleşen ızgara hücrelerini çaprazlayın.",
+  "digitSwapEqTitle": "Rakam Değiştirme Denklemleri",
+  "digitSwapEqSubtitle": "Her ikisini de düzeltmek için denklemler arasındaki tek rakamları değiştirin.",
+  "areaPerimeterMatchTitle": "Alan ve Çevre",
+  "areaPerimeterMatchSubtitle": "Hedef alan ve çevre değerleriyle eşleşen dikdörtgenler çizin.",
+  "inequalityBalanceOpsTitle": "Eşitsizlik Dengesi",
+  "inequalityBalanceOpsSubtitle": "Eşitsizlik sembollerini karmaşık matematik terimleri arasına yerleştirin.",
+  "graphCoordinatePlotTitle": "Grafik Çizici",
+  "graphCoordinatePlotSubtitle": "Doğrusal/ikinci dereceden eğrilerle eşleşen ızgara koordinatlarını çizin.",
+  "baseConversionRunTitle": "Temel Dönüşüm",
+  "baseConversionRunSubtitle": "Değerleri ikili, ondalık, onaltılı ve sekizli arasında dönüştürün.",
+  "unitConverterProTitle": "Birim Dönüştürücü",
+  "unitConverterProSubtitle": "Hızlı birim dönüşümlerini zaman sınırları altında yanıtlayın.",
+  "auditoryNBackTitle": "İşitsel N-Geri",
+  "auditoryNBackSubtitle": "Bellekten N adım geri duyulan duyulan harfleri eşleştirin.",
+  "abstractPatternRecallTitle": "Desen Katmanlama",
+  "abstractPatternRecallSubtitle": "Bellek çalışmalarından katmanlı renkli şekilleri yeniden oluşturun.",
+  "roomInspectorTitle": "Oda Müfettişi",
+  "roomInspectorSubtitle": "Ekran boşken yapılan mobilya değişikliklerini tanımlayın.",
+  "voiceToFaceMatchTitle": "Ses-Yüz Eşleşmesi",
+  "voiceToFaceMatchSubtitle": "Konuşulan ses klibiyle ilişkili doğru yüzü seçin.",
+  "spatialGridMemory3DTitle": "3D Uzaysal Bellek",
+  "spatialGridMemory3DSubtitle": "Döndürülmüş bir 3B küp ızgara yapısındaki parlatılmış blokları hatırlayın.",
+  "sequenceStackTitle": "Sıra Yığını",
+  "sequenceStackSubtitle": "Plaka yığını ekleme ve çıkarma işlemlerini sırayla yeniden oluşturun.",
+  "semanticCategoryRecallTitle": "Kategori Geri Çağırma",
+  "semanticCategoryRecallSubtitle": "İstenen kategori hedefleriyle eşleşen çalışma sözcüklerini belirleyin.",
+  "gridDisplacementTitle": "Izgara Yer Değiştirme",
+  "gridDisplacementSubtitle": "Düzeni orijinalle karşılaştırarak kaydırılan simgeleri tanımlayın.",
+  "soundSequenceMatchTitle": "Ses Sırası Eşleşmesi",
+  "soundSequenceMatchSubtitle": "Sanal klavyede çalınan nota dizilerini tekrarlayın.",
+  "cardCountingMemoryTitle": "Kart Sayacı",
+  "cardCountingMemorySubtitle": "Sürekli kart dağıtma çalıştırmalarında halihazırda dağıtılmış olan kartları tanımlayın.",
+  "directionsRecallTitle": "Yol Tarifini Geri Çağırma",
+  "directionsRecallSubtitle": "Bellekteki yol yönleriyle eşleşen ızgara haritalarında gezinin.",
+  "eventTimelineMemoryTitle": "Etkinlik Zaman Çizelgesi",
+  "eventTimelineMemorySubtitle": "Tarihsel/kurgusal olay kartlarını kronolojik olarak düzenleyin.",
+  "featureMatrixRecallTitle": "Özellik Matrisi",
+  "featureMatrixRecallSubtitle": "Yanıt sorgusu, hücre şekli-renk nitelikleri hakkında bilgi ister.",
+  "delayedMatchSampleTitle": "Gecikmeli Maç",
+  "delayedMatchSampleSubtitle": "Matematik çeldiricilerini çözdükten sonra hedef sembolü eşleştirin.",
+  "symbolDigitAssocTitle": "Sembol-Rakam Doç.",
+  "symbolDigitAssocSubtitle": "Rakam tuşlarıyla eşleşen sembol çeviri sayfalarını çözün.",
+  "dualTaskMemoryTitle": "Çift Görevli Bellek",
+  "dualTaskMemorySubtitle": "Hızlı aritmetik görevleri çözerken kelime kümelerini ezberleyin.",
+  "actionSequenceRecallTitle": "Eylem Hatırlama",
+  "actionSequenceRecallSubtitle": "Karakter hareketi animasyon dizilerini sırayla tekrarlayın.",
+  "tangramPolygonTitle": "Tangram Fiti",
+  "tangramPolygonSubtitle": "Çokgen şekillerini siluet ana hatlarını dolduracak şekilde düzenleyin.",
+  "mazeNav3DTitle": "3D Labirent Gezintisi",
+  "mazeNav3DSubtitle": "Birinci şahıs bakış açısıyla 3D izometrik labirent rotalarında gezinin.",
+  "isometricProjectionTitle": "İzometrik Projektör",
+  "isometricProjectionSubtitle": "3B blok şekillerini ortografik 2B üst/ön görünümlerle eşleştirin.",
+  "polyominoPackingTitle": "Polyomino Ambalaj",
+  "polyominoPackingSubtitle": "Rastgele polyomino blok parçalarını hedef alanlara paketleyin.",
+  "spatialGridRotationTitle": "Uzamsal Izgara Döndürme",
+  "spatialGridRotationSubtitle": "Eksen koordinatları boyunca döndürülmüş 3B blok düzenlemelerini eşleştirin.",
+  "wireLoopGameTitle": "Tel Döngü",
+  "wireLoopGameSubtitle": "Metal halkaları tel kamaları boyunca temas etmeden sürükleyin.",
+  "origamiUnfoldTitle": "Origami Açılımı",
+  "origamiUnfoldSubtitle": "Katlanmış sayfaları açtıktan sonra delik delme desenlerini belirleyin.",
+  "ropeTangleSolverTitle": "Halat Çözücü",
+  "ropeTangleSolverSubtitle": "Düzlemsel grafikleri sıfır çizgi geçişleriyle düzenlemek için düğümleri sürükleyin.",
+  "gridFitTetrisTitle": "Izgaraya Uyum Çözücü",
+  "gridFitTetrisSubtitle": "Statik düzensiz blokları konteyner sınırlarına uyacak şekilde düzenleyin.",
+  "vectorGridAlignmentTitle": "Vektör Hizalaması",
+  "vectorGridAlignmentSubtitle": "Şekilleri, gölge şablonu hedefleriyle eşleşecek şekilde ölçeklendirin ve döndürün.",
+  "blockStackingPhysicsTitle": "Blok İstifleme",
+  "blockStackingPhysicsSubtitle": "Yer çekimi ağırlığını dengeleyen düzensiz blok panelleri istifleyin.",
+  "crossSectionMatch3DTitle": "3D Kesit",
+  "crossSectionMatch3DSubtitle": "3B şekillerden kesilen 2B dilim geometrilerini tanımlayın.",
+  "symmetryPaintTitle": "Simetri Boyası",
+  "symmetryPaintSubtitle": "Simetri eksenleri boyunca yansıyan ayna görüntüsü parçaları çizin.",
+  "rollingBlockBloxTitle": "Yuvarlanan Blok",
+  "rollingBlockBloxSubtitle": "Hedef yuvalara dikey olarak inmek için blok parçalarını yuvarlayın.",
+  "perspectiveShiftViewTitle": "Perspektif Kayması",
+  "perspectiveShiftViewSubtitle": "Blok kümelerini harfleri/kelimeleri yazana kadar döndürün.",
+  "networkFlowSphericalTitle": "Ağ Akışı",
+  "networkFlowSphericalSubtitle": "Silindirik koordinatları sararak ızgara akışlarını bağlayın.",
+  "layeredSilhouetteBlendTitle": "Siluet Karışımı",
+  "layeredSilhouetteBlendSubtitle": "Hedef yarı saydam şekillere uyacak şekilde renkli katmanları yığın.",
+  "wordWheelPangramTitle": "Kelime Anagramları",
+  "wordWheelPangramSubtitle": "Tekerleklerden merkezi hedef harfleri içeren kelimeler oluşturun.",
+  "letterGridSwapperTitle": "Mektup Değiştirici",
+  "letterGridSwapperSubtitle": "Satır ve sütun sözcüklerini tamamlamak için bitişik harf döşemelerini değiştirin.",
+  "synonymMatchTitle": "Eş Anlamlı Eşleşme",
+  "synonymMatchSubtitle": "Düşen kelime hedeflerini eş anlamlı veya zıt anlamlı kelimelerle eşleştirin.",
+  "vowelDropTitle": "Ünlü Damlası",
+  "vowelDropSubtitle": "Kelimeleri tamamlayan sesli harfleri koordinat ızgaralarına bırakın.",
+  "letterBalanceScaleTitle": "Kelime Dengesi Ölçeği",
+  "letterBalanceScaleSubtitle": "Harf değerleri ağırlıkları dengeleyen kelimeleri heceleyin.",
+  "wordChainShiritoriTitle": "Kelime Zinciri",
+  "wordChainShiritoriSubtitle": "Önceki harf çıktılarından başlayarak kelime döngülerini bağlayın.",
+  "affixBuilderTitle": "Ekleme Oluşturucu",
+  "affixBuilderSubtitle": "Hedef sözcükleri oluşturmak için önekleri/sonekleri birleştirin.",
+  "decipherCrypticCluesTitle": "Şifreli Deşifre",
+  "decipherCrypticCluesSubtitle": "Kelime oyunu bulmacalarını çözün ve yazım bilmecelerinin şifresini çözün.",
+  "boggleWordSearchTitle": "Boggle Bağlantısı",
+  "boggleWordSearchSubtitle": "Gizli kelimeleri bulmak için bitişik bağlantılı yolları takip edin.",
+  "idiomUnscrambleTitle": "Deyim Çözme",
+  "idiomUnscrambleSubtitle": "Karmaşık kelime dizilerini deyim anlamlarıyla eşleşecek şekilde düzenleyin.",
+  "letterPyramidsTitle": "Harf Piramitleri",
+  "letterPyramidsSubtitle": "Katman başına tek anagram harfleri ekleyerek kelime kuleleri oluşturun.",
+  "soundAlikeHomophonesTitle": "Homofoni Eşleşmeleri",
+  "soundAlikeHomophonesSubtitle": "Cümlelerin doğru sesteş yazılışlarını belirleyin.",
+  "wordGridSudokuTitle": "Kelime Sudoku",
+  "wordGridSudokuSubtitle": "Kelimeleri oluşturan ızgara satırlarındaki harfleri mozaikleyin.",
+  "portmanteauFactoryTitle": "Portmanteau Fabrikası",
+  "portmanteauFactorySubtitle": "Bileşik sözcükler oluşturarak anlamsal bileşenleri birleştirin.",
+  "codedCrosswordsCodeTitle": "Kod Kelimeleri Bulmaca",
+  "codedCrosswordsCodeSubtitle": "Sayılardan harflere kodlarla eşleşen ızgara bulmacalarını çözün.",
+  "wordSnakeTrailTitle": "Kelime Yılanı",
+  "wordSnakeTrailSubtitle": "Tematik kelimeleri yazan yılan benzeri harf izlerini takip edin.",
+  "typingRhythmSpeedTitle": "Yazma Akışı",
+  "typingRhythmSpeedSubtitle": "Metronom ritim ritimleriyle eşleşen sözcükleri yazın.",
   "errorSomethingWrong": "Something went wrong",
   "errorUnexpected": "An unexpected error occurred",
   "errorTryAgain": "Try Again",
@@ -2181,35 +1398,11 @@
   "statsAchievements": "Achievements",
   "statsWeeklyActivity": "Weekly Activity",
   "statsDayStreak": "{days} Day Streak",
-  "@statsDayStreak": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
   "statsTotalXp": "Total XP",
   "statsSolved": "Solved",
   "statsLevel": "Level {level}",
-  "@statsLevel": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsMaintainStreak": "Maintain your streak!",
   "statsPercentToLevel": "{percent}% to Level {level}",
-  "@statsPercentToLevel": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      },
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsCognitiveProfile": "Cognitive Profile",
   "statsLocked": "Locked",
   "achievementSeeker": "Seeker",
@@ -2333,24 +1526,19 @@
   "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
   "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
   "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
-  "@snackbarWordMustContainCentral": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarWordAlreadyFound": "Word already found!",
   "snackbarNotAValidWord": "Not a valid word!",
   "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
   "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectCorrectAnswer": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
+  "hideGame": "Gizle",
+  "unhideGame": "Göster",
+  "favoriteGame": "Favori",
+  "unfavoriteGame": "Favorilerden Çıkar",
+  "hiddenGames": "GİZLİ OYUNLAR",
+  "showHiddenGames": "Gizli Oyunları Göster ({count})",
+  "noHiddenGames": "Gizli oyun yok",
+  "gameHidden": "Oyun gizlendi",
+  "undo": "Geri Al",
   "snackbarCorrect": "Correct!",
   "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
   "snackbarAllCorrect": "All associations correct!",
@@ -2360,165 +1548,31 @@
   "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
   "snackbarPieceDoesNotFit": "Piece does not fit there!",
   "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
-  "@snackbarInvalidStep": {
-    "placeholders": {
-      "mod": {
-        "type": "int"
-      },
-      "modulus": {
-        "type": "int"
-      },
-      "remainder": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
-  "@snackbarIncorrectGroup": {
-    "placeholders": {
-      "tries": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
   "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
-  "@snackbarIncorrectDestination": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
-  "@snackbarIncorrectCorrectCount": {
-    "placeholders": {
-      "suit": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
   "snackbarSequenceMatched": "Sequence matched! Increasing length...",
   "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
   "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
-  "@snackbarIncorrectCorrectValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
-  "@snackbarIncorrectSlices": {
-    "placeholders": {
-      "selected": {
-        "type": "int"
-      },
-      "required": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
   "snackbarCorrectOrder": "Correct chronological order!",
   "snackbarIncorrectOrder": "Incorrect order! Study again.",
   "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
-  "@snackbarIncorrectMissingValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
-  "@snackbarIncorrectLetterDigit": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      },
-      "digit": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
-  "@snackbarIncorrectCorrectPoint": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarReachedExit": "Reached the exit! Generating next maze...",
   "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
   "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
-  "@snackbarIncorrectCorrectStack": {
-    "placeholders": {
-      "stack": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
   "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
-  "@snackbarScaleNotBalanced": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
   "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
   "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
-  "@snackbarIncorrectCorrectForm": {
-    "placeholders": {
-      "form": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
-  "@snackbarIncorrectInequality": {
-    "placeholders": {
-      "left": {
-        "type": "String"
-      },
-      "leftVal": {
-        "type": "int"
-      },
-      "correct": {
-        "type": "String"
-      },
-      "right": {
-        "type": "String"
-      },
-      "rightVal": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectBaseConversion": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
   "snackbarAlignedCorrectly": "Aligned and correctly identified!",
   "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
@@ -2538,6 +1592,8 @@
   "btnImReadyToAnswer": "I'm Ready to Answer",
   "btnNoMatch": "No Match",
   "btnMatch": "Match",
+  "btnMatchColor": "RENK EŞLEŞTİR",
+  "btnMatchWord": "KELİME EŞLEŞTİR",
   "btnGuess": "Guess",
   "btnPlayNow": "Play Now",
   "btnClear": "Clear",
@@ -2560,13 +1616,6 @@
   "phaseTapToAdd": "Tap to Add",
   "phaseCalculationLabel": "Calculation:",
   "phaseTimeLeft": "Time: {time}s",
-  "@phaseTimeLeft": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "phaseRemember2Back": "Remember 2 steps back",
   "phaseMatch": "Match",
   "hintTypeRhymingWord": "Type a rhyming word...",
@@ -2586,54 +1635,13 @@
   "feedbackFindNumber": "Find the number between 1 and 10,000!",
   "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
   "feedbackCorrectExcl": "Correct! The number was {number}.",
-  "@feedbackCorrectExcl": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackCorrectEmoji": "Correct!",
   "feedbackTooLow": "Too Low",
   "feedbackTooHigh": "Too High",
   "feedbackGameOver": "Game Over! The number was {number}.",
-  "@feedbackGameOver": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackGuessResult": "{guess} is {result}!",
-  "@feedbackGuessResult": {
-    "placeholders": {
-      "guess": {
-        "type": "int"
-      },
-      "result": {
-        "type": "String"
-      }
-    }
-  },
   "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
-  "@feedbackWinMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      },
-      "guesses": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackLoseMessage": "Out of guesses! The number was {number}.",
-  "@feedbackLoseMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "statTime": "Time",
   "statScore": "Score",
   "statGrid": "Grid",
@@ -2731,275 +1739,6 @@
   "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
   "correctExclEmoji": "Correct!",
   "wrongExcl": "Wrong!",
-  "abstractPatternRecallSubtitle": "Bellek çalışmalarından katmanlı renkli şekilleri yeniden oluşturun.",
-  "abstractPatternRecallTitle": "Desen Katmanlama",
-  "actionSequenceRecallSubtitle": "Karakter hareketi animasyon dizilerini sırayla tekrarlayın.",
-  "actionSequenceRecallTitle": "Eylem Hatırlama",
-  "affixBuilderSubtitle": "Hedef sözcükleri oluşturmak için önekleri/sonekleri birleştirin.",
-  "affixBuilderTitle": "Ekleme Oluşturucu",
-  "algebraicBalanceSubtitle": "Hedef toplamı bulmak için denklemleri çözün.",
-  "algebraicBalanceTitle": "Cebirsel Denge",
-  "areaPerimeterMatchSubtitle": "Hedef alan ve çevre değerleriyle eşleşen dikdörtgenler çizin.",
-  "areaPerimeterMatchTitle": "Alan ve Çevre",
-  "attentionalRsvpSubtitle": "Hızlı seri harf flaşında görünen rakamları tanımlayın.",
-  "attentionalRsvpTitle": "Dikkatli RSVP",
-  "auditoryNBackSubtitle": "Bellekten N adım geri duyulan duyulan harfleri eşleştirin.",
-  "auditoryNBackTitle": "İşitsel N-Geri",
-  "baseConversionRunSubtitle": "Değerleri ikili, ondalık, onaltılı ve sekizli arasında dönüştürün.",
-  "baseConversionRunTitle": "Temel Dönüşüm",
-  "binaryScaleBalanceSubtitle": "İki bloğun kuvvetini kullanarak ondalık ağırlığı dengeleyin.",
-  "binaryScaleBalanceTitle": "İkili Ölçek Dengesi",
-  "binomialMatchSubtitle": "İkinci dereceden formülleri çarpanlara ayrılmış binom değerleriyle eşleştirin.",
-  "binomialMatchTitle": "Binom Eşleşmesi",
-  "blinkDetectorSubtitle": "Art arda iki kez yanıp sönen ızgara yüzüne dokunun.",
-  "blinkDetectorTitle": "Göz Kırpma Dedektörü",
-  "blockStackingPhysicsSubtitle": "Yer çekimi ağırlığını dengeleyen düzensiz blok panelleri istifleyin.",
-  "blockStackingPhysicsTitle": "Blok İstifleme",
-  "boggleWordSearchSubtitle": "Gizli kelimeleri bulmak için bitişik bağlantılı yolları takip edin.",
-  "boggleWordSearchTitle": "Boggle Bağlantısı",
-  "cardCountingMemorySubtitle": "Sürekli kart dağıtma çalıştırmalarında halihazırda dağıtılmış olan kartları tanımlayın.",
-  "cardCountingMemoryTitle": "Kart Sayacı",
-  "chalkAndTalkSubtitle": "Görsel dikkat dağıtıcı unsurları göz ardı ederek sesli olarak duyulan kelimeleri yazın.",
-  "chalkAndTalkTitle": "Tebeşir ve Konuşma",
-  "codedCrosswordsCodeSubtitle": "Sayılardan harflere kodlarla eşleşen ızgara bulmacalarını çözün.",
-  "codedCrosswordsCodeTitle": "Kod Kelimeleri Bulmaca",
-  "colorMazeNavSubtitle": "Dinamik izin renkleriyle eşleşen labirent döşemelerinde gezinin.",
-  "colorMazeNavTitle": "Renkli Labirent Gezintisi",
-  "colorWordMatchUpSubtitle": "Değişen kurallara göre iki renkli kelimenin eşleşip eşleşmediğini belirleyin.",
-  "colorWordMatchUpTitle": "Renk Eşleştirme",
-  "corralLoopSubtitle": "Görünürlükle eşleşen sayıları çevreleyen tek bir döngü çizin.",
-  "corralLoopTitle": "Ağıl Döngüsü",
-  "countdownMathSubtitle": "ÜÇ BASAMAKLI HEDEFİ HESAPLAMAK İÇİN RASTGELE SAYILARI BİRLEŞTİRİN.",
-  "countdownMathTitle": "Geri Sayım Matematik",
-  "crossSectionMatch3DSubtitle": "3B şekillerden kesilen 2B dilim geometrilerini tanımlayın.",
-  "crossSectionMatch3DTitle": "3D Kesit",
-  "cryptoArithmeticSubtitle": "Karakter-rakam ikamesi şifre matematik problemlerini kırın.",
-  "cryptoArithmeticTitle": "Kripto-Aritmetik",
-  "decipherCrypticCluesSubtitle": "Kelime oyunu bulmacalarını çözün ve yazım bilmecelerinin şifresini çözün.",
-  "decipherCrypticCluesTitle": "Şifreli Deşifre",
-  "delayedMatchSampleSubtitle": "Matematik çeldiricilerini çözdükten sonra hedef sembolü eşleştirin.",
-  "delayedMatchSampleTitle": "Gecikmeli Maç",
-  "digitSwapEqSubtitle": "Her ikisini de düzeltmek için denklemler arasındaki tek rakamları değiştirin.",
-  "digitSwapEqTitle": "Rakam Değiştirme Denklemleri",
-  "directionsRecallSubtitle": "Bellekteki yol yönleriyle eşleşen ızgara haritalarında gezinin.",
-  "directionsRecallTitle": "Yol Tarifini Geri Çağırma",
-  "doubleTroubleSubtitle": "Bölünmüş ekranda aynı anda iki ayrı basit oyunu oynayın.",
-  "doubleTroubleTitle": "Çifte Sorun",
-  "dualTaskMemorySubtitle": "Hızlı aritmetik görevleri çözerken kelime kümelerini ezberleyin.",
-  "dualTaskMemoryTitle": "Çift Görevli Bellek",
-  "dynamicSalienceSubtitle": "Biraz farklı dinamiklerle hareket eden şekli bulun.",
-  "dynamicSalienceTitle": "Dinamik Belirginlik",
-  "eventTimelineMemorySubtitle": "Tarihsel/kurgusal olay kartlarını kronolojik olarak düzenleyin.",
-  "eventTimelineMemoryTitle": "Etkinlik Zaman Çizelgesi",
-  "featureMatrixRecallSubtitle": "Yanıt sorgusu, hücre şekli-renk nitelikleri hakkında bilgi ister.",
-  "featureMatrixRecallTitle": "Özellik Matrisi",
-  "focusTunnelSubtitle": "Hareketli tünel duvarlarında görünen eşleşen sembolleri tanımlayın.",
-  "focusTunnelTitle": "Odak Tüneli",
-  "fractionalPizzaSubtitle": "Hedef toplam kesirlerine uyacak şekilde pizza dilimlerini bölümlere ayırın.",
-  "fractionalPizzaTitle": "Fraksiyonel Pizza",
-  "frequencyTapSubtitle": "Hedef ışık darbe frekansıyla eşleşen düğmeye dokunun.",
-  "frequencyTapTitle": "Frekans Dokunuşu",
-  "galaxiesSymSubtitle": "Izgarayı dönme simetrik galaksi şekillerine bölün.",
-  "galaxiesSymTitle": "Galaksi Simetrisi",
-  "gearRotationSubtitle": "Son dişlinin dönüş yönünü tahmin edin.",
-  "gearRotationTitle": "Dişli Dönüşü",
-  "ghostTapSubtitle": "Görünmez nabız maksimum yüksekliğe ulaştığında dokunun.",
-  "ghostTapTitle": "Hayalet Musluk",
-  "gokigenNanameSubtitle": "Döngüler olmadan noktaları birleştirmek için köşegenler çizin.",
-  "gokigenNanameTitle": "Gökigen Adı",
-  "gokigenVariantSubtitle": "Köşe sayılarını karşılayan döngü içermeyen köşegenler çizin.",
-  "gokigenVariantTitle": "Gokigen Varyantı",
-  "graphCoordinatePlotSubtitle": "Doğrusal/ikinci dereceden eğrilerle eşleşen ızgara koordinatlarını çizin.",
-  "graphCoordinatePlotTitle": "Grafik Çizici",
-  "gridDisplacementSubtitle": "Düzeni orijinalle karşılaştırarak kaydırılan simgeleri tanımlayın.",
-  "gridDisplacementTitle": "Izgara Yer Değiştirme",
-  "gridFitTetrisSubtitle": "Statik düzensiz blokları konteyner sınırlarına uyacak şekilde düzenleyin.",
-  "gridFitTetrisTitle": "Izgaraya Uyum Çözücü",
-  "gridGazeSubtitle": "Hangi ızgara hücresinin farklı bir süre ile yanıp söndüğünü belirleyin.",
-  "gridGazeTitle": "Izgara Bakışı",
-  "gridSumLineSubtitle": "Değerleri tam olarak hedefe göre değerlendirilen bir yol çizin.",
-  "gridSumLineTitle": "Izgara Toplama Çizgisi",
-  "heyawakeSubtitle": "Bitişik siyah hücreleri olmayan gölge ızgaralı odalar.",
-  "heyawakeTitle": "Heyawake",
-  "idiomUnscrambleSubtitle": "Karmaşık kelime dizilerini deyim anlamlarıyla eşleşecek şekilde düzenleyin.",
-  "idiomUnscrambleTitle": "Deyim Çözme",
-  "inequalityBalanceOpsSubtitle": "Eşitsizlik sembollerini karmaşık matematik terimleri arasına yerleştirin.",
-  "inequalityBalanceOpsTitle": "Eşitsizlik Dengesi",
-  "islandNurikabeSubtitle": "Sayısal boyut kısıtlamalarına uyan adalar oluşturun.",
-  "islandNurikabeTitle": "Nurikabe Adası",
-  "isometricProjectionSubtitle": "3B blok şekillerini ortografik 2B üst/ön görünümlerle eşleştirin.",
-  "isometricProjectionTitle": "İzometrik Projektör",
-  "kakurasuSumsSubtitle": "Ağırlıklı satır/sütun dizin toplamlarını karşılamak için hücreleri gölgeleyin.",
-  "kakurasuSumsTitle": "Kakurasu Toplamları",
-  "layeredSilhouetteBlendSubtitle": "Hedef yarı saydam şekillere uyacak şekilde renkli katmanları yığın.",
-  "layeredSilhouetteBlendTitle": "Siluet Karışımı",
-  "letterBalanceScaleSubtitle": "Harf değerleri ağırlıkları dengeleyen kelimeleri heceleyin.",
-  "letterBalanceScaleTitle": "Kelime Dengesi Ölçeği",
-  "letterGridSwapperSubtitle": "Satır ve sütun sözcüklerini tamamlamak için bitişik harf döşemelerini değiştirin.",
-  "letterGridSwapperTitle": "Mektup Değiştirici",
-  "letterPyramidsSubtitle": "Katman başına tek anagram harfleri ekleyerek kelime kuleleri oluşturun.",
-  "letterPyramidsTitle": "Harf Piramitleri",
-  "litsTetrisSubtitle": "Tetrominoları bitişik kopyaların bulunmadığı odalara yerleştirin.",
-  "litsTetrisTitle": "LITS Tetromino",
-  "masyuSubtitle": "Masyu daire kurallarına uygun tek bir döngü çizin.",
-  "masyuTitle": "Masyu Döngüsü",
-  "mathMazeSubtitle": "Hedef toplam olarak değerlendirilen bir yol izleyin.",
-  "mathMazeTitle": "Matematik Labirenti",
-  "matrixMultiplierMatchSubtitle": "Hedef nokta çarpımını eşleştirmek için satır ve sütun değerlerini çarpın.",
-  "matrixMultiplierMatchTitle": "Matris Eşleştirici",
-  "matrixMultiplierSubtitle": "Hedefe çarpmak için bir satır ve sütun seçin.",
-  "matrixMultiplierTitle": "Matris Çarpanı",
-  "mazeNav3DSubtitle": "Birinci şahıs bakış açısıyla 3D izometrik labirent rotalarında gezinin.",
-  "mazeNav3DTitle": "3D Labirent Gezintisi",
-  "mirrorMazeSubtitle": "Çapraz aynalar kullanarak lazer ışınını yönlendirin.",
-  "mirrorMazeTitle": "Ayna Labirenti",
-  "moduloPathSubtitle": "Modülo kalan değerleriyle eşleşen ızgara hücrelerini çaprazlayın.",
-  "moduloPathTitle": "Modulo Yolu",
-  "multiTrackCounterSubtitle": "Herhangi bir sayaç hedef çarpana yükseldiğinde dokunun.",
-  "multiTrackCounterTitle": "Çok Kanallı Sayaç",
-  "narrativeRecallSubtitle": "BİR HİKAYEYİ OKUYUN VE BELİRLİ SAYISAL VE GERÇEK DETAYLARI HATIRLAYIN.",
-  "narrativeRecallTitle": "Anlatı Hatırlama",
-  "networkFlowSphericalSubtitle": "Silindirik koordinatları sararak ızgara akışlarını bağlayın.",
-  "networkFlowSphericalTitle": "Ağ Akışı",
-  "norinoriSubtitle": "Her odada tam olarak birbirine bağlı iki hücreyi gölgeleyin.",
-  "norinoriTitle": "Norinori",
-  "numberBondsSubtitle": "Düğüm değerlerini hedef bağlantı toplamına eşit olacak şekilde bağlayın.",
-  "numberBondsTitle": "Sayı Tahvili",
-  "oddEvenFlashSubtitle": "Sayı eşliğini hızla renk kuralıyla eşleştirin.",
-  "oddEvenFlashTitle": "Tek-Çift Flaş",
-  "origamiUnfoldSubtitle": "Katlanmış sayfaları açtıktan sonra delik delme desenlerini belirleyin.",
-  "origamiUnfoldTitle": "Origami Açılımı",
-  "patternSequenceDrawSubtitle": "Izgaradaki animasyonlu yol dizisini tekrarlayın.",
-  "patternSequenceDrawTitle": "Desen Hatırlama",
-  "percentageShoppingSubtitle": "İndirim yüzdelerini ve son ödeme toplamlarını hesaplayın.",
-  "percentageShoppingTitle": "Yüzde Alışveriş",
-  "peripheralFocusSubtitle": "Matematik çözerken yanıp sönen yan panellere tepki verin.",
-  "peripheralFocusTitle": "Çevresel Odak",
-  "perspectiveShiftViewSubtitle": "Blok kümelerini harfleri/kelimeleri yazana kadar döndürün.",
-  "perspectiveShiftViewTitle": "Perspektif Kayması",
-  "polyominoPackingSubtitle": "Rastgele polyomino blok parçalarını hedef alanlara paketleyin.",
-  "polyominoPackingTitle": "Polyomino Ambalaj",
-  "portmanteauFactorySubtitle": "Bileşik sözcükler oluşturarak anlamsal bileşenleri birleştirin.",
-  "portmanteauFactoryTitle": "Portmanteau Fabrikası",
-  "primeFactorTreesSubtitle": "Bileşik sayıları asal yaprak faktörü çiftlerine ayrıştırın.",
-  "primeFactorTreesTitle": "Prime Faktör Ağaçları",
-  "rippleEffectSubtitle": "Odalardaki sayıları aralık mesafesi sınırlamalarına uygun şekilde doldurun.",
-  "rippleEffectTitle": "Dalgalanma Etkisi",
-  "rollingBlockBloxSubtitle": "Hedef yuvalara dikey olarak inmek için blok parçalarını yuvarlayın.",
-  "rollingBlockBloxTitle": "Yuvarlanan Blok",
-  "roomInspectorSubtitle": "Ekran boşken yapılan mobilya değişikliklerini tanımlayın.",
-  "roomInspectorTitle": "Oda Müfettişi",
-  "ropeTangleSolverSubtitle": "Düzlemsel grafikleri sıfır çizgi geçişleriyle düzenlemek için düğümleri sürükleyin.",
-  "ropeTangleSolverTitle": "Halat Çözücü",
-  "semanticAssociationSubtitle": "Üç ipucunun hepsini birbirine bağlayan kelimeyi bulun.",
-  "semanticAssociationTitle": "Dernek Kelimesi",
-  "semanticCategoryRecallSubtitle": "İstenen kategori hedefleriyle eşleşen çalışma sözcüklerini belirleyin.",
-  "semanticCategoryRecallTitle": "Kategori Geri Çağırma",
-  "sequenceStackSubtitle": "Plaka yığını ekleme ve çıkarma işlemlerini sırayla yeniden oluşturun.",
-  "sequenceStackTitle": "Sıra Yığını",
-  "shakashakaSubtitle": "Dikdörtgen beyaz alanlar oluşturacak şekilde üçgen fayanslar yerleştirin.",
-  "shakashakaTitle": "Shakashaka Rektleri",
-  "shapeShifterPeripheralSubtitle": "Merkezi değerleri eşleştirirken çevresel şekil değişikliklerini izleyin.",
-  "shapeShifterPeripheralTitle": "Çevresel Şekiller",
-  "shapeShifterSubtitle": "Hedef şekil-renk kombinasyonuna dokunun.",
-  "shapeShifterTitle": "Şekil Değiştirici",
-  "sheepAndWolvesSubtitle": "Koyunları kurtlardan ayıran bir halka çizin.",
-  "sheepAndWolvesTitle": "Koyun ve Kurtlar",
-  "shellGameSubtitle": "KARIŞTIRMA BARDAKLARI YERLERİ DEĞİŞTİRİRKEN GİZLİ BİR TOPU TAKİP EDİN.",
-  "shellGameTitle": "Kabuk Oyunu",
-  "shikakuSubtitle": "IZGARAYI RAKAMLARLA EŞLEŞEN KARELERE VE DİKDÖRTGENLERE BÖLÜN.",
-  "shikakuTitle": "Şikaku",
-  "signalAndNoiseSubtitle": "Statik gürültüde gizlenmiş hedef alfanümerik karakterleri bulun.",
-  "signalAndNoiseTitle": "Sinyal ve Gürültü",
-  "soundAlikeHomophonesSubtitle": "Cümlelerin doğru sesteş yazılışlarını belirleyin.",
-  "soundAlikeHomophonesTitle": "Homofoni Eşleşmeleri",
-  "soundSequenceMatchSubtitle": "Sanal klavyede çalınan nota dizilerini tekrarlayın.",
-  "soundSequenceMatchTitle": "Ses Sırası Eşleşmesi",
-  "soundWaveMatchSubtitle": "Görsel dalga frekansı perde değişiklikleriyle aynı hizaya geldiğinde dokunun.",
-  "soundWaveMatchTitle": "Ses Dalgası Eşleşmesi",
-  "spatialGridMemory3DSubtitle": "Döndürülmüş bir 3B küp ızgara yapısındaki parlatılmış blokları hatırlayın.",
-  "spatialGridMemory3DTitle": "3D Uzaysal Bellek",
-  "spatialGridRotationSubtitle": "Eksen koordinatları boyunca döndürülmüş 3B blok düzenlemelerini eşleştirin.",
-  "spatialGridRotationTitle": "Uzamsal Izgara Döndürme",
-  "storyBuilderSubtitle": "Hikayenin kronolojik sırasını yeniden oluşturun.",
-  "storyBuilderTitle": "Hikaye Oluşturucu",
-  "stostoneSubtitle": "Alt satırları mükemmel şekilde doldurmak için aşağı açılan hücreleri gölgeleyin.",
-  "stostoneTitle": "Stostone Yerçekimi",
-  "suguruTectonicSubtitle": "Oda bloklarını, komşuları eşit olmayan 1'den K'ye kadar olan sayılarla doldurun.",
-  "suguruTectonicTitle": "Suguru Izgarası",
-  "symbolDigitAssocSubtitle": "Rakam tuşlarıyla eşleşen sembol çeviri sayfalarını çözün.",
-  "symbolDigitAssocTitle": "Sembol-Rakam Doç.",
-  "symmetryPaintSubtitle": "Simetri eksenleri boyunca yansıyan ayna görüntüsü parçaları çizin.",
-  "symmetryPaintTitle": "Simetri Boyası",
-  "syncRhythmSubtitle": "Görsel metronom taraması senkoplu vuruşla eşleştiğinde dokunun.",
-  "syncRhythmTitle": "Ritim Senkronizasyonu",
-  "synonymMatchSubtitle": "Düşen kelime hedeflerini eş anlamlı veya zıt anlamlı kelimelerle eşleştirin.",
-  "synonymMatchTitle": "Eş Anlamlı Eşleşme",
-  "tangramPolygonSubtitle": "Çokgen şekillerini siluet ana hatlarını dolduracak şekilde düzenleyin.",
-  "tangramPolygonTitle": "Tangram Fiti",
-  "tangramSubtitle": "Hedef silueti dolduracak şekilde şekilleri düzenleyin.",
-  "tangramTitle": "Tangram Yapboz",
-  "tapaWallSubtitle": "Sürekli bir siyah duvar deseni oluşturmak için hücreleri gölgeleyin.",
-  "tapaWallTitle": "Tapa Duvarı",
-  "targetPursuerSubtitle": "Birden fazla örtüşen daireyi takip edin ve orijinal hedefi seçin.",
-  "targetPursuerTitle": "Hedef Takipçisi",
-  "tennerGridSubtitle": "Satırları, sütun toplamlarıyla eşleşen 0-9 arasındaki rakamlarla doldurun.",
-  "tennerGridTitle": "Tenner Izgarası",
-  "triangularBridgesSubtitle": "Gereksinimleri karşılayan adaları 3 yönde bağlayın.",
-  "triangularBridgesTitle": "Üçgen Köprüler",
-  "tripletsLogicSubtitle": "Izgarayı arka arkaya üçten kaçınarak üç şekille doldurun.",
-  "tripletsLogicTitle": "Üçüzler Üçlüsü",
-  "typingRhythmSpeedSubtitle": "Metronom ritim ritimleriyle eşleşen sözcükleri yazın.",
-  "typingRhythmSpeedTitle": "Yazma Akışı",
-  "typoglycemiaDecoderSubtitle": "KARIŞIK CÜMLELERİ ÇÖZÜN VE HIZLA OKUYUN.",
-  "typoglycemiaDecoderTitle": "Tipoglisemi Kod Çözücü",
-  "unitConverterProSubtitle": "Hızlı birim dönüşümlerini zaman sınırları altında yanıtlayın.",
-  "unitConverterProTitle": "Birim Dönüştürücü",
-  "vectorGridAlignmentSubtitle": "Şekilleri, gölge şablonu hedefleriyle eşleşecek şekilde ölçeklendirin ve döndürün.",
-  "vectorGridAlignmentTitle": "Vektör Hizalaması",
-  "vektorVectorSubtitle": "Toplamlarının hedefe ulaşması için vektörleri ölçeklendirin.",
-  "vektorVectorTitle": "vektör vektör",
-  "voiceToFaceMatchSubtitle": "Konuşulan ses klibiyle ilişkili doğru yüzü seçin.",
-  "voiceToFaceMatchTitle": "Ses-Yüz Eşleşmesi",
-  "vowelDropSubtitle": "Kelimeleri tamamlayan sesli harfleri koordinat ızgaralarına bırakın.",
-  "vowelDropTitle": "Ünlü Damlası",
-  "wireLoopGameSubtitle": "Metal halkaları tel kamaları boyunca temas etmeden sürükleyin.",
-  "wireLoopGameTitle": "Tel Döngü",
-  "wordAssociationRecallSubtitle": "Eşleştirilmiş sözcük ilişkilerini bellekten hatırlayın.",
-  "wordAssociationRecallTitle": "Kelime Derneği",
-  "wordChainShiritoriSubtitle": "Önceki harf çıktılarından başlayarak kelime döngülerini bağlayın.",
-  "wordChainShiritoriTitle": "Kelime Zinciri",
-  "wordGridConnectionSubtitle": "16 kelimeyi dörtlü dört kategoriye ayırın.",
-  "wordGridConnectionTitle": "Kelime Bağlantıları",
-  "wordGridSudokuSubtitle": "Kelimeleri oluşturan ızgara satırlarındaki harfleri mozaikleyin.",
-  "wordGridSudokuTitle": "Kelime Sudoku",
-  "wordSnakeTrailSubtitle": "Tematik kelimeleri yazan yılan benzeri harf izlerini takip edin.",
-  "wordSnakeTrailTitle": "Kelime Yılanı",
-  "wordWheelPangramSubtitle": "Tekerleklerden merkezi hedef harfleri içeren kelimeler oluşturun.",
-  "wordWheelPangramTitle": "Kelime Anagramları",
-  "wordWheelSubtitle": "Ortadaki harf de dahil olmak üzere çarktaki harfleri kullanarak kelimeler oluşturun.",
-  "wordWheelTitle": "Kelime Çarkı",
-  "yajilinSubtitle": "Siyah hücreleri yerleştirin ve ipuçlarıyla eşleşen tek bir döngü çizin.",
-  "yajilinTitle": "Yajilin",
-  "btnMatchColor": "RENK EŞLEŞTİR",
-  "btnMatchWord": "KELİME EŞLEŞTİR",
-  "favoriteGame": "Favori",
-  "gameHidden": "Oyun gizlendi",
-  "hiddenGames": "GİZLİ OYUNLAR",
-  "hideGame": "Gizle",
-  "noHiddenGames": "Gizli oyun yok",
-  "orbitTapTapToHit": "Top kapıya girdiğinde dokun",
-  "showHiddenGames": "Gizli Oyunları Göster ({count})",
-  "@showHiddenGames": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "undo": "Geri Al",
-  "unfavoriteGame": "Favorilerden Çıkar",
-  "unhideGame": "Göster",
   "kurodokoTitle": "Kurodoko",
   "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
   "kurodokoCongrats": "Her sayı tam görmesi gerekeni görüyor.",
@@ -3121,6 +1860,13 @@
   "pegsTitle": "Pegs",
   "pegsSubtitle": "Bir pulu komşusunun üzerinden atlatıp alın. Tek pul kalsın.",
   "pegsCongrats": "Tek pul kaldı. Tertemiz bir tahta.",
+  "lightsOutPresses": "Presses",
+  "lightsOutLit": "Lit",
+  "sameGameTitle": "Same Game",
+  "sameGameSubtitle": "Clear groups of matching blocks to empty the board.",
+  "sameGameCongrats": "Board cleared. Every square gone.",
+  "sameGameLeft": "Left",
+  "sameGameStuck": "No groups left. Start a new board.",
   "galaxiesTitle": "Galaxies",
   "galaxiesSubtitle": "Give every dot its own symmetric region",
   "galaxiesCongrats": "Every dot has its own galaxy.",
@@ -3131,5 +1877,28 @@
   "twiddleCongrats": "Her sayı yerinde.",
   "difficultyEasy": "KOLAY",
   "difficultyMedium": "ORTA",
-  "difficultyHard": "ZOR"
+  "difficultyHard": "ZOR",
+  "crossingTitle": "Number Crossing",
+  "crossingSubtitle": "Fit every listed number into the crossing slots.",
+  "crossingPlaced": "Placed",
+  "crossingWinTitle": "EVERY NUMBER FITS!",
+  "crossingWinMessage": "Each number once, and every crossing agrees digit for digit.",
+  "navDeal": "Dağıt",
+  "navStack": "Koleksiyon",
+  "navYou": "Sen",
+  "next": "Sonraki",
+  "nextPuzzle": "Sonraki bulmaca",
+  "restartPuzzle": "Yeniden başlat",
+  "lockScroll": "Kaydırmayı kilitle",
+  "unlockScroll": "Kaydırma kilidini aç",
+  "feedScrollLocked": "Kaydırma kilitlendi.",
+  "dealTitle": "Dağıtım",
+  "dealSubtitle": "Her bulmaca, tek tek kartlarla.",
+  "yourCards": "Kartların",
+  "todaysCard": "Günün kartı",
+  "quickPlay": "İki dakikanın altında",
+  "rooms": "Altı oda",
+  "puzzles": "bulmaca",
+  "shuffleCategory": "Bu odayı dağıt",
+  "deckProgress": "{position} / {total}"
 }

@@ -35,69 +35,79 @@ class _CryptoArithmeticScreenState extends ConsumerState<CryptoArithmeticScreen>
   }
 
   void _generatePuzzle() {
-    // Generate num1 (10-79) and num2 (10-79) such that sum is 2-digit (20-99)
-    int num1 = 10 + _random.nextInt(70);
-    int num2 = 10 + _random.nextInt(90 - num1);
-    int sum = num1 + num2;
+    for (int attempt = 0; attempt < 200; attempt++) {
+      // Generate num1 (10-79) and num2 (10-79) such that sum is 2-digit (20-99)
+      int num1 = 10 + _random.nextInt(70);
+      int num2 = 10 + _random.nextInt(90 - num1);
+      int sum = num1 + num2;
 
-    // Map each digit 0-9 to a unique letter
-    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'L', 'M', 'P'];
-    final shuffledLetters = List<String>.from(letters)..shuffle(_random);
+      // Map each digit 0-9 to a unique letter
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'L', 'M', 'P'];
+      final shuffledLetters = List<String>.from(letters)..shuffle(_random);
 
-    String num1Str = num1.toString();
-    String num2Str = num2.toString();
-    String sumStr = sum.toString();
+      String num1Str = num1.toString();
+      String num2Str = num2.toString();
+      String sumStr = sum.toString();
 
-    // Helper to convert number string to letter string
-    String toLetters(String numStr) {
-      return numStr.split('').map((char) {
-        int val = int.parse(char);
-        return shuffledLetters[val];
-      }).join('');
-    }
-
-    String letter1 = toLetters(num1Str);
-    String letter2 = toLetters(num2Str);
-    String letterSum = toLetters(sumStr);
-
-    _equationStr = '$letter1 + $letter2 = $letterSum';
-
-    // Collect all unique letters in the equation
-    final equationLetters = <String>{};
-    for (int i = 0; i < _equationStr.length; i++) {
-      final char = _equationStr[i];
-      if (letters.contains(char)) {
-        equationLetters.add(char);
+      // Helper to convert number string to letter string
+      String toLetters(String numStr) {
+        return numStr.split('').map((char) {
+          int val = int.parse(char);
+          return shuffledLetters[val];
+        }).join('');
       }
-    }
 
-    // Pick one letter to solve for
-    final letterList = equationLetters.toList();
-    _targetLetter = letterList[_random.nextInt(letterList.length)];
-    
-    // Find the digit it corresponds to
-    int targetDigit = -1;
-    for (int i = 0; i < shuffledLetters.length; i++) {
-      if (shuffledLetters[i] == _targetLetter) {
-        targetDigit = i;
-        break;
-      }
-    }
-    _correctDigit = targetDigit;
+      String letter1 = toLetters(num1Str);
+      String letter2 = toLetters(num2Str);
+      String letterSum = toLetters(sumStr);
 
-    // Create the legend containing all other letters in the equation
-    _legend = {};
-    for (final l in equationLetters) {
-      if (l != _targetLetter) {
-        int digitVal = -1;
-        for (int i = 0; i < shuffledLetters.length; i++) {
-          if (shuffledLetters[i] == l) {
-            digitVal = i;
-            break;
-          }
+      _equationStr = '$letter1 + $letter2 = $letterSum';
+
+      // Collect all unique letters in the equation
+      final equationLetters = <String>{};
+      for (int i = 0; i < _equationStr.length; i++) {
+        final char = _equationStr[i];
+        if (letters.contains(char)) {
+          equationLetters.add(char);
         }
-        _legend[l] = digitVal;
       }
+
+      // Pick one letter to solve for
+      final letterList = equationLetters.toList();
+      _targetLetter = letterList[_random.nextInt(letterList.length)];
+
+      // Find the digit it corresponds to
+      int targetDigit = -1;
+      for (int i = 0; i < shuffledLetters.length; i++) {
+        if (shuffledLetters[i] == _targetLetter) {
+          targetDigit = i;
+          break;
+        }
+      }
+      _correctDigit = targetDigit;
+
+      // Create the legend containing all other letters in the equation
+      _legend = {};
+      for (final l in equationLetters) {
+        if (l != _targetLetter) {
+          int digitVal = -1;
+          for (int i = 0; i < shuffledLetters.length; i++) {
+            if (shuffledLetters[i] == l) {
+              digitVal = i;
+              break;
+            }
+          }
+          _legend[l] = digitVal;
+        }
+      }
+
+      // Ensure the target letter is uniquely determined (excludes degenerate
+      // `CA + D0 = EA` cases where the ones digit cancels on both sides).
+      int validCount = 0;
+      for (int d = 0; d <= 9; d++) {
+        if (_isCorrectAnswer(d)) validCount++;
+      }
+      if (validCount == 1) break;
     }
 
     // Generate 4 digit options
