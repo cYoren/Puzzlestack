@@ -53,6 +53,7 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
   late String _dayKey;
   int _slot = 0;
   int _restartEpoch = 0;
+  bool _showSummary = false;
   FeedSession? _session;
   String? _slotWatchKey;
   final Stopwatch _slotWatch = Stopwatch();
@@ -63,6 +64,7 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     final DateTime now = ref.read(dailyFiveClockProvider)();
     _dayKey = widget.initialDayKey ?? pickDayKey(now);
     _slot = _firstOpenSlot(_dayKey);
+    _showSummary = ref.read(dailyFiveProvider).progressFor(_dayKey).isComplete;
     _activateSession();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
@@ -185,7 +187,7 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     final DailyFiveProgress after =
         ref.read(dailyFiveProvider).progressFor(_dayKey);
     if (after.isComplete) {
-      setState(() {});
+      setState(() => _showSummary = true);
       return;
     }
     for (int step = 1; step <= 5; step++) {
@@ -225,6 +227,8 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     setState(() {
       _dayKey = targetDayKey;
       _slot = _firstOpenSlot(targetDayKey);
+      _showSummary =
+          ref.read(dailyFiveProvider).progressFor(targetDayKey).isComplete;
       _restartEpoch += 1;
     });
   }
@@ -407,7 +411,7 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
                     ),
                     child: isPastDay && !ownsPlus
                         ? _archiveGateCard(context, muted, accent, colors)
-                        : progress.isComplete
+                        : (progress.isComplete && _showSummary)
                             ? _completedCard(
                                 context,
                                 handIds,
@@ -803,26 +807,38 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
           children: [
             Row(
               children: [
-                Text(
-                  'DAILY FIVE COMPLETE',
-                  style: TextStyle(
-                    fontFamily: 'Bebas Neue',
-                    fontSize: DesignSystem.fontSize2XL,
-                    letterSpacing: 1.2,
-                    color: colors.onSurface,
-                  ),
-                ),
-                const Spacer(),
-                if (streak > 0)
-                  Text(
-                    '$streak DAY STREAK',
-                    style: TextStyle(
-                      fontFamily: 'Bebas Neue',
-                      fontSize: DesignSystem.fontSizeLG,
-                      letterSpacing: 1.0,
-                      color: accent,
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'DAILY FIVE COMPLETE',
+                      style: TextStyle(
+                        fontFamily: 'Bebas Neue',
+                        fontSize: DesignSystem.fontSize2XL,
+                        letterSpacing: 1.2,
+                        color: colors.onSurface,
+                      ),
                     ),
                   ),
+                ),
+                if (streak > 0) ...[
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        '$streak DAY STREAK',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: DesignSystem.fontSizeLG,
+                          letterSpacing: 1.0,
+                          color: accent,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ],
             ),
             const SizedBox(height: DesignSystem.spaceMD),

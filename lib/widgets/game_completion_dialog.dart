@@ -55,6 +55,9 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
   }
 
   String _feedResultLine() {
+    if (!widget.isVictory) {
+      return widget.title.isNotEmpty ? widget.title.toUpperCase() : 'TRY AGAIN';
+    }
     final String? gameId = GameClock.lastGameId;
     if (gameId != null) {
       final stat = ref.read(gameStatsProvider)[gameId];

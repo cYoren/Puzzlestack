@@ -368,5 +368,122 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await tester.pump(const Duration(milliseconds: 100));
     });
+
+    testWidgets(
+        'keeps 5th slot mounted while completion dialog is open so replay is safe',
+        (tester) async {
+      tester.view.physicalSize = const Size(900, 1800);
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(tester.view.reset);
+
+      const String dayKey = '2026-11-17';
+      final ProviderContainer root = ProviderContainer(
+        overrides: [
+          userRepositoryProvider.overrideWithValue(_FakeUserRepository()),
+          dailyFiveClockProvider
+              .overrideWithValue(() => DateTime(2026, 11, 17, 12)),
+        ],
+      );
+      addTearDown(root.dispose);
+
+      // Pre-solve slots 0..3 so DailyFiveScreen opens directly on slot 4.
+      for (int s = 0; s < 4; s++) {
+        root.read(dailyFiveProvider.notifier).recordSlot(
+              dayKey: dayKey,
+              slot: s,
+              elapsedMs: 12000 + s * 1000,
+            );
+      }
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: root,
+          child: MaterialApp(
+            theme: DesignSystem.lightTheme,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const DailyFiveScreen(),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.text('5 / 5'), findsOneWidget);
+      expect(find.text('DAILY FIVE COMPLETE'), findsNothing);
+
+      // Grab a WidgetRef from inside the 5th slot's game subtree so replay can
+      // verify its ProviderScope has not been disposed while the dialog is up.
+      final Finder slotCardFinder = find.byKey(
+        ValueKey<String>(
+          'daily_scope_${dayKey}_4_${dailyFiveForDate(dayKey)[4]}_0',
+        ),
+      );
+      expect(slotCardFinder, findsOneWidget);
+
+      int replayed = 0;
+      final BuildContext dailyCtx =
+          tester.element(find.byType(DailyFiveScreen));
+      showDialog<void>(
+        context: dailyCtx,
+        builder: (dialogCtx) => GameCompletionDialog(
+          isVictory: true,
+          title: 'Solved',
+          message: 'All clear.',
+          onHome: () => Navigator.of(dialogCtx).pop(),
+          onPlayAgain: () {
+            // Slot 4 must still be mounted when replay runs!
+            expect(slotCardFinder, findsOneWidget);
+            replayed += 1;
+            Navigator.of(dialogCtx).pop();
+          },
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      // Post-frame onSolved has now recorded slot 4 -> progress.isComplete is
+      // true, yet the 5th slot card remains mounted underneath the dialog.
+      expect(
+        root.read(dailyFiveProvider).progressFor(dayKey).isComplete,
+        isTrue,
+      );
+      expect(slotCardFinder, findsOneWidget);
+      expect(find.text('DAILY FIVE COMPLETE'), findsNothing);
+
+      // Tapping replay invokes onPlayAgain safely and keeps the 5th slot live.
+      await tester.tap(
+        find.descendant(
+          of: find.byType(GameCompletionDialog),
+          matching: find.byIcon(Icons.refresh_rounded),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(replayed, 1);
+      expect(slotCardFinder, findsOneWidget);
+
+      // Completing again and tapping NEXT PUZZLE transitions to the summary.
+      showDialog<void>(
+        context: dailyCtx,
+        builder: (dialogCtx) => GameCompletionDialog(
+          isVictory: true,
+          title: 'Solved',
+          message: 'All clear.',
+          onHome: () => Navigator.of(dialogCtx).pop(),
+          onPlayAgain: () {},
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.tap(find.text('NEXT PUZZLE'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.text('DAILY FIVE COMPLETE'), findsOneWidget);
+
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump(const Duration(milliseconds: 100));
+    });
   });
 }
