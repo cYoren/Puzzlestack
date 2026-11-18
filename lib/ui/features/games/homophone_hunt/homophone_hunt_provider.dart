@@ -39,13 +39,18 @@ class HomophoneHuntState {
 @riverpod
 class HomophoneHuntNotifier extends _$HomophoneHuntNotifier {
   final _engine = HomophoneHuntEngine();
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   HomophoneHuntState build() {
+    _disposed = false;
+    ref.onDispose(() => _disposed = true);
     return HomophoneHuntState();
   }
 
   void startGame() {
+    _epoch++;
     final puzzle = _engine.generatePuzzle();
     final options = [puzzle.correctAnswer, puzzle.wrongAnswer]..shuffle();
     state = HomophoneHuntState(
@@ -64,7 +69,9 @@ class HomophoneHuntNotifier extends _$HomophoneHuntNotifier {
       isCorrect: isCorrect,
     );
 
+    final callEpoch = _epoch;
     Future.delayed(const Duration(milliseconds: 1000), () {
+      if (_disposed || callEpoch != _epoch) return;
       state = state.copyWith(isGameOver: true);
     });
   }

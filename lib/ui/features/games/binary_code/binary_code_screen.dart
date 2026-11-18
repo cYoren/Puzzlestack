@@ -79,16 +79,23 @@ class _BinaryCodeScreenState extends ConsumerState<BinaryCodeScreen> {
   }
 
   void _onOptionSelected(int value) {
+    if (_timeLeft <= 0 || _correctAnswers >= targetAnswers) return;
     final isCorrect = value == _targetDecimal;
 
-    if (isCorrect) {
-      HapticFeedbackUtil.success();
-      _correctAnswers++;
-      _score += 15;
-    } else {
-      HapticFeedbackUtil.error();
-      _score = max(0, _score - 5);
-    }
+    setState(() {
+      if (isCorrect) {
+        HapticFeedbackUtil.success();
+        _correctAnswers++;
+        _score += 15;
+      } else {
+        HapticFeedbackUtil.error();
+        _score = max(0, _score - 5);
+      }
+
+      if (_correctAnswers < targetAnswers) {
+        _generateNextRound();
+      }
+    });
 
     if (_correctAnswers >= targetAnswers) {
       _timer?.cancel();
@@ -115,10 +122,6 @@ class _BinaryCodeScreenState extends ConsumerState<BinaryCodeScreen> {
           },
         ),
       );
-    } else {
-      setState(() {
-        _generateNextRound();
-      });
     }
   }
 

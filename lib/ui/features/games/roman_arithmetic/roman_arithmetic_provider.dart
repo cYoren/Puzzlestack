@@ -47,9 +47,15 @@ class RomanArithmeticState {
 class RomanArithmeticNotifier extends _$RomanArithmeticNotifier {
   final _engine = RomanArithmeticEngine();
   Timer? _timer;
+  bool _disposed = false;
 
   @override
   RomanArithmeticState build() {
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      _timer?.cancel();
+    });
     return RomanArithmeticState();
   }
 
@@ -93,6 +99,7 @@ class RomanArithmeticNotifier extends _$RomanArithmeticNotifier {
       }
       
       Future.delayed(const Duration(milliseconds: 400), () {
+        if (_disposed) return;
         if (state.status == RomanStatus.playing) {
           state = state.copyWith(isInvalidGuess: false);
         }

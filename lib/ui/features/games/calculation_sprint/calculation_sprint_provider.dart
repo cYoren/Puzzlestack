@@ -47,10 +47,15 @@ class CalculationSprintState {
 class CalculationSprintNotifier extends _$CalculationSprintNotifier {
   final _engine = CalculationSprintEngine();
   Timer? _timer;
+  bool _disposed = false;
 
   @override
   CalculationSprintState build() {
-    ref.onDispose(() => _timer?.cancel());
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      _timer?.cancel();
+    });
     return CalculationSprintState();
   }
 
@@ -96,6 +101,7 @@ class CalculationSprintNotifier extends _$CalculationSprintNotifier {
       
       // Auto clear the invalid flag after a tiny delay so it can shake again
       Future.delayed(const Duration(milliseconds: 400), () {
+        if (_disposed) return;
         if (state.status == SprintStatus.playing) {
           state = state.copyWith(isInvalidGuess: false);
         }

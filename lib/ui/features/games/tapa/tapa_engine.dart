@@ -86,24 +86,63 @@ class TapaEngine {
       }
 
       nonWallCells.shuffle(rng);
-      final numClues = (size * 1.6).round();
-      final clueCoords = nonWallCells.take(numClues).toSet();
+      final minClues = (size * 1.6).round().clamp(1, nonWallCells.length);
+      final clueGrid = List.generate(
+        size,
+        (r) => List<List<int>?>.filled(size, null),
+      );
+      int clueCount = 0;
+      for (final coord in nonWallCells) {
+        if (clueCount >= minClues) break;
+        final cr = coord[0], cc = coord[1];
+        clueGrid[cr][cc] = _calculateTapaClues(isBlack, size, cr, cc);
+        clueCount++;
+      }
 
-      final grid = List.generate(size, (r) {
-        return List.generate(size, (c) {
-          List<int>? clues;
-          final isClueCell = clueCoords.any((coord) => coord[0] == r && coord[1] == c);
-          if (isClueCell) {
-            clues = _calculateTapaClues(isBlack, size, r, c);
+      // Build grid with current clues and tighten until unique if needed.
+      List<List<TapaCell>> buildGrid() => List.generate(size, (r) {
+            return List.generate(size, (c) {
+              final clues = clueGrid[r][c];
+              return TapaCell(
+                row: r,
+                col: c,
+                clues: clues,
+                state: clues != null ? TapaCellState.white : TapaCellState.empty,
+              );
+            });
+          });
+
+      var grid = buildGrid();
+      if (countSolutions(grid, size, limit: 2) != 1) {
+        // Add extra non-wall clues until unique (fast on 5x5).
+        bool unique = false;
+        for (int i = clueCount; i < nonWallCells.length; i++) {
+          final coord = nonWallCells[i];
+          clueGrid[coord[0]][coord[1]] =
+              _calculateTapaClues(isBlack, size, coord[0], coord[1]);
+          grid = buildGrid();
+          if (countSolutions(grid, size, limit: 2) == 1) {
+            unique = true;
+            break;
           }
-          return TapaCell(
-            row: r,
-            col: c,
-            clues: clues,
-            state: clues != null ? TapaCellState.white : TapaCellState.empty,
-          );
-        });
-      });
+        }
+        if (!unique) continue;
+
+        // Prune redundant clues down to minimal unique set.
+        final activeCoords = [
+          for (int r = 0; r < size; r++)
+            for (int c = 0; c < size; c++)
+              if (clueGrid[r][c] != null) (r, c),
+        ]..shuffle(rng);
+        for (final (r, c) in activeCoords) {
+          final saved = clueGrid[r][c];
+          clueGrid[r][c] = null;
+          if (countSolutions(buildGrid(), size, limit: 2) != 1) {
+            clueGrid[r][c] = saved;
+          }
+        }
+        grid = buildGrid();
+      }
 
       return TapaPuzzle(
         size: size,
@@ -111,6 +150,157 @@ class TapaEngine {
         solutionBlack: isBlack,
       );
     }
+  }
+
+  /// Counts valid Tapa solutions up to [limit].
+  static int countSolutions(
+    List<List<TapaCell>> grid,
+    int size, {
+    int limit = 2,
+  }) {
+    const offsets = [
+      (-1, -1),
+      (-1, 0),
+      (-1, 1),
+      (0, 1),
+      (1, 1),
+      (1, 0),
+      (1, -1),
+      (0, -1),
+    ];
+
+    final isClue = List.generate(
+      size,
+      (r) => List.generate(size, (c) => grid[r][c].isClue),
+    );
+    // -1 = undecided, 0 = white, 1 = black
+    final state = List.generate(
+      size,
+      (r) => List.generate(size, (c) => isClue[r][c] ? 0 : -1),
+    );
+    final unknownCells = <(int r, int c)>[
+      for (int r = 0; r < size; r++)
+        for (int c = 0; c < size; c++)
+          if (!isClue[r][c]) (r, c),
+    ];
+
+    // Collect clues and the neighboring cells that determine them.
+    final clueNodes = <(int r, int c, List<int> target)>[];
+    final cellClues = List.generate(size * size, (_) => <int>[]);
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        final clues = grid[r][c].clues;
+        if (clues != null && clues.isNotEmpty) {
+          final cid = clueNodes.length;
+          clueNodes.add((r, c, clues));
+          for (final (dr, dc) in offsets) {
+            final nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < size && nc >= 0 && nc < size && !isClue[nr][nc]) {
+              cellClues[nr * size + nc].add(cid);
+            }
+          }
+        }
+      }
+    }
+
+    bool clueConsistent(int cid) {
+      final (cr, cc, target) = clueNodes[cid];
+      final targetSum = target.length == 1 && target[0] == 0
+          ? 0
+          : target.reduce((a, b) => a + b);
+      int blacks = 0;
+      int unknowns = 0;
+      for (final (dr, dc) in offsets) {
+        final nr = cr + dr, nc = cc + dc;
+        if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+          final st = state[nr][nc];
+          if (st == 1) blacks++;
+          if (st == -1) unknowns++;
+        }
+      }
+      if (blacks > targetSum || blacks + unknowns < targetSum) return false;
+      if (unknowns == 0) {
+        final isBlack = List.generate(
+          size,
+          (r) => List.generate(size, (c) => state[r][c] == 1),
+        );
+        final actual = _calculateTapaClues(isBlack, size, cr, cc);
+        if (actual.length != target.length) return false;
+        for (int i = 0; i < target.length; i++) {
+          if (actual[i] != target[i]) return false;
+        }
+      }
+      return true;
+    }
+
+    for (int cid = 0; cid < clueNodes.length; cid++) {
+      if (!clueConsistent(cid)) return 0;
+    }
+
+    bool makes2x2(int r, int c) {
+      for (final (dr, dc) in const [(-1, -1), (-1, 0), (0, -1), (0, 0)]) {
+        final r0 = r + dr, c0 = c + dc;
+        if (r0 < 0 || r0 + 1 >= size || c0 < 0 || c0 + 1 >= size) continue;
+        if (state[r0][c0] == 1 &&
+            state[r0 + 1][c0] == 1 &&
+            state[r0][c0 + 1] == 1 &&
+            state[r0 + 1][c0 + 1] == 1) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    int solutions = 0;
+
+    void search(int idx, int blackCount) {
+      if (solutions >= limit) return;
+      if (idx == unknownCells.length) {
+        if (blackCount == 0) return;
+        final isBlack = List.generate(
+          size,
+          (r) => List.generate(size, (c) => state[r][c] == 1),
+        );
+        if (_isSingleConnectedWall(isBlack, size, blackCount)) {
+          solutions++;
+        }
+        return;
+      }
+
+      final (r, c) = unknownCells[idx];
+      final cids = cellClues[r * size + c];
+
+      // Try black (1)
+      state[r][c] = 1;
+      if (!makes2x2(r, c)) {
+        bool ok = true;
+        for (final cid in cids) {
+          if (!clueConsistent(cid)) {
+            ok = false;
+            break;
+          }
+        }
+        if (ok) search(idx + 1, blackCount + 1);
+      }
+
+      // Try white (0)
+      if (solutions < limit) {
+        state[r][c] = 0;
+        bool ok = true;
+        for (final cid in cids) {
+          if (!clueConsistent(cid)) {
+            ok = false;
+            break;
+          }
+        }
+        if (ok) search(idx + 1, blackCount);
+      }
+
+      state[r][c] = -1;
+    }
+
+    search(0, 0);
+    return solutions;
   }
 
   static bool _has2x2(List<List<bool>> isBlack, int size) {

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/tangle_fix/tangle_fix_engine.dart';
+import 'package:puzzle/ui/features/games/tangle_fix/tangle_fix_provider.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('TangleFixEngine', () {
     late TangleFixEngine engine;
 
@@ -183,6 +187,40 @@ void main() {
         ];
         expect(engine.isSolved(nodes, edges), isFalse);
       });
+    });
+
+    test('notifier supports tap-to-select and tap-to-move a node', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+
+      const bounds = Size(320, 480);
+      final notifier = container.read(tangleFixNotifierProvider.notifier);
+      notifier.initGame(bounds);
+
+      final nodes = container.read(tangleFixNotifierProvider).nodes;
+      final firstNode = nodes.first;
+      notifier.onTap(firstNode.position, bounds);
+      expect(container.read(tangleFixNotifierProvider).draggingNodeId, firstNode.id);
+
+      // Pick a destination far (> 50px) from every node so onTap moves rather
+      // than selecting another node.
+      Offset destination = const Offset(290, 450);
+      for (double y = 40; y <= bounds.height - 40; y += 30) {
+        for (double x = 40; x <= bounds.width - 40; x += 30) {
+          final candidate = Offset(x, y);
+          if (nodes.every((n) => (n.position - candidate).distance > 55)) {
+            destination = candidate;
+            break;
+          }
+        }
+      }
+      notifier.onTap(destination, bounds);
+      final movedNode = container
+          .read(tangleFixNotifierProvider)
+          .nodes
+          .firstWhere((n) => n.id == firstNode.id);
+      expect(movedNode.position, destination);
+      expect(container.read(tangleFixNotifierProvider).draggingNodeId, isNull);
     });
   });
 }

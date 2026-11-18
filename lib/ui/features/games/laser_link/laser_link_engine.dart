@@ -15,71 +15,78 @@ enum Direction {
 
 class LaserLinkEngine {
   final int size;
-  final Random _random = Random();
+  final Random _random;
 
-  LaserLinkEngine({this.size = 5});
+  LaserLinkEngine({this.size = 5, Random? random})
+      : _random = random ?? Random();
 
   Map<String, dynamic> generateLevel() {
-    // 1. Randomly place a laser source on the edge
-    final sourcePos = _getRandomEdgePos();
-    final sourceDir = _getInwardDirection(sourcePos);
+    for (int attempt = 0; attempt < 200; attempt++) {
+      // 1. Randomly place a laser source on the edge
+      final sourcePos = _getRandomEdgePos();
+      final sourceDir = _getInwardDirection(sourcePos);
 
-    // 2. Generate a path with some mirrors
-    List<Point<int>> mirrorsPos = [];
-    List<MirrorType> mirrorsType = [];
-    List<Point<int>> targets = [];
+      // 2. Generate a path with some mirrors
+      final mirrorsPos = <Point<int>>[];
+      final mirrorsType = <MirrorType>[];
+      final targets = <Point<int>>[];
 
-    Point<int> currentPos = sourcePos;
-    Direction currentDir = sourceDir;
-    Set<Point<int>> path = {currentPos};
+      Point<int> currentPos = sourcePos;
+      Direction currentDir = sourceDir;
 
-    int mirrorCount = 3 + _random.nextInt(3);
-    
-    for (int i = 0; i < 20 && mirrorsPos.length < mirrorCount; i++) {
-      // Move in current direction
-      Point<int> nextPos = _move(currentPos, currentDir);
-      
-      if (!_isInBounds(nextPos)) {
-        // If we hit the edge, place a target if we have enough mirrors, or try again
-        if (mirrorsPos.length >= mirrorCount - 1 && !targets.contains(currentPos)) {
-          targets.add(currentPos);
+      final mirrorCount = 3 + _random.nextInt(3);
+
+      for (int i = 0; i < 20 && mirrorsPos.length < mirrorCount; i++) {
+        final nextPos = _move(currentPos, currentDir);
+
+        if (!_isInBounds(nextPos)) {
+          if (mirrorsPos.length >= mirrorCount - 1 &&
+              !targets.contains(currentPos)) {
+            targets.add(currentPos);
+            break;
+          }
           break;
-        } else {
-          // Re-generate if too short
-          return generateLevel();
+        }
+
+        currentPos = nextPos;
+
+        // Place a mirror along interior/edge turns (never duplicate coords).
+        if (_random.nextDouble() < 0.35 && !mirrorsPos.contains(currentPos)) {
+          final type = _random.nextBool()
+              ? MirrorType.forwardSlash
+              : MirrorType.backSlash;
+          mirrorsPos.add(currentPos);
+          mirrorsType.add(type);
+          currentDir = _reflect(currentDir, type);
         }
       }
 
-      currentPos = nextPos;
-      path.add(currentPos);
-
-      // Randomly decide to place a mirror
-      if (_random.nextDouble() < 0.3 && !mirrorsPos.contains(currentPos)) {
-        MirrorType type = _random.nextBool() ? MirrorType.forwardSlash : MirrorType.backSlash;
-        mirrorsPos.add(currentPos);
-        mirrorsType.add(type);
-        currentDir = _reflect(currentDir, type);
-      }
-    }
-
-    if (targets.isEmpty) {
+      if (targets.isEmpty && currentPos != sourcePos) {
         targets.add(currentPos);
+      }
+      if (mirrorsPos.isEmpty || targets.isEmpty) continue;
+
+      // Ensure 0-mirror straight beam does not already solve the level.
+      final baselinePath = tracePath(sourcePos, sourceDir, {});
+      if (targets.every(baselinePath.contains)) continue;
+
+      return {
+        'size': size,
+        'sourcePos': sourcePos,
+        'sourceDir': sourceDir,
+        'targets': targets,
+        'solutionMirrors': Map.fromIterables(mirrorsPos, mirrorsType),
+      };
     }
 
-    // Level description:
-    // sourcePos, sourceDir
-    // targets: where the laser MUST reach
-    // mirrors: initial mirrors (some might be fixed, but for now let's say user places them)
-    // The challenge is to place mirrors to hit all targets.
-    // Let's simplify: we provide some mirrors that the user can ROTATE or MOVE.
-    // Easier: User clicks empty cells to cycle through mirror types.
-
+    // Verified non-trivial fallback (straight beam hits (0,4), mirror at (0,2)
+    // reflects right to (4,2)).
     return {
       'size': size,
-      'sourcePos': sourcePos,
-      'sourceDir': sourceDir,
-      'targets': targets,
-      'solutionMirrors': Map.fromIterables(mirrorsPos, mirrorsType),
+      'sourcePos': const Point(0, 0),
+      'sourceDir': Direction.down,
+      'targets': [Point(size - 1, 2)],
+      'solutionMirrors': {const Point(0, 2): MirrorType.backSlash},
     };
   }
 

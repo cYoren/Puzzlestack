@@ -49,55 +49,94 @@ class _TangramScreenState extends ConsumerState<TangramScreen> {
     _isSolved = false;
     _selectedPieceId = null;
 
-    final puzzleIdx = _random.nextInt(3);
-    if (puzzleIdx == 0) {
-      // Puzzle 1: 3x3 square outline
-      _targetOutline = [];
-      for (int r = 0; r < 3; r++) {
-        for (int c = 0; c < 3; c++) {
-          _targetOutline.add(Point(r, c));
+    const palette = [
+      DesignSystem.gameBlue,
+      DesignSystem.gamePurple,
+      DesignSystem.gameTeal,
+      DesignSystem.gameOrange,
+      DesignSystem.gameRose,
+    ];
+
+    // Grow a contiguous 6..10-cell silhouette inside the 4x4 board.
+    final targetCount = 6 + _random.nextInt(5);
+    final start = Point(_random.nextInt(_gridSize), _random.nextInt(_gridSize));
+    final shape = <Point<int>>{start};
+    final frontier = <Point<int>>[start];
+
+    List<Point<int>> neighborsOf(Point<int> p) => [
+          if (p.x > 0) Point(p.x - 1, p.y),
+          if (p.x < _gridSize - 1) Point(p.x + 1, p.y),
+          if (p.y > 0) Point(p.x, p.y - 1),
+          if (p.y < _gridSize - 1) Point(p.x, p.y + 1),
+        ];
+
+    while (shape.length < targetCount && frontier.isNotEmpty) {
+      final pick = frontier[_random.nextInt(frontier.length)];
+      final candidates = neighborsOf(pick).where((n) => !shape.contains(n)).toList();
+      if (candidates.isEmpty) {
+        frontier.remove(pick);
+        continue;
+      }
+      final added = candidates[_random.nextInt(candidates.length)];
+      shape.add(added);
+      frontier.add(added);
+    }
+
+    // Carve the silhouette into 2..4 contiguous polyomino pieces so a valid
+    // tiling always exists.
+    final remaining = Set<Point<int>>.from(shape);
+    final rawPieces = <List<Point<int>>>[];
+    while (remaining.isNotEmpty) {
+      final seed = remaining.elementAt(_random.nextInt(remaining.length));
+      final chunkSize = (2 + _random.nextInt(2)).clamp(1, remaining.length);
+      final chunk = <Point<int>>{seed};
+      final chunkFrontier = <Point<int>>[seed];
+      remaining.remove(seed);
+
+      while (chunk.length < chunkSize && chunkFrontier.isNotEmpty) {
+        final cur = chunkFrontier[_random.nextInt(chunkFrontier.length)];
+        final candidates =
+            neighborsOf(cur).where(remaining.contains).toList();
+        if (candidates.isEmpty) {
+          chunkFrontier.remove(cur);
+          continue;
+        }
+        final next = candidates[_random.nextInt(candidates.length)];
+        chunk.add(next);
+        chunkFrontier.add(next);
+        remaining.remove(next);
+      }
+      rawPieces.add(chunk.toList());
+    }
+
+    // Merge any single-cell orphan piece into an adjacent piece if small enough.
+    if (rawPieces.length > 2) {
+      for (int i = rawPieces.length - 1; i >= 0; i--) {
+        if (rawPieces[i].length != 1) continue;
+        final single = rawPieces[i].first;
+        for (int j = 0; j < rawPieces.length; j++) {
+          if (i == j || rawPieces[j].length >= 4) continue;
+          final touches = rawPieces[j].any(
+            (p) => (p.x - single.x).abs() + (p.y - single.y).abs() == 1,
+          );
+          if (touches) {
+            rawPieces[j].add(single);
+            rawPieces.removeAt(i);
+            break;
+          }
         }
       }
-
-      _pieces = [
-        // 2x2 Square (4 cells)
-        TangramPiece(id: 0, color: DesignSystem.gameBlue, cells: [const Point(0, 0), const Point(0, 1), const Point(1, 0), const Point(1, 1)]),
-        // 1x3 Line (3 cells)
-        TangramPiece(id: 1, color: DesignSystem.gamePurple, cells: [const Point(0, 0), const Point(0, 1), const Point(0, 2)]),
-        // 1x2 Line (2 cells)
-        TangramPiece(id: 2, color: DesignSystem.gameTeal, cells: [const Point(0, 0), const Point(0, 1)]),
-      ];
-    } else if (puzzleIdx == 1) {
-      // Puzzle 2: Stair shape
-      _targetOutline = [
-        const Point(0, 0),
-        const Point(1, 0), const Point(1, 1),
-        const Point(2, 0), const Point(2, 1), const Point(2, 2)
-      ];
-
-      _pieces = [
-        // L-shape (3 cells)
-        TangramPiece(id: 0, color: DesignSystem.gameOrange, cells: [const Point(0, 0), const Point(1, 0), const Point(1, 1)]),
-        // 1x2 Line (2 cells)
-        TangramPiece(id: 1, color: DesignSystem.gameRose, cells: [const Point(0, 0), const Point(0, 1)]),
-        // 1x1 block (1 cell)
-        TangramPiece(id: 2, color: DesignSystem.gameBlue, cells: [const Point(0, 0)]),
-      ];
-    } else {
-      // Puzzle 3: T-shape outline / Cross shape
-      _targetOutline = [
-        const Point(0, 1),
-        const Point(1, 0), const Point(1, 1), const Point(1, 2),
-        const Point(2, 1),
-      ];
-
-      _pieces = [
-        // T-shape (4 cells)
-        TangramPiece(id: 0, color: DesignSystem.gameTeal, cells: [const Point(0, 1), const Point(1, 0), const Point(1, 1), const Point(1, 2)]),
-        // 1x1 block (1 cell)
-        TangramPiece(id: 1, color: DesignSystem.gameRose, cells: [const Point(0, 0)]),
-      ];
     }
+
+    _targetOutline = shape.toList();
+    _pieces = [
+      for (int i = 0; i < rawPieces.length; i++)
+        TangramPiece(
+          id: i,
+          color: palette[i % palette.length],
+          cells: _getRotatedCells(rawPieces[i], _random.nextInt(4)),
+        ),
+    ];
 
     _piecePlacements = List.filled(_pieces.length, null);
     _pieceRotations = List.filled(_pieces.length, 0);

@@ -52,6 +52,12 @@ void main() {
       expect(engine.countSolutions(List<bool>.filled(64, false), 8), 1);
       expect(engine.countSolutions(List<bool>.filled(16, false), 4), 16);
       expect(engine.countSolutions(List<bool>.filled(25, false), 5), 4);
+      // An unsolvable 4x4 board (single corner lit) has 0 solutions.
+      final unsolvable4 = List<bool>.filled(16, false)..[0] = true;
+      expect(engine.countSolutions(unsolvable4, 4), 0);
+      // Every 8x8 board has a unique solution (non-zero, non-empty).
+      final single8 = List<bool>.filled(64, false)..[0] = true;
+      expect(engine.countSolutions(single8, 8), 1);
     });
   });
 

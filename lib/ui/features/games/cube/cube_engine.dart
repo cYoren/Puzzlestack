@@ -154,11 +154,11 @@ class CubeEngine {
 
   // ------------------------------------------------------------- packed state
 
-  /// The state as one int: `squares | faces << cells | cell << (cells + 6)`.
+  /// The state as two 32-bit-safe ints: `(squares, faces | (cell << 6))`.
   ///
-  /// Packed because the solver builds a visited set of up to 25 x 64 x 64
-  /// entries, and hashing a list per state cost seconds a board.
-  int encode(CubePosition position) {
+  /// Split into two ints rather than one 36-bit integer because Dart's web
+  /// target truncates bitwise shifts to 32 bits, which would overflow on 5x5.
+  (int, int) encode(CubePosition position) {
     final cells = position.squares.length;
     var squares = 0;
     for (var i = 0; i < cells; i++) {
@@ -168,29 +168,30 @@ class CubeEngine {
     for (var i = 0; i < CubeFace.count; i++) {
       if (position.faces[i] == 1) faces |= 1 << i;
     }
-    return squares | (faces << cells) | (position.cell << (cells + CubeFace.count));
+    return (squares, faces | (position.cell << CubeFace.count));
   }
 
-  CubePosition decode(int code, int cells) {
+  CubePosition decode((int, int) code, int cells) {
+    final (squaresMask, meta) = code;
     final squares = List<int>.filled(cells, 0);
     for (var i = 0; i < cells; i++) {
-      if (code & (1 << i) != 0) squares[i] = 1;
+      if (squaresMask & (1 << i) != 0) squares[i] = 1;
     }
     final faces = List<int>.filled(CubeFace.count, 0);
     for (var i = 0; i < CubeFace.count; i++) {
-      if ((code >> cells) & (1 << i) != 0) faces[i] = 1;
+      if (meta & (1 << i) != 0) faces[i] = 1;
     }
     return CubePosition(
-      cell: code >> (cells + CubeFace.count),
+      cell: meta >> CubeFace.count,
       faces: faces,
       squares: squares,
     );
   }
 
-  /// One roll on the packed state. -1 when the move would leave the grid.
-  int _advance(int code, CubeDirection direction, int rows, int cols) {
-    final cells = rows * cols;
-    final cell = code >> (cells + CubeFace.count);
+  /// One roll on the packed state. Null when the move would leave the grid.
+  (int, int)? _advance((int, int) code, CubeDirection direction, int rows, int cols) {
+    final (squares, meta) = code;
+    final cell = meta >> CubeFace.count;
     final row = cell ~/ cols;
     final col = cell % cols;
     final next = switch (direction) {
@@ -199,10 +200,9 @@ class CubeEngine {
       CubeDirection.east => col + 1 < cols ? cell + 1 : -1,
       CubeDirection.west => col > 0 ? cell - 1 : -1,
     };
-    if (next < 0) return -1;
+    if (next < 0) return null;
 
-    final faces = (code >> cells) & CubeFace.solvedMask;
-    final squares = code & ((1 << cells) - 1);
+    final faces = meta & CubeFace.solvedMask;
 
     final order = _permutation[direction]!;
     var rolled = 0;
@@ -214,9 +214,9 @@ class CubeEngine {
     final bottom = rolled & 1;
     final landed = (squares >> next) & 1;
     final newFaces = (rolled & ~1) | landed;
-    final newSquares = (squares & ~(1 << next)) | bottom;
+    final newSquares = (squares & ~(1 << next)) | (bottom << next);
 
-    return newSquares | (newFaces << cells) | (next << (cells + CubeFace.count));
+    return (newSquares, newFaces | (next << CubeFace.count));
   }
 
   /// The position after rolling one square.
@@ -232,7 +232,7 @@ class CubeEngine {
   ) {
     final cells = puzzle.cellCount;
     final code = _advance(encode(position), direction, puzzle.rows, puzzle.cols);
-    if (code < 0) return position;
+    if (code == null) return position;
 
     final moved = decode(code, cells);
     // A finished cube keeps rolling, but stops swapping: every face is blue by
@@ -303,23 +303,22 @@ class CubeEngine {
   }) {
     if (from.isSolved) return const [];
 
-    final cells = puzzle.cellCount;
     final startCode = encode(from);
-    final seen = <int>{startCode};
-    final parents = <int, (int, CubeDirection)>{};
-    var frontier = <int>[startCode];
+    final seen = <(int, int)>{startCode};
+    final parents = <(int, int), ((int, int), CubeDirection)>{};
+    var frontier = <(int, int)>[startCode];
     var depth = 0;
 
     while (frontier.isNotEmpty) {
       if (maxMoves != null && depth >= maxMoves) return null;
-      final next = <int>[];
+      final next = <(int, int)>[];
       for (final code in frontier) {
         for (final direction in CubeDirection.values) {
           final moved = _advance(code, direction, puzzle.rows, puzzle.cols);
-          if (moved < 0) continue;
+          if (moved == null) continue;
           if (!seen.add(moved)) continue;
           parents[moved] = (code, direction);
-          if ((moved >> cells) & CubeFace.solvedMask == CubeFace.solvedMask) {
+          if ((moved.$2 & CubeFace.solvedMask) == CubeFace.solvedMask) {
             final line = <CubeDirection>[];
             var cursor = moved;
             while (cursor != startCode) {

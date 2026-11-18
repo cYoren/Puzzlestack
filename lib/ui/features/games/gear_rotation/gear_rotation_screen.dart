@@ -33,6 +33,7 @@ class _GearRotationScreenState extends ConsumerState<GearRotationScreen>
   int _score = 0;
   final int _targetScore = 5;
   bool _isGameOver = false;
+  int _roundEpoch = 0;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _GearRotationScreenState extends ConsumerState<GearRotationScreen>
   }
 
   void _generatePuzzle() {
+    _roundEpoch++;
     _gearsCount = _random.nextInt(3) + 3; // 3, 4, or 5 gears
     _firstGearClockwise = _random.nextBool();
 
@@ -70,6 +72,7 @@ class _GearRotationScreenState extends ConsumerState<GearRotationScreen>
   void _onAnswer(bool isClockwise) {
     if (_isAnswered || _isGameOver) return;
 
+    final epoch = _roundEpoch;
     setState(() {
       _isAnswered = true;
       _userAnswer = isClockwise;
@@ -78,7 +81,7 @@ class _GearRotationScreenState extends ConsumerState<GearRotationScreen>
         _score++;
         HapticFeedbackUtil.success();
         Future.delayed(const Duration(milliseconds: 1200), () {
-          if (!mounted) return;
+          if (!mounted || epoch != _roundEpoch) return;
           if (_score >= _targetScore) {
             setState(() {
               _isGameOver = true;
@@ -94,7 +97,7 @@ class _GearRotationScreenState extends ConsumerState<GearRotationScreen>
         HapticFeedbackUtil.error();
         _score = max(0, _score - 1);
         Future.delayed(const Duration(milliseconds: 1500), () {
-          if (!mounted) return;
+          if (!mounted || epoch != _roundEpoch) return;
           setState(() {
             _generatePuzzle();
           });

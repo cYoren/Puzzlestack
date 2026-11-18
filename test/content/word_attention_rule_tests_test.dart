@@ -299,12 +299,9 @@ List<String> _conundrumPool(WidgetTester tester) {
 
 String _conundrumSolutionFor(List<String> pool) {
   final String sortedPool = (List<String>.from(pool)..sort()).join();
-  for (int seed = 0; seed < 200; seed++) {
-    final String cand =
-        ConundrumAnagramEngine.generateRound(random: Random(seed)).solution;
-    if ((cand.split('')..sort()).join() == sortedPool) return cand;
-  }
-  throw StateError('No Conundrum solution matched $pool');
+  return ConundrumAnagramEngine.words.firstWhere(
+    (String cand) => (cand.split('')..sort()).join() == sortedPool,
+  );
 }
 
 List<int> _indicesForWord(List<String> pool, String target) {

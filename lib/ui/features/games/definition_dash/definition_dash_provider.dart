@@ -35,13 +35,18 @@ class DefinitionDashState {
 @riverpod
 class DefinitionDashNotifier extends _$DefinitionDashNotifier {
   final _engine = DefinitionDashEngine();
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   DefinitionDashState build() {
+    _disposed = false;
+    ref.onDispose(() => _disposed = true);
     return DefinitionDashState();
   }
 
   void startGame() {
+    _epoch++;
     final puzzle = _engine.generatePuzzle();
     state = DefinitionDashState(
       puzzle: puzzle,
@@ -58,7 +63,9 @@ class DefinitionDashNotifier extends _$DefinitionDashNotifier {
       isCorrect: isCorrect,
     );
 
+    final callEpoch = _epoch;
     Future.delayed(const Duration(milliseconds: 1000), () {
+      if (_disposed || callEpoch != _epoch) return;
       state = state.copyWith(isGameOver: true);
     });
   }

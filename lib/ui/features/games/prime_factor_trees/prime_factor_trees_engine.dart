@@ -18,7 +18,13 @@ class FactorNode {
 
 class PrimeFactorTreesEngine {
   final Random _random;
-  final List<int> _puzzleRoots = [24, 30, 36, 40, 45];
+  final List<int> _puzzleRoots = const [
+    12, 18, 20, 24, 27, 28, 30, 36, 40, 42,
+    44, 45, 50, 52, 54, 56, 60, 63, 66, 68,
+    70, 75, 76, 84, 90, 98, 99,
+  ];
+
+  List<int> get puzzleRoots => _puzzleRoots;
 
   late int rootValue;
   late Map<int, FactorNode> treeNodes;
@@ -109,23 +115,34 @@ class PrimeFactorTreesEngine {
   }
 
   void generateOptions() {
-    final Set<int> optionSet = {};
-    for (var node in treeNodes.values) {
+    final guaranteed = <int>{};
+    final validPool = <int>{};
+    for (final node in treeNodes.values) {
       if (node.isVisible && !node.isSolved) {
-        optionSet.addAll(getValidFactors(node.index));
+        final factors = getValidFactors(node.index);
+        if (factors.isNotEmpty) {
+          guaranteed.add(factors[_random.nextInt(factors.length)]);
+          validPool.addAll(factors);
+        }
       }
     }
 
-    while (optionSet.length < 6) {
+    final optionSet = <int>{...guaranteed};
+    final remainingValid = validPool.difference(optionSet).toList()
+      ..shuffle(_random);
+    for (final v in remainingValid) {
+      if (optionSet.length >= 6) break;
+      optionSet.add(v);
+    }
+
+    int guard = 0;
+    while (optionSet.length < 6 && guard < 100) {
+      guard++;
       optionSet.add(_random.nextInt(12) + 2);
     }
 
-    final list = optionSet.toList();
-    if (list.length > 6) {
-      options = (list..shuffle(_random)).sublist(0, 6);
-    } else {
-      options = list..shuffle(_random);
-    }
+    final list = optionSet.toList()..shuffle(_random);
+    options = list.length > 6 ? list.sublist(0, 6) : list;
   }
 
   bool submitAnswer(int nodeIndex, int value) {

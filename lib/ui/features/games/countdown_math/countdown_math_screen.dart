@@ -20,6 +20,8 @@ class CountdownMathScreen extends ConsumerStatefulWidget {
 
 class _CountdownMathScreenState extends ConsumerState<CountdownMathScreen> {
   late List<int> _numbers;
+  late List<int> _initialNumbers;
+  final List<List<int>> _history = [];
   late int _target;
   int? _selectedNumIndex1;
   int? _selectedNumIndex2;
@@ -32,64 +34,101 @@ class _CountdownMathScreenState extends ConsumerState<CountdownMathScreen> {
   }
 
   void _generatePuzzle() {
-    _selectedNumIndex1 = null;
-    _selectedNumIndex2 = null;
-    _selectedOperator = null;
-
     final random = Random();
-    final smalls = List.generate(4, (_) => random.nextInt(9) + 2);
-    final largeOptions = [25, 50, 75, 100];
-    final large = largeOptions[random.nextInt(largeOptions.length)];
-    
-    _numbers = [...smalls, large];
+    for (int attempt = 0; attempt < 25; attempt++) {
+      _selectedNumIndex1 = null;
+      _selectedNumIndex2 = null;
+      _selectedOperator = null;
+      _history.clear();
 
-    List<int> workingList = List.from(_numbers);
-    int target = workingList[random.nextInt(workingList.length)];
+      final smalls = List.generate(4, (_) => random.nextInt(9) + 2);
+      final largeOptions = [25, 50, 75, 100];
+      final large = largeOptions[random.nextInt(largeOptions.length)];
 
-    int operationsCount = random.nextInt(3) + 2;
-    for (int i = 0; i < operationsCount; i++) {
-      if (workingList.length < 2) break;
-      int idx1 = random.nextInt(workingList.length);
-      int idx2 = (idx1 + 1 + random.nextInt(workingList.length - 1)) % workingList.length;
+      final initial = [...smalls, large];
+      List<int> workingList = List.from(initial);
+      int? candidateTarget;
 
-      int n1 = workingList[idx1];
-      int n2 = workingList[idx2];
-      int op = random.nextInt(4);
+      final operationsCount = random.nextInt(3) + 2;
+      for (int i = 0; i < operationsCount; i++) {
+        if (workingList.length < 2) break;
+        final idx1 = random.nextInt(workingList.length);
+        final idx2 =
+            (idx1 + 1 + random.nextInt(workingList.length - 1)) %
+                workingList.length;
 
-      int result = 0;
-      switch (op) {
-        case 0:
-          result = n1 + n2;
-          break;
-        case 1:
-          result = (n1 - n2).abs();
-          break;
-        case 2:
-          result = n1 * n2;
-          break;
-        case 3:
-          if (n2 != 0 && n1 % n2 == 0) {
-            result = n1 ~/ n2;
-          } else if (n1 != 0 && n2 % n1 == 0) {
-            result = n2 ~/ n1;
-          } else {
+        final n1 = workingList[idx1];
+        final n2 = workingList[idx2];
+        final op = random.nextInt(4);
+
+        int result = 0;
+        switch (op) {
+          case 0:
             result = n1 + n2;
+            break;
+          case 1:
+            result = (n1 - n2).abs();
+            break;
+          case 2:
+            result = n1 * n2;
+            break;
+          case 3:
+            if (n2 != 0 && n1 % n2 == 0) {
+              result = n1 ~/ n2;
+            } else if (n1 != 0 && n2 % n1 == 0) {
+              result = n2 ~/ n1;
+            } else {
+              result = n1 + n2;
+            }
+            break;
+        }
+
+        if (result > 0 && result < 1000) {
+          candidateTarget = result;
+          final nextList = <int>[];
+          for (int j = 0; j < workingList.length; j++) {
+            if (j != idx1 && j != idx2) nextList.add(workingList[j]);
           }
-          break;
+          nextList.add(result);
+          workingList = nextList;
+        }
       }
 
-      if (result > 0 && result < 1000) {
-        target = result;
-        final nextList = <int>[];
-        for (int j = 0; j < workingList.length; j++) {
-          if (j != idx1 && j != idx2) nextList.add(workingList[j]);
-        }
-        nextList.add(result);
-        workingList = nextList;
+      if (candidateTarget != null && !initial.contains(candidateTarget)) {
+        _initialNumbers = initial;
+        _numbers = List.from(initial);
+        _target = candidateTarget;
+        return;
       }
     }
 
-    _target = target;
+    // Guaranteed solvable non-trivial fallback.
+    _initialNumbers = [3, 5, 7, 9, 50];
+    _numbers = List.from(_initialNumbers);
+    _history.clear();
+    _target = 3 * 50 + 7;
+  }
+
+  void _undo() {
+    if (_history.isEmpty) return;
+    HapticFeedbackUtil.lightImpact();
+    setState(() {
+      _numbers = _history.removeLast();
+      _selectedNumIndex1 = null;
+      _selectedNumIndex2 = null;
+      _selectedOperator = null;
+    });
+  }
+
+  void _resetCurrentPuzzle() {
+    HapticFeedbackUtil.lightImpact();
+    setState(() {
+      _numbers = List.from(_initialNumbers);
+      _history.clear();
+      _selectedNumIndex1 = null;
+      _selectedNumIndex2 = null;
+      _selectedOperator = null;
+    });
   }
 
   void _selectNumber(int idx) {
@@ -149,6 +188,7 @@ class _CountdownMathScreenState extends ConsumerState<CountdownMathScreen> {
     }
 
     setState(() {
+      _history.add(List.from(_numbers));
       final nextNumbers = <int>[];
       for (int i = 0; i < _numbers.length; i++) {
         if (i != _selectedNumIndex1 && i != _selectedNumIndex2) {
@@ -202,10 +242,26 @@ class _CountdownMathScreenState extends ConsumerState<CountdownMathScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
                 child: GameHud(children: [
-                  Text(AppLocalizations.of(context)!.phaseFindTheTarget, style: Theme.of(context).textTheme.titleMedium),
-                  IconButton(
-                    icon: const Icon(Icons.refresh_rounded),
-                    onPressed: () => setState(_generatePuzzle),
+                  Text(
+                    AppLocalizations.of(context)!.phaseFindTheTarget,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.undo_rounded),
+                        onPressed: _history.isEmpty ? null : _undo,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.restart_alt_rounded),
+                        onPressed: _history.isEmpty ? null : _resetCurrentPuzzle,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.refresh_rounded),
+                        onPressed: () => setState(_generatePuzzle),
+                      ),
+                    ],
                   ),
                 ],
               ),

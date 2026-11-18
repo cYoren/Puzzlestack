@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/ui/features/games/kakuro/kakuro_engine.dart';
 
@@ -68,6 +70,25 @@ void main() {
             }
           }
         }
+      });
+
+      test('generates varied puzzles with a unique solution', () {
+        final seeded = KakuroEngine(Random(42));
+        final sigs = <String>{};
+        for (int i = 0; i < 20; i++) {
+          final level = seeded.generateLevel();
+          expect(
+            KakuroEngine.countSolutions(level, limit: 2),
+            1,
+            reason: 'Kakuro board $i must have a unique solution',
+          );
+          final sig = [
+            for (final row in level.grid)
+              for (final c in row) '${c.hClue ?? '-'},${c.vClue ?? '-'}',
+          ].join(';');
+          sigs.add(sig);
+        }
+        expect(sigs.length, greaterThan(10));
       });
     });
 

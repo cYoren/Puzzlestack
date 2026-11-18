@@ -122,22 +122,23 @@ class LightsOutEngine {
   int countSolutions(List<bool> grid, int size) {
     final n = size * size;
     // One equation per cell, one variable per press, plus the right-hand side
-    // in the top bit.
-    final rows = <int>[];
-    for (var cell = 0; cell < n; cell++) {
-      var mask = 0;
+    // at index [n]. Uses explicit GF(2) rows rather than an int bitmask so
+    // 6x6 (36 vars) and 8x8 (64 vars) work identically on 64-bit VM and 32-bit
+    // web builds.
+    final rows = List<List<int>>.generate(n, (cell) {
+      final row = List<int>.filled(n + 1, 0);
       for (final at in affected(size, cell)) {
-        mask |= 1 << at;
+        row[at] = 1;
       }
-      if (grid[cell]) mask |= 1 << n;
-      rows.add(mask);
-    }
+      if (grid[cell]) row[n] = 1;
+      return row;
+    });
 
     var rank = 0;
     for (var col = 0; col < n; col++) {
       var pivot = -1;
       for (var i = rank; i < rows.length; i++) {
-        if ((rows[i] >> col) & 1 == 1) {
+        if (rows[i][col] == 1) {
           pivot = i;
           break;
         }
@@ -146,9 +147,13 @@ class LightsOutEngine {
       final tmp = rows[rank];
       rows[rank] = rows[pivot];
       rows[pivot] = tmp;
+      final pivotRow = rows[rank];
       for (var i = 0; i < rows.length; i++) {
-        if (i != rank && (rows[i] >> col) & 1 == 1) {
-          rows[i] ^= rows[rank];
+        if (i != rank && rows[i][col] == 1) {
+          final target = rows[i];
+          for (var j = col; j <= n; j++) {
+            target[j] ^= pivotRow[j];
+          }
         }
       }
       rank++;
@@ -156,7 +161,15 @@ class LightsOutEngine {
 
     // Any row that is all-zero on the left but set on the right is 0 = 1.
     for (final row in rows) {
-      if ((row & ((1 << n) - 1)) == 0 && ((row >> n) & 1) == 1) return 0;
+      if (row[n] == 0) continue;
+      var allZero = true;
+      for (var col = 0; col < n; col++) {
+        if (row[col] == 1) {
+          allZero = false;
+          break;
+        }
+      }
+      if (allZero) return 0;
     }
     return 1 << (n - rank);
   }

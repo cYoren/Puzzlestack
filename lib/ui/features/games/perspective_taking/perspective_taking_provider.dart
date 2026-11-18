@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter/material.dart';
 import 'perspective_taking_engine.dart';
@@ -68,7 +69,7 @@ class PerspectiveTakingNotifier extends _$PerspectiveTakingNotifier {
     final topView = _engine.getView(cubes, ViewDirection.top);
     
     final directions = [ViewDirection.north, ViewDirection.south, ViewDirection.east, ViewDirection.west];
-    final targetDirection = directions[DateTime.now().millisecondsSinceEpoch % directions.length];
+    final targetDirection = directions[Random().nextInt(directions.length)];
     
     // Generate 3 incorrect views
     // We can generate incorrect views by using other directions or slightly modified arrangements

@@ -11,7 +11,9 @@ class BinaryPuzzleBoard {
 }
 
 class BinaryPuzzleEngine {
-  final Random _random = Random();
+  final Random _random;
+
+  BinaryPuzzleEngine([Random? random]) : _random = random ?? Random();
 
   BinaryPuzzleBoard generateBoard({int size = 6}) {
     List<List<int>> solution = _generateFullGrid(size);
@@ -92,27 +94,181 @@ class BinaryPuzzleEngine {
   }
 
   List<List<int?>> _createPuzzle(List<List<int>> solution, int size) {
-    List<List<int?>> puzzle = List.generate(size, (r) => List.generate(size, (c) => solution[r][c]));
-    
-    List<Point<int>> cells = [];
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        cells.add(Point(c, r));
-      }
-    }
-    cells.shuffle(_random);
+    final puzzle = List.generate(
+      size,
+      (r) => List<int?>.generate(size, (c) => solution[r][c]),
+    );
 
-    // Remove cells until we reach the target number of clues.
-    // For binary puzzles, we want enough clues to make it interesting but allow multiple solutions.
-    int targetClues = (size * size * 0.4).toInt() + _random.nextInt(size); 
-    int removed = 0;
-    for (var cell in cells) {
-      if ((size * size - removed) <= targetClues) break;
+    final cells = <Point<int>>[
+      for (int r = 0; r < size; r++)
+        for (int c = 0; c < size; c++) Point(c, r),
+    ]..shuffle(_random);
+
+    final targetClues = (size * size * 0.4).toInt() + _random.nextInt(size);
+    int remaining = size * size;
+    for (final cell in cells) {
+      if (remaining <= targetClues) break;
+      final saved = puzzle[cell.y][cell.x];
       puzzle[cell.y][cell.x] = null;
-      removed++;
+      if (countSolutions(puzzle, size, limit: 2) != 1) {
+        puzzle[cell.y][cell.x] = saved;
+      } else {
+        remaining--;
+      }
     }
 
     return puzzle;
+  }
+
+  /// Counts valid Binary Puzzle solutions up to [limit].
+  static int countSolutions(
+    List<List<int?>> initialGrid,
+    int size, {
+    int limit = 2,
+  }) {
+    final half = size ~/ 2;
+    final grid = [
+      for (int r = 0; r < size; r++)
+        [for (int c = 0; c < size; c++) initialGrid[r][c] ?? -1],
+    ];
+    final row0 = List<int>.filled(size, 0);
+    final row1 = List<int>.filled(size, 0);
+    final col0 = List<int>.filled(size, 0);
+    final col1 = List<int>.filled(size, 0);
+    final empty = <(int r, int c)>[];
+
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        final v = grid[r][c];
+        if (v == 0) {
+          row0[r]++;
+          col0[c]++;
+        } else if (v == 1) {
+          row1[r]++;
+          col1[c]++;
+        } else {
+          empty.add((r, c));
+        }
+      }
+    }
+
+    // Check prefilled legality.
+    for (int i = 0; i < size; i++) {
+      if (row0[i] > half || row1[i] > half) return 0;
+      if (col0[i] > half || col1[i] > half) return 0;
+    }
+
+    bool canPlace(int r, int c, int v) {
+      if (v == 0 && (row0[r] >= half || col0[c] >= half)) return false;
+      if (v == 1 && (row1[r] >= half || col1[c] >= half)) return false;
+
+      if (c >= 2 && grid[r][c - 1] == v && grid[r][c - 2] == v) return false;
+      if (c < size - 2 && grid[r][c + 1] == v && grid[r][c + 2] == v) {
+        return false;
+      }
+      if (c > 0 && c < size - 1 && grid[r][c - 1] == v && grid[r][c + 1] == v) {
+        return false;
+      }
+
+      if (r >= 2 && grid[r - 1][c] == v && grid[r - 2][c] == v) return false;
+      if (r < size - 2 && grid[r + 1][c] == v && grid[r + 2][c] == v) {
+        return false;
+      }
+      if (r > 0 && r < size - 1 && grid[r - 1][c] == v && grid[r + 1][c] == v) {
+        return false;
+      }
+
+      // Check row uniqueness once completing row r.
+      if (row0[r] + row1[r] + 1 == size) {
+        for (int rr = 0; rr < size; rr++) {
+          if (rr == r || row0[rr] + row1[rr] != size) continue;
+          bool same = true;
+          for (int cc = 0; cc < size; cc++) {
+            final cur = cc == c ? v : grid[r][cc];
+            if (grid[rr][cc] != cur) {
+              same = false;
+              break;
+            }
+          }
+          if (same) return false;
+        }
+      }
+
+      // Check col uniqueness once completing col c.
+      if (col0[c] + col1[c] + 1 == size) {
+        for (int cc = 0; cc < size; cc++) {
+          if (cc == c || col0[cc] + col1[cc] != size) continue;
+          bool same = true;
+          for (int rr = 0; rr < size; rr++) {
+            final cur = rr == r ? v : grid[rr][c];
+            if (grid[rr][cc] != cur) {
+              same = false;
+              break;
+            }
+          }
+          if (same) return false;
+        }
+      }
+      return true;
+    }
+
+    int solutions = 0;
+
+    void search(int solvedCount) {
+      if (solutions >= limit) return;
+      if (solvedCount == empty.length) {
+        solutions++;
+        return;
+      }
+
+      int bestR = -1, bestC = -1, bestCount = 3, bestMask = 0;
+      for (final (r, c) in empty) {
+        if (grid[r][c] != -1) continue;
+        int mask = 0;
+        int count = 0;
+        if (canPlace(r, c, 0)) {
+          mask |= 1;
+          count++;
+        }
+        if (canPlace(r, c, 1)) {
+          mask |= 2;
+          count++;
+        }
+        if (count == 0) return;
+        if (count < bestCount) {
+          bestCount = count;
+          bestR = r;
+          bestC = c;
+          bestMask = mask;
+          if (count == 1) break;
+        }
+      }
+
+      for (int v = 0; v <= 1; v++) {
+        if (solutions >= limit) return;
+        if ((bestMask & (1 << v)) == 0) continue;
+        grid[bestR][bestC] = v;
+        if (v == 0) {
+          row0[bestR]++;
+          col0[bestC]++;
+        } else {
+          row1[bestR]++;
+          col1[bestC]++;
+        }
+        search(solvedCount + 1);
+        if (v == 0) {
+          row0[bestR]--;
+          col0[bestC]--;
+        } else {
+          row1[bestR]--;
+          col1[bestC]--;
+        }
+        grid[bestR][bestC] = -1;
+      }
+    }
+
+    search(0);
+    return solutions;
   }
 
   bool _isFinalValid(List<List<int>> grid, int size) {

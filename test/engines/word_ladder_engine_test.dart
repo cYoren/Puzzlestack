@@ -13,5 +13,22 @@ void main() {
       final engine = WordLadderEngine();
       expect(engine, isA<WordLadderEngine>());
     });
+
+    test('dictionary excludes abbreviations and inappropriate words', () {
+      final engine = WordLadderEngine();
+      for (final bad in const [
+        'ABBR',
+        'ACCT',
+        'ADVT',
+        'ANAL',
+        'ANUS',
+        'ASSN',
+        'ASST',
+        'ATTY',
+        'AVDP',
+      ]) {
+        expect(engine.isValidWord(bad), isFalse, reason: '$bad should not be accepted');
+      }
+    });
   });
 }
