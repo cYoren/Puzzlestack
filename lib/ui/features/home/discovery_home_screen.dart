@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../providers/daily_five_providers.dart';
 import '../../../providers/game_session_provider.dart';
 import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
@@ -14,6 +15,7 @@ import '../../../utils/navigation_utils.dart';
 import '../../../widgets/deck.dart';
 import '../../core/assist/game_launch.dart';
 import '../../core/preview/game_preview.dart';
+import '../daily/daily_five_screen.dart';
 import '../main_shell/main_shell.dart';
 import '../feed/feed_screen.dart';
 import 'category_room_screen.dart';
@@ -89,6 +91,7 @@ class DiscoveryHomeScreen extends ConsumerWidget {
                 SliverToBoxAdapter(
                     child:
                         _header(context, ref, hidden.toList(), showArchived)),
+                SliverToBoxAdapter(child: _dailyFiveCard(context, ref)),
                 SliverToBoxAdapter(child: _dealCard(context, ref)),
                 if (favorites.isNotEmpty) ...[
                   SliverToBoxAdapter(
@@ -175,6 +178,94 @@ class DiscoveryHomeScreen extends ConsumerWidget {
           width: 44,
           height: 44,
           child: Icon(icon, size: 20, color: DesignSystem.muted(context)),
+        ),
+      ),
+    );
+  }
+
+  /// Daily Five entry at the top of the Stack (`docs/FEED.md`).
+  Widget _dailyFiveCard(BuildContext context, WidgetRef ref) {
+    final summary = ref.watch(dailyFiveProvider);
+    final progress = summary.today;
+    final Color muted = DesignSystem.muted(context);
+    final Color accent = DesignSystem.accent(context);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        DesignSystem.spaceLG,
+        0,
+        DesignSystem.spaceLG,
+        DesignSystem.spaceSM,
+      ),
+      child: DeckCard(
+        key: const ValueKey<String>('stack_daily_five_card'),
+        padding: const EdgeInsets.fromLTRB(20, 16, 18, 16),
+        onTap: () {
+          HapticFeedbackUtil.selectionClick();
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(builder: (_) => const DailyFiveScreen()),
+          );
+        },
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'DAILY FIVE',
+                    style: TextStyle(
+                      fontFamily: 'Bebas Neue',
+                      fontSize: DesignSystem.fontSize3XL,
+                      height: 0.95,
+                      letterSpacing: 0.5,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    progress.isComplete
+                        ? 'Finished today. Open summary or archive.'
+                        : 'Five seeded cards, the same for everyone today.',
+                    style: TextStyle(
+                      fontSize: DesignSystem.fontSizeXS,
+                      height: 1.3,
+                      color: muted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: DesignSystem.spaceSM),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  progress.isComplete
+                      ? 'DONE'
+                      : '${progress.solvedCount} / 5',
+                  style: TextStyle(
+                    fontFamily: 'Bebas Neue',
+                    fontSize: DesignSystem.fontSize2XL,
+                    letterSpacing: 0.8,
+                    height: 1,
+                    color: accent,
+                  ),
+                ),
+                if (summary.streak > 0)
+                  Text(
+                    '${summary.streak}D STREAK',
+                    style: TextStyle(
+                      fontFamily: 'Bebas Neue',
+                      fontSize: DesignSystem.fontSize2XS,
+                      letterSpacing: 1.2,
+                      color: muted,
+                    ),
+                  ),
+              ],
+            ),
+          ],
         ),
       ),
     );

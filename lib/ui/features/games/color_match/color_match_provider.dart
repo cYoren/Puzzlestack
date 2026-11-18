@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../feed/feed_session.dart';
 import 'color_match_engine.dart';
 
 part 'color_match_provider.g.dart';
@@ -38,7 +39,9 @@ class ColorMatchNotifier extends _$ColorMatchNotifier {
 
   @override
   ColorMatchState build() {
-    final target = _engine.generateTargetColor();
+    final target = _engine.generateTargetColor(
+      random: FeedSession.randomFor('color_match'),
+    );
     return ColorMatchState(
       targetColor: target,
       currentColor: const Color(0xFF808080),

@@ -14,7 +14,8 @@ import 'sudoku_provider.dart';
 class SudokuBoard extends PuzzleBoard<SudokuState> {
   SudokuBoard({required this.state});
 
-  static const int _size = SudokuEngine.size;
+  int get _size => state.currentBoard.length;
+  int get _box => _size == 4 ? 2 : 3;
 
   /// The grid is square, so the board box is taller than it is wide by exactly
   /// the tray it carries underneath.
@@ -30,7 +31,7 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
 
   /// A listener hears the grid and the tray it carries, not a count of pieces.
   @override
-  String get semanticsShape => '9 by 9 grid with a digit tray';
+  String get semanticsShape => '$_size by $_size grid with a digit tray';
 
   /// The digit in a cell, and nothing for the tray: a tray digit already says
   /// its value in its label.
@@ -58,8 +59,10 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
         gridHeight / _size,
       );
 
-  Rect _trayRect(int slot) =>
-      Rect.fromLTWH(slot / 10, trayTop, 1 / 10, trayHeight);
+  Rect _trayRect(int slot) {
+    final int slots = _size + 1;
+    return Rect.fromLTWH(slot / slots, trayTop, 1 / slots, trayHeight);
+  }
 
   static ElementRef cell(int row, int col) => ElementRef('cell', row, col);
 
@@ -83,7 +86,7 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
       case 'digit':
         return _trayRect(element.a - 1);
       case 'erase':
-        return _trayRect(9);
+        return _trayRect(_size);
     }
     return null;
   }
@@ -189,9 +192,10 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
     }
 
     // Box separators, the only 2.5dp strokes on the board.
-    for (var i = 1; i < 3; i++) {
-      final x = i * 3 / _size;
-      final y = i * 3 / _size * gridHeight;
+    final int boxes = _size ~/ _box;
+    for (var i = 1; i < boxes; i++) {
+      final x = i * _box / _size;
+      final y = i * _box / _size * gridHeight;
       canvas.line(Offset(x, 0), Offset(x, gridHeight),
           color: palette.ink, width: 2.5);
       canvas.line(Offset(0, y), Offset(1, y), color: palette.ink, width: 2.5);
@@ -268,7 +272,8 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
     if (selectedRow == row && selectedCol == col) return false;
     return selectedRow == row ||
         selectedCol == col ||
-        (row ~/ 3 == selectedRow ~/ 3 && col ~/ 3 == selectedCol ~/ 3);
+        (row ~/ _box == selectedRow ~/ _box &&
+            col ~/ _box == selectedCol ~/ _box);
   }
 
   void _paintDigit(PuzzleCanvas canvas, SudokuState state, int value) {
@@ -307,7 +312,7 @@ class SudokuBoard extends PuzzleBoard<SudokuState> {
 
   void _paintErase(PuzzleCanvas canvas) {
     final palette = canvas.palette;
-    final rect = _trayRect(9).deflate(0.008);
+    final rect = _trayRect(_size).deflate(0.008);
     canvas.cell(rect, fill: palette.surface, stroke: palette.outline);
     final centre = rect.center;
     final arm = rect.width * 0.16;

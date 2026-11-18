@@ -104,6 +104,7 @@ class _MainShellState extends ConsumerState<MainShell>
         0,
         FeedScreen(
           startGameId: widget.startGameId,
+          isActive: _selectedIndex == 0,
           onBrowse: short ? () => _select(1) : null,
         ),
       ),

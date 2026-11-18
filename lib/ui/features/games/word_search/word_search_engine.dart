@@ -24,61 +24,83 @@ class WordSearchBoard {
   });
 }
 
+class WordSearchConfig {
+  final List<String> candidates;
+  final int size;
+  final int maxWords;
+  final int? seed;
+
+  const WordSearchConfig({
+    required this.candidates,
+    this.size = WordSearchEngine.boardSize,
+    this.maxWords = 8,
+    this.seed,
+  });
+}
+
 class WordSearchEngine {
   static const int boardSize = 10;
-  static final Random _random = Random();
+  static const int feedBoardSize = 6;
+  static const int feedMaxWords = 4;
 
   static WordSearchBoard generateBoard(List<String> candidates) {
-    List<List<String>> grid =
-        List.generate(boardSize, (_) => List.filled(boardSize, ''));
-    List<WordSearchWord> placedWords = [];
+    return generateWithConfig(WordSearchConfig(candidates: candidates));
+  }
 
-    // Try to place up to 8 words
-    for (String word in candidates) {
-      if (placedWords.length >= 8) break;
-      _tryPlaceWord(grid, word, placedWords);
+  static WordSearchBoard generateWithConfig(WordSearchConfig config) {
+    final int sz = config.size;
+    final Random rng = config.seed == null ? Random() : Random(config.seed);
+    final List<List<String>> grid =
+        List.generate(sz, (_) => List.filled(sz, ''));
+    final List<WordSearchWord> placedWords = [];
+
+    for (final String word in config.candidates) {
+      if (placedWords.length >= config.maxWords) break;
+      _tryPlaceWord(grid, sz, word, placedWords, rng);
     }
 
-    // Fill remaining empty cells with random letters
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    for (int y = 0; y < boardSize; y++) {
-      for (int x = 0; x < boardSize; x++) {
+    for (int y = 0; y < sz; y++) {
+      for (int x = 0; x < sz; x++) {
         if (grid[y][x] == '') {
-          grid[y][x] = letters[_random.nextInt(letters.length)];
+          grid[y][x] = letters[rng.nextInt(letters.length)];
         }
       }
     }
 
-    return WordSearchBoard(size: boardSize, grid: grid, words: placedWords);
+    return WordSearchBoard(size: sz, grid: grid, words: placedWords);
   }
 
-  static bool _tryPlaceWord(List<List<String>> grid, String word, List<WordSearchWord> placedWords) {
-    // Directions: [dx, dy]
+  static bool _tryPlaceWord(
+    List<List<String>> grid,
+    int sz,
+    String word,
+    List<WordSearchWord> placedWords,
+    Random rng,
+  ) {
     final directions = [
-      [1, 0],   // Horizontal
-      [0, 1],   // Vertical
-      [1, 1],   // Diagonal down-right
-      [1, -1],  // Diagonal up-right
+      [1, 0],
+      [0, 1],
+      [1, 1],
+      [1, -1],
     ];
-    directions.shuffle(_random);
+    directions.shuffle(rng);
 
-    // Try all possible start positions using 1D index to avoid Point object allocation
-    List<int> starts = List.generate(boardSize * boardSize, (i) => i);
-    starts.shuffle(_random);
+    final List<int> starts = List.generate(sz * sz, (i) => i)..shuffle(rng);
 
-    for (var dir in directions) {
-      int dx = dir[0];
-      int dy = dir[1];
+    for (final dir in directions) {
+      final int dx = dir[0];
+      final int dy = dir[1];
 
-      for (var startIndex in starts) {
-        int startX = startIndex % boardSize;
-        int startY = startIndex ~/ boardSize;
-        
-        if (_canPlace(grid, word, startX, startY, dx, dy)) {
-          List<Point<int>> positions = [];
+      for (final startIndex in starts) {
+        final int startX = startIndex % sz;
+        final int startY = startIndex ~/ sz;
+
+        if (_canPlace(grid, sz, word, startX, startY, dx, dy)) {
+          final List<Point<int>> positions = [];
           for (int i = 0; i < word.length; i++) {
-            int x = startX + (i * dx);
-            int y = startY + (i * dy);
+            final int x = startX + (i * dx);
+            final int y = startY + (i * dy);
             grid[y][x] = word[i];
             positions.add(Point(x, y));
           }
@@ -90,18 +112,25 @@ class WordSearchEngine {
     return false;
   }
 
-  static bool _canPlace(List<List<String>> grid, String word, int startX, int startY, int dx, int dy) {
-    int endX = startX + (word.length - 1) * dx;
-    int endY = startY + (word.length - 1) * dy;
+  static bool _canPlace(
+    List<List<String>> grid,
+    int sz,
+    String word,
+    int startX,
+    int startY,
+    int dx,
+    int dy,
+  ) {
+    final int endX = startX + (word.length - 1) * dx;
+    final int endY = startY + (word.length - 1) * dy;
 
-    if (endX < 0 || endX >= boardSize || endY < 0 || endY >= boardSize) return false;
+    if (endX < 0 || endX >= sz || endY < 0 || endY >= sz) return false;
 
     for (int i = 0; i < word.length; i++) {
-      int x = startX + (i * dx);
-      int y = startY + (i * dy);
+      final int x = startX + (i * dx);
+      final int y = startY + (i * dy);
       if (grid[y][x] != '' && grid[y][x] != word[i]) return false;
     }
     return true;
   }
 }
-

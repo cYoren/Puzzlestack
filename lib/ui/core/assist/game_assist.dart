@@ -2,7 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 export '../../../utils/game_assist_state.dart';
 
+import '../../features/games/abcd/abcd_provider.dart';
 import '../../features/games/akari/akari_provider.dart';
+import '../../features/games/ascent/ascent_provider.dart';
+import '../../features/games/boats/boats_provider.dart';
+import '../../features/games/bricks/bricks_provider.dart';
+import '../../features/games/clusters/clusters_provider.dart';
+import '../../features/games/crossing/crossing_provider.dart';
 import '../../features/games/cube/cube_provider.dart';
 import '../../features/games/dominosa/dominosa_provider.dart';
 import '../../features/games/futoshiki/futoshiki_provider.dart';
@@ -12,9 +18,14 @@ import '../../features/games/kurodoko/kurodoko_provider.dart';
 import '../../features/games/lights_out/lights_out_provider.dart';
 import '../../features/games/magnets/magnets_provider.dart';
 import '../../features/games/map/map_provider.dart';
+import '../../features/games/mathrax/mathrax_provider.dart';
 import '../../features/games/netslide/netslide_provider.dart';
+import '../../features/games/nurikabe/nurikabe_provider.dart';
 import '../../features/games/pegs/pegs_provider.dart';
+import '../../features/games/rome/rome_provider.dart';
+import '../../features/games/salad/salad_provider.dart';
 import '../../features/games/same_game/same_game_provider.dart';
+import '../../features/games/seismic/seismic_provider.dart';
 import '../../features/games/signpost/signpost_provider.dart';
 import '../../features/games/skyscrapers/skyscrapers_provider.dart';
 import '../../features/games/slitherlink/slitherlink_provider.dart';
@@ -26,8 +37,7 @@ import '../../features/games/water_sort/water_sort_provider.dart';
 /// What the shell can offer for one game.
 ///
 /// Hint is a provable next step; solve is the answer. Both are optional, and a
-/// game with neither simply has no buttons — that is the honest state for a
-/// timed reaction test, where "the answer" is not a thing.
+/// game with neither simply has no buttons.
 class GameAssistActions {
   const GameAssistActions({this.onHint, this.onSolve});
 
@@ -44,6 +54,36 @@ class GameAssistActions {
 /// support it readable in one file.
 GameAssistActions? gameAssistFor(String gameId, WidgetRef ref) {
   switch (gameId) {
+    case 'abcd':
+      final notifier = ref.read(abcdNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'ascent':
+      final notifier = ref.read(ascentNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'boats':
+      final notifier = ref.read(boatsNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'bricks':
+      final notifier = ref.read(bricksNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'clusters':
+      final notifier = ref.read(clustersNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'crossing':
+      final notifier = ref.read(crossingNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'mathrax':
+      final notifier = ref.read(mathraxNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'rome':
+      final notifier = ref.read(romeNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'salad':
+      final notifier = ref.read(saladNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'seismic':
+      final notifier = ref.read(seismicNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'signpost':
       final notifier = ref.read(signpostNotifierProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
@@ -76,7 +116,10 @@ GameAssistActions? gameAssistFor(String gameId, WidgetRef ref) {
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
     case 'sudoku':
       final notifier = ref.read(sudokuNotifierProvider.notifier);
-      return GameAssistActions(onSolve: notifier.solve);
+      return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);
+    case 'nurikabe':
+      final notifier = ref.read(nurikabeNotifierProvider.notifier);
+      return GameAssistActions(onHint: notifier.showHint);
     case 'map':
       final notifier = ref.read(mapNotifierProvider.notifier);
       return GameAssistActions(onHint: notifier.hint, onSolve: notifier.solve);

@@ -143,19 +143,19 @@ class _MinesweeperScreenState extends ConsumerState<MinesweeperScreen> {
               borderRadius: BorderRadius.circular(DesignSystem.radiusMD - 4),
             ),
             child: AspectRatio(
-              aspectRatio: MinesweeperNotifier.cols / MinesweeperNotifier.rows,
+              aspectRatio: state.cols / state.rows,
               child: GridView.builder(
                 padding: const EdgeInsets.all(6),
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: MinesweeperNotifier.cols,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: state.cols,
                   crossAxisSpacing: 3,
                   mainAxisSpacing: 3,
                 ),
-                itemCount: MinesweeperNotifier.rows * MinesweeperNotifier.cols,
+                itemCount: state.rows * state.cols,
                 itemBuilder: (context, index) {
-                  final r = index ~/ MinesweeperNotifier.cols;
-                  final c = index % MinesweeperNotifier.cols;
+                  final r = index ~/ state.cols;
+                  final c = index % state.cols;
                   return RepaintBoundary(
                     child: MinesweeperCellWidget(row: r, col: c, isFlagMode: _isFlagMode),
                   );

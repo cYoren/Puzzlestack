@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../data/daily/daily_five.dart';
 import '../data/game_metadata.dart';
 import '../data/game_registry.dart';
 import '../ui/features/feed/feed_session.dart';
@@ -43,15 +44,38 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       if (widget.isVictory) {
         HapticFeedbackUtil.victory();
+        FeedSession.current?.onSolved?.call(null);
       } else {
         HapticFeedbackUtil.vibrate();
       }
     });
   }
 
-  /// The feed's win state: one card, one action. Solve, tap, next puzzle.
+  String _feedResultLine() {
+    final String? gameId = GameClock.lastGameId;
+    if (gameId != null) {
+      final stat = ref.read(gameStatsProvider)[gameId];
+      if (stat != null && stat.times.isNotEmpty) {
+        final int latestMs = stat.times.last;
+        final bool isBest = stat.bestMs != null && latestMs <= stat.bestMs!;
+        final String formatted = formatDailyDuration(latestMs);
+        return isBest ? '$formatted \u00b7 BEST' : formatted;
+      }
+      final Duration? live = GameClock.elapsed(gameId);
+      if (live != null && live.inMilliseconds > 0) {
+        return formatDailyDuration(live.inMilliseconds);
+      }
+    }
+    return widget.title.isNotEmpty
+        ? widget.title.toUpperCase()
+        : (widget.isVictory ? 'SOLVED' : 'DONE');
+  }
+
+  /// The feed's win state: one compact result bar along the bottom edge so the
+  /// solved board remains visible above it (`docs/FEED.md` `card-result`).
   Widget _feedSheet(
       BuildContext context, AppLocalizations l10n, FeedSession feed) {
     final ColorScheme colors = Theme.of(context).colorScheme;
@@ -59,123 +83,109 @@ class _GameCompletionDialogState extends ConsumerState<GameCompletionDialog> {
     final Color muted = DesignSystem.muted(context);
 
     void deal() {
-      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(context, rootNavigator: true).maybePop();
       feed.next();
     }
 
-    /// Re-deal this card.
-    ///
-    /// Every game's `onPlayAgain` already closes this sheet and rebuilds its own
-    /// board, which is why the two buttons on the standing card call it and
-    /// nothing else. The feed used to close the sheet *and* call it, so the
-    /// second pop removed the feed (or the whole tab, when the deal is the front
-    /// door) and read as the app closing.
     void replay() => widget.onPlayAgain();
 
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      insetPadding:
-          const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 380),
-        child: DeckCard(
-          padding: const EdgeInsets.fromLTRB(22, 22, 22, 18),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    widget.isVictory
-                        ? Icons.check_rounded
-                        : Icons.remove_rounded,
-                    size: 18,
-                    color: widget.isVictory
-                        ? (Theme.of(context).brightness == Brightness.dark
-                            ? DesignSystem.solvedDark
-                            : DesignSystem.solved)
-                        : muted,
-                  ),
-                  const SizedBox(width: 8),
-                  // Long titles and 22 locales: the line gives way, the layout
-                  // does not.
-                  Flexible(
-                    child: Text(
-                      widget.title.toUpperCase(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: 'Bebas Neue',
-                        fontSize: DesignSystem.fontSize2XL,
-                        letterSpacing: 1.2,
-                        height: 1,
-                        color: colors.onSurface,
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            DesignSystem.spaceMD,
+            0,
+            DesignSystem.spaceMD,
+            DesignSystem.spaceMD,
+          ),
+          child: Material(
+            type: MaterialType.transparency,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 460),
+              child: DeckCard(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      widget.isVictory
+                          ? Icons.check_rounded
+                          : Icons.remove_rounded,
+                      size: 18,
+                      color: widget.isVictory
+                          ? (Theme.of(context).brightness == Brightness.dark
+                              ? DesignSystem.solvedDark
+                              : DesignSystem.solved)
+                          : muted,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        _feedResultLine(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: DesignSystem.fontSizeXL,
+                          letterSpacing: 1.0,
+                          height: 1,
+                          color: colors.onSurface,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                widget.message,
-                style: TextStyle(
-                  fontSize: DesignSystem.fontSizeSM,
-                  height: 1.45,
-                  color: muted,
-                ),
-              ),
-              const SizedBox(height: 18),
-              Row(
-                children: [
-                  _roundAction(
-                    context,
-                    icon: Icons.refresh_rounded,
-                    tooltip: l10n.playAgain,
-                    onTap: replay,
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Semantics(
+                    const SizedBox(width: 8),
+                    _roundAction(
+                      context,
+                      icon: Icons.refresh_rounded,
+                      tooltip: l10n.playAgain,
+                      onTap: replay,
+                    ),
+                    const SizedBox(width: 8),
+                    Semantics(
                       button: true,
                       label: l10n.nextPuzzle,
                       child: GestureDetector(
                         onTap: deal,
                         behavior: HitTestBehavior.opaque,
                         child: Container(
-                          height: 48,
+                          height: 44,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           decoration: BoxDecoration(
                             color: accent,
                             borderRadius:
                                 BorderRadius.circular(DesignSystem.radiusFull),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 l10n.nextPuzzle.toUpperCase(),
                                 style: TextStyle(
                                   fontFamily: 'Bebas Neue',
-                                  fontSize: DesignSystem.fontSizeLG,
-                                  letterSpacing: 1.2,
+                                  fontSize: DesignSystem.fontSizeMD,
+                                  letterSpacing: 1.1,
                                   height: 1,
                                   color: DesignSystem.onAccent(context),
                                 ),
                               ),
-                              const SizedBox(width: 6),
-                              Icon(Icons.arrow_downward_rounded,
-                                  size: 18,
-                                  color: DesignSystem.onAccent(context)),
+                              const SizedBox(width: 4),
+                              Icon(
+                                Icons.arrow_downward_rounded,
+                                size: 16,
+                                color: DesignSystem.onAccent(context),
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,32 +7,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/game_categories.dart';
 import '../../../data/game_guides.dart';
 import '../../../data/game_metadata.dart';
+import '../../../data/game_profiles.dart';
 import '../../../data/game_registry.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../providers/daily_five_providers.dart';
+import '../../../providers/game_stats_provider.dart';
+import '../../../providers/pick_providers.dart';
 import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/haptic_feedback.dart';
 import '../../../widgets/deck.dart';
 import '../../../widgets/game_guide_screen.dart';
+import '../../core/assist/game_assist.dart';
+import '../../core/assist/hint_request.dart';
+import '../../core/juice/game_scope.dart';
+import '../daily/daily_five_screen.dart';
+import 'deal_order.dart';
 import 'feed_deck.dart';
 import 'feed_session.dart';
 
 /// The deal: Puzzlestack's front door.
 ///
 /// One puzzle per screen, all of it playable right there, and a swipe up deals
-/// the next card. There are no menus between puzzles, no "start" button and no
-/// list to scroll: the app opens on something to solve, which is the only
-/// argument a puzzle app really has.
-///
-/// It is a tab (so the bottom bar stays) or a pushed route (from a category).
-/// The deck deals a real shuffled pass over every puzzle, so nothing repeats
-/// until the bag is empty and the counter on the card is true.
+/// the next card.
 class FeedScreen extends ConsumerStatefulWidget {
   const FeedScreen({
     super.key,
     this.startGameId,
     this.categoryId,
     this.isRoute = false,
+    this.isActive = true,
     this.onBrowse,
   });
 
@@ -44,8 +50,10 @@ class FeedScreen extends ConsumerStatefulWidget {
   /// the top of the screen.
   final bool isRoute;
 
-  /// Present when the feed is a tab. On short phones the bottom bar is dropped
-  /// so the board gets the height, and this is the way back to the stack.
+  /// False when this feed tab is parked behind another tab in `IndexedStack`.
+  final bool isActive;
+
+  /// Present when the feed is a tab on short phones.
   final VoidCallback? onBrowse;
 
   @override
@@ -57,42 +65,39 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   late final FeedDeck _deck;
   late final FeedSession _session;
   late final AnimationController _settle;
-
-  /// How far the arriving card has turned face up. The next card waits in the
-  /// deck showing its back; when it lands, the back fades and the puzzle is
-  /// already there underneath.
   late final AnimationController _reveal;
 
   int _index = 0;
-
-  /// How far the live card has been pulled off the deck, in pixels. Positive is
-  /// up (deal the next card), negative is down (put this one back).
   double _drag = 0;
 
-  /// How far a finger must travel before the card is allowed to follow it.
   static const double _slop = 22;
+  static const double _chromeSlop = 8;
 
-  /// Finger travel of the current gesture, reset when it ends.
   double _travelled = 0;
-
-  /// True once the gesture has passed the slop and the card is following it.
   bool _armed = false;
-
-  /// Height of one card slot, measured on layout. Every threshold below is a
-  /// fraction of it, so a small phone and a tablet deal the same way.
+  bool _chromeGesture = false;
   double _slot = 1;
 
-  /// How much of the next card is showing. Kept outside the drag value so the
-  /// deck can settle without the gesture changing.
-  bool _locked = false;
-  final Map<int, int> _restartEpochs = {};
+  final Map<int, int> _restartEpochs = <int, int>{};
+  final Map<String, int> _quickSkips = <String, int>{};
+  final Set<String> _seenThisSession = <String>{};
+  int _cardsSeenCount = 0;
+  DateTime _cardShownAt = DateTime.now();
+  bool _currentCardSolved = false;
+  String _localeCode = 'en';
 
   @override
   void initState() {
     super.initState();
-    final hidden = ref.read(userDataNotifierProvider
-        .select((d) => (d.hiddenGameIds ?? const []).toSet()));
-    _deck = FeedDeck(categoryId: widget.categoryId, hidden: hidden);
+    final DealHistory initialHistory = _buildHistory(localeCode: _localeCode);
+    _deck = FeedDeck(
+      categoryId: widget.categoryId,
+      hidden: initialHistory.blocked,
+      history: initialHistory,
+      includeFirstTen: widget.startGameId == null && widget.categoryId == null,
+      seedStore: SeedHistoryStore(ref.read(pickStoreProvider)),
+    );
+    _seenThisSession.add(_gameAt(0).id);
 
     _reveal = AnimationController(
       vsync: this,
@@ -100,8 +105,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
       value: 1,
     );
 
-    // The controller works in card heights, not pixels: an AnimationController
-    // is bounded to -1.2..1.2 so a settle never overruns the deck.
     _settle = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 320),
@@ -118,8 +121,35 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
       restart: () => _restart(_index),
       close: _close,
       isRoute: widget.isRoute,
+      seedFor: (String gameId) => _deck.seedAt(_index, gameId),
+      onSolved: (_) => _currentCardSolved = true,
     );
-    FeedSession.activate(_session);
+    if (widget.isActive) {
+      FeedSession.activate(_session);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final String nextLocale =
+        Localizations.maybeLocaleOf(context)?.languageCode ?? 'en';
+    if (nextLocale != _localeCode) {
+      _localeCode = nextLocale;
+      _deck.updateHistory(_buildHistory(localeCode: _localeCode));
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant FeedScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isActive != widget.isActive) {
+      if (widget.isActive) {
+        FeedSession.activate(_session);
+      } else {
+        FeedSession.deactivate(_session);
+      }
+    }
   }
 
   @override
@@ -128,6 +158,24 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     _reveal.dispose();
     _settle.dispose();
     super.dispose();
+  }
+
+  DealHistory _buildHistory({String? localeCode}) {
+    final userData = ref.read(userDataNotifierProvider);
+    final stats = ref.read(gameStatsProvider);
+    final Set<String> solvedIds = <String>{
+      for (final entry in stats.entries)
+        if (entry.value.solves > 0) entry.key,
+    };
+    return DealHistory(
+      blocked: (userData.hiddenGameIds ?? const <String>[]).toSet(),
+      liked: (userData.favoriteGameIds ?? const <String>[]).toSet(),
+      solved: solvedIds,
+      quickSkips: Map<String, int>.unmodifiable(_quickSkips),
+      seen: <String>{...solvedIds, ..._seenThisSession},
+      cardsSeen: (userData.totalSolved ?? 0) + _cardsSeenCount,
+      localeCode: localeCode ?? _localeCode,
+    );
   }
 
   GameMetadata _gameAt(int index) {
@@ -145,7 +193,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     _animateTo(_slot);
   }
 
-  /// Animate the live card to [target] pixels off the deck, then commit it.
   void _animateTo(double target) {
     if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) {
       setState(() => _drag = target);
@@ -166,23 +213,20 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     HapticFeedbackUtil.lightImpact();
   }
 
-  /// The drag ended: deal, go back, or settle. Distance or a throw decides.
-  ///
-  /// Both numbers were raised on 2026-11-16 because a card was one careless
-  /// thumb away: 16% of the screen and 650 px/s meant a board drag (Tangle,
-  /// Inertia, Netslide all take a drag) dealt the next card before the player
-  /// had moved a piece. A card that leaves when you did not mean to is worse
-  /// than a card that takes a deliberate flick, so the bar is now a third of a
-  /// screen or a real throw.
-  void _release({required double velocity, double travelled = 0}) {
-    // A gesture that never got past the slop is a tap or a puzzle drag, not a
-    // swipe, whatever the fling velocity says.
-    if (travelled.abs() < _slop) {
+  void _release({
+    required double velocity,
+    double travelled = 0,
+    bool fromChrome = false,
+  }) {
+    final double requiredSlop = fromChrome ? _chromeSlop : _slop;
+    if (travelled.abs() < requiredSlop) {
       _animateTo(0);
       return;
     }
-    final bool deal = velocity < -900 || _drag > _slot * 0.30;
-    final bool back = velocity > 900 || _drag < -_slot * 0.30;
+    final double ratio = fromChrome ? 0.14 : 0.30;
+    final double fling = fromChrome ? 450 : 900;
+    final bool deal = velocity < -fling || _drag > _slot * ratio;
+    final bool back = velocity > fling || _drag < -_slot * ratio;
 
     if (deal) {
       _animateTo(_slot);
@@ -193,17 +237,26 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     }
   }
 
-  /// The card landed: adopt the new index and let the deck fall back to rest.
   void _commit() {
     final bool forward = _drag >= _slot * 0.5;
     final bool backward = _drag <= -_slot * 0.5 && _index > 0;
 
     if (forward) {
+      final GameMetadata leaving = _gameAt(_index);
+      if (!_currentCardSolved &&
+          DateTime.now().difference(_cardShownAt).inSeconds < 5) {
+        _quickSkips[leaving.id] = (_quickSkips[leaving.id] ?? 0) + 1;
+      }
+      _cardsSeenCount += 1;
       HapticFeedbackUtil.selectionClick();
       setState(() {
         _index += 1;
         _drag = 0;
+        _cardShownAt = DateTime.now();
+        _currentCardSolved = false;
       });
+      _seenThisSession.add(_gameAt(_index).id);
+      _deck.updateHistory(_buildHistory());
       _settle.value = 0;
       _reveal.forward(from: 0);
     } else if (backward) {
@@ -211,6 +264,8 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
       setState(() {
         _index -= 1;
         _drag = 0;
+        _cardShownAt = DateTime.now();
+        _currentCardSolved = false;
       });
       _settle.value = 0;
       _reveal.forward(from: 0);
@@ -220,27 +275,57 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     }
   }
 
+  void _onChromeDragUpdate(DragUpdateDetails details) {
+    _settle.stop();
+    _chromeGesture = true;
+    _travelled += details.delta.dy;
+    if (!_armed) {
+      if (_travelled.abs() < _chromeSlop) return;
+      _armed = true;
+      setState(() {
+        _drag = (-_travelled).clamp(-_slot * 1.2, _slot * 1.2);
+      });
+      return;
+    }
+    setState(() {
+      _drag = (_drag - details.delta.dy).clamp(-_slot * 1.2, _slot * 1.2);
+    });
+  }
+
+  void _onChromeDragEnd(DragEndDetails details) {
+    final double travelled = _travelled;
+    _travelled = 0;
+    _armed = false;
+    _chromeGesture = false;
+    _release(
+      velocity: details.primaryVelocity ?? 0,
+      travelled: travelled,
+      fromChrome: true,
+    );
+  }
+
   void _restart(int index) {
     if (!mounted) return;
     HapticFeedbackUtil.mediumImpact();
     setState(() => _restartEpochs[index] = (_restartEpochs[index] ?? 0) + 1);
   }
 
-  bool _isLiked(GameMetadata game) => ref.watch(userDataNotifierProvider
-      .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)));
+  bool _isLiked(GameMetadata game) => ref.watch(
+        userDataNotifierProvider
+            .select((d) => (d.favoriteGameIds ?? const []).contains(game.id)),
+      );
 
   void _toggleLike(GameMetadata game) {
     HapticFeedbackUtil.lightImpact();
     ref.read(userDataNotifierProvider.notifier).toggleFavorite(game.id);
+    _deck.updateHistory(_buildHistory());
   }
 
-  /// Blocking removes a game from this player's deal and from the browse
-  /// surfaces. It is undoable from the snackbar, because a stray tap on a phone
-  /// should never cost a game for good.
   void _block(GameMetadata game) {
     final l10n = AppLocalizations.of(context);
     HapticFeedbackUtil.mediumImpact();
     ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
+    _deck.updateHistory(_buildHistory());
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(
@@ -250,9 +335,12 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
           content: Text(l10n?.gameHidden ?? 'Hidden from the deal'),
           action: SnackBarAction(
             label: l10n?.undo ?? 'Undo',
-            onPressed: () => ref
-                .read(userDataNotifierProvider.notifier)
-                .toggleHideGame(game.id),
+            onPressed: () {
+              ref
+                  .read(userDataNotifierProvider.notifier)
+                  .toggleHideGame(game.id);
+              _deck.updateHistory(_buildHistory());
+            },
           ),
           duration: const Duration(seconds: 4),
         ),
@@ -263,37 +351,12 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     if (widget.isRoute) Navigator.of(context).maybePop();
   }
 
-  void _toggleLock() {
-    HapticFeedbackUtil.lightImpact();
-    setState(() => _locked = !_locked);
-    if (_locked) {
-      ScaffoldMessenger.of(context)
-        ..clearSnackBars()
-        ..showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            margin: const EdgeInsets.fromLTRB(24, 0, 24, 88),
-            backgroundColor: Theme.of(context).colorScheme.onSurface,
-            duration: const Duration(milliseconds: 1600),
-            content: Text(
-              AppLocalizations.of(context)?.feedScrollLocked ??
-                  'Scroll locked for this puzzle',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.surface,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        );
-    }
-  }
-
   void _openGuide(BuildContext context, GameMetadata game) {
     if (!gameGuides.containsKey(game.id)) return;
     HapticFeedbackUtil.selectionClick();
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (_) => GameGuideScreen(
           gameId: game.id,
           gameColor: DesignSystem.accent(context),
@@ -302,14 +365,16 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     );
   }
 
+  void _openDailyFive(BuildContext context) {
+    HapticFeedbackUtil.selectionClick();
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(builder: (_) => const DailyFiveScreen()),
+    );
+  }
+
   // --- The stack -----------------------------------------------------------
 
-  /// One card of the deck.
-  ///
-  /// [depth] is where it sits in the stack: 0 is the live slot, 1 and 2 are the
-  /// cards behind it. [advance] (0..1) is how far it has moved one place
-  /// forward, which is what makes the whole stack step up when the live card is
-  /// pulled: the next card slides into the live slot and grows as it does.
   Widget _card(
     BuildContext context, {
     required int index,
@@ -322,35 +387,32 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
 
     final double a = advance.clamp(0.0, 1.0);
     final double effDepth = live ? 0.0 : (depth - a).clamp(0.0, 2.0);
-    // The cards behind are inset and dropped, not scaled: a stack peeks out at
-    // the sides and below the front card, the way a deck does on a table.
     final double inset = live ? 0.0 : 9.0 * effDepth;
     final double drop = live ? -_drag : (fromAbove ? -13.0 : 13.0) * effDepth;
     final double rotation = live ? -0.014 * a : 0.010 * a;
     final double scale = live ? 1 - 0.02 * a : 1.0;
     final double wash = live ? 0.45 * a : 0.16 * (1 - a);
 
-    // The next card stays face down until the player is committed to it:
-    // building a puzzle behind the live card would start its timer, and showing
-    // its footer through the gap reads as two screens fighting.
     final bool faceUp = live || a > 0.35;
-
     final GameMetadata game = _gameAt(index);
+
     final Widget content = faceUp
         ? _FeedCard(
             key: ValueKey(
-                'card_${index}_${game.id}_${_restartEpochs[index] ?? 0}'),
+              'card_${index}_${game.id}_${_restartEpochs[index] ?? 0}',
+            ),
             game: game,
             index: index,
             deck: _deck,
-            locked: _locked,
+            live: live && widget.isActive,
             onNext: _next,
             onRestart: () => _restart(index),
-            onToggleLock: _toggleLock,
             onGuide: () => _openGuide(context, game),
             liked: _isLiked(game),
             onLike: () => _toggleLike(game),
             onBlock: () => _block(game),
+            onChromeDragUpdate: live ? _onChromeDragUpdate : null,
+            onChromeDragEnd: live ? _onChromeDragEnd : null,
           )
         : DeckCard(
             key: ValueKey('back_$index'),
@@ -359,8 +421,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
           );
 
     return Positioned.fill(
-      // Keyed by slot, not by position: when the deck steps up, the card that
-      // was behind has to keep its game state as it becomes the live one.
       key: ValueKey('slot_$index'),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: inset),
@@ -375,20 +435,13 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
               ..scaleByDouble(scale, scale, 1.0, 1.0),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onVerticalDragUpdate: live && !_locked
+              onVerticalDragUpdate: live
                   ? (details) {
+                      if (_chromeGesture) return;
                       _settle.stop();
-                      // A card does not move at all until the finger has
-                      // travelled [_slop] on its own: below that it is a tap, or
-                      // a board drag that should belong to the puzzle. Without
-                      // this the card crept under every micro-movement and the
-                      // gesture arena handed the feed a drag the board wanted.
                       _travelled += details.delta.dy;
                       if (!_armed) {
                         if (_travelled.abs() < _slop) return;
-                        // Crossed the slop: take the whole travel at once, so a
-                        // deliberate drag is not 20px behind the finger for the
-                        // rest of the gesture.
                         _armed = true;
                         setState(() {
                           _drag =
@@ -402,8 +455,9 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
                       });
                     }
                   : null,
-              onVerticalDragEnd: live && !_locked
+              onVerticalDragEnd: live
                   ? (details) {
+                      if (_chromeGesture) return;
                       final double travelled = _travelled;
                       _travelled = 0;
                       _armed = false;
@@ -436,6 +490,10 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   @override
   Widget build(BuildContext context) {
     final Color bed = DesignSystem.paperOf(context);
+    final int dailyStreak =
+        ref.watch(dailyFiveProvider.select((s) => s.streak));
+    final bool dailyDone =
+        ref.watch(dailyFiveProvider.select((s) => s.today.isComplete));
 
     return Scaffold(
       backgroundColor: bed,
@@ -451,7 +509,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
 
           return Listener(
             onPointerSignal: (event) {
-              if (_locked || _settle.isAnimating) return;
+              if (_settle.isAnimating) return;
               if (event is! PointerScrollEvent) return;
               if (event.scrollDelta.dy > 0) {
                 _animateTo(_slot);
@@ -461,22 +519,34 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
             },
             child: Stack(
               children: [
-                // Painted back to front: the stack, then the live card on top.
                 if (forward) ...[
-                  _card(context,
-                      index: _index + 2, depth: 2, advance: progress),
-                  _card(context,
-                      index: _index + 1, depth: 1, advance: progress),
+                  _card(
+                    context,
+                    index: _index + 2,
+                    depth: 2,
+                    advance: progress,
+                  ),
+                  _card(
+                    context,
+                    index: _index + 1,
+                    depth: 1,
+                    advance: progress,
+                  ),
                 ] else
-                  _card(context,
-                      index: _index - 1,
-                      depth: 1,
-                      advance: -progress,
-                      fromAbove: true),
-                _card(context,
-                    index: _index, depth: 0, advance: progress, live: true),
-                // The wordmark belongs to the deck, not to each card: it stays
-                // put while the cards are dealt underneath it.
+                  _card(
+                    context,
+                    index: _index - 1,
+                    depth: 1,
+                    advance: -progress,
+                    fromAbove: true,
+                  ),
+                _card(
+                  context,
+                  index: _index,
+                  depth: 0,
+                  advance: progress,
+                  live: true,
+                ),
                 Positioned(
                   top: 0,
                   left: 0,
@@ -494,6 +564,9 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
                               showClose: widget.isRoute,
                               onClose: _close,
                               onBrowse: widget.onBrowse,
+                              onDailyFive: () => _openDailyFive(context),
+                              dailyStreak: dailyStreak,
+                              dailyDone: dailyDone,
                             ),
                           ),
                         ),
@@ -510,12 +583,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   }
 }
 
-/// The back of a card in the deck: paper, a hairline, and the mark.
-///
-/// It covers the puzzle underneath until the card has landed, which is what
-/// keeps a half-dealt card from showing its footer through the gap. [wash]
-/// pushes background cards away from the eye; [reveal] fades the back off as
-/// the card takes the live slot.
 class _CardBack extends StatelessWidget {
   const _CardBack({required this.wash, this.reveal});
 
@@ -524,7 +591,6 @@ class _CardBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The same box as a face card, so a card turning over never changes size.
     final Widget back = Padding(
       padding: EdgeInsets.fromLTRB(
         DesignSystem.spaceMD,
@@ -537,13 +603,12 @@ class _CardBack extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 560),
           child: DeckCard(
             padding: EdgeInsets.zero,
-            // The mark sits low on the back, where the peel uncovers it first.
             child: Align(
               alignment: const Alignment(0, 0.42),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Opacity(opacity: 0.22, child: DeckMark(size: 52)),
+                  const Opacity(opacity: 0.22, child: DeckMark(size: 52)),
                   const SizedBox(height: 8),
                   Opacity(
                     opacity: 0.16,
@@ -591,33 +656,99 @@ class _CardBack extends StatelessWidget {
   }
 }
 
-class _FeedCard extends StatelessWidget {
+class _FeedCard extends ConsumerStatefulWidget {
   const _FeedCard({
     super.key,
     required this.game,
     required this.index,
     required this.deck,
-    required this.locked,
+    required this.live,
     required this.onNext,
     required this.onRestart,
-    required this.onToggleLock,
     required this.onGuide,
     required this.liked,
     required this.onLike,
     required this.onBlock,
+    this.onChromeDragUpdate,
+    this.onChromeDragEnd,
   });
 
   final GameMetadata game;
   final int index;
   final FeedDeck deck;
-  final bool locked;
+  final bool live;
   final VoidCallback onNext;
   final VoidCallback onRestart;
   final bool liked;
   final VoidCallback onLike;
   final VoidCallback onBlock;
-  final VoidCallback onToggleLock;
   final VoidCallback onGuide;
+  final GestureDragUpdateCallback? onChromeDragUpdate;
+  final GestureDragEndCallback? onChromeDragEnd;
+
+  @override
+  ConsumerState<_FeedCard> createState() => _FeedCardState();
+}
+
+class _FeedCardState extends ConsumerState<_FeedCard>
+    with SingleTickerProviderStateMixin {
+  Timer? _idleTimer;
+  late final AnimationController _nudgeController;
+  bool _nudgedOnce = false;
+  bool _interacted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nudgeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 680),
+    );
+    _armIdleNudgeIfNeeded();
+  }
+
+  @override
+  void didUpdateWidget(covariant _FeedCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!oldWidget.live && widget.live) {
+      _armIdleNudgeIfNeeded();
+    } else if (oldWidget.live && !widget.live) {
+      _idleTimer?.cancel();
+      _idleTimer = null;
+    }
+  }
+
+  void _armIdleNudgeIfNeeded() {
+    _idleTimer?.cancel();
+    if (!widget.live || _nudgedOnce || _interacted) return;
+    final int solves = ref.read(gameStatsProvider)[widget.game.id]?.solves ?? 0;
+    if (solves > 0) return;
+    _idleTimer = Timer(const Duration(seconds: 6), () {
+      if (!mounted || _interacted || _nudgedOnce) return;
+      setState(() => _nudgedOnce = true);
+      _nudgeController.forward(from: 0);
+    });
+  }
+
+  void _onBoardPointerDown() {
+    if (_interacted) return;
+    _interacted = true;
+    _idleTimer?.cancel();
+    _idleTimer = null;
+  }
+
+  @override
+  void dispose() {
+    _idleTimer?.cancel();
+    _nudgeController.dispose();
+    super.dispose();
+  }
+
+  static String _goalText(String raw) {
+    final String trimmed = raw.trim();
+    if (trimmed.length <= 60) return trimmed;
+    return '${trimmed.substring(0, 59).trimRight()}\u2026';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -625,9 +756,9 @@ class _FeedCard extends StatelessWidget {
     final Color muted = DesignSystem.muted(context);
     final Color accent = DesignSystem.accent(context);
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final GameAssistActions? assist = gameAssistFor(widget.game.id, ref);
 
     return Padding(
-      // The fixed wordmark bar above owns this space; the card starts under it.
       padding: EdgeInsets.fromLTRB(
         DesignSystem.spaceMD,
         MediaQuery.paddingOf(context).top + kToolbarHeight,
@@ -646,16 +777,69 @@ class _FeedCard extends StatelessWidget {
                   lift: isDark ? 0 : 1,
                   child: Column(
                     children: [
-                      _cardHeader(context, muted, accent),
+                      GestureDetector(
+                        key: ValueKey<String>(
+                          'feed_card_header_${widget.index}',
+                        ),
+                        behavior: HitTestBehavior.opaque,
+                        onVerticalDragUpdate: widget.onChromeDragUpdate,
+                        onVerticalDragEnd: widget.onChromeDragEnd,
+                        child: _cardHeader(context, muted, accent),
+                      ),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: DesignSystem.spaceSM,
+                        child: Listener(
+                          behavior: HitTestBehavior.translucent,
+                          onPointerDown: (_) => _onBoardPointerDown(),
+                          child: AnimatedBuilder(
+                            animation: _nudgeController,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: DesignSystem.spaceSM,
+                              ),
+                              child: GameScope(
+                                gameId: widget.game.id,
+                                child: widget.game.builder(context),
+                              ),
+                            ),
+                            builder: (context, child) {
+                              final double t = _nudgeController.value;
+                              final double pulse = t <= 0 || t >= 1
+                                  ? 0.0
+                                  : (1.0 - (2 * t - 1).abs());
+                              if (pulse <= 0.001) return child!;
+                              return DecoratedBox(
+                                key: const ValueKey<String>('feed_idle_nudge'),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color:
+                                        accent.withValues(alpha: 0.55 * pulse),
+                                    width: 2.5,
+                                  ),
+                                ),
+                                child: Transform.scale(
+                                  scale: 1.0 + 0.012 * pulse,
+                                  child: child,
+                                ),
+                              );
+                            },
                           ),
-                          child: game.builder(context),
                         ),
                       ),
-                      _cardFooter(context, colors, muted, accent),
+                      GestureDetector(
+                        key: ValueKey<String>(
+                          'feed_card_footer_${widget.index}',
+                        ),
+                        behavior: HitTestBehavior.opaque,
+                        onVerticalDragUpdate: widget.onChromeDragUpdate,
+                        onVerticalDragEnd: widget.onChromeDragEnd,
+                        child: _cardFooter(
+                          context,
+                          colors,
+                          muted,
+                          accent,
+                          assist?.onHint,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -668,68 +852,107 @@ class _FeedCard extends StatelessWidget {
   }
 
   Widget _cardHeader(BuildContext context, Color muted, Color accent) {
-    final CategoryInfo cat = GameCategories.info(game.category);
-    final int position = deck.positionInDeck(index);
+    final CategoryInfo cat = GameCategories.info(widget.game.category);
+    final CardKind kind = cardKindOf(widget.game.id);
+    final int position = widget.deck.positionInDeck(widget.index);
+    final String goal = _goalText(widget.game.subtitleGetter(context));
+    final bool compact = MediaQuery.sizeOf(context).height < 700;
+
     return Container(
-      padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
+      padding: EdgeInsets.fromLTRB(18, compact ? 9 : 11, 18, compact ? 8 : 10),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(color: DesignSystem.hairline(context), width: 1),
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 6,
-            height: 6,
-            decoration: BoxDecoration(color: accent, shape: BoxShape.circle),
+          Row(
+            children: [
+              Container(
+                width: 6,
+                height: 6,
+                decoration:
+                    BoxDecoration(color: accent, shape: BoxShape.circle),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '${kind.name.toUpperCase()} \u00b7 ${cat.label.toUpperCase()}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: 'Bebas Neue',
+                    fontSize: DesignSystem.fontSizeSM + 2,
+                    letterSpacing: 1.4,
+                    height: 1,
+                    color: muted,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                position.toString().padLeft(3, '0'),
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue',
+                  fontSize: DesignSystem.fontSizeSM + 2,
+                  letterSpacing: 1.2,
+                  height: 1,
+                  color: DesignSystem.muted(context),
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+              Text(
+                ' / ${widget.deck.deckSize}',
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue',
+                  fontSize: DesignSystem.fontSizeSM + 2,
+                  letterSpacing: 1.2,
+                  height: 1,
+                  color: muted.withValues(alpha: 0.55),
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 8),
-          Text(
-            cat.label.toUpperCase(),
-            style: TextStyle(
-              fontFamily: 'Bebas Neue',
-              fontSize: DesignSystem.fontSizeSM + 2,
-              letterSpacing: 1.6,
-              height: 1,
-              color: muted,
+          if (goal.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              goal,
+              key: ValueKey<String>('feed_goal_${widget.game.id}'),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: DesignSystem.fontSizeXS,
+                height: 1.25,
+                color: muted,
+              ),
             ),
-          ),
-          const Spacer(),
-          Text(
-            position.toString().padLeft(3, '0'),
-            style: TextStyle(
-              fontFamily: 'Bebas Neue',
-              fontSize: DesignSystem.fontSizeSM + 2,
-              letterSpacing: 1.2,
-              height: 1,
-              color: DesignSystem.muted(context),
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
-          Text(
-            ' / ${deck.deckSize}',
-            style: TextStyle(
-              fontFamily: 'Bebas Neue',
-              fontSize: DesignSystem.fontSizeSM + 2,
-              letterSpacing: 1.2,
-              height: 1,
-              color: muted.withValues(alpha: 0.55),
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
+          ],
         ],
       ),
     );
   }
 
   Widget _cardFooter(
-      BuildContext context, ColorScheme colors, Color muted, Color accent) {
+    BuildContext context,
+    ColorScheme colors,
+    Color muted,
+    Color accent,
+    VoidCallback? onHint,
+  ) {
     final l10n = AppLocalizations.of(context);
-    // On a short phone the board needs the height more than the subtitle does.
     final bool compact = MediaQuery.sizeOf(context).height < 760;
+    final bool narrow = MediaQuery.sizeOf(context).width < 360;
+
     return Container(
-      padding: EdgeInsets.fromLTRB(18, compact ? 10 : 14, 12, compact ? 8 : 12),
+      padding: EdgeInsets.fromLTRB(
+        narrow ? 12 : 18,
+        compact ? 8 : 12,
+        narrow ? 8 : 12,
+        compact ? 6 : 10,
+      ),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(color: DesignSystem.hairline(context), width: 1),
@@ -741,7 +964,7 @@ class _FeedCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 6),
             child: Text(
-              game.titleGetter(context),
+              widget.game.titleGetter(context),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -755,67 +978,54 @@ class _FeedCard extends StatelessWidget {
               ),
             ),
           ),
-          if (!compact) ...[
-            const SizedBox(height: 2),
-            Padding(
-              padding: const EdgeInsets.only(right: 6),
-              child: Text(
-                game.subtitleGetter(context),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: DesignSystem.fontSizeXS,
-                  height: 1.3,
-                  color: muted,
-                ),
-              ),
-            ),
-          ],
-          SizedBox(height: compact ? 4 : 10),
+          SizedBox(height: compact ? 4 : 8),
           Row(
             children: [
               _quietButton(
                 context,
                 icon: Icons.refresh_rounded,
                 tooltip: l10n?.restartPuzzle ?? 'Restart',
-                onTap: onRestart,
+                onTap: widget.onRestart,
+                narrow: narrow,
               ),
-              const SizedBox(width: 2),
+              if (onHint != null)
+                _quietButton(
+                  context,
+                  key: ValueKey<String>('feed_hint_${widget.game.id}'),
+                  icon: Icons.lightbulb_outline_rounded,
+                  tooltip: 'Hint',
+                  onTap: () => requestHint(context, ref, onHint),
+                  narrow: narrow,
+                ),
               _quietButton(
                 context,
                 icon: Icons.help_outline_rounded,
                 tooltip: l10n?.howToPlay ?? 'How to Play',
-                onTap: onGuide,
+                onTap: widget.onGuide,
+                narrow: narrow,
               ),
               const Spacer(),
               _quietButton(
                 context,
-                icon: liked
+                icon: widget.liked
                     ? Icons.favorite_rounded
                     : Icons.favorite_border_rounded,
-                tooltip: liked ? 'Remove from favourites' : 'Add to favourites',
-                onTap: onLike,
-                tinted: liked,
+                tooltip: widget.liked
+                    ? 'Remove from favourites'
+                    : 'Add to favourites',
+                onTap: widget.onLike,
+                tinted: widget.liked,
+                narrow: narrow,
               ),
-              const SizedBox(width: 2),
               _quietButton(
                 context,
                 icon: Icons.visibility_off_outlined,
-                tooltip: 'Not a puzzle: block it from the deal',
-                onTap: onBlock,
+                tooltip: 'Hide from the deal',
+                onTap: widget.onBlock,
+                narrow: narrow,
               ),
-              const SizedBox(width: 2),
-              _quietButton(
-                context,
-                icon: locked ? Icons.lock_rounded : Icons.lock_open_rounded,
-                tooltip: locked
-                    ? (l10n?.unlockScroll ?? 'Unlock scrolling')
-                    : (l10n?.lockScroll ?? 'Lock scrolling'),
-                onTap: onToggleLock,
-                tinted: true,
-              ),
-              const SizedBox(width: 6),
-              _nextButton(context, accent, l10n),
+              const SizedBox(width: 4),
+              Flexible(child: _nextButton(context, accent, l10n)),
             ],
           ),
         ],
@@ -825,22 +1035,23 @@ class _FeedCard extends StatelessWidget {
 
   Widget _quietButton(
     BuildContext context, {
+    Key? key,
     required IconData icon,
     required String tooltip,
     required VoidCallback onTap,
     bool tinted = false,
+    bool narrow = false,
   }) {
     final Color muted = DesignSystem.muted(context);
     final Color accent = DesignSystem.accent(context);
     return Tooltip(
+      key: key,
       message: tooltip,
       child: InkResponse(
         onTap: onTap,
-        radius: 24,
-        // Five of these share one row with NEXT on the narrowest phone, so the
-        // width is what the row can spare rather than a round number.
+        radius: 22,
         child: SizedBox(
-          width: 36,
+          width: narrow ? 32 : 36,
           height: 44,
           child: Icon(icon, size: 20, color: tinted ? accent : muted),
         ),
@@ -854,11 +1065,11 @@ class _FeedCard extends StatelessWidget {
       button: true,
       label: l10n?.nextPuzzle ?? 'Next puzzle',
       child: GestureDetector(
-        onTap: onNext,
+        onTap: widget.onNext,
         behavior: HitTestBehavior.opaque,
         child: Container(
           height: 40,
-          padding: const EdgeInsets.only(left: 16, right: 10),
+          padding: const EdgeInsets.only(left: 14, right: 8),
           decoration: BoxDecoration(
             color: accent,
             borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
@@ -866,19 +1077,27 @@ class _FeedCard extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                (l10n?.next ?? 'Next').toUpperCase(),
-                style: TextStyle(
-                  fontFamily: 'Bebas Neue',
-                  fontSize: DesignSystem.fontSizeLG,
-                  letterSpacing: 1.2,
-                  height: 1,
-                  color: DesignSystem.onAccent(context),
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    (l10n?.next ?? 'Next').toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: 'Bebas Neue',
+                      fontSize: DesignSystem.fontSizeLG,
+                      letterSpacing: 1.2,
+                      height: 1,
+                      color: DesignSystem.onAccent(context),
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(width: 6),
-              Icon(Icons.keyboard_arrow_down_rounded,
-                  size: 20, color: DesignSystem.onAccent(context)),
+              const SizedBox(width: 4),
+              Icon(
+                Icons.keyboard_arrow_down_rounded,
+                size: 20,
+                color: DesignSystem.onAccent(context),
+              ),
             ],
           ),
         ),
@@ -892,14 +1111,23 @@ class _TopBar extends StatelessWidget {
     required this.showClose,
     required this.onClose,
     required this.onBrowse,
+    required this.onDailyFive,
+    required this.dailyStreak,
+    required this.dailyDone,
   });
 
   final bool showClose;
   final VoidCallback onClose;
   final VoidCallback? onBrowse;
+  final VoidCallback onDailyFive;
+  final int dailyStreak;
+  final bool dailyDone;
 
   @override
   Widget build(BuildContext context) {
+    final Color muted = DesignSystem.muted(context);
+    final Color accent = DesignSystem.accent(context);
+
     return Row(
       children: [
         const Padding(
@@ -907,22 +1135,59 @@ class _TopBar extends StatelessWidget {
           child: DeckMark(size: 20),
         ),
         const SizedBox(width: 10),
-        Text(
-          'PUZZLESTACK',
-          style: TextStyle(
-            fontFamily: 'Bebas Neue',
-            fontSize: DesignSystem.fontSizeLG,
-            letterSpacing: 1.4,
-            height: 1,
-            color: Theme.of(context).colorScheme.onSurface,
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'PUZZLESTACK',
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue',
+                  fontSize: DesignSystem.fontSizeLG,
+                  letterSpacing: 1.4,
+                  height: 1,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
           ),
         ),
-        const Spacer(),
+        const SizedBox(width: 8),
+        GestureDetector(
+          key: const ValueKey<String>('feed_daily_five_chip'),
+          onTap: onDailyFive,
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            margin: const EdgeInsets.only(right: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
+              border: Border.all(
+                color: dailyDone ? accent : DesignSystem.hairline(context),
+              ),
+            ),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                dailyStreak > 0 ? 'DAILY 5 \u00b7 ${dailyStreak}D' : 'DAILY 5',
+                style: TextStyle(
+                  fontFamily: 'Bebas Neue',
+                  fontSize: DesignSystem.fontSizeSM,
+                  letterSpacing: 1.1,
+                  height: 1,
+                  color: dailyDone ? accent : muted,
+                ),
+              ),
+            ),
+          ),
+        ),
         if (onBrowse != null)
           IconButton(
             onPressed: onBrowse,
             iconSize: 20,
-            color: DesignSystem.muted(context),
+            color: muted,
             tooltip: AppLocalizations.of(context)?.navStack ?? 'Stack',
             icon: const Icon(Icons.grid_view_rounded),
           ),
@@ -930,7 +1195,7 @@ class _TopBar extends StatelessWidget {
           IconButton(
             onPressed: onClose,
             iconSize: 20,
-            color: DesignSystem.muted(context),
+            color: muted,
             tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
             icon: const Icon(Icons.close_rounded),
           ),

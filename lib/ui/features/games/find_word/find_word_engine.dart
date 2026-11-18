@@ -64,9 +64,11 @@ class FindWordEngine {
     return {'APPLE', 'BRAIN', 'CHAIR', 'DANCE', 'EARTH'};
   }
 
-  String getRandomWord(Set<String> words) {
+  String getRandomWord(Set<String> words, {Random? random}) {
     if (words.isEmpty) return 'APPLE';
-    return words.elementAt(Random().nextInt(words.length));
+    final rng = random ?? Random();
+    final sorted = words.toList()..sort();
+    return sorted[rng.nextInt(sorted.length)];
   }
 
   List<LetterStatus> checkGuess(String guess, String target) {

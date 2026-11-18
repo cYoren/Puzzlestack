@@ -44,16 +44,18 @@ class WordScrambleEngine {
     }
   }
 
-  String getRandomWord(List<String> words) {
+  String getRandomWord(List<String> words, {Random? random}) {
     if (words.isEmpty) return 'APPLE';
-    return words[Random().nextInt(words.length)];
+    final rng = random ?? Random();
+    return words[rng.nextInt(words.length)];
   }
 
-  String scrambleWord(String word) {
-    List<String> letters = word.split('');
+  String scrambleWord(String word, {Random? random}) {
+    final rng = random ?? Random();
+    final List<String> letters = word.split('');
     String scrambled;
     do {
-      letters.shuffle();
+      letters.shuffle(rng);
       scrambled = letters.join('');
     } while (scrambled == word && word.length > 1);
     return scrambled;
