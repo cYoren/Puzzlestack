@@ -815,20 +815,32 @@ class _FeedCardState extends ConsumerState<_FeedCard>
                               final double pulse = t <= 0 || t >= 1
                                   ? 0.0
                                   : (1.0 - (2 * t - 1).abs());
-                              if (pulse <= 0.001) return child!;
-                              return DecoratedBox(
-                                key: const ValueKey<String>('feed_idle_nudge'),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color:
-                                        accent.withValues(alpha: 0.55 * pulse),
-                                    width: 2.5,
+                              final bool active = pulse > 0.001;
+                              return Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      border: active
+                                          ? Border.all(
+                                              color: accent.withValues(
+                                                alpha: 0.55 * pulse,
+                                              ),
+                                              width: 2.5,
+                                            )
+                                          : null,
+                                    ),
+                                    child: Transform.scale(
+                                      scale: 1.0 + 0.012 * pulse,
+                                      child: child,
+                                    ),
                                   ),
-                                ),
-                                child: Transform.scale(
-                                  scale: 1.0 + 0.012 * pulse,
-                                  child: child,
-                                ),
+                                  if (active)
+                                    const IgnorePointer(
+                                      key: ValueKey<String>('feed_idle_nudge'),
+                                      child: SizedBox.expand(),
+                                    ),
+                                ],
                               );
                             },
                           ),

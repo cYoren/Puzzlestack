@@ -9,10 +9,7 @@ import '../../../data/game_metadata.dart';
 import '../../../data/picks/pick_ledger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../providers/daily_five_providers.dart';
-import '../../../providers/game_tier_provider.dart';
-import '../../../providers/pick_providers.dart';
 import '../../../providers/plus_providers.dart';
-import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/game_clock.dart';
 import '../../../utils/haptic_feedback.dart';
@@ -23,6 +20,20 @@ import '../../core/assist/game_assist.dart';
 import '../../core/assist/hint_request.dart';
 import '../../core/juice/game_scope.dart';
 import '../feed/feed_session.dart';
+import '../games/color_match/color_match_provider.dart';
+import '../games/cube/cube_provider.dart';
+import '../games/dominosa/dominosa_provider.dart';
+import '../games/find_word/find_word_provider.dart';
+import '../games/futoshiki/futoshiki_provider.dart';
+import '../games/lights_out/lights_out_provider.dart';
+import '../games/minesweeper/minesweeper_provider.dart';
+import '../games/schulte_table/schulte_table_provider.dart';
+import '../games/signpost/signpost_provider.dart';
+import '../games/skyscrapers/skyscrapers_provider.dart';
+import '../games/sudoku/sudoku_provider.dart';
+import '../games/twiddle/twiddle_provider.dart';
+import '../games/word_scramble/word_scramble_provider.dart';
+import '../games/word_search/word_search_provider.dart';
 import '../plus/plus_sheet.dart';
 
 /// Five seeded puzzles, the same for everyone on a given date (`docs/FEED.md`).
@@ -43,8 +54,7 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
   int _slot = 0;
   int _restartEpoch = 0;
   FeedSession? _session;
-  ProviderContainer? _slotContainer;
-  String? _slotContainerKey;
+  String? _slotWatchKey;
   final Stopwatch _slotWatch = Stopwatch();
 
   @override
@@ -62,41 +72,66 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
 
   @override
   void dispose() {
-    _slotContainer?.dispose();
-    _slotContainer = null;
     final FeedSession? session = _session;
     if (session != null) FeedSession.deactivate(session);
     super.dispose();
   }
 
-  ProviderContainer _ensureSlotContainer(String gameId) {
-    final String wantedKey = '$_dayKey:$_slot:$gameId:$_restartEpoch';
-    if (_slotContainer != null && _slotContainerKey == wantedKey) {
-      return _slotContainer!;
-    }
-    final ProviderContainer? old = _slotContainer;
-    if (old != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
-    }
-    final ProviderContainer fresh = ProviderContainer(
-      overrides: <Override>[
-        userRepositoryProvider
-            .overrideWithValue(ref.read(userRepositoryProvider)),
-        pickStoreProvider.overrideWithValue(ref.read(pickStoreProvider)),
-        plusStoreProvider.overrideWithValue(ref.read(plusStoreProvider)),
-        plusGatewayProvider.overrideWithValue(ref.read(plusGatewayProvider)),
-        gameTierStoreProvider
-            .overrideWithValue(ref.read(gameTierStoreProvider)),
-        dailyFiveClockProvider
-            .overrideWithValue(ref.read(dailyFiveClockProvider)),
-      ],
-    );
-    _slotContainer = fresh;
-    _slotContainerKey = wantedKey;
+  void _syncSlotWatch(String gameId) {
+    final String key = '$_dayKey:$_slot:$gameId:$_restartEpoch';
+    if (_slotWatchKey == key) return;
+    _slotWatchKey = key;
     _slotWatch
       ..reset()
       ..start();
-    return fresh;
+  }
+
+  static List<Override> _isolatedGameOverrides(String gameId) {
+    return switch (gameId) {
+      'sudoku' => <Override>[
+          sudokuNotifierProvider.overrideWith(SudokuNotifier.new),
+        ],
+      'futoshiki' => <Override>[
+          futoshikiNotifierProvider.overrideWith(FutoshikiNotifier.new),
+        ],
+      'lights_out' => <Override>[
+          lightsOutNotifierProvider.overrideWith(LightsOutNotifier.new),
+        ],
+      'signpost' => <Override>[
+          signpostNotifierProvider.overrideWith(SignpostNotifier.new),
+        ],
+      'skyscrapers' => <Override>[
+          skyscrapersNotifierProvider.overrideWith(SkyscrapersNotifier.new),
+        ],
+      'dominosa' => <Override>[
+          dominosaNotifierProvider.overrideWith(DominosaNotifier.new),
+        ],
+      'cube' => <Override>[
+          cubeNotifierProvider.overrideWith(CubeNotifier.new),
+        ],
+      'twiddle' => <Override>[
+          twiddleNotifierProvider.overrideWith(TwiddleNotifier.new),
+        ],
+      'minesweeper' => <Override>[
+          minesweeperNotifierProvider.overrideWith(MinesweeperNotifier.new),
+        ],
+      'find_word' => <Override>[
+          findWordNotifierProvider.overrideWith(FindWordNotifier.new),
+        ],
+      'word_scramble' => <Override>[
+          wordScrambleNotifierProvider.overrideWith(WordScrambleNotifier.new),
+        ],
+      'word_search' => <Override>[
+          wordSearchNotifierProvider.overrideWith(WordSearchNotifier.new),
+        ],
+      'schulte_table' => <Override>[
+          schulteTableNotifierProvider.overrideWith(SchulteTableNotifier.new),
+        ],
+      'color_match' => <Override>[
+          colorMatchNotifierProvider.overrideWith(ColorMatchNotifier.new),
+        ],
+      _ => const <Override>[],
+    };
   }
 
   int _firstOpenSlot(String dayKey) {
@@ -579,15 +614,15 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     final String gameId = handIds[_slot];
     final GameMetadata? game = GameFeed.find(gameId);
     if (game == null) return const SizedBox.shrink();
-    final ProviderContainer slotContainer = _ensureSlotContainer(game.id);
+    _syncSlotWatch(game.id);
     final BuildContext rootScreenContext = this.context;
     final WidgetRef rootRef = ref;
 
-    return UncontrolledProviderScope(
+    return ProviderScope(
       key: ValueKey<String>(
         'daily_scope_${_dayKey}_${_slot}_${game.id}_$_restartEpoch',
       ),
-      container: slotContainer,
+      overrides: _isolatedGameOverrides(game.id),
       child: Consumer(
         builder: (BuildContext slotContext, WidgetRef slotRef, _) {
           final GameAssistActions? assist = gameAssistFor(game.id, slotRef);
