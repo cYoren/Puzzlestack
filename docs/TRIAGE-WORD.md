@@ -46,12 +46,12 @@ light and `AUDIT_DARK=1`:
 | `anagram_definition` | Anagram Definition | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `category_fluency` | Category Fluency | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `chain_reaction` | Chain Reaction | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `cognate_catch` | Cognate Catch | library | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
+| `cognate_catch` | Cognate Catch | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `compound_connect` | Compound Connect | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `context_clues` | Context Clues | library | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
-| `conundrum_anagram` | Conundrum | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `context_clues` | Context Clues | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
+| `conundrum_anagram` | Conundrum | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `crossword` | Crossword | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `cryptogram` | CRYPTOGRAM | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `cryptogram` | Cryptogram | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `definition_dash` | Definition Dash | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `etymology_origin` | Etymology Origin | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `find_word` | Find Word | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -59,8 +59,8 @@ light and `AUDIT_DARK=1`:
 | `homophone_hunt` | Homophone Hunt | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `letter_bridge` | Letter Bridge | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `letter_frequency_scan` | Letter Frequency Scan | archive | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `letter_grid_swapper` | Letter Swapper | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
-| `missing_vowels` | Missing Vowels | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `letter_grid_swapper` | Letter Swapper | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `missing_vowels` | Missing Vowels | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `one_letter_shift` | One-Letter Shift | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `oxymoron_hunt` | Oxymoron Hunt | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `palindrome_builder` | Palindrome Builder | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
@@ -75,7 +75,7 @@ light and `AUDIT_DARK=1`:
 | `spoonerism_solver` | Spoonerism Solver | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `syllable_stack` | Syllable Stack | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `typing_speed` | Typing Speed | archive | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `typoglycemia_decoder` | Typoglycemia Decoder | library | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
+| `typoglycemia_decoder` | Typoglycemia Decoder | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `verbal_analogies` | Verbal Analogies | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `word_grid_connection` | Word Connections | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `word_ladder` | Word Ladder | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -84,7 +84,7 @@ light and `AUDIT_DARK=1`:
 | `word_search` | Word Search | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `word_snake_trail` | Word Snake | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `word_surge` | Word Surge | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
-| `word_wheel` | Word Wheel | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `word_wheel` | Word Wheel | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 
 ## What needs a fix job
 
@@ -93,15 +93,13 @@ its own change with its own test. Grouped by the job that fixes it, because the 
 usually one mechanism and not N edits.
 
 - **`uniqueness` — the generator must prove its deal (check 2)** — 26: `chain_reaction`, `compound_connect`, `conundrum_anagram`, `crossword`, `cryptogram`, `find_word`, `homophone_hunt`, `letter_bridge`, `letter_frequency_scan`, `letter_grid_swapper`, `missing_vowels`, `one_letter_shift`, `pangram_sprint`, `portmanteau_split`, `rhyme_master`, `sentence_unscramble`, `spoonerism_solver`, `typing_speed`, `verbal_analogies`, `word_grid_connection`, `word_ladder`, `word_mastermind`, `word_scramble`, `word_search`, `word_snake_trail`, `word_wheel`
-- **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 5: `cognate_catch`, `conundrum_anagram`, `letter_grid_swapper`, `missing_vowels`, `word_wheel`
-- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 3: `context_clues`, `cryptogram`, `typoglycemia_decoder`
 
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (2): `pangram_sprint`, `word_snake_trail`
+- winnable, not unique (24): `chain_reaction`, `compound_connect`, `conundrum_anagram`, `crossword`, `cryptogram`, `find_word`, `homophone_hunt`, `letter_bridge`, `letter_grid_swapper`, `missing_vowels`, `one_letter_shift`, `pangram_sprint`, `portmanteau_split`, `rhyme_master`, `sentence_unscramble`, `spoonerism_solver`, `verbal_analogies`, `word_grid_connection`, `word_ladder`, `word_mastermind`, `word_scramble`, `word_search`, `word_snake_trail`, `word_wheel`
 
-- neither proven (24): `chain_reaction`, `compound_connect`, `conundrum_anagram`, `crossword`, `cryptogram`, `find_word`, `homophone_hunt`, `letter_bridge`, `letter_frequency_scan`, `letter_grid_swapper`, `missing_vowels`, `one_letter_shift`, `portmanteau_split`, `rhyme_master`, `sentence_unscramble`, `spoonerism_solver`, `typing_speed`, `verbal_analogies`, `word_grid_connection`, `word_ladder`, `word_mastermind`, `word_scramble`, `word_search`, `word_wheel`
+- neither proven (2): `letter_frequency_scan`, `typing_speed`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.

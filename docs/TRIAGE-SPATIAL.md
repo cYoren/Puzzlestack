@@ -41,36 +41,36 @@ light and `AUDIT_DARK=1`:
 
 | Game | Title | Tier | 2 fair | 5 fresh | 6 app | 7 tap | 8 ends | 9 name | 10 rule |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `block_count_3d` | 3D Block Count | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `block_stacking_physics` | Block Stacking | library | unproven | pass | audit-clean | pass | pass | pass | fail |
-| `classic_maze` | Classic Maze | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `block_count_3d` | 3D Block Count | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `block_stacking_physics` | Block Stacking | library | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `classic_maze` | Classic Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `compass_maze` | Compass Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `cross_section_slice` | Cross-Section Slice | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `cube_net_fold` | Cube Net Fold | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `gear_rotation` | Gear Rotation | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
-| `hue_sort` | HUE SORT | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `cube_net_fold` | Cube Net Fold | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `gear_rotation` | Gear Rotation | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `hue_sort` | Hue Sort | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `interlock_puzzle` | Interlock Puzzle | library | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `klotski` | Klotski Escape | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `klotski` | Klotski Escape | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `laser_link` | Laser Link | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `maze_nav_3d` | 3D Maze Nav | library | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `maze_nav_3d` | 3D Maze Nav | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mental_mapping` | Mental Mapping | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mental_rotation` | Mental Rotation | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `mirror_image` | Mirror Image | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
-| `mirror_maze` | Mirror Maze | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `mirror_image` | Mirror Image | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `mirror_maze` | Mirror Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mirror_tracing` | Mirror Tracing | library | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `negative_space_detection` | Negative Space | library | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `negative_space_detection` | Negative Space | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `paper_folding` | Paper Folding | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `path_intersect` | Path Intersect | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `perspective_shift_view` | Perspective Shift | library | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `perspective_shift_view` | Perspective Shift | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `perspective_taking` | Perspective Taking | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `polyomino_tiling` | Polyomino | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `rotating_maze` | Rotating Maze | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `rotating_maze` | Rotating Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `shadow_pivot` | Shadow Pivot | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `silhouette_match` | Silhouette Match | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `slide_puzzle` | Slide Puzzle | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `slide_puzzle` | Slide Puzzle | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `symmetry` | Symmetry | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `tangram` | Tangram Puzzle | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
-| `topology` | TOPOLOGY | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `tangram` | Tangram Puzzle | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `topology` | Topology | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `trace_path` | Trace Path | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `vector_grid_alignment` | Vector Alignment | archive | unproven | pass | audit-clean | pass | pass | pass | fail |
 
@@ -81,15 +81,14 @@ its own change with its own test. Grouped by the job that fixes it, because the 
 usually one mechanism and not N edits.
 
 - **`uniqueness` — the generator must prove its deal (check 2)** — 32: `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `interlock_puzzle`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_mapping`, `mental_rotation`, `mirror_image`, `mirror_maze`, `mirror_tracing`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `shadow_pivot`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`, `trace_path`, `vector_grid_alignment`
-- **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 9: `block_stacking_physics`, `gear_rotation`, `maze_nav_3d`, `mirror_image`, `mirror_maze`, `negative_space_detection`, `perspective_shift_view`, `tangram`, `vector_grid_alignment`
-- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 8: `block_count_3d`, `classic_maze`, `cube_net_fold`, `hue_sort`, `klotski`, `rotating_maze`, `slide_puzzle`, `topology`
+- **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 1: `vector_grid_alignment`
 
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (3): `klotski`, `polyomino_tiling`, `slide_puzzle`
+- winnable, not unique (26): `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_rotation`, `mirror_image`, `mirror_maze`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`
 
-- neither proven (29): `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `interlock_puzzle`, `laser_link`, `maze_nav_3d`, `mental_mapping`, `mental_rotation`, `mirror_image`, `mirror_maze`, `mirror_tracing`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `rotating_maze`, `shadow_pivot`, `silhouette_match`, `symmetry`, `tangram`, `topology`, `trace_path`, `vector_grid_alignment`
+- neither proven (6): `interlock_puzzle`, `mental_mapping`, `mirror_tracing`, `shadow_pivot`, `trace_path`, `vector_grid_alignment`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.

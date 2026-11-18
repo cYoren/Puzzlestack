@@ -82,7 +82,7 @@ light and `AUDIT_DARK=1`:
 | `room_inspector` | Room Inspector | archive | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `running_memory_span` | Running Span | archive | fair-by-play | pass | audit-clean | pass | pass | fail | fail |
 | `sequence_stack` | Sequence Stack | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
-| `simon_sequence` | Sequence | deck | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
+| `simon_sequence` | Sequence | deck | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `sopt` | Self-Ordered Pointing | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
 | `source_monitoring` | Source Monitoring | archive | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
 | `spatial_cabinet_memory` | Spatial Cabinets | archive | fair-by-play | pass | audit-clean | pass | pass | shouting | fail |
@@ -102,7 +102,7 @@ PUZZLE-BAR.md's working procedure keeps fixes out of the triage PR: each of thes
 its own change with its own test. Grouped by the job that fixes it, because the fix is
 usually one mechanism and not N edits.
 
-- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 33: `associative_pairs`, `chimp_test`, `continuous_recognition`, `corsi_backward_span`, `corsi_blocks`, `counting_span`, `digit_span_reverse`, `distractor_matrix`, `double_n_back`, `dual_coding`, `dual_task_memory`, `face_name_association`, `fact_binder`, `grocery_list`, `mandala_recall`, `n_back`, `narrative_recall`, `object_displacement`, `object_shuffle`, `operation_span`, `path_recall`, `pixel_mimic`, `reading_span`, `relational_memory`, `running_memory_span`, `simon_sequence`, `source_monitoring`, `spatial_cabinet_memory`, `staircase_memory`, `sternberg_task`, `symmetry_span`, `temporal_order`, `visual_statistical_learning`
+- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 32: `associative_pairs`, `chimp_test`, `continuous_recognition`, `corsi_backward_span`, `corsi_blocks`, `counting_span`, `digit_span_reverse`, `distractor_matrix`, `double_n_back`, `dual_coding`, `dual_task_memory`, `face_name_association`, `fact_binder`, `grocery_list`, `mandala_recall`, `n_back`, `narrative_recall`, `object_displacement`, `object_shuffle`, `operation_span`, `path_recall`, `pixel_mimic`, `reading_span`, `relational_memory`, `running_memory_span`, `source_monitoring`, `spatial_cabinet_memory`, `staircase_memory`, `sternberg_task`, `symmetry_span`, `temporal_order`, `visual_statistical_learning`
 - **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 27: `action_sequence_recall`, `card_counting_memory`, `chimp_test`, `continuous_recognition`, `corsi_backward_span`, `counting_span`, `delayed_match_sample`, `directions_recall`, `dual_task_memory`, `event_timeline_memory`, `feature_matrix_recall`, `grid_displacement`, `mandala_recall`, `narrative_recall`, `object_displacement`, `pattern_sequence_draw`, `probe_digit_span`, `reading_span`, `relational_memory`, `running_memory_span`, `sequence_stack`, `sopt`, `spatial_cabinet_memory`, `symbol_digit_assoc`, `symmetry_span`, `word_association_recall`, `word_pair_associate_memory`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
