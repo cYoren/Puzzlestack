@@ -163,13 +163,16 @@ def test_files(game_id: str) -> list[Path]:
 
 
 def rule_test(game_id: str) -> Path | None:
-    """A test named after the game that asserts how it plays, not just that it renders."""
-    skip = {"game_audit.dart", "screen_test.dart", "new_games_screen_test.dart"}
+    """A test named after the game (or a room `*_rule_tests_test.dart` group) that asserts how it plays."""
+    skip = {"game_audit.dart", "screen_test.dart", "new_games_screen_test.dart", "rule_tests_sweep_test.dart"}
+    group_pat = re.compile(rf"""group\(\s*['"]{re.escape(game_id)}['"]""")
     for path in test_files(game_id):
         if path.name in skip:
             continue
-        named = game_id in path.stem
         text = path.read_text(errors="ignore")
+        named = game_id in path.stem or (
+            path.stem.endswith("_rule_tests_test") and bool(group_pat.search(text))
+        )
         asserts_play = re.search(
             r"unique|solv|generat|valid|winnable|expect\(.*(count|length|length)", text
         )
