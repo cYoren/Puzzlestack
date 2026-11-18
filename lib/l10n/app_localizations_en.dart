@@ -228,7 +228,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String findWordSubtitle(int maxTries, int wordLength) {
-    return 'You have $maxTries tries to find the hidden $wordLength-letter word.';
+    return 'Guess the $wordLength-letter word in $maxTries tries.';
   }
 
   @override
@@ -249,7 +249,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crosswordSubtitle =>
-      'Complete the grid with the correct words based on the clues provided.';
+      'Fill the intersecting words from their clues.';
 
   @override
   String get wordSearchTitle => 'Word Search';
@@ -295,7 +295,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get romanArithmeticSubtitle =>
-      'Solve addition and subtraction problems using Roman Numerals.';
+      'Solve sums and differences in Roman numerals.';
 
   @override
   String get romanArithmeticGoalReached => 'Centurion Level!';
@@ -359,7 +359,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sudokuSubtitle =>
-      'Complete the grid so that every row, column, and 3x3 box contains all digits 1 to 9.';
+      'Fill digits so each row, column, and box has all.';
 
   @override
   String get minesweeperTitle => 'Minesweeper';
@@ -397,7 +397,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get game2048Subtitle =>
-      'Swipe in any direction to merge tiles and reach the 2048 tile!';
+      'Slide and merge matching tiles to reach 2048.';
 
   @override
   String get nonogramTitle => 'Nonogram';
@@ -409,11 +409,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nonogramWin => 'Image Revealed!';
 
   @override
-  String get magnetsTitle => 'MAGNETS';
+  String get magnetsTitle => 'Magnets';
 
   @override
   String get magnetsSubtitle =>
-      'Place magnets in the grid based on pole counts.';
+      'Place magnets and blanks to match the border counts.';
 
   @override
   String get magnetsHowToPlay =>
@@ -432,10 +432,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get magnetsLevel => 'Depth';
 
   @override
-  String get cubeTitle => 'CUBE';
+  String get cubeTitle => 'Cube';
 
   @override
-  String get cubeSubtitle => 'Roll the cube, collect the blue squares.';
+  String get cubeSubtitle => 'Roll the cube to collect every blue square.';
 
   @override
   String get cubeWinTitle => 'SIX BLUES!';
@@ -457,11 +457,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cubeBest => 'Best';
 
   @override
-  String get mapTitle => 'MAP';
+  String get mapTitle => 'Four Colours';
 
   @override
   String get mapSubtitle =>
-      'Four-colour the map: no two touching regions may match.';
+      'Colour every region so touching regions never match.';
 
   @override
   String get mapWinTitle => 'MAP COLOURED!';
@@ -481,11 +481,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapColoured => 'Coloured';
 
   @override
-  String get inertiaTitle => 'INERTIA';
+  String get inertiaTitle => 'Inertia';
 
   @override
   String get inertiaSubtitle =>
-      'Slide the ball, collect every gem, avoid the mines.';
+      'Slide the ball to collect every gem and miss mines.';
 
   @override
   String get inertiaWinTitle => 'ALL GEMS!';
@@ -507,11 +507,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inertiaExploded => 'MINE! Tap to retry';
 
   @override
-  String get netslideTitle => 'NETSLIDE';
+  String get netslideTitle => 'Netslide';
 
   @override
   String get netslideSubtitle =>
-      'Slide rows and columns until every pipe meets a pipe.';
+      'Slide rows and columns until every pipe connects.';
 
   @override
   String get netslideWinTitle => 'NET COMPLETE!';
@@ -530,11 +530,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get netslideScramble => 'Depth';
 
   @override
-  String get signpostTitle => 'SIGNPOST';
+  String get signpostTitle => 'Signpost';
 
   @override
   String get signpostSubtitle =>
-      'Give every cell the next number, following the arrows.';
+      'Link cells in order by following their arrows.';
 
   @override
   String get signpostWinTitle => 'EVERY NUMBER PLACED!';
@@ -554,10 +554,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signpostGivens => 'Givens';
 
   @override
-  String get lighthousesTitle => 'LIGHTHOUSES';
+  String get lighthousesTitle => 'Lighthouses';
 
   @override
-  String get lighthousesSubtitle => 'Place ships based on lighthouse clues.';
+  String get lighthousesSubtitle =>
+      'Place boats so each lighthouse sees its count.';
 
   @override
   String get lighthousesHowToPlay =>
@@ -571,10 +572,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'All lighthouses are guiding the ships perfectly!';
 
   @override
-  String get dominosaTitle => 'DOMINOSA';
+  String get dominosaTitle => 'Dominosa';
 
   @override
-  String get dominosaSubtitle => 'Find all the hidden dominoes in the grid.';
+  String get dominosaSubtitle =>
+      'Pair adjacent numbers so each domino appears once.';
 
   @override
   String get dominosaHowToPlay =>
@@ -599,10 +601,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skyscrapersFilled => 'Filled';
 
   @override
-  String get skyscrapersTitle => 'SKYSCRAPERS';
+  String get skyscrapersTitle => 'Skyscrapers';
 
   @override
-  String get skyscrapersSubtitle => 'Fill the grid with building heights.';
+  String get skyscrapersSubtitle =>
+      'Place tower heights matching the edge sightlines.';
 
   @override
   String get skyscrapersHowToPlay =>
@@ -615,10 +618,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skyscrapersWinMessage => 'All buildings are perfectly positioned!';
 
   @override
-  String get nurikabeTitle => 'NURIKABE';
+  String get nurikabeTitle => 'Nurikabe';
 
   @override
-  String get nurikabeSubtitle => 'Form a connected sea and separate islands.';
+  String get nurikabeSubtitle =>
+      'Build one connected sea around numbered islands.';
 
   @override
   String get nurikabeHowToPlay =>
@@ -631,11 +635,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nurikabeWinMessage => 'Islands separated, sea connected!';
 
   @override
-  String get fillominoTitle => 'FILLOMINO';
+  String get fillominoTitle => 'Fillomino';
 
   @override
   String get fillominoSubtitle =>
-      'Divide the grid into polyominoes of the specified sizes.';
+      'Group cells into regions matching their number.';
 
   @override
   String get fillominoHowToPlay =>
@@ -648,11 +652,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fillominoWinMessage => 'Perfectly tiled with logic!';
 
   @override
-  String get hitoriTitle => 'HITORI';
+  String get hitoriTitle => 'Hitori';
 
   @override
   String get hitoriSubtitle =>
-      'Shade duplicate numbers in each row and column.';
+      'Shade duplicate numbers without splitting the grid.';
 
   @override
   String get hitoriHowToPlay =>
@@ -738,11 +742,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get balanceScaleTitle => 'BALANCE SCALE';
+  String get balanceScaleTitle => 'Balance Scale';
 
   @override
   String get balanceScaleSubtitle =>
-      'Deduce the weight of the last item based on the scales.';
+      'Find the missing weight that balances the scales.';
 
   @override
   String get balanceScaleWinTitle => 'BALANCED!';
@@ -764,11 +768,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get balanceScaleSubmit => 'SUBMIT';
 
   @override
-  String get binaryPuzzleTitle => 'BINARY PUZZLE';
+  String get binaryPuzzleTitle => 'Binary Puzzle';
 
   @override
   String get binaryPuzzleSubtitle =>
-      'Fill with 0 and 1. Max two of the same digit adjacent. Equal 0s and 1s. Unique rows and columns.';
+      'Fill 0s and 1s equally with no three in a row.';
 
   @override
   String get binaryPuzzleWinTitle => 'WELL DONE';
@@ -778,11 +782,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'You solved the binary puzzle with perfect logic!';
 
   @override
-  String get blockEscapeTitle => 'BLOCK ESCAPE';
+  String get blockEscapeTitle => 'Block Escape';
 
   @override
-  String get blockEscapeSubtitle =>
-      'Slide the blocks to clear a path for the primary block to reach the exit.';
+  String get blockEscapeSubtitle => 'Slide blocks to clear a path to the exit.';
 
   @override
   String get blockEscapeWinTitle => 'ESCAPE!';
@@ -806,11 +809,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get boxCompletionOptions => 'OPTIONS';
 
   @override
-  String get bridgesTitle => 'BRIDGES';
+  String get bridgesTitle => 'Bridges';
 
   @override
   String get bridgesSubtitle =>
-      'Connect islands with bridges. Each island needs a specific number of bridges. Bridges cannot cross.';
+      'Connect islands with bridges that match each count.';
 
   @override
   String get bridgesWinTitle => 'CONNECTED!';
@@ -819,11 +822,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bridgesWinMessage => 'You successfully connected all the islands!';
 
   @override
-  String get calculationSprintTitle => 'CALCULATION SPRINT';
+  String get calculationSprintTitle => 'Calculation Sprint';
 
   @override
   String get calculationSprintSubtitle =>
-      'Solve as many equations as possible in 60 seconds.';
+      'Solve as many equations as you can in 60 seconds.';
 
   @override
   String get calculationSprintGoalReached => 'GOAL REACHED!';
@@ -889,7 +892,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changeBlindnessTitle => 'Change Blindness';
 
   @override
-  String get changeBlindnessSubtitle => 'SPOT THE CHANGING ITEM';
+  String get changeBlindnessSubtitle =>
+      'Spot the single item that changes between flashes.';
 
   @override
   String changeBlindnessScore(int score) {
@@ -944,11 +948,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get colorFloodLoseMessage => 'You ran out of moves. Try again!';
 
   @override
-  String get colorMatchTitle => 'COLOR MATCH';
+  String get colorMatchTitle => 'Colour Match';
 
   @override
   String get colorMatchSubtitle =>
-      'Adjust the sliders to match the target color as closely as possible.';
+      'Tune the sliders to match the target colour.';
 
   @override
   String get colorMatchTarget => 'TARGET';
@@ -998,11 +1002,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get corsiBlocksSpan => 'SPAN';
 
   @override
-  String get crownTitle => 'CROWN';
+  String get crownTitle => 'Crowns';
 
   @override
   String get crownSubtitle =>
-      'Place one crown in each row, column, and color region. Crowns cannot be adjacent, even diagonally.';
+      'One crown per row, column, and region; none touching.';
 
   @override
   String get crownCrowned => 'CROWNED!';
@@ -1012,11 +1016,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'All crowns placed successfully with perfect logic.';
 
   @override
-  String get cryptogramTitle => 'CRYPTOGRAM';
+  String get cryptogramTitle => 'Cryptogram';
 
   @override
-  String get cryptogramSubtitle =>
-      'Assign letters to decode the secret message! Each encoded letter represents a real letter.';
+  String get cryptogramSubtitle => 'Swap letters to decode the hidden quote.';
 
   @override
   String get cryptogramBroken => 'CODE BROKEN!';
@@ -1210,11 +1213,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groceryListWhereBelong => 'WHERE DOES THIS BELONG?';
 
   @override
-  String get hueSortTitle => 'HUE SORT';
+  String get hueSortTitle => 'Hue Sort';
 
   @override
   String get hueSortSubtitle =>
-      'Swap tiles to create a smooth transition between corner colors. Dots indicate fixed tiles.';
+      'Swap tiles into a smooth gradient; dots stay fixed.';
 
   @override
   String get hueSortWinTitle => 'PERFECT GRADIENT!';
@@ -1270,11 +1273,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get letterCancellationTime => 'TIME';
 
   @override
-  String get lightsOutTitle => 'LIGHTS OUT';
+  String get lightsOutTitle => 'Lights Out';
 
   @override
   String get lightsOutSubtitle =>
-      'Tapping a tile toggles it and its adjacent neighbors. Turn off all lights to solve.';
+      'Tap tiles to flip neighbours until all lights go out.';
 
   @override
   String get lightsOutWinTitle => 'PUZZLE SOLVED!';
@@ -1287,8 +1290,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get symmetryTitle => 'Symmetry';
 
   @override
-  String get symmetrySubtitle =>
-      'Mirror the pattern on the left onto the empty grid on the right.';
+  String get symmetrySubtitle => 'Mirror the left pattern onto the right grid.';
 
   @override
   String get semanticLinkTitle => 'Semantic Link';
@@ -1444,11 +1446,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Identify the ink color of the word shown. Ignore what the word actually says!';
 
   @override
-  String get wisconsinCardSortingTitle => 'Wisconsin Card Sort';
+  String get wisconsinCardSortingTitle => 'Rule Finder';
 
   @override
   String get wisconsinCardSortingSubtitle =>
-      'MATCH THE CARD TO ONE OF THE FOUR ABOVE';
+      'Match each card by finding the hidden sorting rule.';
 
   @override
   String get nBackTitle => 'N-Back Test';
@@ -1528,7 +1530,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lockPatternSubtitle =>
-      'Find the secret pattern. Every guess gives feedback on position and dots.';
+      'Deduce the secret dot pattern from each clue.';
 
   @override
   String get primeHunterTitle => 'Prime Hunter';
@@ -1582,7 +1584,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wordMastermindSubtitle =>
-      'Crack the 4-letter code! Bulls (B) are perfect spots, Cows (C) are wrong spots.';
+      'Crack the 4-letter word using position clues.';
 
   @override
   String get simonSequenceTitle => 'Sequence';
@@ -1592,7 +1594,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get symbolLogicSubtitle =>
-      'Solve the visual equations to find the value of each symbol. What is the result of the last equation?';
+      'Find each symbol\'s value to solve the final line.';
 
   @override
   String get silhouetteMatchTitle => 'Silhouette Match';
@@ -1657,11 +1659,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get matrixReasoningSubtitle => 'Complete the pattern in the 3x3 grid';
 
   @override
-  String get abcdTitle => 'ABCD';
+  String get abcdTitle => 'Four Letters';
 
   @override
-  String get abcdSubtitle =>
-      'Write a letter in every cell. The digits on the edge count each letter in that row or column.';
+  String get abcdSubtitle => 'Place A, B, C, or D to match the edge counts.';
 
   @override
   String get abcdFilled => 'Cells';
@@ -1681,7 +1682,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get boatsSubtitle =>
-      'Find the hidden fleet. The counts outside say how many boat cells each row and column holds.';
+      'Place the fleet to match the row and column counts.';
 
   @override
   String get boatsShipsFound => 'Boat cells';
@@ -1700,7 +1701,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get seismicSubtitle =>
-      'Fill every shape with the numbers 1 to its size. Two equal numbers in a line need that many cells between them.';
+      'Fill regions 1..N; equal digits keep N cells apart.';
 
   @override
   String get seismicClues => 'Clues';
@@ -1720,7 +1721,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mathraxSubtitle =>
-      'Fill every row and column with 1 to the side of the board. Each corner clue binds the four cells around it on both diagonals.';
+      'Fill a Latin square obeying every corner rule.';
 
   @override
   String get mathraxFilled => 'Filled';
@@ -1740,7 +1741,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saladSubtitle =>
-      'Fill every row and column with the letters A to the last one, once each, with the rest holes. A letter on the border is the first one you meet looking into that line.';
+      'Place each letter once per line; edges show first seen.';
 
   @override
   String get saladWritten => 'Written';
@@ -1756,8 +1757,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get romeTitle => 'Rome';
 
   @override
-  String get romeSubtitle =>
-      'One arrow in every cell. No arrow repeats inside an outlined area, and following the arrows from anywhere has to arrive at a circled goal without looping.';
+  String get romeSubtitle => 'Point arrows so every path reaches a goal.';
 
   @override
   String get romeWritten => 'Arrows';
@@ -1773,8 +1773,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ascentTitle => 'Number Path';
 
   @override
-  String get ascentSubtitle =>
-      'Place 1 to the last number once each. Every number touches the one before it, along an edge or a corner.';
+  String get ascentSubtitle => 'Place 1 to N so consecutive numbers touch.';
 
   @override
   String get ascentNext => 'Next';
@@ -1794,7 +1793,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clustersSubtitle =>
-      'Fill the grid with two colours. A dot marks a cell with exactly one neighbour of its colour; every other cell needs two.';
+      'Two colours: dots touch one mate, others touch two.';
 
   @override
   String get clustersDots => 'Dots';
@@ -1813,8 +1812,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bricksTitle => 'Bricks';
 
   @override
-  String get bricksSubtitle =>
-      'Shade cells of the honeycomb. A shaded cell needs a shaded cell under it, no three shaded cells may sit in a row, and a number counts the shaded cells around it.';
+  String get bricksSubtitle => 'Shade supported cells with no three in a row.';
 
   @override
   String get bricksShaded => 'Shaded';
@@ -1834,7 +1832,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tentsAndTreesSubtitle =>
-      'Place tents next to trees. Numbers indicate how many tents are in each row/column. Tents cannot touch each other.';
+      'Pair each tree with a tent; tents never touch.';
 
   @override
   String get quickMathTitle => 'Quick Math';
@@ -1863,11 +1861,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get oddOneOutSubtitle => 'Find the tile with a different color.';
 
   @override
-  String get einsteinRiddleTitle => 'EINSTEIN RIDDLE';
+  String get einsteinRiddleTitle => 'House Logic';
 
   @override
   String get einsteinRiddleSubtitle =>
-      'Use the clues to deduce the attributes of each house.';
+      'Use the clues to deduce every house\'s traits.';
 
   @override
   String get einsteinRiddleHowToPlay =>
@@ -1975,7 +1973,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get grammarPoliceSubtitle =>
-      'Identify if the sentence is grammatically correct or contains errors.';
+      'Decide whether each sentence has a grammar error.';
 
   @override
   String get grammarPoliceHowToPlay =>
@@ -2000,7 +1998,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fibonacciMergeSubtitle =>
-      'Merge consecutive Fibonacci numbers (1, 1, 2, 3, 5, 8, 13...).';
+      'Merge consecutive Fibonacci tiles to climb higher.';
 
   @override
   String get sequenceSleuthTitle => 'Sequence Sleuth';
@@ -2052,10 +2050,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Connect adjacent numbers to reach the target sum.';
 
   @override
-  String get baseShiftTitle => 'BASE SHIFT BLITZ';
+  String get baseShiftTitle => 'Base Shift';
 
   @override
-  String get baseShiftSubtitle => 'Solve in decimal';
+  String get baseShiftSubtitle => 'Convert each number into base ten.';
 
   @override
   String get baseShiftDescription =>
@@ -2139,7 +2137,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get classicMazeTitle => 'Classic Maze';
 
   @override
-  String get classicMazeSubtitle => 'EXPLORE & SOLVE • A NEW MAZE EACH GAME';
+  String get classicMazeSubtitle => 'Guide the marker from start to the exit.';
 
   @override
   String get classicMazeWinTitle => 'MAZE CLEARED';
@@ -2220,7 +2218,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cubeNetFoldTitle => 'Cube Net Fold';
 
   @override
-  String get cubeNetFoldSubtitle => 'SELECT THE MATCHING 3D CUBE OPTION';
+  String get cubeNetFoldSubtitle =>
+      'Pick the 3D cube that folds from the flat net.';
 
   @override
   String get cubeNetFoldWinTitle => 'CORRECT';
@@ -2275,11 +2274,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get topologyTitle => 'TOPOLOGY';
+  String get topologyTitle => 'Topology';
 
   @override
   String get topologySubtitle =>
-      'Are these shapes topologically equivalent? (Can one be deformed into the other without cutting or gluing?)';
+      'Decide whether one shape stretches into the other.';
 
   @override
   String get topologyWinTitle => 'GEOMETRY GENIUS!';
@@ -2774,7 +2773,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String groceryListMessage(String arg0, Object score) {
+  String groceryListMessage(String arg0) {
     return 'You scored $arg0 points in Grocery List!';
   }
 
@@ -3574,50 +3573,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get slitherlinkTitle => 'Slitherlink';
 
   @override
-  String get slitherlinkSubtitle => 'LOOP THE PIN GRID USING NUMBER CLUES.';
+  String get slitherlinkSubtitle =>
+      'Draw one closed loop matching the numbered cells.';
 
   @override
   String get futoshikiTitle => 'Futoshiki';
 
   @override
-  String get futoshikiSubtitle => 'FILL GRIDS WITH GREATER-THAN CLUES.';
+  String get futoshikiSubtitle =>
+      'Fill each row and column while obeying the signs.';
 
   @override
   String get kakuroTitle => 'Kakuro';
 
   @override
-  String get kakuroSubtitle => 'SOLVE CROSSWORDS WITH NUMBERS AND SUMS.';
+  String get kakuroSubtitle =>
+      'Fill digits that add up to each clue with no repeats.';
 
   @override
   String get inequalityDashTitle => 'Inequality Dash';
 
   @override
   String get inequalityDashSubtitle =>
-      'SOLVE INEQUALITIES UNDER TIME PRESSURE.';
+      'Pick the sign that makes each inequality true.';
 
   @override
   String get factorFinderTitle => 'Factor Finder';
 
   @override
-  String get factorFinderSubtitle => 'IDENTIFY ALL FACTORS OF TARGET NUMBERS.';
+  String get factorFinderSubtitle => 'Tap every factor of the target number.';
 
   @override
   String get collatzTitle => 'Collatz Path';
 
   @override
-  String get collatzSubtitle => 'NAVIGATE THE 3N+1 SEQUENCE.';
+  String get collatzSubtitle => 'Follow the 3n + 1 steps down to one.';
 
   @override
   String get sumPyramidTitle => 'Sum Pyramid';
 
   @override
-  String get sumPyramidSubtitle => 'FILL PYRAMID CELLS WITH SUM MATH CLUES.';
+  String get sumPyramidSubtitle =>
+      'Fill the pyramid so each brick equals the two below.';
 
   @override
   String get target10Title => 'Target 10';
 
   @override
-  String get target10Subtitle => 'COMBINE NUMBER TILES TO REAP TEN SUMS.';
+  String get target10Subtitle => 'Combine number tiles so their sum makes ten.';
 
   @override
   String get fractionMatcherTitle => 'Fraction Matcher';
@@ -3654,13 +3657,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get blockCount3dTitle => '3D Block Count';
 
   @override
-  String get blockCount3dSubtitle => 'COUNT BLOCKS IN THREE-DIMENSIONAL SPACE.';
+  String get blockCount3dSubtitle =>
+      'Count every cube in the 3D stack, hidden ones too.';
 
   @override
   String get rotatingMazeTitle => 'Rotating Maze';
 
   @override
-  String get rotatingMazeSubtitle => 'ROTATE MAZES TO GUIDE BALLS TO THE EXIT.';
+  String get rotatingMazeSubtitle =>
+      'Turn the maze so gravity rolls the ball out.';
 
   @override
   String get silhouetteMatchOrthoTitle => 'Silhouette Match';
@@ -3699,7 +3704,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contextCluesTitle => 'Context Clues';
 
   @override
-  String get contextCluesSubtitle => 'INFER HIDDEN WORDS FROM CONTEXT HINTS.';
+  String get contextCluesSubtitle =>
+      'Pick the word that best fits the sentence.';
 
   @override
   String get digitSpanReverseSubtitle =>
@@ -3782,13 +3788,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groceryListSubtitle => 'MEMORIZE AND CHECK OFF ITEMS ON THE LIST.';
 
   @override
-  String get quickMathSubtitle => 'SOLVE ARITHMETIC QUESTIONS AT TOP SPEED.';
+  String get quickMathSubtitle =>
+      'Solve arithmetic rounds accurately before time ends.';
 
   @override
   String get mathGuessTitle => 'Math Guess';
 
   @override
-  String get mathGuessSubtitle => 'GUESS THE HIDDEN NUMBER WITHIN 15 CHANCES.';
+  String get mathGuessSubtitle =>
+      'Guess the secret number using high and low clues.';
 
   @override
   String get reflexTapSubtitle => 'TAP STIMULI AS FAST AS HUMANLY POSSIBLE.';
@@ -3797,16 +3805,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pixelMimicSubtitle => 'MIMIC DESIGN PATTERNS ON PIXEL GRIDS.';
 
   @override
-  String get simonSequenceSubtitle => 'REPEAT SHAPE SEQUENCES FROM MEMORY.';
+  String get simonSequenceSubtitle =>
+      'Watch the pattern and tap it back in order.';
 
   @override
-  String get slidePuzzleSubtitle => 'REARRANGE SQUARE SLIDING GRID TILES.';
+  String get slidePuzzleSubtitle =>
+      'Slide tiles into order using the empty space.';
 
   @override
   String get findWordTitle => 'Find Word';
 
   @override
-  String get schulteTableSubtitle => 'TAP NUMBERS FROM ONE TO TWENTY-FIVE.';
+  String get schulteTableSubtitle => 'Tap the numbers in order from 1 to 25.';
 
   @override
   String get simonCommandTitle => 'Simon Command';
@@ -3818,13 +3828,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get binaryCodeTitle => 'Binary Speed';
 
   @override
-  String get binaryCodeSubtitle => 'TRANSLATE BINARY CODES INTO DECIMAL.';
+  String get binaryCodeSubtitle => 'Convert each binary number into base ten.';
 
   @override
   String get moduloClockTitle => 'Modulo Clock';
 
   @override
-  String get moduloClockSubtitle => 'CALCULATE MATH EQUATIONS USING CLOCKS.';
+  String get moduloClockSubtitle => 'Solve clock arithmetic around the dial.';
 
   @override
   String get chimpTestTitle => 'Chimp Test';
@@ -3855,7 +3865,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get klotskiTitle => 'Klotski Escape';
 
   @override
-  String get klotskiSubtitle => 'SLIDE BLOCKS TO REACH THE EXITS.';
+  String get klotskiSubtitle =>
+      'Slide blocks to guide the main piece to the exit.';
 
   @override
   String get homophoneHuntSubtitle => 'Choose the correctly spelled homophone';
@@ -3865,7 +3876,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get laserLinkSubtitle =>
-      'Rotate mirrors to reflect lasers and power up all the targets.';
+      'Turn mirrors so the laser lights every target.';
 
   @override
   String get laserLinkCongrats =>
@@ -3876,7 +3887,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crossSectionSliceSubtitle =>
-      'Identify the correct 2D cross-section of a 3D object from a specific angle.';
+      'Pick the 2D slice cut through the 3D solid.';
 
   @override
   String get crossSectionSliceCongrats =>
@@ -3891,14 +3902,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shadowPivotSubtitle =>
-      'Predict the shadow cast by a 3D object as it rotates on different axes.';
+      'Pick the shadow cast after the 3D shape rotates.';
 
   @override
   String get interlockPuzzleTitle => 'Interlock Puzzle';
 
   @override
   String get interlockPuzzleSubtitle =>
-      'Disassemble or assemble complex interlocking blocks in the correct sequence.';
+      'Free the interlocking blocks in the right order.';
 
   @override
   String get interlockPuzzleCongrats =>
@@ -3909,7 +3920,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pathIntersectSubtitle =>
-      'Navigate multiple paths simultaneously to reach their respective targets without collision.';
+      'Route every path to its goal without crossing.';
 
   @override
   String get pathIntersectCongrats =>
@@ -3920,7 +3931,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get negativeSpaceDetectionSubtitle =>
-      'Identify the shape formed by the empty space between objects.';
+      'Spot the figure hidden in the empty space.';
 
   @override
   String get negativeSpaceDetectionCongrats =>
@@ -3931,7 +3942,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compassMazeSubtitle =>
-      'Navigate a maze where movement directions change based on your compass orientation.';
+      'Reach the exit as each step rotates your compass.';
 
   @override
   String get compassMazeCongrats =>
@@ -3960,14 +3971,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shikakuSubtitle =>
-      'DIVIDE THE GRID INTO SQUARES AND RECTANGLES MATCHING THE NUMBERS.';
+      'Divide the grid into rectangles matching each clue.';
 
   @override
   String get countdownMathTitle => 'Countdown Math';
 
   @override
   String get countdownMathSubtitle =>
-      'COMBINE RANDOM NUMBERS TO CALCULATE THE THREE-DIGIT TARGET.';
+      'Combine the given numbers to hit the target.';
 
   @override
   String get narrativeRecallTitle => 'Narrative Recall';
@@ -3981,14 +3992,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shellGameSubtitle =>
-      'TRACK A HIDDEN BALL AS THE SHUFFLING CUPS SWAP PLACES.';
+      'Track the hidden ball while the cups swap places.';
 
   @override
   String get typoglycemiaDecoderTitle => 'Typoglycemia Decoder';
 
   @override
   String get typoglycemiaDecoderSubtitle =>
-      'UNSCRAMBLE AND READ JUMBLED SENTENCES SPEEDILY.';
+      'Read the jumbled sentence and pick its meaning.';
 
   @override
   String get shapeShifterTitle => 'Shape Shifter';
@@ -4029,7 +4040,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wordWheelSubtitle =>
-      'Make words using letters on the wheel, including the center letter.';
+      'Build words of 3+ letters using the centre letter.';
 
   @override
   String get oddEvenFlashTitle => 'Odd-Even Flash';
@@ -4343,7 +4354,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tripletsLogicSubtitle =>
-      'Fill the grid with three shapes, avoiding three-in-a-row. Every row and column must contain the same number of each shape.';
+      'Balance three shapes per line with no three adjacent.';
 
   @override
   String get galaxiesSymTitle => 'Galaxies Symmetry';
@@ -5980,7 +5991,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kurodokoSubtitle =>
-      'Place black cells so numbers see the exact count of white cells.';
+      'Shade cells so numbers see that many white cells.';
 
   @override
   String get kurodokoCongrats => 'Every number sees exactly what it should.';
@@ -6085,7 +6096,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setTheoryVennSubtitle =>
-      'Select the corresponding regions of the Venn diagram for the set formula.';
+      'Shade the Venn regions matching the set formula.';
 
   @override
   String get setTheoryVennWinTitle => 'SET LOGIC MASTER!';
@@ -6197,7 +6208,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get polyominoTilingSubtitle =>
-      'Rotate and assemble tetromino geometric shapes to tile the grid without gaps.';
+      'Pack the shapes into the grid with no gaps.';
 
   @override
   String get polyominoTilingWinTitle => 'GRID TILED!';
@@ -6323,7 +6334,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get conundrumAnagramSubtitle =>
-      'Unscramble all 9 letters to discover the hidden full dictionary word.';
+      'Unscramble all nine letters into one word.';
 
   @override
   String get conundrumAnagramWinTitle => 'CONUNDRUM CRACKED!';
@@ -6392,8 +6403,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pegsTitle => 'Pegs';
 
   @override
-  String get pegsSubtitle =>
-      'Jump a peg over its neighbour to capture it. Leave one standing.';
+  String get pegsSubtitle => 'Jump pegs over neighbours until one peg remains.';
 
   @override
   String get pegsCongrats => 'One peg left. That is a clean board.';
@@ -6409,7 +6419,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sameGameSubtitle =>
-      'Clear a group of two or more to score. Empty the board to win.';
+      'Clear groups of matching blocks to empty the board.';
 
   @override
   String get sameGameCongrats => 'Board cleared. Every square gone.';
@@ -6418,7 +6428,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sameGameLeft => 'Left';
 
   @override
-  String get sameGameStuck => 'No groups left — start a new board.';
+  String get sameGameStuck => 'No groups left. Start a new board.';
 
   @override
   String get galaxiesTitle => 'Galaxies';
@@ -6460,7 +6470,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crossingSubtitle =>
-      'Lay every number in the list into the grid once, across or down. The cells that cross have to agree, and the cells left over are wall.';
+      'Fit every listed number into the crossing slots.';
 
   @override
   String get crossingPlaced => 'Placed';

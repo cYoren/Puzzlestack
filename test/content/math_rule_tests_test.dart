@@ -835,7 +835,7 @@ int _solveCryptoScreen(WidgetTester tester) {
       .map((t) => t.data ?? '')
       .toList();
   final eq = texts.firstWhere(
-    (s) => RegExp(r'^[A-Z]{2} \+ [A-Z]{2} = [A-Z]{2}$').hasMatch(s),
+    (s) => RegExp(r'^[A-Z]{2,} \+ [A-Z]{2,} = [A-Z]{2,}$').hasMatch(s),
   );
   final solveLine = texts.firstWhere((s) => s.startsWith('Solve for: '));
   final targetLetter = solveLine.split('Solve for: ')[1].split(' ').first;

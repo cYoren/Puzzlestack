@@ -1,9 +1,6 @@
 {
   "@@locale": "vi",
   "appTitle": "Puzzlestack",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
   "home": "Trang chủ",
   "settings": "Cài đặt",
   "playAgain": "Chơi lại",
@@ -44,6 +41,9 @@
   "trialModeDescription": "Giải 20 câu để kết thúc thay vì hẹn giờ 60 giây",
   "keepScreenAwake": "Giữ màn hình luôn sáng",
   "keepScreenAwakeDescription": "Ngăn màn hình tắt trong khi chơi",
+  "showArchivedGames": "Hiện câu đố lưu trữ",
+  "showArchivedGamesDescription": "Các bài tập nhận thức được giữ lại để tham khảo.",
+  "archived": "LƯU TRỮ",
   "appearance": "Giao diện",
   "language": "Ngôn ngữ",
   "gameplay": "Cách chơi",
@@ -73,32 +73,8 @@
   "termsOfService": "Điều khoản dịch vụ",
   "licenses": "Giấy phép",
   "findWordSubtitle": "Bạn có {maxTries} lượt để tìm từ có {wordLength} chữ cái đang ẩn giấu.",
-  "@findWordSubtitle": {
-    "placeholders": {
-      "maxTries": {
-        "type": "int"
-      },
-      "wordLength": {
-        "type": "int"
-      }
-    }
-  },
   "wordFoundMessage": "Đã tìm thấy từ: {word}",
-  "@wordFoundMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOverMessage": "Từ đó là: {word}",
-  "@gameOverMessage": {
-    "placeholders": {
-      "word": {
-        "type": "String"
-      }
-    }
-  },
   "gameOver": "Trò chơi kết thúc",
   "crosswordTitle": "Ô chữ",
   "crosswordSubtitle": "Hoàn thành lưới với các từ chính xác dựa trên gợi ý.",
@@ -108,21 +84,7 @@
   "radicalRootsGoalReached": "Đã đạt mục tiêu!",
   "radicalRootsTimeUp": "Hết giờ!",
   "radicalRootsScoreMessage": "Bạn đã tính đúng {score} căn thức!",
-  "@radicalRootsScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsTryAgainMessage": "Hãy tiếp tục luyện tập! Bạn đã tính được {score} căn thức.",
-  "@radicalRootsTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "radicalRootsStart": "Bắt đầu tính",
   "radicalRootsDescription": "Bạn có 60 giây để giải càng nhiều càng tốt.",
   "radicalRootsBest": "Kỷ lục",
@@ -132,21 +94,7 @@
   "romanArithmeticGoalReached": "Cấp độ Centurion!",
   "romanArithmeticTimeUp": "Hết giờ!",
   "romanArithmeticScoreMessage": "Bạn đã giải được {score} bài toán La Mã!",
-  "@romanArithmeticScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticTryAgainMessage": "Veni, Vidi, Vici! Bạn đã giải được {score} bài toán.",
-  "@romanArithmeticTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "romanArithmeticStart": "Bắt đầu hành trình",
   "romanArithmeticDescription": "Chuyển đổi và giải toán. Bạn có 60 giây.",
   "romanArithmeticBest": "Kỷ lục",
@@ -181,6 +129,45 @@
   "magnetsHowToPlay": "Đổ đầy các hộp chứa kích thước bằng quân domino bằng các nam châm '+' và '-' hoặc để trống. Các gợi ý ở hàng và cột xác định tổng số mỗi cực trong dòng đó. Các cực giống nhau không được nằm cạnh nhau theo chiều dọc hoặc ngang.",
   "magnetsWinTitle": "CÂN BẰNG PHÂN CỰC!",
   "magnetsWinMessage": "Tất cả các nam châm đã được sắp xếp hoàn hảo!",
+  "magnetsPlaced": "Magnets",
+  "magnetsLevel": "Depth",
+  "cubeTitle": "Cube",
+  "cubeSubtitle": "Roll the cube to collect every blue square.",
+  "cubeWinTitle": "SIX BLUES!",
+  "cubeWinMessage": "Every face of the cube is blue.",
+  "cubeHowToPlay": "Roll the cube by dragging it onto a neighbouring square, or tapping one. Landing on a square swaps the cube's bottom face with that square, so a blue square paints a white face and a white square unpaints a blue one. Collect all six blue squares: the board is done when all six faces of the cube are blue.",
+  "cubeFaces": "Faces",
+  "cubeMoves": "Moves",
+  "cubeBest": "Best",
+  "mapTitle": "Four Colours",
+  "mapSubtitle": "Colour every region so touching regions never match.",
+  "mapWinTitle": "MAP COLOURED!",
+  "mapWinMessage": "Every region has a colour, and no neighbours clash.",
+  "mapHowToPlay": "Tap a region to colour it. Four colours, and no two regions that share a border may share a colour. Regions that clash glow red.",
+  "mapRegions": "Regions",
+  "mapColoured": "Coloured",
+  "inertiaTitle": "Inertia",
+  "inertiaSubtitle": "Slide the ball to collect every gem and miss mines.",
+  "inertiaWinTitle": "ALL GEMS!",
+  "inertiaWinMessage": "Every gem collected and not a mine touched.",
+  "inertiaHowToPlay": "Swipe the ball onto the square it would land on, or tap any square in line with it. The ball cannot stop halfway: it slides until a wall stops it. Collect every gem. Touching a mine ends the run, and you start again.",
+  "inertiaGems": "Gems",
+  "inertiaMoves": "Moves",
+  "inertiaExploded": "MINE! Tap to retry",
+  "netslideTitle": "Netslide",
+  "netslideSubtitle": "Slide rows and columns until every pipe connects.",
+  "netslideWinTitle": "NET COMPLETE!",
+  "netslideWinMessage": "Every pipe is connected.",
+  "netslideHowToPlay": "Drag a tile one square along its row or column and that whole line slides round, one step. Tiles never rotate, so only where they sit can change. A wall across a line stops it sliding. Connect every pipe to its neighbour.",
+  "netslideMoves": "Slides",
+  "netslideScramble": "Depth",
+  "signpostTitle": "Signpost",
+  "signpostSubtitle": "Link cells in order by following their arrows.",
+  "signpostWinTitle": "EVERY NUMBER PLACED!",
+  "signpostWinMessage": "One chain from 1 to the last, every arrow pointing the way.",
+  "signpostHowToPlay": "Every cell holds a number from 1 to the last, each used once, and the cell holding a number must point at the cell holding the next one. The arrow runs along a whole line, so the cell it means can be any distance away. A few numbers are given. Drag a cell onto the cell it points at, or tap one and then the other. An arrow turns solid once its cell points somewhere. Tapping a cell that already points somewhere takes that link back.",
+  "signpostMoves": "Links",
+  "signpostGivens": "Givens",
   "lighthousesTitle": "NGỌN HẢI ĐĂNG",
   "lighthousesSubtitle": "Đặt tàu dựa trên các gợi ý từ ngọn hải đăng.",
   "lighthousesHowToPlay": "Đặt các con tàu 1x1 vào lưới. Ngọn hải đăng cho biết tổng số tàu có thể nhìn thấy theo chiều ngang và chiều dọc. Các tàu không được chạm vào ngọn hải đăng hoặc chạm vào nhau, kể cả theo đường chéo.",
@@ -191,6 +178,10 @@
   "dominosaHowToPlay": "Sắp xếp một bộ domino hoàn chỉnh trên một lưới các con số sao cho mỗi cặp số liền kề được bao phủ bởi đúng một quân domino. Mỗi cặp số chỉ tồn tại một lần trong bộ.",
   "dominosaWinTitle": "BẬC THẦY DOMINO!",
   "dominosaWinMessage": "Mọi quân domino đã được tìm thấy và đặt đúng chỗ!",
+  "dominosaPlaced": "Placed",
+  "dominosaTypes": "Types",
+  "skyscrapersClues": "Clues",
+  "skyscrapersFilled": "Filled",
   "skyscrapersTitle": "NHÀ CHỌC TRỜI",
   "skyscrapersSubtitle": "Điền vào lưới độ cao của các tòa nhà.",
   "skyscrapersHowToPlay": "Điền vào lưới các độ cao (1-N) sao cho mỗi hàng và cột chứa mỗi độ cao đúng một lần. Các gợi ý ở các cạnh cho biết có bao nhiêu tòa nhà có thể nhìn thấy từ hướng đó, với các tòa nhà cao hơn sẽ che khuất các tòa nhà thấp hơn.",
@@ -227,26 +218,12 @@
   "arithmeticChainWinMessage": "Khả năng tính nhẩm của bạn thật sắc bén!",
   "arithmeticChainLoseTitle": "THỬ LẠI",
   "arithmeticChainLoseMessage": "Đáp án đúng là {answer}.",
-  "@arithmeticChainLoseMessage": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "arithmeticChainStart": "BẮT ĐẦU",
   "arithmeticChainNext": "TIẾP THEO",
   "attentionalBlinkTitle": "Chớp mắt chú ý",
   "attentionalBlinkSubtitleWatch": "QUAN SÁT CÁC CON SỐ",
   "attentionalBlinkSubtitleInput": "NHẬP HAI CON SỐ BẠN ĐÃ THẤY",
   "attentionalBlinkScoreMessage": "Bạn đã ghi được {score} mục tiêu!",
-  "@attentionalBlinkScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "balanceScaleTitle": "CÂN THĂNG BẰNG",
   "balanceScaleSubtitle": "Suy luận trọng lượng của vật cuối cùng dựa trên các bàn cân.",
   "balanceScaleWinTitle": "THĂNG BẰNG!",
@@ -266,16 +243,6 @@
   "boxCompletionTitle": "Hoàn thành hộp",
   "boxCompletionSubtitle": "Hình lập phương nào có thể được tạo thành?",
   "boxCompletionScoreMessage": "Bạn đã trả lời đúng {score} trên tổng số {totalTrials} câu!",
-  "@boxCompletionScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "totalTrials": {
-        "type": "int"
-      }
-    }
-  },
   "boxCompletionOptions": "LỰA CHỌN",
   "bridgesTitle": "CÂY CẦU",
   "bridgesSubtitle": "Nối các hòn đảo bằng những cây cầu. Mỗi hòn đảo cần một số lượng cầu nhất định. Các cây cầu không được chồng chéo lên nhau.",
@@ -286,21 +253,7 @@
   "calculationSprintGoalReached": "ĐÃ ĐẠT MỤC TIÊU!",
   "calculationSprintTimeUp": "HẾT GIỜ",
   "calculationSprintScoreMessage": "Tốc độ tính toán tuyệt vời! Bạn ghi được {score} điểm.",
-  "@calculationSprintScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintTryAgainMessage": "Bạn ghi được {score} điểm. Hãy cố gắng vượt qua kỷ lục của mình!",
-  "@calculationSprintTryAgainMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "calculationSprintBest": "KỶ LỤC",
   "calculationSprintSeconds": "60 GIÂY",
   "calculationSprintDescription": "Giải các phép tính nhanh chóng.\nĐáp án sai sẽ bị trừ 3 giây!",
@@ -311,82 +264,20 @@
   "categoryFluencyTimeUp": "HẾT GIỜ!",
   "categoryFluencyWinMessage": "Bạn có vốn từ vựng thật phong phú!",
   "categoryFluencyFoundMessage": "Bạn đã tìm được {count} từ.",
-  "@categoryFluencyFoundMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "categoryFluencyCategoryLabel": "Danh mục:",
   "categoryFluencyEnterItem": "Nhập một mục...",
   "categoryFluencyWordCount": "{entered} / {target} từ",
-  "@categoryFluencyWordCount": {
-    "placeholders": {
-      "entered": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessTitle": "Mù thay đổi",
   "changeBlindnessSubtitle": "TÌM KIẾM CHI TIẾT THAY ĐỔI",
   "changeBlindnessScore": "ĐIỂM: {score}",
-  "@changeBlindnessScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "changeBlindnessFoundMessage": "Bạn đã tìm thấy {score} sự thay đổi!",
-  "@changeBlindnessFoundMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTitle": "Thời gian phản ứng",
   "choiceRtSubtitle": "Nhấn vào ô vuông đang hoạt động nhanh nhất có thể",
   "choiceRtAvgMessage": "Thời gian phản ứng trung bình của bạn: {avg}ms",
-  "@choiceRtAvgMessage": {
-    "placeholders": {
-      "avg": {
-        "type": "String"
-      }
-    }
-  },
   "choiceRtTimeRemaining": "Thời gian còn lại: {time}s",
-  "@choiceRtTimeRemaining": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "choiceRtTaps": "Số lần nhấn: {count}",
-  "@choiceRtTaps": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodTitle": "Tràn màu",
   "colorFloodSubtitle": "Lượt đi: {moves} / {maxMoves}",
-  "@colorFloodSubtitle": {
-    "placeholders": {
-      "moves": {
-        "type": "int"
-      },
-      "maxMoves": {
-        "type": "int"
-      }
-    }
-  },
   "colorFloodSuccess": "TRÀN MÀU THÀNH CÔNG!",
   "colorFloodDryLand": "VÙNG ĐẤT KHÔ CẰN...",
   "colorFloodWinMessage": "Bạn đã phủ kín lưới bằng màu sắc!",
@@ -398,28 +289,11 @@
   "colorMatchCheck": "KIỂM TRA ĐỘ KHỚP",
   "colorMatchResult": "KẾT QUẢ",
   "colorMatchAccuracy": "Độ chính xác của bạn: {accuracy}%",
-  "@colorMatchAccuracy": {
-    "placeholders": {
-      "accuracy": {
-        "type": "String"
-      }
-    }
-  },
   "corsiBlocksTitle": "KHỐI CORSI",
   "corsiBlocksSubtitle": "Quan sát các khối phát sáng và nhấn vào chúng theo đúng thứ tự.",
   "corsiBlocksWinTitle": "BẬC THẦY KHÔNG GIAN!",
   "corsiBlocksLoseTitle": "LẠC TRONG KHÔNG GIAN",
   "corsiBlocksMessage": "Bạn đã nhớ được {score} chuỗi! Khả năng ghi nhớ không gian của bạn đạt mức {span}.",
-  "@corsiBlocksMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      },
-      "span": {
-        "type": "int"
-      }
-    }
-  },
   "corsiBlocksWatch": "QUAN SÁT MẪU",
   "corsiBlocksRepeat": "LẶP LẠI MẪU",
   "corsiBlocksExcellent": "TUYỆT VỜI!",
@@ -441,58 +315,16 @@
   "digitSpanReverseWinMessage": "Trí nhớ ngắn hạn của bạn thật ấn tượng!",
   "digitSpanReverseLoseTitle": "THỬ LẠI",
   "digitSpanReverseLoseMessage": "Chuỗi ngược chính xác là {sequence}.",
-  "@digitSpanReverseLoseMessage": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
   "dividedAttentionTitle": "Sự tập trung phân tán",
   "dividedAttentionSubtitle": "Nhấn TRÁI cho SAO ⭐ | Nhấn PHẢI cho ĐỎ 🔴",
   "dividedAttentionGameOverTitle": "MẤT TẬP TRUNG",
   "dividedAttentionGameOverMessage": "Làm nhiều việc cùng lúc thật khó! Điểm của bạn là {score}.",
-  "@dividedAttentionGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "dividedAttentionScore": "ĐIỂM: {score}",
-  "@dividedAttentionScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackTitle": "Double N-Back",
   "doubleNBackSubtitle": "Khớp các kích thích từ {n} bước trước",
-  "@doubleNBackSubtitle": {
-    "placeholders": {
-      "n": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackGameOverTitle": "TRÒ CHƠI KẾT THÚC",
   "doubleNBackGameOverMessage": "Bạn đã ghi được {score} điểm trong Double N-Back!",
-  "@doubleNBackGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackScore": "Điểm: {score}",
-  "@doubleNBackScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "doubleNBackPositionMatch": "KHỚP VỊ TRÍ",
   "doubleNBackLetterMatch": "KHỚP CHỮ CÁI",
   "faceNameAssociationTitle": "Nhớ mặt và tên",
@@ -502,27 +334,10 @@
   "faceNameAssociationGameOver": "TRÒ CHƠI KẾT THÚC",
   "faceNameAssociationWinMessage": "Bạn có trí nhớ tuyệt vời về khuôn mặt và tên gọi!",
   "faceNameAssociationLoseMessage": "Bạn đã trả lời đúng {correct} trên tổng số {total} câu.",
-  "@faceNameAssociationLoseMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceNameAssociationStartTest": "BẮT ĐẦU KIỂM TRA",
   "flankerTestWinTitle": "TẬP TRUNG CAO ĐỘ!",
   "flankerTestLoseTitle": "BỊ XAO NHÃNG",
   "flankerTestScoreMessage": "Bạn đã trả lời đúng {score} câu!",
-  "@flankerTestScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "flankerTestTitle": "BÀI KIỂM TRA FLANKER",
   "flankerTestSubtitle": "Chỉ ra hướng của mũi tên trung tâm, bỏ qua các mũi tên hai bên.",
   "flankerTestLeft": "TRÁI",
@@ -531,13 +346,6 @@
   "fractionMatchSubtitle": "Khớp hình ảnh với phân số tương ứng",
   "fractionMatchLoseTitle": "PHÂN SỐ KHÔNG KHỚP",
   "fractionMatchLoseMessage": "Đáp án đúng là {correctAnswer}.",
-  "@fractionMatchLoseMessage": {
-    "placeholders": {
-      "correctAnswer": {
-        "type": "String"
-      }
-    }
-  },
   "goNoGoTitle": "Go / No-Go",
   "goNoGoSubtitle": "Nhấn khi hiện màu Xanh, BỎ QUA màu Đỏ!",
   "goNoGoLoseTitle": "PHẢN ỨNG ĐÃ DỪNG",
@@ -549,13 +357,6 @@
   "groceryListWinTitle": "BẬC THẦY MUA SẮM!",
   "groceryListLoseTitle": "QUÊN GÌ ĐÓ SAO?",
   "groceryListScoreMessage": "Bạn đã ghi được {score} điểm trong Danh sách mua sắm!",
-  "@groceryListScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "groceryListReady": "TÔI ĐÃ SẴN SÀNG",
   "groceryListWhereBelong": "MỤC NÀY THUỘC VỀ ĐÂU?",
   "hueSortTitle": "SẮP XẾP TÔNG MÀU",
@@ -563,44 +364,16 @@
   "hueSortWinTitle": "CHUYỂN MÀU HOÀN HẢO!",
   "hueSortWinMessage": "Bạn đã sắp xếp quang phổ màu một cách hoàn hảo!",
   "hueSortWrongTiles": "Số ô sai vị trí: {count}",
-  "@hueSortWrongTiles": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "kenkenTitle": "KenKen",
   "kenkenWinTitle": "THIÊN TÀI!",
   "kenkenLoseTitle": "TRÒ CHƠI KẾT THÚC",
   "kenkenWinMessage": "Bạn đã giải được câu đố KenKen!",
   "kenkenLoseMessage": "Hãy kiểm tra quy tắc hàng/cột và lồng.",
   "kenkenSubtitle": "Điền từ 1-{size} mà không lặp lại trong hàng/cột",
-  "@kenkenSubtitle": {
-    "placeholders": {
-      "size": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationTitle": "Hủy chữ cái",
   "letterCancellationTitleFull": "Bài kiểm tra Hủy chữ cái",
   "letterCancellationScoreMessage": "Bạn đã tìm thấy {score} chữ cái!",
-  "@letterCancellationScoreMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "letterCancellationSubtitle": "Tìm tất cả các chữ cái \"{target}\"",
-  "@letterCancellationSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "String"
-      }
-    }
-  },
   "letterCancellationFound": "ĐÃ TÌM THẤY",
   "letterCancellationTime": "THỜI GIAN",
   "lightsOutTitle": "TẮT ĐÈN",
@@ -615,6 +388,7 @@
   "visualStatisticalLearningTitle": "Học thống kê trực quan",
   "orbitTapTitle": "Nhấn theo quỹ đạo",
   "orbitTapSubtitle": "Nhấn khi các quả bóng thẳng hàng với cổng",
+  "orbitTapTapToHit": "Chạm khi quả bóng đi vào cổng",
   "schulteTableTitle": "Bảng Schulte",
   "multipleObjectTrackingTitle": "Theo dõi đối tượng",
   "multipleObjectTrackingSubtitle": "Quan sát các đối tượng được làm nổi bật. Theo dõi chúng khi chúng di chuyển, sau đó chọn chúng.",
@@ -639,13 +413,6 @@
   "sternbergTaskMemorize": "Ghi nhớ các chữ cái",
   "sternbergTaskWasLetterSet": "Chữ cái này có trong bộ vừa rồi không?",
   "sternbergTaskScore": "Bạn đã ghi được {score} điểm trong Nhiệm vụ Sternberg!",
-  "@sternbergTaskScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "verbalAnalogiesTitle": "Ẩn dụ ngôn từ",
   "verbalAnalogiesSubtitle": "Hoàn thành mối quan hệ",
   "typingSpeedTitle": "Tốc độ đánh máy",
@@ -671,13 +438,6 @@
   "pixelMimicTitle": "Bắt chước điểm ảnh",
   "targetNumberTitle": "Mục tiêu 24",
   "targetNumberSubtitle": "Sử dụng cả 4 số để đạt được kết quả {target}",
-  "@targetNumberSubtitle": {
-    "placeholders": {
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "mirrorTracingTitle": "Vẽ ngược qua gương",
   "mirrorTracingSubtitle": "Vẽ theo hình ngôi sao! Các điều khiển bị PHẢN CHIẾU.",
   "wordSurgeTitle": "Từ vựng bùng nổ",
@@ -687,13 +447,6 @@
   "perspectiveTakingChoosePerspective": "CHỌN GÓC NHÌN",
   "perspectiveTakingCongrats": "Bạn có cái nhìn sắc bén về các mối quan hệ không gian.",
   "perspectiveTakingSubtitle": "Góc nhìn nào là từ hướng {targetDirName}?",
-  "@perspectiveTakingSubtitle": {
-    "placeholders": {
-      "targetDirName": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingTitle": "Gấp giấy",
   "paperFoldingSubtitle": "Nó sẽ trông như thế nào khi mở ra?",
   "waterSortTitle": "Rót nước đúng ống",
@@ -729,13 +482,6 @@
   "operationSpanRecallPhase": "Nhớ lại các chữ cái theo thứ tự",
   "operationSpanRoundComplete": "Hoàn thành vòng chơi!",
   "operationSpanScore": "Bạn đã ghi được {score} điểm trong Phạm vi hoạt động!",
-  "@operationSpanScore": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
   "slidePuzzleTitle": "Trò chơi trượt ô",
   "slidePuzzleNewGame": "TRÒ CHƠI MỚI",
   "slidePuzzleInstructions": "Sắp xếp các ô theo thứ tự số bằng cách trượt chúng vào ô trống.",
@@ -747,18 +493,63 @@
   "trailMakingSubtitle": "Nối các con số theo thứ tự (1 -> 2 -> 3...) nhanh nhất có thể.",
   "matrixReasoningTitle": "Suy luận ma trận",
   "matrixReasoningSubtitle": "Hoàn thành mẫu trong lưới 3x3",
+  "abcdTitle": "Four Letters",
+  "abcdSubtitle": "Place A, B, C, or D to match the edge counts.",
+  "abcdFilled": "Cells",
+  "abcdDepth": "Depth",
+  "abcdWinTitle": "EVERY CELL LETTERED!",
+  "abcdWinMessage": "Every count met, no two identical letters touching.",
+  "boatsTitle": "Boats",
+  "boatsSubtitle": "Place the fleet to match the row and column counts.",
+  "boatsShipsFound": "Boat cells",
+  "boatsDepth": "Depth",
+  "boatsWinTitle": "FLEET FOUND!",
+  "boatsWinMessage": "Every boat placed and nothing touching.",
+  "seismicTitle": "Ripple Effect",
+  "seismicSubtitle": "Fill regions 1..N; equal digits keep N cells apart.",
+  "seismicClues": "Clues",
+  "seismicDepth": "Depth",
+  "seismicWinTitle": "RIPPLE SETTLED!",
+  "seismicWinMessage": "Every shape holds 1 to its size, with no two numbers too close.",
+  "mathraxTitle": "Mathrax",
+  "mathraxSubtitle": "Fill a Latin square obeying every corner rule.",
+  "mathraxFilled": "Filled",
+  "mathraxDepth": "Depth",
+  "mathraxWinTitle": "EVERY CORNER AGREES!",
+  "mathraxWinMessage": "A Latin square that satisfies every corner clue.",
+  "saladTitle": "Salad",
+  "saladSubtitle": "Place each letter once per line; edges show first seen.",
+  "saladWritten": "Written",
+  "saladWinTitle": "EVERY LINE AGREES!",
+  "saladWinMessage": "Every letter once in every line, and every border clue reads true.",
+  "romeTitle": "Rome",
+  "romeSubtitle": "Point arrows so every path reaches a goal.",
+  "romeWritten": "Arrows",
+  "romeWinTitle": "EVERY CHAIN ARRIVES!",
+  "romeWinMessage": "One arrow per cell, no repeats in an area, and every chain ends at a goal.",
+  "ascentTitle": "Number Path",
+  "ascentSubtitle": "Place 1 to N so consecutive numbers touch.",
+  "ascentNext": "Next",
+  "ascentDepth": "Depth",
+  "ascentWinTitle": "PATH COMPLETE!",
+  "ascentWinMessage": "One number per cell, every step touching the one before it.",
+  "clustersTitle": "Clusters",
+  "clustersSubtitle": "Two colours: dots touch one mate, others touch two.",
+  "clustersDots": "Dots",
+  "clustersDepth": "Depth",
+  "clustersWinTitle": "CLUSTERS SETTLED!",
+  "clustersWinMessage": "Two colours, every dot true, every cluster of two or more.",
+  "bricksTitle": "Bricks",
+  "bricksSubtitle": "Shade supported cells with no three in a row.",
+  "bricksShaded": "Shaded",
+  "bricksDepth": "Depth",
+  "bricksWinTitle": "THE PILE HOLDS!",
+  "bricksWinMessage": "Every shaded cell is held up, no run of three, and every number reads true.",
   "tentsAndTreesTitle": "Lều & Cây",
   "tentsAndTreesSubtitle": "Đặt lều cạnh cây. Các con số cho biết có bao nhiêu lều trong mỗi hàng/cột. Các lều không được chạm vào nhau.",
   "quickMathTitle": "Toán nhanh",
   "magicSquaresTitle": "Ô vuông ma thuật",
   "magicSquaresSubtitle": "Mỗi hàng, cột và đường chéo phải có tổng bằng {targetSum}",
-  "@magicSquaresSubtitle": {
-    "placeholders": {
-      "targetSum": {
-        "type": "int"
-      }
-    }
-  },
   "objectShuffleTitle": "Xáo trộn đối tượng",
   "pipesTitle": "Đường ống",
   "pipesSubtitle": "Nối các điểm cùng màu bằng đường ống.",
@@ -840,13 +631,6 @@
   "blockCount3DNotQuite": "Chưa đúng lắm! Hãy thử xoay để đếm lại xem.",
   "blockCount3DExcellent": "TUYỆT VỜI",
   "blockCount3DWinMessage": "Bạn đã xác định đúng tất cả {count} khối!",
-  "@blockCount3DWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "blockCount3DHowToPlayDescription": "1. Kéo ngón tay của bạn qua khung nhìn 3D để xoay chồng khối.\n\n2. Đếm tất cả các khối trong chồng.\n\n3. Lưu ý: một khối ở trên cao phải có các khối đỡ bên dưới (các khối bị ẩn!).\n\n4. Nhập câu trả lời của bạn vào ô trống và nhấn \"GỬI KẾT QUẢ\" để kiểm tra.",
   "alphabetSudokuTitle": "SUDOKU CHỮ CÁI",
   "alphabetSudokuSubtitle": "Điền vào lưới sao cho mỗi hàng, cột và ô đều chứa các chữ cái từ A đến I.",
@@ -856,13 +640,6 @@
   "classicMazeSubtitle": "KHÁM PHÁ & GIẢI MÃ • MÊ CUNG MỚI MỖI VÁN",
   "classicMazeWinTitle": "ĐÃ VƯỢT MÊ CUNG",
   "classicMazeWinMessage": "Khả năng điều hướng đáng kinh ngạc! Bạn đã giải mê cung trong {count} lượt đi.",
-  "@classicMazeWinMessage": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "classicMazeMoves": "LƯỢT ĐI: ",
   "classicMazeHowToPlayDescription": "1. Dẫn đường cho viên bi vàng phát sáng (người chơi) đến cổng xanh (lối thoát) ở phía dưới bên phải.\n\n2. Vuốt bất cứ đâu trên mê cung, sử dụng các phím mũi tên trên bàn phím vật lý hoặc các nút trên bảng điều khiển để di chuyển.\n\n3. Đường mòn màu tím hiển thị con đường bạn đã khám phá. Quay lại đường mòn để xóa nó đi!\n\n4. Thay đổi độ khó từ thanh tác vụ phía trên để thử thách bản thân với những mê cung lớn hơn!",
   "conjunctionSearchTitle": "Tìm kiếm kết hợp",
@@ -877,6 +654,9 @@
   "shapeSquare": "HÌNH VUÔNG",
   "shapeTriangle": "HÌNH TAM GIÁC",
   "shapeStar": "HÌNH NGÔI SAO",
+  "shapeRectangle": "HÌNH CHỮ NHẬT",
+  "shapeEllipse": "HÌNH ELIP",
+  "shapeTrapezoid": "HÌNH THANG",
   "colorRedLabel": "ĐỎ",
   "colorBlueLabel": "XANH DƯƠNG",
   "colorGreenLabel": "XANH LÁ",
@@ -893,31 +673,11 @@
   "cubeNetFoldFailed": "THẤT BẠI (NHẤN ĐẶT LẠI)",
   "faceTraitAssociationMemorize": "GHI NHỚ TẤT CẢ 4 NGƯỜI",
   "faceTraitAssociationPersonOf": "NGƯỜI THỨ {current} TRÊN {total}",
-  "@faceTraitAssociationPersonOf": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "faceTraitAssociationWhatOccupation": "NGHỀ NGHIỆP CỦA HỌ LÀ GÌ?",
   "faceTraitAssociationWhatHobby": "SỞ THÍCH CỦA HỌ LÀ GÌ?",
   "faceTraitAssociationWinTitle": "BẬC THẦY TRÍ NHỚ!",
   "faceTraitAssociationLoseTitle": "TRÒ CHƠI KẾT THÚC",
   "faceTraitAssociationScoreMessage": "Bạn đã trả lời đúng {correct} trên tổng số {total} câu.",
-  "@faceTraitAssociationScoreMessage": {
-    "placeholders": {
-      "correct": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "topologyTitle": "TÔ PÔ HỌC",
   "topologySubtitle": "Các hình này có tương đương về mặt tô pô không? (Có thể biến đổi hình này thành hình kia mà không cần cắt hay dán không?)",
   "topologyWinTitle": "THIÊN TÀI HÌNH HỌC!",
@@ -975,828 +735,157 @@
   "oneLetterShiftTitle": "Dịch chuyển một chữ cái",
   "oneLetterShiftSubtitle": "Biến đổi một từ thành từ khác bằng cách thay đổi một chữ cái",
   "vocabularyBuilderMessage": "Làm tốt lắm! Vốn từ vựng của bạn rất ấn tượng. Điểm: {arg0}",
-  "@vocabularyBuilderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "symmetryMessage": "Bạn đã đối xứng hóa mẫu hình một cách hoàn hảo với độ chính xác tuyệt đối.",
   "temporalOrderMessage": "Đáng kinh ngạc! Trí nhớ trình tự thời gian của bạn rất chuẩn xác.",
   "temporalOrderMessage1": "Trí nhớ trình tự không chính xác. Có công mài sắt có ngày nên kim!",
   "wordSearchMessage": "Đã tìm thấy tất cả các từ với khả năng quan sát tinh tường.",
   "colorMatchMessage": "Độ chính xác của bạn: {arg0}%",
-  "@colorMatchMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "semanticLinkMessage": "Bạn đã ghi được {arg0} điểm!",
-  "@semanticLinkMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "reflexTapMessage": "Bạn đã chạm vào {arg0} mục tiêu!",
-  "@reflexTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderMessage": "Trực giác hình học của bạn thật hoàn hảo!",
   "angleFinderMessage1": "Câu trả lời đúng là {arg0}°",
-  "@angleFinderMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "angleFinderText": "{arg0}°",
-  "@angleFinderText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "visualStatisticalLearningMessage": "Bạn đã ghi được {arg0} mẫu hình đúng!",
-  "@visualStatisticalLearningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nonogramText": "Lỗi: {arg0}",
-  "@nonogramText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalCalendarMessage": "Bạn đã làm đúng {arg0} trên 10!",
-  "@mentalCalendarMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "orbitTapMessage": "Bạn đã chạm thành công {arg0} lần!",
-  "@orbitTapMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableMessage": "Bạn đã hoàn thành bảng trong {arg0}.\nHãy tiếp tục luyện tập để mở rộng tầm nhìn ngoại vi!",
-  "@schulteTableMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "schulteTableText": "BẮT ĐẦU KIỂM TRA",
   "relationalMemoryMessage": "Độ chính xác trí nhớ quan hệ không gian thật tuyệt vời!",
   "sudokuText": "Lỗi: {arg0}",
-  "@sudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sdmtMessage": "Bạn đã khớp được {arg0} biểu tượng! Bài kiểm tra này đo tốc độ quét và sự chú ý thị giác của bạn.",
-  "@sdmtMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "futoshikiMessage": "Đáng kinh ngạc! Bạn đã giải được ô số Futoshiki.",
+  "futoshikiWinTitle": "SQUARE SOLVED!",
+  "futoshikiGivens": "Givens",
+  "futoshikiEdges": "Edges",
   "letterFrequencyScanMessage": "Bạn đã đếm đúng {arg0} lần xuất hiện của \"{arg1}\".",
-  "@letterFrequencyScanMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "letterFrequencyScanText": "Không chính xác. Số lượng là {arg0}.",
-  "@letterFrequencyScanText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "memoryMatrixMessage": "Ấn tượng! Trí nhớ ngắn hạn của bạn rất nhạy bén. Mục tiêu hàng ngày đã hoàn thành!",
   "memoryMatrixMessage1": "Hãy tập trung và thử lại để cải thiện điểm trí nhớ của bạn.",
   "contextCluesMessage": "Xuất sắc! Vốn từ vựng và khả năng phân tích ngữ cảnh của bạn thật tuyệt vời.",
   "contextCluesMessage1": "Đã chọn sai từ! Hãy rèn luyện tư duy ngữ cảnh ngôn ngữ và thử lại.",
   "oneLetterShiftMessage": "Bạn đã chuyển đổi chính xác {arg0} thành {arg1}.",
-  "@oneLetterShiftMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "mentalAbacusMessage": "Khả năng tính nhẩm của bạn thuộc hàng đẳng cấp.",
   "fractionMatcherMessage": "Bạn đã ghi được {arg0} điểm khi ghép các biểu thức!",
-  "@fractionMatcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spellingSprintMessage": "Bạn đã đánh vần đúng cả 10 từ!",
   "spellingSprintMessage1": "Bạn đã đánh vần được {arg0} từ.",
-  "@spellingSprintMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "stopSignalMessage": "Bạn đã đạt được {arg0} phản hồi chính xác! Bài kiểm tra này đo khả năng kiềm chế một hành động đã dự định.",
-  "@stopSignalMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarPoliceMessage": "Trò chơi kết thúc! Bạn đã duy trì trật tự trong thế giới ngữ pháp. Điểm: {arg0}",
-  "@grammarPoliceMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "consonantReconstructMessage": "Bạn đã khôi phục thành công với số điểm {arg0}!",
-  "@consonantReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhymeMasterMessage": "Bạn đã tìm được {arg0} trên {arg1} vần!",
-  "@rhymeMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "vigilanceTaskMessage": "Số lần trúng: {arg0}, Số lần bỏ lỡ: {arg1}\nBáo động giả: {arg2}",
-  "@vigilanceTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "silhouetteMatchOrthoMessage": "Bạn có kỹ năng căn chỉnh chính hình hoàn hảo!",
   "silhouetteMatchOrthoText": "ĐÃ HIỂU",
   "silhouetteMatchOrthoText1": "Phép chiếu phối cảnh không chính xác! Chạm vào Đặt lại để thử lại.",
   "fibonacciMergeMessage": "{arg0}: {arg1}",
-  "@fibonacciMergeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "factorFinderMessage": "Bạn đã ghi được {arg0} điểm bằng cách tìm tất cả các ước số!",
-  "@factorFinderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "logicalSyllogismsMessage": "Bạn đã giải đúng {arg0} tam đoạn luận!",
-  "@logicalSyllogismsMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rotatingMazeMessage": "Bạn đã vượt qua mê cung xoay động thành công!",
   "rotatingMazeText": "ĐÃ HIỂU",
   "rotatingMazeText1": "🌀 Mê cung đã xoay 90°! Lưới đã thay đổi!",
   "mathPathMessage": "You found the path that adds up to the target!",
   "bridgesMessage": "You successfully connected all the islands!",
   "compoundConnectMessage": "The compound word is {arg0}{arg1}.",
-  "@compoundConnectMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "pangramSprintMessage": "You built a sentence using all 26 letters.",
   "mirrorImageMessage": "You perfectly identified the reflection.",
   "mirrorImageText": "MIRROR IMAGE",
   "reverseStroopMessage": "You scored {arg0} points! Keep your eye on the instructions.",
-  "@reverseStroopMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "verbalAnalogiesMessage": "You have a sharp mind for relationships.",
   "corsiBlocksMessage1": "You recalled {arg1} sequences! Your spatial memory span reached {arg0}.",
-  "@corsiBlocksMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "wordLadderMessage": "You successfully connected {arg0} to {arg1} in {arg2} steps.",
-  "@wordLadderMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionMessage": "Incredible selective scanning! Final score: {arg0}.",
-  "@d2AttentionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "d2AttentionText": "HOW TO PLAY",
   "d2AttentionText1": "GOT IT",
   "tangleFixMessage": "All lines are clear and smooth.",
   "distractorMatrixMessage": "Incredible! You recalled patterns despite cognitive math distractors!",
   "distractorMatrixMessage1": "The distractors got you! Retrain your working memory.",
   "sentenceUnscrambleMessage": "You unscrambled a score of {arg0}!",
-  "@sentenceUnscrambleMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "kakuroMessage": "Incredible! You matched all sum segments perfectly.",
   "symbolicFlankerMessage": "You got {arg0} correct out of {arg1}!",
-  "@symbolicFlankerMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "stroopTestMessage": "You scored {arg0} correctly! Focus on the color of the ink, not the word.",
-  "@stroopTestMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wisconsinCardSortingMessage": "You correctly sorted {arg0} cards!",
-  "@wisconsinCardSortingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "nBackMessage": "You achieved {arg0} 2-back matches! Your working memory is vital for multitasking.",
-  "@nBackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "rhythmMasterMessage": "You got {arg0} perfect hits and {arg1} points!",
-  "@rhythmMasterMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListMessage": "You scored {arg0} points in Grocery List!",
-  "@groceryListMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "groceryListText": "I\\",
   "mirrorTracingMessage": "Your brain successfully rewired its coordination.",
   "moduloClockMessage": "Excellent modular mental math coordination! Score: {arg0}",
-  "@moduloClockMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "moduloClockMessage1": "You managed {arg0} of {arg1} modular clock solutions. Score: {arg2}",
-  "@moduloClockMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "crownMessage": "All crowns placed successfully with perfect logic.",
   "dualCodingMessage": "Fantastic dual-task performance! Your working memory score: {arg0}",
-  "@dualCodingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "inequalityDashMessage": "You scored {arg0} points matching inequalities!",
-  "@inequalityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringMessage": "You scored {arg0} out of {arg1}!",
-  "@sourceMonitoringMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "sourceMonitoringText": "START RECALL",
   "memoryPalaceText": "AVAILABLE WORDS",
   "target10Message": "You scored {arg0} points matching numbers to 10!",
-  "@target10Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "paperFoldingMessage": "You can see the patterns in your mind.",
   "topologyText": "{arg0}{arg1} / 10",
-  "@topologyText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "waterSortMessage": "You sorted all the colors perfectly!",
   "anagramDefinitionMessage": "The word was indeed \"{arg0}\".",
-  "@anagramDefinitionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message": "{arg0}: {arg1}\n{arg2}",
-  "@game2048Message": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
   "game2048Message1": "{arg0}: {arg1}",
-  "@game2048Message1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "numericalEstimationMessage": "You made {arg0} correct estimations.",
-  "@numericalEstimationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "grammarSortMessage": "You sorted {arg0} words correctly!",
-  "@grammarSortMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vowelReconstructMessage": "You reconstructed a score of {arg0}!",
-  "@vowelReconstructMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictMessage": "You achieved a score of {arg0} with {arg1} errors!",
-  "@spatialConflictMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "spatialConflictText": "HOW TO PLAY",
   "spatialConflictText1": "GOT IT",
   "tracePathMessage": "Your accuracy was {arg0}%!",
-  "@tracePathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "ruleSwitcherMessage": "You scored {arg0} correct out of {arg1}!",
-  "@ruleSwitcherMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzMessage": "You took {arg0} steps. Min possible was {arg1}.",
-  "@collatzMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "collatzText": "/ 2",
   "collatzText1": "+ 1",
   "collatzText2": "3n + 1",
   "divisibilityDashMessage": "You solved {arg0} numbers!",
-  "@divisibilityDashMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "switchTaskMessage": "You scored {arg0} correctly! Fast switching is key to mental flexibility.",
-  "@switchTaskMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sequenceSleuthMessage": "You solved {arg0} sequences!",
-  "@sequenceSleuthMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "changeBlindnessMessage": "You found {arg0} changes!",
-  "@changeBlindnessMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "mentalRotationMessage": "You rotated {arg0} shapes correctly!",
-  "@mentalRotationMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage": "You mastered the code!\nThe word was: {arg0}",
-  "@wordMastermindMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindMessage1": "The hidden word was: {arg0}",
-  "@wordMastermindMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "wordMastermindText": "{arg0}",
-  "@wordMastermindText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonSequenceMessage": "You memorized all 10 tiles!",
   "simonSequenceMessage1": "Try again to master the sequence.",
   "oxymoronHuntMessage": "You found {arg0} oxymorons!",
-  "@oxymoronHuntMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackMessage": "Incredible spatial tracking! You scored {arg0} points.",
-  "@spotlightTrackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "spotlightTrackText": "HOW TO PLAY",
   "spotlightTrackText1": "GOT IT",
   "spotlightTrackText2": "START ROUND",
   "vennNumbersMessage": "You categorized {arg0} numbers!",
-  "@vennNumbersMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "vennNumbersText": "NEITHER",
   "vennNumbersText1": "BOTH",
   "silhouetteMatchMessage": "Your brain is excellent at 3D to 2D translation.",
   "sumSnakeMessage": "Target {arg0} reached with perfect precision!",
-  "@sumSnakeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumSnakeText": "CLEAR PATH",
   "percentagePeakMessage": "You solved {arg0} percentage problems!",
-  "@percentagePeakMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "trailMakingMessage": "You completed {arg0} trails! This test measures your visual search speed and mental flexibility.",
-  "@trailMakingMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "matrixReasoningMessage": "You completed {arg0} matrices correctly!",
-  "@matrixReasoningMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "tentsAndTreesMessage": "You have successfully placed all the tents.",
+  "tentsAndTreesWinTitle": "CAMP READY!",
+  "tentsAndTreesTents": "Tents",
+  "tentsAndTreesDepth": "Depth",
   "klotskiMessage": "Sensational sliding! You freed the Hero block in {arg0} moves.",
-  "@klotskiMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "sumPyramidMessage": "You solved {arg0} sum pyramids successfully!",
-  "@sumPyramidMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage": "Excellent selective response and focus! Total Score: {arg0}",
-  "@simonCommandMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "simonCommandMessage1": "You scored {arg0} but did not reach {arg1} matches in time.",
-  "@simonCommandMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "syllableStackMessage": "You stacked up a score of {arg0}!",
-  "@syllableStackMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "slitherlinkMessage": "Awesome! You successfully completed the loop puzzle.",
   "quickMathMessage": "You solved {arg0} problems!",
-  "@quickMathMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "commonDenominatorMessage": "You solved {arg0} GCD/LCM problems!",
-  "@commonDenominatorMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionMessage": "Your final score is {arg0}. You built a chain of {arg1} words.",
-  "@chainReactionMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "chainReactionText": "{arg0}",
-  "@chainReactionText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "associativePairsMessage": "Brilliant! You associated visual traits flawlessly.",
   "associativePairsMessage1": "Wrong association! Sharpen your link memory and try again.",
   "portmanteauSplitMessage": "You split {arg0} portmanteaus!",
-  "@portmanteauSplitMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "magicSquaresText": "CLEAR",
   "alphabetSudokuText": "Error: {arg0}",
-  "@alphabetSudokuText": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "pipesMessage": "You connected all the pipes and filled the grid.",
   "dualMirrorMessage": "You navigated both icons to their targets!",
   "binaryCodeMessage": "Sensational rapid decimal translation! Final Score: {arg0}",
-  "@binaryCodeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "binaryCodeMessage1": "You correctly converted {arg0} binary numbers. Score: {arg1}",
-  "@binaryCodeMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      },
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage": "You found 50 odd ones! Final score: {arg0}",
-  "@oddOneOutMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "oddOneOutMessage1": "Your score: {arg0}",
-  "@oddOneOutMessage1": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "letterBridgeMessage": "You found the bridge letter: {arg0}",
-  "@letterBridgeMessage": {
-    "placeholders": {
-      "arg0": {
-        "type": "String"
-      }
-    }
-  },
   "imReady": "TÔI ĐÃ SẴN SÀNG",
   "soptTitle": "Tự trỏ chỉ",
   "soptSubtitle": "Nhấn vào một thẻ khác nhau mỗi lần. Các vị trí xáo trộn!",
@@ -1926,125 +1015,6 @@
   "cabinetItemLock": "Khóa",
   "cabinetItemPet": "Thú cưng",
   "cabinetItemCar": "Xe hơi",
-  "@soptGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@contRecogGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@dnmsGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@symSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@readingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@countingSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@countingSpanYourSequence": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@objDispGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@mandalaGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanPrepareRecall": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEnterLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanRecallLast": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "@runningSpanEntered": {
-    "placeholders": {
-      "sequence": {
-        "type": "String"
-      }
-    }
-  },
-  "@spatialCabinetGameOverMessage": {
-    "placeholders": {
-      "score": {
-        "type": "int"
-      }
-    }
-  },
-  "@spatialCabinetWhereIs": {
-    "placeholders": {
-      "itemName": {
-        "type": "String"
-      }
-    }
-  },
   "gamesTitleLabel": "TRÒ CHƠI",
   "yourFavorites": "YÊU THÍCH CỦA BẠN",
   "readyForWorkout": "SẴN SÀNG CHO BÀI TẬP HÀNG NGÀY CỦA BẠN?",
@@ -2143,35 +1113,282 @@
   "klotskiTitle": "Thoát Khỏi Klotski",
   "klotskiSubtitle": "TRƯỢT CÁC KHỐI ĐỂ ĐẾN ĐƯỢC LỐI RA.",
   "homophoneHuntSubtitle": "Chọn từ đồng âm có cách viết đúng",
-  "compassMazeCongrats": "Điều hướng điêu luyện! Bạn đã tìm thấy lối thoát qua các hướng thay đổi liên tục.",
-  "compassMazeMessage": "Điều hướng mê cung bằng la bàn.",
-  "compassMazeSubtitle": "Điều hướng một mê cung nơi các hướng di chuyển thay đổi dựa trên hướng la bàn của bạn.",
-  "compassMazeTitle": "Mê cung La bàn",
-  "complexFoldingNetsCongrats": "Logic gấp nâng cao! Bạn đã hình dung thành công hình dạng 3D.",
-  "complexFoldingNetsSubtitle": "Xác định hình dạng 3D phức tạp nào sẽ được tạo thành bằng cách gấp một lưới 2D không chuẩn.",
-  "complexFoldingNetsTitle": "Lưới gấp",
-  "crossSectionSliceCongrats": "Hình dung 3D đáng kinh ngạc! Bạn đã nhìn thấu suốt hình dạng đó.",
-  "crossSectionSliceSubtitle": "Xác định mặt cắt 2D chính xác của một đối tượng 3D từ một góc cụ thể.",
-  "crossSectionSliceTitle": "Lát cắt ngang",
-  "interlockPuzzleCongrats": "Giải mã logic! Bạn đã tháo gỡ câu đố một cách hoàn hảo.",
-  "interlockPuzzleSubtitle": "Tháo rời hoặc lắp ráp các khối lồng vào nhau phức tạp theo trình tự chính xác.",
-  "interlockPuzzleTitle": "Câu đố lồng nhau",
-  "laserLinkCongrats": "Phản xạ chính xác! Bạn đã cấp nguồn thành công cho toàn bộ lưới.",
-  "laserLinkSubtitle": "Xoay gương để phản xạ tia laser và cung cấp năng lượng cho tất cả các mục tiêu.",
   "laserLinkTitle": "Liên kết Laser",
-  "negativeSpaceDetectionCongrats": "Nhận thức sắc bén! Bạn đã thành thạo nghệ thuật nhìn thấy những gì không có ở đó.",
-  "negativeSpaceDetectionMessage": "Xác định vật thể ẩn trong không gian.",
-  "negativeSpaceDetectionSubtitle": "Xác định hình dạng được tạo bởi không gian trống giữa các vật thể.",
-  "negativeSpaceDetectionTitle": "Không gian âm",
-  "pathIntersectCongrats": "Điều hướng đồng bộ! Bạn đã đạt được tất cả các mục tiêu một cách hoàn hảo.",
-  "pathIntersectSubtitle": "Điều hướng nhiều con đường cùng lúc để đạt được các mục tiêu tương ứng mà không bị va chạm.",
-  "pathIntersectTitle": "Giao lộ đường dẫn",
+  "laserLinkSubtitle": "Xoay gương để phản xạ tia laser và cung cấp năng lượng cho tất cả các mục tiêu.",
+  "laserLinkCongrats": "Phản xạ chính xác! Bạn đã cấp nguồn thành công cho toàn bộ lưới.",
+  "crossSectionSliceTitle": "Lát cắt ngang",
+  "crossSectionSliceSubtitle": "Xác định mặt cắt 2D chính xác của một đối tượng 3D từ một góc cụ thể.",
+  "crossSectionSliceCongrats": "Hình dung 3D đáng kinh ngạc! Bạn đã nhìn thấu suốt hình dạng đó.",
+  "shadowPivotTitle": "Trục bóng",
   "shadowPivotCongrats": "Lập luận không gian năng động! Bạn đã làm chủ ánh sáng và bóng tối.",
   "shadowPivotSubtitle": "Dự đoán bóng của một đối tượng 3D khi nó quay trên các trục khác nhau.",
-  "shadowPivotTitle": "Trục bóng",
-  "shapeEllipse": "HÌNH ELIP",
-  "shapeRectangle": "HÌNH CHỮ NHẬT",
-  "shapeTrapezoid": "HÌNH THANG",
+  "interlockPuzzleTitle": "Câu đố lồng nhau",
+  "interlockPuzzleSubtitle": "Tháo rời hoặc lắp ráp các khối lồng vào nhau phức tạp theo trình tự chính xác.",
+  "interlockPuzzleCongrats": "Giải mã logic! Bạn đã tháo gỡ câu đố một cách hoàn hảo.",
+  "pathIntersectTitle": "Giao lộ đường dẫn",
+  "pathIntersectSubtitle": "Điều hướng nhiều con đường cùng lúc để đạt được các mục tiêu tương ứng mà không bị va chạm.",
+  "pathIntersectCongrats": "Điều hướng đồng bộ! Bạn đã đạt được tất cả các mục tiêu một cách hoàn hảo.",
+  "negativeSpaceDetectionTitle": "Không gian âm",
+  "negativeSpaceDetectionSubtitle": "Xác định hình dạng được tạo bởi không gian trống giữa các vật thể.",
+  "negativeSpaceDetectionCongrats": "Nhận thức sắc bén! Bạn đã thành thạo nghệ thuật nhìn thấy những gì không có ở đó.",
+  "compassMazeTitle": "Mê cung La bàn",
+  "compassMazeSubtitle": "Điều hướng một mê cung nơi các hướng di chuyển thay đổi dựa trên hướng la bàn của bạn.",
+  "compassMazeCongrats": "Điều hướng điêu luyện! Bạn đã tìm thấy lối thoát qua các hướng thay đổi liên tục.",
+  "complexFoldingNetsTitle": "Lưới gấp",
+  "complexFoldingNetsSubtitle": "Xác định hình dạng 3D phức tạp nào sẽ được tạo thành bằng cách gấp một lưới 2D không chuẩn.",
+  "complexFoldingNetsCongrats": "Logic gấp nâng cao! Bạn đã hình dung thành công hình dạng 3D.",
+  "compassMazeMessage": "Điều hướng mê cung bằng la bàn.",
+  "negativeSpaceDetectionMessage": "Xác định vật thể ẩn trong không gian.",
+  "shikakuTitle": "Shikaku",
+  "shikakuSubtitle": "CHIA LƯỚI THÀNH CÁC HÌNH VUÔNG VÀ HÌNH CHỮ NHẬT ĐỐI VỚI CÁC SỐ.",
+  "countdownMathTitle": "Toán đếm ngược",
+  "countdownMathSubtitle": "KẾT HỢP CÁC SỐ NGẪU NHIÊN ĐỂ TÍNH MỤC TIÊU BA CHỮ SỐ.",
+  "narrativeRecallTitle": "Nhớ lại tường thuật",
+  "narrativeRecallSubtitle": "ĐỌC CÂU CHUYỆN VÀ GHI NHỚ CÁC CHI TIẾT ĐỊNH LƯỢNG VÀ THỰC TẾ CỤ THỂ.",
+  "shellGameTitle": "Trò chơi vỏ sò",
+  "shellGameSubtitle": "THEO DÕI MỘT BÓNG ẨN NHƯ CÁC ĐỊA ĐIỂM ĐỔI ĐỔI CÚP XÁC NHẬN.",
+  "typoglycemiaDecoderTitle": "Bộ giải mã typoglycemia",
+  "typoglycemiaDecoderSubtitle": "Xắp xếp lại và đọc các câu lộn xộn một cách nhanh chóng.",
+  "shapeShifterTitle": "Bộ chuyển đổi hình dạng",
+  "shapeShifterSubtitle": "Nhấn vào tổ hợp màu-hình dạng mục tiêu.",
+  "gokigenNanameTitle": "Gokigen Naname",
+  "gokigenNanameSubtitle": "Vẽ các đường chéo để nối các điểm không có vòng lặp.",
+  "matrixMultiplierTitle": "Nhân ma trận",
+  "matrixMultiplierSubtitle": "Chọn một hàng và cột để nhân với mục tiêu.",
+  "wordAssociationRecallTitle": "Hiệp hội từ",
+  "wordAssociationRecallSubtitle": "Nhớ lại các liên kết từ được ghép nối từ bộ nhớ.",
+  "gearRotationTitle": "Xoay bánh răng",
+  "gearRotationSubtitle": "Dự đoán hướng quay của bánh răng cuối cùng.",
+  "wordWheelTitle": "Bánh xe từ",
+  "wordWheelSubtitle": "Tạo từ bằng cách sử dụng các chữ cái trên bánh xe, bao gồm cả chữ cái ở giữa.",
+  "oddEvenFlashTitle": "Flash Chẵn Lẻ",
+  "oddEvenFlashSubtitle": "Nhanh chóng khớp số chẵn lẻ với quy tắc màu.",
+  "norinoriTitle": "Norinori",
+  "norinoriSubtitle": "Che chính xác hai ô được kết nối trong mỗi phòng.",
+  "algebraicBalanceTitle": "Cân bằng đại số",
+  "algebraicBalanceSubtitle": "Giải các phương trình để tìm tổng mục tiêu.",
+  "patternSequenceDrawTitle": "Thu hồi mẫu",
+  "patternSequenceDrawSubtitle": "Lặp lại chuỗi đường dẫn hoạt hình trên lưới.",
+  "tangramTitle": "Câu đố Tangram",
+  "tangramSubtitle": "Sắp xếp các hình dạng để lấp đầy hình bóng mục tiêu.",
+  "semanticAssociationTitle": "Hiệp hội từ",
+  "semanticAssociationSubtitle": "Tìm từ kết nối cả ba đầu mối.",
+  "peripheralFocusTitle": "Lấy nét ngoại vi",
+  "peripheralFocusSubtitle": "Phản ứng với các bảng bên nhấp nháy trong khi giải toán.",
+  "masyuTitle": "Vòng Masyu",
+  "masyuSubtitle": "Vẽ một vòng lặp phù hợp với quy tắc vòng tròn Masyu.",
+  "mathMazeTitle": "Mê cung toán học",
+  "mathMazeSubtitle": "Theo dõi một đường dẫn đánh giá tổng mục tiêu.",
+  "storyBuilderTitle": "Người xây dựng câu chuyện",
+  "storyBuilderSubtitle": "Xây dựng lại trình tự thời gian của câu chuyện.",
+  "mirrorMazeTitle": "Mê cung gương",
+  "mirrorMazeSubtitle": "Chuyển hướng chùm tia laser bằng gương chéo.",
+  "wordGridConnectionTitle": "Kết nối từ",
+  "wordGridConnectionSubtitle": "Nhóm 16 từ thành bốn loại bốn.",
+  "shapeShifterPeripheralTitle": "Hình dạng ngoại vi",
+  "shapeShifterPeripheralSubtitle": "Theo dõi các thay đổi hình dạng ngoại vi trong khi khớp các giá trị trung tâm.",
+  "soundWaveMatchTitle": "Trận đấu sóng âm thanh",
+  "soundWaveMatchSubtitle": "Nhấn vào khi tần số sóng hình ảnh phù hợp với sự thay đổi cao độ.",
+  "multiTrackCounterTitle": "Bộ đếm nhiều đường",
+  "multiTrackCounterSubtitle": "Nhấn khi bất kỳ bộ đếm nào tăng lên theo hệ số mục tiêu.",
+  "colorWordMatchUpTitle": "Phối màu",
+  "colorWordMatchUpSubtitle": "Xác định xem hai từ màu có khớp nhau hay không dựa trên việc thay đổi quy tắc.",
+  "signalAndNoiseTitle": "Tín hiệu & Tiếng ồn",
+  "signalAndNoiseSubtitle": "Xác định vị trí các ký tự chữ và số mục tiêu ẩn trong tiếng ồn tĩnh.",
+  "focusTunnelTitle": "Đường hầm tập trung",
+  "focusTunnelSubtitle": "Xác định các ký hiệu phù hợp xuất hiện trên các bức tường đường hầm chuyển động.",
+  "targetPursuerTitle": "Người theo đuổi mục tiêu",
+  "targetPursuerSubtitle": "Theo dõi nhiều vòng tròn chồng chéo và chọn mục tiêu ban đầu.",
+  "gridGazeTitle": "Lưới nhìn",
+  "gridGazeSubtitle": "Xác định ô lưới nào nhấp nháy với thời lượng khác nhau.",
+  "doubleTroubleTitle": "Rắc rối kép",
+  "doubleTroubleSubtitle": "Chơi đồng thời hai trò chơi đơn giản riêng biệt trên màn hình chia đôi.",
+  "syncRhythmTitle": "Đồng bộ nhịp điệu",
+  "syncRhythmSubtitle": "Nhấn khi quét máy đếm nhịp trực quan khớp với nhịp đảo phách.",
+  "ghostTapTitle": "cú nhấn ma",
+  "ghostTapSubtitle": "Nhấn khi xung vô hình đạt đến độ cao tối đa.",
+  "attentionalRsvpTitle": "Trả lời chú ý",
+  "attentionalRsvpSubtitle": "Xác định các chữ số xuất hiện trong đèn flash chữ cái nối tiếp nhanh chóng.",
+  "colorMazeNavTitle": "Mê cung màu sắc",
+  "colorMazeNavSubtitle": "Điều hướng các ô mê cung phù hợp với màu sắc cho phép động.",
+  "dynamicSalienceTitle": "Sự nổi bật năng động",
+  "dynamicSalienceSubtitle": "Tìm hình dạng chuyển động với động lực hơi khác nhau.",
+  "chalkAndTalkTitle": "Phấn & Nói",
+  "chalkAndTalkSubtitle": "Nhập các từ được nghe bằng âm thanh trong khi bỏ qua các yếu tố gây phân tâm thị giác.",
+  "blinkDetectorTitle": "Máy dò nhấp nháy",
+  "blinkDetectorSubtitle": "Chạm vào mặt lưới nhấp nháy nhanh hai lần liên tiếp.",
+  "frequencyTapTitle": "Nhấn tần số",
+  "frequencyTapSubtitle": "Nhấn vào nút phù hợp với tần số xung ánh sáng mục tiêu.",
+  "yajilinTitle": "Yajilin",
+  "yajilinSubtitle": "Đặt các ô màu đen và vẽ một vòng lặp phù hợp với các manh mối.",
+  "heyawakeTitle": "Heyawake",
+  "heyawakeSubtitle": "Phòng lưới bóng râm không có ô đen liền kề.",
+  "gokigenVariantTitle": "Biến thể Gokigen",
+  "gokigenVariantSubtitle": "Vẽ các đường chéo không có vòng lặp đáp ứng số đỉnh.",
+  "sheepAndWolvesTitle": "Cừu & Sói",
+  "sheepAndWolvesSubtitle": "Vẽ một vòng tròn ngăn cách cừu với sói.",
+  "islandNurikabeTitle": "Đảo Nurikabe",
+  "islandNurikabeSubtitle": "Các đảo hình thành phù hợp với các ràng buộc về kích thước số.",
+  "shakashakaTitle": "Shakashaka Rects",
+  "shakashakaSubtitle": "Đặt các viên gạch hình tam giác để tạo thành các vùng màu trắng hình chữ nhật.",
+  "litsTetrisTitle": "LITS Tetromino",
+  "litsTetrisSubtitle": "Đặt tetromino trong các phòng không có bản sao liền kề.",
+  "tapaWallTitle": "Tường Tapa",
+  "tapaWallSubtitle": "Bóng các ô để tạo thành một mẫu tường đen liên tục.",
+  "triangularBridgesTitle": "Cầu tam giác",
+  "triangularBridgesSubtitle": "Kết nối đảo 3 hướng đáp ứng yêu cầu.",
+  "rippleEffectTitle": "Hiệu ứng gợn sóng",
+  "rippleEffectSubtitle": "Điền số vào các phòng tôn trọng các ràng buộc về khoảng cách khoảng cách.",
+  "suguruTectonicTitle": "Lưới Suguru",
+  "suguruTectonicSubtitle": "Điền vào các khối phòng các số từ 1 đến K mà không có hàng xóm nào bằng nhau.",
+  "tennerGridTitle": "Lưới Tenner",
+  "tennerGridSubtitle": "Điền vào các hàng các chữ số từ 0 đến 9 tổng số cột phù hợp.",
+  "kakurasuSumsTitle": "Tổng Kakurasu",
+  "kakurasuSumsSubtitle": "Làm mờ các ô để đáp ứng tổng chỉ số hàng/col có trọng số.",
+  "corralLoopTitle": "Vòng Corral",
+  "corralLoopSubtitle": "Vẽ một vòng lặp đơn bao quanh các số phù hợp với khả năng hiển thị.",
+  "stostoneTitle": "Trọng lực đá",
+  "stostoneSubtitle": "Tạo bóng cho các ô thả xuống để lấp đầy các hàng dưới cùng một cách hoàn hảo.",
+  "tripletsLogicTitle": "Bộ ba sinh ba",
+  "tripletsLogicSubtitle": "Lấp đầy lưới bằng ba hình dạng, tránh tạo thành ba hình liên tiếp.",
+  "galaxiesSymTitle": "Sự đối xứng của các thiên hà",
+  "galaxiesSymSubtitle": "Chia lưới thành các hình dạng thiên hà đối xứng xoay.",
+  "matrixMultiplierMatchTitle": "Bộ so khớp ma trận",
+  "matrixMultiplierMatchSubtitle": "Nhân các giá trị hàng và cột để khớp với tích số chấm mục tiêu.",
+  "primeFactorTreesTitle": "Cây nguyên tố",
+  "primeFactorTreesSubtitle": "Phân tách các số tổng hợp thành các cặp thừa số lá nguyên tố.",
+  "vektorVectorTitle": "véc tơ véc tơ",
+  "vektorVectorSubtitle": "Các vectơ tỷ lệ để làm cho tổng của chúng chạm vào mục tiêu.",
+  "binomialMatchTitle": "Trận đấu nhị thức",
+  "binomialMatchSubtitle": "Ghép các công thức bậc hai với các giá trị nhị thức được phân tích thành thừa số.",
+  "percentageShoppingTitle": "Phần trăm mua sắm",
+  "percentageShoppingSubtitle": "Tính tỷ lệ phần trăm giảm giá và tổng số tiền thanh toán cuối cùng.",
+  "cryptoArithmeticTitle": "Số học tiền điện tử",
+  "cryptoArithmeticSubtitle": "Giải các bài toán về mật mã thay thế chữ số ký tự.",
+  "fractionalPizzaTitle": "Pizza phân số",
+  "fractionalPizzaSubtitle": "Phân vùng các lát bánh pizza để khớp với các phân số tổng mục tiêu.",
+  "numberBondsTitle": "Trái phiếu số",
+  "numberBondsSubtitle": "Các giá trị nút liên kết bằng tổng kết nối mục tiêu.",
+  "gridSumLineTitle": "Đường tổng lưới",
+  "gridSumLineSubtitle": "Vẽ một đường dẫn có giá trị đánh giá chính xác đến mục tiêu.",
+  "binaryScaleBalanceTitle": "Số dư quy mô nhị phân",
+  "binaryScaleBalanceSubtitle": "Cân bằng trọng lượng thập phân bằng cách sử dụng lũy thừa hai khối.",
+  "moduloPathTitle": "Đường dẫn Modulo",
+  "moduloPathSubtitle": "Các ô lưới ngang khớp với các giá trị còn lại theo modulo.",
+  "digitSwapEqTitle": "Phương trình hoán đổi chữ số",
+  "digitSwapEqSubtitle": "Trao đổi các chữ số đơn giữa các phương trình để sửa cả hai.",
+  "areaPerimeterMatchTitle": "Diện tích & Chu vi",
+  "areaPerimeterMatchSubtitle": "Vẽ các hình chữ nhật phù hợp với các giá trị diện tích và chu vi mục tiêu.",
+  "inequalityBalanceOpsTitle": "Cân bằng bất bình đẳng",
+  "inequalityBalanceOpsSubtitle": "Đặt các ký hiệu bất đẳng thức giữa các thuật ngữ toán học phức tạp.",
+  "graphCoordinatePlotTitle": "Máy vẽ đồ thị",
+  "graphCoordinatePlotSubtitle": "Vẽ tọa độ lưới khớp với các đường cong tuyến tính/bậc hai.",
+  "baseConversionRunTitle": "Chuyển đổi cơ sở",
+  "baseConversionRunSubtitle": "Chuyển đổi các giá trị giữa nhị phân, thập phân, hex và bát phân.",
+  "unitConverterProTitle": "Bộ chuyển đổi đơn vị",
+  "unitConverterProSubtitle": "Trả lời chuyển đổi đơn vị nhanh chóng trong thời gian giới hạn.",
+  "auditoryNBackTitle": "Thính giác N-Back",
+  "auditoryNBackSubtitle": "Trận đấu nói chữ N bước trở lại từ bộ nhớ.",
+  "abstractPatternRecallTitle": "Phân lớp mẫu",
+  "abstractPatternRecallSubtitle": "Tái tạo lại các hình dạng nhiều lớp đầy màu sắc từ nghiên cứu trí nhớ.",
+  "roomInspectorTitle": "Thanh tra phòng",
+  "roomInspectorSubtitle": "Xác định các sửa đổi đồ nội thất được thực hiện trong khi màn hình trống.",
+  "voiceToFaceMatchTitle": "Kết hợp giọng nói-khuôn mặt",
+  "voiceToFaceMatchSubtitle": "Chọn đúng khuôn mặt được liên kết với clip giọng nói âm thanh.",
+  "spatialGridMemory3DTitle": "Bộ nhớ không gian 3D",
+  "spatialGridMemory3DSubtitle": "Nhớ lại các khối nhấp nháy trong cấu trúc lưới khối 3D xoay.",
+  "sequenceStackTitle": "ngăn xếp trình tự",
+  "sequenceStackSubtitle": "Xây dựng lại các phần bổ sung và loại bỏ chồng đĩa theo thứ tự.",
+  "semanticCategoryRecallTitle": "Hạng mục Thu hồi",
+  "semanticCategoryRecallSubtitle": "Xác định các từ nghiên cứu phù hợp với mục tiêu danh mục được yêu cầu.",
+  "gridDisplacementTitle": "Dịch chuyển lưới",
+  "gridDisplacementSubtitle": "Xác định các biểu tượng đã thay đổi so sánh bố cục với bản gốc.",
+  "soundSequenceMatchTitle": "Kết hợp trình tự âm thanh",
+  "soundSequenceMatchSubtitle": "Lặp lại chuỗi nốt nhạc được chơi trên bàn phím ảo.",
+  "cardCountingMemoryTitle": "Máy đếm thẻ",
+  "cardCountingMemorySubtitle": "Xác định các lá bài đã được chia trong các lần chia bài liên tục.",
+  "directionsRecallTitle": "Hướng dẫn thu hồi",
+  "directionsRecallSubtitle": "Điều hướng bản đồ lưới phù hợp với hướng đường dẫn từ bộ nhớ.",
+  "eventTimelineMemoryTitle": "Dòng thời gian sự kiện",
+  "eventTimelineMemorySubtitle": "Sắp xếp các thẻ sự kiện lịch sử/hư cấu theo thứ tự thời gian.",
+  "featureMatrixRecallTitle": "Ma trận tính năng",
+  "featureMatrixRecallSubtitle": "Trả lời các câu hỏi gợi ý về thuộc tính màu sắc hình dạng ô.",
+  "delayedMatchSampleTitle": "Trận đấu bị trì hoãn",
+  "delayedMatchSampleSubtitle": "Ghép biểu tượng mục tiêu sau khi giải các câu đố toán học.",
+  "symbolDigitAssocTitle": "PGS ký hiệu-chữ số",
+  "symbolDigitAssocSubtitle": "Giải các bảng dịch ký hiệu khớp với các phím chữ số.",
+  "dualTaskMemoryTitle": "Bộ nhớ tác vụ kép",
+  "dualTaskMemorySubtitle": "Ghi nhớ các bộ từ trong khi giải các bài toán số học nhanh chóng.",
+  "actionSequenceRecallTitle": "Thu hồi hành động",
+  "actionSequenceRecallSubtitle": "Lặp lại chuỗi hoạt ảnh cử chỉ của nhân vật theo thứ tự.",
+  "tangramPolygonTitle": "Tangram Fit",
+  "tangramPolygonSubtitle": "Sắp xếp các hình dạng đa giác để điền vào đường viền hình bóng.",
+  "mazeNav3DTitle": "Mê cung 3D",
+  "mazeNav3DSubtitle": "Điều hướng các tuyến đường mê cung đẳng cự 3D từ góc nhìn thứ nhất.",
+  "isometricProjectionTitle": "Máy chiếu đẳng cự",
+  "isometricProjectionSubtitle": "Ghép các số liệu khối 3D với các chế độ xem trên/phía trước 2D chính tả.",
+  "polyominoPackingTitle": "Đóng gói Polyomino",
+  "polyominoPackingSubtitle": "Gói các mảnh khối polyomino ngẫu nhiên vào khu vực mục tiêu.",
+  "spatialGridRotationTitle": "Xoay lưới không gian",
+  "spatialGridRotationSubtitle": "Khớp cách sắp xếp khối 3D được xoay dọc theo tọa độ trục.",
+  "wireLoopGameTitle": "vòng dây",
+  "wireLoopGameSubtitle": "Kéo các vòng kim loại dọc theo các chốt dây mà không tiếp xúc.",
+  "origamiUnfoldTitle": "Origami mở ra",
+  "origamiUnfoldSubtitle": "Xác định các mẫu đục lỗ sau khi mở các tờ gấp.",
+  "ropeTangleSolverTitle": "Dụng cụ gỡ dây",
+  "ropeTangleSolverSubtitle": "Kéo các nút để bố trí đồ thị phẳng với các đường chéo bằng 0.",
+  "gridFitTetrisTitle": "Bộ giải phù hợp với lưới",
+  "gridFitTetrisSubtitle": "Sắp xếp các khối tĩnh không đều để phù hợp với giới hạn vùng chứa.",
+  "vectorGridAlignmentTitle": "Căn chỉnh vectơ",
+  "vectorGridAlignmentSubtitle": "Chia tỷ lệ và xoay hình dạng để phù hợp với mục tiêu mẫu bóng.",
+  "blockStackingPhysicsTitle": "Xếp chồng khối",
+  "blockStackingPhysicsSubtitle": "Xếp các tấm khối không đều nhau cân bằng trọng lực.",
+  "crossSectionMatch3DTitle": "Mặt cắt 3D",
+  "crossSectionMatch3DSubtitle": "Xác định hình học lát cắt 2D được cắt từ hình dạng 3D.",
+  "symmetryPaintTitle": "Sơn đối xứng",
+  "symmetryPaintSubtitle": "Vẽ các đoạn ảnh phản chiếu qua các trục đối xứng.",
+  "rollingBlockBloxTitle": "Khối lăn",
+  "rollingBlockBloxSubtitle": "Lăn các mảnh khối để hạ cánh thẳng đứng vào các khe mục tiêu.",
+  "perspectiveShiftViewTitle": "Thay đổi quan điểm",
+  "perspectiveShiftViewSubtitle": "Xoay các cụm khối cho đến khi chúng đánh vần được các chữ cái/từ.",
+  "networkFlowSphericalTitle": "Luồng mạng",
+  "networkFlowSphericalSubtitle": "Kết nối các luồng lưới trên tọa độ hình trụ.",
+  "layeredSilhouetteBlendTitle": "Pha trộn bóng",
+  "layeredSilhouetteBlendSubtitle": "Xếp chồng các lớp màu để phù hợp với hình dạng mờ mục tiêu.",
+  "wordWheelPangramTitle": "đảo chữ từ",
+  "wordWheelPangramSubtitle": "Xây dựng các từ có chứa các chữ cái mục tiêu trung tâm từ bánh xe.",
+  "letterGridSwapperTitle": "Trao đổi thư",
+  "letterGridSwapperSubtitle": "Hoán đổi các ô chữ cái liền kề để hoàn thành các từ hàng và cột.",
+  "synonymMatchTitle": "Kết hợp từ đồng nghĩa",
+  "synonymMatchSubtitle": "Ghép các mục tiêu từ rơi xuống với từ đồng nghĩa hoặc trái nghĩa.",
+  "vowelDropTitle": "nguyên âm thả",
+  "vowelDropSubtitle": "Thả các nguyên âm vào lưới tọa độ để hoàn thành các từ.",
+  "letterBalanceScaleTitle": "Thang đo cân bằng từ",
+  "letterBalanceScaleSubtitle": "Đánh vần các từ có giá trị chữ cái cân bằng trọng lượng.",
+  "wordChainShiritoriTitle": "Chuỗi từ",
+  "wordChainShiritoriSubtitle": "Liên kết các vòng lặp từ bắt đầu bằng đầu ra chữ cái trước đó.",
+  "affixBuilderTitle": "Trình tạo gắn kết",
+  "affixBuilderSubtitle": "Kết hợp các tiền tố/hậu tố để xây dựng từ vựng mục tiêu.",
+  "decipherCrypticCluesTitle": "Giải mã mật mã",
+  "decipherCrypticCluesSubtitle": "Giải các câu đố chơi chữ và giải mã các câu đố chính tả.",
+  "boggleWordSearchTitle": "Kết nối Boggle",
+  "boggleWordSearchSubtitle": "Theo dõi các đường dẫn được kết nối liền kề để tìm các từ ẩn.",
+  "idiomUnscrambleTitle": "Thành ngữ xắp xếp lại",
+  "idiomUnscrambleSubtitle": "Sắp xếp các mảng từ được xáo trộn để phù hợp với ý nghĩa thành ngữ.",
+  "letterPyramidsTitle": "Kim tự tháp chữ cái",
+  "letterPyramidsSubtitle": "Xây dựng các tháp từ thêm các chữ cái đảo chữ duy nhất cho mỗi tầng.",
+  "soundAlikeHomophonesTitle": "Trận đấu đồng âm",
+  "soundAlikeHomophonesSubtitle": "Xác định đúng cách viết đồng âm cho câu.",
+  "wordGridSudokuTitle": "Sudoku từ",
+  "wordGridSudokuSubtitle": "Xếp các chữ cái theo hàng lưới tạo thành từ.",
+  "portmanteauFactoryTitle": "Nhà máy Portmanteau",
+  "portmanteauFactorySubtitle": "Hợp nhất các thành phần ngữ nghĩa tạo thành từ ghép.",
+  "codedCrosswordsCodeTitle": "Mật mã Ô chữ",
+  "codedCrosswordsCodeSubtitle": "Giải ô chữ dạng lưới khớp với mã số theo chữ cái.",
+  "wordSnakeTrailTitle": "rắn chữ",
+  "wordSnakeTrailSubtitle": "Dấu vết các dấu vết giống như con rắn đánh vần các từ theo chủ đề.",
+  "typingRhythmSpeedTitle": "Luồng gõ",
+  "typingRhythmSpeedSubtitle": "Nhập từ vựng phù hợp với nhịp điệu của máy đếm nhịp.",
   "errorSomethingWrong": "Something went wrong",
   "errorUnexpected": "An unexpected error occurred",
   "errorTryAgain": "Try Again",
@@ -2181,35 +1398,11 @@
   "statsAchievements": "Achievements",
   "statsWeeklyActivity": "Weekly Activity",
   "statsDayStreak": "{days} Day Streak",
-  "@statsDayStreak": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
   "statsTotalXp": "Total XP",
   "statsSolved": "Solved",
   "statsLevel": "Level {level}",
-  "@statsLevel": {
-    "placeholders": {
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsMaintainStreak": "Maintain your streak!",
   "statsPercentToLevel": "{percent}% to Level {level}",
-  "@statsPercentToLevel": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      },
-      "level": {
-        "type": "int"
-      }
-    }
-  },
   "statsCognitiveProfile": "Cognitive Profile",
   "statsLocked": "Locked",
   "achievementSeeker": "Seeker",
@@ -2333,24 +1526,19 @@
   "snackbarAlignedPerfectly": "Aligned perfectly! Next target...",
   "snackbarNotAligned": "Not aligned yet! Keep adjusting the rotation, scale, or positions.",
   "snackbarWordMustContainCentral": "Word must contain the central letter \"{letter}\"!",
-  "@snackbarWordMustContainCentral": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarWordAlreadyFound": "Word already found!",
   "snackbarNotAValidWord": "Not a valid word!",
   "snackbarIncorrectLookClose": "Incorrect reading. Look closely at the words!",
   "snackbarIncorrectCorrectAnswer": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectCorrectAnswer": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
+  "hideGame": "Ẩn",
+  "unhideGame": "Hiện",
+  "favoriteGame": "Yêu thích",
+  "unfavoriteGame": "Bỏ yêu thích",
+  "hiddenGames": "TRÒ CHƠI ĐÃ ẨN",
+  "showHiddenGames": "Hiển thị trò chơi đã ẩn ({count})",
+  "noHiddenGames": "Không có trò chơi nào bị ẩn",
+  "gameHidden": "Đã ẩn trò chơi",
+  "undo": "Hoàn tác",
   "snackbarCorrect": "Correct!",
   "snackbarIncorrectTryNew": "Incorrect recall! Try a new grid.",
   "snackbarAllCorrect": "All associations correct!",
@@ -2360,165 +1548,31 @@
   "snackbarWrongRecall": "Wrong recall selection! Try a new set.",
   "snackbarPieceDoesNotFit": "Piece does not fit there!",
   "snackbarInvalidStep": "Invalid step! {mod} mod {modulus} is not {remainder}.",
-  "@snackbarInvalidStep": {
-    "placeholders": {
-      "mod": {
-        "type": "int"
-      },
-      "modulus": {
-        "type": "int"
-      },
-      "remainder": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectGroup": "Incorrect group! {tries} tries remaining.",
-  "@snackbarIncorrectGroup": {
-    "placeholders": {
-      "tries": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSwapped": "Incorrect! Swapped items are highlighted in green.",
   "snackbarIncorrectDestination": "Incorrect! The final destination was ({x}, {y}).",
-  "@snackbarIncorrectDestination": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectCount": "Incorrect! The correct count for {suit} was {count}.",
-  "@snackbarIncorrectCorrectCount": {
-    "placeholders": {
-      "suit": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectSequence": "Incorrect sequence! Watch closely again.",
   "snackbarSequenceMatched": "Sequence matched! Increasing length...",
   "snackbarIncorrectAnswer": "Incorrect answer! Try again.",
   "snackbarIncorrectCorrectValue": "Incorrect! The correct value was {value}",
-  "@snackbarIncorrectCorrectValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectSlices": "Incorrect! You selected {selected} slices, but need {required}.",
-  "@snackbarIncorrectSlices": {
-    "placeholders": {
-      "selected": {
-        "type": "int"
-      },
-      "required": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarReachedEndNoMatch": "Reached end but total does not match target!",
   "snackbarCorrectOrder": "Correct chronological order!",
   "snackbarIncorrectOrder": "Incorrect order! Study again.",
   "snackbarIncorrectMissingValue": "Incorrect! The missing value was {value}",
-  "@snackbarIncorrectMissingValue": {
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectLetterDigit": "Incorrect! {letter} = {digit}",
-  "@snackbarIncorrectLetterDigit": {
-    "placeholders": {
-      "letter": {
-        "type": "String"
-      },
-      "digit": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectCorrectPoint": "Incorrect! The correct point was ({x}, {y}).",
-  "@snackbarIncorrectCorrectPoint": {
-    "placeholders": {
-      "x": {
-        "type": "int"
-      },
-      "y": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarReachedExit": "Reached the exit! Generating next maze...",
   "snackbarCannotMoveBlocked": "Cannot move forward: Blocked by wall!",
   "snackbarIncorrectCorrectStack": "Incorrect! The correct final stack was: {stack}",
-  "@snackbarIncorrectCorrectStack": {
-    "placeholders": {
-      "stack": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyStory": "Incorrect sequence! Study the story again.",
   "snackbarScaleNotBalanced": "Scale is not balanced! Current weight is {current}, Target is {target}.",
-  "@snackbarScaleNotBalanced": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "target": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarWordMatchedTracing": "Word matched! Tracing next word...",
   "snackbarIncorrectTraceFromStart": "Incorrect sequence! Try tracing from the start cell.",
   "snackbarIncorrectCorrectForm": "Incorrect! The factored form is {form}",
-  "@snackbarIncorrectCorrectForm": {
-    "placeholders": {
-      "form": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectInequality": "Incorrect! {left} ({leftVal}) {correct} {right} ({rightVal})",
-  "@snackbarIncorrectInequality": {
-    "placeholders": {
-      "left": {
-        "type": "String"
-      },
-      "leftVal": {
-        "type": "int"
-      },
-      "correct": {
-        "type": "String"
-      },
-      "right": {
-        "type": "String"
-      },
-      "rightVal": {
-        "type": "int"
-      }
-    }
-  },
   "snackbarIncorrectBaseConversion": "Incorrect! The correct answer was {answer}",
-  "@snackbarIncorrectBaseConversion": {
-    "placeholders": {
-      "answer": {
-        "type": "String"
-      }
-    }
-  },
   "snackbarIncorrectStudyPairs": "Incorrect! Let's study the pairs again.",
   "snackbarAlignedCorrectly": "Aligned and correctly identified!",
   "snackbarIncorrectPerspective": "Incorrect perspective angle rotation! Try aligning them first.",
@@ -2538,6 +1592,8 @@
   "btnImReadyToAnswer": "I'm Ready to Answer",
   "btnNoMatch": "No Match",
   "btnMatch": "Match",
+  "btnMatchColor": "KHỚP MÀU",
+  "btnMatchWord": "KHỚP TỪ",
   "btnGuess": "Guess",
   "btnPlayNow": "Play Now",
   "btnClear": "Clear",
@@ -2560,13 +1616,6 @@
   "phaseTapToAdd": "Tap to Add",
   "phaseCalculationLabel": "Calculation:",
   "phaseTimeLeft": "Time: {time}s",
-  "@phaseTimeLeft": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
   "phaseRemember2Back": "Remember 2 steps back",
   "phaseMatch": "Match",
   "hintTypeRhymingWord": "Type a rhyming word...",
@@ -2586,54 +1635,13 @@
   "feedbackFindNumber": "Find the number between 1 and 10,000!",
   "feedbackEnterNumber": "Enter a number between 1 and 10,000!",
   "feedbackCorrectExcl": "Correct! The number was {number}.",
-  "@feedbackCorrectExcl": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackCorrectEmoji": "Correct!",
   "feedbackTooLow": "Too Low",
   "feedbackTooHigh": "Too High",
   "feedbackGameOver": "Game Over! The number was {number}.",
-  "@feedbackGameOver": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackGuessResult": "{guess} is {result}!",
-  "@feedbackGuessResult": {
-    "placeholders": {
-      "guess": {
-        "type": "int"
-      },
-      "result": {
-        "type": "String"
-      }
-    }
-  },
   "feedbackWinMessage": "Correct! You found {number} with {guesses} guesses left!",
-  "@feedbackWinMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      },
-      "guesses": {
-        "type": "int"
-      }
-    }
-  },
   "feedbackLoseMessage": "Out of guesses! The number was {number}.",
-  "@feedbackLoseMessage": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "statTime": "Time",
   "statScore": "Score",
   "statGrid": "Grid",
@@ -2731,275 +1739,6 @@
   "enterNumberRange": "ENTER A NUMBER BETWEEN 1 AND 10,000!",
   "correctExclEmoji": "Correct!",
   "wrongExcl": "Wrong!",
-  "abstractPatternRecallSubtitle": "Tái tạo lại các hình dạng nhiều lớp đầy màu sắc từ nghiên cứu trí nhớ.",
-  "abstractPatternRecallTitle": "Phân lớp mẫu",
-  "actionSequenceRecallSubtitle": "Lặp lại chuỗi hoạt ảnh cử chỉ của nhân vật theo thứ tự.",
-  "actionSequenceRecallTitle": "Thu hồi hành động",
-  "affixBuilderSubtitle": "Kết hợp các tiền tố/hậu tố để xây dựng từ vựng mục tiêu.",
-  "affixBuilderTitle": "Trình tạo gắn kết",
-  "algebraicBalanceSubtitle": "Giải các phương trình để tìm tổng mục tiêu.",
-  "algebraicBalanceTitle": "Cân bằng đại số",
-  "areaPerimeterMatchSubtitle": "Vẽ các hình chữ nhật phù hợp với các giá trị diện tích và chu vi mục tiêu.",
-  "areaPerimeterMatchTitle": "Diện tích & Chu vi",
-  "attentionalRsvpSubtitle": "Xác định các chữ số xuất hiện trong đèn flash chữ cái nối tiếp nhanh chóng.",
-  "attentionalRsvpTitle": "Trả lời chú ý",
-  "auditoryNBackSubtitle": "Trận đấu nói chữ N bước trở lại từ bộ nhớ.",
-  "auditoryNBackTitle": "Thính giác N-Back",
-  "baseConversionRunSubtitle": "Chuyển đổi các giá trị giữa nhị phân, thập phân, hex và bát phân.",
-  "baseConversionRunTitle": "Chuyển đổi cơ sở",
-  "binaryScaleBalanceSubtitle": "Cân bằng trọng lượng thập phân bằng cách sử dụng lũy thừa hai khối.",
-  "binaryScaleBalanceTitle": "Số dư quy mô nhị phân",
-  "binomialMatchSubtitle": "Ghép các công thức bậc hai với các giá trị nhị thức được phân tích thành thừa số.",
-  "binomialMatchTitle": "Trận đấu nhị thức",
-  "blinkDetectorSubtitle": "Chạm vào mặt lưới nhấp nháy nhanh hai lần liên tiếp.",
-  "blinkDetectorTitle": "Máy dò nhấp nháy",
-  "blockStackingPhysicsSubtitle": "Xếp các tấm khối không đều nhau cân bằng trọng lực.",
-  "blockStackingPhysicsTitle": "Xếp chồng khối",
-  "boggleWordSearchSubtitle": "Theo dõi các đường dẫn được kết nối liền kề để tìm các từ ẩn.",
-  "boggleWordSearchTitle": "Kết nối Boggle",
-  "cardCountingMemorySubtitle": "Xác định các lá bài đã được chia trong các lần chia bài liên tục.",
-  "cardCountingMemoryTitle": "Máy đếm thẻ",
-  "chalkAndTalkSubtitle": "Nhập các từ được nghe bằng âm thanh trong khi bỏ qua các yếu tố gây phân tâm thị giác.",
-  "chalkAndTalkTitle": "Phấn & Nói",
-  "codedCrosswordsCodeSubtitle": "Giải ô chữ dạng lưới khớp với mã số theo chữ cái.",
-  "codedCrosswordsCodeTitle": "Mật mã Ô chữ",
-  "colorMazeNavSubtitle": "Điều hướng các ô mê cung phù hợp với màu sắc cho phép động.",
-  "colorMazeNavTitle": "Mê cung màu sắc",
-  "colorWordMatchUpSubtitle": "Xác định xem hai từ màu có khớp nhau hay không dựa trên việc thay đổi quy tắc.",
-  "colorWordMatchUpTitle": "Phối màu",
-  "corralLoopSubtitle": "Vẽ một vòng lặp đơn bao quanh các số phù hợp với khả năng hiển thị.",
-  "corralLoopTitle": "Vòng Corral",
-  "countdownMathSubtitle": "KẾT HỢP CÁC SỐ NGẪU NHIÊN ĐỂ TÍNH MỤC TIÊU BA CHỮ SỐ.",
-  "countdownMathTitle": "Toán đếm ngược",
-  "crossSectionMatch3DSubtitle": "Xác định hình học lát cắt 2D được cắt từ hình dạng 3D.",
-  "crossSectionMatch3DTitle": "Mặt cắt 3D",
-  "cryptoArithmeticSubtitle": "Giải các bài toán về mật mã thay thế chữ số ký tự.",
-  "cryptoArithmeticTitle": "Số học tiền điện tử",
-  "decipherCrypticCluesSubtitle": "Giải các câu đố chơi chữ và giải mã các câu đố chính tả.",
-  "decipherCrypticCluesTitle": "Giải mã mật mã",
-  "delayedMatchSampleSubtitle": "Ghép biểu tượng mục tiêu sau khi giải các câu đố toán học.",
-  "delayedMatchSampleTitle": "Trận đấu bị trì hoãn",
-  "digitSwapEqSubtitle": "Trao đổi các chữ số đơn giữa các phương trình để sửa cả hai.",
-  "digitSwapEqTitle": "Phương trình hoán đổi chữ số",
-  "directionsRecallSubtitle": "Điều hướng bản đồ lưới phù hợp với hướng đường dẫn từ bộ nhớ.",
-  "directionsRecallTitle": "Hướng dẫn thu hồi",
-  "doubleTroubleSubtitle": "Chơi đồng thời hai trò chơi đơn giản riêng biệt trên màn hình chia đôi.",
-  "doubleTroubleTitle": "Rắc rối kép",
-  "dualTaskMemorySubtitle": "Ghi nhớ các bộ từ trong khi giải các bài toán số học nhanh chóng.",
-  "dualTaskMemoryTitle": "Bộ nhớ tác vụ kép",
-  "dynamicSalienceSubtitle": "Tìm hình dạng chuyển động với động lực hơi khác nhau.",
-  "dynamicSalienceTitle": "Sự nổi bật năng động",
-  "eventTimelineMemorySubtitle": "Sắp xếp các thẻ sự kiện lịch sử/hư cấu theo thứ tự thời gian.",
-  "eventTimelineMemoryTitle": "Dòng thời gian sự kiện",
-  "featureMatrixRecallSubtitle": "Trả lời các câu hỏi gợi ý về thuộc tính màu sắc hình dạng ô.",
-  "featureMatrixRecallTitle": "Ma trận tính năng",
-  "focusTunnelSubtitle": "Xác định các ký hiệu phù hợp xuất hiện trên các bức tường đường hầm chuyển động.",
-  "focusTunnelTitle": "Đường hầm tập trung",
-  "fractionalPizzaSubtitle": "Phân vùng các lát bánh pizza để khớp với các phân số tổng mục tiêu.",
-  "fractionalPizzaTitle": "Pizza phân số",
-  "frequencyTapSubtitle": "Nhấn vào nút phù hợp với tần số xung ánh sáng mục tiêu.",
-  "frequencyTapTitle": "Nhấn tần số",
-  "galaxiesSymSubtitle": "Chia lưới thành các hình dạng thiên hà đối xứng xoay.",
-  "galaxiesSymTitle": "Sự đối xứng của các thiên hà",
-  "gearRotationSubtitle": "Dự đoán hướng quay của bánh răng cuối cùng.",
-  "gearRotationTitle": "Xoay bánh răng",
-  "ghostTapSubtitle": "Nhấn khi xung vô hình đạt đến độ cao tối đa.",
-  "ghostTapTitle": "cú nhấn ma",
-  "gokigenNanameSubtitle": "Vẽ các đường chéo để nối các điểm không có vòng lặp.",
-  "gokigenNanameTitle": "Gokigen Naname",
-  "gokigenVariantSubtitle": "Vẽ các đường chéo không có vòng lặp đáp ứng số đỉnh.",
-  "gokigenVariantTitle": "Biến thể Gokigen",
-  "graphCoordinatePlotSubtitle": "Vẽ tọa độ lưới khớp với các đường cong tuyến tính/bậc hai.",
-  "graphCoordinatePlotTitle": "Máy vẽ đồ thị",
-  "gridDisplacementSubtitle": "Xác định các biểu tượng đã thay đổi so sánh bố cục với bản gốc.",
-  "gridDisplacementTitle": "Dịch chuyển lưới",
-  "gridFitTetrisSubtitle": "Sắp xếp các khối tĩnh không đều để phù hợp với giới hạn vùng chứa.",
-  "gridFitTetrisTitle": "Bộ giải phù hợp với lưới",
-  "gridGazeSubtitle": "Xác định ô lưới nào nhấp nháy với thời lượng khác nhau.",
-  "gridGazeTitle": "Lưới nhìn",
-  "gridSumLineSubtitle": "Vẽ một đường dẫn có giá trị đánh giá chính xác đến mục tiêu.",
-  "gridSumLineTitle": "Đường tổng lưới",
-  "heyawakeSubtitle": "Phòng lưới bóng râm không có ô đen liền kề.",
-  "heyawakeTitle": "Heyawake",
-  "idiomUnscrambleSubtitle": "Sắp xếp các mảng từ được xáo trộn để phù hợp với ý nghĩa thành ngữ.",
-  "idiomUnscrambleTitle": "Thành ngữ xắp xếp lại",
-  "inequalityBalanceOpsSubtitle": "Đặt các ký hiệu bất đẳng thức giữa các thuật ngữ toán học phức tạp.",
-  "inequalityBalanceOpsTitle": "Cân bằng bất bình đẳng",
-  "islandNurikabeSubtitle": "Các đảo hình thành phù hợp với các ràng buộc về kích thước số.",
-  "islandNurikabeTitle": "Đảo Nurikabe",
-  "isometricProjectionSubtitle": "Ghép các số liệu khối 3D với các chế độ xem trên/phía trước 2D chính tả.",
-  "isometricProjectionTitle": "Máy chiếu đẳng cự",
-  "kakurasuSumsSubtitle": "Làm mờ các ô để đáp ứng tổng chỉ số hàng/col có trọng số.",
-  "kakurasuSumsTitle": "Tổng Kakurasu",
-  "layeredSilhouetteBlendSubtitle": "Xếp chồng các lớp màu để phù hợp với hình dạng mờ mục tiêu.",
-  "layeredSilhouetteBlendTitle": "Pha trộn bóng",
-  "letterBalanceScaleSubtitle": "Đánh vần các từ có giá trị chữ cái cân bằng trọng lượng.",
-  "letterBalanceScaleTitle": "Thang đo cân bằng từ",
-  "letterGridSwapperSubtitle": "Hoán đổi các ô chữ cái liền kề để hoàn thành các từ hàng và cột.",
-  "letterGridSwapperTitle": "Trao đổi thư",
-  "letterPyramidsSubtitle": "Xây dựng các tháp từ thêm các chữ cái đảo chữ duy nhất cho mỗi tầng.",
-  "letterPyramidsTitle": "Kim tự tháp chữ cái",
-  "litsTetrisSubtitle": "Đặt tetromino trong các phòng không có bản sao liền kề.",
-  "litsTetrisTitle": "LITS Tetromino",
-  "masyuSubtitle": "Vẽ một vòng lặp phù hợp với quy tắc vòng tròn Masyu.",
-  "masyuTitle": "Vòng Masyu",
-  "mathMazeSubtitle": "Theo dõi một đường dẫn đánh giá tổng mục tiêu.",
-  "mathMazeTitle": "Mê cung toán học",
-  "matrixMultiplierMatchSubtitle": "Nhân các giá trị hàng và cột để khớp với tích số chấm mục tiêu.",
-  "matrixMultiplierMatchTitle": "Bộ so khớp ma trận",
-  "matrixMultiplierSubtitle": "Chọn một hàng và cột để nhân với mục tiêu.",
-  "matrixMultiplierTitle": "Nhân ma trận",
-  "mazeNav3DSubtitle": "Điều hướng các tuyến đường mê cung đẳng cự 3D từ góc nhìn thứ nhất.",
-  "mazeNav3DTitle": "Mê cung 3D",
-  "mirrorMazeSubtitle": "Chuyển hướng chùm tia laser bằng gương chéo.",
-  "mirrorMazeTitle": "Mê cung gương",
-  "moduloPathSubtitle": "Các ô lưới ngang khớp với các giá trị còn lại theo modulo.",
-  "moduloPathTitle": "Đường dẫn Modulo",
-  "multiTrackCounterSubtitle": "Nhấn khi bất kỳ bộ đếm nào tăng lên theo hệ số mục tiêu.",
-  "multiTrackCounterTitle": "Bộ đếm nhiều đường",
-  "narrativeRecallSubtitle": "ĐỌC CÂU CHUYỆN VÀ GHI NHỚ CÁC CHI TIẾT ĐỊNH LƯỢNG VÀ THỰC TẾ CỤ THỂ.",
-  "narrativeRecallTitle": "Nhớ lại tường thuật",
-  "networkFlowSphericalSubtitle": "Kết nối các luồng lưới trên tọa độ hình trụ.",
-  "networkFlowSphericalTitle": "Luồng mạng",
-  "norinoriSubtitle": "Che chính xác hai ô được kết nối trong mỗi phòng.",
-  "norinoriTitle": "Norinori",
-  "numberBondsSubtitle": "Các giá trị nút liên kết bằng tổng kết nối mục tiêu.",
-  "numberBondsTitle": "Trái phiếu số",
-  "oddEvenFlashSubtitle": "Nhanh chóng khớp số chẵn lẻ với quy tắc màu.",
-  "oddEvenFlashTitle": "Flash Chẵn Lẻ",
-  "origamiUnfoldSubtitle": "Xác định các mẫu đục lỗ sau khi mở các tờ gấp.",
-  "origamiUnfoldTitle": "Origami mở ra",
-  "patternSequenceDrawSubtitle": "Lặp lại chuỗi đường dẫn hoạt hình trên lưới.",
-  "patternSequenceDrawTitle": "Thu hồi mẫu",
-  "percentageShoppingSubtitle": "Tính tỷ lệ phần trăm giảm giá và tổng số tiền thanh toán cuối cùng.",
-  "percentageShoppingTitle": "Phần trăm mua sắm",
-  "peripheralFocusSubtitle": "Phản ứng với các bảng bên nhấp nháy trong khi giải toán.",
-  "peripheralFocusTitle": "Lấy nét ngoại vi",
-  "perspectiveShiftViewSubtitle": "Xoay các cụm khối cho đến khi chúng đánh vần được các chữ cái/từ.",
-  "perspectiveShiftViewTitle": "Thay đổi quan điểm",
-  "polyominoPackingSubtitle": "Gói các mảnh khối polyomino ngẫu nhiên vào khu vực mục tiêu.",
-  "polyominoPackingTitle": "Đóng gói Polyomino",
-  "portmanteauFactorySubtitle": "Hợp nhất các thành phần ngữ nghĩa tạo thành từ ghép.",
-  "portmanteauFactoryTitle": "Nhà máy Portmanteau",
-  "primeFactorTreesSubtitle": "Phân tách các số tổng hợp thành các cặp thừa số lá nguyên tố.",
-  "primeFactorTreesTitle": "Cây nguyên tố",
-  "rippleEffectSubtitle": "Điền số vào các phòng tôn trọng các ràng buộc về khoảng cách khoảng cách.",
-  "rippleEffectTitle": "Hiệu ứng gợn sóng",
-  "rollingBlockBloxSubtitle": "Lăn các mảnh khối để hạ cánh thẳng đứng vào các khe mục tiêu.",
-  "rollingBlockBloxTitle": "Khối lăn",
-  "roomInspectorSubtitle": "Xác định các sửa đổi đồ nội thất được thực hiện trong khi màn hình trống.",
-  "roomInspectorTitle": "Thanh tra phòng",
-  "ropeTangleSolverSubtitle": "Kéo các nút để bố trí đồ thị phẳng với các đường chéo bằng 0.",
-  "ropeTangleSolverTitle": "Dụng cụ gỡ dây",
-  "semanticAssociationSubtitle": "Tìm từ kết nối cả ba đầu mối.",
-  "semanticAssociationTitle": "Hiệp hội từ",
-  "semanticCategoryRecallSubtitle": "Xác định các từ nghiên cứu phù hợp với mục tiêu danh mục được yêu cầu.",
-  "semanticCategoryRecallTitle": "Hạng mục Thu hồi",
-  "sequenceStackSubtitle": "Xây dựng lại các phần bổ sung và loại bỏ chồng đĩa theo thứ tự.",
-  "sequenceStackTitle": "ngăn xếp trình tự",
-  "shakashakaSubtitle": "Đặt các viên gạch hình tam giác để tạo thành các vùng màu trắng hình chữ nhật.",
-  "shakashakaTitle": "Shakashaka Rects",
-  "shapeShifterPeripheralSubtitle": "Theo dõi các thay đổi hình dạng ngoại vi trong khi khớp các giá trị trung tâm.",
-  "shapeShifterPeripheralTitle": "Hình dạng ngoại vi",
-  "shapeShifterSubtitle": "Nhấn vào tổ hợp màu-hình dạng mục tiêu.",
-  "shapeShifterTitle": "Bộ chuyển đổi hình dạng",
-  "sheepAndWolvesSubtitle": "Vẽ một vòng tròn ngăn cách cừu với sói.",
-  "sheepAndWolvesTitle": "Cừu & Sói",
-  "shellGameSubtitle": "THEO DÕI MỘT BÓNG ẨN NHƯ CÁC ĐỊA ĐIỂM ĐỔI ĐỔI CÚP XÁC NHẬN.",
-  "shellGameTitle": "Trò chơi vỏ sò",
-  "shikakuSubtitle": "CHIA LƯỚI THÀNH CÁC HÌNH VUÔNG VÀ HÌNH CHỮ NHẬT ĐỐI VỚI CÁC SỐ.",
-  "shikakuTitle": "Shikaku",
-  "signalAndNoiseSubtitle": "Xác định vị trí các ký tự chữ và số mục tiêu ẩn trong tiếng ồn tĩnh.",
-  "signalAndNoiseTitle": "Tín hiệu & Tiếng ồn",
-  "soundAlikeHomophonesSubtitle": "Xác định đúng cách viết đồng âm cho câu.",
-  "soundAlikeHomophonesTitle": "Trận đấu đồng âm",
-  "soundSequenceMatchSubtitle": "Lặp lại chuỗi nốt nhạc được chơi trên bàn phím ảo.",
-  "soundSequenceMatchTitle": "Kết hợp trình tự âm thanh",
-  "soundWaveMatchSubtitle": "Nhấn vào khi tần số sóng hình ảnh phù hợp với sự thay đổi cao độ.",
-  "soundWaveMatchTitle": "Trận đấu sóng âm thanh",
-  "spatialGridMemory3DSubtitle": "Nhớ lại các khối nhấp nháy trong cấu trúc lưới khối 3D xoay.",
-  "spatialGridMemory3DTitle": "Bộ nhớ không gian 3D",
-  "spatialGridRotationSubtitle": "Khớp cách sắp xếp khối 3D được xoay dọc theo tọa độ trục.",
-  "spatialGridRotationTitle": "Xoay lưới không gian",
-  "storyBuilderSubtitle": "Xây dựng lại trình tự thời gian của câu chuyện.",
-  "storyBuilderTitle": "Người xây dựng câu chuyện",
-  "stostoneSubtitle": "Tạo bóng cho các ô thả xuống để lấp đầy các hàng dưới cùng một cách hoàn hảo.",
-  "stostoneTitle": "Trọng lực đá",
-  "suguruTectonicSubtitle": "Điền vào các khối phòng các số từ 1 đến K mà không có hàng xóm nào bằng nhau.",
-  "suguruTectonicTitle": "Lưới Suguru",
-  "symbolDigitAssocSubtitle": "Giải các bảng dịch ký hiệu khớp với các phím chữ số.",
-  "symbolDigitAssocTitle": "PGS ký hiệu-chữ số",
-  "symmetryPaintSubtitle": "Vẽ các đoạn ảnh phản chiếu qua các trục đối xứng.",
-  "symmetryPaintTitle": "Sơn đối xứng",
-  "syncRhythmSubtitle": "Nhấn khi quét máy đếm nhịp trực quan khớp với nhịp đảo phách.",
-  "syncRhythmTitle": "Đồng bộ nhịp điệu",
-  "synonymMatchSubtitle": "Ghép các mục tiêu từ rơi xuống với từ đồng nghĩa hoặc trái nghĩa.",
-  "synonymMatchTitle": "Kết hợp từ đồng nghĩa",
-  "tangramPolygonSubtitle": "Sắp xếp các hình dạng đa giác để điền vào đường viền hình bóng.",
-  "tangramPolygonTitle": "Tangram Fit",
-  "tangramSubtitle": "Sắp xếp các hình dạng để lấp đầy hình bóng mục tiêu.",
-  "tangramTitle": "Câu đố Tangram",
-  "tapaWallSubtitle": "Bóng các ô để tạo thành một mẫu tường đen liên tục.",
-  "tapaWallTitle": "Tường Tapa",
-  "targetPursuerSubtitle": "Theo dõi nhiều vòng tròn chồng chéo và chọn mục tiêu ban đầu.",
-  "targetPursuerTitle": "Người theo đuổi mục tiêu",
-  "tennerGridSubtitle": "Điền vào các hàng các chữ số từ 0 đến 9 tổng số cột phù hợp.",
-  "tennerGridTitle": "Lưới Tenner",
-  "triangularBridgesSubtitle": "Kết nối đảo 3 hướng đáp ứng yêu cầu.",
-  "triangularBridgesTitle": "Cầu tam giác",
-  "tripletsLogicSubtitle": "Lấp đầy lưới bằng ba hình dạng, tránh tạo thành ba hình liên tiếp.",
-  "tripletsLogicTitle": "Bộ ba sinh ba",
-  "typingRhythmSpeedSubtitle": "Nhập từ vựng phù hợp với nhịp điệu của máy đếm nhịp.",
-  "typingRhythmSpeedTitle": "Luồng gõ",
-  "typoglycemiaDecoderSubtitle": "Xắp xếp lại và đọc các câu lộn xộn một cách nhanh chóng.",
-  "typoglycemiaDecoderTitle": "Bộ giải mã typoglycemia",
-  "unitConverterProSubtitle": "Trả lời chuyển đổi đơn vị nhanh chóng trong thời gian giới hạn.",
-  "unitConverterProTitle": "Bộ chuyển đổi đơn vị",
-  "vectorGridAlignmentSubtitle": "Chia tỷ lệ và xoay hình dạng để phù hợp với mục tiêu mẫu bóng.",
-  "vectorGridAlignmentTitle": "Căn chỉnh vectơ",
-  "vektorVectorSubtitle": "Các vectơ tỷ lệ để làm cho tổng của chúng chạm vào mục tiêu.",
-  "vektorVectorTitle": "véc tơ véc tơ",
-  "voiceToFaceMatchSubtitle": "Chọn đúng khuôn mặt được liên kết với clip giọng nói âm thanh.",
-  "voiceToFaceMatchTitle": "Kết hợp giọng nói-khuôn mặt",
-  "vowelDropSubtitle": "Thả các nguyên âm vào lưới tọa độ để hoàn thành các từ.",
-  "vowelDropTitle": "nguyên âm thả",
-  "wireLoopGameSubtitle": "Kéo các vòng kim loại dọc theo các chốt dây mà không tiếp xúc.",
-  "wireLoopGameTitle": "vòng dây",
-  "wordAssociationRecallSubtitle": "Nhớ lại các liên kết từ được ghép nối từ bộ nhớ.",
-  "wordAssociationRecallTitle": "Hiệp hội từ",
-  "wordChainShiritoriSubtitle": "Liên kết các vòng lặp từ bắt đầu bằng đầu ra chữ cái trước đó.",
-  "wordChainShiritoriTitle": "Chuỗi từ",
-  "wordGridConnectionSubtitle": "Nhóm 16 từ thành bốn loại bốn.",
-  "wordGridConnectionTitle": "Kết nối từ",
-  "wordGridSudokuSubtitle": "Xếp các chữ cái theo hàng lưới tạo thành từ.",
-  "wordGridSudokuTitle": "Sudoku từ",
-  "wordSnakeTrailSubtitle": "Dấu vết các dấu vết giống như con rắn đánh vần các từ theo chủ đề.",
-  "wordSnakeTrailTitle": "rắn chữ",
-  "wordWheelPangramSubtitle": "Xây dựng các từ có chứa các chữ cái mục tiêu trung tâm từ bánh xe.",
-  "wordWheelPangramTitle": "đảo chữ từ",
-  "wordWheelSubtitle": "Tạo từ bằng cách sử dụng các chữ cái trên bánh xe, bao gồm cả chữ cái ở giữa.",
-  "wordWheelTitle": "Bánh xe từ",
-  "yajilinSubtitle": "Đặt các ô màu đen và vẽ một vòng lặp phù hợp với các manh mối.",
-  "yajilinTitle": "Yajilin",
-  "btnMatchColor": "KHỚP MÀU",
-  "btnMatchWord": "KHỚP TỪ",
-  "favoriteGame": "Yêu thích",
-  "gameHidden": "Đã ẩn trò chơi",
-  "hiddenGames": "TRÒ CHƠI ĐÃ ẨN",
-  "hideGame": "Ẩn",
-  "noHiddenGames": "Không có trò chơi nào bị ẩn",
-  "orbitTapTapToHit": "Chạm khi quả bóng đi vào cổng",
-  "showHiddenGames": "Hiển thị trò chơi đã ẩn ({count})",
-  "@showHiddenGames": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "undo": "Hoàn tác",
-  "unfavoriteGame": "Bỏ yêu thích",
-  "unhideGame": "Hiện",
   "kurodokoTitle": "Kurodoko",
   "kurodokoSubtitle": "Place black cells so numbers see the exact count of white cells.",
   "kurodokoCongrats": "Mỗi con số nhìn thấy đúng những gì nó cần thấy.",
@@ -3121,6 +1860,13 @@
   "pegsTitle": "Pegs",
   "pegsSubtitle": "Nhảy một quân qua quân bên cạnh để ăn. Chỉ để lại một quân.",
   "pegsCongrats": "Còn lại một quân. Bàn cờ sạch sẽ.",
+  "lightsOutPresses": "Presses",
+  "lightsOutLit": "Lit",
+  "sameGameTitle": "Same Game",
+  "sameGameSubtitle": "Clear groups of matching blocks to empty the board.",
+  "sameGameCongrats": "Board cleared. Every square gone.",
+  "sameGameLeft": "Left",
+  "sameGameStuck": "No groups left. Start a new board.",
   "galaxiesTitle": "Galaxies",
   "galaxiesSubtitle": "Give every dot its own symmetric region",
   "galaxiesCongrats": "Every dot has its own galaxy.",
@@ -3131,5 +1877,28 @@
   "twiddleCongrats": "Mọi con số đều đúng chỗ.",
   "difficultyEasy": "DỄ",
   "difficultyMedium": "VỪA",
-  "difficultyHard": "KHÓ"
+  "difficultyHard": "KHÓ",
+  "crossingTitle": "Number Crossing",
+  "crossingSubtitle": "Fit every listed number into the crossing slots.",
+  "crossingPlaced": "Placed",
+  "crossingWinTitle": "EVERY NUMBER FITS!",
+  "crossingWinMessage": "Each number once, and every crossing agrees digit for digit.",
+  "navDeal": "Chia bài",
+  "navStack": "Bộ sưu tập",
+  "navYou": "Bạn",
+  "next": "Tiếp",
+  "nextPuzzle": "Câu đố tiếp theo",
+  "restartPuzzle": "Chơi lại",
+  "lockScroll": "Khóa cuộn",
+  "unlockScroll": "Mở khóa cuộn",
+  "feedScrollLocked": "Đã khóa cuộn.",
+  "dealTitle": "Chia bài",
+  "dealSubtitle": "Mỗi câu đố, từng lá một.",
+  "yourCards": "Lá bài của bạn",
+  "todaysCard": "Lá bài hôm nay",
+  "quickPlay": "Dưới hai phút",
+  "rooms": "Sáu phòng",
+  "puzzles": "câu đố",
+  "shuffleCategory": "Chia phòng này",
+  "deckProgress": "{position} / {total}"
 }

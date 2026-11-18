@@ -575,7 +575,7 @@ abstract class AppLocalizations {
   /// No description provided for @findWordSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'You have {maxTries} tries to find the hidden {wordLength}-letter word.'**
+  /// **'Guess the {wordLength}-letter word in {maxTries} tries.'**
   String findWordSubtitle(int maxTries, int wordLength);
 
   /// No description provided for @wordFoundMessage.
@@ -605,7 +605,7 @@ abstract class AppLocalizations {
   /// No description provided for @crosswordSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Complete the grid with the correct words based on the clues provided.'**
+  /// **'Fill the intersecting words from their clues.'**
   String get crosswordSubtitle;
 
   /// No description provided for @wordSearchTitle.
@@ -683,7 +683,7 @@ abstract class AppLocalizations {
   /// No description provided for @romanArithmeticSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Solve addition and subtraction problems using Roman Numerals.'**
+  /// **'Solve sums and differences in Roman numerals.'**
   String get romanArithmeticSubtitle;
 
   /// No description provided for @romanArithmeticGoalReached.
@@ -791,7 +791,7 @@ abstract class AppLocalizations {
   /// No description provided for @sudokuSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Complete the grid so that every row, column, and 3x3 box contains all digits 1 to 9.'**
+  /// **'Fill digits so each row, column, and box has all.'**
   String get sudokuSubtitle;
 
   /// No description provided for @minesweeperTitle.
@@ -863,7 +863,7 @@ abstract class AppLocalizations {
   /// No description provided for @game2048Subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Swipe in any direction to merge tiles and reach the 2048 tile!'**
+  /// **'Slide and merge matching tiles to reach 2048.'**
   String get game2048Subtitle;
 
   /// No description provided for @nonogramTitle.
@@ -887,13 +887,13 @@ abstract class AppLocalizations {
   /// No description provided for @magnetsTitle.
   ///
   /// In en, this message translates to:
-  /// **'MAGNETS'**
+  /// **'Magnets'**
   String get magnetsTitle;
 
   /// No description provided for @magnetsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Place magnets in the grid based on pole counts.'**
+  /// **'Place magnets and blanks to match the border counts.'**
   String get magnetsSubtitle;
 
   /// No description provided for @magnetsHowToPlay.
@@ -929,13 +929,13 @@ abstract class AppLocalizations {
   /// No description provided for @cubeTitle.
   ///
   /// In en, this message translates to:
-  /// **'CUBE'**
+  /// **'Cube'**
   String get cubeTitle;
 
   /// No description provided for @cubeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Roll the cube, collect the blue squares.'**
+  /// **'Roll the cube to collect every blue square.'**
   String get cubeSubtitle;
 
   /// No description provided for @cubeWinTitle.
@@ -977,13 +977,13 @@ abstract class AppLocalizations {
   /// No description provided for @mapTitle.
   ///
   /// In en, this message translates to:
-  /// **'MAP'**
+  /// **'Four Colours'**
   String get mapTitle;
 
   /// No description provided for @mapSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Four-colour the map: no two touching regions may match.'**
+  /// **'Colour every region so touching regions never match.'**
   String get mapSubtitle;
 
   /// No description provided for @mapWinTitle.
@@ -1019,13 +1019,13 @@ abstract class AppLocalizations {
   /// No description provided for @inertiaTitle.
   ///
   /// In en, this message translates to:
-  /// **'INERTIA'**
+  /// **'Inertia'**
   String get inertiaTitle;
 
   /// No description provided for @inertiaSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Slide the ball, collect every gem, avoid the mines.'**
+  /// **'Slide the ball to collect every gem and miss mines.'**
   String get inertiaSubtitle;
 
   /// No description provided for @inertiaWinTitle.
@@ -1067,13 +1067,13 @@ abstract class AppLocalizations {
   /// No description provided for @netslideTitle.
   ///
   /// In en, this message translates to:
-  /// **'NETSLIDE'**
+  /// **'Netslide'**
   String get netslideTitle;
 
   /// No description provided for @netslideSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Slide rows and columns until every pipe meets a pipe.'**
+  /// **'Slide rows and columns until every pipe connects.'**
   String get netslideSubtitle;
 
   /// No description provided for @netslideWinTitle.
@@ -1109,13 +1109,13 @@ abstract class AppLocalizations {
   /// No description provided for @signpostTitle.
   ///
   /// In en, this message translates to:
-  /// **'SIGNPOST'**
+  /// **'Signpost'**
   String get signpostTitle;
 
   /// No description provided for @signpostSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Give every cell the next number, following the arrows.'**
+  /// **'Link cells in order by following their arrows.'**
   String get signpostSubtitle;
 
   /// No description provided for @signpostWinTitle.
@@ -1151,13 +1151,13 @@ abstract class AppLocalizations {
   /// No description provided for @lighthousesTitle.
   ///
   /// In en, this message translates to:
-  /// **'LIGHTHOUSES'**
+  /// **'Lighthouses'**
   String get lighthousesTitle;
 
   /// No description provided for @lighthousesSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Place ships based on lighthouse clues.'**
+  /// **'Place boats so each lighthouse sees its count.'**
   String get lighthousesSubtitle;
 
   /// No description provided for @lighthousesHowToPlay.
@@ -1181,13 +1181,13 @@ abstract class AppLocalizations {
   /// No description provided for @dominosaTitle.
   ///
   /// In en, this message translates to:
-  /// **'DOMINOSA'**
+  /// **'Dominosa'**
   String get dominosaTitle;
 
   /// No description provided for @dominosaSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Find all the hidden dominoes in the grid.'**
+  /// **'Pair adjacent numbers so each domino appears once.'**
   String get dominosaSubtitle;
 
   /// No description provided for @dominosaHowToPlay.
@@ -1235,13 +1235,13 @@ abstract class AppLocalizations {
   /// No description provided for @skyscrapersTitle.
   ///
   /// In en, this message translates to:
-  /// **'SKYSCRAPERS'**
+  /// **'Skyscrapers'**
   String get skyscrapersTitle;
 
   /// No description provided for @skyscrapersSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill the grid with building heights.'**
+  /// **'Place tower heights matching the edge sightlines.'**
   String get skyscrapersSubtitle;
 
   /// No description provided for @skyscrapersHowToPlay.
@@ -1265,13 +1265,13 @@ abstract class AppLocalizations {
   /// No description provided for @nurikabeTitle.
   ///
   /// In en, this message translates to:
-  /// **'NURIKABE'**
+  /// **'Nurikabe'**
   String get nurikabeTitle;
 
   /// No description provided for @nurikabeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Form a connected sea and separate islands.'**
+  /// **'Build one connected sea around numbered islands.'**
   String get nurikabeSubtitle;
 
   /// No description provided for @nurikabeHowToPlay.
@@ -1295,13 +1295,13 @@ abstract class AppLocalizations {
   /// No description provided for @fillominoTitle.
   ///
   /// In en, this message translates to:
-  /// **'FILLOMINO'**
+  /// **'Fillomino'**
   String get fillominoTitle;
 
   /// No description provided for @fillominoSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Divide the grid into polyominoes of the specified sizes.'**
+  /// **'Group cells into regions matching their number.'**
   String get fillominoSubtitle;
 
   /// No description provided for @fillominoHowToPlay.
@@ -1325,13 +1325,13 @@ abstract class AppLocalizations {
   /// No description provided for @hitoriTitle.
   ///
   /// In en, this message translates to:
-  /// **'HITORI'**
+  /// **'Hitori'**
   String get hitoriTitle;
 
   /// No description provided for @hitoriSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Shade duplicate numbers in each row and column.'**
+  /// **'Shade duplicate numbers without splitting the grid.'**
   String get hitoriSubtitle;
 
   /// No description provided for @hitoriHowToPlay.
@@ -1487,13 +1487,13 @@ abstract class AppLocalizations {
   /// No description provided for @balanceScaleTitle.
   ///
   /// In en, this message translates to:
-  /// **'BALANCE SCALE'**
+  /// **'Balance Scale'**
   String get balanceScaleTitle;
 
   /// No description provided for @balanceScaleSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Deduce the weight of the last item based on the scales.'**
+  /// **'Find the missing weight that balances the scales.'**
   String get balanceScaleSubtitle;
 
   /// No description provided for @balanceScaleWinTitle.
@@ -1535,13 +1535,13 @@ abstract class AppLocalizations {
   /// No description provided for @binaryPuzzleTitle.
   ///
   /// In en, this message translates to:
-  /// **'BINARY PUZZLE'**
+  /// **'Binary Puzzle'**
   String get binaryPuzzleTitle;
 
   /// No description provided for @binaryPuzzleSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill with 0 and 1. Max two of the same digit adjacent. Equal 0s and 1s. Unique rows and columns.'**
+  /// **'Fill 0s and 1s equally with no three in a row.'**
   String get binaryPuzzleSubtitle;
 
   /// No description provided for @binaryPuzzleWinTitle.
@@ -1559,13 +1559,13 @@ abstract class AppLocalizations {
   /// No description provided for @blockEscapeTitle.
   ///
   /// In en, this message translates to:
-  /// **'BLOCK ESCAPE'**
+  /// **'Block Escape'**
   String get blockEscapeTitle;
 
   /// No description provided for @blockEscapeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Slide the blocks to clear a path for the primary block to reach the exit.'**
+  /// **'Slide blocks to clear a path to the exit.'**
   String get blockEscapeSubtitle;
 
   /// No description provided for @blockEscapeWinTitle.
@@ -1607,13 +1607,13 @@ abstract class AppLocalizations {
   /// No description provided for @bridgesTitle.
   ///
   /// In en, this message translates to:
-  /// **'BRIDGES'**
+  /// **'Bridges'**
   String get bridgesTitle;
 
   /// No description provided for @bridgesSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Connect islands with bridges. Each island needs a specific number of bridges. Bridges cannot cross.'**
+  /// **'Connect islands with bridges that match each count.'**
   String get bridgesSubtitle;
 
   /// No description provided for @bridgesWinTitle.
@@ -1631,13 +1631,13 @@ abstract class AppLocalizations {
   /// No description provided for @calculationSprintTitle.
   ///
   /// In en, this message translates to:
-  /// **'CALCULATION SPRINT'**
+  /// **'Calculation Sprint'**
   String get calculationSprintTitle;
 
   /// No description provided for @calculationSprintSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Solve as many equations as possible in 60 seconds.'**
+  /// **'Solve as many equations as you can in 60 seconds.'**
   String get calculationSprintSubtitle;
 
   /// No description provided for @calculationSprintGoalReached.
@@ -1751,7 +1751,7 @@ abstract class AppLocalizations {
   /// No description provided for @changeBlindnessSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'SPOT THE CHANGING ITEM'**
+  /// **'Spot the single item that changes between flashes.'**
   String get changeBlindnessSubtitle;
 
   /// No description provided for @changeBlindnessScore.
@@ -1835,13 +1835,13 @@ abstract class AppLocalizations {
   /// No description provided for @colorMatchTitle.
   ///
   /// In en, this message translates to:
-  /// **'COLOR MATCH'**
+  /// **'Colour Match'**
   String get colorMatchTitle;
 
   /// No description provided for @colorMatchSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Adjust the sliders to match the target color as closely as possible.'**
+  /// **'Tune the sliders to match the target colour.'**
   String get colorMatchSubtitle;
 
   /// No description provided for @colorMatchTarget.
@@ -1931,13 +1931,13 @@ abstract class AppLocalizations {
   /// No description provided for @crownTitle.
   ///
   /// In en, this message translates to:
-  /// **'CROWN'**
+  /// **'Crowns'**
   String get crownTitle;
 
   /// No description provided for @crownSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Place one crown in each row, column, and color region. Crowns cannot be adjacent, even diagonally.'**
+  /// **'One crown per row, column, and region; none touching.'**
   String get crownSubtitle;
 
   /// No description provided for @crownCrowned.
@@ -1955,13 +1955,13 @@ abstract class AppLocalizations {
   /// No description provided for @cryptogramTitle.
   ///
   /// In en, this message translates to:
-  /// **'CRYPTOGRAM'**
+  /// **'Cryptogram'**
   String get cryptogramTitle;
 
   /// No description provided for @cryptogramSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Assign letters to decode the secret message! Each encoded letter represents a real letter.'**
+  /// **'Swap letters to decode the hidden quote.'**
   String get cryptogramSubtitle;
 
   /// No description provided for @cryptogramBroken.
@@ -2297,13 +2297,13 @@ abstract class AppLocalizations {
   /// No description provided for @hueSortTitle.
   ///
   /// In en, this message translates to:
-  /// **'HUE SORT'**
+  /// **'Hue Sort'**
   String get hueSortTitle;
 
   /// No description provided for @hueSortSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Swap tiles to create a smooth transition between corner colors. Dots indicate fixed tiles.'**
+  /// **'Swap tiles into a smooth gradient; dots stay fixed.'**
   String get hueSortSubtitle;
 
   /// No description provided for @hueSortWinTitle.
@@ -2399,13 +2399,13 @@ abstract class AppLocalizations {
   /// No description provided for @lightsOutTitle.
   ///
   /// In en, this message translates to:
-  /// **'LIGHTS OUT'**
+  /// **'Lights Out'**
   String get lightsOutTitle;
 
   /// No description provided for @lightsOutSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Tapping a tile toggles it and its adjacent neighbors. Turn off all lights to solve.'**
+  /// **'Tap tiles to flip neighbours until all lights go out.'**
   String get lightsOutSubtitle;
 
   /// No description provided for @lightsOutWinTitle.
@@ -2429,7 +2429,7 @@ abstract class AppLocalizations {
   /// No description provided for @symmetrySubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Mirror the pattern on the left onto the empty grid on the right.'**
+  /// **'Mirror the left pattern onto the right grid.'**
   String get symmetrySubtitle;
 
   /// No description provided for @semanticLinkTitle.
@@ -2717,13 +2717,13 @@ abstract class AppLocalizations {
   /// No description provided for @wisconsinCardSortingTitle.
   ///
   /// In en, this message translates to:
-  /// **'Wisconsin Card Sort'**
+  /// **'Rule Finder'**
   String get wisconsinCardSortingTitle;
 
   /// No description provided for @wisconsinCardSortingSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'MATCH THE CARD TO ONE OF THE FOUR ABOVE'**
+  /// **'Match each card by finding the hidden sorting rule.'**
   String get wisconsinCardSortingSubtitle;
 
   /// No description provided for @nBackTitle.
@@ -2867,7 +2867,7 @@ abstract class AppLocalizations {
   /// No description provided for @lockPatternSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Find the secret pattern. Every guess gives feedback on position and dots.'**
+  /// **'Deduce the secret dot pattern from each clue.'**
   String get lockPatternSubtitle;
 
   /// No description provided for @primeHunterTitle.
@@ -2963,7 +2963,7 @@ abstract class AppLocalizations {
   /// No description provided for @wordMastermindSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Crack the 4-letter code! Bulls (B) are perfect spots, Cows (C) are wrong spots.'**
+  /// **'Crack the 4-letter word using position clues.'**
   String get wordMastermindSubtitle;
 
   /// No description provided for @simonSequenceTitle.
@@ -2981,7 +2981,7 @@ abstract class AppLocalizations {
   /// No description provided for @symbolLogicSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Solve the visual equations to find the value of each symbol. What is the result of the last equation?'**
+  /// **'Find each symbol\'s value to solve the final line.'**
   String get symbolLogicSubtitle;
 
   /// No description provided for @silhouetteMatchTitle.
@@ -3101,13 +3101,13 @@ abstract class AppLocalizations {
   /// No description provided for @abcdTitle.
   ///
   /// In en, this message translates to:
-  /// **'ABCD'**
+  /// **'Four Letters'**
   String get abcdTitle;
 
   /// No description provided for @abcdSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Write a letter in every cell. The digits on the edge count each letter in that row or column.'**
+  /// **'Place A, B, C, or D to match the edge counts.'**
   String get abcdSubtitle;
 
   /// No description provided for @abcdFilled.
@@ -3143,7 +3143,7 @@ abstract class AppLocalizations {
   /// No description provided for @boatsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Find the hidden fleet. The counts outside say how many boat cells each row and column holds.'**
+  /// **'Place the fleet to match the row and column counts.'**
   String get boatsSubtitle;
 
   /// No description provided for @boatsShipsFound.
@@ -3179,7 +3179,7 @@ abstract class AppLocalizations {
   /// No description provided for @seismicSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill every shape with the numbers 1 to its size. Two equal numbers in a line need that many cells between them.'**
+  /// **'Fill regions 1..N; equal digits keep N cells apart.'**
   String get seismicSubtitle;
 
   /// No description provided for @seismicClues.
@@ -3215,7 +3215,7 @@ abstract class AppLocalizations {
   /// No description provided for @mathraxSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill every row and column with 1 to the side of the board. Each corner clue binds the four cells around it on both diagonals.'**
+  /// **'Fill a Latin square obeying every corner rule.'**
   String get mathraxSubtitle;
 
   /// No description provided for @mathraxFilled.
@@ -3251,7 +3251,7 @@ abstract class AppLocalizations {
   /// No description provided for @saladSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill every row and column with the letters A to the last one, once each, with the rest holes. A letter on the border is the first one you meet looking into that line.'**
+  /// **'Place each letter once per line; edges show first seen.'**
   String get saladSubtitle;
 
   /// No description provided for @saladWritten.
@@ -3281,7 +3281,7 @@ abstract class AppLocalizations {
   /// No description provided for @romeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'One arrow in every cell. No arrow repeats inside an outlined area, and following the arrows from anywhere has to arrive at a circled goal without looping.'**
+  /// **'Point arrows so every path reaches a goal.'**
   String get romeSubtitle;
 
   /// No description provided for @romeWritten.
@@ -3311,7 +3311,7 @@ abstract class AppLocalizations {
   /// No description provided for @ascentSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Place 1 to the last number once each. Every number touches the one before it, along an edge or a corner.'**
+  /// **'Place 1 to N so consecutive numbers touch.'**
   String get ascentSubtitle;
 
   /// No description provided for @ascentNext.
@@ -3347,7 +3347,7 @@ abstract class AppLocalizations {
   /// No description provided for @clustersSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill the grid with two colours. A dot marks a cell with exactly one neighbour of its colour; every other cell needs two.'**
+  /// **'Two colours: dots touch one mate, others touch two.'**
   String get clustersSubtitle;
 
   /// No description provided for @clustersDots.
@@ -3383,7 +3383,7 @@ abstract class AppLocalizations {
   /// No description provided for @bricksSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Shade cells of the honeycomb. A shaded cell needs a shaded cell under it, no three shaded cells may sit in a row, and a number counts the shaded cells around it.'**
+  /// **'Shade supported cells with no three in a row.'**
   String get bricksSubtitle;
 
   /// No description provided for @bricksShaded.
@@ -3419,7 +3419,7 @@ abstract class AppLocalizations {
   /// No description provided for @tentsAndTreesSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Place tents next to trees. Numbers indicate how many tents are in each row/column. Tents cannot touch each other.'**
+  /// **'Pair each tree with a tent; tents never touch.'**
   String get tentsAndTreesSubtitle;
 
   /// No description provided for @quickMathTitle.
@@ -3473,13 +3473,13 @@ abstract class AppLocalizations {
   /// No description provided for @einsteinRiddleTitle.
   ///
   /// In en, this message translates to:
-  /// **'EINSTEIN RIDDLE'**
+  /// **'House Logic'**
   String get einsteinRiddleTitle;
 
   /// No description provided for @einsteinRiddleSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Use the clues to deduce the attributes of each house.'**
+  /// **'Use the clues to deduce every house\'s traits.'**
   String get einsteinRiddleSubtitle;
 
   /// No description provided for @einsteinRiddleHowToPlay.
@@ -3671,7 +3671,7 @@ abstract class AppLocalizations {
   /// No description provided for @grammarPoliceSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Identify if the sentence is grammatically correct or contains errors.'**
+  /// **'Decide whether each sentence has a grammar error.'**
   String get grammarPoliceSubtitle;
 
   /// No description provided for @grammarPoliceHowToPlay.
@@ -3713,7 +3713,7 @@ abstract class AppLocalizations {
   /// No description provided for @fibonacciMergeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Merge consecutive Fibonacci numbers (1, 1, 2, 3, 5, 8, 13...).'**
+  /// **'Merge consecutive Fibonacci tiles to climb higher.'**
   String get fibonacciMergeSubtitle;
 
   /// No description provided for @sequenceSleuthTitle.
@@ -3803,13 +3803,13 @@ abstract class AppLocalizations {
   /// No description provided for @baseShiftTitle.
   ///
   /// In en, this message translates to:
-  /// **'BASE SHIFT BLITZ'**
+  /// **'Base Shift'**
   String get baseShiftTitle;
 
   /// No description provided for @baseShiftSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Solve in decimal'**
+  /// **'Convert each number into base ten.'**
   String get baseShiftSubtitle;
 
   /// No description provided for @baseShiftDescription.
@@ -3965,7 +3965,7 @@ abstract class AppLocalizations {
   /// No description provided for @classicMazeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'EXPLORE & SOLVE • A NEW MAZE EACH GAME'**
+  /// **'Guide the marker from start to the exit.'**
   String get classicMazeSubtitle;
 
   /// No description provided for @classicMazeWinTitle.
@@ -4115,7 +4115,7 @@ abstract class AppLocalizations {
   /// No description provided for @cubeNetFoldSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'SELECT THE MATCHING 3D CUBE OPTION'**
+  /// **'Pick the 3D cube that folds from the flat net.'**
   String get cubeNetFoldSubtitle;
 
   /// No description provided for @cubeNetFoldWinTitle.
@@ -4211,13 +4211,13 @@ abstract class AppLocalizations {
   /// No description provided for @topologyTitle.
   ///
   /// In en, this message translates to:
-  /// **'TOPOLOGY'**
+  /// **'Topology'**
   String get topologyTitle;
 
   /// No description provided for @topologySubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Are these shapes topologically equivalent? (Can one be deformed into the other without cutting or gluing?)'**
+  /// **'Decide whether one shape stretches into the other.'**
   String get topologySubtitle;
 
   /// No description provided for @topologyWinTitle.
@@ -4980,7 +4980,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'You scored {arg0} points in Grocery List!'**
-  String groceryListMessage(String arg0, Object score);
+  String groceryListMessage(String arg0);
 
   /// No description provided for @groceryListText.
   ///
@@ -6281,7 +6281,7 @@ abstract class AppLocalizations {
   /// No description provided for @slitherlinkSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'LOOP THE PIN GRID USING NUMBER CLUES.'**
+  /// **'Draw one closed loop matching the numbered cells.'**
   String get slitherlinkSubtitle;
 
   /// No description provided for @futoshikiTitle.
@@ -6293,7 +6293,7 @@ abstract class AppLocalizations {
   /// No description provided for @futoshikiSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'FILL GRIDS WITH GREATER-THAN CLUES.'**
+  /// **'Fill each row and column while obeying the signs.'**
   String get futoshikiSubtitle;
 
   /// No description provided for @kakuroTitle.
@@ -6305,7 +6305,7 @@ abstract class AppLocalizations {
   /// No description provided for @kakuroSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'SOLVE CROSSWORDS WITH NUMBERS AND SUMS.'**
+  /// **'Fill digits that add up to each clue with no repeats.'**
   String get kakuroSubtitle;
 
   /// No description provided for @inequalityDashTitle.
@@ -6317,7 +6317,7 @@ abstract class AppLocalizations {
   /// No description provided for @inequalityDashSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'SOLVE INEQUALITIES UNDER TIME PRESSURE.'**
+  /// **'Pick the sign that makes each inequality true.'**
   String get inequalityDashSubtitle;
 
   /// No description provided for @factorFinderTitle.
@@ -6329,7 +6329,7 @@ abstract class AppLocalizations {
   /// No description provided for @factorFinderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'IDENTIFY ALL FACTORS OF TARGET NUMBERS.'**
+  /// **'Tap every factor of the target number.'**
   String get factorFinderSubtitle;
 
   /// No description provided for @collatzTitle.
@@ -6341,7 +6341,7 @@ abstract class AppLocalizations {
   /// No description provided for @collatzSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'NAVIGATE THE 3N+1 SEQUENCE.'**
+  /// **'Follow the 3n + 1 steps down to one.'**
   String get collatzSubtitle;
 
   /// No description provided for @sumPyramidTitle.
@@ -6353,7 +6353,7 @@ abstract class AppLocalizations {
   /// No description provided for @sumPyramidSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'FILL PYRAMID CELLS WITH SUM MATH CLUES.'**
+  /// **'Fill the pyramid so each brick equals the two below.'**
   String get sumPyramidSubtitle;
 
   /// No description provided for @target10Title.
@@ -6365,7 +6365,7 @@ abstract class AppLocalizations {
   /// No description provided for @target10Subtitle.
   ///
   /// In en, this message translates to:
-  /// **'COMBINE NUMBER TILES TO REAP TEN SUMS.'**
+  /// **'Combine number tiles so their sum makes ten.'**
   String get target10Subtitle;
 
   /// No description provided for @fractionMatcherTitle.
@@ -6437,7 +6437,7 @@ abstract class AppLocalizations {
   /// No description provided for @blockCount3dSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'COUNT BLOCKS IN THREE-DIMENSIONAL SPACE.'**
+  /// **'Count every cube in the 3D stack, hidden ones too.'**
   String get blockCount3dSubtitle;
 
   /// No description provided for @rotatingMazeTitle.
@@ -6449,7 +6449,7 @@ abstract class AppLocalizations {
   /// No description provided for @rotatingMazeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'ROTATE MAZES TO GUIDE BALLS TO THE EXIT.'**
+  /// **'Turn the maze so gravity rolls the ball out.'**
   String get rotatingMazeSubtitle;
 
   /// No description provided for @silhouetteMatchOrthoTitle.
@@ -6521,7 +6521,7 @@ abstract class AppLocalizations {
   /// No description provided for @contextCluesSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'INFER HIDDEN WORDS FROM CONTEXT HINTS.'**
+  /// **'Pick the word that best fits the sentence.'**
   String get contextCluesSubtitle;
 
   /// No description provided for @digitSpanReverseSubtitle.
@@ -6665,7 +6665,7 @@ abstract class AppLocalizations {
   /// No description provided for @quickMathSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'SOLVE ARITHMETIC QUESTIONS AT TOP SPEED.'**
+  /// **'Solve arithmetic rounds accurately before time ends.'**
   String get quickMathSubtitle;
 
   /// No description provided for @mathGuessTitle.
@@ -6677,7 +6677,7 @@ abstract class AppLocalizations {
   /// No description provided for @mathGuessSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'GUESS THE HIDDEN NUMBER WITHIN 15 CHANCES.'**
+  /// **'Guess the secret number using high and low clues.'**
   String get mathGuessSubtitle;
 
   /// No description provided for @reflexTapSubtitle.
@@ -6695,13 +6695,13 @@ abstract class AppLocalizations {
   /// No description provided for @simonSequenceSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'REPEAT SHAPE SEQUENCES FROM MEMORY.'**
+  /// **'Watch the pattern and tap it back in order.'**
   String get simonSequenceSubtitle;
 
   /// No description provided for @slidePuzzleSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'REARRANGE SQUARE SLIDING GRID TILES.'**
+  /// **'Slide tiles into order using the empty space.'**
   String get slidePuzzleSubtitle;
 
   /// No description provided for @findWordTitle.
@@ -6713,7 +6713,7 @@ abstract class AppLocalizations {
   /// No description provided for @schulteTableSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'TAP NUMBERS FROM ONE TO TWENTY-FIVE.'**
+  /// **'Tap the numbers in order from 1 to 25.'**
   String get schulteTableSubtitle;
 
   /// No description provided for @simonCommandTitle.
@@ -6737,7 +6737,7 @@ abstract class AppLocalizations {
   /// No description provided for @binaryCodeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'TRANSLATE BINARY CODES INTO DECIMAL.'**
+  /// **'Convert each binary number into base ten.'**
   String get binaryCodeSubtitle;
 
   /// No description provided for @moduloClockTitle.
@@ -6749,7 +6749,7 @@ abstract class AppLocalizations {
   /// No description provided for @moduloClockSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'CALCULATE MATH EQUATIONS USING CLOCKS.'**
+  /// **'Solve clock arithmetic around the dial.'**
   String get moduloClockSubtitle;
 
   /// No description provided for @chimpTestTitle.
@@ -6809,7 +6809,7 @@ abstract class AppLocalizations {
   /// No description provided for @klotskiSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'SLIDE BLOCKS TO REACH THE EXITS.'**
+  /// **'Slide blocks to guide the main piece to the exit.'**
   String get klotskiSubtitle;
 
   /// No description provided for @homophoneHuntSubtitle.
@@ -6827,7 +6827,7 @@ abstract class AppLocalizations {
   /// No description provided for @laserLinkSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Rotate mirrors to reflect lasers and power up all the targets.'**
+  /// **'Turn mirrors so the laser lights every target.'**
   String get laserLinkSubtitle;
 
   /// No description provided for @laserLinkCongrats.
@@ -6845,7 +6845,7 @@ abstract class AppLocalizations {
   /// No description provided for @crossSectionSliceSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Identify the correct 2D cross-section of a 3D object from a specific angle.'**
+  /// **'Pick the 2D slice cut through the 3D solid.'**
   String get crossSectionSliceSubtitle;
 
   /// No description provided for @crossSectionSliceCongrats.
@@ -6869,7 +6869,7 @@ abstract class AppLocalizations {
   /// No description provided for @shadowPivotSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Predict the shadow cast by a 3D object as it rotates on different axes.'**
+  /// **'Pick the shadow cast after the 3D shape rotates.'**
   String get shadowPivotSubtitle;
 
   /// No description provided for @interlockPuzzleTitle.
@@ -6881,7 +6881,7 @@ abstract class AppLocalizations {
   /// No description provided for @interlockPuzzleSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Disassemble or assemble complex interlocking blocks in the correct sequence.'**
+  /// **'Free the interlocking blocks in the right order.'**
   String get interlockPuzzleSubtitle;
 
   /// No description provided for @interlockPuzzleCongrats.
@@ -6899,7 +6899,7 @@ abstract class AppLocalizations {
   /// No description provided for @pathIntersectSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Navigate multiple paths simultaneously to reach their respective targets without collision.'**
+  /// **'Route every path to its goal without crossing.'**
   String get pathIntersectSubtitle;
 
   /// No description provided for @pathIntersectCongrats.
@@ -6917,7 +6917,7 @@ abstract class AppLocalizations {
   /// No description provided for @negativeSpaceDetectionSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Identify the shape formed by the empty space between objects.'**
+  /// **'Spot the figure hidden in the empty space.'**
   String get negativeSpaceDetectionSubtitle;
 
   /// No description provided for @negativeSpaceDetectionCongrats.
@@ -6935,7 +6935,7 @@ abstract class AppLocalizations {
   /// No description provided for @compassMazeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Navigate a maze where movement directions change based on your compass orientation.'**
+  /// **'Reach the exit as each step rotates your compass.'**
   String get compassMazeSubtitle;
 
   /// No description provided for @compassMazeCongrats.
@@ -6983,7 +6983,7 @@ abstract class AppLocalizations {
   /// No description provided for @shikakuSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'DIVIDE THE GRID INTO SQUARES AND RECTANGLES MATCHING THE NUMBERS.'**
+  /// **'Divide the grid into rectangles matching each clue.'**
   String get shikakuSubtitle;
 
   /// No description provided for @countdownMathTitle.
@@ -6995,7 +6995,7 @@ abstract class AppLocalizations {
   /// No description provided for @countdownMathSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'COMBINE RANDOM NUMBERS TO CALCULATE THE THREE-DIGIT TARGET.'**
+  /// **'Combine the given numbers to hit the target.'**
   String get countdownMathSubtitle;
 
   /// No description provided for @narrativeRecallTitle.
@@ -7019,7 +7019,7 @@ abstract class AppLocalizations {
   /// No description provided for @shellGameSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'TRACK A HIDDEN BALL AS THE SHUFFLING CUPS SWAP PLACES.'**
+  /// **'Track the hidden ball while the cups swap places.'**
   String get shellGameSubtitle;
 
   /// No description provided for @typoglycemiaDecoderTitle.
@@ -7031,7 +7031,7 @@ abstract class AppLocalizations {
   /// No description provided for @typoglycemiaDecoderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'UNSCRAMBLE AND READ JUMBLED SENTENCES SPEEDILY.'**
+  /// **'Read the jumbled sentence and pick its meaning.'**
   String get typoglycemiaDecoderSubtitle;
 
   /// No description provided for @shapeShifterTitle.
@@ -7103,7 +7103,7 @@ abstract class AppLocalizations {
   /// No description provided for @wordWheelSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Make words using letters on the wheel, including the center letter.'**
+  /// **'Build words of 3+ letters using the centre letter.'**
   String get wordWheelSubtitle;
 
   /// No description provided for @oddEvenFlashTitle.
@@ -7643,7 +7643,7 @@ abstract class AppLocalizations {
   /// No description provided for @tripletsLogicSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Fill the grid with three shapes, avoiding three-in-a-row. Every row and column must contain the same number of each shape.'**
+  /// **'Balance three shapes per line with no three adjacent.'**
   String get tripletsLogicSubtitle;
 
   /// No description provided for @galaxiesSymTitle.
@@ -10584,7 +10584,7 @@ abstract class AppLocalizations {
   /// No description provided for @kurodokoSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Place black cells so numbers see the exact count of white cells.'**
+  /// **'Shade cells so numbers see that many white cells.'**
   String get kurodokoSubtitle;
 
   /// No description provided for @kurodokoCongrats.
@@ -10764,7 +10764,7 @@ abstract class AppLocalizations {
   /// No description provided for @setTheoryVennSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Select the corresponding regions of the Venn diagram for the set formula.'**
+  /// **'Shade the Venn regions matching the set formula.'**
   String get setTheoryVennSubtitle;
 
   /// No description provided for @setTheoryVennWinTitle.
@@ -10956,7 +10956,7 @@ abstract class AppLocalizations {
   /// No description provided for @polyominoTilingSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Rotate and assemble tetromino geometric shapes to tile the grid without gaps.'**
+  /// **'Pack the shapes into the grid with no gaps.'**
   String get polyominoTilingSubtitle;
 
   /// No description provided for @polyominoTilingWinTitle.
@@ -11172,7 +11172,7 @@ abstract class AppLocalizations {
   /// No description provided for @conundrumAnagramSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Unscramble all 9 letters to discover the hidden full dictionary word.'**
+  /// **'Unscramble all nine letters into one word.'**
   String get conundrumAnagramSubtitle;
 
   /// No description provided for @conundrumAnagramWinTitle.
@@ -11292,7 +11292,7 @@ abstract class AppLocalizations {
   /// No description provided for @pegsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Jump a peg over its neighbour to capture it. Leave one standing.'**
+  /// **'Jump pegs over neighbours until one peg remains.'**
   String get pegsSubtitle;
 
   /// No description provided for @pegsCongrats.
@@ -11322,7 +11322,7 @@ abstract class AppLocalizations {
   /// No description provided for @sameGameSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Clear a group of two or more to score. Empty the board to win.'**
+  /// **'Clear groups of matching blocks to empty the board.'**
   String get sameGameSubtitle;
 
   /// No description provided for @sameGameCongrats.
@@ -11340,7 +11340,7 @@ abstract class AppLocalizations {
   /// No description provided for @sameGameStuck.
   ///
   /// In en, this message translates to:
-  /// **'No groups left — start a new board.'**
+  /// **'No groups left. Start a new board.'**
   String get sameGameStuck;
 
   /// No description provided for @galaxiesTitle.
@@ -11418,7 +11418,7 @@ abstract class AppLocalizations {
   /// No description provided for @crossingSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Lay every number in the list into the grid once, across or down. The cells that cross have to agree, and the cells left over are wall.'**
+  /// **'Fit every listed number into the crossing slots.'**
   String get crossingSubtitle;
 
   /// No description provided for @crossingPlaced.

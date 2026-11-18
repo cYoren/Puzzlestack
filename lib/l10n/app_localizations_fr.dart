@@ -134,14 +134,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Empêche l\'écran de s\'éteindre pendant le jeu';
 
   @override
-  String get showArchivedGames => 'Show archived puzzles';
+  String get showArchivedGames => 'Afficher les puzzles archivés';
 
   @override
   String get showArchivedGamesDescription =>
-      'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
+      'Tâches cognitives et exercices conservés pour référence.';
 
   @override
-  String get archived => 'ARCHIVED';
+  String get archived => 'ARCHIVÉ';
 
   @override
   String get appearance => 'Apparence';
@@ -435,10 +435,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get magnetsLevel => 'Depth';
 
   @override
-  String get cubeTitle => 'CUBE';
+  String get cubeTitle => 'Cube';
 
   @override
-  String get cubeSubtitle => 'Roll the cube, collect the blue squares.';
+  String get cubeSubtitle => 'Roll the cube to collect every blue square.';
 
   @override
   String get cubeWinTitle => 'SIX BLUES!';
@@ -460,11 +460,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cubeBest => 'Best';
 
   @override
-  String get mapTitle => 'MAP';
+  String get mapTitle => 'Four Colours';
 
   @override
   String get mapSubtitle =>
-      'Four-colour the map: no two touching regions may match.';
+      'Colour every region so touching regions never match.';
 
   @override
   String get mapWinTitle => 'MAP COLOURED!';
@@ -484,11 +484,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mapColoured => 'Coloured';
 
   @override
-  String get inertiaTitle => 'INERTIA';
+  String get inertiaTitle => 'Inertia';
 
   @override
   String get inertiaSubtitle =>
-      'Slide the ball, collect every gem, avoid the mines.';
+      'Slide the ball to collect every gem and miss mines.';
 
   @override
   String get inertiaWinTitle => 'ALL GEMS!';
@@ -510,11 +510,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get inertiaExploded => 'MINE! Tap to retry';
 
   @override
-  String get netslideTitle => 'NETSLIDE';
+  String get netslideTitle => 'Netslide';
 
   @override
   String get netslideSubtitle =>
-      'Slide rows and columns until every pipe meets a pipe.';
+      'Slide rows and columns until every pipe connects.';
 
   @override
   String get netslideWinTitle => 'NET COMPLETE!';
@@ -533,11 +533,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get netslideScramble => 'Depth';
 
   @override
-  String get signpostTitle => 'SIGNPOST';
+  String get signpostTitle => 'Signpost';
 
   @override
   String get signpostSubtitle =>
-      'Give every cell the next number, following the arrows.';
+      'Link cells in order by following their arrows.';
 
   @override
   String get signpostWinTitle => 'EVERY NUMBER PLACED!';
@@ -1687,11 +1687,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get matrixReasoningSubtitle => 'Complétez le motif dans la grille 3x3';
 
   @override
-  String get abcdTitle => 'ABCD';
+  String get abcdTitle => 'Four Letters';
 
   @override
-  String get abcdSubtitle =>
-      'Write a letter in every cell. The digits on the edge count each letter in that row or column.';
+  String get abcdSubtitle => 'Place A, B, C, or D to match the edge counts.';
 
   @override
   String get abcdFilled => 'Cells';
@@ -1711,7 +1710,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get boatsSubtitle =>
-      'Find the hidden fleet. The counts outside say how many boat cells each row and column holds.';
+      'Place the fleet to match the row and column counts.';
 
   @override
   String get boatsShipsFound => 'Boat cells';
@@ -1730,7 +1729,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get seismicSubtitle =>
-      'Fill every shape with the numbers 1 to its size. Two equal numbers in a line need that many cells between them.';
+      'Fill regions 1..N; equal digits keep N cells apart.';
 
   @override
   String get seismicClues => 'Clues';
@@ -1750,7 +1749,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mathraxSubtitle =>
-      'Fill every row and column with 1 to the side of the board. Each corner clue binds the four cells around it on both diagonals.';
+      'Fill a Latin square obeying every corner rule.';
 
   @override
   String get mathraxFilled => 'Filled';
@@ -1770,7 +1769,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get saladSubtitle =>
-      'Fill every row and column with the letters A to the last one, once each, with the rest holes. A letter on the border is the first one you meet looking into that line.';
+      'Place each letter once per line; edges show first seen.';
 
   @override
   String get saladWritten => 'Written';
@@ -1786,8 +1785,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get romeTitle => 'Rome';
 
   @override
-  String get romeSubtitle =>
-      'One arrow in every cell. No arrow repeats inside an outlined area, and following the arrows from anywhere has to arrive at a circled goal without looping.';
+  String get romeSubtitle => 'Point arrows so every path reaches a goal.';
 
   @override
   String get romeWritten => 'Arrows';
@@ -1803,8 +1801,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ascentTitle => 'Number Path';
 
   @override
-  String get ascentSubtitle =>
-      'Place 1 to the last number once each. Every number touches the one before it, along an edge or a corner.';
+  String get ascentSubtitle => 'Place 1 to N so consecutive numbers touch.';
 
   @override
   String get ascentNext => 'Next';
@@ -1824,7 +1821,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get clustersSubtitle =>
-      'Fill the grid with two colours. A dot marks a cell with exactly one neighbour of its colour; every other cell needs two.';
+      'Two colours: dots touch one mate, others touch two.';
 
   @override
   String get clustersDots => 'Dots';
@@ -1843,8 +1840,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bricksTitle => 'Bricks';
 
   @override
-  String get bricksSubtitle =>
-      'Shade cells of the honeycomb. A shaded cell needs a shaded cell under it, no three shaded cells may sit in a row, and a number counts the shaded cells around it.';
+  String get bricksSubtitle => 'Shade supported cells with no three in a row.';
 
   @override
   String get bricksShaded => 'Shaded';
@@ -2821,7 +2817,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String groceryListMessage(String arg0, Object score) {
+  String groceryListMessage(String arg0) {
     return 'Vous avez marqué $arg0 points dans Liste de courses !';
   }
 
@@ -6513,7 +6509,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sameGameSubtitle =>
-      'Clear a group of two or more to score. Empty the board to win.';
+      'Clear groups of matching blocks to empty the board.';
 
   @override
   String get sameGameCongrats => 'Board cleared. Every square gone.';
@@ -6522,7 +6518,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sameGameLeft => 'Left';
 
   @override
-  String get sameGameStuck => 'No groups left — start a new board.';
+  String get sameGameStuck => 'No groups left. Start a new board.';
 
   @override
   String get galaxiesTitle => 'Galaxies';
@@ -6565,7 +6561,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get crossingSubtitle =>
-      'Lay every number in the list into the grid once, across or down. The cells that cross have to agree, and the cells left over are wall.';
+      'Fit every listed number into the crossing slots.';
 
   @override
   String get crossingPlaced => 'Placed';
@@ -6578,58 +6574,58 @@ class AppLocalizationsFr extends AppLocalizations {
       'Each number once, and every crossing agrees digit for digit.';
 
   @override
-  String get navDeal => 'Deal';
+  String get navDeal => 'Donne';
 
   @override
-  String get navStack => 'Stack';
+  String get navStack => 'Collection';
 
   @override
-  String get navYou => 'You';
+  String get navYou => 'Vous';
 
   @override
-  String get next => 'Next';
+  String get next => 'Suivant';
 
   @override
-  String get nextPuzzle => 'Next puzzle';
+  String get nextPuzzle => 'Puzzle suivant';
 
   @override
-  String get restartPuzzle => 'Restart';
+  String get restartPuzzle => 'Recommencer';
 
   @override
-  String get lockScroll => 'Lock scrolling';
+  String get lockScroll => 'Verrouiller le défilement';
 
   @override
-  String get unlockScroll => 'Unlock scrolling';
+  String get unlockScroll => 'Déverrouiller le défilement';
 
   @override
-  String get feedScrollLocked => 'Scroll locked. Tap the lock to deal again.';
+  String get feedScrollLocked => 'Défilement verrouillé.';
 
   @override
-  String get dealTitle => 'The deal';
+  String get dealTitle => 'La donne';
 
   @override
-  String get dealSubtitle => 'Every puzzle, one card at a time.';
+  String get dealSubtitle => 'Chaque puzzle, une carte à la fois.';
 
   @override
-  String get yourCards => 'Your cards';
+  String get yourCards => 'Vos cartes';
 
   @override
-  String get todaysCard => 'Today\'s card';
+  String get todaysCard => 'Carte du jour';
 
   @override
-  String get quickPlay => 'Under two minutes';
+  String get quickPlay => 'Moins de deux minutes';
 
   @override
-  String get rooms => 'Six rooms';
+  String get rooms => 'Six salles';
 
   @override
   String get puzzles => 'puzzles';
 
   @override
-  String get shuffleCategory => 'Deal this room';
+  String get shuffleCategory => 'Distribuer cette salle';
 
   @override
   String deckProgress(String position, String total) {
-    return '$position of $total';
+    return '$position sur $total';
   }
 }
