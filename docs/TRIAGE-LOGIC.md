@@ -41,45 +41,45 @@ light and `AUDIT_DARK=1`:
 
 | Game | Title | Tier | 2 fair | 5 fresh | 6 app | 7 tap | 8 ends | 9 name | 10 rule |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `abcd` | ABCD | library | pass | pass | audit-clean | pass | pass | shouting | pass |
+| `abcd` | Four Letters | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `akari` | Akari | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `ascent` | Number Path | library | pass | pass | audit-clean | pass | pass | pass | pass |
-| `binary_puzzle` | BINARY PUZZLE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `block_escape` | BLOCK ESCAPE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `binary_puzzle` | Binary Puzzle | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `block_escape` | Block Escape | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `boats` | Boats | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `bricks` | Bricks | library | pass | pass | audit-clean | pass | pass | pass | pass |
-| `bridges` | BRIDGES | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
+| `bridges` | Bridges | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `clusters` | Clusters | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `color_flood` | Color Flood | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `crossing` | Number Crossing | library | pass | pass | audit-clean | pass | pass | pass | pass |
-| `crown` | CROWN | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
-| `cube` | CUBE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `dominosa` | DOMINOSA | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `einstein_riddle` | EINSTEIN RIDDLE | library | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
-| `fillomino` | FILLOMINO | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `futoshiki` | Futoshiki | deck | pass | pass | audit-clean | pass | pass | shouting | pass |
+| `crown` | Crowns | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
+| `cube` | Cube | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `dominosa` | Dominosa | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `einstein_riddle` | House Logic | library | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
+| `fillomino` | Fillomino | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `futoshiki` | Futoshiki | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `galaxies` | Galaxies | deck | pass | pass | audit-clean | pass | pass | pass | pass |
-| `gokigen_naname` | Gokigen Naname | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `gokigen_naname` | Gokigen Naname | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `heyawake` | Heyawake | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `hitori` | HITORI | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `inertia` | INERTIA | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `kakurasu_sums` | Kakurasu Sums | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
-| `kakuro` | Kakuro | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `hitori` | Hitori | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `inertia` | Inertia | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `kakurasu_sums` | Kakurasu Sums | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `kakuro` | Kakuro | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `kurodoko` | Kurodoko | deck | pass | pass | audit-clean | pass | pass | pass | pass |
-| `lighthouses` | LIGHTHOUSES | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
-| `lights_out` | LIGHTS OUT | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
+| `lighthouses` | Lighthouses | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
+| `lights_out` | Lights Out | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `lock_pattern` | Lock Pattern | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `logical_syllogisms` | Logical Syllogisms | library | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `magnets` | MAGNETS | deck | pass | pass | audit-clean | pass | pass | shouting | pass |
-| `map` | MAP | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
-| `masyu` | Masyu Loop | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `magnets` | Magnets | deck | pass | pass | audit-clean | pass | pass | pass | pass |
+| `map` | Four Colours | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `masyu` | Masyu Loop | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mathrax` | Mathrax | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `matrix_reasoning` | Matrix Reasoning | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `minesweeper` | Minesweeper | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
-| `netslide` | NETSLIDE | deck | unproven | pass | audit-clean | pass | pass | shouting | pass |
+| `netslide` | Netslide | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `nonogram` | Nonogram | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `norinori` | Norinori | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
-| `nurikabe` | NURIKABE | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
+| `nurikabe` | Nurikabe | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `path_finder` | Path Finder | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `pegs` | Pegs | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `pipes` | Pipes | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -87,22 +87,22 @@ light and `AUDIT_DARK=1`:
 | `salad` | Salad | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `same_game` | Same Game | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `seismic` | Ripple Effect | library | pass | pass | audit-clean | pass | pass | pass | pass |
-| `shikaku` | Shikaku | deck | unproven | pass | audit-clean | pass | pass | shouting | fail |
-| `signpost` | SIGNPOST | deck | pass | pass | audit-clean | pass | pass | shouting | pass |
-| `skyscrapers` | SKYSCRAPERS | deck | pass | pass | audit-clean | pass | pass | shouting | pass |
-| `slitherlink` | Slitherlink | deck | pass-named-unique | pass | audit-clean | pass | pass | shouting | pass |
+| `shikaku` | Shikaku | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `signpost` | Signpost | deck | pass | pass | audit-clean | pass | pass | pass | pass |
+| `skyscrapers` | Skyscrapers | deck | pass | pass | audit-clean | pass | pass | pass | pass |
+| `slitherlink` | Slitherlink | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `sudoku` | Sudoku | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `symbol_logic` | Symbol Logic | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `tangle_fix` | Tangle Fix | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `tapa` | Tapa | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
-| `tenner_grid` | Tenner Grid | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `tapa` | Tapa | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `tenner_grid` | Tenner Grid | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `tents_and_trees` | Tents & Trees | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `tower_of_london` | Tower of London | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `triplets_logic` | Triplets Trio | library | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `triplets_logic` | Triplets Trio | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `twiddle` | Twiddle | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `water_sort` | Water Sort | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `wisconsin_card_sorting` | Wisconsin Card Sort | library | unproven | pass | audit-clean | pass | pass | fail | pass |
-| `yajilin` | Yajilin | deck | unproven | pass | audit-clean | pass | pass | pass | fail |
+| `wisconsin_card_sorting` | Rule Finder | library | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `yajilin` | Yajilin | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 
 ## What needs a fix job
 
@@ -111,15 +111,13 @@ its own change with its own test. Grouped by the job that fixes it, because the 
 usually one mechanism and not N edits.
 
 - **`uniqueness` — the generator must prove its deal (check 2)** — 33: `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `map`, `masyu`, `matrix_reasoning`, `netslide`, `path_finder`, `pegs`, `pipes`, `same_game`, `shikaku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
-- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 24: `abcd`, `binary_puzzle`, `block_escape`, `bridges`, `crown`, `cube`, `dominosa`, `einstein_riddle`, `fillomino`, `futoshiki`, `hitori`, `inertia`, `kakuro`, `lighthouses`, `lights_out`, `magnets`, `map`, `netslide`, `nurikabe`, `shikaku`, `signpost`, `skyscrapers`, `slitherlink`, `wisconsin_card_sorting`
-- **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 8: `gokigen_naname`, `kakurasu_sums`, `masyu`, `shikaku`, `tapa`, `tenner_grid`, `triplets_logic`, `yajilin`
 
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (26): `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `map`, `masyu`, `netslide`, `pegs`, `pipes`, `same_game`, `shikaku`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `yajilin`
+- winnable, not unique (27): `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `map`, `masyu`, `netslide`, `pegs`, `pipes`, `same_game`, `shikaku`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `yajilin`
 
-- neither proven (7): `kakuro`, `lock_pattern`, `logical_syllogisms`, `matrix_reasoning`, `path_finder`, `symbol_logic`, `wisconsin_card_sorting`
+- neither proven (6): `lock_pattern`, `logical_syllogisms`, `matrix_reasoning`, `path_finder`, `symbol_logic`, `wisconsin_card_sorting`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.

@@ -14,10 +14,10 @@ Two rules for whoever picks these up:
 1. **Every fix ships with a test that would have failed before it.** Every band-1 defect is content
    that was never checked against the game's own rules. A test is the only thing that stops the
    next one.
-2. **Never delete a game.** Grow the table instead. A game that cannot meet the bar is archived
-   (`archived: true`): its code and its tests stay, its card goes. Deleting is the one thing that
-   loses work and the one thing this repo does not do. The catalog counts are written into ten
-   files plus `docs/CATALOG.md`, and `test/content/registry_test.dart` holds them together.
+2. **Never delete a game from the repository.** Quality sets the visible count (`docs/PRODUCT.md`
+   decision 2): a game that cannot meet the bar is archived (`archived: true` in
+   `docs/CATALOG.md`), so its code and tests stay in the repo as material to rebuild while store
+   copy and `test/content/registry_test.dart` count only the games a player can open (`visibleIds`).
 
 ---
 

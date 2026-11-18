@@ -10,7 +10,8 @@ THE DEAL
 
 WHY IT FEELS DIFFERENT
 - One card, one screen, one decision. The rules are a tap away, never a wall of text before the first move.
-- Nothing is a timer where a puzzle should be thought about.
+- Daily Five deals the same five seeded cards to everyone each day, with plain-text result sharing and a daily streak.
+- Three Stack picks and three hints a day are free, along with the endless Deal and today's Daily Five. Puzzlestack Plus is one optional, one-time unlock for unlimited picks, hints, and the full Daily Five archive.
 - Your own times and your streak, against yourself only. No leaderboards, no invented percentiles.
 
 HIGHLIGHTS

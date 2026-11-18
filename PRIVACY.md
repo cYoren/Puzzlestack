@@ -1,6 +1,6 @@
 # Privacy Policy for Puzzlestack
 
-**Last updated: 11 November 2026**
+**Last updated: 18 November 2026**
 
 Published at <https://cyoren.github.io/Puzzlestack/privacy.html>. The published page is
 `docs/privacy.html`; change both together.
@@ -16,12 +16,22 @@ app can remember your progress between sessions:
 
 - A nickname you choose during onboarding (you may enter anything, including a
   random one the app suggests).
-- Your experience points, level, and total puzzles solved.
-- Per-puzzle streaks and the dates you last solved them.
-- Your favourite puzzles and app settings, such as theme and trial mode.
+- Your experience points, level, solve times, and total puzzles solved.
+- Per-puzzle streaks, Daily Five completion times and streaks, and daily free
+  pick and hint counters.
+- Your favourite and hidden puzzles, saved difficulty choices, app settings such
+  as theme, and whether your device owns Puzzlestack Plus.
 
 This data never leaves your device. It is not uploaded to us or to anyone else,
 because Puzzlestack has no server to upload it to.
+
+## In-app purchase
+
+Puzzlestack offers one optional, one-time purchase (`Puzzlestack Plus`). When
+you buy or restore Puzzlestack Plus, the payment and receipt check are processed
+directly by Apple (App Store) or Google (Google Play) under their respective
+privacy policies. Puzzlestack never receives your name, billing address, or
+payment details, and records only a local unlock flag on your device.
 
 ## What Puzzlestack does not do
 

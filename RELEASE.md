@@ -59,15 +59,31 @@ Verified against the source, not assumed:
 
 Basis for those answers:
 
-- All state is local, via Hive: nickname, XP, level, totals, per-game streaks,
-  favourites, and settings. See `lib/data/models/`.
-- There is no networking code anywhere in `lib/`, and no ads, analytics,
-  attribution, or crash-reporting SDK in `pubspec.yaml`.
-- `android.permission.INTERNET` is declared but currently unused by app code.
-  It is retained for Shorebird OTA updates (see below).
+- All state is local, via Hive and SharedPreferences: nickname, XP, level,
+  solve times, totals, per-game streaks, Daily Five progress and streaks, daily
+  pick and hint counters, favourites, hidden puzzles, difficulty preferences,
+  theme settings, and the local Puzzlestack Plus entitlement row.
+- In-app purchase (`puzzlestack_plus`, one-time non-consumable) uses platform
+  billing (`in_app_purchase`: Google Play Billing on Android, StoreKit on iOS).
+  Apple and Google process the payment directly; Puzzlestack operates no server
+  and receives no personal or payment data.
+- There is no developer server, analytics SDK, advertising SDK, attribution
+  SDK, or crash-reporting SDK in `pubspec.yaml`.
+- `android.permission.INTERNET` and `com.android.vending.BILLING` are used only
+  by the platform store billing client (`Shorebird` stays off for `1.1.0`).
 
-If any of that changes, update this file, `PRIVACY.md`, and the Data Safety
-form together — they must agree.
+If any of that changes, update this file, `PRIVACY.md`, `docs/privacy.html`,
+and the Data Safety form together.
+
+## In-app purchase (`puzzlestack_plus`)
+
+| Field | Value |
+| --- | --- |
+| Product ID | `puzzlestack_plus` |
+| Type | Non-consumable (one-time purchase) |
+| Base price | US$4.99 (175 App Store territories / 174 Google Play regions) |
+| App Store Connect | Created (`6836154241`, `READY_TO_SUBMIT`, review screenshot attached) |
+| Google Play | Create and activate immediately after uploading the first `1.1.0+16` AAB (which adds `com.android.vending.BILLING`): `gplay onetimeproducts create --package com.medhub.puzzlestack --product-id puzzlestack_plus --json @tool/play_puzzlestack_plus.json --regions-version "2026/01"` followed by `gplay purchase-options batch-update-states --package com.medhub.puzzlestack --product-id puzzlestack_plus --json '{"requests":[{"activatePurchaseOptionRequest":{"packageName":"com.medhub.puzzlestack","productId":"puzzlestack_plus","purchaseOptionId":"default"}}]}'` |
 
 ## Shorebird (OTA updates)
 
