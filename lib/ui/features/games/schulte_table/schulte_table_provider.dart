@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../providers/user_providers.dart';
+import '../../feed/feed_session.dart';
 import 'schulte_table_engine.dart';
 
 part 'schulte_table_provider.g.dart';
@@ -48,7 +49,11 @@ class SchulteTableNotifier extends _$SchulteTableNotifier {
   @override
   SchulteTableState build() {
     ref.onDispose(() => _timer?.cancel());
-    return SchulteTableState(grid: _engine.generateGrid());
+    return SchulteTableState(
+      grid: _engine.generateGrid(
+        random: FeedSession.randomFor('schulte_table'),
+      ),
+    );
   }
 
   void startGame() {
@@ -104,7 +109,9 @@ class SchulteTableNotifier extends _$SchulteTableNotifier {
   void reset() {
     _timer?.cancel();
     state = SchulteTableState(
-      grid: _engine.generateGrid(),
+      grid: _engine.generateGrid(
+        random: FeedSession.randomFor('schulte_table'),
+      ),
       bestTime: state.bestTime,
     );
   }

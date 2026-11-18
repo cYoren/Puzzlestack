@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../providers/daily_five_providers.dart';
 import '../../../widgets/deck.dart';
 import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
@@ -63,6 +64,7 @@ class _MainShellState extends ConsumerState<MainShell>
     if (_lastCheckedDate == null || today != _lastCheckedDate) {
       _lastCheckedDate = today;
       ref.read(gameStreakNotifierProvider.notifier).refreshStatus();
+      ref.read(dailyFiveProvider.notifier).refresh();
     }
   }
 
@@ -77,6 +79,7 @@ class _MainShellState extends ConsumerState<MainShell>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       ref.read(gameStreakNotifierProvider.notifier).refreshStatus();
+      ref.read(dailyFiveProvider.notifier).refresh();
     }
   }
 
@@ -104,6 +107,7 @@ class _MainShellState extends ConsumerState<MainShell>
         0,
         FeedScreen(
           startGameId: widget.startGameId,
+          isActive: _selectedIndex == 0,
           onBrowse: short ? () => _select(1) : null,
         ),
       ),

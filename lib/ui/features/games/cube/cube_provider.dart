@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
 import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'cube_engine.dart';
 
 part 'cube_provider.g.dart';
@@ -58,7 +59,10 @@ class CubeNotifier extends _$CubeNotifier {
       );
 
   CubeState _newPuzzle(CubeDifficulty difficulty) {
-    final puzzle = _engine.generate(difficulty);
+    final puzzle = _engine.generate(
+      difficulty,
+      random: FeedSession.randomFor('cube'),
+    );
     return CubeState(
       puzzle: puzzle,
       position: _engine.startOf(puzzle),

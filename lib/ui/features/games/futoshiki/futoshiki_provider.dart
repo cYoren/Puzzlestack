@@ -5,6 +5,7 @@ import '../../../../core/deduction.dart';
 import '../../../../core/latin.dart';
 import '../../../core/board/puzzle_board.dart';
 import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'futoshiki_engine.dart';
 
 part 'futoshiki_provider.g.dart';
@@ -98,7 +99,10 @@ class FutoshikiNotifier extends _$FutoshikiNotifier {
       );
 
   FutoshikiState _newPuzzle(FutoshikiDifficulty difficulty) {
-    final puzzle = _engine.generate(difficulty);
+    final puzzle = _engine.generate(
+      difficulty,
+      random: FeedSession.randomFor('futoshiki'),
+    );
     final values = List<int>.filled(puzzle.n * puzzle.n, 0);
     puzzle.givens.forEach((cell, value) => values[cell] = value);
     return FutoshikiState(

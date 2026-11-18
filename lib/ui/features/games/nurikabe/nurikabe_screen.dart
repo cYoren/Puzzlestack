@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import '../../../../../providers/user_providers.dart';
 import '../../../../../utils/haptic_feedback.dart';
+import '../../../core/assist/hint_request.dart';
 import '../../../core/juice/game_scaffold.dart';
 import '../../../../widgets/game_completion_dialog.dart';
 import '../../../../widgets/tangible.dart';
@@ -127,7 +128,7 @@ class _NurikabeScreenState extends ConsumerState<NurikabeScreen> {
                 color: colorScheme.surface,
                 shadowColor: colorScheme.outline,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                onTap: () => notifier.showHint(),
+                onTap: () => requestHint(context, ref, notifier.showHint),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

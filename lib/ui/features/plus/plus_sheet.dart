@@ -11,13 +11,13 @@ import '../../../widgets/tangible.dart';
 /// Why the sheet is open. It changes the headline and nothing else, so there is
 /// exactly one paywall in the app and it always says the same thing about what
 /// Plus is.
-enum PlusReason { picks }
+enum PlusReason { picks, hints, dailyArchive }
 
 /// The one paywall.
 ///
-/// This is the only place in the app that can start a purchase, and it is only
-/// ever opened by the pick gate, on the fourth pick of a day. It shows the
-/// store's price, never ours, and it can always restore.
+/// This is the only place in the app that can start a purchase, opened on the
+/// fourth pick or fourth hint of a day, or when opening a past Daily Five. It
+/// shows the store's price, never ours, and it can always restore.
 ///
 /// Returns true when Plus is owned by the time it closes, so the caller can
 /// carry on with what the player was doing.
@@ -29,7 +29,7 @@ Future<bool> showPlusSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (sheetContext) => const _PlusSheet(),
+    builder: (sheetContext) => _PlusSheet(reason: reason),
   );
   if (owned != null) return owned;
   if (!context.mounted) return false;
@@ -39,7 +39,9 @@ Future<bool> showPlusSheet(
 }
 
 class _PlusSheet extends ConsumerStatefulWidget {
-  const _PlusSheet();
+  const _PlusSheet({required this.reason});
+
+  final PlusReason reason;
 
   @override
   ConsumerState<_PlusSheet> createState() => _PlusSheetState();
@@ -55,6 +57,39 @@ class _PlusSheetState extends ConsumerState<_PlusSheet> {
       ref.read(plusProvider.notifier).clearNotice();
       ref.read(plusProvider.notifier).ensurePrice();
     });
+  }
+
+  String _headline(PlusState state) {
+    if (state.ownsPlus) return 'Plus is yours.';
+    switch (widget.reason) {
+      case PlusReason.picks:
+        return 'Choose any game, any time.';
+      case PlusReason.hints:
+        return 'Unlimited hints, whenever you want one.';
+      case PlusReason.dailyArchive:
+        return 'Play any Daily Five in the archive.';
+    }
+  }
+
+  String _body(PlusState state) {
+    if (state.ownsPlus) {
+      return 'Unlimited picks, unlimited hints, and every past Daily Five, '
+          'on this store account, for good.';
+    }
+    switch (widget.reason) {
+      case PlusReason.picks:
+        return 'Three picks and three hints a day are free, along with '
+            'today\'s Daily Five. Plus makes picks and hints unlimited and '
+            'opens every past Daily Five. One purchase, no subscription.';
+      case PlusReason.hints:
+        return 'Three hints and three picks a day are free, along with '
+            'today\'s Daily Five. Plus makes hints and picks unlimited and '
+            'opens every past Daily Five. One purchase, no subscription.';
+      case PlusReason.dailyArchive:
+        return 'Today\'s Daily Five is free, along with three picks and three '
+            'hints a day. Plus opens every past Daily Five and makes picks '
+            'and hints unlimited. One purchase, no subscription.';
+    }
   }
 
   @override
@@ -88,23 +123,27 @@ class _PlusSheetState extends ConsumerState<_PlusSheet> {
                 children: [
                   const DeckMark(size: 22),
                   const SizedBox(width: 10),
-                  Text(
-                    'PUZZLESTACK PLUS',
-                    style: TextStyle(
-                      fontFamily: 'Bebas Neue',
-                      fontSize: DesignSystem.fontSizeLG,
-                      letterSpacing: 1.4,
-                      height: 1,
-                      color: colors.onSurface,
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'PUZZLESTACK PLUS',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: DesignSystem.fontSizeLG,
+                          letterSpacing: 1.4,
+                          height: 1,
+                          color: colors.onSurface,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: DesignSystem.spaceMD),
               Text(
-                state.ownsPlus
-                    ? 'Plus is yours.'
-                    : 'Choose any game, any time.',
+                _headline(state),
                 style: TextStyle(
                   fontFamily: 'Bebas Neue',
                   fontSize: DesignSystem.fontSize3XL,
@@ -115,11 +154,7 @@ class _PlusSheetState extends ConsumerState<_PlusSheet> {
               ),
               const SizedBox(height: DesignSystem.spaceSM),
               Text(
-                state.ownsPlus
-                    ? 'Unlimited picks, on this store account, for good.'
-                    : 'Three picks a day are free. Plus makes them unlimited: '
-                        'open the game you want, at the size you want, as often '
-                        'as you like. One purchase, no subscription.',
+                _body(state),
                 style: TextStyle(
                   fontSize: DesignSystem.fontSizeSM,
                   height: 1.45,
@@ -176,16 +211,22 @@ class _PlusSheetState extends ConsumerState<_PlusSheet> {
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
       children: [
-        Text(
-          price ?? 'Price at checkout',
-          style: TextStyle(
-            fontFamily: 'Bebas Neue',
-            fontSize: price == null
-                ? DesignSystem.fontSizeLG
-                : DesignSystem.fontSize3XL,
-            height: 1,
-            letterSpacing: 0.4,
-            color: Theme.of(context).colorScheme.onSurface,
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              price ?? 'Price at checkout',
+              style: TextStyle(
+                fontFamily: 'Bebas Neue',
+                fontSize: price == null
+                    ? DesignSystem.fontSizeLG
+                    : DesignSystem.fontSize3XL,
+                height: 1,
+                letterSpacing: 0.4,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
           ),
         ),
         if (price != null) ...[
@@ -357,8 +398,8 @@ class PlusSettingsRow extends ConsumerWidget {
                   ),
                   Text(
                     state.ownsPlus
-                        ? 'Owned: unlimited picks'
-                        : '$freePicksPerDay free picks a day',
+                        ? 'Owned: unlimited picks, hints, and Daily Five archive'
+                        : '$freePicksPerDay free picks and hints a day',
                     style: TextStyle(
                       fontSize: DesignSystem.fontSize2XS,
                       color: muted,

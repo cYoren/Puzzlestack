@@ -1,7 +1,12 @@
+import 'dart:math';
+
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+
+import '../../../../providers/game_tier_provider.dart';
 import '../../../core/board/puzzle_board.dart';
+import '../../feed/feed_session.dart';
 import 'sudoku_engine.dart';
 
 part 'sudoku_provider.g.dart';
@@ -43,19 +48,43 @@ class SudokuState extends PuzzleState {
 @riverpod
 class SudokuNotifier extends _$SudokuNotifier {
   static const int boardSize = 9;
+  static const int feedBoardSize = 4;
+  static const int feedClues = 8;
+  static const int stackClues = 35;
 
   @override
   Future<SudokuState> build() async {
+    ref.watch(tierRevisionProvider('sudoku'));
     return _generateNewGame();
   }
 
   Future<SudokuState> _generateNewGame() async {
-    final solved = await compute(SudokuEngine.generateFullBoard, null);
+    final bool inFeed = FeedSession.inFeed;
+    final int? seed = FeedSession.seedOf('sudoku');
+    if (inFeed) {
+      final engine = SudokuEngine(
+        boardSize: feedBoardSize,
+        random: seed == null ? null : Random(seed),
+      );
+      final solved = engine.generateBoard();
+      final puzzle = engine.createPuzzle(solved, feedClues);
+      return SudokuState(
+        initialBoard: puzzle.map((r) => r.lock).toIList(),
+        currentBoard: puzzle.map((r) => r.lock).toIList(),
+        solvedBoard: solved.map((r) => r.lock).toIList(),
+      );
+    }
+
+    final solved = await compute(SudokuEngine.generateFullBoard, {
+      'size': boardSize,
+      'seed': seed,
+    });
     final puzzle = await compute(SudokuEngine.generateInitialPuzzle, {
       'solved': solved,
-      'clues': 35,
+      'clues': stackClues,
+      'seed': seed == null ? null : seed ^ 0x5A17,
     });
-    
+
     return SudokuState(
       initialBoard: puzzle.map((r) => r.lock).toIList(),
       currentBoard: puzzle.map((r) => r.lock).toIList(),
@@ -86,7 +115,56 @@ class SudokuNotifier extends _$SudokuNotifier {
     for (final line in board) {
       if (line.contains(0)) return false;
     }
-    return SudokuEngine().isCorrect(board, board);
+    return SudokuEngine(boardSize: board.length).isCorrect(board, board);
+  }
+
+  /// Reveals one deducible step (preferring a cell with the fewest legal
+  /// candidates) and selects that cell.
+  void hint() {
+    if (!state.hasValue) return;
+    final current = state.value!;
+    if (current.isSolved) return;
+
+    final int n = current.currentBoard.length;
+    int? bestRow;
+    int? bestCol;
+    int bestCandidates = n + 1;
+
+    for (int r = 0; r < n; r++) {
+      for (int c = 0; c < n; c++) {
+        if (current.initialBoard[r][c] != 0) continue;
+        final int val = current.currentBoard[r][c];
+        final int answer = current.solvedBoard[r][c];
+        if (val == answer) continue;
+        int candidates = 0;
+        for (int d = 1; d <= n; d++) {
+          if (SudokuEngine.isValid(current.currentBoard, r, c, d)) {
+            candidates++;
+          }
+        }
+        if (candidates < bestCandidates) {
+          bestCandidates = candidates;
+          bestRow = r;
+          bestCol = c;
+          if (candidates <= 1) break;
+        }
+      }
+      if (bestCandidates <= 1 && bestRow != null) break;
+    }
+
+    if (bestRow == null || bestCol == null) return;
+    final nextBoard = [
+      for (final line in current.currentBoard) line.toList(),
+    ];
+    nextBoard[bestRow][bestCol] = current.solvedBoard[bestRow][bestCol];
+    final nextState = current.copyWith(
+      currentBoard: nextBoard.map((r) => r.lock).toIList(),
+      selectedRow: bestRow,
+      selectedCol: bestCol,
+    );
+    state = AsyncValue.data(
+      nextState.copyWith(isSolved: _isSolved(nextState)),
+    );
   }
 
   /// Fills the board with the answer.

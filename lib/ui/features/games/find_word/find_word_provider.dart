@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../feed/feed_session.dart';
 import 'find_word_engine.dart';
 
 part 'find_word_provider.g.dart';
@@ -71,7 +72,10 @@ class FindWordNotifier extends _$FindWordNotifier {
   Future<void> initGame() async {
     _validGuesses = await _engine.loadWords();
     final answers = await _engine.loadAnswers();
-    final target = _engine.getRandomWord(answers);
+    final target = _engine.getRandomWord(
+      answers,
+      random: FeedSession.randomFor('find_word'),
+    );
     state = FindWordState(
       targetWord: target,
       guesses: [],

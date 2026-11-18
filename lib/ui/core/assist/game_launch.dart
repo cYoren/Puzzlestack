@@ -10,6 +10,7 @@ import '../../../providers/game_tier_provider.dart';
 import '../../../providers/pick_providers.dart';
 import '../../../utils/navigation_utils.dart';
 import '../../../widgets/game_guide_screen.dart';
+import '../../features/feed/feed_session.dart';
 import '../../features/home/stack_chooser_sheet.dart';
 import '../../features/plus/plus_sheet.dart';
 import '../juice/game_scope.dart';
@@ -49,7 +50,7 @@ Future<void> launchGame(
     // again; buying removes that preview route and continues through the shared
     // flow below, so a ladder game still offers its size choice and every game
     // starts with a fresh clock.
-    final Route<void> backdrop = _open(context, game);
+    final Route<void> backdrop = _open(context, ref, game);
     final bool bought = await showPlusSheet(context);
     if (!context.mounted) return;
     if (!bought) {
@@ -116,16 +117,21 @@ Future<void> launchGame(
   await gate.commit(game.id, decision);
   if (!context.mounted) return;
 
-  _open(context, game);
+  _open(context, ref, game);
 }
 
 /// The game itself. The id travels with the page: four games share a localised
 /// title, and a screen that resolves to the wrong registry entry gets the wrong
 /// guide, the wrong assists, and a clock that `completeGame` can never stop.
-Route<void> _open(BuildContext context, GameMetadata game) {
+Route<void> _open(BuildContext context, WidgetRef ref, GameMetadata game) {
+  final VoidCallback releaseFeed = FeedSession.suspend();
+  if (!offersTierChoice(game.id)) {
+    ref.read(tierRevisionProvider(game.id).notifier).state++;
+  }
   final Route<void> route = CustomPageRoute<void>(
     page: GameScope(gameId: game.id, child: game.builder(context)),
   );
+  route.popped.whenComplete(releaseFeed);
   Navigator.of(context).push(route);
   return route;
 }

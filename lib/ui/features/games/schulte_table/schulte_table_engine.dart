@@ -6,10 +6,10 @@ class SchulteTableEngine {
 
   SchulteTableEngine({this.size = 5});
 
-  List<int> generateGrid() {
+  List<int> generateGrid({Random? random}) {
     final int count = size * size;
     final List<int> numbers = List.generate(count, (i) => i + 1);
-    numbers.shuffle(_random);
+    numbers.shuffle(random ?? _random);
     return numbers;
   }
 

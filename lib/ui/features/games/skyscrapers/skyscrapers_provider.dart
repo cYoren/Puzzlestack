@@ -5,6 +5,7 @@ import '../../../../core/deduction.dart';
 import '../../../../core/latin.dart';
 import '../../../core/board/puzzle_board.dart';
 import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'skyscrapers_engine.dart';
 
 part 'skyscrapers_provider.g.dart';
@@ -98,7 +99,10 @@ class SkyscrapersNotifier extends _$SkyscrapersNotifier {
       );
 
   SkyscrapersState _newPuzzle(SkyscrapersDifficulty difficulty) {
-    final puzzle = _engine.generate(difficulty);
+    final puzzle = _engine.generate(
+      difficulty,
+      random: FeedSession.randomFor('skyscrapers'),
+    );
     return SkyscrapersState(
       puzzle: puzzle,
       values: List<int>.filled(puzzle.n * puzzle.n, 0),

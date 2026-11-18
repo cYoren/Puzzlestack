@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
 import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'twiddle_engine.dart';
 
 part 'twiddle_provider.g.dart';
@@ -64,7 +65,10 @@ class TwiddleNotifier extends _$TwiddleNotifier {
       );
 
   TwiddleState _newPuzzle(TwiddleDifficulty difficulty) {
-    final puzzle = _engine.generate(difficulty: difficulty);
+    final puzzle = _engine.generate(
+      difficulty: difficulty,
+      random: FeedSession.randomFor('twiddle'),
+    );
     return TwiddleState(
       puzzle: puzzle,
       grid: puzzle.start,

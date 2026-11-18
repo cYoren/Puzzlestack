@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../providers/game_tier_provider.dart';
 import '../../../../providers/user_providers.dart';
+import '../../feed/feed_session.dart';
 import 'nonogram_engine.dart';
 
 part 'nonogram_provider.g.dart';
@@ -36,14 +38,14 @@ class NonogramState {
 
 @riverpod
 class NonogramNotifier extends _$NonogramNotifier {
-  /// The size a board opens at. Nothing can change it yet, so it is a constant
-  /// rather than a setting: the difficulty ladder (`difficulty-ladder`) is what
-  /// will pass a size in here.
+  static const int feedSize = 5;
   static const int defaultSize = 8;
 
   @override
   Future<NonogramState> build() async {
-    return _generateInitialState(defaultSize);
+    ref.watch(tierRevisionProvider('nonogram'));
+    final int size = FeedSession.inFeed ? feedSize : defaultSize;
+    return _generateInitialState(size);
   }
 
   Future<NonogramState> _generateInitialState(int size) async {

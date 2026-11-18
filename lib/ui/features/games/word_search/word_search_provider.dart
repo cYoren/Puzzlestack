@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'word_search_engine.dart';
 import 'package:flutter/services.dart';
 
@@ -38,36 +40,38 @@ class WordSearchState {
 class WordSearchNotifier extends _$WordSearchNotifier {
   @override
   WordSearchState build() {
+    ref.watch(tierRevisionProvider('word_search'));
     return WordSearchState();
   }
 
   Future<void> initGame() async {
-    List<String> selectedWords = [];
-    
-    try {
-      // Load the dedicated asset
-      final String response = await rootBundle.loadString('assets/word_search_words.txt');
+    final bool inFeed = FeedSession.inFeed;
+    final int targetSize =
+        inFeed ? WordSearchEngine.feedBoardSize : WordSearchEngine.boardSize;
+    final int targetWords = inFeed ? WordSearchEngine.feedMaxWords : 8;
+    final int? seed = FeedSession.seedOf('word_search');
+    final Random rng = seed == null ? Random() : Random(seed);
 
-      // Process and filter the list
+    List<String> selectedWords = [];
+
+    try {
+      final String response =
+          await rootBundle.loadString('assets/word_search_words.txt');
+
       final List<String> allWords = response
           .split('\n')
           .map((w) => w.trim().toUpperCase())
-          // The board is 10x10, so a 10-letter word fits exactly once per
-          // line. The old 4..8 cap silently dropped every 9- and 10-letter
-          // entry in the asset, which made a third of the list unreachable.
-          .where((w) => w.length >= 4 && w.length <= 10)
+          .where((w) => w.length >= 4 && w.length <= targetSize)
           .toList();
 
       if (allWords.isNotEmpty) {
-        // Pick 15 random candidates to give the engine options
-        allWords.shuffle();
+        allWords.shuffle(rng);
         selectedWords = allWords.take(15).toList();
       }
     } catch (e) {
       // Fallback handled below
     }
 
-    // Fallback if asset loading fails or results in empty list
     if (selectedWords.isEmpty) {
       selectedWords = [
         'APPLE',
@@ -79,11 +83,19 @@ class WordSearchNotifier extends _$WordSearchNotifier {
         'GALAXY',
         'HONEY',
         'ISLAND',
-        'JUNGLE'
-      ];
+        'JUNGLE',
+      ].where((w) => w.length <= targetSize).toList();
     }
 
-    final board = await compute(WordSearchEngine.generateBoard, selectedWords);
+    final config = WordSearchConfig(
+      candidates: selectedWords,
+      size: targetSize,
+      maxWords: targetWords,
+      seed: seed == null ? null : seed ^ 0x3C91,
+    );
+    final board = inFeed
+        ? WordSearchEngine.generateWithConfig(config)
+        : await compute(WordSearchEngine.generateWithConfig, config);
     state = WordSearchState(board: board);
   }
 

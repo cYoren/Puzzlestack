@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
 import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'signpost_engine.dart';
 
 part 'signpost_provider.g.dart';
@@ -81,7 +82,10 @@ class SignpostNotifier extends _$SignpostNotifier {
       );
 
   SignpostState _newPuzzle(SignpostDifficulty difficulty) {
-    final puzzle = _engine.generate(difficulty);
+    final puzzle = _engine.generate(
+      difficulty,
+      random: FeedSession.randomFor('signpost'),
+    );
     return SignpostState(
       puzzle: puzzle,
       links: List<int>.filled(puzzle.cellCount, -1),

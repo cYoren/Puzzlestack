@@ -1,13 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/key_value_store.dart';
+import '../data/picks/hint_gate.dart';
+import '../data/picks/hint_ledger.dart';
 import '../data/picks/pick_gate.dart';
 import '../data/picks/pick_ledger.dart';
 import 'plus_providers.dart';
 
-/// Where today's picks and the "ever opened" list live. Overridden in `main`
-/// with the opened Hive box; the memory default keeps tests and a broken disk
-/// working.
+/// Where today's picks, today's hints and the "ever opened" list live.
+/// Overridden in `main` with the opened Hive box; the memory default keeps
+/// tests and a broken disk working.
 final Provider<KeyValueStore> pickStoreProvider = Provider<KeyValueStore>(
   (ref) => MemoryKeyValueStore(),
 );
@@ -19,6 +21,14 @@ final Provider<KeyValueStore> pickStoreProvider = Provider<KeyValueStore>(
 final Provider<PickGate> pickGateProvider = Provider<PickGate>(
   (ref) => PickGate(
     ledger: PickLedger(ref.watch(pickStoreProvider)),
+    hasPlus: () => ref.read(plusProvider).ownsPlus,
+  ),
+);
+
+/// The one gate every hint button passes through.
+final Provider<HintGate> hintGateProvider = Provider<HintGate>(
+  (ref) => HintGate(
+    ledger: HintLedger(ref.watch(pickStoreProvider)),
     hasPlus: () => ref.read(plusProvider).ownsPlus,
   ),
 );
