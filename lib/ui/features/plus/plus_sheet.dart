@@ -31,7 +31,11 @@ Future<bool> showPlusSheet(
     backgroundColor: Colors.transparent,
     builder: (sheetContext) => const _PlusSheet(),
   );
-  return owned ?? false;
+  if (owned != null) return owned;
+  if (!context.mounted) return false;
+  return ProviderScope.containerOf(context, listen: false)
+      .read(plusProvider)
+      .ownsPlus;
 }
 
 class _PlusSheet extends ConsumerStatefulWidget {

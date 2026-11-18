@@ -1,9 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/data/game_metadata.dart';
 import 'package:puzzle/data/game_tiers.dart';
 import 'package:puzzle/data/key_value_store.dart';
+import 'package:puzzle/data/picks/pick_gate.dart';
+import 'package:puzzle/data/purchase/plus_gateway.dart';
 import 'package:puzzle/providers/game_tier_provider.dart';
+import 'package:puzzle/providers/pick_providers.dart';
+import 'package:puzzle/providers/plus_providers.dart';
+import 'package:puzzle/ui/core/assist/game_launch.dart';
 import 'package:puzzle/ui/features/home/stack_chooser_sheet.dart';
 import 'package:puzzle/ui/features/games/cube/cube_engine.dart';
 import 'package:puzzle/ui/features/games/cube/cube_provider.dart';
@@ -174,11 +182,47 @@ void main() {
       expect(container.read(cubeNotifierProvider).difficulty,
           CubeDifficulty.medium);
 
-      // The launch bumps the revision, and the board that is opening is rebuilt
-      // at the size the player just picked.
-      container.read(tierRevisionProvider.notifier).state++;
+      // The launch bumps this game's revision, and the board that is opening is
+      // rebuilt at the size the player just picked.
+      container.read(tierRevisionProvider('cube').notifier).state++;
       expect(
           container.read(cubeNotifierProvider).difficulty, CubeDifficulty.hard);
+    });
+
+    test('choosing a size for one game leaves every other live board untouched',
+        () async {
+      final MemoryKeyValueStore rows = MemoryKeyValueStore();
+      final ProviderContainer container = ProviderContainer(
+        overrides: <Override>[
+          gameTierStoreProvider.overrideWithValue(GameTierStore(rows)),
+        ],
+      );
+      addTearDown(container.dispose);
+      container.listen(cubeNotifierProvider, (_, __) {}, fireImmediately: true);
+      container.listen(
+        dominosaNotifierProvider,
+        (_, __) {},
+        fireImmediately: true,
+      );
+
+      final CubeState cubeInDeal = container.read(cubeNotifierProvider);
+      expect(
+        container.read(dominosaNotifierProvider).difficulty,
+        DominosaDifficulty.medium,
+      );
+
+      await GameTierStore(rows).remember('dominosa', 'hard');
+      container.read(tierRevisionProvider('dominosa').notifier).state++;
+
+      expect(
+        container.read(dominosaNotifierProvider).difficulty,
+        DominosaDifficulty.hard,
+      );
+      expect(
+        identical(container.read(cubeNotifierProvider), cubeInDeal),
+        isTrue,
+        reason: 'opening Dominosa from Stack must not re-deal Cube in the Deal',
+      );
     });
 
     test('is one row per game, beside the first-play flag', () {
@@ -306,7 +350,149 @@ void main() {
 
       expect(GameTierStore(rows).tierFor('cube'), isNull);
     });
+
+    testWidgets(
+      'buying Plus on a fourth pick continues into the size chooser and opens at that size',
+      (tester) async {
+        final MemoryKeyValueStore rows = MemoryKeyValueStore();
+        final ProviderContainer container = _plusLaunchContainer(rows);
+        addTearDown(container.dispose);
+
+        // Dominosa is held by the Deal behind the tabs; Cube has been played
+        // and today's three picks are spent.
+        container.listen(
+          dominosaNotifierProvider,
+          (_, __) {},
+          fireImmediately: true,
+        );
+        final DominosaState dominosaInDeal =
+            container.read(dominosaNotifierProvider);
+        final PickGate picks = container.read(pickGateProvider);
+        await picks.request('cube');
+        for (int i = 0; i < 3; i++) {
+          await picks.request('cube');
+        }
+
+        await tester.pumpWidget(_launchHarness(container));
+        await tester.tap(find.text('launch-cube'));
+        await tester.pumpAndSettle();
+
+        // Paywall sits over the preview board.
+        expect(find.text('PUZZLESTACK PLUS'), findsOneWidget);
+        await tester.tap(find.text('GET PLUS'));
+        await tester.pumpAndSettle();
+
+        // Buying Plus continues straight into the size chooser rather than
+        // stranding the player on the preview tier.
+        expect(find.text('Choose a size'), findsOneWidget);
+        await tester.tap(find.text('Hard'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('board:hard'), findsOneWidget);
+        expect(GameTierStore(rows).tierFor('cube'), 'hard');
+        expect(
+          identical(container.read(dominosaNotifierProvider), dominosaInDeal),
+          isTrue,
+        );
+      },
+    );
+
+    testWidgets(
+      'closing the size chooser after buying Plus leaves no preview board open',
+      (tester) async {
+        final MemoryKeyValueStore rows = MemoryKeyValueStore();
+        final ProviderContainer container = _plusLaunchContainer(rows);
+        addTearDown(container.dispose);
+
+        final PickGate picks = container.read(pickGateProvider);
+        await picks.request('cube');
+        for (int i = 0; i < 3; i++) {
+          await picks.request('cube');
+        }
+
+        await tester.pumpWidget(_launchHarness(container));
+        await tester.tap(find.text('launch-cube'));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('GET PLUS'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Choose a size'), findsOneWidget);
+        await tester.tap(find.text('Not now'));
+        await tester.pumpAndSettle();
+
+        expect(container.read(plusProvider).ownsPlus, isTrue);
+        expect(find.textContaining('board:'), findsNothing);
+        expect(find.text('launch-cube'), findsOneWidget);
+      },
+    );
   });
+}
+
+class _InstantPlusStore implements PlusGateway {
+  final StreamController<PurchaseEvent> _events =
+      StreamController<PurchaseEvent>.broadcast();
+
+  @override
+  Stream<PurchaseEvent> get events => _events.stream;
+
+  @override
+  Future<String?> price() async => 'US\$4.99';
+
+  @override
+  Future<PurchaseAnswer> buy() async => PurchaseAnswer.purchased;
+
+  @override
+  Future<RestoreAnswer> restore() async => RestoreAnswer.owned;
+
+  @override
+  Future<void> completePurchase(PurchaseEvent event) async {}
+
+  @override
+  Future<void> dispose() async => _events.close();
+}
+
+ProviderContainer _plusLaunchContainer(MemoryKeyValueStore rows) =>
+    ProviderContainer(
+      overrides: <Override>[
+        gameTierStoreProvider.overrideWithValue(GameTierStore(rows)),
+        pickStoreProvider.overrideWithValue(rows),
+        plusStoreProvider.overrideWithValue(rows),
+        plusGatewayProvider.overrideWithValue(_InstantPlusStore.new),
+      ],
+    );
+
+Widget _launchHarness(ProviderContainer container) {
+  final GameMetadata cubeMeta = GameMetadata(
+    id: 'cube',
+    category: 'logic',
+    icon: Icons.check_box_outline_blank,
+    color: Colors.blue,
+    titleGetter: (_) => 'Cube',
+    subtitleGetter: (_) => 'Roll the cube',
+    builder: (_) => Consumer(
+      builder: (_, WidgetRef ref, __) {
+        final CubeState state = ref.watch(cubeNotifierProvider);
+        return Scaffold(
+            body: Center(child: Text('board:${state.difficulty.name}')));
+      },
+    ),
+  );
+  return UncontrolledProviderScope(
+    container: container,
+    child: MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Consumer(
+            builder: (BuildContext context, WidgetRef ref, _) => TextButton(
+              onPressed: () => launchGame(context, ref, cubeMeta),
+              child: const Text('launch-cube'),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 GameLadder _ladderOf(String gameId) => gameLadders[gameId]!;

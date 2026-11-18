@@ -40,18 +40,31 @@ Future<void> launchGame(
   // (the player closes the rules page or the size chooser), and a pick spent on
   // an opening that never happened is a pick taken for nothing.
   final PickGate gate = ref.read(pickGateProvider);
-  final PickDecision decision = await gate.preview(game.id);
+  PickDecision decision = await gate.preview(game.id);
   if (!context.mounted) return;
 
   if (decision is PickRefused) {
     // The board is opened first, so the sheet sits over the game the player is
     // being asked to pay for rather than over a list. Declining closes it
-    // again; there is no lock on the tile and nothing is lost.
-    _open(context, game);
+    // again; buying removes that preview route and continues through the shared
+    // flow below, so a ladder game still offers its size choice and every game
+    // starts with a fresh clock.
+    final Route<void> backdrop = _open(context, game);
     final bool bought = await showPlusSheet(context);
-    if (!context.mounted || bought) return;
-    Navigator.of(context).maybePop();
-    return;
+    if (!context.mounted) return;
+    if (!bought) {
+      if (backdrop.isCurrent) {
+        Navigator.of(context).pop();
+      } else if (backdrop.isActive) {
+        Navigator.of(context).removeRoute(backdrop);
+      }
+      return;
+    }
+    if (backdrop.isActive) {
+      Navigator.of(context).removeRoute(backdrop);
+    }
+    decision = await gate.preview(game.id);
+    if (!context.mounted || decision is PickRefused) return;
   }
 
   final repository = GameStatsRepository.instance;
@@ -91,11 +104,11 @@ Future<void> launchGame(
     // Written before the board is built, which is how the chosen size reaches
     // a board that starts now: the provider reads this row in `build`.
     await ref.rememberTier(game.id, chosen.id);
-    // And this is how it reaches a board that is already alive — the Deal keeps
-    // the current card mounted behind its tabs, so this game's provider can
-    // exist with the old size. Every game watches the counter, so bumping it
-    // rebuilds the board that is opening at the size just chosen.
-    ref.read(tierRevisionProvider.notifier).state++;
+    // And this is how it reaches a board of this game that is already alive —
+    // the Deal keeps the current card mounted behind its tabs, so this game's
+    // provider can exist with the old size. Scoped by id so every other live
+    // game keeps its puzzle untouched.
+    ref.read(tierRevisionProvider(game.id).notifier).state++;
     if (!context.mounted) return;
   }
 
@@ -109,11 +122,10 @@ Future<void> launchGame(
 /// The game itself. The id travels with the page: four games share a localised
 /// title, and a screen that resolves to the wrong registry entry gets the wrong
 /// guide, the wrong assists, and a clock that `completeGame` can never stop.
-void _open(BuildContext context, GameMetadata game) {
-  Navigator.push(
-    context,
-    CustomPageRoute(
-      page: GameScope(gameId: game.id, child: game.builder(context)),
-    ),
+Route<void> _open(BuildContext context, GameMetadata game) {
+  final Route<void> route = CustomPageRoute<void>(
+    page: GameScope(gameId: game.id, child: game.builder(context)),
   );
+  Navigator.of(context).push(route);
+  return route;
 }
