@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'tents_and_trees_engine.dart';
 import 'tents_model.dart';
 
@@ -57,7 +58,10 @@ class TentsAndTreesNotifier extends _$TentsAndTreesNotifier {
   final TentsEngine _engine = const TentsEngine();
 
   @override
-  TentsState build() => _newPuzzle(TentsDifficulty.medium);
+  TentsState build() => _newPuzzle(
+        ref.startTier('tents_and_trees', TentsDifficulty.values,
+            TentsDifficulty.medium, (tier) => tier.name),
+      );
 
   TentsState _newPuzzle(TentsDifficulty difficulty) => TentsState(
         puzzle: _engine.generate(difficulty),
@@ -69,6 +73,7 @@ class TentsAndTreesNotifier extends _$TentsAndTreesNotifier {
 
   void setDifficulty(TentsDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('tents_and_trees', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

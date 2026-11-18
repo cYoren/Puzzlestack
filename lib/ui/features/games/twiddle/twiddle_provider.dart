@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'twiddle_engine.dart';
 
 part 'twiddle_provider.g.dart';
@@ -57,7 +58,10 @@ class TwiddleNotifier extends _$TwiddleNotifier {
   final TwiddleEngine _engine = const TwiddleEngine();
 
   @override
-  TwiddleState build() => _newPuzzle(TwiddleDifficulty.medium);
+  TwiddleState build() => _newPuzzle(
+        ref.startTier('twiddle', TwiddleDifficulty.values,
+            TwiddleDifficulty.medium, (tier) => tier.name),
+      );
 
   TwiddleState _newPuzzle(TwiddleDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty: difficulty);
@@ -72,6 +76,7 @@ class TwiddleNotifier extends _$TwiddleNotifier {
 
   void setDifficulty(TwiddleDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('twiddle', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

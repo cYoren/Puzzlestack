@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'signpost_engine.dart';
 
 part 'signpost_provider.g.dart';
@@ -74,7 +75,10 @@ class SignpostNotifier extends _$SignpostNotifier {
   final SignpostEngine _engine = const SignpostEngine();
 
   @override
-  SignpostState build() => _newPuzzle(SignpostDifficulty.easy);
+  SignpostState build() => _newPuzzle(
+        ref.startTier('signpost', SignpostDifficulty.values,
+            SignpostDifficulty.easy, (tier) => tier.name),
+      );
 
   SignpostState _newPuzzle(SignpostDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -89,6 +93,7 @@ class SignpostNotifier extends _$SignpostNotifier {
 
   void setDifficulty(SignpostDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('signpost', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'cube_engine.dart';
 
 part 'cube_provider.g.dart';
@@ -51,7 +52,10 @@ class CubeNotifier extends _$CubeNotifier {
   final CubeEngine _engine = const CubeEngine();
 
   @override
-  CubeState build() => _newPuzzle(CubeDifficulty.medium);
+  CubeState build() => _newPuzzle(
+        ref.startTier('cube', CubeDifficulty.values, CubeDifficulty.medium,
+            (tier) => tier.name),
+      );
 
   CubeState _newPuzzle(CubeDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -66,6 +70,7 @@ class CubeNotifier extends _$CubeNotifier {
 
   void setDifficulty(CubeDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('cube', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 

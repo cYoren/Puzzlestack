@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
+import '../../../../providers/game_tier_provider.dart';
 import 'magnets_engine.dart';
 
 part 'magnets_provider.g.dart';
@@ -61,7 +62,10 @@ class MagnetsNotifier extends _$MagnetsNotifier {
   final MagnetsEngine _engine = const MagnetsEngine();
 
   @override
-  MagnetsState build() => _newPuzzle(MagnetsDifficulty.medium);
+  MagnetsState build() => _newPuzzle(
+        ref.startTier('magnets', MagnetsDifficulty.values,
+            MagnetsDifficulty.medium, (tier) => tier.name),
+      );
 
   MagnetsState _newPuzzle(MagnetsDifficulty difficulty) {
     final puzzle = _engine.generate(difficulty);
@@ -76,6 +80,7 @@ class MagnetsNotifier extends _$MagnetsNotifier {
 
   void setDifficulty(MagnetsDifficulty difficulty) {
     if (difficulty == state.difficulty) return;
+    ref.rememberTier('magnets', difficulty.name);
     state = _newPuzzle(difficulty);
   }
 
