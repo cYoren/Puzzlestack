@@ -62,7 +62,8 @@ class FeedScreen extends ConsumerStatefulWidget {
 
 class _FeedScreenState extends ConsumerState<FeedScreen>
     with TickerProviderStateMixin {
-  late final FeedDeck _deck;
+  FeedDeck? _deckInstance;
+  FeedDeck get _deck => _deckInstance!;
   late final FeedSession _session;
   late final AnimationController _settle;
   late final AnimationController _reveal;
@@ -89,15 +90,6 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   @override
   void initState() {
     super.initState();
-    final DealHistory initialHistory = _buildHistory(localeCode: _localeCode);
-    _deck = FeedDeck(
-      categoryId: widget.categoryId,
-      hidden: initialHistory.blocked,
-      history: initialHistory,
-      includeFirstTen: widget.startGameId == null && widget.categoryId == null,
-      seedStore: SeedHistoryStore(ref.read(pickStoreProvider)),
-    );
-    _seenThisSession.add(_gameAt(0).id);
 
     _reveal = AnimationController(
       vsync: this,
@@ -132,11 +124,28 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final String nextLocale =
+    final String resolvedLocale =
         Localizations.maybeLocaleOf(context)?.languageCode ?? 'en';
-    if (nextLocale != _localeCode) {
-      _localeCode = nextLocale;
-      _deck.updateHistory(_buildHistory(localeCode: _localeCode));
+    if (_deckInstance == null) {
+      _localeCode = resolvedLocale;
+      final DealHistory initialHistory = _buildHistory(localeCode: _localeCode);
+      _deckInstance = FeedDeck(
+        categoryId: widget.categoryId,
+        hidden: initialHistory.blocked,
+        history: initialHistory,
+        includeFirstTen:
+            widget.startGameId == null && widget.categoryId == null,
+        seedStore: SeedHistoryStore(ref.read(pickStoreProvider)),
+      );
+      _seenThisSession.add(_gameAt(0).id);
+      return;
+    }
+    if (resolvedLocale != _localeCode) {
+      _localeCode = resolvedLocale;
+      _deck.updateHistory(
+        _buildHistory(localeCode: _localeCode),
+        keepThroughIndex: _index - 1,
+      );
     }
   }
 
@@ -325,7 +334,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
     final l10n = AppLocalizations.of(context);
     HapticFeedbackUtil.mediumImpact();
     ref.read(userDataNotifierProvider.notifier).toggleHideGame(game.id);
-    _deck.updateHistory(_buildHistory());
+    _deck.updateHistory(_buildHistory(), keepThroughIndex: _index);
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(
@@ -339,7 +348,7 @@ class _FeedScreenState extends ConsumerState<FeedScreen>
               ref
                   .read(userDataNotifierProvider.notifier)
                   .toggleHideGame(game.id);
-              _deck.updateHistory(_buildHistory());
+              _deck.updateHistory(_buildHistory(), keepThroughIndex: _index);
             },
           ),
           duration: const Duration(seconds: 4),

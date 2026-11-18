@@ -16,7 +16,9 @@ import 'package:puzzle/providers/plus_providers.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/features/daily/daily_five_screen.dart';
 import 'package:puzzle/ui/features/feed/deal_order.dart';
+import 'package:puzzle/ui/features/feed/feed_screen.dart';
 import 'package:puzzle/ui/features/feed/feed_session.dart';
+import 'package:puzzle/ui/features/games/futoshiki/futoshiki_provider.dart';
 import 'package:puzzle/ui/features/games/lights_out/lights_out_provider.dart';
 import 'package:puzzle/utils/design_system.dart';
 
@@ -257,6 +259,79 @@ void main() {
 
       expect(find.text('16 NOV'), findsOneWidget);
       expect(find.text('1 / 5'), findsOneWidget);
+
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump(const Duration(milliseconds: 100));
+    });
+
+    testWidgets(
+        'isolates Daily Five game state from a live Deal card and stays free across midnight',
+        (tester) async {
+      tester.view.physicalSize = const Size(900, 1800);
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(tester.view.reset);
+
+      DateTime now = DateTime(2026, 11, 17, 23, 59);
+      // Find a date whose slot 0 is futoshiki so both Deal and Daily Five mount
+      // futoshiki at the same time.
+      String targetDay = '2026-11-18';
+      for (int d = 18; d <= 45; d++) {
+        final String candidate = DateTime(2026, 11, 1)
+            .add(Duration(days: d - 1))
+            .toIso8601String()
+            .substring(0, 10);
+        if (dailyFiveForDate(candidate).first == 'futoshiki') {
+          targetDay = candidate;
+          break;
+        }
+      }
+
+      final ProviderContainer root = ProviderContainer(
+        overrides: [
+          userRepositoryProvider.overrideWithValue(_FakeUserRepository()),
+          dailyFiveClockProvider.overrideWithValue(() => now),
+        ],
+      );
+      addTearDown(root.dispose);
+
+      // Prime dailyFiveProvider before midnight (2026-11-17).
+      expect(root.read(dailyFiveProvider).todayKey, '2026-11-17');
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: root,
+          child: MaterialApp(
+            theme: DesignSystem.lightTheme,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const FeedScreen(startGameId: 'futoshiki'),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      final FutoshikiState dealBefore = root.read(futoshikiNotifierProvider);
+
+      // Advance clock to targetDay without restarting the app or container,
+      // then open Daily Five from the Deal header chip.
+      now = DateTime.parse('${targetDay}T08:00:00');
+      await tester
+          .tap(find.byKey(const ValueKey<String>('feed_daily_five_chip')));
+      await tester.pumpAndSettle();
+
+      // Today's new date is free (not locked behind the archive gate).
+      expect(find.text('UNLOCK ARCHIVE WITH PLUS'), findsNothing);
+      expect(find.text('1 / 5'), findsOneWidget);
+
+      // Trigger a hint in Daily Five and verify the background Deal's
+      // futoshiki state in root was NOT mutated.
+      final Finder dailyHint =
+          find.byIcon(Icons.lightbulb_outline_rounded).last;
+      await tester.tap(dailyHint);
+      await tester.pump();
+      expect(
+          identical(root.read(futoshikiNotifierProvider), dealBefore), isTrue);
 
       await tester.pumpWidget(const SizedBox());
       await tester.pump(const Duration(milliseconds: 100));

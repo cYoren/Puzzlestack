@@ -9,7 +9,10 @@ import '../../../data/game_metadata.dart';
 import '../../../data/picks/pick_ledger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../providers/daily_five_providers.dart';
+import '../../../providers/game_tier_provider.dart';
+import '../../../providers/pick_providers.dart';
 import '../../../providers/plus_providers.dart';
+import '../../../providers/user_providers.dart';
 import '../../../utils/design_system.dart';
 import '../../../utils/game_clock.dart';
 import '../../../utils/haptic_feedback.dart';
@@ -40,6 +43,8 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
   int _slot = 0;
   int _restartEpoch = 0;
   FeedSession? _session;
+  ProviderContainer? _slotContainer;
+  String? _slotContainerKey;
 
   @override
   void initState() {
@@ -48,13 +53,46 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     _dayKey = widget.initialDayKey ?? pickDayKey(now);
     _slot = _firstOpenSlot(_dayKey);
     _activateSession();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(dailyFiveProvider.notifier).refresh();
+    });
   }
 
   @override
   void dispose() {
+    _slotContainer?.dispose();
+    _slotContainer = null;
     final FeedSession? session = _session;
     if (session != null) FeedSession.deactivate(session);
     super.dispose();
+  }
+
+  ProviderContainer _ensureSlotContainer(String gameId) {
+    final String wantedKey = '$_dayKey:$_slot:$gameId:$_restartEpoch';
+    if (_slotContainer != null && _slotContainerKey == wantedKey) {
+      return _slotContainer!;
+    }
+    final ProviderContainer? old = _slotContainer;
+    if (old != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
+    }
+    final ProviderContainer fresh = ProviderContainer(
+      overrides: <Override>[
+        userRepositoryProvider
+            .overrideWithValue(ref.read(userRepositoryProvider)),
+        pickStoreProvider.overrideWithValue(ref.read(pickStoreProvider)),
+        plusStoreProvider.overrideWithValue(ref.read(plusStoreProvider)),
+        plusGatewayProvider.overrideWithValue(ref.read(plusGatewayProvider)),
+        gameTierStoreProvider
+            .overrideWithValue(ref.read(gameTierStoreProvider)),
+        dailyFiveClockProvider
+            .overrideWithValue(ref.read(dailyFiveClockProvider)),
+      ],
+    );
+    _slotContainer = fresh;
+    _slotContainerKey = wantedKey;
+    return fresh;
   }
 
   int _firstOpenSlot(String dayKey) {
@@ -134,7 +172,8 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
   }
 
   Future<void> _selectDay(String targetDayKey) async {
-    final String todayKey = ref.read(dailyFiveProvider).todayKey;
+    ref.read(dailyFiveProvider.notifier).refresh();
+    final String todayKey = pickDayKey(ref.read(dailyFiveClockProvider)());
     if (targetDayKey != todayKey && !ref.read(plusProvider).ownsPlus) {
       final bool unlocked = await showPlusSheet(
         context,
@@ -230,7 +269,8 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
                             ),
                             itemBuilder: (BuildContext context, int index) {
                               final String key = recentDays[index];
-                              final bool isToday = key == summary.todayKey;
+                              final bool isToday =
+                                  key == pickDayKey(todayFloor);
                               final DailyFiveProgress prog =
                                   summary.progressFor(key);
                               final bool selected = key == _dayKey;
@@ -297,8 +337,9 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
   @override
   Widget build(BuildContext context) {
     final DailyFiveSummaryState summary = ref.watch(dailyFiveProvider);
+    final String liveTodayKey = pickDayKey(ref.read(dailyFiveClockProvider)());
     final bool ownsPlus = ref.watch(plusProvider).ownsPlus;
-    final bool isPastDay = _dayKey != summary.todayKey;
+    final bool isPastDay = _dayKey != liveTodayKey;
     final DailyFiveProgress progress = summary.progressFor(_dayKey);
     final List<String> handIds = _handForDay(context);
     final Color bed = DesignSystem.paperOf(context);
@@ -505,8 +546,9 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
             const SizedBox(height: DesignSystem.spaceXS),
             Center(
               child: TextButton(
-                onPressed: () =>
-                    _selectDay(ref.read(dailyFiveProvider).todayKey),
+                onPressed: () => _selectDay(
+                  pickDayKey(ref.read(dailyFiveClockProvider)()),
+                ),
                 child: Text(
                   'Play today\'s free Daily Five',
                   style: TextStyle(
@@ -531,145 +573,159 @@ class _DailyFiveScreenState extends ConsumerState<DailyFiveScreen> {
     final String gameId = handIds[_slot];
     final GameMetadata? game = GameFeed.find(gameId);
     if (game == null) return const SizedBox.shrink();
-    final GameAssistActions? assist = gameAssistFor(game.id, ref);
+    final ProviderContainer slotContainer = _ensureSlotContainer(game.id);
+    final BuildContext rootScreenContext = this.context;
+    final WidgetRef rootRef = ref;
 
-    return DeckCard(
-      clip: true,
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: DesignSystem.hairline(context)),
-              ),
-            ),
-            child: Row(
+    return UncontrolledProviderScope(
+      key: ValueKey<String>(
+        'daily_scope_${_dayKey}_${_slot}_${game.id}_$_restartEpoch',
+      ),
+      container: slotContainer,
+      child: Consumer(
+        builder: (BuildContext slotContext, WidgetRef slotRef, _) {
+          final GameAssistActions? assist = gameAssistFor(game.id, slotRef);
+          return DeckCard(
+            clip: true,
+            padding: EdgeInsets.zero,
+            child: Column(
               children: [
-                for (int i = 0; i < 5; i++) ...[
-                  if (i > 0) const SizedBox(width: 6),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => setState(() {
-                        _slot = i;
-                        _restartEpoch += 1;
-                      }),
-                      child: Container(
-                        height: 6,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(99),
-                          color: progress.timesMs.containsKey(i)
-                              ? accent
-                              : (i == _slot
-                                  ? colors.onSurface
-                                  : DesignSystem.hairline(context)),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: DesignSystem.hairline(context)),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < 5; i++) ...[
+                        if (i > 0) const SizedBox(width: 6),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => setState(() {
+                              _slot = i;
+                              _restartEpoch += 1;
+                            }),
+                            child: Container(
+                              height: 6,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(99),
+                                color: progress.timesMs.containsKey(i)
+                                    ? accent
+                                    : (i == _slot
+                                        ? colors.onSurface
+                                        : DesignSystem.hairline(context)),
+                              ),
+                            ),
+                          ),
                         ),
+                      ],
+                      const SizedBox(width: 12),
+                      Text(
+                        '${_slot + 1} / 5',
+                        style: TextStyle(
+                          fontFamily: 'Bebas Neue',
+                          fontSize: DesignSystem.fontSizeSM + 2,
+                          letterSpacing: 1.1,
+                          color: muted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      game.subtitleGetter(slotContext),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: DesignSystem.fontSizeXS,
+                        color: muted,
                       ),
                     ),
                   ),
-                ],
-                const SizedBox(width: 12),
-                Text(
-                  '${_slot + 1} / 5',
-                  style: TextStyle(
-                    fontFamily: 'Bebas Neue',
-                    fontSize: DesignSystem.fontSizeSM + 2,
-                    letterSpacing: 1.1,
-                    color: muted,
-                  ),
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                game.subtitleGetter(context),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: DesignSystem.fontSizeXS,
-                  color: muted,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: DesignSystem.spaceSM),
-              child: KeyedSubtree(
-                key: ValueKey<String>(
-                  'daily_${_dayKey}_${_slot}_${game.id}_$_restartEpoch',
-                ),
-                child: GameScope(
-                  gameId: game.id,
-                  child: game.builder(context),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(color: DesignSystem.hairline(context)),
-              ),
-            ),
-            child: Row(
-              children: [
                 Expanded(
-                  child: Text(
-                    game.titleGetter(context),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: 'Bebas Neue',
-                      fontSize: DesignSystem.fontSize2XL,
-                      height: 1,
-                      color: colors.onSurface,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: DesignSystem.spaceSM,
+                    ),
+                    child: GameScope(
+                      gameId: game.id,
+                      child: game.builder(slotContext),
                     ),
                   ),
                 ),
-                if (assist?.onHint != null)
-                  IconButton(
-                    tooltip: 'Hint',
-                    icon: Icon(
-                      Icons.lightbulb_outline_rounded,
-                      size: 20,
-                      color: muted,
+                Container(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: DesignSystem.hairline(context)),
                     ),
-                    onPressed: () => requestHint(context, ref, assist!.onHint!),
                   ),
-                IconButton(
-                  tooltip:
-                      AppLocalizations.of(context)?.restartPuzzle ?? 'Restart',
-                  icon: Icon(Icons.refresh_rounded, size: 20, color: muted),
-                  onPressed: _restartSlot,
-                ),
-                if (gameGuides.containsKey(game.id))
-                  IconButton(
-                    tooltip: AppLocalizations.of(context)?.howToPlay ??
-                        'How to Play',
-                    icon: Icon(Icons.help_outline_rounded,
-                        size: 20, color: muted),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (_) => GameGuideScreen(
-                          gameId: game.id,
-                          gameColor: accent,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          game.titleGetter(slotContext),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Bebas Neue',
+                            fontSize: DesignSystem.fontSize2XL,
+                            height: 1,
+                            color: colors.onSurface,
+                          ),
                         ),
                       ),
-                    ),
+                      if (assist?.onHint != null)
+                        IconButton(
+                          tooltip: 'Hint',
+                          icon: Icon(
+                            Icons.lightbulb_outline_rounded,
+                            size: 20,
+                            color: muted,
+                          ),
+                          onPressed: () => requestHint(
+                            rootScreenContext,
+                            rootRef,
+                            assist!.onHint!,
+                          ),
+                        ),
+                      IconButton(
+                        tooltip: AppLocalizations.of(context)?.restartPuzzle ??
+                            'Restart',
+                        icon:
+                            Icon(Icons.refresh_rounded, size: 20, color: muted),
+                        onPressed: _restartSlot,
+                      ),
+                      if (gameGuides.containsKey(game.id))
+                        IconButton(
+                          tooltip: AppLocalizations.of(context)?.howToPlay ??
+                              'How to Play',
+                          icon: Icon(Icons.help_outline_rounded,
+                              size: 20, color: muted),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (_) => GameGuideScreen(
+                                gameId: game.id,
+                                gameColor: accent,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
+                ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

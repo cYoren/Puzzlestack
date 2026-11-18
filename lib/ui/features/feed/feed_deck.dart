@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
+
 import '../../../data/game_categories.dart';
 import '../../../data/game_metadata.dart';
 import '../../../data/game_profiles.dart';
@@ -41,7 +43,7 @@ class FeedDeck {
   final SeedHistoryStore? _seedStore;
   final DateTime Function() _now;
 
-  late final List<GameMetadata> _pool;
+  late List<GameMetadata> _pool;
 
   /// Cards left in the current pass, popped from the end.
   final List<GameMetadata> _bag = [];
@@ -79,9 +81,22 @@ class FeedDeck {
     return fallback.isEmpty ? GameFeed.feedPool() : fallback;
   }
 
-  /// Updates history weights (likes, solves, quick skips) for subsequent passes.
-  void updateHistory(DealHistory next) {
+  /// Updates history weights, locale eligibility, and blocked games.
+  ///
+  /// When the eligible language or blocked set changes, rebuilds `_pool`, drops
+  /// any pre-dealt future slots above [keepThroughIndex], and refills `_bag` so
+  /// disallowed cards (such as English Word cards on a non-English locale) never
+  /// appear.
+  void updateHistory(DealHistory next, {int keepThroughIndex = -1}) {
+    final bool poolChanged =
+        next.supportsWordCards != _history.supportsWordCards ||
+            !setEquals(next.blocked, _history.blocked);
     _history = next;
+    if (!poolChanged) return;
+
+    _pool = _buildPool();
+    _dealt.removeWhere((int idx, _) => idx > keepThroughIndex);
+    _refill(firstPass: _dealt.isEmpty);
   }
 
   /// The size of one full pass, for the "n / total" counter.

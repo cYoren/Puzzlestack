@@ -249,5 +249,46 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await tester.pump(const Duration(milliseconds: 100));
     });
+
+    testWidgets(
+        'non-English launch builds eligible pool without English Word cards',
+        (tester) async {
+      tester.view.physicalSize = const Size(800, 1600);
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            userRepositoryProvider.overrideWithValue(_FakeUserRepository()),
+          ],
+          child: MaterialApp(
+            locale: const Locale('pt'),
+            theme: DesignSystem.lightTheme,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const FeedScreen(),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      final int nonWordDeckCount =
+          deckIds.where((id) => cardKindOf(id) != CardKind.word).length;
+      expect(find.text(' / $nonWordDeckCount'), findsOneWidget);
+
+      // Card 002 in English firstTenIds is find_word (WORD); in Portuguese it
+      // must NOT be a WORD card.
+      final Finder header0 =
+          find.byKey(const ValueKey<String>('feed_card_header_0'));
+      await tester.drag(header0, const Offset(0, -140));
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(find.textContaining('WORD \u00b7'), findsNothing);
+
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump(const Duration(milliseconds: 100));
+    });
   });
 }
