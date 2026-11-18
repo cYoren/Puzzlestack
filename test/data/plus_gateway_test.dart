@@ -30,6 +30,8 @@ class _FakeIap implements InAppPurchase {
   /// How many times the store was asked for product details, and what it
   /// answers. A throw here is a store that could not be reached.
   int productQueries = 0;
+  int buyCalls = 0;
+  bool buyStarted = true;
   Object? productError;
   List<ProductDetails> products = const <ProductDetails>[];
 
@@ -58,8 +60,10 @@ class _FakeIap implements InAppPurchase {
   }
 
   @override
-  Future<bool> buyNonConsumable({required PurchaseParam purchaseParam}) =>
-      throw UnimplementedError();
+  Future<bool> buyNonConsumable({required PurchaseParam purchaseParam}) async {
+    buyCalls++;
+    return buyStarted;
+  }
 
   @override
   Future<bool> buyConsumable({
@@ -373,6 +377,41 @@ void main() {
       expect(await g.price(), 'R\$ 29,90');
       expect(await g.price(), 'R\$ 29,90');
       expect(iap.productQueries, 1, reason: 'the store is asked once');
+    });
+
+    test(
+        'a pending purchase keeps the active buy guarded against overlapping '
+        'buy and restore calls', () async {
+      iap.products = <ProductDetails>[
+        ProductDetails(
+          id: plusProductId,
+          title: 'Puzzlestack Plus',
+          description: 'One purchase',
+          price: 'R\$ 29,90',
+          rawPrice: 29.9,
+          currencyCode: 'BRL',
+        ),
+      ];
+      final InAppPurchaseGateway g = gateway();
+      addTearDown(g.dispose);
+
+      final Future<PurchaseAnswer> first = g.buy();
+      await Future<void>.delayed(Duration.zero);
+      expect(iap.buyCalls, 1);
+
+      iap.deliver([_purchase(PurchaseStatus.pending)]);
+      await Future<void>.delayed(Duration.zero);
+
+      final Future<PurchaseAnswer> second = g.buy();
+      await Future<void>.delayed(Duration.zero);
+      expect(iap.buyCalls, 1,
+          reason: 'a second buy joins the open transaction instead of '
+              'overwriting its completer');
+      expect(await g.restore(), RestoreAnswer.noAnswer);
+
+      iap.deliver([_purchase(PurchaseStatus.purchased, pendingComplete: true)]);
+      expect(await first, PurchaseAnswer.purchased);
+      expect(await second, PurchaseAnswer.purchased);
     });
   });
 }

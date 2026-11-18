@@ -330,9 +330,17 @@ class InAppPurchaseGateway implements PlusGateway {
 
   @override
   Future<PurchaseAnswer> buy() async {
+    final Completer<PurchaseAnswer>? active = _buy;
+    if (active != null && !active.isCompleted) return active.future;
+
     if (!await _available()) return PurchaseAnswer.storeUnavailable;
     final ProductDetails? details = await _details();
     if (details == null) return PurchaseAnswer.storeUnavailable;
+
+    final Completer<PurchaseAnswer>? startedElsewhere = _buy;
+    if (startedElsewhere != null && !startedElsewhere.isCompleted) {
+      return startedElsewhere.future;
+    }
 
     final Completer<PurchaseAnswer> answer = Completer<PurchaseAnswer>();
     _buy = answer;
@@ -344,11 +352,11 @@ class InAppPurchaseGateway implements PlusGateway {
       );
     } catch (error) {
       debugPrint('buyNonConsumable failed: $error');
-      _buy = null;
+      if (identical(_buy, answer)) _buy = null;
       return PurchaseAnswer.failed;
     }
     if (!started) {
-      _buy = null;
+      if (identical(_buy, answer)) _buy = null;
       return PurchaseAnswer.failed;
     }
 
@@ -364,7 +372,17 @@ class InAppPurchaseGateway implements PlusGateway {
 
   @override
   Future<RestoreAnswer> restore() async {
+    final Completer<RestoreAnswer>? active = _restored;
+    if (active != null && !active.isCompleted) return active.future;
+    final Completer<PurchaseAnswer>? buying = _buy;
+    if (buying != null && !buying.isCompleted) return RestoreAnswer.noAnswer;
+
     if (!await _available()) return RestoreAnswer.noAnswer;
+
+    final Completer<RestoreAnswer>? startedElsewhere = _restored;
+    if (startedElsewhere != null && !startedElsewhere.isCompleted) {
+      return startedElsewhere.future;
+    }
 
     final Completer<RestoreAnswer> settled = Completer<RestoreAnswer>();
     _restored = settled;

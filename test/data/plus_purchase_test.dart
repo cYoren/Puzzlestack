@@ -16,6 +16,7 @@ class _FakeStore implements PlusGateway {
   });
 
   PurchaseAnswer buyAnswer = PurchaseAnswer.purchased;
+  Future<PurchaseAnswer> Function()? onBuy;
   RestoreAnswer restoreAnswer;
   String? priceText = 'US\$4.99';
 
@@ -43,6 +44,8 @@ class _FakeStore implements PlusGateway {
   @override
   Future<PurchaseAnswer> buy() async {
     buyCalls++;
+    final Future<PurchaseAnswer> Function()? handler = onBuy;
+    if (handler != null) return handler();
     return buyAnswer;
   }
 
@@ -384,6 +387,58 @@ void main() {
       await plus.start();
       expect(plus.state.price, isNull);
       expect(plus.state.storeReachable, isFalse);
+    });
+
+    test(
+        'ensurePrice rechecks reachability after a transient unavailable buy '
+        'even when a price is cached', () async {
+      await plus.start();
+      expect(plus.state.price, 'US\$4.99');
+      expect(plus.state.storeReachable, isTrue);
+      expect(store.priceCalls, 1);
+
+      store.buyAnswer = PurchaseAnswer.storeUnavailable;
+      expect(await plus.buy(), PlusNotice.unavailable);
+      expect(plus.state.storeReachable, isFalse);
+      expect(plus.state.price, 'US\$4.99');
+
+      // Reopening the sheet calls ensurePrice(): because storeReachable is
+      // false, it re-probes the store and brings the buttons back.
+      await plus.ensurePrice();
+      expect(store.priceCalls, 2);
+      expect(plus.state.storeReachable, isTrue);
+    });
+
+    test(
+        'a pending stream update during an active buy keeps busy on and blocks '
+        'overlapping store calls', () async {
+      await plus.start();
+      final Completer<PurchaseAnswer> inFlight = Completer<PurchaseAnswer>();
+      store.onBuy = () => inFlight.future;
+
+      final Future<PlusNotice> buying = plus.buy();
+      await Future<void>.delayed(Duration.zero);
+      expect(plus.state.busy, isTrue);
+      expect(store.buyCalls, 1);
+
+      // StoreKit / Play emits pending while the payment sheet is still open.
+      store.emit(const PurchaseEvent.pending());
+      await Future<void>.delayed(Duration.zero);
+
+      expect(plus.state.notice, PlusNotice.pending);
+      expect(plus.state.busy, isTrue,
+          reason: 'busy must stay true until the buy itself settles');
+
+      // Tapping buy or restore while pending does not start a second call.
+      expect(await plus.buy(), PlusNotice.pending);
+      expect(await plus.restore(), PlusNotice.pending);
+      expect(store.buyCalls, 1);
+      expect(store.restoreCalls, 0);
+
+      inFlight.complete(PurchaseAnswer.purchased);
+      expect(await buying, PlusNotice.purchased);
+      expect(plus.state.ownsPlus, isTrue);
+      expect(plus.state.busy, isFalse);
     });
   });
 }

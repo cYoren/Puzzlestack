@@ -103,6 +103,7 @@ class PlusController {
 
   PlusGateway? _storeConnection;
   StreamSubscription<PurchaseEvent>? _events;
+  bool _inFlight = false;
   late PlusState _state;
 
   PlusState get state => _state;
@@ -178,10 +179,13 @@ class PlusController {
 
   PlusGateway _connection() => _storeConnection ??= _gateway();
 
-  /// The store's price, read once. A store that cannot answer leaves [price]
-  /// null and the sheet says the price is shown at checkout.
+  /// The store's price, read once while the store stays reachable.
+  ///
+  /// When a later buy hits a transient outage ([PlusState.storeReachable] false
+  /// while [PlusState.price] is already cached), asking again re-probes the
+  /// store so reopening the sheet brings the buttons back without a restart.
   Future<void> ensurePrice() async {
-    if (_state.price != null) return;
+    if (_state.price != null && _state.storeReachable) return;
     final String? price = await _connection().price();
     if (price == null) {
       _set(_state.copyWith(storeReachable: false));
@@ -191,10 +195,17 @@ class PlusController {
   }
 
   Future<PlusNotice> buy() async {
-    if (_state.busy) return _state.notice;
+    if (_inFlight || _state.busy) return _state.notice;
+    _inFlight = true;
     _set(_state.copyWith(busy: true, notice: PlusNotice.none));
 
-    final PurchaseAnswer answer = await _connection().buy();
+    final PurchaseAnswer answer;
+    try {
+      answer = await _connection().buy();
+    } finally {
+      _inFlight = false;
+    }
+
     switch (answer) {
       case PurchaseAnswer.purchased:
         return _grant(PlusNotice.purchased);
@@ -222,10 +233,17 @@ class PlusController {
   /// check uses the same path, which is why a refund behaves the same however
   /// it comes in.
   Future<PlusNotice> restore() async {
-    if (_state.busy) return _state.notice;
+    if (_inFlight || _state.busy) return _state.notice;
+    _inFlight = true;
     _set(_state.copyWith(busy: true, notice: PlusNotice.none));
 
-    final RestoreAnswer answer = await _connection().restore();
+    final RestoreAnswer answer;
+    try {
+      answer = await _connection().restore();
+    } finally {
+      _inFlight = false;
+    }
+
     switch (answer) {
       case RestoreAnswer.owned:
         return _grant(PlusNotice.restored);
@@ -273,8 +291,9 @@ class PlusController {
     await _store.write(entitlement);
     _state = _state.copyWith(
       entitlement: entitlement,
-      busy: false,
+      busy: _inFlight,
       notice: notice,
+      storeReachable: true,
     );
     notify();
     return notice;
@@ -284,14 +303,18 @@ class PlusController {
     await _store.clear();
     _state = _state.copyWith(
       entitlement: const PlusEntitlement.free(),
-      busy: false,
+      busy: _inFlight,
       notice: PlusNotice.revoked,
+      storeReachable: true,
     );
     notify();
   }
 
   PlusNotice _tell(PlusNotice notice) {
-    _set(_state.copyWith(busy: false, notice: notice));
+    // A pending stream update arrives while `buy()` is still waiting on the
+    // store; keeping `busy` tied to `_inFlight` shows the pending notice
+    // without unlocking the buttons for an overlapping store call.
+    _set(_state.copyWith(busy: _inFlight, notice: notice));
     return notice;
   }
 
