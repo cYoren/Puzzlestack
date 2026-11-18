@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../feed/feed_session.dart';
 import 'word_scramble_engine.dart';
 
 part 'word_scramble_provider.g.dart';
@@ -56,8 +57,9 @@ class WordScrambleNotifier extends _$WordScrambleNotifier {
   Future<void> initGame() async {
     state = state.copyWith(isLoading: true);
     _wordList = await _engine.loadWords();
-    final target = _engine.getRandomWord(_wordList);
-    final scrambled = _engine.scrambleWord(target);
+    final rng = FeedSession.randomFor('word_scramble');
+    final target = _engine.getRandomWord(_wordList, random: rng);
+    final scrambled = _engine.scrambleWord(target, random: rng);
     
     state = WordScrambleState(
       targetWord: target,

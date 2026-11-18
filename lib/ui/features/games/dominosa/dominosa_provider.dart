@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
 import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'dominosa_engine.dart';
 
 part 'dominosa_provider.g.dart';
@@ -87,7 +88,10 @@ class DominosaNotifier extends _$DominosaNotifier {
 
   DominosaState _newPuzzle(DominosaDifficulty difficulty) {
     return DominosaState(
-      puzzle: _engine.generate(difficulty),
+      puzzle: _engine.generate(
+        difficulty,
+        random: FeedSession.randomFor('dominosa'),
+      ),
       placed: const {},
       difficulty: difficulty,
     );

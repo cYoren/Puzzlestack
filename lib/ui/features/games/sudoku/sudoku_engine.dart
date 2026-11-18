@@ -4,28 +4,48 @@ class SudokuEngine {
   static const int size = 9;
   static const int boxSize = 3;
 
+  SudokuEngine({this.boardSize = size, Random? random})
+      : _random = random ?? Random();
+
+  final int boardSize;
+  final Random _random;
+
   List<List<int>> generateBoard() {
-    List<List<int>> board = List.generate(size, (_) => List.filled(size, 0));
+    final List<List<int>> board =
+        List.generate(boardSize, (_) => List.filled(boardSize, 0));
     _fillBoard(board);
     return board;
   }
 
-  static List<List<int>> generateFullBoard([dynamic _]) {
+  static List<List<int>> generateFullBoard([dynamic params]) {
+    if (params is Map) {
+      final int sz = (params['size'] as int?) ?? size;
+      final int? seed = params['seed'] as int?;
+      return SudokuEngine(
+        boardSize: sz,
+        random: seed == null ? null : Random(seed),
+      ).generateBoard();
+    }
     return SudokuEngine().generateBoard();
   }
 
   static List<List<int>> generateInitialPuzzle(Map<String, dynamic> params) {
     final solved = params['solved'] as List<List<int>>;
     final clues = params['clues'] as int;
-    return SudokuEngine().createPuzzle(solved, clues);
+    final int? seed = params['seed'] as int?;
+    return SudokuEngine(
+      boardSize: solved.length,
+      random: seed == null ? null : Random(seed),
+    ).createPuzzle(solved, clues);
   }
 
   bool _fillBoard(List<List<int>> board) {
-    for (int row = 0; row < size; row++) {
-      for (int col = 0; col < size; col++) {
+    for (int row = 0; row < boardSize; row++) {
+      for (int col = 0; col < boardSize; col++) {
         if (board[row][col] == 0) {
-          List<int> numbers = List.generate(size, (i) => i + 1)..shuffle();
-          for (int num in numbers) {
+          final List<int> numbers =
+              List.generate(boardSize, (i) => i + 1)..shuffle(_random);
+          for (final int num in numbers) {
             if (_isValid(board, row, col, num)) {
               board[row][col] = num;
               if (_fillBoard(board)) return true;
@@ -40,18 +60,20 @@ class SudokuEngine {
   }
 
   static bool isValid(dynamic board, int row, int col, int num) {
-    for (int i = 0; i < size; i++) {
+    final int n = board.length as int;
+    final int b = n == 4 ? 2 : 3;
+    for (int i = 0; i < n; i++) {
       if (i != col && board[row][i] == num) return false;
     }
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < n; i++) {
       if (i != row && board[i][col] == num) return false;
     }
-    int boxRow = (row ~/ boxSize) * boxSize;
-    int boxCol = (col ~/ boxSize) * boxSize;
-    for (int i = 0; i < boxSize; i++) {
-      for (int j = 0; j < boxSize; j++) {
-        int r = boxRow + i;
-        int c = boxCol + j;
+    final int boxRow = (row ~/ b) * b;
+    final int boxCol = (col ~/ b) * b;
+    for (int i = 0; i < b; i++) {
+      for (int j = 0; j < b; j++) {
+        final int r = boxRow + i;
+        final int c = boxCol + j;
         if ((r != row || c != col) && board[r][c] == num) return false;
       }
     }
@@ -63,29 +85,28 @@ class SudokuEngine {
   }
 
   List<List<int>> createPuzzle(List<List<int>> solvedBoard, int clues) {
-    List<List<int>> puzzle =
-        List.generate(size, (r) => List.from(solvedBoard[r]));
-    int totalCells = size * size;
-    int toRemove = totalCells - clues;
-    toRemove = toRemove.clamp(0, totalCells - 17);
+    final List<List<int>> puzzle =
+        List.generate(boardSize, (r) => List<int>.from(solvedBoard[r]));
+    final int totalCells = boardSize * boardSize;
+    final int minClues = boardSize == 4 ? 4 : 17;
+    int toRemove = (totalCells - clues).clamp(0, totalCells - minClues);
 
-    Random random = Random();
-    List<List<int>> candidates = [];
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
+    final List<List<int>> candidates = [];
+    for (int r = 0; r < boardSize; r++) {
+      for (int c = 0; c < boardSize; c++) {
         candidates.add([r, c]);
       }
     }
-    candidates.shuffle(random);
+    candidates.shuffle(_random);
 
     int removed = 0;
-    for (var candidate in candidates) {
+    for (final candidate in candidates) {
       if (removed >= toRemove) break;
-      int r = candidate[0];
-      int c = candidate[1];
+      final int r = candidate[0];
+      final int c = candidate[1];
       if (puzzle[r][c] == 0) continue;
 
-      int backup = puzzle[r][c];
+      final int backup = puzzle[r][c];
       puzzle[r][c] = 0;
 
       if (_countSolutions(puzzle) == 1) {
@@ -104,10 +125,10 @@ class SudokuEngine {
   int _solve(List<List<int>> board, int count) {
     if (count > 1) return count;
 
-    for (int row = 0; row < size; row++) {
-      for (int col = 0; col < size; col++) {
+    for (int row = 0; row < boardSize; row++) {
+      for (int col = 0; col < boardSize; col++) {
         if (board[row][col] == 0) {
-          for (int num = 1; num <= size; num++) {
+          for (int num = 1; num <= boardSize; num++) {
             if (_isValid(board, row, col, num)) {
               board[row][col] = num;
               count = _solve(board, count);
@@ -123,8 +144,9 @@ class SudokuEngine {
   }
 
   bool isComplete(List<List<int>> board) {
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
+    final int n = board.length;
+    for (int r = 0; r < n; r++) {
+      for (int c = 0; c < n; c++) {
         if (board[r][c] == 0) return false;
       }
     }
@@ -134,13 +156,12 @@ class SudokuEngine {
   bool isCorrect(List<List<int>> board, List<List<int>> solvedBoard) {
     if (!isComplete(board)) return false;
 
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        int num = board[r][c];
-        board[r][c] = 0;
-        bool valid = _isValid(board, r, c, num);
-        board[r][c] = num;
-        if (!valid) return false;
+    final int n = board.length;
+    for (int r = 0; r < n; r++) {
+      for (int c = 0; c < n; c++) {
+        final int val = board[r][c];
+        if (val < 1 || val > n) return false;
+        if (!SudokuEngine.isValid(board, r, c, val)) return false;
       }
     }
     return true;

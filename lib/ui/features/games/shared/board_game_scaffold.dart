@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/design_system.dart';
 import '../../../../widgets/game_hud.dart';
 import '../../../../widgets/tangible.dart';
+import '../../../core/assist/hint_request.dart';
 import '../../../core/board/board_verb.dart';
 import '../../../core/juice/game_scaffold.dart';
 
@@ -197,7 +199,7 @@ class BoardGameChipRow extends StatelessWidget {
 }
 
 /// The three buttons every board game has, in the order the shell expects.
-class BoardGameActions extends StatelessWidget {
+class BoardGameActions extends ConsumerWidget {
   const BoardGameActions({
     super.key,
     this.onHint,
@@ -210,7 +212,7 @@ class BoardGameActions extends StatelessWidget {
   final List<Widget> extra;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final onSurface = Theme.of(context).colorScheme.onSurface;
     Widget button(IconData icon, VoidCallback? tap) => TangibleButton(
           color: Theme.of(context).colorScheme.surface,
@@ -229,7 +231,11 @@ class BoardGameActions extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ...extra,
-        if (onHint != null) button(Icons.lightbulb_outline_rounded, onHint),
+        if (onHint != null)
+          button(
+            Icons.lightbulb_outline_rounded,
+            () => requestHint(context, ref, onHint!),
+          ),
         if (onHint != null && onReset != null) const SizedBox(width: 8),
         if (onReset != null) button(Icons.refresh_rounded, onReset),
       ],

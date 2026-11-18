@@ -8,9 +8,14 @@ class GameClock {
 
   static final Map<String, Stopwatch> _clocks = <String, Stopwatch>{};
 
-  /// The game that most recently started. The completion dialog uses it to
-  /// name the game whose record it is showing.
+  /// The game that most recently started.
   static String? lastGameId;
+
+  /// The most recently completed duration captured before `completeGame`
+  /// restarts the clock for the next board.
+  static String? lastStoppedGameId;
+  static Duration? lastStoppedElapsed;
+  static DateTime? _lastStoppedAt;
 
   static void start(String gameId) {
     lastGameId = gameId;
@@ -26,6 +31,9 @@ class GameClock {
     final clock = _clocks[gameId];
     if (clock == null || !clock.isRunning) return null;
     clock.stop();
+    lastStoppedGameId = gameId;
+    lastStoppedElapsed = clock.elapsed;
+    _lastStoppedAt = DateTime.now();
     return clock.elapsed;
   }
 
@@ -33,5 +41,18 @@ class GameClock {
   static Duration? elapsed(String gameId) {
     final clock = _clocks[gameId];
     return clock?.elapsed;
+  }
+
+  /// Completed solve duration for [gameId], preferring [lastStoppedElapsed]
+  /// when `completeGame` has just reset the running stopwatch.
+  static Duration? completedElapsed(String gameId) {
+    final DateTime? stoppedAt = _lastStoppedAt;
+    if (lastStoppedGameId == gameId &&
+        lastStoppedElapsed != null &&
+        stoppedAt != null &&
+        DateTime.now().difference(stoppedAt) < const Duration(seconds: 2)) {
+      return lastStoppedElapsed;
+    }
+    return elapsed(gameId);
   }
 }

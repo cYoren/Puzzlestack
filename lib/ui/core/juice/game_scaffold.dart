@@ -11,6 +11,7 @@ import '../../../providers/user_providers.dart';
 import '../../features/feed/feed_session.dart';
 import '../../../utils/game_clock.dart';
 import '../assist/game_assist.dart';
+import '../assist/hint_request.dart';
 import 'game_scope.dart';
 
 class GameScaffold extends ConsumerStatefulWidget {
@@ -214,7 +215,8 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
           // The screen's own controls. `actions` used to be accepted and then
           // dropped on the floor, which is why hint and reset buttons existed
           // in every game and appeared in none.
-          ...?widget.actions,
+          if (widget.actions != null)
+            for (final action in widget.actions!) _gateHintAction(action),
           ..._assistButtons(context),
           // Info / Help button: always shown for every game!
           const SizedBox(width: DesignSystem.spaceSM),
@@ -232,6 +234,49 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
         ],
       ),
     );
+  }
+
+  static bool _isHintIcon(Widget? child) {
+    return child is Icon &&
+        (child.icon == Icons.lightbulb_outline_rounded ||
+            child.icon == Icons.lightbulb_outline ||
+            child.icon == Icons.lightbulb_rounded ||
+            child.icon == Icons.lightbulb);
+  }
+
+  /// Routes every app-bar lightbulb button through the shared hint gate so
+  /// 3 hints a day free (unlimited with Plus) holds across every screen.
+  Widget _gateHintAction(Widget action) {
+    if (action is TangibleButton &&
+        action.onTap != null &&
+        _isHintIcon(action.child)) {
+      final VoidCallback original = action.onTap!;
+      return TangibleButton(
+        key: action.key,
+        color: action.color,
+        shadowColor: action.shadowColor,
+        radius: action.radius,
+        depth: action.depth,
+        padding: action.padding,
+        drawBorder: action.drawBorder,
+        onTap: () => requestHint(context, ref, original),
+        child: action.child,
+      );
+    }
+    if (action is IconButton &&
+        action.onPressed != null &&
+        _isHintIcon(action.icon)) {
+      final VoidCallback original = action.onPressed!;
+      return IconButton(
+        key: action.key,
+        icon: action.icon,
+        iconSize: action.iconSize,
+        tooltip: action.tooltip,
+        color: action.color,
+        onPressed: () => requestHint(context, ref, original),
+      );
+    }
+    return action;
   }
 
   /// Hint and solve for the games that can offer them.

@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/board/puzzle_board.dart';
 import '../../../../providers/game_tier_provider.dart';
+import '../../feed/feed_session.dart';
 import 'lights_out_engine.dart';
 
 part 'lights_out_provider.g.dart';
@@ -65,7 +66,10 @@ class LightsOutNotifier extends _$LightsOutNotifier {
       );
 
   LightsOutState _newPuzzle(LightsOutDifficulty difficulty) {
-    final puzzle = _engine.generate(difficulty);
+    final puzzle = _engine.generate(
+      difficulty,
+      random: FeedSession.randomFor('lights_out'),
+    );
     return LightsOutState(
       puzzle: puzzle,
       grid: puzzle.start,

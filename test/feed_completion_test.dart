@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/data/repositories/game_stats_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
+import 'package:puzzle/providers/game_stats_provider.dart';
 import 'package:puzzle/ui/features/feed/feed_session.dart';
 import 'package:puzzle/utils/design_system.dart';
+import 'package:puzzle/utils/game_clock.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
+
+class _SeededGameStatsNotifier extends GameStatsNotifier {
+  _SeededGameStatsNotifier(this._seeded);
+  final Map<String, GameStat> _seeded;
+
+  @override
+  Map<String, GameStat> build() => _seeded;
+}
 
 /// Solving a puzzle in the feed must cost one tap and land on the next card.
 /// The bridge that makes that work is [FeedSession], which the dialog reads
@@ -83,5 +94,48 @@ void main() {
 
     expect(replayed, 1);
     expect(dealt, 0);
+  });
+
+  testWidgets(
+      'non-victory feed result shows failure title instead of solve time',
+      (tester) async {
+    FeedSession.activate(FeedSession(
+      next: () {},
+      restart: () {},
+      close: () {},
+      isRoute: false,
+    ));
+    GameClock.start('minesweeper');
+
+    await tester.pumpWidget(ProviderScope(
+      overrides: [
+        gameStatsProvider.overrideWith(
+          () => _SeededGameStatsNotifier(const <String, GameStat>{
+            'minesweeper': GameStat(solves: 2, times: <int>[14000, 9000]),
+          }),
+        ),
+      ],
+      child: MaterialApp(
+        theme: DesignSystem.lightTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: Center(
+            child: GameCompletionDialog(
+              onHome: () {},
+              onPlayAgain: () {},
+              title: 'Game over',
+              message: 'Hit a mine.',
+              isVictory: false,
+            ),
+          ),
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('GAME OVER'), findsOneWidget);
+    expect(find.textContaining('BEST'), findsNothing);
+    expect(find.text('0:09'), findsNothing);
   });
 }
