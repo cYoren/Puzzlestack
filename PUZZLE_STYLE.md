@@ -1,6 +1,6 @@
 # The Puzzlestack house style
 
-One app, not 229 games that happen to share a font. This is the gate every port and every
+One app, not 184 games that happen to share a font. This is the gate every port and every
 rebuild passes, and the look a card is held to before it is dealt.
 
 **What is in place.** The contract is real code, not a proposal: `lib/ui/core/board/`

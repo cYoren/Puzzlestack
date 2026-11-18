@@ -46,9 +46,9 @@ light and `AUDIT_DARK=1`:
 | `attentional_blink_probe` | Blink Probe | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
 | `blink_detector` | Blink Detector | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
 | `chalk_and_talk` | Chalk & Talk | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
-| `change_blindness` | Change Blindness | deck | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
+| `change_blindness` | Change Blindness | deck | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `choice_reaction_time` | Choice Reaction Time | archive | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
-| `color_match` | COLOR MATCH | deck | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
+| `color_match` | Colour Match | deck | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `color_maze_nav` | Color Maze Nav | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
 | `color_word_match_up` | Color Match-Up | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
 | `counting_sheep` | Counting Sheep | archive | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
@@ -75,10 +75,10 @@ light and `AUDIT_DARK=1`:
 | `reverse_stroop` | Reverse Stroop | archive | fair-by-play | pass | audit-clean | pass | pass | fail | pass |
 | `rhythm_master` | Rhythm Master | archive | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `rule_switcher` | Rule Switcher | archive | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
-| `schulte_table` | Schulte Table | deck | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
+| `schulte_table` | Schulte Table | deck | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `sdmt` | Sdmt Test | archive | fair-by-play | pass | audit-clean | pass | pass | fail | pass |
 | `shape_shifter` | Shape Shifter | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
-| `shell_game` | Shell Game | deck | fair-by-play | pass | audit-clean | pass | pass | shouting | fail |
+| `shell_game` | Shell Game | deck | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `simon_command` | Simon Command | archive | fair-by-play | pass | audit-clean | pass | pass | shouting | fail |
 | `spatial_conflict` | Spatial Conflict | archive | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
 | `spotlight_track` | Spotlight Track | archive | fair-by-play | pass | audit-clean | pass | pass | shouting | pass |
@@ -100,8 +100,8 @@ PUZZLE-BAR.md's working procedure keeps fixes out of the triage PR: each of thes
 its own change with its own test. Grouped by the job that fixes it, because the fix is
 usually one mechanism and not N edits.
 
-- **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 23: `ab_reversal_oddball`, `attentional_blink_probe`, `blink_detector`, `chalk_and_talk`, `color_maze_nav`, `color_word_match_up`, `double_trouble`, `dynamic_salience`, `focus_tunnel`, `frequency_tap`, `multi_track_counter`, `multiple_object_tracking`, `navon_hierarchical`, `odd_even_flash`, `peripheral_focus`, `posner_spatial_cueing`, `shape_shifter`, `shell_game`, `simon_command`, `stroop_number_size`, `subitizing_rush`, `temporal_order_judgment`, `visual_crowding_acuity`
-- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 21: `attentional_blink`, `change_blindness`, `choice_reaction_time`, `color_match`, `d2_attention`, `dual_mirror`, `flanker_test`, `navon_hierarchical`, `reflex_tap`, `reverse_stroop`, `schulte_table`, `sdmt`, `shell_game`, `simon_command`, `spatial_conflict`, `spotlight_track`, `stroop_number_size`, `stroop_test`, `switch_task`, `symbolic_flanker`, `vigilance_task`
+- **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 22: `ab_reversal_oddball`, `attentional_blink_probe`, `blink_detector`, `chalk_and_talk`, `color_maze_nav`, `color_word_match_up`, `double_trouble`, `dynamic_salience`, `focus_tunnel`, `frequency_tap`, `multi_track_counter`, `multiple_object_tracking`, `navon_hierarchical`, `odd_even_flash`, `peripheral_focus`, `posner_spatial_cueing`, `shape_shifter`, `simon_command`, `stroop_number_size`, `subitizing_rush`, `temporal_order_judgment`, `visual_crowding_acuity`
+- **`plain-names` — sentence case, no lab vocabulary (check 9)** — 17: `attentional_blink`, `choice_reaction_time`, `d2_attention`, `dual_mirror`, `flanker_test`, `navon_hierarchical`, `reflex_tap`, `reverse_stroop`, `sdmt`, `simon_command`, `spatial_conflict`, `spotlight_track`, `stroop_number_size`, `stroop_test`, `switch_task`, `symbolic_flanker`, `vigilance_task`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.
