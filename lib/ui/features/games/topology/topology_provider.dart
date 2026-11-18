@@ -39,9 +39,12 @@ class TopologyState {
 @riverpod
 class TopologyNotifier extends _$TopologyNotifier {
   final _engine = TopologyEngine();
+  bool _disposed = false;
 
   @override
   TopologyState build() {
+    _disposed = false;
+    ref.onDispose(() => _disposed = true);
     return TopologyState();
   }
 
@@ -67,12 +70,14 @@ class TopologyNotifier extends _$TopologyNotifier {
           message: 'correct',
         );
         Future.delayed(const Duration(milliseconds: 500), () {
+          if (_disposed) return;
           if (state.message == 'correct') state = state.copyWith(message: null);
         });
       }
     } else {
       state = state.copyWith(message: 'incorrect');
       Future.delayed(const Duration(milliseconds: 500), () {
+        if (_disposed) return;
         if (state.message == 'incorrect') state = state.copyWith(message: null);
       });
     }

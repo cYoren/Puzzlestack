@@ -17,10 +17,16 @@ void main() {
       expect(WordMastermindEngine.maxTries, 10);
     });
 
-    test('getRandomWord returns a 4-letter word', () {
-      final word = engine.getRandomWord();
-      expect(word.length, 4);
-      expect(word, word.toUpperCase());
+    test('getRandomWord returns varied 4-letter words from expanded pool', () {
+      expect(engine.words.length, greaterThanOrEqualTo(100));
+      final seen = <String>{};
+      for (int i = 0; i < 30; i++) {
+        final word = engine.getRandomWord();
+        expect(word.length, 4);
+        expect(word, word.toUpperCase());
+        seen.add(word);
+      }
+      expect(seen.length, greaterThan(5));
     });
 
     group('checkGuess', () {

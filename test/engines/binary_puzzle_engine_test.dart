@@ -186,5 +186,18 @@ void main() {
         }
       });
     });
+
+    group('generateBoard', () {
+      test('generates uniquely solvable 6x6 puzzles', () {
+        for (int i = 0; i < 15; i++) {
+          final board = engine.generateBoard(size: 6);
+          expect(
+            BinaryPuzzleEngine.countSolutions(board.grid, 6, limit: 2),
+            1,
+            reason: 'Board $i must have a unique solution',
+          );
+        }
+      });
+    });
   });
 }

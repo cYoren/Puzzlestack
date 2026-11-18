@@ -39,9 +39,12 @@ class BaseShiftState {
 @riverpod
 class BaseShiftNotifier extends _$BaseShiftNotifier {
   final _engine = BaseShiftEngine();
+  bool _disposed = false;
 
   @override
   BaseShiftState build() {
+    _disposed = false;
+    ref.onDispose(() => _disposed = true);
     return BaseShiftState();
   }
 
@@ -68,12 +71,14 @@ class BaseShiftNotifier extends _$BaseShiftNotifier {
           message: 'correct',
         );
         Future.delayed(const Duration(seconds: 1), () {
+          if (_disposed) return;
           if (state.message == 'correct') state = state.copyWith(message: null);
         });
       }
     } else {
       state = state.copyWith(message: 'incorrect');
       Future.delayed(const Duration(seconds: 1), () {
+        if (_disposed) return;
         if (state.message == 'incorrect') state = state.copyWith(message: null);
       });
     }

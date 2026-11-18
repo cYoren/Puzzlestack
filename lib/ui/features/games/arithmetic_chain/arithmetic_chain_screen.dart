@@ -78,6 +78,7 @@ class _ArithmeticChainScreenState extends ConsumerState<ArithmeticChainScreen> {
     return GameScaffold(
       title: l10n.arithmeticChainTitle,
       subtitle: l10n.arithmeticChainSubtitle,
+      onReset: () => notifier.initGame(),
       body: Column(
         children: [
           const SizedBox(height: DesignSystem.spaceXL),

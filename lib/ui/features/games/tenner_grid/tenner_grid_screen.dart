@@ -8,6 +8,7 @@ import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
+import 'tenner_grid_engine.dart';
 
 class TennerGridScreen extends ConsumerStatefulWidget {
   const TennerGridScreen({super.key});
@@ -22,39 +23,11 @@ class _TennerGridScreenState extends ConsumerState<TennerGridScreen> {
   final int _targetScore = 3;
   bool _isGameOver = false;
 
-  final int _gridRows = 3; // 3 rows of grid
-  final int _gridCols = 10; // 10 columns (each row contains numbers 0..9)
+  final int _gridRows = TennerGridEngine.defaultRows; // 3 rows of grid
+  final int _gridCols = TennerGridEngine.defaultCols; // 10 columns (each row contains numbers 0..9)
   late List<List<int>> _grid; // User entered values (-1 represents empty)
   late List<List<bool>> _isFixed; // Prefilled fixed cells
   late List<int> _colSums; // Sum of values in each column
-
-  // Solvable levels
-  final List<Map<String, dynamic>> _levels = [
-    {
-      'solution': [
-        [3, 2, 7, 0, 1, 5, 8, 9, 4, 6],
-        [9, 6, 1, 5, 2, 0, 4, 7, 8, 3],
-        [0, 5, 7, 9, 8, 6, 1, 3, 2, 4]
-      ],
-      'fixed': [
-        [false, true, false, false, false, true, false, true, false, true],
-        [true, false, true, false, false, true, false, true, false, false],
-        [false, true, false, true, true, true, false, false, false, false]
-      ],
-    },
-    {
-      'solution': [
-        [8, 7, 3, 9, 4, 1, 0, 6, 5, 2],
-        [5, 6, 0, 7, 2, 8, 3, 9, 4, 1],
-        [1, 3, 9, 6, 4, 7, 5, 2, 0, 8]
-      ],
-      'fixed': [
-        [true, true, false, false, false, true, false, false, true, false],
-        [true, true, false, false, false, false, true, false, false, true],
-        [false, false, true, true, false, false, true, true, false, false]
-      ],
-    }
-  ];
 
   int _selectedCellRow = -1;
   int _selectedCellCol = -1;
@@ -66,28 +39,20 @@ class _TennerGridScreenState extends ConsumerState<TennerGridScreen> {
   }
 
   void _generatePuzzle() {
-    final level = _levels[_random.nextInt(_levels.length)];
-    final solution = level['solution'] as List<List<int>>;
-    final rawFixed = level['fixed'] as List<List<bool>>;
-
+    final puzzle = TennerGridEngine.generatePuzzle(
+      rows: _gridRows,
+      cols: _gridCols,
+      random: _random,
+    );
+    _isFixed = List.generate(_gridRows, (r) => List.from(puzzle.fixed[r]));
+    _colSums = List.from(puzzle.colSums);
     _grid = List.generate(_gridRows, (r) => List.filled(_gridCols, -1));
-    _isFixed = List.generate(_gridRows, (r) => List.from(rawFixed[r]));
-
-    // Populate col sums from the complete solution
-    _colSums = List.filled(_gridCols, 0);
-    for (int c = 0; c < _gridCols; c++) {
-      int sum = 0;
-      for (int r = 0; r < _gridRows; r++) {
-        sum += solution[r][c];
-      }
-      _colSums[c] = sum;
-    }
 
     // Populate prefilled fixed cells
     for (int r = 0; r < _gridRows; r++) {
       for (int c = 0; c < _gridCols; c++) {
         if (_isFixed[r][c]) {
-          _grid[r][c] = solution[r][c];
+          _grid[r][c] = puzzle.solution[r][c];
         }
       }
     }

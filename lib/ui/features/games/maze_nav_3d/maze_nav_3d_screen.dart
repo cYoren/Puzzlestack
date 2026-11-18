@@ -42,36 +42,50 @@ class _MazeNav3DScreenState extends ConsumerState<MazeNav3DScreen> {
   }
 
   void _generatePuzzle() {
-    // Generate a simple 4x4 maze
-    // To make it easy and solvable, let's create a clear pathway
-    _mazeGrid = List.generate(_gridSize, (_) => List.filled(_gridSize, 1));
+    for (int attempt = 0; attempt < 50; attempt++) {
+      _mazeGrid = List.generate(_gridSize, (_) => List.filled(_gridSize, 1));
 
-    // Simple random walk path from (0,0) to random exit at boundaries
-    int cx = 0;
-    int cy = 0;
-    _mazeGrid[cy][cx] = 0;
-
-    final path = <Point<int>>[Point(cx, cy)];
-    while (path.length < 6) {
-      final neighbors = <Point<int>>[];
-      if (cx > 0) neighbors.add(Point(cx - 1, cy));
-      if (cx < _gridSize - 1) neighbors.add(Point(cx + 1, cy));
-      if (cy > 0) neighbors.add(Point(cx, cy - 1));
-      if (cy < _gridSize - 1) neighbors.add(Point(cx, cy + 1));
-
-      final next = neighbors[_random.nextInt(neighbors.length)];
-      cx = next.x;
-      cy = next.y;
+      int cx = 0;
+      int cy = 0;
       _mazeGrid[cy][cx] = 0;
-      path.add(next);
+
+      final visited = <Point<int>>{Point(cx, cy)};
+      for (int step = 0; step < 12; step++) {
+        final neighbors = <Point<int>>[
+          if (cx > 0) Point(cx - 1, cy),
+          if (cx < _gridSize - 1) Point(cx + 1, cy),
+          if (cy > 0) Point(cx, cy - 1),
+          if (cy < _gridSize - 1) Point(cx, cy + 1),
+        ];
+        final unvisited =
+            neighbors.where((p) => !visited.contains(p)).toList();
+        final pool = unvisited.isNotEmpty ? unvisited : neighbors;
+        final next = pool[_random.nextInt(pool.length)];
+        cx = next.x;
+        cy = next.y;
+        _mazeGrid[cy][cx] = 0;
+        visited.add(next);
+        if (cx + cy >= _gridSize + 1 && step >= 5) break;
+      }
+
+      if (cx + cy >= 3 && (cx != 0 || cy != 0)) {
+        _mazeGrid[cy][cx] = 2;
+        _playerX = 0;
+        _playerY = 0;
+        _facing = east;
+        return;
+      }
     }
 
-    // Set exit
-    _mazeGrid[cy][cx] = 2;
-
-    // Reset player position to start of path
-    _playerX = path.first.x;
-    _playerY = path.first.y;
+    // Verified reachable fallback.
+    _mazeGrid = [
+      [0, 0, 0, 1],
+      [1, 1, 0, 1],
+      [1, 0, 0, 0],
+      [1, 0, 1, 2],
+    ];
+    _playerX = 0;
+    _playerY = 0;
     _facing = east;
   }
 

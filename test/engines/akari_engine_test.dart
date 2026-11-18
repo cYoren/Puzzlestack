@@ -43,6 +43,18 @@ void main() {
         grid1[0][0] = 999;
         expect(grid2[0][0], isNot(equals(999)));
       });
+
+      test('5x5 and 6x6 procedural boards have a unique solution', () {
+        for (final size in [5, 6]) {
+          for (int i = 0; i < 10; i++) {
+            final grid = engine.generateLevel(size: size)['grid'] as List<List<int>>;
+            expect(grid.length, size);
+            expect(AkariEngine.countSolutions(grid), 1,
+                reason: 'size=$size board $i must be unique');
+            expect(AkariEngine.solve(grid), isNotNull);
+          }
+        }
+      });
     });
 
     group('calculateLit', () {

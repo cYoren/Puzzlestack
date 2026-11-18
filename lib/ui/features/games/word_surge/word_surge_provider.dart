@@ -52,14 +52,21 @@ class WordSurgeState {
 class WordSurgeNotifier extends _$WordSurgeNotifier {
   final _engine = WordSurgeEngine();
   Timer? _timer;
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   WordSurgeState build() {
-    ref.onDispose(() => _timer?.cancel());
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      _timer?.cancel();
+    });
     return WordSurgeState();
   }
 
   void initGame() {
+    _epoch++;
     _timer?.cancel();
     state = WordSurgeState(
       currentChallenge: _engine.getRandomChallenge(),
@@ -95,8 +102,9 @@ class WordSurgeNotifier extends _$WordSurgeNotifier {
       _timer?.cancel();
       state = state.copyWith(isGameOver: true);
     } else {
+      final callEpoch = _epoch;
       Future.delayed(const Duration(milliseconds: 500), () {
-        if (state.isGameOver) return;
+        if (_disposed || callEpoch != _epoch || state.isGameOver) return;
         state = state.copyWith(
           currentChallenge: _engine.getRandomChallenge(),
           selectedOption: null,

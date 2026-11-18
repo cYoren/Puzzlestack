@@ -12,6 +12,64 @@ import '../../../core/juice/game_scaffold.dart';
 class KakurasuSumsScreen extends ConsumerStatefulWidget {
   const KakurasuSumsScreen({super.key});
 
+  /// Counts Kakurasu solutions matching [rowTargets] and [colTargets] up to [limit].
+  static int countSolutions(
+    List<int> rowTargets,
+    List<int> colTargets, {
+    int limit = 2,
+  }) {
+    final n = rowTargets.length;
+    final rowOptions = List.generate(n, (r) {
+      final target = rowTargets[r];
+      final masks = <int>[];
+      for (int mask = 0; mask < (1 << n); mask++) {
+        int sum = 0;
+        for (int c = 0; c < n; c++) {
+          if ((mask & (1 << c)) != 0) sum += (c + 1);
+        }
+        if (sum == target) masks.add(mask);
+      }
+      return masks;
+    });
+
+    final colSums = List<int>.filled(n, 0);
+    int solutions = 0;
+
+    void search(int r) {
+      if (solutions >= limit) return;
+      if (r == n) {
+        for (int c = 0; c < n; c++) {
+          if (colSums[c] != colTargets[c]) return;
+        }
+        solutions++;
+        return;
+      }
+
+      int remWeight = 0;
+      for (int rr = r + 1; rr < n; rr++) {
+        remWeight += (rr + 1);
+      }
+
+      for (final mask in rowOptions[r]) {
+        bool ok = true;
+        for (int c = 0; c < n; c++) {
+          final next = colSums[c] + (((mask & (1 << c)) != 0) ? (r + 1) : 0);
+          colSums[c] = next;
+          if (next > colTargets[c] || next + remWeight < colTargets[c]) {
+            ok = false;
+          }
+        }
+        if (ok) search(r + 1);
+        for (int c = 0; c < n; c++) {
+          if ((mask & (1 << c)) != 0) colSums[c] -= (r + 1);
+        }
+      }
+    }
+
+    search(0);
+    return solutions;
+  }
+
   @override
   ConsumerState<KakurasuSumsScreen> createState() => _KakurasuSumsScreenState();
 }
@@ -38,42 +96,48 @@ class _KakurasuSumsScreenState extends ConsumerState<KakurasuSumsScreen> {
     _rowTargets = List.filled(_gridSize, 0);
     _colTargets = List.filled(_gridSize, 0);
 
-    // To ensure a valid, solvable board, we generate a random configuration of shaded cells
-    // and compute the row and column target sums based on it.
-    final solution = List.generate(_gridSize, (_) => List.generate(_gridSize, (_) => _random.nextBool()));
+    for (int attempt = 0; attempt < 500; attempt++) {
+      final solution = List.generate(
+        _gridSize,
+        (_) => List.generate(_gridSize, (_) => _random.nextBool()),
+      );
 
-    // Make sure we have at least some shaded cells
-    bool hasShaded = false;
-    for (int r = 0; r < _gridSize; r++) {
-      for (int c = 0; c < _gridSize; c++) {
-        if (solution[r][c]) hasShaded = true;
-      }
-    }
-    if (!hasShaded) {
-      solution[0][0] = true;
-      solution[1][1] = true;
-    }
-
-    // Weight of index i is (i + 1)
-    for (int r = 0; r < _gridSize; r++) {
-      int sum = 0;
-      for (int c = 0; c < _gridSize; c++) {
-        if (solution[r][c]) {
-          sum += (c + 1);
-        }
-      }
-      _rowTargets[r] = sum;
-    }
-
-    for (int c = 0; c < _gridSize; c++) {
-      int sum = 0;
+      bool hasShaded = false;
       for (int r = 0; r < _gridSize; r++) {
-        if (solution[r][c]) {
-          sum += (r + 1);
+        for (int c = 0; c < _gridSize; c++) {
+          if (solution[r][c]) hasShaded = true;
         }
       }
-      _colTargets[c] = sum;
+      if (!hasShaded) continue;
+
+      final rowTargets = List<int>.filled(_gridSize, 0);
+      final colTargets = List<int>.filled(_gridSize, 0);
+      for (int r = 0; r < _gridSize; r++) {
+        int sum = 0;
+        for (int c = 0; c < _gridSize; c++) {
+          if (solution[r][c]) sum += (c + 1);
+        }
+        rowTargets[r] = sum;
+      }
+      for (int c = 0; c < _gridSize; c++) {
+        int sum = 0;
+        for (int r = 0; r < _gridSize; r++) {
+          if (solution[r][c]) sum += (r + 1);
+        }
+        colTargets[c] = sum;
+      }
+
+      if (KakurasuSumsScreen.countSolutions(rowTargets, colTargets, limit: 2) ==
+          1) {
+        _rowTargets = rowTargets;
+        _colTargets = colTargets;
+        return;
+      }
     }
+
+    // Verified unique fallback (only top-left and bottom-right unshaded, unique sums).
+    _rowTargets = [9, 10, 10, 6];
+    _colTargets = [9, 10, 10, 6];
   }
 
   void _onCellTap(int r, int c) {

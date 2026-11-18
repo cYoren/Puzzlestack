@@ -27,6 +27,7 @@ class TangleFixState {
     List<TangleEdge>? edges,
     bool? isSolved,
     String? draggingNodeId,
+    bool clearDraggingNodeId = false,
     Set<int>? intersectingEdgeIndices,
     bool? gameCompleted,
   }) {
@@ -34,7 +35,8 @@ class TangleFixState {
       nodes: nodes ?? this.nodes,
       edges: edges ?? this.edges,
       isSolved: isSolved ?? this.isSolved,
-      draggingNodeId: draggingNodeId ?? this.draggingNodeId,
+      draggingNodeId:
+          clearDraggingNodeId ? null : (draggingNodeId ?? this.draggingNodeId),
       intersectingEdgeIndices:
           intersectingEdgeIndices ?? this.intersectingEdgeIndices,
       gameCompleted: gameCompleted ?? this.gameCompleted,
@@ -73,20 +75,80 @@ class TangleFixNotifier extends _$TangleFixNotifier {
     );
   }
 
-  void onDragStart(Offset position) {
-    if (state.gameCompleted) return;
-
+  String? _findClosestNodeId(Offset position) {
     String? closestNodeId;
     double minDistance = 45.0; // Generous hitbox
-
-    for (var node in state.nodes) {
-      double dist = (node.position - position).distance;
+    for (final node in state.nodes) {
+      final dist = (node.position - position).distance;
       if (dist < minDistance) {
         minDistance = dist;
         closestNodeId = node.id;
       }
     }
+    return closestNodeId;
+  }
 
+  void _moveNodeTo(
+    String nodeId,
+    Offset position,
+    Size bounds, {
+    bool completeIfSolved = false,
+  }) {
+    const padding = 25.0;
+    final clampedPosition = Offset(
+      position.dx.clamp(padding, bounds.width - padding),
+      position.dy.clamp(padding, bounds.height - padding),
+    );
+
+    final updatedNodes = state.nodes.map((node) {
+      if (node.id == nodeId) {
+        return TangleNode(id: node.id, position: clampedPosition);
+      }
+      return node;
+    }).toList();
+
+    final intersecting =
+        _engine.getIntersectingEdgeIndices(updatedNodes, state.edges);
+    final solved = intersecting.isEmpty;
+
+    state = state.copyWith(
+      nodes: updatedNodes,
+      intersectingEdgeIndices: intersecting,
+      isSolved: solved,
+      clearDraggingNodeId: completeIfSolved,
+      gameCompleted: completeIfSolved && solved,
+    );
+
+    if (completeIfSolved && solved) {
+      HapticFeedbackUtil.victory();
+    }
+  }
+
+  void onTap(Offset position, Size bounds) {
+    if (state.gameCompleted || state.nodes.isEmpty) return;
+
+    final tappedNodeId = _findClosestNodeId(position);
+    if (tappedNodeId != null) {
+      HapticFeedbackUtil.lightImpact();
+      if (state.draggingNodeId == tappedNodeId) {
+        state = state.copyWith(clearDraggingNodeId: true);
+      } else {
+        state = state.copyWith(draggingNodeId: tappedNodeId);
+      }
+      return;
+    }
+
+    final selectedId = state.draggingNodeId;
+    if (selectedId != null) {
+      HapticFeedbackUtil.lightImpact();
+      _moveNodeTo(selectedId, position, bounds, completeIfSolved: true);
+    }
+  }
+
+  void onDragStart(Offset position) {
+    if (state.gameCompleted) return;
+
+    final closestNodeId = _findClosestNodeId(position);
     if (closestNodeId != null) {
       state = state.copyWith(draggingNodeId: closestNodeId);
       HapticFeedbackUtil.lightImpact();
@@ -95,42 +157,18 @@ class TangleFixNotifier extends _$TangleFixNotifier {
 
   void onDragUpdate(Offset position, Size bounds) {
     if (state.draggingNodeId == null || state.gameCompleted) return;
-
-    // Clamp position to bounds with padding
-    const padding = 25.0;
-    final clampedPosition = Offset(
-      position.dx.clamp(padding, bounds.width - padding),
-      position.dy.clamp(padding, bounds.height - padding),
-    );
-
-    final updatedNodes = state.nodes.map((node) {
-      if (node.id == state.draggingNodeId) {
-        return TangleNode(id: node.id, position: clampedPosition);
-      }
-      return node;
-    }).toList();
-
-    final intersecting =
-        _engine.getIntersectingEdgeIndices(updatedNodes, state.edges);
-
-    state = state.copyWith(
-      nodes: updatedNodes,
-      intersectingEdgeIndices: intersecting,
-      isSolved: intersecting.isEmpty,
-    );
+    _moveNodeTo(state.draggingNodeId!, position, bounds);
   }
 
   void onDragEnd() {
     if (state.draggingNodeId == null) return;
 
-    // Final check for win condition on release
     final isSolved = state.isSolved;
-    
     state = state.copyWith(
-      draggingNodeId: null,
+      clearDraggingNodeId: true,
       gameCompleted: isSolved,
     );
-    
+
     if (isSolved) {
       HapticFeedbackUtil.victory();
     }

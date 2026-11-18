@@ -1,16 +1,33 @@
+import 'dart:math';
+
 class WordMastermindEngine {
   static const int wordLength = 4;
   static const int maxTries = 10;
 
-  // Dedicated dataset for Word Mastermind
-  final List<String> _words = [
+  final Random _random;
+
+  WordMastermindEngine([Random? random]) : _random = random ?? Random();
+
+  // Dedicated 4-letter English word dataset for Word Mastermind
+  static const List<String> _words = [
     'BLUE', 'GOLD', 'DARK', 'MIND', 'CODE', 'PLAY', 'GAME', 'TIME', 'FAST', 'SLOW',
-    'FIRE', 'WIND', 'SNOW', 'RAIN', 'STAR', 'MOON', 'SUNS', 'COOL', 'HEAT', 'ROCK',
-    'TREE', 'LEAF', 'BIRD', 'FISH', 'SHIP', 'BOAT', 'ROAD', 'CITY', 'LAND', 'SAND'
+    'FIRE', 'WIND', 'SNOW', 'RAIN', 'STAR', 'MOON', 'DAWN', 'COOL', 'HEAT', 'ROCK',
+    'TREE', 'LEAF', 'BIRD', 'FISH', 'SHIP', 'BOAT', 'ROAD', 'CITY', 'LAND', 'SAND',
+    'WAVE', 'TIDE', 'PEAK', 'VALE', 'GLOW', 'LAMP', 'BELL', 'RING', 'SONG', 'NOTE',
+    'BOOK', 'PAGE', 'INKY', 'DESK', 'PATH', 'GATE', 'WALL', 'ROOF', 'DOOR', 'ROOM',
+    'KING', 'DUKE', 'FORT', 'CAST', 'COIN', 'GEMS', 'WORK', 'TASK', 'PLAN', 'IDEA',
+    'FORM', 'LINE', 'EDGE', 'ARCH', 'DOME', 'CUBE', 'CONE', 'GEAR', 'BOLT', 'WIRE',
+    'IRON', 'ZINC', 'SALT', 'MILK', 'PEAR', 'PLUM', 'LIME', 'CORN', 'RICE', 'OATS',
+    'SOUP', 'CAKE', 'LOAF', 'FORK', 'BOWL', 'MUGS', 'VASE', 'SILK', 'WOOL', 'KNOT',
+    'CAPE', 'COAT', 'BELT', 'SHOE', 'SOCK', 'GLAD', 'CALM', 'BOLD', 'WISE', 'KEEN',
+    'PURE', 'WARM', 'DEEP', 'HIGH', 'WIDE', 'LONG', 'NEAR', 'OPEN', 'TRUE', 'SAFE',
+    'JUMP', 'SWIM', 'DIVE', 'WALK', 'HIKE', 'RIDE', 'SAIL', 'SOAR', 'TURN', 'SPIN',
   ];
 
+  List<String> get words => _words;
+
   String getRandomWord() {
-    return _words[(DateTime.now().millisecondsSinceEpoch % _words.length)].toUpperCase();
+    return _words[_random.nextInt(_words.length)].toUpperCase();
   }
 
   // Returns [bulls, cows]

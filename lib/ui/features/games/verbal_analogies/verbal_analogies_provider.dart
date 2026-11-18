@@ -46,13 +46,18 @@ class VerbalAnalogiesState {
 @riverpod
 class VerbalAnalogiesNotifier extends _$VerbalAnalogiesNotifier {
   final _engine = VerbalAnalogiesEngine();
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   VerbalAnalogiesState build() {
+    _disposed = false;
+    ref.onDispose(() => _disposed = true);
     return VerbalAnalogiesState();
   }
 
   void initGame() {
+    _epoch++;
     state = VerbalAnalogiesState(
       currentAnalogy: _engine.getRandomAnalogy(),
       isLoading: false,
@@ -74,8 +79,9 @@ class VerbalAnalogiesNotifier extends _$VerbalAnalogiesNotifier {
     if (newScore >= state.targetScore) {
       state = state.copyWith(isVictory: true);
     } else {
+      final callEpoch = _epoch;
       Future.delayed(const Duration(milliseconds: 1000), () {
-        if (state.isVictory) return;
+        if (_disposed || callEpoch != _epoch || state.isVictory) return;
         state = state.copyWith(
           currentAnalogy: _engine.getRandomAnalogy(),
           selectedOption: null,

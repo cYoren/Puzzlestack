@@ -81,294 +81,438 @@ class AkariEngine {
     ],
   ];
 
-  Map<String, dynamic> generateLevel({int size = 5}) {
+  Map<String, dynamic> generateLevel({int size = 5, Random? random}) {
+    final rng = random ?? _random;
+    for (int attempt = 0; attempt < 80; attempt++) {
+      final result = _tryGenerate(size, rng);
+      if (result != null) return result;
+    }
     if (size == 5) {
-      final template = predefinedLevels[_random.nextInt(predefinedLevels.length)];
+      final template = predefinedLevels[rng.nextInt(predefinedLevels.length)];
       final grid = template.map((r) => List<int>.from(r)).toList();
       return {'grid': grid};
     }
-    while (true) {
-      final result = _tryGenerate(size);
-      if (result != null) return result;
-    }
+    return {'grid': _fallback6x6.map((r) => List<int>.from(r)).toList()};
   }
 
-  Map<String, dynamic>? _tryGenerate(int size) {
-    // 1. Generate a valid bulb placement
-    final solution = _generateSolution(size);
-    if (solution == null) return null;
+  static const List<List<int>> _fallback6x6 = [
+    [-2, -2, 1, -2, -2, -2],
+    [-2, -2, -2, -2, 2, -2],
+    [1, -2, -2, -2, -2, -1],
+    [-1, -2, -2, -2, -2, 1],
+    [-2, 2, -2, -2, -2, -2],
+    [-2, -2, -2, 1, -2, -2],
+  ];
 
-    // 2. Build grid from solution
+  Map<String, dynamic>? _tryGenerate(int size, Random rng) {
     final grid = List.generate(size, (_) => List.filled(size, -2));
 
-    // 3. Add numbered walls
+    // 1. Place walls (~25% of cells), keeping at least two-thirds white.
+    final wallTarget = max(3, (size * size * 0.25).round());
+    final allCells = [
+      for (int r = 0; r < size; r++)
+        for (int c = 0; c < size; c++) [r, c],
+    ]..shuffle(rng);
+
+    for (int i = 0; i < wallTarget && i < allCells.length; i++) {
+      final r = allCells[i][0];
+      final c = allCells[i][1];
+      grid[r][c] = -1;
+    }
+
+    // 2. Find a valid bulb placement on the walled grid.
+    final solution = _findRandomBulbCover(grid, size, rng);
+    if (solution == null) return null;
+
+    // 3. Fill every wall with its exact adjacent bulb count.
+    final wallCells = <List<int>>[];
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
-        if (!solution[r][c]) continue;
-        // This cell has a bulb — number its wall neighbors
-        final dirs = [
-          [r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]
-        ];
-        for (final d in dirs) {
-          final dr = d[0], dc = d[1];
-          if (dr >= 0 && dr < size && dc >= 0 && dc < size && !solution[dr][dc]) {
-            // Neighbor is white — count bulbs around it
-            int count = 0;
-            for (final dd in [
-              [dr - 1, dc], [dr + 1, dc], [dr, dc - 1], [dr, dc + 1]
-            ]) {
-              final nr = dd[0], nc = dd[1];
-              if (nr >= 0 && nr < size && nc >= 0 && nc < size && solution[nr][nc]) {
-                count++;
-              }
-            }
-            if (grid[dr][dc] == -2) {
-              grid[dr][dc] = count;
-            }
-          }
+        if (grid[r][c] != -2) {
+          int count = 0;
+          if (r > 0 && solution[r - 1][c]) count++;
+          if (r < size - 1 && solution[r + 1][c]) count++;
+          if (c > 0 && solution[r][c - 1]) count++;
+          if (c < size - 1 && solution[r][c + 1]) count++;
+          grid[r][c] = count;
+          wallCells.add([r, c]);
         }
       }
     }
 
-    // 4. Convert some numbered walls to plain walls (-1) for difficulty
-    final numberCells = <List<int>>[];
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        if (grid[r][c] >= 0) numberCells.add([r, c]);
+    // Require unique solution even with all wall clues present.
+    if (countSolutions(grid) != 1) return null;
+
+    // 4. Prune wall numbers while keeping uniqueness.
+    wallCells.shuffle(rng);
+    for (final w in wallCells) {
+      final r = w[0];
+      final c = w[1];
+      final backup = grid[r][c];
+      grid[r][c] = -1;
+      if (countSolutions(grid) != 1) {
+        grid[r][c] = backup;
       }
     }
-    numberCells.shuffle(_random);
-    // Keep enough numbers to ensure unique solution, hide some
-    final revealCount = max(1, (numberCells.length * 0.6).toInt());
-    for (int i = revealCount; i < numberCells.length; i++) {
-      grid[numberCells[i][0]][numberCells[i][1]] = -1;
-    }
-
-    // 5. Verify unique solution
-    final solutionCount = _countSolutions(grid, size);
-    if (solutionCount != 1) return null;
 
     return {'grid': grid};
   }
 
-  List<List<bool>>? _generateSolution(int size) {
-    // Try random bulb placement with backtracking
+  List<List<bool>>? _findRandomBulbCover(
+    List<List<int>> grid,
+    int size,
+    Random rng,
+  ) {
     final bulbs = List.generate(size, (_) => List.filled(size, false));
-    final lit = List.generate(size, (_) => List.filled(size, false));
-
-    if (_placeBulbs(bulbs, lit, size, 0, 0)) {
-      return bulbs;
+    final white = <(int, int)>[];
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        if (grid[r][c] == -2) white.add((r, c));
+      }
     }
-    return null;
+    white.shuffle(rng);
+
+    // Greedy randomized backtracking on white cells: pick an unlit white cell
+    // and try placing a bulb in a cell that lights it.
+    bool rec() {
+      (int, int)? target;
+      for (final (r, c) in white) {
+        if (!_isCellLit(grid, bulbs, size, r, c)) {
+          target = (r, c);
+          break;
+        }
+      }
+      if (target == null) return true;
+
+      final candidates = _lightingCandidates(grid, bulbs, size, target.$1, target.$2)
+        ..shuffle(rng);
+      for (final (br, bc) in candidates) {
+        bulbs[br][bc] = true;
+        if (rec()) return true;
+        bulbs[br][bc] = false;
+      }
+      return false;
+    }
+
+    return rec() ? bulbs : null;
   }
 
-  bool _placeBulbs(List<List<bool>> bulbs, List<List<bool>> lit, int size, int row, int col) {
-    if (row == size) {
-      // Check all white cells are lit (all cells start as white in generation)
-      for (int r = 0; r < size; r++) {
-        for (int c = 0; c < size; c++) {
-          if (!lit[r][c]) return false;
-        }
+  static bool _isCellLit(
+    List<List<int>> grid,
+    List<List<bool>> bulbs,
+    int size,
+    int r,
+    int c,
+  ) {
+    if (bulbs[r][c]) return true;
+    for (int j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
+      if (bulbs[r][j]) return true;
+    }
+    for (int j = c + 1; j < size && grid[r][j] == -2; j++) {
+      if (bulbs[r][j]) return true;
+    }
+    for (int i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
+      if (bulbs[i][c]) return true;
+    }
+    for (int i = r + 1; i < size && grid[i][c] == -2; i++) {
+      if (bulbs[i][c]) return true;
+    }
+    return false;
+  }
+
+  static List<(int, int)> _lightingCandidates(
+    List<List<int>> grid,
+    List<List<bool>> bulbs,
+    int size,
+    int r,
+    int c,
+  ) {
+    final out = <(int, int)>[];
+    bool clear(int cr, int cc) {
+      if (bulbs[cr][cc]) return false;
+      for (int j = cc - 1; j >= 0 && grid[cr][j] == -2; j--) {
+        if (bulbs[cr][j]) return false;
+      }
+      for (int j = cc + 1; j < size && grid[cr][j] == -2; j++) {
+        if (bulbs[cr][j]) return false;
+      }
+      for (int i = cr - 1; i >= 0 && grid[i][cc] == -2; i--) {
+        if (bulbs[i][cc]) return false;
+      }
+      for (int i = cr + 1; i < size && grid[i][cc] == -2; i++) {
+        if (bulbs[i][cc]) return false;
       }
       return true;
     }
 
-    int nextRow = col == size - 1 ? row + 1 : row;
-    int nextCol = col == size - 1 ? 0 : col + 1;
-
-    // Try placing bulb at (row, col)
-    if (_canPlaceBulb(bulbs, lit, size, row, col)) {
-      bulbs[row][col] = true;
-      _updateLit(lit, bulbs, size, row, col, true);
-      if (_placeBulbs(bulbs, lit, size, nextRow, nextCol)) return true;
-      bulbs[row][col] = false;
-      _updateLit(lit, bulbs, size, row, col, false);
-    }
-
-    // Try without bulb
-    return _placeBulbs(bulbs, lit, size, nextRow, nextCol);
-  }
-
-  bool _canPlaceBulb(List<List<bool>> bulbs, List<List<bool>> lit, int size, int r, int c) {
-    // Can't place if another bulb sees this cell
-    // Check horizontal
-    for (int j = c - 1; j >= 0 && !bulbs[r][j]; j--) {
-      // No wall checks during generation — all cells are white
-    }
-    for (int j = c + 1; j < size && !bulbs[r][j]; j++) {}
-    // Actually check: no bulb in same row/column before a wall
-    for (int j = c - 1; j >= 0; j--) {
-      if (bulbs[r][j]) return false;
-    }
-    for (int j = c + 1; j < size; j++) {
-      if (bulbs[r][j]) return false;
-    }
-    for (int i = r - 1; i >= 0; i--) {
-      if (bulbs[i][c]) return false;
-    }
-    for (int i = r + 1; i < size; i++) {
-      if (bulbs[i][c]) return false;
-    }
-    return true;
-  }
-
-  void _updateLit(List<List<bool>> lit, List<List<bool>> bulbs, int size, int r, int c, bool add) {
-    // During generation all cells are white, so light travels until grid edge
-    if (add) {
-      lit[r][c] = true;
-      for (int i = r - 1; i >= 0; i--) { lit[i][c] = true; }
-      for (int i = r + 1; i < size; i++) { lit[i][c] = true; }
-      for (int j = c - 1; j >= 0; j--) { lit[r][j] = true; }
-      for (int j = c + 1; j < size; j++) { lit[r][j] = true; }
-    } else {
-      // Recalculate all lit from scratch
-      for (int rr = 0; rr < size; rr++) {
-        for (int cc = 0; cc < size; cc++) {
-          lit[rr][cc] = false;
-        }
-      }
-      for (int rr = 0; rr < size; rr++) {
-        for (int cc = 0; cc < size; cc++) {
-          if (bulbs[rr][cc]) {
-            lit[rr][cc] = true;
-            for (int i = rr - 1; i >= 0; i--) { lit[i][cc] = true; }
-            for (int i = rr + 1; i < size; i++) { lit[i][cc] = true; }
-            for (int j = cc - 1; j >= 0; j--) { lit[rr][j] = true; }
-            for (int j = cc + 1; j < size; j++) { lit[rr][j] = true; }
-          }
-        }
-      }
-    }
-  }
-
-  int _countSolutions(List<List<int>> grid, int size) {
-    final bulbs = List.generate(size, (_) => List.filled(size, false));
-    return _solve(grid, bulbs, size, 0, 0, 0);
-  }
-
-  int _solve(List<List<int>> grid, List<List<bool>> bulbs, int size, int row, int col, int count) {
-    if (count > 1) return count;
-
-    if (row == size) {
-      if (_isValidSolution(grid, bulbs, size)) return count + 1;
-      return count;
-    }
-
-    int nextRow = col == size - 1 ? row + 1 : row;
-    int nextCol = col == size - 1 ? 0 : col + 1;
-
-    // Skip wall cells
-    if (grid[row][col] != -2) {
-      return _solve(grid, bulbs, size, nextRow, nextCol, count);
-    }
-
-    // Try without bulb
-    count = _solve(grid, bulbs, size, nextRow, nextCol, count);
-    if (count > 1) return count;
-
-    // Try with bulb
-    if (_canPlaceInPuzzle(grid, bulbs, size, row, col)) {
-      bulbs[row][col] = true;
-      count = _solve(grid, bulbs, size, nextRow, nextCol, count);
-      bulbs[row][col] = false;
-    }
-
-    return count;
-  }
-
-  bool _canPlaceInPuzzle(List<List<int>> grid, List<List<bool>> bulbs, int size, int r, int c) {
-    // Check no bulb sees this cell (through white cells only)
+    if (clear(r, c)) out.add((r, c));
     for (int j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
-      if (bulbs[r][j]) return false;
+      if (clear(r, j)) out.add((r, j));
     }
     for (int j = c + 1; j < size && grid[r][j] == -2; j++) {
-      if (bulbs[r][j]) return false;
+      if (clear(r, j)) out.add((r, j));
     }
     for (int i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
-      if (bulbs[i][c]) return false;
+      if (clear(i, c)) out.add((i, c));
     }
     for (int i = r + 1; i < size && grid[i][c] == -2; i++) {
-      if (bulbs[i][c]) return false;
+      if (clear(i, c)) out.add((i, c));
+    }
+    return out;
+  }
+
+  /// Counts solutions to [grid] up to [limit] (default 2, enough for uniqueness).
+  static int countSolutions(List<List<int>> grid, {int limit = 2}) {
+    final size = grid.length;
+    // State per white cell: -1 = unknown, 0 = forbidden (no bulb), 1 = bulb.
+    final state = List.generate(
+      size,
+      (r) => List<int>.generate(size, (c) => grid[r][c] == -2 ? -1 : 0),
+    );
+    return _searchSolutions(grid, state, size, 0, limit);
+  }
+
+  static int _searchSolutions(
+    List<List<int>> grid,
+    List<List<int>> state,
+    int size,
+    int found,
+    int limit,
+  ) {
+    if (found >= limit) return found;
+
+    // Save snapshot for propagation rollback.
+    final saved = [for (final row in state) List<int>.from(row)];
+    if (!_propagate(grid, state, size)) {
+      _restore(state, saved);
+      return found;
     }
 
-    // Temporarily place and check numbered wall constraints
-    bulbs[r][c] = true;
+    // Pick the unlit white cell with the fewest possible bulb positions (MRV).
+    (int, int)? bestCell;
+    List<(int, int)> bestOpts = const [];
+    bool allLit = true;
 
-    // Check adjacent numbered walls — count of bulbs must not exceed the number
-    final dirs = [[r-1,c],[r+1,c],[r,c-1],[r,c+1]];
-    for (final d in dirs) {
-      final dr = d[0], dc = d[1];
-      if (dr >= 0 && dr < size && dc >= 0 && dc < size && grid[dr][dc] >= 0) {
-        int count = 0;
-        for (final dd in [[dr-1,dc],[dr+1,dc],[dr,dc-1],[dr,dc+1]]) {
-          final nr = dd[0], nc = dd[1];
-          if (nr >= 0 && nr < size && nc >= 0 && nc < size && bulbs[nr][nc]) count++;
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c++) {
+        if (grid[r][c] != -2) continue;
+        if (_isLitInState(grid, state, size, r, c)) continue;
+        allLit = false;
+        final opts = _openLighters(grid, state, size, r, c);
+        if (opts.isEmpty) {
+          _restore(state, saved);
+          return found;
         }
-        if (count > grid[dr][dc]) { bulbs[r][c] = false; return false; }
+        if (bestCell == null || opts.length < bestOpts.length) {
+          bestCell = (r, c);
+          bestOpts = opts;
+          if (bestOpts.length == 1) break;
+        }
+      }
+      if (bestCell != null && bestOpts.length == 1) break;
+    }
+
+    if (allLit) {
+      // Every white cell is lit; branch on any remaining unknown white cell or
+      // verify all numbered walls are satisfied.
+      (int, int)? unknown;
+      for (int r = 0; r < size && unknown == null; r++) {
+        for (int c = 0; c < size; c++) {
+          if (grid[r][c] == -2 && state[r][c] == -1) {
+            unknown = (r, c);
+            break;
+          }
+        }
+      }
+      if (unknown == null) {
+        final ok = _wallsExact(grid, state, size);
+        _restore(state, saved);
+        return ok ? found + 1 : found;
+      }
+      final (ur, uc) = unknown;
+      state[ur][uc] = 1;
+      found = _searchSolutions(grid, state, size, found, limit);
+      if (found < limit) {
+        state[ur][uc] = 0;
+        found = _searchSolutions(grid, state, size, found, limit);
+      }
+      _restore(state, saved);
+      return found;
+    }
+
+    // Branch on the first candidate for bestCell: either bulb=1 or bulb=0.
+    final (br, bc) = bestOpts.first;
+    state[br][bc] = 1;
+    found = _searchSolutions(grid, state, size, found, limit);
+    if (found < limit) {
+      state[br][bc] = 0;
+      found = _searchSolutions(grid, state, size, found, limit);
+    }
+
+    _restore(state, saved);
+    return found;
+  }
+
+  static void _restore(List<List<int>> state, List<List<int>> saved) {
+    for (int r = 0; r < state.length; r++) {
+      for (int c = 0; c < state.length; c++) {
+        state[r][c] = saved[r][c];
       }
     }
+  }
 
-    bulbs[r][c] = false;
+  static bool _propagate(List<List<int>> grid, List<List<int>> state, int size) {
+    bool changed = true;
+    while (changed) {
+      changed = false;
+
+      // 1. Any placed bulb forbids every visible white cell in its row/col.
+      for (int r = 0; r < size; r++) {
+        for (int c = 0; c < size; c++) {
+          if (state[r][c] != 1) continue;
+          for (int j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
+            if (state[r][j] == 1) return false;
+            if (state[r][j] == -1) {
+              state[r][j] = 0;
+              changed = true;
+            }
+          }
+          for (int j = c + 1; j < size && grid[r][j] == -2; j++) {
+            if (state[r][j] == 1) return false;
+            if (state[r][j] == -1) {
+              state[r][j] = 0;
+              changed = true;
+            }
+          }
+          for (int i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
+            if (state[i][c] == 1) return false;
+            if (state[i][c] == -1) {
+              state[i][c] = 0;
+              changed = true;
+            }
+          }
+          for (int i = r + 1; i < size && grid[i][c] == -2; i++) {
+            if (state[i][c] == 1) return false;
+            if (state[i][c] == -1) {
+              state[i][c] = 0;
+              changed = true;
+            }
+          }
+        }
+      }
+
+      // 2. Numbered walls: enforce count bounds and force when exact.
+      for (int r = 0; r < size; r++) {
+        for (int c = 0; c < size; c++) {
+          final clue = grid[r][c];
+          if (clue < 0) continue;
+          int bulbs = 0;
+          final open = <(int, int)>[];
+          for (final (dr, dc) in const [(-1, 0), (1, 0), (0, -1), (0, 1)]) {
+            final nr = r + dr;
+            final nc = c + dc;
+            if (nr < 0 || nr >= size || nc < 0 || nc >= size) continue;
+            if (grid[nr][nc] != -2) continue;
+            if (state[nr][nc] == 1) {
+              bulbs++;
+            } else if (state[nr][nc] == -1) {
+              open.add((nr, nc));
+            }
+          }
+          if (bulbs > clue || bulbs + open.length < clue) return false;
+          if (bulbs == clue && open.isNotEmpty) {
+            for (final (nr, nc) in open) {
+              state[nr][nc] = 0;
+            }
+            changed = true;
+          } else if (bulbs + open.length == clue && open.isNotEmpty) {
+            for (final (nr, nc) in open) {
+              state[nr][nc] = 1;
+            }
+            changed = true;
+          }
+        }
+      }
+
+      // 3. Unlit white cells with only one open lighter force that bulb.
+      for (int r = 0; r < size; r++) {
+        for (int c = 0; c < size; c++) {
+          if (grid[r][c] != -2) continue;
+          if (_isLitInState(grid, state, size, r, c)) continue;
+          final opts = _openLighters(grid, state, size, r, c);
+          if (opts.isEmpty) return false;
+          if (opts.length == 1) {
+            final (br, bc) = opts.first;
+            if (state[br][bc] == 0) return false;
+            state[br][bc] = 1;
+            changed = true;
+          }
+        }
+      }
+    }
     return true;
   }
 
-  bool _isValidSolution(List<List<int>> grid, List<List<bool>> bulbs, int size) {
-    // 1. All white cells must be lit
-    final lit = List.generate(size, (_) => List.filled(size, false));
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        if (bulbs[r][c]) {
-          lit[r][c] = true;
-          for (int i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
-            lit[i][c] = true;
-          }
-          for (int i = r + 1; i < size && grid[i][c] == -2; i++) {
-            lit[i][c] = true;
-          }
-          for (int j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
-            lit[r][j] = true;
-          }
-          for (int j = c + 1; j < size && grid[r][j] == -2; j++) {
-            lit[r][j] = true;
-          }
-        }
-      }
+  static bool _isLitInState(
+    List<List<int>> grid,
+    List<List<int>> state,
+    int size,
+    int r,
+    int c,
+  ) {
+    if (state[r][c] == 1) return true;
+    for (int j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
+      if (state[r][j] == 1) return true;
     }
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        if (grid[r][c] == -2 && !lit[r][c]) return false;
-      }
+    for (int j = c + 1; j < size && grid[r][j] == -2; j++) {
+      if (state[r][j] == 1) return true;
     }
+    for (int i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
+      if (state[i][c] == 1) return true;
+    }
+    for (int i = r + 1; i < size && grid[i][c] == -2; i++) {
+      if (state[i][c] == 1) return true;
+    }
+    return false;
+  }
 
-    // 2. Bulbs can't see each other
+  static List<(int, int)> _openLighters(
+    List<List<int>> grid,
+    List<List<int>> state,
+    int size,
+    int r,
+    int c,
+  ) {
+    final opts = <(int, int)>[];
+    if (state[r][c] == -1) opts.add((r, c));
+    for (int j = c - 1; j >= 0 && grid[r][j] == -2; j--) {
+      if (state[r][j] == -1) opts.add((r, j));
+    }
+    for (int j = c + 1; j < size && grid[r][j] == -2; j++) {
+      if (state[r][j] == -1) opts.add((r, j));
+    }
+    for (int i = r - 1; i >= 0 && grid[i][c] == -2; i--) {
+      if (state[i][c] == -1) opts.add((i, c));
+    }
+    for (int i = r + 1; i < size && grid[i][c] == -2; i++) {
+      if (state[i][c] == -1) opts.add((i, c));
+    }
+    return opts;
+  }
+
+  static bool _wallsExact(List<List<int>> grid, List<List<int>> state, int size) {
     for (int r = 0; r < size; r++) {
       for (int c = 0; c < size; c++) {
-        if (bulbs[r][c]) {
-          for (int j = c + 1; j < size && grid[r][j] == -2; j++) {
-            if (bulbs[r][j]) return false;
-          }
-          for (int i = r + 1; i < size && grid[i][c] == -2; i++) {
-            if (bulbs[i][c]) return false;
-          }
-        }
+        final clue = grid[r][c];
+        if (clue < 0) continue;
+        int bulbs = 0;
+        if (r > 0 && state[r - 1][c] == 1) bulbs++;
+        if (r < size - 1 && state[r + 1][c] == 1) bulbs++;
+        if (c > 0 && state[r][c - 1] == 1) bulbs++;
+        if (c < size - 1 && state[r][c + 1] == 1) bulbs++;
+        if (bulbs != clue) return false;
       }
     }
-
-    // 3. Numbered walls must have exact adjacent bulbs
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c++) {
-        final val = grid[r][c];
-        if (val >= 0) {
-          int count = 0;
-          if (r > 0 && bulbs[r - 1][c]) count++;
-          if (r < size - 1 && bulbs[r + 1][c]) count++;
-          if (c > 0 && bulbs[r][c - 1]) count++;
-          if (c < size - 1 && bulbs[r][c + 1]) count++;
-          if (count != val) return false;
-        }
-      }
-    }
-
     return true;
   }
 

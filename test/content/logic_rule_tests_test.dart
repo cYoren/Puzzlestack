@@ -560,39 +560,13 @@ class _TennerLevel {
   final List<List<int>> solution;
 }
 
-const _tennerLevels = [
-  _TennerLevel(
-    [
-      [false, true, false, false, false, true, false, true, false, true],
-      [true, false, true, false, false, true, false, true, false, false],
-      [false, true, false, true, true, true, false, false, false, false],
-    ],
-    [
-      [3, 2, 7, 0, 1, 5, 8, 9, 4, 6],
-      [9, 6, 1, 5, 2, 0, 4, 7, 8, 3],
-      [0, 5, 7, 9, 8, 6, 1, 3, 2, 4],
-    ],
-  ),
-  _TennerLevel(
-    [
-      [true, true, false, false, false, true, false, false, true, false],
-      [true, true, false, false, false, false, true, false, false, true],
-      [false, false, true, true, false, false, true, true, false, false],
-    ],
-    [
-      [8, 7, 3, 9, 4, 1, 0, 6, 5, 2],
-      [5, 6, 0, 7, 2, 8, 3, 9, 4, 1],
-      [1, 3, 9, 6, 4, 7, 5, 2, 0, 8],
-    ],
-  ),
-];
-
 _TennerLevel? _tennerLevel(
   WidgetTester tester,
   Finder gestures,
   List<int> indices,
 ) {
   final values = List.generate(3, (_) => List<int>.filled(10, -1));
+  final fixed = List.generate(3, (_) => List<bool>.filled(10, false));
   for (var i = 0; i < 30; i++) {
     final text = find.descendant(
       of: gestures.at(indices[i]),
@@ -600,26 +574,98 @@ _TennerLevel? _tennerLevel(
     );
     final data = tester.widget<Text>(text).data;
     if (data != null && data.isNotEmpty) {
-      values[i ~/ 10][i % 10] = int.parse(data);
+      final r = i ~/ 10;
+      final c = i % 10;
+      values[r][c] = int.parse(data);
+      fixed[r][c] = true;
     }
   }
-  for (final level in _tennerLevels) {
-    var matches = true;
-    for (var r = 0; r < 3 && matches; r++) {
-      for (var c = 0; c < 10; c++) {
-        if (level.fixed[r][c] && values[r][c] != level.solution[r][c]) {
-          matches = false;
-          break;
-        }
-        if (!level.fixed[r][c] && values[r][c] != -1) {
-          matches = false;
-          break;
-        }
+
+  final sumTexts = tester
+      .widgetList<Text>(find.byType(Text))
+      .where(
+        (t) =>
+            t.style?.color == DesignSystem.primary &&
+            t.style?.fontSize == 16 &&
+            int.tryParse(t.data ?? '') != null,
+      )
+      .map((t) => int.parse(t.data!))
+      .toList();
+  if (sumTexts.length != 10) return null;
+
+  final grid = [for (final r in values) List<int>.from(r)];
+  final rowUsed = List<int>.filled(3, 0);
+  final colCur = List<int>.filled(10, 0);
+  final colEmpty = List<int>.filled(10, 0);
+  final empty = <(int, int)>[];
+  for (var r = 0; r < 3; r++) {
+    for (var c = 0; c < 10; c++) {
+      final v = grid[r][c];
+      if (v != -1) {
+        rowUsed[r] |= 1 << v;
+        colCur[c] += v;
+      } else {
+        colEmpty[c]++;
+        empty.add((r, c));
       }
     }
-    if (matches) return level;
   }
-  return null;
+
+  bool canPlace(int r, int c, int v) {
+    if ((rowUsed[r] & (1 << v)) != 0) return false;
+    final nextSum = colCur[c] + v;
+    final rem = colEmpty[c] - 1;
+    if (rem == 0 ? nextSum != sumTexts[c] : (nextSum > sumTexts[c] || nextSum + rem * 9 < sumTexts[c])) {
+      return false;
+    }
+    for (final nr in [r - 1, r + 1]) {
+      if (nr < 0 || nr >= 3) continue;
+      for (var dc = -1; dc <= 1; dc++) {
+        final nc = c + dc;
+        if (nc >= 0 && nc < 10 && grid[nr][nc] == v) return false;
+      }
+    }
+    return true;
+  }
+
+  bool solve(int solved) {
+    if (solved == empty.length) return true;
+    var bestR = -1, bestC = -1, bestCount = 999, bestMask = 0;
+    for (final (r, c) in empty) {
+      if (grid[r][c] != -1) continue;
+      var mask = 0, count = 0;
+      for (var v = 0; v < 10; v++) {
+        if (canPlace(r, c, v)) {
+          mask |= 1 << v;
+          count++;
+        }
+      }
+      if (count == 0) return false;
+      if (count < bestCount) {
+        bestCount = count;
+        bestR = r;
+        bestC = c;
+        bestMask = mask;
+        if (count == 1) break;
+      }
+    }
+    for (var v = 0; v < 10; v++) {
+      if ((bestMask & (1 << v)) == 0) continue;
+      grid[bestR][bestC] = v;
+      rowUsed[bestR] |= 1 << v;
+      colCur[bestC] += v;
+      colEmpty[bestC]--;
+      if (solve(solved + 1)) return true;
+      colEmpty[bestC]++;
+      colCur[bestC] -= v;
+      rowUsed[bestR] &= ~(1 << v);
+      grid[bestR][bestC] = -1;
+    }
+    return false;
+  }
+
+  if (!solve(0)) return null;
+  return _TennerLevel(fixed, grid);
 }
 
 List<List<int>>? _tennerSwap(

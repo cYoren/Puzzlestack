@@ -70,8 +70,12 @@ class _PerspectiveShiftViewScreenState extends ConsumerState<PerspectiveShiftVie
       ];
     }
 
-    // Set a random target angle (e.g. either 0, 90, 180, or 270 degrees in radians)
-    _targetAngle = [0.0, pi / 2, pi, pi * 1.5][_random.nextInt(4)];
+    // Require non-zero rotation so player must rotate; omit 180° for 'H' since
+    // it is rotationally symmetric at pi radians.
+    final anglePool = _correctLetter == 'H'
+        ? const [pi / 2, pi * 1.5]
+        : const [pi / 2, pi, pi * 1.5];
+    _targetAngle = anglePool[_random.nextInt(anglePool.length)];
 
     // Reset slider angle
     _cameraAngle = 0.0;

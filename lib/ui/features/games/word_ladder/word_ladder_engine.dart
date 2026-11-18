@@ -1,13 +1,13 @@
+import 'dart:math';
+
 class WordLadderEngine {
   // A vast dictionary of common 4-letter English words
   static const Set<String> _dictionary = {
-    'ABBR',
     'ABED',
     'ABET',
     'ABLE',
     'ABLY',
     'ABUT',
-    'ACCT',
     'ACED',
     'ACES',
     'ACHE',
@@ -18,7 +18,6 @@ class WordLadderEngine {
     'ACRE',
     'ACTS',
     'ADDS',
-    'ADVT',
     'ADZE',
     'AEON',
     'AERY',
@@ -57,14 +56,12 @@ class WordLadderEngine {
     'AMOK',
     'AMPS',
     'AMYL',
-    'ANAL',
     'ANEW',
     'ANKH',
     'ANON',
     'ANTE',
     'ANTI',
     'ANTS',
-    'ANUS',
     'APED',
     'APES',
     'APEX',
@@ -85,16 +82,12 @@ class WordLadderEngine {
     'ASHY',
     'ASKS',
     'ASPS',
-    'ASSN',
-    'ASST',
     'ATOM',
     'ATOP',
-    'ATTY',
     'AUKS',
     'AUNT',
     'AURA',
     'AUTO',
-    'AVDP',
     'AVER',
     'AVID',
     'AVOW',
@@ -3939,7 +3932,7 @@ class WordLadderEngine {
   Set<String> get dictionary => _dictionary;
 
   Map<String, String> getRandomPuzzle() {
-    return _puzzles[(DateTime.now().millisecondsSinceEpoch % _puzzles.length)];
+    return _puzzles[Random().nextInt(_puzzles.length)];
   }
 
   bool isValidWord(String word) {

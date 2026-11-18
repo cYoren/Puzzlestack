@@ -27,12 +27,32 @@ class _LetterGridSwapperScreenState extends ConsumerState<LetterGridSwapperScree
   late List<String> _grid; // 9 letters in 1D list representing 3x3 grid
   int? _selectedTileIndex;
 
-  final List<List<String>> _wordSets = [
+  final List<List<String>> _wordSets = const [
     ['CAT', 'DOG', 'SUN'],
     ['RED', 'BOX', 'FLY'],
     ['SKY', 'MAP', 'HAT'],
     ['CUP', 'PEN', 'WET'],
     ['ICE', 'RUN', 'TOY'],
+    ['ANT', 'OWL', 'FOX'],
+    ['CAR', 'BUS', 'VAN'],
+    ['OAK', 'ELM', 'FIR'],
+    ['SEA', 'BAY', 'LOG'],
+    ['JAM', 'PIE', 'NUT'],
+    ['BED', 'RUG', 'MOP'],
+    ['KEY', 'BAG', 'PIN'],
+    ['INK', 'ART', 'HUE'],
+    ['RAY', 'GEM', 'ORB'],
+    ['DAY', 'EVE', 'FUN'],
+    ['JOY', 'WIN', 'ACE'],
+    ['MAP', 'DOT', 'ARC'],
+    ['FIN', 'EEL', 'COD'],
+    ['BAT', 'CAP', 'NET'],
+    ['ROW', 'OAR', 'BOW'],
+    ['DEW', 'FOG', 'AIR'],
+    ['PEA', 'FIG', 'YAM'],
+    ['CUB', 'ELK', 'HEN'],
+    ['MUD', 'ASH', 'ORE'],
+    ['JET', 'CAB', 'RIG'],
   ];
 
   @override
@@ -43,29 +63,25 @@ class _LetterGridSwapperScreenState extends ConsumerState<LetterGridSwapperScree
 
   void _generatePuzzle() {
     _targetWords = _wordSets[_random.nextInt(_wordSets.length)];
-    // Build letters
     final letters = _targetWords.join('').split('');
 
-    // Perform random swaps to jumble
     _grid = List<String>.from(letters);
-    int swapCount = 0;
-    while (swapCount < 4) {
-      final i1 = _random.nextInt(9);
-      final i2 = _random.nextInt(9);
-      if (i1 != i2 && _isAdjacent(i1, i2)) {
-        final temp = _grid[i1];
-        _grid[i1] = _grid[i2];
-        _grid[i2] = temp;
-        swapCount++;
+    for (int attempt = 0; attempt < 20; attempt++) {
+      _grid = List<String>.from(letters);
+      int swapCount = 0;
+      while (swapCount < 8) {
+        final i1 = _random.nextInt(9);
+        final i2 = _random.nextInt(9);
+        if (i1 != i2 && _isAdjacent(i1, i2)) {
+          final temp = _grid[i1];
+          _grid[i1] = _grid[i2];
+          _grid[i2] = temp;
+          swapCount++;
+        }
       }
+      if (!_checkSolvedState()) break;
     }
-
-    // Ensure it's not solved by chance
-    if (_checkSolvedState()) {
-      _generatePuzzle();
-    } else {
-      _selectedTileIndex = null;
-    }
+    _selectedTileIndex = null;
   }
 
   bool _isAdjacent(int i1, int i2) {

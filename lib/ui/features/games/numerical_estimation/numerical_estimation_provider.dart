@@ -57,10 +57,13 @@ class NumericalEstimationState {
 class NumericalEstimationNotifier extends _$NumericalEstimationNotifier {
   final _engine = NumericalEstimationEngine();
   Timer? _timer;
+  bool _disposed = false;
 
   @override
   NumericalEstimationState build() {
+    _disposed = false;
     ref.onDispose(() {
+      _disposed = true;
       _timer?.cancel();
     });
     
@@ -111,8 +114,7 @@ class NumericalEstimationNotifier extends _$NumericalEstimationNotifier {
     );
 
     Future.delayed(const Duration(milliseconds: 300), () {
-      if (!ref.exists(numericalEstimationNotifierProvider)) return;
-      if (state.isGameOver) return;
+      if (_disposed || state.isGameOver) return;
 
       if (state.isTrialMode && newTotalTrials >= state.targetTrials) {
         _timer?.cancel();

@@ -39,30 +39,6 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
   final Random _random = Random();
   final int _size = 4; // 4x4 grid
 
-  final List<MirrorMazePuzzle> _puzzles = [
-    // Puzzle 1: Enters Row 1 Left (1,0) heading Right (0,1). Target is Row 3 Left (3,0) heading Left (0,-1).
-    MirrorMazePuzzle(
-      laserStart: const Point(1, 0),
-      laserDir: const Point(0, 1),
-      targetCell: const Point(3, 0),
-      targetDir: const Point(0, -1),
-    ),
-    // Puzzle 2: Enters Row 0 Left (0,0) heading Right (0,1). Target is Col 2 Bottom (3,2) heading Down (1,0).
-    MirrorMazePuzzle(
-      laserStart: const Point(0, 0),
-      laserDir: const Point(0, 1),
-      targetCell: const Point(3, 2),
-      targetDir: const Point(1, 0),
-    ),
-    // Puzzle 3: Enters Col 1 Top (0,1) heading Down (1,0). Target is Row 2 Right (2,3) heading Right (0,1).
-    MirrorMazePuzzle(
-      laserStart: const Point(0, 1),
-      laserDir: const Point(1, 0),
-      targetCell: const Point(2, 3),
-      targetDir: const Point(0, 1),
-    ),
-  ];
-
   late MirrorMazePuzzle _currentPuzzle;
   late List<List<MirrorCell>> _board;
   final List<Point<int>> _laserPath = [];
@@ -74,9 +50,84 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
     _generatePuzzle();
   }
 
+  MirrorMazePuzzle _generateRandomPuzzle() {
+    for (int attempt = 0; attempt < 200; attempt++) {
+      final side = _random.nextInt(4);
+      final offset = _random.nextInt(_size);
+      late Point<int> start;
+      late Point<int> dir;
+      switch (side) {
+        case 0:
+          start = Point(0, offset);
+          dir = const Point(1, 0);
+        case 1:
+          start = Point(_size - 1, offset);
+          dir = const Point(-1, 0);
+        case 2:
+          start = Point(offset, 0);
+          dir = const Point(0, 1);
+        default:
+          start = Point(offset, _size - 1);
+          dir = const Point(0, -1);
+      }
+
+      // Simulate random valid mirror placements inside the 4x4 grid until the
+      // ray exits the board, requiring at least 2 reflections.
+      final mirrors = List.generate(_size, (_) => List.filled(_size, 0));
+      var cur = start;
+      var curDir = dir;
+      int reflections = 0;
+      Point<int>? exitCell;
+      Point<int>? exitDir;
+
+      for (int step = 0; step < 16; step++) {
+        if (mirrors[cur.x][cur.y] == 0 && step > 0 && _random.nextDouble() < 0.4) {
+          final m = _random.nextBool() ? 1 : 2;
+          mirrors[cur.x][cur.y] = m;
+          curDir = m == 1
+              ? Point(-curDir.y, -curDir.x)
+              : Point(curDir.y, curDir.x);
+          reflections++;
+        } else if (mirrors[cur.x][cur.y] != 0) {
+          final m = mirrors[cur.x][cur.y];
+          curDir = m == 1
+              ? Point(-curDir.y, -curDir.x)
+              : Point(curDir.y, curDir.x);
+        }
+
+        final next = Point(cur.x + curDir.x, cur.y + curDir.y);
+        if (next.x < 0 || next.x >= _size || next.y < 0 || next.y >= _size) {
+          exitCell = cur;
+          exitDir = curDir;
+          break;
+        }
+        cur = next;
+      }
+
+      if (exitCell != null &&
+          exitDir != null &&
+          reflections >= 2 &&
+          exitCell != start) {
+        return MirrorMazePuzzle(
+          laserStart: start,
+          laserDir: dir,
+          targetCell: exitCell,
+          targetDir: exitDir,
+        );
+      }
+    }
+
+    return MirrorMazePuzzle(
+      laserStart: const Point(0, 0),
+      laserDir: const Point(0, 1),
+      targetCell: const Point(3, 2),
+      targetDir: const Point(1, 0),
+    );
+  }
+
   void _generatePuzzle() {
     _isSolved = false;
-    _currentPuzzle = _puzzles[_random.nextInt(_puzzles.length)];
+    _currentPuzzle = _generateRandomPuzzle();
     _board = List.generate(_size, (_) => List.generate(_size, (_) => MirrorCell()));
     _traceLaser();
   }

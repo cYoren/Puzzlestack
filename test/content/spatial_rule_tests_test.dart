@@ -177,12 +177,51 @@ void main() {
         );
         expect(cells, findsNWidgets(16));
 
-        // Identify which of the 3 puzzles was chosen by source icon position.
-        final Offset boardTopLeft = tester.getTopLeft(cells.at(0));
-        final Offset sourceTopLeft =
-            tester.getTopLeft(find.byIcon(Icons.play_arrow_rounded));
-        final double dx = sourceTopLeft.dx - boardTopLeft.dx;
-        final double dy = sourceTopLeft.dy - boardTopLeft.dy;
+        // Determine source and target cell + direction directly from rendered UI icons.
+        final Offset tl = tester.getTopLeft(cells.at(0));
+        final Offset br = tester.getBottomRight(cells.at(15));
+        final double cellSize = (br.dx - tl.dx) / 4;
+
+        (Point<int>, Point<int>) readEdgeIcon(IconData icon, bool isSource) {
+          final Offset center = tester.getCenter(find.byIcon(icon));
+          if (center.dx < tl.dx) {
+            final int r = ((center.dy - tl.dy) / cellSize).floor().clamp(0, 3);
+            return (
+              Point<int>(r, 0),
+              isSource ? const Point<int>(0, 1) : const Point<int>(0, -1),
+            );
+          } else if (center.dx > br.dx) {
+            final int r = ((center.dy - tl.dy) / cellSize).floor().clamp(0, 3);
+            return (
+              Point<int>(r, 3),
+              isSource ? const Point<int>(0, -1) : const Point<int>(0, 1),
+            );
+          } else if (center.dy < tl.dy) {
+            final int c = ((center.dx - tl.dx) / cellSize).floor().clamp(0, 3);
+            return (
+              Point<int>(0, c),
+              isSource ? const Point<int>(1, 0) : const Point<int>(-1, 0),
+            );
+          } else {
+            final int c = ((center.dx - tl.dx) / cellSize).floor().clamp(0, 3);
+            return (
+              Point<int>(3, c),
+              isSource ? const Point<int>(-1, 0) : const Point<int>(1, 0),
+            );
+          }
+        }
+
+        final (Point<int> startCell, Point<int> startDir) =
+            readEdgeIcon(Icons.play_arrow_rounded, true);
+        final (Point<int> targetCell, Point<int> targetDir) =
+            readEdgeIcon(Icons.gps_fixed_rounded, false);
+
+        final Map<Point<int>, int>? solution =
+            _solveMirrorMaze(startCell, startDir, targetCell, targetDir);
+        expect(solution, isNotNull,
+            reason: 'generated MirrorMaze board must be solvable');
+        expect(solution, isNotEmpty,
+            reason: 'generated MirrorMaze must require at least one mirror');
 
         Future<void> setMirror(int r, int c, int type) async {
           for (int t = 0; t < type; t++) {
@@ -191,30 +230,17 @@ void main() {
           }
         }
 
-        if (dy < 0) {
-          // Puzzle 3: enters (0,1) going Down, target (2,3) going Right.
-          // Wrong mirror `/` (type 1) at (2,1) sends beam Left off-board.
-          await setMirror(2, 1, 1);
-          await tester.pumpAndSettle();
-          expect(find.byType(GameCompletionDialog), findsNothing);
-          // Cycling once more to `\` (type 2) sends beam Right to (2,3) -> solved!
-          await setMirror(2, 1, 1);
-        } else if (dx < 0 && dy > 50) {
-          // Puzzle 1: enters (1,0) going Right, target (3,0) going Left.
-          // Mirror `\` (2) at (1,0) alone exits Down at (3,0) instead of Left.
-          await setMirror(1, 0, 2);
-          await tester.pumpAndSettle();
-          expect(find.byType(GameCompletionDialog), findsNothing);
-          // Adding `/` (1) at (3,0) exits Left -> solved!
-          await setMirror(3, 0, 1);
-        } else {
-          // Puzzle 2: enters (0,0) going Right, target (3,2) going Down.
-          // `/` (1) at (0,2) sends beam Up off-board -> unsolved.
-          await setMirror(0, 2, 1);
-          await tester.pumpAndSettle();
-          expect(find.byType(GameCompletionDialog), findsNothing);
-          // Cycling once more to `\` (2) at (0,2) sends beam Down to (3,2) -> solved!
-          await setMirror(0, 2, 1);
+        // First set one required mirror to the opposite reflection -> must stay unsolved.
+        final MapEntry<Point<int>, int> firstMirror = solution!.entries.first;
+        final int wrongType = firstMirror.value == 1 ? 2 : 1;
+        await setMirror(firstMirror.key.x, firstMirror.key.y, wrongType);
+        await tester.pumpAndSettle();
+        expect(find.byType(GameCompletionDialog), findsNothing);
+
+        // Reset that cell back to empty, then apply the exact mirror solution.
+        await setMirror(firstMirror.key.x, firstMirror.key.y, (3 - wrongType) % 3);
+        for (final MapEntry<Point<int>, int> entry in solution.entries) {
+          await setMirror(entry.key.x, entry.key.y, entry.value);
         }
 
         await tester.pumpAndSettle();
@@ -231,19 +257,6 @@ void main() {
         await _pump(tester, const TangramScreen());
         expect(find.byType(GameCompletionDialog), findsNothing);
 
-        final Finder dockPieces = find.ancestor(
-          of: find.text('SELECT'),
-          matching: find.byType(GestureDetector),
-        );
-        final int pieceCount = dockPieces.evaluate().length;
-        expect(pieceCount, inInclusiveRange(2, 3));
-
-        // The 16 grid cells precede the dock pieces under TangramScreen.
-        final Finder allGestures = find.descendant(
-          of: find.byType(TangramScreen),
-          matching: find.byType(GestureDetector),
-        );
-        // Filter to the 4x4 board cells inside the 240x240 Container.
         final Finder boardBox = find.descendant(
           of: find.byType(TangramScreen),
           matching: find.byWidgetPredicate(
@@ -255,7 +268,6 @@ void main() {
           matching: find.byType(GestureDetector),
         );
         expect(gridCells, findsNWidgets(16));
-        expect(allGestures, findsWidgets);
 
         // Read which of the 16 cells belong to _targetOutline (non-null border).
         final Set<Point<int>> outline = <Point<int>>{};
@@ -271,13 +283,42 @@ void main() {
             if (dec?.border != null) outline.add(Point<int>(r, c));
           }
         }
+        expect(outline.length, greaterThanOrEqualTo(5));
 
-        Finder dockAt(int idx) => find
-            .descendant(
-              of: find.byType(FittedBox).last,
-              matching: find.byType(GestureDetector),
-            )
-            .at(idx);
+        final Finder dockPieces = find.descendant(
+          of: find.byType(FittedBox).last,
+          matching: find.byType(GestureDetector),
+        );
+        final int pieceCount = dockPieces.evaluate().length;
+        expect(pieceCount, greaterThanOrEqualTo(2));
+
+        final List<List<Point<int>>> pieces = <List<Point<int>>>[];
+        for (int i = 0; i < pieceCount; i++) {
+          final Stack previewStack = tester.widget<Stack>(
+            find.descendant(
+              of: dockPieces.at(i),
+              matching: find.byType(Stack),
+            ),
+          );
+          pieces.add(
+            previewStack.children
+                .whereType<Positioned>()
+                .map(
+                  (Positioned p) => Point<int>(
+                    ((p.top! - 6.0) / 12.0).round(),
+                    ((p.left! - 6.0) / 12.0).round(),
+                  ),
+                )
+                .toList(growable: false),
+          );
+        }
+
+        final List<({int rot, int r, int c})>? plan =
+            _solveTangram(outline, pieces);
+        expect(plan, isNotNull,
+            reason: 'generated Tangram puzzle must tile the outline');
+
+        Finder dockAt(int idx) => dockPieces.at(idx);
 
         Future<void> placePiece(int idx, int rotations, int r, int c) async {
           for (int rot = 0; rot < rotations; rot++) {
@@ -292,33 +333,28 @@ void main() {
           await tester.pump();
         }
 
-        if (outline.length == 9) {
-          // Puzzle 1: 3x3 square: 2x2 at (0,0), 1x3 rotated vertical at (0,2), 1x2 at (2,0).
-          // First place piece 2 outside outline at (3,0) -> must not solve.
-          await placePiece(0, 0, 0, 0);
-          await placePiece(1, 1, 0, 2);
-          await placePiece(2, 0, 3, 0);
-          await tester.pumpAndSettle();
-          expect(find.byType(GameCompletionDialog), findsNothing);
-          // Piece 2 remains selected after placement; tap (2,0) -> exact 3x3 tiling!
-          _tapGesture(tester, gridCells.at(2 * 4 + 0));
-        } else if (outline.length == 6) {
-          // Puzzle 2: stair {(0,0),(1,0),(1,1),(2,0),(2,1),(2,2)}:
-          // L-shape {(0,0),(1,0),(1,1)} at (0,0), 1x2 at (2,0), 1x1 at (2,2).
-          await placePiece(0, 0, 0, 0);
-          await placePiece(1, 0, 2, 0);
-          await placePiece(2, 0, 0, 3); // wrong cell outside outline
-          await tester.pumpAndSettle();
-          expect(find.byType(GameCompletionDialog), findsNothing);
-          _tapGesture(tester, gridCells.at(2 * 4 + 2));
-        } else {
-          // Puzzle 3: cross {(0,1),(1,0),(1,1),(1,2),(2,1)}:
-          // T-shape at (0,0), 1x1 at (2,1).
-          await placePiece(0, 0, 0, 0);
-          await placePiece(1, 0, 0, 0); // wrong cell outside outline
-          await tester.pumpAndSettle();
-          expect(find.byType(GameCompletionDialog), findsNothing);
-          _tapGesture(tester, gridCells.at(2 * 4 + 1));
+        // Place pieces 1..last cleanly.
+        for (int i = 1; i < pieces.length; i++) {
+          await placePiece(i, plan![i].rot, plan[i].r, plan[i].c);
+        }
+
+        // Place piece 0 at a different valid in-bounds coordinate -> overlaps or exits outline.
+        final List<Point<int>> p0Cells = _rotatePiece(pieces[0], plan![0].rot);
+        final int maxR = p0Cells.map((p) => p.x).reduce(max);
+        final int maxC = p0Cells.map((p) => p.y).reduce(max);
+        for (int r = 0; r + maxR < 4; r++) {
+          bool testedInvalid = false;
+          for (int c = 0; c + maxC < 4; c++) {
+            if (r == plan[0].r && c == plan[0].c) continue;
+            await placePiece(0, plan[0].rot, r, c);
+            await tester.pumpAndSettle();
+            expect(find.byType(GameCompletionDialog), findsNothing);
+            // Piece 0 remains selected after placement; move directly to solution.
+            _tapGesture(tester, gridCells.at(plan[0].r * 4 + plan[0].c));
+            testedInvalid = true;
+            break;
+          }
+          if (testedInvalid) break;
         }
 
         await tester.pumpAndSettle();
@@ -656,6 +692,117 @@ Future<void> _pumpNoSettle(WidgetTester tester, Widget child) async {
 Future<void> _teardown(WidgetTester tester) async {
   await tester.pumpWidget(const SizedBox());
   await tester.pump();
+}
+
+Map<Point<int>, int>? _solveMirrorMaze(
+  Point<int> startCell,
+  Point<int> startDir,
+  Point<int> targetCell,
+  Point<int> targetDir,
+) {
+  Point<int> reflect(Point<int> dir, int mirror) {
+    if (mirror == 1) return Point<int>(-dir.y, -dir.x);
+    if (mirror == 2) return Point<int>(dir.y, dir.x);
+    return dir;
+  }
+
+  Map<Point<int>, int>? dfs(
+    Point<int> cur,
+    Point<int> incomingDir,
+    Map<Point<int>, int> mirrors,
+    Set<(Point<int>, Point<int>)> visited,
+    int maxMirrors,
+  ) {
+    if (!visited.add((cur, incomingDir))) return null;
+
+    final int? fixed = mirrors[cur];
+    final List<int> choices = fixed != null
+        ? <int>[fixed]
+        : (mirrors.length < maxMirrors ? const <int>[0, 1, 2] : const <int>[0]);
+
+    for (final int m in choices) {
+      final Point<int> outDir = reflect(incomingDir, m);
+      final Point<int> next = Point<int>(cur.x + outDir.x, cur.y + outDir.y);
+      final Map<Point<int>, int> nextMirrors = m == 0 || fixed != null
+          ? mirrors
+          : (<Point<int>, int>{...mirrors, cur: m});
+
+      if (next.x < 0 || next.x >= 4 || next.y < 0 || next.y >= 4) {
+        if (cur == targetCell && outDir == targetDir && nextMirrors.isNotEmpty) {
+          return nextMirrors;
+        }
+        continue;
+      }
+
+      final Map<Point<int>, int>? found = dfs(
+        next,
+        outDir,
+        nextMirrors,
+        Set<(Point<int>, Point<int>)>.from(visited),
+        maxMirrors,
+      );
+      if (found != null) return found;
+    }
+    return null;
+  }
+
+  for (int maxM = 1; maxM <= 5; maxM++) {
+    final Map<Point<int>, int>? found = dfs(
+      startCell,
+      startDir,
+      const <Point<int>, int>{},
+      <(Point<int>, Point<int>)>{},
+      maxM,
+    );
+    if (found != null) return found;
+  }
+  return null;
+}
+
+List<Point<int>> _rotatePiece(List<Point<int>> cells, int rotations) {
+  List<Point<int>> result = cells;
+  for (int r = 0; r < (rotations % 4); r++) {
+    result = result.map((Point<int> p) => Point<int>(p.y, -p.x)).toList();
+  }
+  final int minR = result.map((Point<int> p) => p.x).reduce(min);
+  final int minC = result.map((Point<int> p) => p.y).reduce(min);
+  return result.map((Point<int> p) => Point<int>(p.x - minR, p.y - minC)).toList();
+}
+
+List<({int rot, int r, int c})>? _solveTangram(
+  Set<Point<int>> outline,
+  List<List<Point<int>>> pieces,
+) {
+  final Set<Point<int>> occupied = <Point<int>>{};
+  final List<({int rot, int r, int c})?> chosen =
+      List<({int rot, int r, int c})?>.filled(pieces.length, null);
+
+  bool search(int idx) {
+    if (idx == pieces.length) return occupied.length == outline.length;
+    for (int rot = 0; rot < 4; rot++) {
+      final List<Point<int>> rotated = _rotatePiece(pieces[idx], rot);
+      for (int r = 0; r < 4; r++) {
+        for (int c = 0; c < 4; c++) {
+          final List<Point<int>> shifted = <Point<int>>[
+            for (final Point<int> p in rotated) Point<int>(r + p.x, c + p.y),
+          ];
+          if (shifted.every(
+            (Point<int> pt) => outline.contains(pt) && !occupied.contains(pt),
+          )) {
+            occupied.addAll(shifted);
+            chosen[idx] = (rot: rot, r: r, c: c);
+            if (search(idx + 1)) return true;
+            chosen[idx] = null;
+            occupied.removeAll(shifted);
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  if (!search(0)) return null;
+  return chosen.cast<({int rot, int r, int c})>();
 }
 
 void _tapGesture(WidgetTester tester, Finder finder) {

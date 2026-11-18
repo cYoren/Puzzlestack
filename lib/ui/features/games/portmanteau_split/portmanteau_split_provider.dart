@@ -44,14 +44,21 @@ class PortmanteauSplitState {
 class PortmanteauSplitNotifier extends _$PortmanteauSplitNotifier {
   final _engine = PortmanteauSplitEngine();
   Timer? _timer;
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   PortmanteauSplitState build() {
-    ref.onDispose(() => _timer?.cancel());
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      _timer?.cancel();
+    });
     return PortmanteauSplitState();
   }
 
   void startGame() {
+    _epoch++;
     _timer?.cancel();
     state = PortmanteauSplitState(
       puzzle: _engine.generatePuzzle(),
@@ -101,22 +108,22 @@ class PortmanteauSplitNotifier extends _$PortmanteauSplitNotifier {
           score: state.score + 1,
           isCorrect: true,
         );
-        
+
+        final callEpoch = _epoch;
         Future.delayed(const Duration(milliseconds: 500), () {
-          if (!state.isGameOver) {
-            state = state.copyWith(
-              puzzle: _engine.generatePuzzle(),
-              selectedWords: {},
-              isCorrect: false,
-            );
-          }
+          if (_disposed || callEpoch != _epoch || state.isGameOver) return;
+          state = state.copyWith(
+            puzzle: _engine.generatePuzzle(),
+            selectedWords: {},
+            isCorrect: false,
+          );
         });
       } else {
         // Wrong selection
+        final callEpoch = _epoch;
         Future.delayed(const Duration(milliseconds: 300), () {
-          if (!state.isGameOver) {
-            state = state.copyWith(selectedWords: {});
-          }
+          if (_disposed || callEpoch != _epoch || state.isGameOver) return;
+          state = state.copyWith(selectedWords: {});
         });
       }
     }

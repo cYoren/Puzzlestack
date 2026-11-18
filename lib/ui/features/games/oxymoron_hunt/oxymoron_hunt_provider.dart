@@ -44,14 +44,21 @@ class OxymoronHuntState {
 class OxymoronHuntNotifier extends _$OxymoronHuntNotifier {
   final _engine = OxymoronHuntEngine();
   Timer? _timer;
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   OxymoronHuntState build() {
-    ref.onDispose(() => _timer?.cancel());
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      _timer?.cancel();
+    });
     return OxymoronHuntState();
   }
 
   void startGame() {
+    _epoch++;
     _timer?.cancel();
     state = OxymoronHuntState(
       puzzle: _engine.generatePuzzle(),
@@ -108,14 +115,14 @@ class OxymoronHuntNotifier extends _$OxymoronHuntNotifier {
 
         if (newFound.length == state.puzzle!.words.length) {
           // Puzzle complete, get next
+          final callEpoch = _epoch;
           Future.delayed(const Duration(milliseconds: 500), () {
-            if (!state.isGameOver) {
-              state = state.copyWith(
-                puzzle: _engine.generatePuzzle(),
-                selectedWords: {},
-                foundWords: {},
-              );
-            }
+            if (_disposed || callEpoch != _epoch || state.isGameOver) return;
+            state = state.copyWith(
+              puzzle: _engine.generatePuzzle(),
+              selectedWords: {},
+              foundWords: {},
+            );
           });
         }
       } else {

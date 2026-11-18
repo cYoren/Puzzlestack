@@ -78,6 +78,7 @@ class _TangleFixScreenState extends ConsumerState<TangleFixScreen> {
 
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
+            onTapUp: (details) => notifier.onTap(details.localPosition, bounds),
             onPanStart: (details) => notifier.onDragStart(details.localPosition),
             onPanUpdate: (details) => notifier.onDragUpdate(details.localPosition, bounds),
             onPanEnd: (_) => notifier.onDragEnd(),

@@ -48,14 +48,21 @@ class SyllableStackState {
 class SyllableStackNotifier extends _$SyllableStackNotifier {
   final _engine = SyllableStackEngine();
   Timer? _timer;
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   SyllableStackState build() {
-    ref.onDispose(() => _timer?.cancel());
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      _timer?.cancel();
+    });
     return SyllableStackState();
   }
 
   void startGame() {
+    _epoch++;
     _timer?.cancel();
     final puzzle = _engine.generatePuzzle();
     state = SyllableStackState(
@@ -119,13 +126,16 @@ class SyllableStackNotifier extends _$SyllableStackNotifier {
         score: state.score + 10 + (state.timeLeft ~/ 5),
         lastCheck: true,
       );
+      final callEpoch = _epoch;
       Future.delayed(const Duration(milliseconds: 500), () {
+        if (_disposed || callEpoch != _epoch) return;
         _nextPuzzle();
       });
     } else {
       state = state.copyWith(lastCheck: false);
+      final callEpoch = _epoch;
       Future.delayed(const Duration(milliseconds: 800), () {
-        if (state.isGameOver) return;
+        if (_disposed || callEpoch != _epoch || state.isGameOver) return;
         // Reset current puzzle
         state = state.copyWith(
           currentStack: [],

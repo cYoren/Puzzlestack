@@ -53,15 +53,22 @@ class LaserLinkState {
 
 @riverpod
 class LaserLinkNotifier extends _$LaserLinkNotifier {
+  bool _disposed = false;
+
   @override
   LaserLinkState build() {
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+    });
     return LaserLinkState(isLoading: true);
   }
 
   Future<void> initGame() async {
     state = state.copyWith(isLoading: true, isSolved: false);
-    
+
     final level = await compute(LaserLinkEngine.generateLevelWrapper, 5);
+    if (_disposed) return;
     
     final int size = level['size'];
     final Point<int> sourcePos = level['sourcePos'];

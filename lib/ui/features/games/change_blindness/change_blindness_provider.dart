@@ -81,10 +81,15 @@ class ChangeBlindnessNotifier extends _$ChangeBlindnessNotifier {
   final _engine = ChangeBlindnessEngine();
   Timer? _timer;
   Timer? _flickerTimer;
+  bool _disposed = false;
 
   @override
   ChangeBlindnessState build() {
-    ref.onDispose(cleanUp);
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      cleanUp();
+    });
     return ChangeBlindnessState();
   }
 
@@ -188,6 +193,7 @@ class ChangeBlindnessNotifier extends _$ChangeBlindnessNotifier {
 
       if (!finishedTrial) {
         Future.delayed(const Duration(milliseconds: 200), () {
+          if (_disposed || state.isGameOver) return;
           _nextTrial();
         });
       }

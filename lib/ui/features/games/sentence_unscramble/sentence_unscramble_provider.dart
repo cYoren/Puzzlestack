@@ -48,14 +48,21 @@ class SentenceUnscrambleState {
 class SentenceUnscrambleNotifier extends _$SentenceUnscrambleNotifier {
   final _engine = SentenceUnscrambleEngine();
   Timer? _timer;
+  bool _disposed = false;
+  int _epoch = 0;
 
   @override
   SentenceUnscrambleState build() {
-    ref.onDispose(() => _timer?.cancel());
+    _disposed = false;
+    ref.onDispose(() {
+      _disposed = true;
+      _timer?.cancel();
+    });
     return SentenceUnscrambleState();
   }
 
   void startGame() {
+    _epoch++;
     _timer?.cancel();
     final puzzle = _engine.generatePuzzle();
     state = SentenceUnscrambleState(
@@ -119,13 +126,16 @@ class SentenceUnscrambleNotifier extends _$SentenceUnscrambleNotifier {
         score: state.score + 20 + (state.timeLeft ~/ 4),
         lastCheck: true,
       );
+      final callEpoch = _epoch;
       Future.delayed(const Duration(milliseconds: 600), () {
+        if (_disposed || callEpoch != _epoch) return;
         _nextPuzzle();
       });
     } else {
       state = state.copyWith(lastCheck: false);
+      final callEpoch = _epoch;
       Future.delayed(const Duration(milliseconds: 1000), () {
-        if (state.isGameOver) return;
+        if (_disposed || callEpoch != _epoch || state.isGameOver) return;
         // Reset current puzzle
         state = state.copyWith(
           currentWords: [],

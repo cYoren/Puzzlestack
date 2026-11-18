@@ -109,6 +109,25 @@ void main() {
       final after = engine.roll(puzzle, position, CubeDirection.east);
       expect(after.isSolved, isTrue, reason: 'the reward roll un-solved the cube');
     });
+
+    test('dropping a blue face onto cell k paints cell k, not cell 0', () {
+      final puzzle = CubePuzzle(
+        rows: 5,
+        cols: 5,
+        targets: const [12, 13, 14, 15, 16, 17],
+        start: 5,
+        minMoves: 1,
+      );
+      // Put blue on the south face so rolling north drops it onto cell 6 (row 1, col 1),
+      // leaving cell 0 unpainted.
+      final faces = [0, 0, 0, 1, 0, 0];
+      final squares = List<int>.filled(25, 0);
+      final pos = CubePosition(cell: 11, faces: faces, squares: squares);
+      final rolled = engine.roll(puzzle, pos, CubeDirection.north);
+      expect(rolled.cell, 6);
+      expect(rolled.squares[6], 1);
+      expect(rolled.squares[0], 0);
+    });
   });
 
   group('hint', () {

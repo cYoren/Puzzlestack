@@ -49,10 +49,13 @@ class FactorFinderState {
 class FactorFinderNotifier extends _$FactorFinderNotifier {
   final _engine = FactorFinderEngine();
   Timer? _timer;
+  bool _disposed = false;
 
   @override
   FactorFinderState build() {
+    _disposed = false;
     ref.onDispose(() {
+      _disposed = true;
       _timer?.cancel();
     });
     return FactorFinderState();
@@ -143,6 +146,7 @@ class FactorFinderNotifier extends _$FactorFinderNotifier {
       } else {
         // Clear wrong indicator after 300ms
         Future.delayed(const Duration(milliseconds: 300), () {
+          if (_disposed) return;
           if (state.wrongTapIndex == index) {
             state = state.copyWith(wrongTapIndex: null);
           }

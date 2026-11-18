@@ -102,6 +102,24 @@ void main() {
         final level = LaserLinkEngine.generateLevelWrapper(5);
         expect(level.containsKey('sourcePos'), isTrue);
       });
+
+      test('zero mirrors never solves a generated level', () {
+        final engine = LaserLinkEngine(size: 5, random: Random(42));
+        for (int i = 0; i < 30; i++) {
+          final level = engine.generateLevel();
+          final sourcePos = level['sourcePos'] as Point<int>;
+          final sourceDir = level['sourceDir'] as Direction;
+          final targets = level['targets'] as List<Point<int>>;
+          final mirrors = level['solutionMirrors'] as Map<Point<int>, MirrorType>;
+
+          expect(mirrors, isNotEmpty);
+          final baseline = engine.tracePath(sourcePos, sourceDir, {});
+          expect(targets.every(baseline.contains), isFalse);
+
+          final solved = engine.tracePath(sourcePos, sourceDir, mirrors);
+          expect(targets.every(solved.contains), isTrue);
+        }
+      });
     });
   });
 }
