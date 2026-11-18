@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
@@ -36,15 +37,52 @@ class WordWheelScreen extends ConsumerStatefulWidget {
   const WordWheelScreen({super.key});
 
   static Set<String>? _dictionary;
+  static Future<void>? _loadingFuture;
 
   static Set<String>? get dictionary => _dictionary;
 
-  /// Curated wheels carry their own answer set (`validWords`); an explicit
-  /// [dictionary] override remains supported for unit tests only.
-  static Future<void> loadDictionary() async {}
+  /// Loads the accepted-guess dictionary so common English words outside a
+  /// curated wheel's core list (such as TREE, ROTOR, RED, TEN, HEN, NET) are
+  /// accepted, while the wheels themselves remain strictly the 30 hand-curated
+  /// [puzzles].
+  static Future<void> loadDictionary() async {
+    if (_dictionary != null) return;
+    _loadingFuture ??= _loadFromAsset();
+    await _loadingFuture;
+  }
+
+  static Future<void> _loadFromAsset() async {
+    try {
+      final data = await rootBundle.loadString('assets/chain_words.txt');
+      final words = data
+          .split('\n')
+          .map((w) => w.trim().toUpperCase())
+          .where((w) => w.length >= 3)
+          .toSet();
+      for (final extra in const <String>[
+        'assets/find_word_words.txt',
+        'assets/word_search_words.txt',
+      ]) {
+        try {
+          final extraData = await rootBundle.loadString(extra);
+          words.addAll(
+            extraData
+                .split('\n')
+                .map((w) => w.trim().toUpperCase())
+                .where((w) => w.length >= 3),
+          );
+        } catch (_) {}
+      }
+      _dictionary = words;
+    } catch (_) {
+      _dictionary = null;
+      _loadingFuture = null;
+    }
+  }
 
   static void setDictionary(Set<String>? words) {
     _dictionary = words;
+    _loadingFuture = null;
   }
 
   static bool isWordValid(WordWheelPuzzle puzzle, String word,

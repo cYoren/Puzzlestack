@@ -126,6 +126,18 @@ void main() {
         }
       }
     });
+
+    test('retains accepted-guess dictionary for common valid words', () async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      WordWheelScreen.setDictionary(null);
+      await WordWheelScreen.loadDictionary();
+      expect(WordWheelScreen.dictionary, isNotNull);
+
+      final WordWheelPuzzle project = WordWheelScreen.puzzles
+          .firstWhere((WordWheelPuzzle p) => p.pangram == 'PROJECT');
+      expect(WordWheelScreen.isWordValid(project, 'TREE'), isTrue);
+      expect(WordWheelScreen.isWordValid(project, 'ROTOR'), isTrue);
+    });
   });
 
   group('Wave 5: crossword-supply', () {
