@@ -398,6 +398,18 @@ abstract class AppLocalizations {
   /// **'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.'**
   String get showArchivedGamesDescription;
 
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get privacy;
+
+  /// In en, this message translates to:
+  /// **'Share anonymous usage data'**
+  String get shareUsageData;
+
+  /// In en, this message translates to:
+  /// **'Anonymous counts of puzzles opened and finished. Never your name or a puzzle itself.'**
+  String get shareUsageDataDescription;
+
   /// No description provided for @archived.
   ///
   /// In en, this message translates to:

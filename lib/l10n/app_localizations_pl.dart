@@ -141,6 +141,15 @@ class AppLocalizationsPl extends AppLocalizations {
       'Zadania poznawcze i ćwiczenia zachowane jako materiał.';
 
   @override
+  String get privacy => 'Prywatność';
+
+  @override
+  String get shareUsageData => 'Udostępniaj anonimowe dane o użyciu';
+
+  @override
+  String get shareUsageDataDescription => 'Anonimowe zliczenia otwartych i rozwiązanych łamigłówek. Nigdy Twoje imię ani sama łamigłówka.';
+
+  @override
   String get archived => 'ARCHIWUM';
 
   @override

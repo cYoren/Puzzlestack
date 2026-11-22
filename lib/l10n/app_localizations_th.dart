@@ -141,6 +141,15 @@ class AppLocalizationsTh extends AppLocalizations {
       'แบบฝึกหัดที่เก็บไว้เป็นข้อมูลอ้างอิง';
 
   @override
+  String get privacy => 'ความเป็นส่วนตัว';
+
+  @override
+  String get shareUsageData => 'แชร์ข้อมูลการใช้งานแบบไม่ระบุตัวตน';
+
+  @override
+  String get shareUsageDataDescription => 'นับจำนวนปริศนาที่เปิดและทำเสร็จแบบไม่ระบุตัวตน ไม่มีชื่อคุณหรือตัวปริศนา';
+
+  @override
   String get archived => 'เก็บถาวร';
 
   @override

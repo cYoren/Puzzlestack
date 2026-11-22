@@ -140,6 +140,15 @@ class AppLocalizationsId extends AppLocalizations {
       'Latihan kognitif yang disimpan sebagai referensi.';
 
   @override
+  String get privacy => 'Privasi';
+
+  @override
+  String get shareUsageData => 'Bagikan data penggunaan anonim';
+
+  @override
+  String get shareUsageDataDescription => 'Hitungan anonim teka-teki yang dibuka dan diselesaikan. Bukan nama Anda atau teka-tekinya.';
+
+  @override
   String get archived => 'DIARSIPKAN';
 
   @override

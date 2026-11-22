@@ -140,6 +140,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Cognitive lab tasks and school worksheets, kept for reference. Real puzzles are never archived.';
 
   @override
+  String get privacy => 'Privacy';
+
+  @override
+  String get shareUsageData => 'Share anonymous usage data';
+
+  @override
+  String get shareUsageDataDescription => 'Anonymous counts of puzzles opened and finished. Never your name or a puzzle itself.';
+
+  @override
   String get archived => 'ARCHIVED';
 
   @override

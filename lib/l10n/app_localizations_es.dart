@@ -141,6 +141,15 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tareas de laboratorio y ejercicios guardados como referencia.';
 
   @override
+  String get privacy => 'Privacidad';
+
+  @override
+  String get shareUsageData => 'Compartir datos de uso anónimos';
+
+  @override
+  String get shareUsageDataDescription => 'Recuentos anónimos de puzles abiertos y resueltos. Nunca tu nombre ni un puzle.';
+
+  @override
   String get archived => 'ARCHIVADO';
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/posthog.dart';
 import '../../../data/purchase/plus_controller.dart';
 import '../../../providers/plus_providers.dart';
 import '../../../utils/design_system.dart';
@@ -25,6 +26,7 @@ Future<bool> showPlusSheet(
   BuildContext context, {
   PlusReason reason = PlusReason.picks,
 }) async {
+  postHog.capture('paywall_viewed', <String, Object?>{'reason': reason.name});
   final bool? owned = await showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
@@ -33,9 +35,10 @@ Future<bool> showPlusSheet(
   );
   if (owned != null) return owned;
   if (!context.mounted) return false;
-  return ProviderScope.containerOf(context, listen: false)
-      .read(plusProvider)
-      .ownsPlus;
+  return ProviderScope.containerOf(
+    context,
+    listen: false,
+  ).read(plusProvider).ownsPlus;
 }
 
 class _PlusSheet extends ConsumerStatefulWidget {

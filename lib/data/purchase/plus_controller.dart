@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../core/posthog.dart';
 import 'plus_entitlement.dart';
 import 'plus_gateway.dart';
 import 'plus_store.dart';
@@ -198,6 +199,7 @@ class PlusController {
     if (_inFlight || _state.busy) return _state.notice;
     _inFlight = true;
     _set(_state.copyWith(busy: true, notice: PlusNotice.none));
+    postHog.capture('purchase_started', <String, Object?>{'product': 'plus'});
 
     final PurchaseAnswer answer;
     try {
@@ -216,11 +218,13 @@ class PlusController {
       case PurchaseAnswer.pending:
         return _tell(PlusNotice.pending);
       case PurchaseAnswer.storeUnavailable:
-        _set(_state.copyWith(
-          busy: false,
-          notice: PlusNotice.unavailable,
-          storeReachable: false,
-        ));
+        _set(
+          _state.copyWith(
+            busy: false,
+            notice: PlusNotice.unavailable,
+            storeReachable: false,
+          ),
+        );
         return PlusNotice.unavailable;
       case PurchaseAnswer.failed:
         return _tell(PlusNotice.failed);
@@ -269,8 +273,9 @@ class PlusController {
     final RestoreAnswer answer = await _connection().restore();
     switch (answer) {
       case RestoreAnswer.owned:
-        final PlusEntitlement confirmed =
-            _state.entitlement.verifiedAtTime(_now());
+        final PlusEntitlement confirmed = _state.entitlement.verifiedAtTime(
+          _now(),
+        );
         _state = _state.copyWith(entitlement: confirmed);
         await _store.write(confirmed);
         notify();
@@ -289,6 +294,7 @@ class PlusController {
       verifiedAt: _now(),
     );
     await _store.write(entitlement);
+    _trackNotice(notice);
     _state = _state.copyWith(
       entitlement: entitlement,
       busy: _inFlight,
@@ -311,11 +317,41 @@ class PlusController {
   }
 
   PlusNotice _tell(PlusNotice notice) {
+    _trackNotice(notice);
     // A pending stream update arrives while `buy()` is still waiting on the
     // store; keeping `busy` tied to `_inFlight` shows the pending notice
     // without unlocking the buttons for an overlapping store call.
     _set(_state.copyWith(busy: _inFlight, notice: notice));
     return notice;
+  }
+
+  /// The purchase funnel in one place: every outcome the sheet can show passes
+  /// through [_tell] or [_grant], so no store path is missed.
+  void _trackNotice(PlusNotice notice) {
+    switch (notice) {
+      case PlusNotice.purchased:
+      case PlusNotice.alreadyOwned:
+        postHog.capture('purchase_completed', <String, Object?>{
+          'product': 'plus',
+          'result': notice.name,
+        });
+      case PlusNotice.restored:
+        postHog.capture('purchase_restored', <String, Object?>{
+          'product': 'plus',
+        });
+      case PlusNotice.failed:
+      case PlusNotice.unavailable:
+      case PlusNotice.cancelled:
+        postHog.capture('purchase_failed', <String, Object?>{
+          'product': 'plus',
+          'result': notice.name,
+        });
+      case PlusNotice.none:
+      case PlusNotice.pending:
+      case PlusNotice.nothingToRestore:
+      case PlusNotice.revoked:
+        break;
+    }
   }
 
   void notify() => onChanged?.call(_state);

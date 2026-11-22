@@ -140,6 +140,15 @@ class AppLocalizationsTe extends AppLocalizations {
   String get showArchivedGamesDescription => 'సూచన కోసం ఉంచిన అభ్యాసాలు.';
 
   @override
+  String get privacy => 'గోప్యత';
+
+  @override
+  String get shareUsageData => 'అనామక వినియోగ డేటాను పంచుకోండి';
+
+  @override
+  String get shareUsageDataDescription => 'తెరిచిన, పూర్తి చేసిన పజిల్స్ యొక్క అనామక లెక్కలు. మీ పేరు లేదా పజిల్ కాదు.';
+
+  @override
   String get archived => 'ఆర్కైవ్';
 
   @override

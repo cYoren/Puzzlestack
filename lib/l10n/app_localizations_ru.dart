@@ -140,6 +140,15 @@ class AppLocalizationsRu extends AppLocalizations {
       'Лабораторные задачи и упражнения, сохранённые для справки.';
 
   @override
+  String get privacy => 'Конфиденциальность';
+
+  @override
+  String get shareUsageData => 'Делиться анонимными данными об использовании';
+
+  @override
+  String get shareUsageDataDescription => 'Анонимный подсчёт открытых и решённых головоломок. Без вашего имени и без самой головоломки.';
+
+  @override
   String get archived => 'В АРХИВЕ';
 
   @override

@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
+
+import '../../../core/posthog.dart';
 import '../../../providers/locale_provider.dart';
 import '../../../providers/theme_provider.dart';
 
@@ -52,13 +56,19 @@ class SettingsScreen extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
     final themeMode = ref.watch(themeNotifierProvider);
     final isTrialModeEnabled = ref.watch(
-        userDataNotifierProvider.select((s) => s.isTrialModeEnabled ?? false));
-    final keepAwake = ref.watch(userDataNotifierProvider
-        .select((s) => s.isKeepScreenAwakeEnabled ?? false));
+      userDataNotifierProvider.select((s) => s.isTrialModeEnabled ?? false),
+    );
+    final keepAwake = ref.watch(
+      userDataNotifierProvider.select(
+        (s) => s.isKeepScreenAwakeEnabled ?? false,
+      ),
+    );
     final showArchived = ref.watch(
-        userDataNotifierProvider.select((s) => s.showArchivedGames ?? false));
+      userDataNotifierProvider.select((s) => s.showArchivedGames ?? false),
+    );
     final hiddenIds = ref.watch(
-        userDataNotifierProvider.select((s) => s.hiddenGameIds ?? const []));
+      userDataNotifierProvider.select((s) => s.hiddenGameIds ?? const []),
+    );
     final currentLocale = ref.watch(localeNotifierProvider);
     final l10n = AppLocalizations.of(context)!;
 
@@ -107,7 +117,11 @@ class SettingsScreen extends ConsumerWidget {
                       _buildSectionTitle(context, l10n.gameplay),
                       const SizedBox(height: DesignSystem.spaceSM),
                       _buildTrialModeToggle(
-                          context, ref, isTrialModeEnabled, l10n),
+                        context,
+                        ref,
+                        isTrialModeEnabled,
+                        l10n,
+                      ),
                       const SizedBox(height: DesignSystem.spaceSM),
                       _buildToggleRow(
                         context,
@@ -158,23 +172,30 @@ class SettingsScreen extends ConsumerWidget {
                           l10n.starOnGithub,
                           Icons.star_outline_rounded,
                           () => _launchUrl(
-                              'https://github.com/cYoren/Puzzlestack'),
+                            'https://github.com/cYoren/Puzzlestack',
+                          ),
                         ),
                         _buildRow(
                           context,
                           l10n.leaveReview,
                           Icons.rate_review_outlined,
                           () => _launchUrl(
-                              'https://play.google.com/store/apps/details?id=com.medhub.puzzlestack'),
+                            'https://play.google.com/store/apps/details?id=com.medhub.puzzlestack',
+                          ),
                         ),
                         _buildRow(
                           context,
                           l10n.reportError,
                           Icons.bug_report_outlined,
                           () => _launchUrl(
-                              'https://github.com/cYoren/Puzzlestack/issues'),
+                            'https://github.com/cYoren/Puzzlestack/issues',
+                          ),
                         ),
                       ]),
+                      const SizedBox(height: DesignSystem.spaceXL),
+                      _buildSectionTitle(context, l10n.privacy),
+                      const SizedBox(height: DesignSystem.spaceSM),
+                      _buildUsageToggle(context, ref, l10n),
                       const SizedBox(height: DesignSystem.spaceXL),
                       _buildSectionTitle(context, l10n.systemLegal),
                       const SizedBox(height: DesignSystem.spaceSM),
@@ -184,14 +205,16 @@ class SettingsScreen extends ConsumerWidget {
                           l10n.privacyPolicy,
                           Icons.privacy_tip_outlined,
                           () => _launchUrl(
-                              'https://cyoren.github.io/Puzzlestack/privacy.html'),
+                            'https://cyoren.github.io/Puzzlestack/privacy.html',
+                          ),
                         ),
                         _buildRow(
                           context,
                           l10n.termsOfService,
                           Icons.description_outlined,
                           () => _launchUrl(
-                              'https://cyoren.github.io/Puzzlestack/terms.html'),
+                            'https://cyoren.github.io/Puzzlestack/terms.html',
+                          ),
                         ),
                         _buildRow(
                           context,
@@ -246,7 +269,10 @@ class SettingsScreen extends ConsumerWidget {
         );
       }
     }
-    return DeckCard(padding: EdgeInsets.zero, child: Column(children: spaced));
+    return DeckCard(
+      padding: EdgeInsets.zero,
+      child: Column(children: spaced),
+    );
   }
 
   Widget _buildRow(
@@ -275,8 +301,11 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              Icon(Icons.chevron_right_rounded,
-                  size: 20, color: DesignSystem.hairline(context)),
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 20,
+                color: DesignSystem.hairline(context),
+              ),
             ],
           ),
         ),
@@ -284,8 +313,33 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildTrialModeToggle(BuildContext context, WidgetRef ref,
-      bool isEnabled, AppLocalizations l10n) {
+  /// The one switch that governs `core/posthog.dart`. Off means this device
+  /// sends nothing, from the moment it is flipped.
+  Widget _buildUsageToggle(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) {
+    final bool enabled = ref.watch(analyticsConsentProvider);
+    return _buildToggleRow(
+      context,
+      icon: Icons.insights_outlined,
+      title: l10n.shareUsageData,
+      subtitle: l10n.shareUsageDataDescription,
+      value: enabled,
+      onChanged: (bool value) {
+        ref.read(analyticsConsentProvider.notifier).state = value;
+        unawaited(setAnalyticsConsent(value));
+      },
+    );
+  }
+
+  Widget _buildTrialModeToggle(
+    BuildContext context,
+    WidgetRef ref,
+    bool isEnabled,
+    AppLocalizations l10n,
+  ) {
     return _buildToggleRow(
       context,
       icon: Icons.timer_off_outlined,
@@ -357,7 +411,10 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Widget _buildLanguageSelector(
-      BuildContext context, WidgetRef ref, Locale? currentLocale) {
+    BuildContext context,
+    WidgetRef ref,
+    Locale? currentLocale,
+  ) {
     final supportedCodes =
         AppLocalizations.supportedLocales.map((l) => l.languageCode).toList();
     final currentLabel = currentLocale == null
@@ -372,16 +429,20 @@ class SettingsScreen extends ConsumerWidget {
           .read(localeNotifierProvider.notifier)
           .setLocale(code == _kSystemLocale ? null : Locale(code)),
       itemBuilder: (context) => [
-        _buildLanguageMenuItem(context,
-            value: _kSystemLocale,
-            label: 'System Default',
-            selected: currentLocale == null),
+        _buildLanguageMenuItem(
+          context,
+          value: _kSystemLocale,
+          label: 'System Default',
+          selected: currentLocale == null,
+        ),
         const PopupMenuDivider(),
         for (final code in supportedCodes)
-          _buildLanguageMenuItem(context,
-              value: code,
-              label: _nativeNames[code] ?? code.toUpperCase(),
-              selected: code == currentLocale?.languageCode),
+          _buildLanguageMenuItem(
+            context,
+            value: code,
+            label: _nativeNames[code] ?? code.toUpperCase(),
+            selected: code == currentLocale?.languageCode,
+          ),
       ],
       child: _buildRow(
         context,
@@ -420,7 +481,10 @@ class SettingsScreen extends ConsumerWidget {
   /// Hiding is undoable only from here: the tile that hid a game is gone from
   /// every browse surface, so this row is the one way back.
   Future<void> _showHiddenGamesDialog(
-      BuildContext context, WidgetRef ref, List<String> hiddenIds) async {
+    BuildContext context,
+    WidgetRef ref,
+    List<String> hiddenIds,
+  ) async {
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -460,20 +524,48 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildThemeSelector(BuildContext context, WidgetRef ref,
-      AppThemeMode currentMode, AppLocalizations l10n) {
+  Widget _buildThemeSelector(
+    BuildContext context,
+    WidgetRef ref,
+    AppThemeMode currentMode,
+    AppLocalizations l10n,
+  ) {
     return _buildGroup(context, [
-      _buildThemeOption(context, ref, AppThemeMode.light, l10n.themeLight,
-          Icons.light_mode_outlined, currentMode == AppThemeMode.light),
-      _buildThemeOption(context, ref, AppThemeMode.dark, l10n.themeDark,
-          Icons.dark_mode_outlined, currentMode == AppThemeMode.dark),
-      _buildThemeOption(context, ref, AppThemeMode.system, l10n.themeSystem,
-          Icons.brightness_auto_outlined, currentMode == AppThemeMode.system),
+      _buildThemeOption(
+        context,
+        ref,
+        AppThemeMode.light,
+        l10n.themeLight,
+        Icons.light_mode_outlined,
+        currentMode == AppThemeMode.light,
+      ),
+      _buildThemeOption(
+        context,
+        ref,
+        AppThemeMode.dark,
+        l10n.themeDark,
+        Icons.dark_mode_outlined,
+        currentMode == AppThemeMode.dark,
+      ),
+      _buildThemeOption(
+        context,
+        ref,
+        AppThemeMode.system,
+        l10n.themeSystem,
+        Icons.brightness_auto_outlined,
+        currentMode == AppThemeMode.system,
+      ),
     ]);
   }
 
-  Widget _buildThemeOption(BuildContext context, WidgetRef ref,
-      AppThemeMode mode, String label, IconData icon, bool isSelected) {
+  Widget _buildThemeOption(
+    BuildContext context,
+    WidgetRef ref,
+    AppThemeMode mode,
+    String label,
+    IconData icon,
+    bool isSelected,
+  ) {
     final Color accent = DesignSystem.accent(context);
     return InkWell(
       onTap: () => ref.read(themeNotifierProvider.notifier).setThemeMode(mode),

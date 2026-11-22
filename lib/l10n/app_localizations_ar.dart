@@ -140,6 +140,15 @@ class AppLocalizationsAr extends AppLocalizations {
       'مهام مختبرية وتمارين محفوظة كمرجع.';
 
   @override
+  String get privacy => 'الخصوصية';
+
+  @override
+  String get shareUsageData => 'مشاركة بيانات الاستخدام المجهولة';
+
+  @override
+  String get shareUsageDataDescription => 'إحصاءات مجهولة عن الألغاز التي تفتحها وتنهيها. لا اسمك ولا محتوى أي لغز.';
+
+  @override
   String get archived => 'مؤرشف';
 
   @override

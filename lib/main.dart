@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
+
 import 'data/models/user_data.dart';
 import 'data/models/game_streak.dart';
 import 'data/key_value_store.dart';
@@ -20,6 +21,7 @@ import 'providers/user_providers.dart';
 import 'providers/theme_provider.dart';
 import 'providers/locale_provider.dart';
 import 'ui/features/main_shell/main_shell.dart';
+import 'core/posthog.dart';
 import 'data/game_registry.dart';
 import 'utils/deep_link.dart';
 import 'utils/design_system.dart';
@@ -59,6 +61,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   registerAppLicense();
+
+  // Usage analytics, before the first frame so the Settings switch reads its
+  // saved value and the launch is counted once. Anonymous events only; a build
+  // with an empty key, or a player who switched it off, sends nothing.
+  await postHog.start(
+    platform: kIsWeb ? 'web' : defaultTargetPlatform.name,
+    locale: WidgetsBinding.instance.platformDispatcher.locale.toLanguageTag(),
+  );
 
   if (!kIsWeb &&
       (defaultTargetPlatform == TargetPlatform.windows ||
@@ -137,9 +147,7 @@ void main() async {
         pickStoreProvider.overrideWithValue(pickStore),
         gameTierStoreProvider.overrideWithValue(gameTierStore),
       ],
-      child: ErrorBoundary(
-        child: MyApp(startGameId: startGameId),
-      ),
+      child: ErrorBoundary(child: MyApp(startGameId: startGameId)),
     ),
   );
 }
@@ -200,8 +208,9 @@ class _MyAppState extends ConsumerState<MyApp> {
       locale: appLocale,
       supportedLocales: [
         const Locale('en'),
-        ...AppLocalizations.supportedLocales
-            .where((l) => l.languageCode != 'en'),
+        ...AppLocalizations.supportedLocales.where(
+          (l) => l.languageCode != 'en',
+        ),
       ],
       localeListResolutionCallback: (locales, supportedLocales) {
         if (locales != null) {

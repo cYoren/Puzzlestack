@@ -138,6 +138,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get showArchivedGamesDescription => '참고용으로 보관된 인지 과제와 연습 문제입니다.';
 
   @override
+  String get privacy => '개인정보';
+
+  @override
+  String get shareUsageData => '익명 사용 데이터 공유';
+
+  @override
+  String get shareUsageDataDescription => '연 퍼즐과 푼 퍼즐의 익명 집계입니다. 이름이나 퍼즐 내용은 보내지 않습니다.';
+
+  @override
   String get archived => '보관됨';
 
   @override
