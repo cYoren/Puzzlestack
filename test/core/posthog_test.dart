@@ -4,12 +4,14 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/core/posthog.dart';
 
-/// A store build that carries this file: above the version live in the stores.
-/// The number is the binary's, not this source tree's.
-const String _storeBuild = '1.1.1';
+/// A store build that carries this file: above the release in the stores. The
+/// number is the binary's, not this source tree's, and it is a *build-only*
+/// bump on purpose: that is the shape a release often takes here, and it has
+/// to be enough to turn analytics on.
+const String _storeBuild = '1.1.0+17';
 
-/// The version currently in the stores, per `kLiveStoreVersion`.
-const String _liveVersion = '1.1.0';
+/// The release currently in the stores, per `kLiveStoreVersion`.
+const String _liveVersion = '1.1.0+16';
 
 /// Records what would have gone on the wire, without a socket.
 class _FakeWire {
@@ -41,7 +43,7 @@ PostHog _postHog(_FakeWire wire, {String key = 'phc_test'}) {
   );
 }
 
-/// A cold start, with the installed native version a build would report. An
+/// A cold start, with the installed native release a build would report. An
 /// empty string stands for a platform that could not answer.
 Future<void> _start(
   PostHog analytics, {
@@ -55,14 +57,21 @@ Future<void> _start(
       nativeVersion: nativeVersion,
     );
 
-String _pubspecVersion() {
+/// `version:` from pubspec.yaml, split the way `package_info_plus` reports it:
+/// `1.1.0` and `16` are two fields there, one string here.
+({String version, String build}) _pubspec() {
   final String pubspec = File('pubspec.yaml').readAsStringSync();
-  final RegExpMatch? match =
-      RegExp(r'^version:\s*([0-9]+\.[0-9]+\.[0-9]+)', multiLine: true)
-          .firstMatch(pubspec);
+  final RegExpMatch? match = RegExp(
+          r'^version:\s*([0-9]+\.[0-9]+\.[0-9]+)(?:\+([0-9]+))?',
+          multiLine: true)
+      .firstMatch(pubspec);
   if (match == null) fail('pubspec.yaml has no version line');
-  return match.group(1)!;
+  return (version: match.group(1)!, build: match.group(2) ?? '');
 }
+
+/// The release this tree builds, in the shape the gate compares.
+String _pubspecRelease() =>
+    postHogRelease(_pubspec().version, _pubspec().build)!;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -92,18 +101,9 @@ void main() {
     expect(wire.bodies, isEmpty);
   });
 
-  test('the installed version decides, not this Dart code', () async {
+  test('the installed release decides, not this Dart code', () async {
     // New Dart code (this file) inside the release already in the stores: the
-    // binary still says 1.1.0, so a Shorebird patch of it sends nothing. The
-    // source tree is at the floor, and that must not be enough.
-    expect(
-      PostHog.compareVersions(_pubspecVersion(), _liveVersion),
-      greaterThanOrEqualTo(0),
-      reason:
-          'this tree is older than what is live, so the release that carries '
-          'this file would be behind the stores',
-    );
-
+    // binary still says 1.1.0+16, so a Shorebird patch of it sends nothing.
     final _FakeWire wire = _FakeWire();
     final PostHog analytics = _postHog(wire);
 
@@ -111,11 +111,22 @@ void main() {
     expect(analytics.active, isFalse);
     expect(analytics.nativeVersion, _liveVersion);
     analytics.capture('app_opened');
-    expect(wire.bodies, isEmpty,
-        reason: 'a patch of a live build must stay silent');
+    expect(
+      wire.bodies,
+      isEmpty,
+      reason: 'a patch of a live build must stay silent',
+    );
+
+    // The same version without its build number, which is what the first cut
+    // of this gate compared: it can never be above the floor, so it is silent.
+    // `postHogRelease` below pins the fields the platform really reports.
+    await _start(analytics, nativeVersion: '1.1.0');
+    expect(analytics.active, isFalse);
+    analytics.capture('app_opened');
+    expect(wire.bodies, isEmpty);
 
     // A build that predates this code, reported as such, is silent too.
-    await _start(analytics, nativeVersion: '1.0.9');
+    await _start(analytics, nativeVersion: '1.0.9+15');
     analytics.capture('app_opened');
     expect(wire.bodies, isEmpty);
 
@@ -127,7 +138,7 @@ void main() {
     expect(wire.properties.single['app_version'], _storeBuild);
   });
 
-  test('an unreadable installed version fails closed', () async {
+  test('an unreadable installed release fails closed', () async {
     final _FakeWire wire = _FakeWire();
     final PostHog analytics = _postHog(wire);
 
@@ -139,7 +150,7 @@ void main() {
     expect(
       wire.bodies,
       isEmpty,
-      reason: 'a version it cannot read is not a licence to send',
+      reason: 'a release it cannot read is not a licence to send',
     );
   });
 
@@ -148,7 +159,33 @@ void main() {
     expect(PostHog.compareVersions('1.1.0', '1.1.0'), 0);
     expect(PostHog.compareVersions('1.0.9', '1.1.0'), -1);
     expect(PostHog.compareVersions('1.1.0+16', '1.1.0'), 1);
-    expect(PostHog.compareVersions('1.1.1+17', '1.1.1+16'), 1);
+    expect(PostHog.compareVersions('1.1.0+17', '1.1.0+16'), 1);
+    expect(PostHog.compareVersions('1.1.0+16', '1.1.0+16'), 0);
+  });
+
+  test('the release comes from the two fields the platform reports', () {
+    // `package_info_plus` splits the release: version and build number.
+    expect(postHogRelease('1.1.0', '16'), '1.1.0+16');
+    expect(postHogRelease('1.1.0', '17'), '1.1.0+17');
+    expect(postHogRelease('1.1.0', ''), '1.1.0');
+    expect(postHogRelease('', '16'), isNull);
+
+    // A release that only bumps the build number must be able to turn
+    // analytics on. This is the case that silently never sent before.
+    expect(
+      PostHog.compareVersions(
+        postHogRelease('1.1.0', '17')!,
+        kLiveStoreVersion,
+      ),
+      greaterThan(0),
+    );
+    expect(
+      PostHog.compareVersions(
+        postHogRelease('1.1.0', '16')!,
+        kLiveStoreVersion,
+      ),
+      0,
+    );
   });
 
   test('every payload carries the app, the platform and no personal keys',
@@ -216,16 +253,17 @@ void main() {
   });
 
   test('the reportable version matches pubspec.yaml', () {
-    expect(postHogBuildVersion, _pubspecVersion());
+    expect(postHogBuildVersion, _pubspec().version);
+    expect(_pubspecRelease().split('+').first, postHogBuildVersion);
   });
 
   test('the version in the stores cannot catch up with this tree', () {
     // The floor in the module is the release in the stores when it was
     // written. This tree is that release today (it cannot be inside a binary
-    // already in review), so equality is the expected state: the build that
-    // carries this file is the next version, and it must be above the floor.
+    // already in review), so equality is the healthy state: the next build
+    // number is the build that reports.
     expect(
-      PostHog.compareVersions(_pubspecVersion(), kLiveStoreVersion),
+      PostHog.compareVersions(_pubspecRelease(), kLiveStoreVersion),
       greaterThanOrEqualTo(0),
       reason: 'pubspec.yaml must not be below kLiveStoreVersion in '
           'lib/core/posthog.dart; that constant is bumped with a store '

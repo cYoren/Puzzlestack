@@ -65,10 +65,15 @@ void main() async {
   // Usage analytics, before the first frame so the Settings switch reads its
   // saved value and the launch is counted once. Anonymous events only; a build
   // with an empty key, or a player who switched it off, sends nothing.
-  await postHog.start(
-    platform: kIsWeb ? 'web' : defaultTargetPlatform.name,
-    locale: WidgetsBinding.instance.platformDispatcher.locale.toLanguageTag(),
-  );
+  // Bounded on purpose: analytics may never delay the first frame, and a step
+  // that times out simply reports nothing (the module fails closed).
+  await postHog
+      .start(
+        platform: kIsWeb ? 'web' : defaultTargetPlatform.name,
+        locale:
+            WidgetsBinding.instance.platformDispatcher.locale.toLanguageTag(),
+      )
+      .timeout(const Duration(seconds: 2), onTimeout: () {});
 
   if (!kIsWeb &&
       (defaultTargetPlatform == TargetPlatform.windows ||

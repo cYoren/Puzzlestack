@@ -38,11 +38,12 @@ import 'posthog_transport.dart';
 /// [kLiveStoreVersion] is the version currently in the stores; a build at or
 /// below it does not send, and neither does a build that predates this file.
 ///
-/// The version that decides is the **installed native version**, read from the
-/// platform at runtime, never the Dart constant below: a Shorebird patch
-/// replaces this file but not the binary, so a patched 1.1.0 build reports
-/// 1.1.0 and stays silent. `package_info_plus` is a native plugin, which also
-/// means Shorebird itself refuses to patch a release that never had it.
+/// The release that decides is the **installed native version and build
+/// number**, read from the platform at runtime, never the Dart constant below:
+/// a Shorebird patch replaces this file but not the binary, so a patched
+/// `1.1.0+16` build reports `1.1.0+16` and stays silent. `package_info_plus` is
+/// a native plugin, which also means Shorebird itself refuses to patch a
+/// release that never had it.
 
 /// The PostHog project "Games and small sites". A project key is public by
 /// design, like a Sentry DSN; it can only ingest, not read.
@@ -56,15 +57,34 @@ const String postHogApp = 'puzzlestack';
 /// version ([PostHog.nativeVersion]), so a patch cannot claim a newer build.
 const String postHogBuildVersion = '1.1.0';
 
-/// The version live on the stores when this file was written. Not what this
-/// code is: it is the floor. Anything at or below it was built before this
-/// file existed, so it stays silent however new its Dart code is.
+/// The release live on the stores when this file was written, **version and
+/// build number together**, because that pair is what identifies a binary.
+/// Not what this code is: it is the floor. Anything at or below it was built
+/// before this file existed, so it stays silent however new its Dart code is.
 ///
 /// On 2026-11-22 no version had been released: the App Store has `1.1.0`
 /// waiting for review and Play has `1.1.0+16` on the internal track only. That
-/// `1.1.0` binary is the one a patch could reach, so it is the floor. The next
-/// release above it is the first build that reports anything.
-const String kLiveStoreVersion = '1.1.0';
+/// `1.1.0+16` binary is the one a patch could reach, so it is the floor. The
+/// next release above it is the first build that reports anything.
+///
+/// Both halves matter: `package_info_plus` reports `version` and `buildNumber`
+/// as separate fields, and a store release that only bumps the build number
+/// still has to be recognised as newer. See [postHogRelease].
+const String kLiveStoreVersion = '1.1.0+16';
+
+/// How long analytics may hold up the first frame. A slow platform channel is
+/// a reason to report nothing, never a reason to delay launch.
+const Duration _startTimeout = Duration(seconds: 2);
+
+/// The release a binary is, from the two fields `package_info_plus` reports.
+/// Null when there is no version to speak of, which fails closed.
+///
+/// `'1.1.0'` with build `'17'` is `'1.1.0+17'`: a build-only bump is a
+/// different, newer release and must be able to turn analytics on.
+String? postHogRelease(String version, String buildNumber) {
+  if (version.isEmpty) return null;
+  return buildNumber.isEmpty ? version : '$version+$buildNumber';
+}
 
 final Uri postHogEndpoint = Uri.parse('https://us.i.posthog.com/batch/');
 
@@ -131,7 +151,12 @@ class PostHogPrefsStorage implements PostHogStorage {
   /// this launch and remembers nothing, which is the harmless way to fail.
   static Future<PostHogPrefsStorage?> open() async {
     try {
-      return PostHogPrefsStorage(await SharedPreferences.getInstance());
+      // Bounded: this runs before the first frame, and a device whose
+      // preferences are slow must not delay launch.
+      return PostHogPrefsStorage(
+        await SharedPreferences.getInstance()
+            .timeout(const Duration(seconds: 2)),
+      );
     } catch (_) {
       return null;
     }
@@ -252,7 +277,7 @@ class PostHog {
   }) async {
     if (platform != null && platform.isNotEmpty) this.platform = platform;
     if (locale != null && locale.isNotEmpty) this.locale = locale;
-    _storage = storage ?? await PostHogPrefsStorage.open();
+    _storage = storage ?? await _bounded(PostHogPrefsStorage.open);
     _nativeVersion = nativeVersion != null && nativeVersion.isNotEmpty
         ? nativeVersion
         : (nativeVersion == null ? await _readNativeVersion() : null);
@@ -262,7 +287,7 @@ class PostHog {
       _installId = storedId;
     } else {
       _installId = _newId();
-      await _storage?.write(_installIdRow, _installId);
+      await _boundedWrite(_installIdRow, _installId);
     }
 
     _consent = _storage?.read(_consentRow) != 'false';
@@ -270,14 +295,34 @@ class PostHog {
     capture('app_opened');
   }
 
-  /// The installed app's own version, so a patch cannot claim to be newer than
-  /// the release it landed in.
+  /// The installed app's own release, so a patch cannot claim to be newer than
+  /// the release it landed in. Version and build number both come from the
+  /// binary, and both are compared (see [kLiveStoreVersion]).
   Future<String?> _readNativeVersion() async {
     try {
-      final PackageInfo info = await PackageInfo.fromPlatform();
-      return info.version.isEmpty ? null : info.version;
+      final PackageInfo info =
+          await PackageInfo.fromPlatform().timeout(_startTimeout);
+      return postHogRelease(info.version, info.buildNumber);
     } catch (_) {
       return null;
+    }
+  }
+
+  /// Runs a startup step with a ceiling. A timeout is the same as the platform
+  /// never answering: the caller's fail-closed path takes over.
+  static Future<T?> _bounded<T>(Future<T?> Function() work) async {
+    try {
+      return await work().timeout(_startTimeout);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> _boundedWrite(String key, String value) async {
+    try {
+      await _storage?.write(key, value).timeout(_startTimeout);
+    } catch (_) {
+      // A switch or an id that could not be written is not worth a delay.
     }
   }
 
@@ -287,7 +332,7 @@ class PostHog {
     if (_consent == enabled) return;
     if (!enabled) capture('settings_analytics_opt_out');
     _consent = enabled;
-    await _storage?.write(_consentRow, enabled ? 'true' : 'false');
+    await _boundedWrite(_consentRow, enabled ? 'true' : 'false');
   }
 
   /// A board became visible. Resets the hint count for it.

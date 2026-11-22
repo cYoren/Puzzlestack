@@ -71,10 +71,9 @@
       }]
     });
 
-    try {
-      if (navigator.sendBeacon && navigator.sendBeacon(HOST, new Blob([body], { type: 'application/json' }))) return;
-    } catch (error) { /* fall through to fetch */ }
-
+    // fetch with keepalive, not sendBeacon: a JSON Blob is not a safelisted
+    // content type, so a cross-origin beacon can return true and then be
+    // dropped without a CORS preflight, losing the event silently.
     try {
       fetch(HOST, {
         method: 'POST',
@@ -97,9 +96,18 @@
   document.addEventListener('click', function (event) {
     var link = event.target && event.target.closest ? event.target.closest('a') : null;
     if (!link) return;
-    var href = link.getAttribute('href') || '';
-    if (href.indexOf('app/index.html') === 0 || href.indexOf('../app/index.html') === 0) {
-      capture('play_opened', { page: pageName(), game: link.getAttribute('href').split('game=')[1] || 'feed' });
+    var url;
+    try {
+      url = new URL(link.getAttribute('href') || '', window.location.href);
+    } catch (error) {
+      return;
     }
+    if (!/(^|\/)app\/index\.html$/.test(url.pathname)) return;
+    // URLSearchParams, not a substring: a future link carrying utm_content or
+    // a campaign tag must never ride along under the `game` key.
+    capture('play_opened', {
+      page: pageName(),
+      game: url.searchParams.get('game') || 'feed'
+    });
   }, true);
 })();

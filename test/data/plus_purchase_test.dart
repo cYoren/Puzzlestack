@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/core/posthog.dart';
 import 'package:puzzle/data/key_value_store.dart';
 import 'package:puzzle/data/purchase/plus_controller.dart';
 import 'package:puzzle/data/purchase/plus_entitlement.dart';
@@ -439,6 +441,76 @@ void main() {
       expect(await buying, PlusNotice.purchased);
       expect(plus.state.ownsPlus, isTrue);
       expect(plus.state.busy, isFalse);
+    });
+  });
+
+  /// The funnel events are sent from inside `PlusController`, which is the one
+  /// place every store path passes through. A double count here would make the
+  /// conversion rate in PostHog wrong, so this pins one event per outcome.
+  group('the purchase funnel', () {
+    late PostHog savedPostHog;
+    late List<Map<String, Object?>> sent;
+
+    setUp(() async {
+      savedPostHog = PostHog.instance;
+      sent = <Map<String, Object?>>[];
+      PostHog.instance = PostHog(
+        apiKey: 'phc_test',
+        sender: (Uri endpoint, String body) async {
+          final Map<String, Object?> decoded =
+              jsonDecode(body) as Map<String, Object?>;
+          for (final Object? event in decoded['batch'] as List<Object?>) {
+            sent.add(event! as Map<String, Object?>);
+          }
+          return true;
+        },
+      );
+      // A store build that may send: above `kLiveStoreVersion`.
+      await PostHog.instance.start(
+        platform: 'android',
+        storage: MemoryPostHogStorage(),
+        nativeVersion: '1.1.0+17',
+      );
+      sent.clear();
+    });
+
+    tearDown(() => PostHog.instance = savedPostHog);
+
+    List<String> names() =>
+        sent.map((Map<String, Object?> e) => e['event'] as String).toList();
+
+    Map<String, Object?> propertiesOf(Map<String, Object?> event) =>
+        event['properties'] as Map<String, Object?>;
+
+    test('one completed purchase sends started once and completed once',
+        () async {
+      final PlusNotice notice = await plus.buy();
+
+      expect(notice, PlusNotice.purchased);
+      expect(names(), <String>['purchase_started', 'purchase_completed']);
+      expect(propertiesOf(sent.last)['result'], 'purchased');
+      // The envelope is intact on the funnel events too.
+      expect(propertiesOf(sent.last)['app'], 'puzzlestack');
+      expect(propertiesOf(sent.last)['app_version'], '1.1.0+17');
+    });
+
+    test('a cancel is a failed purchase, never a completed one', () async {
+      store.buyAnswer = PurchaseAnswer.cancelled;
+
+      await plus.buy();
+
+      expect(names(), <String>['purchase_started', 'purchase_failed']);
+      expect(propertiesOf(sent.last)['result'], 'cancelled');
+    });
+
+    test('a restore that finds Plus is purchase_restored, not a sale',
+        () async {
+      store.restoreAnswer = RestoreAnswer.owned;
+
+      await plus.restore();
+
+      expect(names(), <String>['purchase_restored']);
+      expect(propertiesOf(sent.single)['product'], 'plus');
     });
   });
 }
