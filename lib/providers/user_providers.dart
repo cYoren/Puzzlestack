@@ -1,13 +1,17 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../data/models/user_data.dart';
 import '../data/models/game_streak.dart';
 import '../data/repositories/user_repository.dart';
+import '../core/posthog.dart';
 import '../core/review_prompt_service.dart';
 import '../utils/game_clock.dart';
 import '../utils/game_assist_state.dart';
 import 'game_stats_provider.dart';
+import 'game_tier_provider.dart';
 
 part 'user_providers.g.dart';
 
@@ -59,7 +63,11 @@ class UserDataNotifier extends _$UserDataNotifier {
 
     final lastSuperStreak = state.lastSuperStreakDate;
     final lastNormalized = lastSuperStreak != null
-        ? DateTime(lastSuperStreak.year, lastSuperStreak.month, lastSuperStreak.day)
+        ? DateTime(
+            lastSuperStreak.year,
+            lastSuperStreak.month,
+            lastSuperStreak.day,
+          )
         : DateTime.fromMillisecondsSinceEpoch(0);
 
     if (lastNormalized == today) return;
@@ -87,7 +95,11 @@ class UserDataNotifier extends _$UserDataNotifier {
     final lastSuperStreak = state.lastSuperStreakDate;
     if (lastSuperStreak == null) return;
 
-    final lastNormalized = DateTime(lastSuperStreak.year, lastSuperStreak.month, lastSuperStreak.day);
+    final lastNormalized = DateTime(
+      lastSuperStreak.year,
+      lastSuperStreak.month,
+      lastSuperStreak.day,
+    );
     final daysSince = today.difference(lastNormalized).inDays;
 
     if (daysSince > 1 && (state.superStreak ?? 0) > 0) {
@@ -194,6 +206,17 @@ class GameStreakNotifier extends _$GameStreakNotifier {
     // though it cannot extend a streak that is already safe.
     final assisted = GameAssist.consumeAssisted(gameId);
     final elapsed = GameClock.stop(gameId);
+    // Counted before the streak's early return: an assisted solve is still a
+    // finished board, it just is not the player's first real one.
+    final int solvedBefore =
+        ref.read(userDataNotifierProvider).totalSolved ?? 0;
+    postHog.boardFinished(
+      gameId: gameId,
+      difficulty: ref.read(gameTierStoreProvider).startFor(gameId),
+      elapsed: elapsed,
+      assisted: assisted,
+      firstValue: solvedBefore == 0 && !assisted,
+    );
     if (elapsed != null) {
       unawaited(
         ref
@@ -237,17 +260,21 @@ class GameStreakNotifier extends _$GameStreakNotifier {
 
     // Batch user data updates
     final newXp = ref.read(userDataNotifierProvider).xp + xpAmount;
-    final newLevel = ref.read(userDataNotifierProvider.notifier).calculateLevel(newXp);
+    final newLevel =
+        ref.read(userDataNotifierProvider.notifier).calculateLevel(newXp);
     final newUserData = ref.read(userDataNotifierProvider).copyWith(
-      xp: newXp,
-      level: newLevel,
-      totalSolved: (ref.read(userDataNotifierProvider).totalSolved ?? 0) + 1,
-    );
+          xp: newXp,
+          level: newLevel,
+          totalSolved:
+              (ref.read(userDataNotifierProvider).totalSolved ?? 0) + 1,
+        );
 
     state = {...state, gameId: newStreak};
 
     // Single batched save
-    await ref.read(userRepositoryProvider).saveGameCompletion(newUserData, newStreak);
+    await ref
+        .read(userRepositoryProvider)
+        .saveGameCompletion(newUserData, newStreak);
     ref.read(userDataNotifierProvider.notifier).state = newUserData;
 
     await ref.read(userDataNotifierProvider.notifier).updateSuperStreak(state);
@@ -263,8 +290,7 @@ class GameStreakNotifier extends _$GameStreakNotifier {
       ReviewPromptService.record(
         hitMilestone ? ReviewMoment.peak : ReviewMoment.routine,
         // Streaks are per game, so day 7 of each game counts once.
-        dedupeKey:
-            hitMilestone ? 'streak-$gameId-$newStreakCount' : null,
+        dedupeKey: hitMilestone ? 'streak-$gameId-$newStreakCount' : null,
       ),
     );
 

@@ -73,10 +73,18 @@ void main() {
 
     final String privacyMd = File('PRIVACY.md').readAsStringSync();
     final String privacyHtml = File('docs/privacy.html').readAsStringSync();
-    expect(privacyMd, contains('Last updated: 18 November 2026'));
-    expect(privacyHtml, contains('Last updated: 18 November 2026'));
+    expect(privacyMd, contains('Last updated: 22 November 2026'));
+    expect(privacyHtml, contains('Last updated: 22 November 2026'));
     expect(privacyMd, contains('Puzzlestack Plus'));
     expect(privacyHtml, contains('Puzzlestack Plus'));
+    // The usage analytics paragraph ships in both copies, in the same words,
+    // and it points at the switch that turns it off.
+    for (final String copy in <String>[privacyMd, privacyHtml]) {
+      final String flat = copy.replaceAll(RegExp(r'\s+'), ' ');
+      expect(flat, contains('PostHog'));
+      expect(flat, contains('EU Standard Contractual Clauses'));
+      expect(flat, contains('You can turn this off in Settings'));
+    }
     expect(plusProductId, 'puzzlestack_plus');
 
     final String playLog =

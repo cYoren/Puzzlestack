@@ -140,6 +140,16 @@ class AppLocalizationsVi extends AppLocalizations {
       'Các bài tập nhận thức được giữ lại để tham khảo.';
 
   @override
+  String get privacy => 'Quyền riêng tư';
+
+  @override
+  String get shareUsageData => 'Chia sẻ dữ liệu sử dụng ẩn danh';
+
+  @override
+  String get shareUsageDataDescription =>
+      'Số đếm ẩn danh các câu đố đã mở và đã giải. Không phải tên bạn hay câu đố.';
+
+  @override
   String get archived => 'LƯU TRỮ';
 
   @override

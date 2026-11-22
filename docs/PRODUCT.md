@@ -54,7 +54,7 @@ enforced both. The second is right. The first is the problem.
 4. **The card teaches itself.** No rules page before play. A goal line a stranger understands,
    and a nudge if they stall.
 5. **The deal is free. The choice is Plus.** One purchase, once. No ads, no subscription, no
-   account, no data collected.
+   account, no personal data collected.
 
 ## Pillars
 
@@ -98,7 +98,10 @@ Look and motion for all three: `DESIGN.md` (lands with PR #40). Behaviour: [FEED
 - **The paywall appears in one place:** when a fourth pick is asked for in a day, as a sheet
   with the price and what it buys. Never in the Deal. Never before a first play. Never a
   countdown, never a fake discount.
-- **No ads, ever.** No analytics SDK. "No data collected" is on the store page and is true.
+- **No ads, ever.** No ad or tracking SDK. One anonymous usage module (plain HTTPS to
+  PostHog, opt-out in Settings) counts which puzzle was opened and finished, a duration bucket
+  and a hint bucket. It sends nothing personal, no board and no seed, so "no personal data
+  collected" is on the store page and is true.
 - **No subscription.** There is no server and no recurring cost to justify one.
 - The repo is GPL-3.0 and public. We sell the convenience of the store build, which the GPL
   allows. Entitlement is local plus the store receipt; do not build DRM.

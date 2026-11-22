@@ -141,6 +141,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Tâches cognitives et exercices conservés pour référence.';
 
   @override
+  String get privacy => 'Confidentialité';
+
+  @override
+  String get shareUsageData => 'Partager des données d\'usage anonymes';
+
+  @override
+  String get shareUsageDataDescription =>
+      'Des comptages anonymes des puzzles ouverts et résolus. Jamais votre nom ni un puzzle.';
+
+  @override
   String get archived => 'ARCHIVÉ';
 
   @override

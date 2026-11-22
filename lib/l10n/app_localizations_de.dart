@@ -140,6 +140,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Laboraufgaben und Übungen als Referenz behalten.';
 
   @override
+  String get privacy => 'Datenschutz';
+
+  @override
+  String get shareUsageData => 'Anonyme Nutzungsdaten teilen';
+
+  @override
+  String get shareUsageDataDescription =>
+      'Anonyme Zählungen geöffneter und gelöster Rätsel. Nie dein Name oder ein Rätsel selbst.';
+
+  @override
   String get archived => 'ARCHIVIERT';
 
   @override

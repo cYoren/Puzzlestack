@@ -141,6 +141,16 @@ class AppLocalizationsPt extends AppLocalizations {
       'Tarefas de laboratório e exercícios mantidos para consulta.';
 
   @override
+  String get privacy => 'Privacidade';
+
+  @override
+  String get shareUsageData => 'Compartilhar dados de uso anônimos';
+
+  @override
+  String get shareUsageDataDescription =>
+      'Contagens anônimas de quebra-cabeças abertos e resolvidos. Nunca seu nome nem o quebra-cabeça.';
+
+  @override
   String get archived => 'ARQUIVADO';
 
   @override

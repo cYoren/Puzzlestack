@@ -1,13 +1,12 @@
 # Privacy Policy for Puzzlestack
 
-**Last updated: 18 November 2026**
+**Last updated: 22 November 2026**
 
 Published at <https://cyoren.github.io/Puzzlestack/privacy.html>. The published page is
 `docs/privacy.html`; change both together.
 
 Puzzlestack is a collection of offline brain puzzles. It does not collect,
-transmit, or sell your personal data. There are no accounts, no advertising, and
-no analytics.
+transmit, or sell your personal data. There are no accounts and no advertising.
 
 ## What Puzzlestack stores
 
@@ -23,7 +22,23 @@ app can remember your progress between sessions:
   as theme, and whether your device owns Puzzlestack Plus.
 
 This data never leaves your device. It is not uploaded to us or to anyone else,
-because Puzzlestack has no server to upload it to.
+because Puzzlestack has no server to upload it to. The games you open and finish
+are counted anonymously; that is the next section.
+
+## Usage analytics
+
+We use PostHog (PostHog, Inc., USA) to understand how Puzzlestack is used, for
+example which puzzles are opened and where people stop. PostHog receives
+anonymous usage events, never your name, email or anything you type, and IP
+addresses are not stored. Data is transferred to the USA under the EU Standard
+Contractual Clauses. You can turn this off in Settings.
+
+The events are a short list: the app was opened, a puzzle was opened, a puzzle
+was finished (with a rough duration bucket and how many hints it took), today's
+Daily Five was finished, the Plus sheet was shown, and what came of a purchase.
+They carry a random identifier made on this device, the app version, the
+platform and the language. Never a board, a seed, an answer, your nickname or a
+solve time in exact form.
 
 ## In-app purchase
 
@@ -38,7 +53,7 @@ payment details, and records only a local unlock flag on your device.
 - It does not collect personal information such as your name, email address,
   phone number, contacts, photos, or precise location.
 - It does not contain advertising, advertising identifiers, or ad SDKs.
-- It does not contain analytics, telemetry, or crash-reporting SDKs.
+- It does not contain crash-reporting SDKs, session recording, or heatmaps.
 - It does not track you across apps or websites.
 - It does not require an account or an internet connection to play.
 
@@ -46,7 +61,9 @@ payment details, and records only a local unlock flag on your device.
 
 All Puzzlestack data is held in the app's own private storage. Uninstalling the
 app, or clearing its storage through your device's settings, permanently
-deletes everything listed above. No copy is retained anywhere else.
+deletes everything listed above. No copy is retained anywhere else. The
+anonymous usage events carry only the random identifier stored on the device,
+so once that identifier is gone the events can no longer be tied to it.
 
 ## Links to other sites
 
@@ -62,7 +79,7 @@ information from anyone, it collects none from children either.
 
 ## Changes to this policy
 
-If a future version of Puzzlestack changes what it stores or introduces any
+If a future version of Puzzlestack changes what it stores or introduces any new
 network communication, this policy will be updated before that version is
 released, and the date at the top will change.
 

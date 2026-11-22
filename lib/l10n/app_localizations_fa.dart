@@ -141,6 +141,16 @@ class AppLocalizationsFa extends AppLocalizations {
       'تمرین‌های آزمایشگاهی که برای مرجع نگه داشته شده‌اند.';
 
   @override
+  String get privacy => 'حریم خصوصی';
+
+  @override
+  String get shareUsageData => 'ارسال داده‌های استفادهٔ بی‌نام';
+
+  @override
+  String get shareUsageDataDescription =>
+      'شمارش بی‌نام معماهایی که باز می‌کنید و تمام می‌کنید. نه نام شما و نه خود معما.';
+
+  @override
   String get archived => 'بایگانی‌شده';
 
   @override
