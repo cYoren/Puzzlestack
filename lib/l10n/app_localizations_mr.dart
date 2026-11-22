@@ -140,6 +140,16 @@ class AppLocalizationsMr extends AppLocalizations {
   String get showArchivedGamesDescription => 'संदर्भासाठी ठेवलेले सराव प्रकार.';
 
   @override
+  String get privacy => 'गोपनीयता';
+
+  @override
+  String get shareUsageData => 'अनाम वापर डेटा सामायिक करा';
+
+  @override
+  String get shareUsageDataDescription =>
+      'उघडलेल्या आणि पूर्ण केलेल्या कोड्यांची अनाम मोजणी. तुमचे नाव किंवा कोडे नाही.';
+
+  @override
   String get archived => 'संग्रहित';
 
   @override

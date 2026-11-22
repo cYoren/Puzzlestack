@@ -140,6 +140,16 @@ class AppLocalizationsHi extends AppLocalizations {
       'संदर्भ के लिए रखे गए अभ्यास और कार्य।';
 
   @override
+  String get privacy => 'गोपनीयता';
+
+  @override
+  String get shareUsageData => 'अनाम उपयोग डेटा साझा करें';
+
+  @override
+  String get shareUsageDataDescription =>
+      'खोले और पूरे किए गए पहेलियों की अनाम गिनती। न आपका नाम, न कोई पहेली।';
+
+  @override
   String get archived => 'संग्रहीत';
 
   @override

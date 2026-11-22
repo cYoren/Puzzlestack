@@ -184,6 +184,7 @@ class Site:
 <meta property="og:url" content="{esc(canonical)}">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="{prefix}site.css">
+<script src="{prefix}js/analytics.js" defer></script>
 {schema}</head>
 <body>
 """
@@ -209,7 +210,7 @@ class Site:
     <a href="{REPO}">Source</a>
     <a href="{REPO}/issues">Report a problem</a>
   </p>
-  <p class="foot-note">Free, no ads, no account, no data collected. Puzzlestack is free
+  <p class="foot-note">Free, no ads, no account, no personal data. Puzzlestack is free
   software under the GNU GPL, version 3 or later. It is a modified derivative of
   <a href="https://github.com/sidhant947/Puzzle">Puzzle</a> by Sidhant Khatkar.</p>
 </footer>
@@ -295,7 +296,7 @@ class Site:
         faq = [
             (f"Is {title} free?",
              "Yes. Puzzlestack is free to download, with no advertising, no account and "
-             "nothing collected about you. Every puzzle can be played at least once."),
+             "no personal data collected. Every puzzle can be played at least once."),
             (f"How long does one {title} take?",
              f"{minutes} Dealt from the deck it uses the size a first-timer finishes in "
              f"under two minutes; the full sizes are in the library." if game["tier"] == "deck"

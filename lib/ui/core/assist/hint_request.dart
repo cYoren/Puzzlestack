@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/posthog.dart';
 import '../../../data/picks/hint_gate.dart';
 import '../../../providers/pick_providers.dart';
 import '../../features/plus/plus_sheet.dart';
@@ -27,6 +28,7 @@ Future<bool> requestHint(
 
   await gate.commit(decision);
   if (!context.mounted) return false;
+  postHog.boardHinted();
   onHint();
   return true;
 }

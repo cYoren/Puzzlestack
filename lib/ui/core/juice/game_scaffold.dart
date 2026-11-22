@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+
 import 'dart:math' as math;
+
 import '../../../utils/design_system.dart';
 import '../../../widgets/tangible.dart';
 import '../../../data/game_guides.dart';
 import '../../../data/game_metadata.dart';
 import '../../../widgets/game_guide_screen.dart';
+import '../../../providers/game_tier_provider.dart';
 import '../../../providers/user_providers.dart';
 import '../../features/feed/feed_session.dart';
 import '../../../utils/game_clock.dart';
+import '../../../core/posthog.dart';
 import '../assist/game_assist.dart';
 import '../assist/hint_request.dart';
 import 'game_scope.dart';
@@ -56,7 +60,13 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final game = _resolveGame(context);
-      if (game != null) GameClock.start(game.id);
+      if (game != null) {
+        GameClock.start(game.id);
+        postHog.boardStarted(
+          gameId: game.id,
+          difficulty: ref.read(gameTierStoreProvider).startFor(game.id),
+        );
+      }
     });
   }
 
@@ -90,8 +100,9 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
   @override
   Widget build(BuildContext context) {
     final keepAwake = ref.watch(
-      userDataNotifierProvider
-          .select((u) => u.isKeepScreenAwakeEnabled ?? false),
+      userDataNotifierProvider.select(
+        (u) => u.isKeepScreenAwakeEnabled ?? false,
+      ),
     );
     _syncWakelock(keepAwake);
 
@@ -138,9 +149,10 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
         child: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-                maxWidth: isMobile
-                    ? double.infinity
-                    : math.max(400.0, responsiveMaxWidth)),
+              maxWidth: isMobile
+                  ? double.infinity
+                  : math.max(400.0, responsiveMaxWidth),
+            ),
             child: Column(
               children: [
                 _buildAppBar(context),
@@ -155,9 +167,10 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
               child: Center(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                      maxWidth: isMobile
-                          ? double.infinity
-                          : math.max(400.0, responsiveMaxWidth)),
+                    maxWidth: isMobile
+                        ? double.infinity
+                        : math.max(400.0, responsiveMaxWidth),
+                  ),
                   child: widget.bottomNavigationBar,
                 ),
               ),
@@ -471,8 +484,9 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
         return Dialog(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          insetPadding:
-              const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: DesignSystem.spaceLG,
+          ),
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 380),
             child: TangibleContainer(
@@ -517,8 +531,9 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                     padding: const EdgeInsets.all(DesignSystem.spaceMD),
                     decoration: BoxDecoration(
                       color: colorScheme.onSurface.withValues(alpha: 0.05),
-                      borderRadius:
-                          BorderRadius.circular(DesignSystem.radiusMD),
+                      borderRadius: BorderRadius.circular(
+                        DesignSystem.radiusMD,
+                      ),
                       border: Border.all(
                         color: colorScheme.outline.withValues(alpha: 0.2),
                       ),
@@ -539,8 +554,9 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                         if (rulesList != null && rulesList.isNotEmpty) ...[
                           const SizedBox(height: DesignSystem.spaceMD),
                           Divider(
-                              color: colorScheme.outline.withValues(alpha: 0.3),
-                              height: 1),
+                            color: colorScheme.outline.withValues(alpha: 0.3),
+                            height: 1,
+                          ),
                           const SizedBox(height: DesignSystem.spaceMD),
                           Text(
                             "RULES & CONDITIONS:",
@@ -552,34 +568,37 @@ class _GameScaffoldState extends ConsumerState<GameScaffold> {
                             ),
                           ),
                           const SizedBox(height: DesignSystem.spaceSM),
-                          ...rulesList.map((rule) => Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: DesignSystem.spaceXS),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "• ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: colorScheme.primary,
+                          ...rulesList.map(
+                            (rule) => Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: DesignSystem.spaceXS,
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "• ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme.primary,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      rule,
+                                      style:
+                                          theme.textTheme.bodyMedium?.copyWith(
+                                        color: colorScheme.onSurface
+                                            .withValues(alpha: 0.8),
+                                        fontSize: 13.0,
+                                        height: 1.35,
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        rule,
-                                        style: theme.textTheme.bodyMedium
-                                            ?.copyWith(
-                                          color: colorScheme.onSurface
-                                              .withValues(alpha: 0.8),
-                                          fontSize: 13.0,
-                                          height: 1.35,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ],
                     ),

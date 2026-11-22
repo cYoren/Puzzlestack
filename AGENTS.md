@@ -36,7 +36,10 @@ your PR.
 - **Every fix carries the test that would have caught it.**
 - **One mechanism, not N edits.** If you are about to make the same change in many game
   screens, stop and put it in the shared layer.
-- **No ads, no analytics, no accounts, no network calls.** "No data collected" must stay true.
+- **No ads, no accounts, and nothing personal leaves the device.** The only network call is the
+  anonymous usage module in `lib/core/posthog.dart`, which has a switch in Settings and never
+  sends a board, a seed, a nickname, an answer, a solve time in exact form or anything typed.
+  Nothing else opens a socket.
 - **You judge by playing.** Run the game at phone size and play it before you rule on it.
   A verdict from reading code is a guess; label it as one.
 

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/posthog.dart';
 import '../data/daily/daily_five.dart';
 import '../data/picks/pick_ledger.dart';
 import 'pick_providers.dart';
@@ -47,10 +48,7 @@ class DailyFiveController extends StateNotifier<DailyFiveSummaryState> {
     DailyFiveStore store,
     DateTime Function() clock,
   ) {
-    return DailyFiveSummaryState(
-      days: store.readAll(),
-      clock: clock,
-    );
+    return DailyFiveSummaryState(days: store.readAll(), clock: clock);
   }
 
   void refresh() {
@@ -69,6 +67,10 @@ class DailyFiveController extends StateNotifier<DailyFiveSummaryState> {
       elapsedMs: elapsedMs,
       badge: badge,
     );
+    final bool wasComplete = state.progressFor(dayKey).isComplete;
+    if (!wasComplete && updated.isComplete) {
+      postHog.capture('daily_completed');
+    }
     state = _load(_store, _clock);
     return updated;
   }

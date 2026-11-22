@@ -138,6 +138,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get showArchivedGamesDescription => '留作参考的认知实验与练习题。';
 
   @override
+  String get privacy => '隐私';
+
+  @override
+  String get shareUsageData => '分享匿名使用数据';
+
+  @override
+  String get shareUsageDataDescription => '匿名统计打开和完成的谜题。绝不包含你的姓名或谜题本身。';
+
+  @override
   String get archived => '已归档';
 
   @override

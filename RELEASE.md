@@ -67,10 +67,13 @@ Basis for those answers:
   billing (`in_app_purchase`: Google Play Billing on Android, StoreKit on iOS).
   Apple and Google process the payment directly; Puzzlestack operates no server
   and receives no personal or payment data.
-- There is no developer server, analytics SDK, advertising SDK, attribution
-  SDK, or crash-reporting SDK in `pubspec.yaml`.
+- There is no developer server, advertising SDK, attribution SDK, or
+  crash-reporting SDK in `pubspec.yaml`. Anonymous usage events (PostHog, plain
+  HTTPS, no SDK) come from `lib/core/posthog.dart` and can be switched off in
+  Settings > Privacy; they carry no personal data, no board and no seed.
 - `android.permission.INTERNET` and `com.android.vending.BILLING` are used only
-  by the platform store billing client (`Shorebird` stays off for `1.1.0`).
+  by the platform store billing client and that one analytics module
+  (`Shorebird` stays off for `1.1.0`).
 
 If any of that changes, update this file, `PRIVACY.md`, `docs/privacy.html`,
 and the Data Safety form together.
@@ -96,6 +99,13 @@ Turning Shorebird on means building via the Shorebird CLI instead of
 `flutter build`. That adds a launch-time patch check to Shorebird's servers,
 which **must** be disclosed in `PRIVACY.md` and the Data Safety form before
 such a build is released.
+
+Usage analytics is gated on the **installed native version**, read at launch
+with `package_info_plus`, being above `kLiveStoreVersion` in
+`lib/core/posthog.dart`. A patch cannot raise that number, so a patched build
+of a release at or below the floor stays silent. Bump the constant with a
+store release, never with a patch, and keep `pubspec.yaml` at or above it
+(`test/core/posthog_test.dart` fails otherwise).
 
 **The `app_id` in `shorebird.yaml` belongs to the pre-rename bundle id.**
 Shorebird registers an app per bundle id, so before the first Shorebird build

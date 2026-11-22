@@ -140,6 +140,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get showArchivedGamesDescription => 'حوالے کے لیے رکھی گئی مشقیں۔';
 
   @override
+  String get privacy => 'رازداری';
+
+  @override
+  String get shareUsageData => 'گمنام استعمال کا ڈیٹا شیئر کریں';
+
+  @override
+  String get shareUsageDataDescription =>
+      'کھیلے اور مکمل کیے گئے پہیلیوں کی گمنام گنتی۔ نہ آپ کا نام، نہ پہیلی۔';
+
+  @override
   String get archived => 'محفوظ شدہ';
 
   @override
