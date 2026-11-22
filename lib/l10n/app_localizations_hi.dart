@@ -146,7 +146,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get shareUsageData => 'अनाम उपयोग डेटा साझा करें';
 
   @override
-  String get shareUsageDataDescription => 'खोले और पूरे किए गए पहेलियों की अनाम गिनती। न आपका नाम, न कोई पहेली।';
+  String get shareUsageDataDescription =>
+      'खोले और पूरे किए गए पहेलियों की अनाम गिनती। न आपका नाम, न कोई पहेली।';
 
   @override
   String get archived => 'संग्रहीत';

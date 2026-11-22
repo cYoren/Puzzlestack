@@ -146,7 +146,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareUsageData => 'مشاركة بيانات الاستخدام المجهولة';
 
   @override
-  String get shareUsageDataDescription => 'إحصاءات مجهولة عن الألغاز التي تفتحها وتنهيها. لا اسمك ولا محتوى أي لغز.';
+  String get shareUsageDataDescription =>
+      'إحصاءات مجهولة عن الألغاز التي تفتحها وتنهيها. لا اسمك ولا محتوى أي لغز.';
 
   @override
   String get archived => 'مؤرشف';

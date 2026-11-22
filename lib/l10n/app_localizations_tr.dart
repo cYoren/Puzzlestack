@@ -147,7 +147,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareUsageData => 'Anonim kullanım verilerini paylaş';
 
   @override
-  String get shareUsageDataDescription => 'Açılan ve çözülen bulmacaların anonim sayıları. Adınız ya da bulmacanın kendisi değil.';
+  String get shareUsageDataDescription =>
+      'Açılan ve çözülen bulmacaların anonim sayıları. Adınız ya da bulmacanın kendisi değil.';
 
   @override
   String get archived => 'ARŞİVLENDİ';

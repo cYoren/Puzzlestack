@@ -147,7 +147,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shareUsageData => 'Condividi dati d\'uso anonimi';
 
   @override
-  String get shareUsageDataDescription => 'Conteggi anonimi dei puzzle aperti e risolti. Mai il tuo nome né un puzzle.';
+  String get shareUsageDataDescription =>
+      'Conteggi anonimi dei puzzle aperti e risolti. Mai il tuo nome né un puzzle.';
 
   @override
   String get archived => 'ARCHIVIATO';

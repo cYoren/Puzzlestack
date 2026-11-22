@@ -146,7 +146,8 @@ class AppLocalizationsMr extends AppLocalizations {
   String get shareUsageData => 'अनाम वापर डेटा सामायिक करा';
 
   @override
-  String get shareUsageDataDescription => 'उघडलेल्या आणि पूर्ण केलेल्या कोड्यांची अनाम मोजणी. तुमचे नाव किंवा कोडे नाही.';
+  String get shareUsageDataDescription =>
+      'उघडलेल्या आणि पूर्ण केलेल्या कोड्यांची अनाम मोजणी. तुमचे नाव किंवा कोडे नाही.';
 
   @override
   String get archived => 'संग्रहित';

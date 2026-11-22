@@ -144,7 +144,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get shareUsageData => '匿名の利用データを共有';
 
   @override
-  String get shareUsageDataDescription => '開いたパズルと解いたパズルの匿名の回数。名前やパズルの内容は送りません。';
+  String get shareUsageDataDescription =>
+      '開いたパズルと解いたパズルの匿名の回数。名前やパズルの内容は送りません。';
 
   @override
   String get archived => 'アーカイブ';

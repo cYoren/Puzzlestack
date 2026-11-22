@@ -147,7 +147,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get shareUsageData => 'বেনামী ব্যবহারের তথ্য শেয়ার করুন';
 
   @override
-  String get shareUsageDataDescription => 'খোলা ও শেষ করা ধাঁধার বেনামী গণনা। আপনার নাম বা ধাঁধার বিষয়বস্তু নয়।';
+  String get shareUsageDataDescription =>
+      'খোলা ও শেষ করা ধাঁধার বেনামী গণনা। আপনার নাম বা ধাঁধার বিষয়বস্তু নয়।';
 
   @override
   String get archived => 'আর্কাইভ';

@@ -146,7 +146,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get shareUsageData => 'Chia sẻ dữ liệu sử dụng ẩn danh';
 
   @override
-  String get shareUsageDataDescription => 'Số đếm ẩn danh các câu đố đã mở và đã giải. Không phải tên bạn hay câu đố.';
+  String get shareUsageDataDescription =>
+      'Số đếm ẩn danh các câu đố đã mở và đã giải. Không phải tên bạn hay câu đố.';
 
   @override
   String get archived => 'LƯU TRỮ';

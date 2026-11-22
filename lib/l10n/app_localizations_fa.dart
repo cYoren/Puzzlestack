@@ -147,7 +147,8 @@ class AppLocalizationsFa extends AppLocalizations {
   String get shareUsageData => 'ارسال داده‌های استفادهٔ بی‌نام';
 
   @override
-  String get shareUsageDataDescription => 'شمارش بی‌نام معماهایی که باز می‌کنید و تمام می‌کنید. نه نام شما و نه خود معما.';
+  String get shareUsageDataDescription =>
+      'شمارش بی‌نام معماهایی که باز می‌کنید و تمام می‌کنید. نه نام شما و نه خود معما.';
 
   @override
   String get archived => 'بایگانی‌شده';

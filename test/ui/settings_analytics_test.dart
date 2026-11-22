@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:puzzle/core/posthog.dart';
 import 'package:puzzle/data/models/user_data.dart';
@@ -22,6 +22,19 @@ class _FakeRepository extends UserRepository {
   @override
   Future<void> saveUserData(UserData data) async {}
 }
+
+Widget _app() => ProviderScope(
+      overrides: [
+        userRepositoryProvider.overrideWithValue(_FakeRepository()),
+        analyticsConsentProvider.overrideWith((ref) => true),
+      ],
+      child: MaterialApp(
+        theme: DesignSystem.lightTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const SettingsScreen(),
+      ),
+    );
 
 void main() {
   setUp(() async {
@@ -44,40 +57,27 @@ void main() {
     tester.view.devicePixelRatio = 2.0;
     addTearDown(tester.view.reset);
 
-    final LocalizationsDelegate<AppLocalizations> delegate =
-        AppLocalizations.delegate;
-
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          userRepositoryProvider.overrideWithValue(_FakeRepository()),
-          analyticsConsentProvider.overrideWith((ref) => true),
-        ],
-        child: MaterialApp(
-          theme: DesignSystem.lightTheme,
-          localizationsDelegates: [
-            delegate,
-            ...AppLocalizations.localizationsDelegates
-                .where((LocalizationsDelegate<dynamic> d) => d != delegate),
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: const SettingsScreen(),
-        ),
-      ),
-    );
+    await tester.pumpWidget(_app());
     await tester.pumpAndSettle();
 
-    final Finder switchFinder =
-        find.byType(Switch).last; // the usage row is the last toggle
-    expect(switchFinder, findsOneWidget);
-
-    final BuildContext context = tester.element(switchFinder);
-    final String label = AppLocalizations.of(context)!.shareUsageData;
+    final String label =
+        AppLocalizations.of(tester.element(find.byType(SettingsScreen)))!
+            .shareUsageData;
     expect(find.text(label), findsOneWidget);
+
+    final Finder row = find
+        .ancestor(of: find.text(label), matching: find.byType(DeckCard))
+        .first;
+    final Finder switchFinder =
+        find.descendant(of: row, matching: find.byType(Switch));
+    expect(switchFinder, findsOneWidget);
+    expect(tester.widget<Switch>(switchFinder).value, isTrue);
 
     await tester.tap(switchFinder);
     await tester.pumpAndSettle();
 
+    expect(tester.widget<Switch>(switchFinder).value, isFalse);
+    expect(PostHog.instance.consent, isFalse);
     expect(tester.takeException(), isNull);
   });
 }

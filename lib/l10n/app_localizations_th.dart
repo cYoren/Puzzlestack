@@ -147,7 +147,8 @@ class AppLocalizationsTh extends AppLocalizations {
   String get shareUsageData => 'แชร์ข้อมูลการใช้งานแบบไม่ระบุตัวตน';
 
   @override
-  String get shareUsageDataDescription => 'นับจำนวนปริศนาที่เปิดและทำเสร็จแบบไม่ระบุตัวตน ไม่มีชื่อคุณหรือตัวปริศนา';
+  String get shareUsageDataDescription =>
+      'นับจำนวนปริศนาที่เปิดและทำเสร็จแบบไม่ระบุตัวตน ไม่มีชื่อคุณหรือตัวปริศนา';
 
   @override
   String get archived => 'เก็บถาวร';

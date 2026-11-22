@@ -146,7 +146,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get shareUsageData => 'گمنام استعمال کا ڈیٹا شیئر کریں';
 
   @override
-  String get shareUsageDataDescription => 'کھیلے اور مکمل کیے گئے پہیلیوں کی گمنام گنتی۔ نہ آپ کا نام، نہ پہیلی۔';
+  String get shareUsageDataDescription =>
+      'کھیلے اور مکمل کیے گئے پہیلیوں کی گمنام گنتی۔ نہ آپ کا نام، نہ پہیلی۔';
 
   @override
   String get archived => 'محفوظ شدہ';

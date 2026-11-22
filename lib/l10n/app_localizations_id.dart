@@ -146,7 +146,8 @@ class AppLocalizationsId extends AppLocalizations {
   String get shareUsageData => 'Bagikan data penggunaan anonim';
 
   @override
-  String get shareUsageDataDescription => 'Hitungan anonim teka-teki yang dibuka dan diselesaikan. Bukan nama Anda atau teka-tekinya.';
+  String get shareUsageDataDescription =>
+      'Hitungan anonim teka-teki yang dibuka dan diselesaikan. Bukan nama Anda atau teka-tekinya.';
 
   @override
   String get archived => 'DIARSIPKAN';

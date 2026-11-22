@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'posthog_transport.dart';
@@ -31,6 +32,17 @@ import 'posthog_transport.dart';
 /// The transport is the only thing split into another file, because `dart:io`
 /// cannot compile for the browser; the app's web build sends nothing. The
 /// website's pages have their own tiny module (`docs/js/analytics.js`).
+///
+/// A release build must not reach live players through an over-the-air update,
+/// and this app ships with Shorebird configured (`shorebird.yaml`).
+/// [kLiveStoreVersion] is the version currently in the stores; a build at or
+/// below it does not send, and neither does a build that predates this file.
+///
+/// The version that decides is the **installed native version**, read from the
+/// platform at runtime, never the Dart constant below: a Shorebird patch
+/// replaces this file but not the binary, so a patched 1.1.0 build reports
+/// 1.1.0 and stays silent. `package_info_plus` is a native plugin, which also
+/// means Shorebird itself refuses to patch a release that never had it.
 
 /// The PostHog project "Games and small sites". A project key is public by
 /// design, like a Sentry DSN; it can only ingest, not read.
@@ -39,9 +51,20 @@ const String postHogKey = 'phc_zLwpAJq2pqBggPtCN2VF4EvuNR8wk2uoSpK62A6hhT6o';
 /// Names this product in every event. The site's pages use `puzzlestack-web`.
 const String postHogApp = 'puzzlestack';
 
-/// The version this build reports. `test/core/posthog_test.dart` fails when it
-/// drifts from `pubspec.yaml`, so a release that forgets it cannot ship.
+/// The version this source tree is. Only the test that keeps it equal to
+/// `pubspec.yaml` reads it: what an event reports is the *installed native*
+/// version ([PostHog.nativeVersion]), so a patch cannot claim a newer build.
 const String postHogBuildVersion = '1.1.0';
+
+/// The version live on the stores when this file was written. Not what this
+/// code is: it is the floor. Anything at or below it was built before this
+/// file existed, so it stays silent however new its Dart code is.
+///
+/// On 2026-11-22 no version had been released: the App Store has `1.1.0`
+/// waiting for review and Play has `1.1.0+16` on the internal track only. That
+/// `1.1.0` binary is the one a patch could reach, so it is the floor. The next
+/// release above it is the first build that reports anything.
+const String kLiveStoreVersion = '1.1.0';
 
 final Uri postHogEndpoint = Uri.parse('https://us.i.posthog.com/batch/');
 
@@ -183,9 +206,27 @@ class PostHog {
   bool _consent = true;
   int _boardHints = 0;
 
+  /// The version of the **binary** this Dart code is running inside, read from
+  /// the platform. A Shorebird patch cannot change it, which is the whole
+  /// point: a patched 1.1.0 still says 1.1.0.
+  String? _nativeVersion;
+
+  /// The installed binary's version, once [start] has read it. Null when the
+  /// platform could not answer, which is a reason to stay silent.
+  String? get nativeVersion => _nativeVersion;
+
   /// Does this build send at all? False with an empty key, false on the web
-  /// build, and false when the player turned the switch off.
-  bool get active => apiKey.isNotEmpty && _consent && !isPostHogWebBuild;
+  /// build, false when the player turned the switch off, and false unless the
+  /// installed native version is above the one live in the stores.
+  bool get active {
+    final String? version = _nativeVersion;
+    return apiKey.isNotEmpty &&
+        _consent &&
+        !isPostHogWebBuild &&
+        version != null &&
+        version.isNotEmpty &&
+        compareVersions(version, kLiveStoreVersion) > 0;
+  }
 
   /// What the Settings switch shows. The player's choice, whether or not this
   /// build happens to have a key.
@@ -197,16 +238,24 @@ class PostHog {
   /// How many hints the board on screen has taken.
   int get boardHints => _boardHints;
 
-  /// Called once from `main()` before the first frame: reads the switch and the
-  /// install id, remembers them, and reports the open that just happened.
+  /// Called once from `main()` before the first frame: reads the switch, the
+  /// install id and the installed native version, remembers the first two, and
+  /// reports the open that just happened.
+  ///
+  /// [nativeVersion] exists for tests. Left null, the version is read from the
+  /// platform; a version that cannot be read is a version that does not send.
   Future<void> start({
     String? platform,
     String? locale,
     PostHogStorage? storage,
+    String? nativeVersion,
   }) async {
     if (platform != null && platform.isNotEmpty) this.platform = platform;
     if (locale != null && locale.isNotEmpty) this.locale = locale;
     _storage = storage ?? await PostHogPrefsStorage.open();
+    _nativeVersion = nativeVersion != null && nativeVersion.isNotEmpty
+        ? nativeVersion
+        : (nativeVersion == null ? await _readNativeVersion() : null);
 
     final String? storedId = _storage?.read(_installIdRow);
     if (storedId != null && storedId.isNotEmpty) {
@@ -219,6 +268,17 @@ class PostHog {
     _consent = _storage?.read(_consentRow) != 'false';
 
     capture('app_opened');
+  }
+
+  /// The installed app's own version, so a patch cannot claim to be newer than
+  /// the release it landed in.
+  Future<String?> _readNativeVersion() async {
+    try {
+      final PackageInfo info = await PackageInfo.fromPlatform();
+      return info.version.isEmpty ? null : info.version;
+    } catch (_) {
+      return null;
+    }
   }
 
   /// The Settings switch. Turning it off follows the one event that records the
@@ -275,7 +335,7 @@ class PostHog {
       'app': app,
       'platform': platform,
       if (locale.isNotEmpty) 'locale': locale,
-      'app_version': version,
+      'app_version': _nativeVersion,
       r'$process_person_profile': false,
       ...postHogSafeProperties(properties),
     };
@@ -300,6 +360,27 @@ class PostHog {
       // Analytics is never a player-visible failure.
     }
   }
+
+  /// Compares dotted versions numerically: "1.1.10" is above "1.1.9", which a
+  /// string comparison gets backwards. Build numbers after `+` are compared
+  /// too, so two builds of the same version are ordered.
+  static int compareVersions(String a, String b) {
+    final List<int> left = _numbers(a);
+    final List<int> right = _numbers(b);
+    final int length = left.length > right.length ? left.length : right.length;
+    for (int i = 0; i < length; i++) {
+      final int l = i < left.length ? left[i] : 0;
+      final int r = i < right.length ? right[i] : 0;
+      if (l != r) return l < r ? -1 : 1;
+    }
+    return 0;
+  }
+
+  static List<int> _numbers(String version) => version
+      .split(RegExp(r'[^0-9]+'))
+      .where((String part) => part.isNotEmpty)
+      .map((String part) => int.tryParse(part) ?? 0)
+      .toList();
 
   static String _randomId() {
     final Random random = Random.secure();

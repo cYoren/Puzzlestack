@@ -146,7 +146,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shareUsageData => 'Anonyme Nutzungsdaten teilen';
 
   @override
-  String get shareUsageDataDescription => 'Anonyme Zählungen geöffneter und gelöster Rätsel. Nie dein Name oder ein Rätsel selbst.';
+  String get shareUsageDataDescription =>
+      'Anonyme Zählungen geöffneter und gelöster Rätsel. Nie dein Name oder ein Rätsel selbst.';
 
   @override
   String get archived => 'ARCHIVIERT';

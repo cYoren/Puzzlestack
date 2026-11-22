@@ -147,7 +147,8 @@ class AppLocalizationsTa extends AppLocalizations {
   String get shareUsageData => 'அநாமதேய பயன்பாட்டுத் தரவைப் பகிர்';
 
   @override
-  String get shareUsageDataDescription => 'திறந்து முடித்த புதிர்களின் அநாமதேய எண்ணிக்கை. உங்கள் பெயரோ புதிரோ அல்ல.';
+  String get shareUsageDataDescription =>
+      'திறந்து முடித்த புதிர்களின் அநாமதேய எண்ணிக்கை. உங்கள் பெயரோ புதிரோ அல்ல.';
 
   @override
   String get archived => 'காப்பகம்';
