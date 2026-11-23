@@ -597,7 +597,7 @@ run to produce them.
 `fastlane/Deliverfile`. iOS ships from the same version and copy per `RELEASE.md:124`, but there is
 nothing in the repo to upload. If the App Store release is real, this is the largest gap in it.
 
-### 29. `shorebird.yaml` points at a dead app id, and the updater is not a dependency
+### 29. `shorebird.yaml` points at a dead app id, and the updater is not a dependency — **fixed 2026-11-23**
 
 <sub>job id: `shorebird-decision`</sub>
 
@@ -605,6 +605,12 @@ nothing in the repo to upload. If the App Store release is real, this is the lar
 `pubspec.yaml`, and `RELEASE.md` notes the id predates the rename. Content fixes in band 2 are
 exactly what OTA is for (a dictionary grows, every install gets it without review). Either finish it
 or delete the file; an inert config with a stale id is worse than none.
+
+**Resolution.** The id was never dead: it is the app registered as `Puzzlestack` in the Shorebird
+organisation, renamed from `PuzzleBox` on 2026-11-23, and a Shorebird app is keyed by that id rather
+than by the store bundle id. The dependency is in `pubspec.yaml` now. What is still missing is the
+build: only a `shorebird release` binary carries an updater, so OTA starts with the next store
+release. `RELEASE.md` carries the commands and the privacy consequence.
 
 ### 30. The paywall is decided and not built
 

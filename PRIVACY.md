@@ -1,14 +1,14 @@
 # Privacy Policy for Puzzlestack
 
-**Last updated: 22 November 2026**
+**Last updated: 23 November 2026**
 
 Published at <https://cyoren.github.io/Puzzlestack/privacy.html>. The published page is
 `docs/privacy.html`; change both together.
 
 Puzzlestack is a collection of offline brain puzzles. It does not sell your
-data, does not ask who you are, and has no accounts and no advertising. The one
-thing it sends is the anonymous usage described below, and you can switch that
-off.
+data, does not ask who you are, and has no accounts and no advertising. The
+things it sends are the anonymous usage described below, which you can switch
+off, and an update check once a release carries the updater.
 
 ## What Puzzlestack stores
 
@@ -67,6 +67,22 @@ you buy or restore Puzzlestack Plus, the payment and receipt check are processed
 directly by Apple (App Store) or Google (Google Play) under their respective
 privacy policies. Puzzlestack never receives your name, billing address, or
 payment details, and records only a local unlock flag on your device.
+
+## App updates
+
+From the release that ships with the update service, Puzzlestack asks
+Shorebird (Shorebird, Inc., USA) at launch whether a newer version of its own
+Dart code exists for the build you have installed. The request carries the app
+id, the app version, the platform and architecture, the update channel, the
+release the build came from and the patch you are running, if any. It also
+carries an install id: a random value generated on this device and kept in the
+app's own storage, unique to this app, never linked to you and shown nowhere
+in the app, and deleted when you uninstall the app or clear its data.
+Shorebird sees the connection address as any server sees it. No account, no
+nickname, no puzzle data, nothing you type or play. If a newer version exists
+it is downloaded and applied the next time you open the app. Playing offline
+is unaffected: the check fails quietly and the installed build keeps working.
+Builds older than that have no updater in them and make no such request.
 
 ## What Puzzlestack does not do
 

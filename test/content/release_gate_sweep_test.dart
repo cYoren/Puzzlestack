@@ -73,8 +73,11 @@ void main() {
 
     final String privacyMd = File('PRIVACY.md').readAsStringSync();
     final String privacyHtml = File('docs/privacy.html').readAsStringSync();
-    expect(privacyMd, contains('Last updated: 22 November 2026'));
-    expect(privacyHtml, contains('Last updated: 22 November 2026'));
+    expect(privacyMd, contains('Last updated: 23 November 2026'));
+    expect(privacyHtml, contains('Last updated: 23 November 2026'));
+    // The lede of both copies says the same thing, including the update check.
+    expect(privacyMd, contains('and an update check once a release carries the updater'));
+    expect(privacyHtml, contains('and an update check once a release carries the updater'));
     expect(privacyMd, contains('Puzzlestack Plus'));
     expect(privacyHtml, contains('Puzzlestack Plus'));
     // The usage analytics paragraph ships in both copies, in the same words,
@@ -84,6 +87,13 @@ void main() {
       expect(flat, contains('PostHog'));
       expect(flat, contains('EU Standard Contractual Clauses'));
       expect(flat, contains('You can turn this off in Settings'));
+      // And so does the update disclosure, because from 1.1.0 the released
+      // build asks Shorebird for a patch at launch and users must be told.
+      expect(flat, contains('Shorebird'));
+      expect(flat, contains('update service'));
+      // And the install id the updater sends is described, not denied.
+      expect(flat, contains('install id'));
+      expect(flat, isNot(contains('no identifier stored on your device')));
     }
     expect(plusProductId, 'puzzlestack_plus');
 
