@@ -106,8 +106,10 @@ every board plays with a screen reader.
 **(d) G5, the feed-size medians.** The mechanism and the size table are in code. No timing is
 recorded anywhere, and the gate asks for a measured median of 30 to 120 s per Deck game. Take the
 timings from the play pass, write them into the PR, and do not make a number up.
-`mirror_maze` is the one known thin pool: it deals from 96 distinct boards, counted by enumeration,
-so check 5 cannot hold as written. Widen the board rather than move the game down a tier.
+`mirror_maze` was the one known thin pool and is no longer one: a 5x5 board gives 160 distinct
+two-mirror deals, counted by enumeration, which is enough for check 5. Do not try to buy depth
+instead, a deal cannot need three mirrors: a mirror turns the beam onto the other axis and one turn
+already reaches any exit on that axis, so every reachable deal costs zero, one or two.
 
 **(e) G6, the device pass.** A person plays fifty dealt cards on a cheap Android and on an iPhone,
 times the cold start to a playable card, and looks at the deal holding 60 fps. Every stumble

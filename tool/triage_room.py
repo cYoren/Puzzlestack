@@ -35,9 +35,10 @@ Checks that are mechanical here:
     `lib/data/game_profiles.dart`. Its answer is the task's own, not deduced from clues on the
     screen, so a uniqueness proof does not apply and fairness is judged by playing. This is
     where every Memory and Attention card lands.
-- **5 stays fresh**: a generator, or a pool big enough for 30 sessions. `deal-space(N)` means
-  the whole deal space was enumerated by hand and come out too small for 30 days; N is the count,
-  and the row says so rather than passing on the presence of `Random(`.
+- **5 stays fresh**: a generator, or a pool big enough for 30 sessions. A counted deal space
+  prints its own number: `pass-deal-space(N)` was enumerated and N is enough for 30 days without a
+  repeat, `deal-space(N)` was enumerated and N is not, which is the `feed-size` job. Either way the
+  row never passes on the mere presence of `Random(`.
 - **8 ends well**: undo and restart exist.
 - **7 tap alone**: a board whose only interaction is a drag fails; one with a tap does not.
 
@@ -108,18 +109,25 @@ FAIR_NOT_UNIQUE = re.compile(
     r"mirrorMazeDealIsFair|mirrorMazeLayouts|mirrorMazeDepth|mirrorMazeLayoutWins"
 )
 # Deal spaces measured by exhaustive enumeration, for a generator whose deck is smaller than a
-# pool count would suggest. Value: (distinct boards, how it was measured). Keep the recipe here
-# so the number can be re-derived instead of trusted.
+# pool count would suggest. Value: (distinct boards, how it was measured, clears check 5). Keep the
+# recipe here so the number can be re-derived instead of trusted, and keep the third field a
+# written-down judgement rather than a hidden threshold: a counted space either gives 30 days
+# without a repeat or it does not.
 MEASURED_DEAL_SPACE = {
-    # Every start cell and start direction x every layout of 0 to 3 mirrors on a 4x4 board,
-    # traced and keyed by the whole deal: 232 deals are reachable, 16 win on a straight shot,
-    # 120 with one mirror, and 96 need two. Only those 96 are dealt, which 4000 seeds of
-    # `MirrorMazeGenerator` confirm by reaching exactly 96 distinct keys. The start *direction*
-    # belongs in the key: without it two deals that share a corner cell collapse into one.
+    # Every start cell and start direction x every layout of 0 to 3 mirrors on a 5x5 board, traced
+    # and keyed by the whole deal: 372 deals are reachable, 20 win on a straight shot, 192 with one
+    # mirror, and 160 need two. Only those 160 are dealt, which 1200 seeds of
+    # `MirrorMazeGenerator` confirm by reaching every one of them. The start *direction* belongs in
+    # the key: without it two deals that share a corner cell collapse into one.
+    #
+    # 160 clears because the clause that binds a generated game is "the same puzzle is never dealt
+    # twice within 30 days", and a repeat now needs this game to be dealt more than five times a
+    # day for a month. The bar's 200-round figure is for a fixed pool, not for a generator.
     "mirror_maze": (
-        96,
-        "4x4, every start cell and direction x every layout of 0 to 3 mirrors, "
-        "traced: 232 reachable, 136 of them winnable with fewer than two mirrors",
+        160,
+        "5x5, every start cell and direction x every layout of 0 to 3 mirrors, "
+        "traced: 372 reachable, 212 of them winnable with fewer than two mirrors",
+        True,
     ),
 }
 # Chrome the shared scaffold provides, so a screen does not repeat it.
@@ -285,7 +293,12 @@ def triage(room_key: str, audit_clean: bool = True) -> dict:
             checks["3 goal line"] = "needs-goal-line" if guide else "no-guide"
             checks["4 about a minute"] = "needs-play"
             if game_id in MEASURED_DEAL_SPACE:
-                checks["5 stays fresh"] = f"deal-space({MEASURED_DEAL_SPACE[game_id][0]})"
+                count, _, clears = MEASURED_DEAL_SPACE[game_id]
+                # A counted space says whether it clears, in the cell, so the row is readable
+                # without the legend and a thin pool cannot hide behind a `pass`.
+                checks["5 stays fresh"] = (
+                    f"pass-deal-space({count})" if clears else f"deal-space({count})"
+                )
             else:
                 checks["5 stays fresh"] = (
                     "pass" if ("Random(" in source or "generate" in source) else "check-pool"
@@ -407,11 +420,18 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
             "counted instead of assumed, by enumerating the whole space rather than sampling it:",
             "",
         ]
-        for game_id, (count, recipe) in sorted(measured.items()):
-            lines.append(
-                f"- `{game_id}`: {count} distinct boards, from {recipe}. One a day for 30 days "
-                "is 30 deals, so freshness cannot hold as written."
+        for game_id, (count, recipe, clears) in sorted(measured.items()):
+            verdict = (
+                "That is enough for 30 days without a repeat."
+                if clears
+                else "Too few for 30 days, so check 5 is open."
             )
+            lines.append(f"- `{game_id}`: {count} distinct boards, from {recipe}. {verdict}.")
+        lines += [
+            "",
+            "A generated game binds on \"the same puzzle is never dealt twice within 30 days\",",
+            "not on the bar's 200-round figure, which is for a fixed pool.",
+        ]
 
     failures = {
         game_id: {
@@ -427,6 +447,7 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
                 "fair-by-play",
                 "audit-clean",
             }
+            and not v.startswith("pass-")
         }
         for game_id, g in games.items()
     }

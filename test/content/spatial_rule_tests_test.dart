@@ -183,6 +183,25 @@ void main() {
       }
     });
 
+    test('the board is dealt wide enough that 30 days does not repeat it', () {
+      // Counted by enumeration: a 5x5 board has 372 reachable deals, 20 win on a
+      // straight shot, 192 with one mirror, and 160 need two, which is what the
+      // generator deals. A 4x4 board could only be dealt 96, which is why the
+      // board grew. This test fails if it shrinks back.
+      final Set<String> seen = <String>{};
+      for (int seed = 0; seed < 1200; seed++) {
+        final MirrorMazeDeal deal =
+            MirrorMazeGenerator(random: Random(seed)).next();
+        if (!seen.add(deal.key)) continue;
+        expect(mirrorMazeDealIsFair(deal), isTrue,
+            reason: 'seed $seed dealt an unfair board: ${deal.key}');
+      }
+      expect(seen.length, greaterThan(150),
+          reason: 'only ${seen.length} distinct boards dealt; 1200 seeds reach '
+              'all 160 of the enumerated 5x5 two-mirror deals, and a 4x4 board '
+              'would cap this at 96');
+    });
+
     test('the fairness verdict rejects a deal a single mirror wins', () {
       // The beam enters row 0 from the left and one `/` at (0, 2) turns it up and
       // out. The generator must never deal this, and the check that says so has
@@ -210,7 +229,7 @@ void main() {
       final MirrorMazeDeal freeShot = MirrorMazeDeal(
         start: Point<int>(0, 0),
         startDir: Point<int>(0, 1),
-        target: Point<int>(0, 3),
+        target: Point<int>(0, mirrorMazeSize - 1),
         targetDir: Point<int>(0, 1),
         answer: <Point<int>, int>{},
         depth: 0,
@@ -279,7 +298,7 @@ void main() {
         await _pump(tester, const MirrorMazeScreen(seed: 20261122));
         expect(find.byType(GameCompletionDialog), findsNothing);
 
-        // Locate the 16 cell GestureDetectors inside the 300x300 board Container.
+        // Locate the cell GestureDetectors inside the 300x300 board Container.
         final Finder boardBox = find.descendant(
           of: find.byType(MirrorMazeScreen),
           matching: find.byWidgetPredicate(
@@ -296,37 +315,46 @@ void main() {
                 w is GestureDetector && w.behavior == HitTestBehavior.opaque,
           ),
         );
-        expect(cells, findsNWidgets(16));
+        expect(cells, findsNWidgets(mirrorMazeSize * mirrorMazeSize));
 
         // Determine source and target cell + direction directly from rendered UI icons.
         final Offset tl = tester.getTopLeft(cells.at(0));
-        final Offset br = tester.getBottomRight(cells.at(15));
-        final double cellSize = (br.dx - tl.dx) / 4;
+        final Offset br = tester
+            .getBottomRight(cells.at(mirrorMazeSize * mirrorMazeSize - 1));
+        final double cellSize = (br.dx - tl.dx) / mirrorMazeSize;
 
         (Point<int>, Point<int>) readEdgeIcon(IconData icon, bool isSource) {
           final Offset center = tester.getCenter(find.byIcon(icon));
           if (center.dx < tl.dx) {
-            final int r = ((center.dy - tl.dy) / cellSize).floor().clamp(0, 3);
+            final int r = ((center.dy - tl.dy) / cellSize)
+                .floor()
+                .clamp(0, mirrorMazeSize - 1);
             return (
               Point<int>(r, 0),
               isSource ? const Point<int>(0, 1) : const Point<int>(0, -1),
             );
           } else if (center.dx > br.dx) {
-            final int r = ((center.dy - tl.dy) / cellSize).floor().clamp(0, 3);
+            final int r = ((center.dy - tl.dy) / cellSize)
+                .floor()
+                .clamp(0, mirrorMazeSize - 1);
             return (
-              Point<int>(r, 3),
+              Point<int>(r, mirrorMazeSize - 1),
               isSource ? const Point<int>(0, -1) : const Point<int>(0, 1),
             );
           } else if (center.dy < tl.dy) {
-            final int c = ((center.dx - tl.dx) / cellSize).floor().clamp(0, 3);
+            final int c = ((center.dx - tl.dx) / cellSize)
+                .floor()
+                .clamp(0, mirrorMazeSize - 1);
             return (
               Point<int>(0, c),
               isSource ? const Point<int>(1, 0) : const Point<int>(-1, 0),
             );
           } else {
-            final int c = ((center.dx - tl.dx) / cellSize).floor().clamp(0, 3);
+            final int c = ((center.dx - tl.dx) / cellSize)
+                .floor()
+                .clamp(0, mirrorMazeSize - 1);
             return (
-              Point<int>(3, c),
+              Point<int>(mirrorMazeSize - 1, c),
               isSource ? const Point<int>(-1, 0) : const Point<int>(1, 0),
             );
           }
@@ -357,7 +385,7 @@ void main() {
 
         Future<void> setMirror(int r, int c, int type) async {
           for (int t = 0; t < type; t++) {
-            _tapGesture(tester, cells.at(r * 4 + c));
+            _tapGesture(tester, cells.at(r * mirrorMazeSize + c));
             await tester.pump();
           }
         }
@@ -863,7 +891,7 @@ Future<void> _teardown(WidgetTester tester) async {
 int _cellMirror(WidgetTester tester, Finder cells, Point<int> at) {
   final CustomPaint paint = tester.widget<CustomPaint>(
     find.descendant(
-      of: cells.at(at.x * 4 + at.y),
+      of: cells.at(at.x * mirrorMazeSize + at.y),
       matching: find.byType(CustomPaint),
     ),
   );
@@ -907,7 +935,10 @@ List<Map<Point<int>, int>> _mirrorMazeLayoutsWithin(
       final Map<Point<int>, int> nextPinned =
           pin != null ? pinned : (<Point<int>, int>{...pinned, cell: mirror});
 
-      if (next.x < 0 || next.x >= 4 || next.y < 0 || next.y >= 4) {
+      if (next.x < 0 ||
+          next.x >= mirrorMazeSize ||
+          next.y < 0 ||
+          next.y >= mirrorMazeSize) {
         if (cell == deal.target && out == deal.targetDir) {
           final Map<Point<int>, int> layout = <Point<int>, int>{
             for (final MapEntry<Point<int>, int> e in nextPinned.entries)

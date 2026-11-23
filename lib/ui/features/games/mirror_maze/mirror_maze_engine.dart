@@ -116,10 +116,10 @@ class MirrorMazeDeal {
   /// One of the winning two-mirror layouts: the one this deal was built from,
   /// traced before the deal was returned.
   ///
-  /// Not the only answer. A 4x4 beam deal has four legal two-mirror layouts, the
-  /// turn pair sliding along the free columns or rows, and any of them wins
-  /// because the win condition is the exit and not a layout. [depth], the mirror
-  /// count, is what is proved.
+  /// Not the only answer. A beam deal has several legal two-mirror layouts, the
+  /// turn pair sliding along a free column or row, and any of them wins because
+  /// the win condition is the exit and not a layout. [depth], the mirror count,
+  /// is what is proved.
   final Map<Point<int>, int> answer;
 
   /// The fewest mirrors any winning layout takes: two for every dealt board, and
@@ -134,19 +134,30 @@ class MirrorMazeDeal {
   String toString() => 'MirrorMazeDeal($key, depth $depth)';
 }
 
+/// The side of the dealt board.
+///
+/// This is the deal space and nothing else. A 4x4 board can only be dealt 96
+/// boards that take two mirrors, which is too few for "never the same board
+/// twice in 30 days"; 5x5 gives 160, counted by enumeration. The rules are the
+/// same at either size, and a bigger board is not a harder rule: reaching an
+/// exit always takes one or two mirrors, whatever the board, because a mirror
+/// turns the beam onto the other axis and one turn is enough to reach any exit
+/// on that axis. What grows is the number of places a turn can happen.
+const int mirrorMazeSize = 5;
+
 /// How many cells a beam may visit before it is called a loop.
 ///
 /// A path visits each cell at most once before it either leaves the board or
-/// repeats a (cell, direction) state, and a board is 4x4, so a real exit needs
-/// no more than this.
-const int mirrorMazeMaxSteps = 20;
+/// repeats a (cell, direction) state. [mirrorMazeSize] squared is 25, so a real
+/// exit needs no more than this.
+const int mirrorMazeMaxSteps = 32;
 
 /// Follows the beam through [mirrors].
 MirrorMazeTrace traceBeam({
   required Map<Point<int>, int> mirrors,
   required Point<int> start,
   required Point<int> startDir,
-  int size = 4,
+  int size = mirrorMazeSize,
 }) {
   final List<Point<int>> path = <Point<int>>[start];
   final Map<Point<int>, int> hit = <Point<int>, int>{};
@@ -203,7 +214,7 @@ bool mirrorMazeLayoutWins(MirrorMazeDeal deal, Map<Point<int>, int> mirrors) {
 List<Map<Point<int>, int>> mirrorMazeLayouts(
   MirrorMazeDeal deal,
   int count, {
-  int size = 4,
+  int size = mirrorMazeSize,
 }) {
   final Map<String, Map<Point<int>, int>> found =
       <String, Map<Point<int>, int>>{};
@@ -264,7 +275,8 @@ List<Map<Point<int>, int>> mirrorMazeLayouts(
 
 /// The fewest mirrors any winning layout of [deal] needs, or null when none
 /// needs at most [maxDepth].
-int? mirrorMazeDepth(MirrorMazeDeal deal, {int maxDepth = 3, int size = 4}) {
+int? mirrorMazeDepth(MirrorMazeDeal deal,
+    {int maxDepth = 3, int size = mirrorMazeSize}) {
   for (int count = 0; count <= maxDepth; count++) {
     if (mirrorMazeLayouts(deal, count, size: size).isNotEmpty) return count;
   }
@@ -285,7 +297,11 @@ int? mirrorMazeDepth(MirrorMazeDeal deal, {int maxDepth = 3, int size = 4}) {
 /// (the U-turn pair can slide along any free row or column), and any of them
 /// wins. The property that matters for the player is the mirror count: no
 /// straight shot, no single mirror, two mirrors whatever the route.
-bool mirrorMazeDealIsFair(MirrorMazeDeal deal, {int size = 4}) {
+bool mirrorMazeDealIsFair(MirrorMazeDeal deal, {int size = mirrorMazeSize}) {
+  // Depth and answer have to agree, or "the deal costs two mirrors" is a label
+  // stuck on a cheaper or a dearer layout.
+  if (deal.depth != MirrorMazeGenerator.mirrorMazeDealDepth) return false;
+  if (deal.answer.length != deal.depth) return false;
   if (!mirrorMazeLayoutWins(deal, deal.answer)) return false;
   if (mirrorMazeLayouts(deal, 0, size: size).isNotEmpty) return false;
   if (mirrorMazeLayouts(deal, 1, size: size).isNotEmpty) return false;
@@ -307,7 +323,7 @@ bool mirrorMazeDealIsFair(MirrorMazeDeal deal, {int size = 4}) {
 /// them, not the only one. See [mirrorMazeDealIsFair] for why that is not a
 /// defect of this game: the win condition is the exit, not a layout.
 class MirrorMazeGenerator {
-  MirrorMazeGenerator({Random? random, this.size = 4})
+  MirrorMazeGenerator({Random? random, this.size = mirrorMazeSize})
       : _random = random ?? Random();
 
   /// The mirror count every dealt board needs.
@@ -321,13 +337,13 @@ class MirrorMazeGenerator {
   /// stale without a test going red. Not const: a `Point` key has no primitive
   /// equality, so a map of them cannot be a constant.
   static final MirrorMazeDeal fallback = MirrorMazeDeal(
-    start: Point<int>(0, 1),
-    startDir: Point<int>(1, 0),
-    target: Point<int>(3, 3),
+    start: Point<int>(mirrorMazeSize - 1, 2),
+    startDir: Point<int>(-1, 0),
+    target: Point<int>(mirrorMazeSize - 1, 0),
     targetDir: Point<int>(1, 0),
     answer: <Point<int>, int>{
-      Point<int>(3, 1): Mirror.backslash,
-      Point<int>(3, 3): Mirror.backslash,
+      Point<int>(2, 2): Mirror.backslash,
+      Point<int>(2, 0): Mirror.slash,
     },
     depth: mirrorMazeDealDepth,
   );
