@@ -23,6 +23,7 @@ import 'package:puzzle/ui/features/games/lights_out/lights_out_engine.dart';
 import 'package:puzzle/ui/features/games/magnets/magnets_engine.dart';
 import 'package:puzzle/ui/features/games/map/map_engine.dart';
 import 'package:puzzle/ui/features/games/minesweeper/minesweeper_engine.dart';
+import 'package:puzzle/ui/features/games/mirror_maze/mirror_maze_engine.dart';
 import 'package:puzzle/ui/features/games/netslide/netslide_engine.dart';
 import 'package:puzzle/ui/features/games/nonogram/nonogram_engine.dart';
 import 'package:puzzle/ui/features/games/nonogram/nonogram_model.dart';
@@ -328,6 +329,33 @@ void _winnableBySearch(int seed, DealFailure fail) {
   }
 }
 
+/// Beam deals whose generator ships a prover that enumerates the cheaper
+/// layouts.
+///
+/// The property is the one this game actually has: the deal cannot be won with
+/// fewer than two mirrors, and the layout the deal was built from does win it.
+/// Several two-mirror layouts win too, and that is not a violation: the win
+/// condition is the exit, so any of them is a legal answer and none costs the
+/// player more than the other.
+void _beamDepth(int seed, DealFailure fail) {
+  final deal = MirrorMazeGenerator(random: Random(seed)).next();
+  if (deal.depth != MirrorMazeGenerator.mirrorMazeDealDepth) {
+    fail('mirror_maze', 'dealt a ${deal.depth}-mirror deal (${deal.key})');
+  }
+  if (!mirrorMazeDealIsFair(deal)) {
+    fail('mirror_maze', 'a cheaper layout wins this deal (${deal.key})');
+  }
+  if (!mirrorMazeLayoutWins(deal, deal.answer)) {
+    fail('mirror_maze', 'the stored answer does not win (${deal.key})');
+  }
+  if (mirrorMazeLayouts(deal, 1).isNotEmpty) {
+    fail('mirror_maze', 'one mirror wins it (${deal.key})');
+  }
+  if (mirrorMazeLayouts(deal, 2).isEmpty) {
+    fail('mirror_maze', 'two mirrors do not win it (${deal.key})');
+  }
+}
+
 // ---------------------------------------------------------------------------
 // The table
 // ---------------------------------------------------------------------------
@@ -376,6 +404,15 @@ const List<DealFamily> dealFamilies = [
     },
     probe: _winnableBySearch,
     seeds: 3,
+  ),
+
+  DealFamily(
+    id: 'G4-beam',
+    label:
+        'Beam deals prove no layout with fewer than two mirrors wins, and their answer wins',
+    games: {'mirror_maze'},
+    probe: _beamDepth,
+    seeds: 5,
   ),
 
   // Findings: the property is not proved. Each family names what is missing;
@@ -518,7 +555,6 @@ const List<DealFamily> dealFamilies = [
       'laser_link',
       'mental_rotation',
       'mirror_image',
-      'mirror_maze',
       'paper_folding',
       'path_intersect',
       'perspective_taking',
