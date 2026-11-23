@@ -180,7 +180,10 @@ void _deductionCount(int seed, DealFailure fail) {
     fail('magnets', 'finishable only at level $magnetsLevel');
   }
 
-  final nonogram = NonogramEngine().generatePuzzle(6);
+  // Seeded like every other game here: the generator now promises the board
+  // falls to the line solver, so a fixed seed is a fixed deal and a failure is
+  // reproducible by seed alone rather than a board nobody can get back.
+  final nonogram = NonogramEngine().generatePuzzle(6, random: rng);
   final nonogramCount = countNonogramSolutions(
     rowClues: nonogram.rowClues,
     colClues: nonogram.colClues,
