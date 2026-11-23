@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:puzzle/core/deduction.dart';
+
 import 'nonogram_model.dart';
 
 class NonogramPuzzle {
@@ -13,21 +15,34 @@ class NonogramPuzzle {
 }
 
 class NonogramEngine {
-  final Random _random = Random();
-
   /// Proposes a random picture, derives the clues, and ships the board only
-  /// when the clues pin down exactly one answer.
+  /// when one answer is all the clues allow **and** the game's own line solver
+  /// reaches that answer without a guess.
   ///
-  /// Without the count, roughly one 8x8 board in five had more than one
-  /// answer: the win check compares clues, so a player could "finish" a picture
-  /// the generator never drew, and the house rule ("every puzzle has exactly
-  /// one solution") was simply false. The count uses the same line solver a
-  /// player reasons with (`nonogram_model.dart`).
-  NonogramPuzzle generatePuzzle(int size) {
+  /// Without a check, roughly one 8x8 board in five had more than one answer:
+  /// the win check compares clues, so a player could "finish" a picture the
+  /// generator never drew, and the house rule ("every puzzle has exactly one
+  /// solution") was simply false.
+  ///
+  /// Uniqueness alone was still not enough. Measured over 400 random 6x6
+  /// pictures, 324 clue grids had exactly one answer, and one of those needed a
+  /// guess: nothing in the board points at the cell, so a player is stuck on a
+  /// uniquely-solvable puzzle. That is the deal the G4 gate (`level <= 2`) was
+  /// failing on about 1 run in 130, with a different board each time.
+  ///
+  /// So the bar is the stronger one, and it is also the cheaper one to check:
+  /// if the line solver alone fills every cell, every filled cell was forced by
+  /// the clues, so the answer is unique and reachable without guessing. Boards
+  /// that fail it are redrawn, which costs about 3 deals in 1000.
+  ///
+  /// [random] exists so a test can deal the same boards twice; the app leaves
+  /// it out and gets its own.
+  NonogramPuzzle generatePuzzle(int size, {Random? random}) {
+    final source = random ?? Random();
     for (var attempt = 0; attempt < 500; attempt++) {
       final List<List<bool>> solution = List.generate(
         size,
-        (_) => List.generate(size, (_) => _random.nextDouble() > 0.45),
+        (_) => List.generate(size, (_) => source.nextDouble() > 0.45),
       );
 
       final List<List<int>> rowClues = [
@@ -38,19 +53,27 @@ class NonogramEngine {
           _calculateClues([for (int r = 0; r < size; r++) solution[r][c]]),
       ];
 
-      final count = countNonogramSolutions(
-        rowClues: rowClues,
-        colClues: colClues,
+      final outcome = deduce(
+        NonogramModel(
+          cells: List.generate(
+            size,
+            (_) => List<int>.filled(size, NonogramModel.unknown),
+          ),
+          rowClues: rowClues,
+          colClues: colClues,
+        ),
+        nonogramRules,
       );
-      if (count.truncated) {
-        // A count we did not finish proves nothing; try another board.
-        continue;
-      }
-      if (count.isUnique) {
-        return NonogramPuzzle(rowClues: rowClues, colClues: colClues);
-      }
+      // A board the rules contradict, or cannot finish, is not a deal. Neither
+      // is one with a second answer: the rules reaching a finished board means
+      // every cell was forced, so exactly one answer exists.
+      if (!outcome.consistent || !outcome.complete) continue;
+
+      return NonogramPuzzle(rowClues: rowClues, colClues: colClues);
     }
-    throw StateError('no unique nonogram after 500 attempts at $size');
+    throw StateError(
+      'no finishable unique nonogram after 500 attempts at $size',
+    );
   }
 
   List<int> _calculateClues(List<bool> line) {
@@ -70,7 +93,8 @@ class NonogramEngine {
     return clues.isEmpty ? [0] : clues;
   }
 
-  static bool isCorrect(List<List<int>> currentGrid, List<List<int>> rowClues, List<List<int>> colClues) {
+  static bool isCorrect(List<List<int>> currentGrid, List<List<int>> rowClues,
+      List<List<int>> colClues) {
     final size = currentGrid.length;
     final engine = NonogramEngine();
 
