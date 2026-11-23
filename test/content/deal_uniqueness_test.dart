@@ -16,8 +16,11 @@
 //   G4-F3  Memory, 1 id: hidden-state sequence; fairness is judged by play.
 //   G4-F4  Attention, 5 ids: hidden/timed targets; fairness is judged by play.
 //   G4-F5  Word, 24 ids: fixed pools with no exported whole-pool accessor.
-//   G4-F6  Spatial, 22 ids: generators expose no finishability or uniqueness
-//          prover.
+//   G4-F6  Spatial, 21 ids: generators expose no finishability or uniqueness
+//          prover. (`mirror_maze` left this finding for `G4-beam`: its engine
+//          exports a prover, and what it proves is the mirror count, not one
+//          answer. Four two-mirror routes win a dealt board and any of them is
+//          legal.)
 //
 // No family produced a counterexample with a failing seed. The skipped families
 // are missing proof, not observed failures: that distinction is the reason they

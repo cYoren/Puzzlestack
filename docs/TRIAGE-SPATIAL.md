@@ -14,7 +14,10 @@ minute*) are marked `needs-play` and are **not** guesses dressed as verdicts. No
 this file marks a game verified; that is the play pass.
 
 **Check 2, by genre.** `pass` and `pass-named-unique` mean the code has a solver, so the
-generator proves its own deal. `unproven` means the game generates content and nothing
+generator proves its own deal. `pass-fair-not-unique` means the code has a prover that
+enumerates the cheaper layouts and proves the deal cannot be won with fewer mirrors than
+it demands, while several answers of that size are legal and any of them wins: proved
+finishable, not unique. `unproven` means the game generates content and nothing
 proves the deal is winnable, or has one answer where the genre implies one:
 the `uniqueness` job. `pool-fairness` means a fixed content pool, where the proof is
 "every row is solvable", i.e. check 10. `fair-by-play` means a lab task, worksheet or
@@ -56,7 +59,7 @@ light and `AUDIT_DARK=1`:
 | `mental_mapping` | Mental Mapping | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mental_rotation` | Mental Rotation | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mirror_image` | Mirror Image | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `mirror_maze` | Mirror Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `mirror_maze` | Mirror Maze | deck | pass-fair-not-unique | deal-space(96) | audit-clean | pass | pass | pass | pass |
 | `mirror_tracing` | Mirror Tracing | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `negative_space_detection` | Negative Space | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `paper_folding` | Paper Folding | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -74,19 +77,25 @@ light and `AUDIT_DARK=1`:
 | `trace_path` | Trace Path | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `vector_grid_alignment` | Vector Alignment | archive | unproven | pass | audit-clean | pass | pass | pass | fail |
 
+**Measured deal spaces.** Check 5 reads "a generator" as fresh. These generators were
+counted instead of assumed, by enumerating the whole space rather than sampling it:
+
+- `mirror_maze`: 96 distinct boards, from 4x4, every start cell and direction x every layout of 0 to 3 mirrors, traced: 232 reachable, 136 of them winnable with fewer than two mirrors. One a day for 30 days is 30 deals, so freshness cannot hold as written.
+
 ## What needs a fix job
 
 PUZZLE-BAR.md's working procedure keeps fixes out of the triage PR: each of these is
 its own change with its own test. Grouped by the job that fixes it, because the fix is
 usually one mechanism and not N edits.
 
-- **`uniqueness` — the generator must prove its deal (check 2)** — 32: `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `interlock_puzzle`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_mapping`, `mental_rotation`, `mirror_image`, `mirror_maze`, `mirror_tracing`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `shadow_pivot`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`, `trace_path`, `vector_grid_alignment`
+- **`uniqueness` — the generator must prove its deal (check 2)** — 31: `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `interlock_puzzle`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_mapping`, `mental_rotation`, `mirror_image`, `mirror_tracing`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `shadow_pivot`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`, `trace_path`, `vector_grid_alignment`
+- **`feed-size` — too few distinct deals for check 5 (counted, not estimated)** — 1: `mirror_maze`
 - **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 1: `vector_grid_alignment`
 
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (26): `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_rotation`, `mirror_image`, `mirror_maze`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`
+- winnable, not unique (25): `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_rotation`, `mirror_image`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`
 
 - neither proven (6): `interlock_puzzle`, `mental_mapping`, `mirror_tracing`, `shadow_pivot`, `trace_path`, `vector_grid_alignment`
 

@@ -113,12 +113,17 @@ class MirrorMazeDeal {
   /// The direction it must be travelling when it leaves.
   final Point<int> targetDir;
 
-  /// The layout this deal was built from. It wins the deal — [MirrorMazeGenerator]
-  /// only returns a deal after tracing it — and [depth] is how many mirrors it
-  /// takes.
+  /// One of the winning two-mirror layouts: the one this deal was built from,
+  /// traced before the deal was returned.
+  ///
+  /// Not the only answer. A 4x4 beam deal has four legal two-mirror layouts, the
+  /// turn pair sliding along the free columns or rows, and any of them wins
+  /// because the win condition is the exit and not a layout. [depth], the mirror
+  /// count, is what is proved.
   final Map<Point<int>, int> answer;
 
-  /// How many mirrors the shortest winning layout takes.
+  /// The fewest mirrors any winning layout takes: two for every dealt board, and
+  /// [mirrorMazeDealIsFair] proves no cheaper layout wins.
   final int depth;
 
   /// A stable identity for this deal, for caching proofs.
@@ -266,15 +271,41 @@ int? mirrorMazeDepth(MirrorMazeDeal deal, {int maxDepth = 3, int size = 4}) {
   return null;
 }
 
-/// Deals a Mirror Maze board that cannot be won by accident.
+/// True when [deal] is fair: winnable, and not winnable with fewer than
+/// [MirrorMazeGenerator.mirrorMazeDealDepth] mirrors.
 ///
-/// The rule the generator holds itself to: a deal is playable only when its
-/// shortest winning layout takes exactly [MirrorMazeGenerator.mirrorMazeDealDepth]
-/// mirrors. So there
-/// is no straight shot through the board, no single mirror that happens to
-/// point the beam at the receiver, and one mirror alone — of either kind, on any
-/// cell — always leaves the deal unsolved. That last part is what makes "a
-/// misrouted beam stays unsolved" a fact and not a hope.
+/// Load-bearing for the generator, and named here so a test can hand it a deal
+/// that *is* a shortcut and watch it say no. Every check is exhaustive:
+/// [mirrorMazeLayouts] tries both mirror kinds on every set of cells, so a
+/// `false` here is a proof that some cheaper layout wins, and `true` is a proof
+/// that none does.
+///
+/// What this does **not** prove, and must not be read as proving: that the deal
+/// has one answer. A two-mirror beam deal has several legal two-mirror layouts
+/// (the U-turn pair can slide along any free row or column), and any of them
+/// wins. The property that matters for the player is the mirror count: no
+/// straight shot, no single mirror, two mirrors whatever the route.
+bool mirrorMazeDealIsFair(MirrorMazeDeal deal, {int size = 4}) {
+  if (!mirrorMazeLayoutWins(deal, deal.answer)) return false;
+  if (mirrorMazeLayouts(deal, 0, size: size).isNotEmpty) return false;
+  if (mirrorMazeLayouts(deal, 1, size: size).isNotEmpty) return false;
+  return mirrorMazeLayouts(deal, MirrorMazeGenerator.mirrorMazeDealDepth,
+          size: size)
+      .isNotEmpty;
+}
+
+/// Deals a Mirror Maze board that cannot be won with fewer than two mirrors.
+///
+/// The rule the generator holds itself to, through [mirrorMazeDealIsFair]:
+/// there is no straight shot through the board, no single mirror that happens to
+/// point the beam at the receiver, and a two-mirror layout is what the deal
+/// costs. One mirror alone, of either kind, on any cell, always leaves the deal
+/// unsolved, which is what makes "a misrouted beam stays unsolved" a fact and
+/// not a hope.
+///
+/// Several two-mirror layouts win a given deal; [MirrorMazeDeal.answer] is one of
+/// them, not the only one. See [mirrorMazeDealIsFair] for why that is not a
+/// defect of this game: the win condition is the exit, not a layout.
 class MirrorMazeGenerator {
   MirrorMazeGenerator({Random? random, this.size = 4})
       : _random = random ?? Random();
@@ -306,13 +337,13 @@ class MirrorMazeGenerator {
   /// Board side length.
   final int size;
 
-  final Map<String, bool> _playable = <String, bool>{};
+  final Map<String, bool> _fair = <String, bool>{};
 
   /// The next deal.
   MirrorMazeDeal next() {
     for (int attempt = 0; attempt < attempts; attempt++) {
       final MirrorMazeDeal? deal = _candidate();
-      if (deal != null && _isPlayable(deal)) return deal;
+      if (deal != null && _isFair(deal)) return deal;
     }
     return fallback;
   }
@@ -352,16 +383,10 @@ class MirrorMazeGenerator {
     );
   }
 
-  /// True when the deal's shortest winning layout is exactly
-  /// [mirrorMazeDealDepth] mirrors, proven by enumerating the cheaper ones.
-  bool _isPlayable(MirrorMazeDeal deal) {
-    return _playable.putIfAbsent(deal.key, () {
-      if (mirrorMazeLayouts(deal, 0, size: size).isNotEmpty) return false;
-      if (mirrorMazeLayouts(deal, 1, size: size).isNotEmpty) return false;
-      return mirrorMazeLayouts(deal, mirrorMazeDealDepth, size: size)
-          .isNotEmpty;
-    });
-  }
+  /// True when the deal passes [mirrorMazeDealIsFair]. Memoised because the
+  /// generator keeps asking about the same small set of deals.
+  bool _isFair(MirrorMazeDeal deal) =>
+      _fair.putIfAbsent(deal.key, () => mirrorMazeDealIsFair(deal, size: size));
 
   MirrorMazeStart _randomStart() {
     final int side = _random.nextInt(4);

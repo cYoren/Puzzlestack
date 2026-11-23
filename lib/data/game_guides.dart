@@ -3075,18 +3075,20 @@ const Map<String, GameGuide> gameGuides = {
     title: "Mirror Maze",
     category: "SPATIAL",
     objective:
-        "Navigate a laser or light beam through a maze to the target by placing mirrors.",
-    controls: "Tap grid cells to place or rotate mirrors to deflect the path.",
+        "Turn a beam with mirrors so it leaves the board at the receiver, heading the way the receiver points.",
+    controls:
+        "Tap a cell to cycle it through empty, /, \\ and back to empty. A mirror turns the beam 90 degrees.",
     walkthrough: [
-      "Step 1: Identify the starting point of the beam and the final target.",
-      "Step 2: Note the obstacles and empty spaces in the grid.",
-      "Step 3: Tap to place a mirror and tap again to rotate it.",
-      "Step 4: Align the mirrors so the beam reflects at 90-degree angles to reach the goal.",
+      "Step 1: The arrow at the edge is the beam: it enters that cell and travels the way the arrow points.",
+      "Step 2: The receiver is the exit. The beam has to leave the board from that cell, in the direction it points.",
+      "Step 3: Start at the receiver and work backwards: one mirror has to be placed so the beam leaves right there.",
+      "Step 4: Tap a cell to put a mirror on the beam path, tap again to swap its angle.",
+      "Step 5: Two mirrors win every board here. A single mirror never does.",
     ],
     strategies: [
-      "Work backwards from the target to figure out the required final reflection.",
-      "Count the number of available mirrors; you might need to use all of them.",
-      "Avoid placing mirrors where the beam will hit an obstacle.",
+      "Every mirror bends the beam by 90 degrees, so count the turns between the arrow and the receiver before you tap.",
+      "The two angles bend the beam in opposite directions: if one sends it off the wrong edge, try the other angle on that cell.",
+      "A beam that leaves the board at the wrong edge means the first mirror sits on the wrong cell, not that the angle is wrong.",
     ],
   ),
   "mirror_tracing": GameGuide(

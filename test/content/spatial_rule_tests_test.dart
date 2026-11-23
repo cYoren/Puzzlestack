@@ -171,6 +171,8 @@ void main() {
             reason: '$why must not be winnable with a single mirror, of '
                 'either kind, on any cell');
         expect(mirrorMazeDepth(deal), 2, reason: '$why solves in two');
+        expect(mirrorMazeDealIsFair(deal), isTrue,
+            reason: '$why: the generator\'s own verdict');
         // The test's own reading of the rules, so the engine cannot agree with
         // itself and be wrong.
         expect(_mirrorMazeLayoutsWithin(deal, 1), isEmpty,
@@ -181,12 +183,72 @@ void main() {
       }
     });
 
+    test('the fairness verdict rejects a deal a single mirror wins', () {
+      // The beam enters row 0 from the left and one `/` at (0, 2) turns it up and
+      // out. The generator must never deal this, and the check that says so has
+      // to be able to say no: a prover that cannot fail proves nothing.
+      final MirrorMazeDeal shortcut = MirrorMazeDeal(
+        start: Point<int>(0, 0),
+        startDir: Point<int>(0, 1),
+        target: Point<int>(0, 2),
+        targetDir: Point<int>(-1, 0),
+        answer: <Point<int>, int>{Point<int>(0, 2): Mirror.slash},
+        depth: 1,
+      );
+      expect(mirrorMazeLayoutWins(shortcut, shortcut.answer), isTrue,
+          reason: 'the one-mirror layout does win this deal');
+      expect(mirrorMazeLayouts(shortcut, 1), isNotEmpty,
+          reason: 'one mirror is on the board');
+      expect(mirrorMazeDealIsFair(shortcut), isFalse,
+          reason: 'a deal one mirror wins is not fair');
+      expect(mirrorMazeDepth(shortcut), 1);
+    });
+
+    test('the fairness verdict rejects a deal a straight shot wins', () {
+      // No mirrors at all: the beam runs along row 0 and leaves at (0, 3) still
+      // heading right. That is the empty layout, and it is an answer.
+      final MirrorMazeDeal freeShot = MirrorMazeDeal(
+        start: Point<int>(0, 0),
+        startDir: Point<int>(0, 1),
+        target: Point<int>(0, 3),
+        targetDir: Point<int>(0, 1),
+        answer: <Point<int>, int>{},
+        depth: 0,
+      );
+      expect(mirrorMazeLayoutWins(freeShot, freeShot.answer), isTrue,
+          reason: 'the empty board does win this deal');
+      expect(mirrorMazeLayouts(freeShot, 0), isNotEmpty,
+          reason: 'a straight shot is a layout of no mirrors');
+      expect(mirrorMazeDealIsFair(freeShot), isFalse,
+          reason: 'a deal a straight shot wins is not fair');
+      expect(mirrorMazeDepth(freeShot), 0);
+    });
+
+    test('the fairness verdict rejects a deal no layout wins', () {
+      // Winnable is part of fair: this start cannot leave by that exit at all.
+      final MirrorMazeDeal impossible = MirrorMazeDeal(
+        start: Point<int>(0, 0),
+        startDir: Point<int>(0, 1),
+        target: Point<int>(0, 0),
+        targetDir: Point<int>(0, -1),
+        answer: <Point<int>, int>{
+          Point<int>(0, 1): Mirror.slash,
+          Point<int>(1, 1): Mirror.backslash,
+        },
+        depth: 2,
+      );
+      expect(mirrorMazeLayoutWins(impossible, impossible.answer), isFalse);
+      expect(mirrorMazeDealIsFair(impossible), isFalse,
+          reason: 'a deal its own answer cannot win is not fair');
+    });
+
     test('the fallback deal is a two-mirror deal too', () {
       final MirrorMazeDeal deal = MirrorMazeGenerator.fallback;
       expect(mirrorMazeLayoutWins(deal, deal.answer), isTrue);
       expect(mirrorMazeLayouts(deal, 0), isEmpty);
       expect(mirrorMazeLayouts(deal, 1), isEmpty);
       expect(mirrorMazeDepth(deal), 2);
+      expect(mirrorMazeDealIsFair(deal), isTrue);
       expect(_mirrorMazeLayoutsWithin(deal, 1), isEmpty);
       expect(_mirrorMazeLayoutsWithin(deal, 2), isNotEmpty);
     });
@@ -306,8 +368,10 @@ void main() {
         expect(find.byType(GameCompletionDialog), findsNothing,
             reason: 'a misrouted beam must stay unsolved');
         // Clear it rather than tapping through the other angle: one tap moves a
-        // cell to the next state, so a route is never reached by accident.
+        // cell to the next state.
         await setMirror(0, 0, 2);
+        expect(_cellMirror(tester, cells, const Point<int>(0, 0)), Mirror.empty,
+            reason: 'two more taps must take the cell back to empty');
 
         // A two-mirror route the deal allows solves the board.
         final List<Map<Point<int>, int>> routes =
@@ -316,6 +380,30 @@ void main() {
             reason: 'the board on screen must be solvable in two mirrors');
         final Map<Point<int>, int> route = routes.first;
         expect(route.length, 2);
+
+        // The CI failure, replayed: tapping a mirror towards the *opposite*
+        // angle walks through the angle that solves the board. When the deal was
+        // a one-mirror deal, the board solved on that first tap and the screen
+        // froze it, which is the dialog this test used to find on screen while
+        // asserting there was none. With a two-mirror deal the same walk must
+        // stay unsolved, so a shallower deal turns this red.
+        final Point<int> firstCell = route.keys.first;
+        final int firstAngle = route[firstCell]!;
+        final int opposite =
+            firstAngle == Mirror.slash ? Mirror.backslash : Mirror.slash;
+        await setMirror(firstCell.x, firstCell.y, opposite);
+        await tester.pumpAndSettle();
+        expect(find.byType(GameCompletionDialog), findsNothing,
+            reason: 'one mirror, even one reached by walking through the '
+                'solving angle, must leave the board unsolved on its own');
+        expect(_cellMirror(tester, cells, firstCell), opposite,
+            reason: 'the walk must land on the opposite angle');
+        // Round the three-state cycle back to empty, whatever order the cycle
+        // visits: from the opposite angle that is stateCount - opposite taps.
+        await setMirror(firstCell.x, firstCell.y, Mirror.stateCount - opposite);
+        expect(_cellMirror(tester, cells, firstCell), Mirror.empty,
+            reason: 'finishing the cycle must clear the cell again');
+
         for (final MapEntry<Point<int>, int> entry in route.entries) {
           await setMirror(entry.key.x, entry.key.y, entry.value);
         }
@@ -771,8 +859,19 @@ Future<void> _teardown(WidgetTester tester) async {
   await tester.pump();
 }
 
+/// The mirror state one board cell currently holds, read off its painter.
+int _cellMirror(WidgetTester tester, Finder cells, Point<int> at) {
+  final CustomPaint paint = tester.widget<CustomPaint>(
+    find.descendant(
+      of: cells.at(at.x * 4 + at.y),
+      matching: find.byType(CustomPaint),
+    ),
+  );
+  return (paint.painter! as MirrorMazeCellPainter).mirrorType;
+}
+
 /// Every layout of at most [maxMirrors] mirrors that wins [deal], found by
-/// walking the beam and pinning every cell it visits — an empty cell included —
+/// walking the beam and pinning every cell it visits, an empty cell included,
 /// so the beam can never come back to a cell and decide it a second time.
 ///
 /// Written from the rules rather than from [MirrorMazeGenerator], so the two can

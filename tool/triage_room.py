@@ -22,6 +22,9 @@ Checks that are mechanical here:
   game without an `xHowToPlay` key as guideless, which was wrong for all of them.)
 - **2 fair**, by genre, because "one answer" is only the right question in a deduction game:
   - `pass` / `pass-named-unique`: the code has a solver, so the generator proves its deal.
+  - `pass-fair-not-unique`: the code has a prover that enumerates the cheaper layouts and
+    proves the deal cannot be won with fewer than the mirrors it demands, while several legal
+    answers of that size exist and are equally fine. The claim is finishability, not uniqueness.
   - `unproven`: the game generates its content and nothing proves the deal is winnable (or
     has one answer, where the genre implies one). That is the `uniqueness` job, and the report
     splits it into games whose tests at least show a solution exists and games where nothing is
@@ -32,7 +35,9 @@ Checks that are mechanical here:
     `lib/data/game_profiles.dart`. Its answer is the task's own, not deduced from clues on the
     screen, so a uniqueness proof does not apply and fairness is judged by playing. This is
     where every Memory and Attention card lands.
-- **5 stays fresh**: a generator, or a pool big enough for 30 sessions.
+- **5 stays fresh**: a generator, or a pool big enough for 30 sessions. `deal-space(N)` means
+  the whole deal space was enumerated by hand and come out too small for 30 days; N is the count,
+  and the row says so rather than passing on the presence of `Random(`.
 - **8 ends well**: undo and restart exist.
 - **7 tap alone**: a board whose only interaction is a drag fails; one with a tap does not.
 
@@ -97,6 +102,26 @@ UNIQUE = re.compile(
     # a solitaire game like minesweeper needs (`isSolvableWithoutGuess`).
     r"isSolvableWithoutGuess|solvableWithoutGuess"
 )
+# A prover that proves a deal cannot be won with fewer than the mirrors it demands, without
+# claiming one answer: a beam game where several two-mirror routes win and any of them is fine.
+FAIR_NOT_UNIQUE = re.compile(
+    r"mirrorMazeDealIsFair|mirrorMazeLayouts|mirrorMazeDepth|mirrorMazeLayoutWins"
+)
+# Deal spaces measured by exhaustive enumeration, for a generator whose deck is smaller than a
+# pool count would suggest. Value: (distinct boards, how it was measured). Keep the recipe here
+# so the number can be re-derived instead of trusted.
+MEASURED_DEAL_SPACE = {
+    # Every start cell and start direction x every layout of 0 to 3 mirrors on a 4x4 board,
+    # traced and keyed by the whole deal: 232 deals are reachable, 16 win on a straight shot,
+    # 120 with one mirror, and 96 need two. Only those 96 are dealt, which 4000 seeds of
+    # `MirrorMazeGenerator` confirm by reaching exactly 96 distinct keys. The start *direction*
+    # belongs in the key: without it two deals that share a corner cell collapse into one.
+    "mirror_maze": (
+        96,
+        "4x4, every start cell and direction x every layout of 0 to 3 mirrors, "
+        "traced: 232 reachable, 136 of them winnable with fewer than two mirrors",
+    ),
+}
 # Chrome the shared scaffold provides, so a screen does not repeat it.
 SCAFFOLD = re.compile(r"GameScaffold\(")
 # Where a game's origin tag lives. Generated from CATALOG.md, so it costs one parse.
@@ -242,6 +267,8 @@ def triage(room_key: str, audit_clean: bool = True) -> dict:
             checks["1 decision"] = "needs-play"
             if DEDUCTION.search(source):
                 checks["2 fair"] = "pass"
+            elif FAIR_NOT_UNIQUE.search(source):
+                checks["2 fair"] = "pass-fair-not-unique"
             elif UNIQUE.search(source):
                 checks["2 fair"] = "pass-named-unique"
             elif origin in PLAY_JUDGED:
@@ -257,9 +284,12 @@ def triage(room_key: str, audit_clean: bool = True) -> dict:
             # so it is not a failure here; a missing guide is.
             checks["3 goal line"] = "needs-goal-line" if guide else "no-guide"
             checks["4 about a minute"] = "needs-play"
-            checks["5 stays fresh"] = (
-                "pass" if ("Random(" in source or "generate" in source) else "check-pool"
-            )
+            if game_id in MEASURED_DEAL_SPACE:
+                checks["5 stays fresh"] = f"deal-space({MEASURED_DEAL_SPACE[game_id][0]})"
+            else:
+                checks["5 stays fresh"] = (
+                    "pass" if ("Random(" in source or "generate" in source) else "check-pool"
+                )
             checks["6 this app"] = "audit-clean" if audit_clean else "audit-failed"
             slop = sorted(w for w in LAB_WORDS if w in f"{title} {subtitle}".lower())
             shouting = title.isupper() or subtitle.isupper()
@@ -320,7 +350,10 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
         "this file marks a game verified; that is the play pass.",
         "",
         "**Check 2, by genre.** `pass` and `pass-named-unique` mean the code has a solver, so the",
-        "generator proves its own deal. `unproven` means the game generates content and nothing",
+        "generator proves its own deal. `pass-fair-not-unique` means the code has a prover that",
+        "enumerates the cheaper layouts and proves the deal cannot be won with fewer mirrors than",
+        "it demands, while several answers of that size are legal and any of them wins: proved",
+        "finishable, not unique. `unproven` means the game generates content and nothing",
         "proves the deal is winnable, or has one answer where the genre implies one:\n"
         "the `uniqueness` job. `pool-fairness` means a fixed content pool, where the proof is",
         "\"every row is solvable\", i.e. check 10. `fair-by-play` means a lab task, worksheet or",
@@ -364,6 +397,22 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
             f"{c['8 ends well']} | {c['9 honest name']} | {c['10 own rule']} |"
         )
 
+    measured = {
+        game_id: space for game_id, space in MEASURED_DEAL_SPACE.items() if game_id in games
+    }
+    if measured:
+        lines += [
+            "",
+            "**Measured deal spaces.** Check 5 reads \"a generator\" as fresh. These generators were",
+            "counted instead of assumed, by enumerating the whole space rather than sampling it:",
+            "",
+        ]
+        for game_id, (count, recipe) in sorted(measured.items()):
+            lines.append(
+                f"- `{game_id}`: {count} distinct boards, from {recipe}. One a day for 30 days "
+                "is 30 deals, so freshness cannot hold as written."
+            )
+
     failures = {
         game_id: {
             k: v
@@ -372,6 +421,7 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
             not in {
                 "pass",
                 "pass-named-unique",
+                "pass-fair-not-unique",
                 "needs-play",
                 "needs-goal-line",
                 "fair-by-play",
@@ -390,6 +440,7 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
         "shouting": "`plain-names` — sentence case titles (check 9)",
         "fail": "see the column",
         "check-pool": "`feed-size` / pool size (check 5)",
+        "deal-space": "`feed-size` — too few distinct deals for check 5 (counted, not estimated)",
         "no-guide": "`card-teaches` — the guide behind `?` (check 3)",
         "audit-failed": "`layout-320` (check 6)",
         "partial": "`card-result` — undo and restart (check 8)",
@@ -402,7 +453,7 @@ def render(report: dict, audit_numbers: dict[str, str]) -> str:
     else:
         for game_id, checks in sorted(failures.items()):
             for check, value in checks.items():
-                job = routes.get(value, value)
+                job = routes.get(value.split("(")[0], value)
                 if check == "10 own rule":
                     job = "`rule-tests` — a test that fails if the content breaks the game (check 10)"
                 elif check == "2 fair":

@@ -186,7 +186,7 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
                               ),
                             ),
                             child: CustomPaint(
-                              painter: _MirrorPainter(
+                              painter: MirrorMazeCellPainter(
                                 mirrorType: _board[r][c],
                                 hasLaser: _laserPath.contains(Point(r, c)),
                                 isDark: isDark,
@@ -257,12 +257,14 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
   }
 }
 
-class _MirrorPainter extends CustomPainter {
+/// One board cell's mirror. Public so a test can read which angle a tap left
+/// behind, which is how the tap cycle is checked.
+class MirrorMazeCellPainter extends CustomPainter {
   final int mirrorType;
   final bool hasLaser;
   final bool isDark;
 
-  _MirrorPainter(
+  MirrorMazeCellPainter(
       {required this.mirrorType, required this.hasLaser, required this.isDark});
 
   @override
@@ -288,7 +290,7 @@ class _MirrorPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_MirrorPainter oldDelegate) {
+  bool shouldRepaint(MirrorMazeCellPainter oldDelegate) {
     return oldDelegate.mirrorType != mirrorType ||
         oldDelegate.hasLaser != hasLaser ||
         oldDelegate.isDark != isDark;
