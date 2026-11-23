@@ -72,6 +72,12 @@ against what the app can do, not against one binary.
 | Encrypted in transit | Yes. HTTPS to `https://us.i.posthog.com/batch/` |
 | Deletion | Uninstalling the app or clearing its storage deletes the install id and the switch, so nothing further is sent. Events already sent carry only that random id, which no screen in the app displays, so a request to the contact address in `PRIVACY.md` is answered as best it can be with nothing to look up. There is no in app delete button and no web form |
 
+The Shorebird update check, from the first `shorebird release` build onward, is
+a second network call: it sends the app id, the app version, the platform and the
+release the build came from. Our reading is that none of that is a user data
+type, so the answers above stand; confirm that with the form open on the day it
+is entered, and do not tick the form from this file alone.
+
 ### What the analytics module sends
 
 One JSON POST to `https://us.i.posthog.com/batch/`, fired and forgotten, with a
@@ -136,7 +142,8 @@ covers the Android app; it is disclosed in `PRIVACY.md` and `docs/privacy.html`.
 - `android.permission.INTERNET` is used by the platform billing client, the
   review prompt (`in_app_review`) and that one analytics module.
   `com.android.vending.BILLING` is merged in from `in_app_purchase`, not declared
-  in `android/`. `Shorebird` stays off for `1.1.0`.
+  in `android/`. `Shorebird` turns on with the next store build: see the OTA
+  section below for what that changes.
 
 If any of that changes, update this file, `PRIVACY.md`, `docs/privacy.html`,
 and the Data Safety form together.
@@ -153,16 +160,41 @@ and the Data Safety form together.
 
 ## Shorebird (OTA updates)
 
-`shorebird.yaml` is committed and bundled as an asset, but the
-`shorebird_code_push` package is **not** a dependency, and CI builds with plain
-`flutter build`. So shipped builds contain no Shorebird updater and make no
-Shorebird network calls. The only call any build makes is the analytics POST in
-the Data Safety section above.
+`shorebird.yaml` is committed, bundled as an asset, and carries the id of the
+**Puzzlestack** app in our Shorebird organisation (`bf46de55-…`; it was named
+`PuzzleBox` before the rename and was renamed in the console on 2026-11-23). A
+Shorebird app is keyed by that id, not by the store bundle id, so the rebrand
+needs no new app. `shorebird_code_push` is a dependency so the app can read
+patch state.
 
-Turning Shorebird on means building via the Shorebird CLI instead of
-`flutter build`. That adds a launch-time patch check to Shorebird's servers,
-which **must** be disclosed in `PRIVACY.md` and the Data Safety form before
-such a build is released.
+**A patch only reaches a build made by the Shorebird CLI.** `flutter build`
+produces a binary with no updater in it, which is why nothing has ever been
+patched. The first OTA-capable build is the next store release, built like this
+on the Mac (CLI at `~/.local/bin/shorebird`; it reads `SHOREBIRD_TOKEN` from the
+ops vault, so `bwenv .config/shorebird/env -- shorebird …`):
+
+```bash
+shorebird release android --release-version 1.1.0+16
+shorebird release ios     --release-version 1.1.0+16
+```
+
+Once that build is live, a Dart-only or asset-only fix ships without a review:
+
+```bash
+shorebird patch android --release-version 1.1.0+16
+shorebird patch ios     --release-version 1.1.0+16
+```
+
+What a patch cannot do: change native code, the manifest or the plist, or the
+version the store shows. It also has to name the exact release version it
+targets, so never delete a release whose patches are still in the wild.
+`shorebird release` builds with the Flutter bundled in the CLI (3.50.1, Dart
+3.14, at the time of writing), not the local SDK, so treat it as a Flutter bump
+and test it like one.
+
+A Shorebird release build asks Shorebird's servers for a patch at launch. That
+call is disclosed in `PRIVACY.md`, `docs/privacy.html` and the answers above,
+and it is why `android.permission.INTERNET` is worth keeping.
 
 Usage analytics is gated on the **installed native version**, read at launch
 with `package_info_plus`, being above `kLiveStoreVersion` in
@@ -170,12 +202,6 @@ with `package_info_plus`, being above `kLiveStoreVersion` in
 of a release at or below the floor stays silent. Bump the constant with a
 store release, never with a patch, and keep `pubspec.yaml` at or above it
 (`test/core/posthog_test.dart` fails otherwise).
-
-**The `app_id` in `shorebird.yaml` belongs to the pre-rename bundle id.**
-Shorebird registers an app per bundle id, so before the first Shorebird build
-run `shorebird init` (or `shorebird apps create`) for `com.medhub.puzzlestack`
-and commit the new `app_id`. Nothing breaks today because no shipped build
-contains the updater.
 
 ## Store listing
 
@@ -246,8 +272,9 @@ version, same copy.
 - **Play Data Safety form.** The answers above are checked against the source and ready to
   enter. Entering and submitting them is a human step in the Play Console; the repo cannot do
   it.
-- **Shorebird `app_id`.** Still the pre-rename id. Harmless while no shipped build bundles the
-  updater; create a new one if OTA is wanted at launch.
+- **Shorebird `app_id`.** Resolved 2026-11-23: the id is the live `Puzzlestack` app
+  (renamed from `PuzzleBox`), bundled as an asset. The next store build must be made with
+  `shorebird release` or OTA stays dead; see the OTA section above.
 - **First Play release.** `applicationId` changed during the rebrand, so this is a new listing
   rather than an update to any previous one.
 - **Flutter SDK skew.** CI runs Flutter stable, which is ahead of the SDK this
