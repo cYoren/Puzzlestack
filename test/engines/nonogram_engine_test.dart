@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:puzzle/core/deduction.dart';
 import 'package:puzzle/ui/features/games/nonogram/nonogram_engine.dart';
+import 'package:puzzle/ui/features/games/nonogram/nonogram_model.dart';
 
 void main() {
   group('NonogramEngine', () {
@@ -40,6 +44,43 @@ void main() {
         final clues1 = puzzle1.rowClues.join(',');
         final clues2 = puzzle2.rowClues.join(',');
         expect(clues1, isNot(equals(clues2)));
+      });
+
+      test('a seed deals the same board twice', () {
+        // So a failing deal is a board anyone can get back, instead of one the
+        // test happened to draw.
+        final first = NonogramEngine().generatePuzzle(6, random: Random(0));
+        final second = NonogramEngine().generatePuzzle(6, random: Random(0));
+        expect(first.rowClues, second.rowClues);
+        expect(first.colClues, second.colClues);
+
+        final other = NonogramEngine().generatePuzzle(6, random: Random(1));
+        expect(other.rowClues, isNot(equals(first.rowClues)));
+      });
+
+      test('never deals a board its own line solver cannot finish', () {
+        // The property the G4 gate demands, held inside the generator: a board
+        // below the bar is redrawn, so no caller can receive one.
+        for (final size in [5, 6, 8, 12]) {
+          final random = Random(97 + size);
+          for (var i = 0; i < 15; i++) {
+            final puzzle =
+                NonogramEngine().generatePuzzle(size, random: random);
+            final board = NonogramModel(
+              cells: List.generate(
+                size,
+                (_) => List<int>.filled(size, NonogramModel.unknown),
+              ),
+              rowClues: puzzle.rowClues,
+              colClues: puzzle.colClues,
+            );
+            expect(
+              deduce(board, nonogramRules).complete,
+              isTrue,
+              reason: 'size $size deal $i',
+            );
+          }
+        }
       });
     });
 

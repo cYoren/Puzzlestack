@@ -123,7 +123,9 @@ Notes
 - `minesweeper` deals a board that is provably finishable by deduction (`minesweeper-no-guess`):
   the first tap is mine-free, and the deal is accepted only if reading the numbers finishes it.
 - `nonogram` proves its deal before it is dealt (`nonogram-uniqueness`, #47): the generator
-  retries up to 500 grids and throws rather than ship one with a second answer.
+  retries up to 500 grids and throws rather than ship one with a second answer, and it also
+  refuses a grid its own line solver cannot finish (measured: 3 grids in 1000 at 6x6 are unique
+  but need a guess), so every deal falls to deduction at level 1.
 
 ## Math (63)
 
