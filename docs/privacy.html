@@ -27,7 +27,7 @@
   <h1>Privacy policy for Puzzlestack</h1>
   <p class="date">Last updated: 22 November 2026</p>
 
-  <p class="lede">Puzzlestack is a collection of offline brain puzzles. It does not collect, transmit or sell your personal data. There are no accounts and no advertising.</p>
+  <p class="lede">Puzzlestack is a collection of offline brain puzzles. It does not sell your data, does not ask who you are, and has no accounts and no advertising. The one thing it sends is the anonymous usage described below, and you can switch that off.</p>
 
   <h2>What Puzzlestack stores</h2>
   <p>Puzzlestack stores a small amount of data <strong>locally on your device only</strong>, so the app can remember your progress between sessions:</p>
@@ -40,8 +40,12 @@
   <p>This data never leaves your device. It is not uploaded to us or to anyone else, because Puzzlestack has no server to upload it to. The games you open and finish are counted anonymously; that is the next section.</p>
 
   <h2>Usage analytics</h2>
-  <p>We use PostHog (PostHog, Inc., USA) to understand how Puzzlestack is used, for example which puzzles are opened and where people stop. PostHog receives anonymous usage events, never your name, email or anything you type, and IP addresses are not stored. Data is transferred to the USA under the EU Standard Contractual Clauses. You can turn this off in Settings.</p>
-  <p>The events are a short list: the app was opened, a puzzle was opened, a puzzle was finished (with a rough duration bucket and how many hints it took), today's Daily Five was finished, the Plus sheet was shown, and what came of a purchase. They carry a random identifier made on this device, the app version, the platform and the language. Never a board, a seed, an answer, your nickname or a solve time in exact form.</p>
+  <p>We use PostHog (PostHog, Inc., USA) to understand how Puzzlestack is used, for example which puzzles are opened and where people stop. PostHog receives anonymous usage events, never your name, your email, anything you type or a board. The app does not send your IP address; PostHog sees the connection address as any server does, and we do not use it to identify anyone. Data is transferred to the USA under the EU Standard Contractual Clauses. You can turn this off in Settings, under Privacy, with &quot;Share anonymous usage data&quot;.</p>
+  <p>The events are a short list: the app was opened, a puzzle was opened, a puzzle was finished, today's Daily Five was finished, the first puzzle you ever finished, the Plus sheet was shown, what came of a purchase, and the switch being turned off. They carry a random identifier made on this device, the app version, the platform and the language. A finished puzzle adds a rough duration bucket, its exact length in milliseconds, how many hints it took and whether it was helped. Never a board, a seed, an answer or your nickname.</p>
+  <p>Outside the store's own billing and review prompt, this is the only network call the app makes. The rest of Puzzlestack plays with no connection at all.</p>
+
+  <h2>The website</h2>
+  <p>The pages at <a href="https://cyoren.github.io/Puzzlestack/">cyoren.github.io/Puzzlestack</a> count pageviews anonymously with the same PostHog project, under the name <code>puzzlestack-web</code>, so we can see which puzzles people look up. That is separate from the app events and carries a different random identifier. It uses no cookie and stores nothing in your browser: the identifier lives in the open page and dies when you close the tab, and nothing you type is read. Only the page path is sent, plus the name of the game when someone opens the puzzles in the browser. Blocking the site's <code>js/analytics.js</code>, or using a private window, stops it. The app's switch does not affect the website, and the website's script does not affect the app.</p>
 
   <h2>In-app purchase</h2>
   <p>Puzzlestack offers one optional, one-time purchase (<code>Puzzlestack Plus</code>). When you buy or restore Puzzlestack Plus, the payment and receipt check are processed directly by Apple (App Store) or Google (Google Play) under their respective privacy policies. Puzzlestack never receives your name, billing address or payment details, and records only a local unlock flag on your device.</p>
@@ -55,14 +59,15 @@
     <li>It does not require an account or an internet connection to play.</li>
   </ul>
 
-  <h2>Deleting your data</h2>
-  <p>All Puzzlestack data is held in the app's own private storage. Uninstalling the app, or clearing its storage through your device's settings, permanently deletes everything listed above. No copy is retained anywhere else. The anonymous usage events carry only the random identifier stored on the device, so once that identifier is gone the events can no longer be tied to it.</p>
+  <h2 id="deleting-your-data">Deleting your data</h2>
+  <p>All your progress is held in the app's own private storage. Uninstalling the app, or clearing its storage through your device's settings, permanently deletes everything listed above. No copy of it is retained anywhere else.</p>
+  <p>The usage events are different. They carry only the random install id, never a name or an email, and no screen in the app shows that id, so a request cannot be matched to a stored event. If you ask us to erase them, we answer as best we can with nothing to look up. What does stop the events is in your hands: switching analytics off in Settings stops everything further, and uninstalling removes the id from the device. There is no delete button in the app and no web form.</p>
 
   <h2>Links to other sites</h2>
-  <p>Some screens link out to external pages, such as the project's source repository on GitHub or its store listing. Opening one hands off to your browser or store app, and those services have their own privacy policies. This policy covers only Puzzlestack itself.</p>
+  <p>Some screens link out to external pages, such as the project's source repository on GitHub or its store listing. Opening one hands off to your browser or store app, and those services have their own privacy policies. This policy covers the app and its own website, not the pages they link to.</p>
 
   <h2>Children's privacy</h2>
-  <p>Puzzlestack is suitable for general audiences. Because it collects no personal information from anyone, it collects none from children either.</p>
+  <p>Puzzlestack is suitable for general audiences. Nothing it collects identifies anyone, so it collects nothing identifying from children either.</p>
 
   <h2>Changes to this policy</h2>
   <p>If a future version of Puzzlestack changes what it stores or introduces any network communication, this policy will be updated before that version is released, and the date at the top will change.</p>
