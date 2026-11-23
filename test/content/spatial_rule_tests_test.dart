@@ -171,6 +171,8 @@ void main() {
             reason: '$why must not be winnable with a single mirror, of '
                 'either kind, on any cell');
         expect(mirrorMazeDepth(deal), 2, reason: '$why solves in two');
+        expect(mirrorMazeNoCheaperLayout(deal), isTrue,
+            reason: '$why must have no zero or one mirror layout');
         expect(mirrorMazeDealIsFair(deal), isTrue,
             reason: '$why: the generator\'s own verdict');
         // The test's own reading of the rules, so the engine cannot agree with
@@ -196,10 +198,84 @@ void main() {
         expect(mirrorMazeDealIsFair(deal), isTrue,
             reason: 'seed $seed dealt an unfair board: ${deal.key}');
       }
-      expect(seen.length, greaterThan(150),
-          reason: 'only ${seen.length} distinct boards dealt; 1200 seeds reach '
-              'all 160 of the enumerated 5x5 two-mirror deals, and a 4x4 board '
-              'would cap this at 96');
+      expect(seen.length, 160,
+          reason: 'the enumerated 5x5 space holds exactly 160 two-mirror deals '
+              'and 1200 seeds reach all of them, so a smaller set means the '
+              'generator stopped reaching part of its own space');
+    });
+
+    test('the enumerated deal space is 372 reachable, 20 / 192 / 160 by depth',
+        () {
+      // The four numbers the triage note, the CATALOG line and the PR quote, all
+      // derived here rather than trusted: every start cell and start direction,
+      // every layout of no mirror and of one, two and three mirrors, traced with
+      // the game's own rules and keyed by the whole deal. If a reflection, a
+      // bounds check or the start directions change, this goes red.
+      final List<(Point<int>, Point<int>)> starts =
+          <(Point<int>, Point<int>)>[];
+      for (int o = 0; o < mirrorMazeSize; o++) {
+        starts.add((Point<int>(0, o), const Point<int>(1, 0)));
+        starts
+            .add((Point<int>(mirrorMazeSize - 1, o), const Point<int>(-1, 0)));
+        starts.add((Point<int>(o, 0), const Point<int>(0, 1)));
+        starts
+            .add((Point<int>(o, mirrorMazeSize - 1), const Point<int>(0, -1)));
+      }
+      final List<Point<int>> cells = <Point<int>>[
+        for (int r = 0; r < mirrorMazeSize; r++)
+          for (int c = 0; c < mirrorMazeSize; c++) Point<int>(r, c),
+      ];
+
+      // Deal key -> the mirror counts of the layouts that win it.
+      final Map<String, Set<int>> winners = <String, Set<int>>{};
+
+      for (final (Point<int> start, Point<int> dir) in starts) {
+        final List<Point<int>> chosen = <Point<int>>[];
+        for (int count = 0; count <= 3; count++) {
+          void trace(int mask) {
+            final MirrorMazeTrace trace = traceBeam(
+              mirrors: <Point<int>, int>{
+                for (int i = 0; i < chosen.length; i++)
+                  chosen[i]:
+                      (mask & (1 << i)) == 0 ? Mirror.slash : Mirror.backslash,
+              },
+              start: start,
+              startDir: dir,
+            );
+            if (!trace.exited || trace.exitCell == start) return;
+            final String key = '${start.x},${start.y}|${dir.x},${dir.y}|'
+                '${trace.exitCell!.x},${trace.exitCell!.y}|'
+                '${trace.exitDir.x},${trace.exitDir.y}';
+            (winners[key] ??= <int>{}).add(trace.hit.length);
+          }
+
+          void choose(int from) {
+            for (int mask = 0; mask < (1 << chosen.length); mask++) {
+              trace(mask);
+            }
+            if (chosen.length == count) return;
+            for (int i = from; i < cells.length; i++) {
+              chosen.add(cells[i]);
+              choose(i + 1);
+              chosen.removeLast();
+            }
+          }
+
+          choose(0);
+        }
+      }
+
+      final Map<int, int> byShortest = <int, int>{};
+      for (final Set<int> counts in winners.values) {
+        final int shortest = counts.reduce((int a, int b) => a < b ? a : b);
+        byShortest[shortest] = (byShortest[shortest] ?? 0) + 1;
+      }
+
+      expect(winners.length, 372, reason: 'reachable deals');
+      expect(byShortest, <int, int>{0: 20, 1: 192, 2: 160},
+          reason: 'deals by shortest winning layout: straight shot, one '
+              'mirror, two mirrors');
+      expect(byShortest.values.reduce((int a, int b) => a + b), 372);
     });
 
     test('the fairness verdict rejects a deal a single mirror wins', () {
@@ -218,6 +294,10 @@ void main() {
           reason: 'the one-mirror layout does win this deal');
       expect(mirrorMazeLayouts(shortcut, 1), isNotEmpty,
           reason: 'one mirror is on the board');
+      // The layout half on its own, so this proves the counting ran and not just
+      // that the deal's label is not the dealt depth.
+      expect(mirrorMazeNoCheaperLayout(shortcut), isFalse,
+          reason: 'a one-mirror layout wins it, so there is a cheaper layout');
       expect(mirrorMazeDealIsFair(shortcut), isFalse,
           reason: 'a deal one mirror wins is not fair');
       expect(mirrorMazeDepth(shortcut), 1);
@@ -238,6 +318,8 @@ void main() {
           reason: 'the empty board does win this deal');
       expect(mirrorMazeLayouts(freeShot, 0), isNotEmpty,
           reason: 'a straight shot is a layout of no mirrors');
+      expect(mirrorMazeNoCheaperLayout(freeShot), isFalse,
+          reason: 'the empty layout wins it');
       expect(mirrorMazeDealIsFair(freeShot), isFalse,
           reason: 'a deal a straight shot wins is not fair');
       expect(mirrorMazeDepth(freeShot), 0);
@@ -257,6 +339,9 @@ void main() {
         depth: 2,
       );
       expect(mirrorMazeLayoutWins(impossible, impossible.answer), isFalse);
+      // No cheaper layout wins it either, so the two halves disagree here and the
+      // verdict has to come from the answer, not from the enumeration.
+      expect(mirrorMazeNoCheaperLayout(impossible), isTrue);
       expect(mirrorMazeDealIsFair(impossible), isFalse,
           reason: 'a deal its own answer cannot win is not fair');
     });
