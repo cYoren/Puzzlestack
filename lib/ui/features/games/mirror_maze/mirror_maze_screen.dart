@@ -8,127 +8,54 @@ import 'package:puzzle/utils/l10n_game_helpers.dart';
 import 'package:puzzle/utils/haptic_feedback.dart';
 import 'package:puzzle/widgets/game_completion_dialog.dart';
 import '../../../core/juice/game_scaffold.dart';
-
-// Mirror state: 0 = empty, 1 = diagonal / (bottom-left to top-right), 2 = diagonal \ (top-left to bottom-right)
-class MirrorCell {
-  int mirrorType = 0;
-}
-
-class MirrorMazePuzzle {
-  final Point<int> laserStart; // start cell
-  final Point<int> laserDir;   // initial movement vector (dx, dy)
-  final Point<int> targetCell; // target cell
-  final Point<int> targetDir;   // target exit direction vector (dx, dy)
-
-  MirrorMazePuzzle({
-    required this.laserStart,
-    required this.laserDir,
-    required this.targetCell,
-    required this.targetDir,
-  });
-}
+import '../../feed/feed_session.dart';
+import 'mirror_maze_engine.dart';
 
 class MirrorMazeScreen extends ConsumerStatefulWidget {
-  const MirrorMazeScreen({super.key});
+  const MirrorMazeScreen({this.seed, super.key});
+
+  /// Fixes the board. A test passes one to get the same deal every run; the
+  /// feed passes its own so a repeated card is the same card. Null falls back
+  /// to the feed's seed when there is one, and to the clock otherwise.
+  final int? seed;
 
   @override
   ConsumerState<MirrorMazeScreen> createState() => _MirrorMazeScreenState();
 }
 
 class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
-  final Random _random = Random();
   final int _size = 4; // 4x4 grid
 
-  late MirrorMazePuzzle _currentPuzzle;
-  late List<List<MirrorCell>> _board;
-  final List<Point<int>> _laserPath = [];
+  late final MirrorMazeGenerator _generator;
+  late MirrorMazeDeal _deal;
+  late List<List<int>> _board;
+  MirrorMazeTrace _trace = const MirrorMazeTrace(
+    path: <Point<int>>[],
+    hit: <Point<int>, int>{},
+    exitCell: null,
+    exitDir: Point<int>(0, 0),
+  );
+
+  /// A new list on every trace, never mutated in place: `_LaserPathPainter`
+  /// compares the list it was given with the one before it, so a reused list
+  /// repaints as unchanged.
+  List<Point<int>> _laserPath = const <Point<int>>[];
   bool _isSolved = false;
 
   @override
   void initState() {
     super.initState();
+    final int seed = widget.seed ??
+        FeedSession.seedOf('mirror_maze') ??
+        Random().nextInt(1 << 32);
+    _generator = MirrorMazeGenerator(random: Random(seed), size: _size);
     _generatePuzzle();
-  }
-
-  MirrorMazePuzzle _generateRandomPuzzle() {
-    for (int attempt = 0; attempt < 200; attempt++) {
-      final side = _random.nextInt(4);
-      final offset = _random.nextInt(_size);
-      late Point<int> start;
-      late Point<int> dir;
-      switch (side) {
-        case 0:
-          start = Point(0, offset);
-          dir = const Point(1, 0);
-        case 1:
-          start = Point(_size - 1, offset);
-          dir = const Point(-1, 0);
-        case 2:
-          start = Point(offset, 0);
-          dir = const Point(0, 1);
-        default:
-          start = Point(offset, _size - 1);
-          dir = const Point(0, -1);
-      }
-
-      // Simulate random valid mirror placements inside the 4x4 grid until the
-      // ray exits the board, requiring at least 2 reflections.
-      final mirrors = List.generate(_size, (_) => List.filled(_size, 0));
-      var cur = start;
-      var curDir = dir;
-      int reflections = 0;
-      Point<int>? exitCell;
-      Point<int>? exitDir;
-
-      for (int step = 0; step < 16; step++) {
-        if (mirrors[cur.x][cur.y] == 0 && step > 0 && _random.nextDouble() < 0.4) {
-          final m = _random.nextBool() ? 1 : 2;
-          mirrors[cur.x][cur.y] = m;
-          curDir = m == 1
-              ? Point(-curDir.y, -curDir.x)
-              : Point(curDir.y, curDir.x);
-          reflections++;
-        } else if (mirrors[cur.x][cur.y] != 0) {
-          final m = mirrors[cur.x][cur.y];
-          curDir = m == 1
-              ? Point(-curDir.y, -curDir.x)
-              : Point(curDir.y, curDir.x);
-        }
-
-        final next = Point(cur.x + curDir.x, cur.y + curDir.y);
-        if (next.x < 0 || next.x >= _size || next.y < 0 || next.y >= _size) {
-          exitCell = cur;
-          exitDir = curDir;
-          break;
-        }
-        cur = next;
-      }
-
-      if (exitCell != null &&
-          exitDir != null &&
-          reflections >= 2 &&
-          exitCell != start) {
-        return MirrorMazePuzzle(
-          laserStart: start,
-          laserDir: dir,
-          targetCell: exitCell,
-          targetDir: exitDir,
-        );
-      }
-    }
-
-    return MirrorMazePuzzle(
-      laserStart: const Point(0, 0),
-      laserDir: const Point(0, 1),
-      targetCell: const Point(3, 2),
-      targetDir: const Point(1, 0),
-    );
   }
 
   void _generatePuzzle() {
     _isSolved = false;
-    _currentPuzzle = _generateRandomPuzzle();
-    _board = List.generate(_size, (_) => List.generate(_size, (_) => MirrorCell()));
+    _deal = _generator.next();
+    _board = List.generate(_size, (_) => List.filled(_size, Mirror.empty));
     _traceLaser();
   }
 
@@ -136,85 +63,45 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
     if (_isSolved) return;
     HapticFeedbackUtil.lightImpact();
     setState(() {
-      _board[r][c].mirrorType = (_board[r][c].mirrorType + 1) % 3;
+      _board[r][c] = Mirror.next(_board[r][c]);
       _traceLaser();
       _checkWinCondition();
     });
   }
 
+  Map<Point<int>, int> _mirrors() {
+    return <Point<int>, int>{
+      for (int r = 0; r < _size; r++)
+        for (int c = 0; c < _size; c++)
+          if (_board[r][c] != Mirror.empty) Point<int>(r, c): _board[r][c],
+    };
+  }
+
   void _traceLaser() {
-    _laserPath.clear();
-
-    Point<int> current = _currentPuzzle.laserStart;
-    Point<int> dir = _currentPuzzle.laserDir;
-
-    _laserPath.add(current);
-
-    int steps = 0;
-    while (steps < 20) { // Limit loop iterations
-      final r = current.x;
-      final c = current.y;
-
-      // Handle reflection if inside board
-      final mirror = _board[r][c].mirrorType;
-      if (mirror == 1) { // /
-        // Swap dir.x and -dir.y
-        dir = Point(-dir.y, -dir.x);
-      } else if (mirror == 2) { // \
-        // Swap dir.x and dir.y
-        dir = Point(dir.y, dir.x);
-      }
-
-      // Next step
-      final next = Point(current.x + dir.x, current.y + dir.y);
-
-      // Check if next coordinate goes outside bounds
-      if (next.x < 0 || next.x >= _size || next.y < 0 || next.y >= _size) {
-        // Exit path trace
-        break;
-      }
-
-      _laserPath.add(next);
-      current = next;
-      steps++;
-    }
+    _trace = traceBeam(
+      mirrors: _mirrors(),
+      start: _deal.start,
+      startDir: _deal.startDir,
+      size: _size,
+    );
+    _laserPath = _trace.path;
   }
 
   void _checkWinCondition() {
-    if (_laserPath.isEmpty) return;
-
-    // Check if the final node in the laser path is the target cell
-    final finalNode = _laserPath.last;
-    if (finalNode == _currentPuzzle.targetCell) {
-      // Trace what direction the beam exits this cell
-      // We look at the final segment direction
-      Point<int> finalDir;
-      if (_laserPath.length == 1) {
-        finalDir = _currentPuzzle.laserDir;
-      } else {
-        final secondLast = _laserPath[_laserPath.length - 2];
-        finalDir = Point(finalNode.x - secondLast.x, finalNode.y - secondLast.y);
-      }
-
-      // Re-apply target cell mirror reflection to see if it matches targetDir
-      final mirror = _board[finalNode.x][finalNode.y].mirrorType;
-      Point<int> exitDir = finalDir;
-      if (mirror == 1) {
-        exitDir = Point(-finalDir.y, -finalDir.x);
-      } else if (mirror == 2) {
-        exitDir = Point(finalDir.y, finalDir.x);
-      }
-
-      if (exitDir == _currentPuzzle.targetDir) {
-        _isSolved = true;
-        _onGameComplete();
-      }
-    }
+    // The deal is won when the beam left the board from the receiver's cell in
+    // the receiver's direction. A beam that never left cannot win, however
+    // close its last cell got.
+    if (_trace.exitCell != _deal.target) return;
+    if (_trace.exitDir != _deal.targetDir) return;
+    _isSolved = true;
+    _onGameComplete();
   }
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('mirror_maze');
+    await ref
+        .read(gameStreakNotifierProvider.notifier)
+        .completeGame('mirror_maze');
     if (!mounted) return;
     showDialog(
       context: context,
@@ -291,13 +178,16 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: (isDark ? DesignSystem.darkOutline : DesignSystem.outline).withValues(alpha: 0.4),
+                                color: (isDark
+                                        ? DesignSystem.darkOutline
+                                        : DesignSystem.outline)
+                                    .withValues(alpha: 0.4),
                                 width: 0.5,
                               ),
                             ),
                             child: CustomPaint(
                               painter: _MirrorPainter(
-                                mirrorType: _board[r][c].mirrorType,
+                                mirrorType: _board[r][c],
                                 hasLaser: _laserPath.contains(Point(r, c)),
                                 isDark: isDark,
                               ),
@@ -309,7 +199,8 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
                   IgnorePointer(
                     child: CustomPaint(
                       size: Size(constraints.maxWidth, constraints.maxHeight),
-                      painter: _LaserPathPainter(path: _laserPath, cellSize: cellSize),
+                      painter: _LaserPathPainter(
+                          path: _laserPath, cellSize: cellSize),
                     ),
                   ),
                 ],
@@ -322,8 +213,8 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
   }
 
   Widget _buildSourceIndicator(double cellSize) {
-    final start = _currentPuzzle.laserStart;
-    final dir = _currentPuzzle.laserDir;
+    final start = _deal.start;
+    final dir = _deal.startDir;
 
     double left = start.y * cellSize;
     double top = start.x * cellSize;
@@ -338,13 +229,14 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
       top: top + (dir.x != 0 ? 0 : cellSize / 2 - 10),
       width: 20,
       height: 20,
-      child: const Icon(Icons.play_arrow_rounded, color: DesignSystem.error, size: 24),
+      child: const Icon(Icons.play_arrow_rounded,
+          color: DesignSystem.error, size: 24),
     );
   }
 
   Widget _buildTargetIndicator(double cellSize) {
-    final target = _currentPuzzle.targetCell;
-    final dir = _currentPuzzle.targetDir;
+    final target = _deal.target;
+    final dir = _deal.targetDir;
 
     double left = target.y * cellSize;
     double top = target.x * cellSize;
@@ -359,7 +251,8 @@ class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
       top: top + (dir.x != 0 ? 0 : cellSize / 2 - 10),
       width: 20,
       height: 20,
-      child: const Icon(Icons.gps_fixed_rounded, color: DesignSystem.gameGreen, size: 20),
+      child: const Icon(Icons.gps_fixed_rounded,
+          color: DesignSystem.gameGreen, size: 20),
     );
   }
 }
@@ -369,27 +262,36 @@ class _MirrorPainter extends CustomPainter {
   final bool hasLaser;
   final bool isDark;
 
-  _MirrorPainter({required this.mirrorType, required this.hasLaser, required this.isDark});
+  _MirrorPainter(
+      {required this.mirrorType, required this.hasLaser, required this.isDark});
 
   @override
   void paint(Canvas canvas, Size size) {
     if (mirrorType == 0) return;
 
     final paint = Paint()
-      ..color = hasLaser ? DesignSystem.gameOrange : (isDark ? Colors.white38 : Colors.black38)
+      ..color = hasLaser
+          ? DesignSystem.gameOrange
+          : (isDark ? Colors.white38 : Colors.black38)
       ..strokeWidth = 6.0
       ..strokeCap = StrokeCap.round;
 
-    if (mirrorType == 1) { // /
-      canvas.drawLine(Offset(size.width * 0.15, size.height * 0.85), Offset(size.width * 0.85, size.height * 0.15), paint);
-    } else if (mirrorType == 2) { // \
-      canvas.drawLine(Offset(size.width * 0.15, size.height * 0.15), Offset(size.width * 0.85, size.height * 0.85), paint);
+    if (mirrorType == 1) {
+      // /
+      canvas.drawLine(Offset(size.width * 0.15, size.height * 0.85),
+          Offset(size.width * 0.85, size.height * 0.15), paint);
+    } else if (mirrorType == 2) {
+      // \
+      canvas.drawLine(Offset(size.width * 0.15, size.height * 0.15),
+          Offset(size.width * 0.85, size.height * 0.85), paint);
     }
   }
 
   @override
   bool shouldRepaint(_MirrorPainter oldDelegate) {
-    return oldDelegate.mirrorType != mirrorType || oldDelegate.hasLaser != hasLaser || oldDelegate.isDark != isDark;
+    return oldDelegate.mirrorType != mirrorType ||
+        oldDelegate.hasLaser != hasLaser ||
+        oldDelegate.isDark != isDark;
   }
 }
 

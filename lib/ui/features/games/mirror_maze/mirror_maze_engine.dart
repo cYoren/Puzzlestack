@@ -1,0 +1,398 @@
+/// The rules of Mirror Maze, in one place.
+///
+/// A cell holds [Mirror.empty], [Mirror.slash] or [Mirror.backslash]. The beam
+/// enters at a start cell travelling a direction, reflects in every cell that
+/// holds a mirror, and leaves as soon as a step would take it off the board. A
+/// deal is the start edge plus the cell and direction the beam must leave by.
+///
+/// The screen, the generator and the tests all read the rules from here, so
+/// there is one answer to "what does this board do" and one to "does this board
+/// win". [mirrorMazeLayouts] enumerates every layout that wins a deal, which is
+/// how a deal can be shown to be more than a one-mirror shortcut.
+library;
+
+import 'dart:math';
+
+/// What a board cell holds.
+///
+/// [Mirror.stateCount] is a three-way cycle, because a cell is tapped through
+/// empty, `/`, `\` and back to empty. That cycle is the reason a single tap
+/// never jumps straight from `/` to `\`: [next] is the only correct way to step
+/// a cell, and a caller that wants "the other mirror" must clear the cell first.
+abstract final class Mirror {
+  /// No mirror; the beam passes straight through.
+  static const int empty = 0;
+
+  /// `/`, bottom-left to top-right.
+  static const int slash = 1;
+
+  /// `\`, top-left to bottom-right.
+  static const int backslash = 2;
+
+  /// How many states one tap cycle visits.
+  static const int stateCount = 3;
+
+  /// The two states that are a mirror, in cycle order.
+  static const List<int> kinds = <int>[slash, backslash];
+
+  /// The state one tap after [state]. This is the whole tap rule.
+  static int next(int state) => (state + 1) % stateCount;
+
+  /// A direction with the mirror's reflection applied. An empty cell leaves the
+  /// beam alone.
+  static Point<int> reflect(Point<int> direction, int mirror) {
+    if (mirror == slash) {
+      return Point<int>(-direction.y, -direction.x);
+    }
+    if (mirror == backslash) {
+      return Point<int>(direction.y, direction.x);
+    }
+    return direction;
+  }
+}
+
+/// Where a beam went.
+class MirrorMazeTrace {
+  const MirrorMazeTrace({
+    required this.path,
+    required this.hit,
+    required this.exitCell,
+    required this.exitDir,
+  });
+
+  /// Every cell the beam was in, start first. The last entry is the cell the
+  /// beam left from, but only when [exited] — a beam that never leaves is
+  /// stopped by the step limit and its last cell is not an exit.
+  final List<Point<int>> path;
+
+  /// The mirrors the beam actually reflected in, and nothing else. A mirror on
+  /// a cell the beam never reaches does not change the beam, so it is not a
+  /// part of the answer.
+  final Map<Point<int>, int> hit;
+
+  /// The cell the beam left the board from, or null when it never left.
+  final Point<int>? exitCell;
+
+  /// The direction the beam travelled as it left. Meaningless unless [exited].
+  final Point<int> exitDir;
+
+  /// True when the beam left the board instead of running into the step limit.
+  bool get exited => exitCell != null;
+}
+
+/// The board edge a beam enters from, taken as a cell plus the direction it
+/// travels in.
+class MirrorMazeStart {
+  const MirrorMazeStart(this.cell, this.direction);
+
+  final Point<int> cell;
+  final Point<int> direction;
+}
+
+/// One deal: where the beam enters, where it must leave, and the layout this
+/// deal was built from.
+class MirrorMazeDeal {
+  const MirrorMazeDeal({
+    required this.start,
+    required this.startDir,
+    required this.target,
+    required this.targetDir,
+    required this.answer,
+    required this.depth,
+  });
+
+  /// The cell the beam enters the board at.
+  final Point<int> start;
+
+  /// The direction it travels when it enters.
+  final Point<int> startDir;
+
+  /// The cell it must leave the board from.
+  final Point<int> target;
+
+  /// The direction it must be travelling when it leaves.
+  final Point<int> targetDir;
+
+  /// The layout this deal was built from. It wins the deal — [MirrorMazeGenerator]
+  /// only returns a deal after tracing it — and [depth] is how many mirrors it
+  /// takes.
+  final Map<Point<int>, int> answer;
+
+  /// How many mirrors the shortest winning layout takes.
+  final int depth;
+
+  /// A stable identity for this deal, for caching proofs.
+  String get key => '${start.x},${start.y}|${startDir.x},${startDir.y}|'
+      '${target.x},${target.y}|${targetDir.x},${targetDir.y}';
+
+  @override
+  String toString() => 'MirrorMazeDeal($key, depth $depth)';
+}
+
+/// How many cells a beam may visit before it is called a loop.
+///
+/// A path visits each cell at most once before it either leaves the board or
+/// repeats a (cell, direction) state, and a board is 4x4, so a real exit needs
+/// no more than this.
+const int mirrorMazeMaxSteps = 20;
+
+/// Follows the beam through [mirrors].
+MirrorMazeTrace traceBeam({
+  required Map<Point<int>, int> mirrors,
+  required Point<int> start,
+  required Point<int> startDir,
+  int size = 4,
+}) {
+  final List<Point<int>> path = <Point<int>>[start];
+  final Map<Point<int>, int> hit = <Point<int>, int>{};
+  Point<int> current = start;
+  Point<int> direction = startDir;
+
+  for (int step = 0; step < mirrorMazeMaxSteps; step++) {
+    final int mirror = mirrors[current] ?? Mirror.empty;
+    if (mirror != Mirror.empty) {
+      hit[current] = mirror;
+      direction = Mirror.reflect(direction, mirror);
+    }
+    final Point<int> next = Point<int>(
+      current.x + direction.x,
+      current.y + direction.y,
+    );
+    if (next.x < 0 || next.x >= size || next.y < 0 || next.y >= size) {
+      return MirrorMazeTrace(
+        path: path,
+        hit: hit,
+        exitCell: current,
+        exitDir: direction,
+      );
+    }
+    path.add(next);
+    current = next;
+  }
+
+  return MirrorMazeTrace(
+    path: path,
+    hit: hit,
+    exitCell: null,
+    exitDir: direction,
+  );
+}
+
+/// True when [mirrors] makes the beam leave [deal] exactly where it must.
+bool mirrorMazeLayoutWins(MirrorMazeDeal deal, Map<Point<int>, int> mirrors) {
+  final MirrorMazeTrace trace = traceBeam(
+    mirrors: mirrors,
+    start: deal.start,
+    startDir: deal.startDir,
+  );
+  return trace.exitCell == deal.target && trace.exitDir == deal.targetDir;
+}
+
+/// Every distinct layout of exactly [count] mirrors that wins [deal].
+///
+/// Exhaustive: it places [count] mirrors on every set of cells and tries both
+/// mirror kinds on each, so an empty result is a proof that the deal cannot be
+/// won with that many mirrors. A layout is reported as the mirrors the beam
+/// actually hit, so tapping a mirror somewhere the beam never goes is not
+/// counted as a second answer.
+List<Map<Point<int>, int>> mirrorMazeLayouts(
+  MirrorMazeDeal deal,
+  int count, {
+  int size = 4,
+}) {
+  final Map<String, Map<Point<int>, int>> found =
+      <String, Map<Point<int>, int>>{};
+
+  void consider(Map<Point<int>, int> board, int count) {
+    final MirrorMazeTrace trace = traceBeam(
+      mirrors: board,
+      start: deal.start,
+      startDir: deal.startDir,
+      size: size,
+    );
+    if (trace.exitCell != deal.target || trace.exitDir != deal.targetDir) {
+      return;
+    }
+    // A layout with no hit mirror is the straight shot: an answer only when no
+    // mirrors were asked for. `count` mirrors that the beam never reaches are
+    // not an answer.
+    if (count > 0 && trace.hit.isEmpty) return;
+    final String key = _layoutKey(trace.hit);
+    found.putIfAbsent(key, () => trace.hit);
+  }
+
+  if (count == 0) {
+    consider(const <Point<int>, int>{}, 0);
+    return found.values.toList();
+  }
+
+  final List<Point<int>> cells = <Point<int>>[
+    for (int r = 0; r < size; r++)
+      for (int c = 0; c < size; c++) Point<int>(r, c),
+  ];
+  final List<Point<int>> chosen = <Point<int>>[];
+
+  void assign() {
+    for (int mask = 0; mask < (1 << count); mask++) {
+      consider(<Point<int>, int>{
+        for (int i = 0; i < count; i++)
+          chosen[i]: (mask & (1 << i)) == 0 ? Mirror.slash : Mirror.backslash,
+      }, count);
+    }
+  }
+
+  void choose(int from) {
+    if (chosen.length == count) {
+      assign();
+      return;
+    }
+    for (int i = from; i < cells.length; i++) {
+      chosen.add(cells[i]);
+      choose(i + 1);
+      chosen.removeLast();
+    }
+  }
+
+  choose(0);
+  return found.values.toList();
+}
+
+/// The fewest mirrors any winning layout of [deal] needs, or null when none
+/// needs at most [maxDepth].
+int? mirrorMazeDepth(MirrorMazeDeal deal, {int maxDepth = 3, int size = 4}) {
+  for (int count = 0; count <= maxDepth; count++) {
+    if (mirrorMazeLayouts(deal, count, size: size).isNotEmpty) return count;
+  }
+  return null;
+}
+
+/// Deals a Mirror Maze board that cannot be won by accident.
+///
+/// The rule the generator holds itself to: a deal is playable only when its
+/// shortest winning layout takes exactly [MirrorMazeGenerator.mirrorMazeDealDepth]
+/// mirrors. So there
+/// is no straight shot through the board, no single mirror that happens to
+/// point the beam at the receiver, and one mirror alone — of either kind, on any
+/// cell — always leaves the deal unsolved. That last part is what makes "a
+/// misrouted beam stays unsolved" a fact and not a hope.
+class MirrorMazeGenerator {
+  MirrorMazeGenerator({Random? random, this.size = 4})
+      : _random = random ?? Random();
+
+  /// The mirror count every dealt board needs.
+  static const int mirrorMazeDealDepth = 2;
+
+  /// How many candidate layouts to try before falling back.
+  static const int attempts = 400;
+
+  /// A deal that passes every check, used if the random search ever fails. It
+  /// is proven by `test/content/spatial_rule_tests_test.dart`, so it cannot go
+  /// stale without a test going red. Not const: a `Point` key has no primitive
+  /// equality, so a map of them cannot be a constant.
+  static final MirrorMazeDeal fallback = MirrorMazeDeal(
+    start: Point<int>(0, 1),
+    startDir: Point<int>(1, 0),
+    target: Point<int>(3, 3),
+    targetDir: Point<int>(1, 0),
+    answer: <Point<int>, int>{
+      Point<int>(3, 1): Mirror.backslash,
+      Point<int>(3, 3): Mirror.backslash,
+    },
+    depth: mirrorMazeDealDepth,
+  );
+
+  final Random _random;
+
+  /// Board side length.
+  final int size;
+
+  final Map<String, bool> _playable = <String, bool>{};
+
+  /// The next deal.
+  MirrorMazeDeal next() {
+    for (int attempt = 0; attempt < attempts; attempt++) {
+      final MirrorMazeDeal? deal = _candidate();
+      if (deal != null && _isPlayable(deal)) return deal;
+    }
+    return fallback;
+  }
+
+  /// A deal built from a random two-mirror layout, or null when the beam never
+  /// reaches both mirrors.
+  MirrorMazeDeal? _candidate() {
+    final MirrorMazeStart start = _randomStart();
+    final List<Point<int>> cells = <Point<int>>[
+      for (int r = 0; r < size; r++)
+        for (int c = 0; c < size; c++) Point<int>(r, c),
+    ]..shuffle(_random);
+    final Point<int> first = cells[0];
+    final Point<int> second = cells[1];
+    final Map<Point<int>, int> board = <Point<int>, int>{
+      first: Mirror.kinds[_random.nextInt(Mirror.kinds.length)],
+      second: Mirror.kinds[_random.nextInt(Mirror.kinds.length)],
+    };
+
+    final MirrorMazeTrace trace = traceBeam(
+      mirrors: board,
+      start: start.cell,
+      startDir: start.direction,
+      size: size,
+    );
+    if (!trace.exited) return null;
+    if (trace.exitCell == start.cell) return null;
+    if (trace.hit.length != mirrorMazeDealDepth) return null;
+
+    return MirrorMazeDeal(
+      start: start.cell,
+      startDir: start.direction,
+      target: trace.exitCell!,
+      targetDir: trace.exitDir,
+      answer: Map<Point<int>, int>.unmodifiable(trace.hit),
+      depth: trace.hit.length,
+    );
+  }
+
+  /// True when the deal's shortest winning layout is exactly
+  /// [mirrorMazeDealDepth] mirrors, proven by enumerating the cheaper ones.
+  bool _isPlayable(MirrorMazeDeal deal) {
+    return _playable.putIfAbsent(deal.key, () {
+      if (mirrorMazeLayouts(deal, 0, size: size).isNotEmpty) return false;
+      if (mirrorMazeLayouts(deal, 1, size: size).isNotEmpty) return false;
+      return mirrorMazeLayouts(deal, mirrorMazeDealDepth, size: size)
+          .isNotEmpty;
+    });
+  }
+
+  MirrorMazeStart _randomStart() {
+    final int side = _random.nextInt(4);
+    final int offset = _random.nextInt(size);
+    switch (side) {
+      case 0:
+        return MirrorMazeStart(
+          Point<int>(0, offset),
+          const Point<int>(1, 0),
+        );
+      case 1:
+        return MirrorMazeStart(
+          Point<int>(size - 1, offset),
+          const Point<int>(-1, 0),
+        );
+      case 2:
+        return MirrorMazeStart(
+          Point<int>(offset, 0),
+          const Point<int>(0, 1),
+        );
+      default:
+        return MirrorMazeStart(
+          Point<int>(offset, size - 1),
+          const Point<int>(0, -1),
+        );
+    }
+  }
+}
+
+String _layoutKey(Map<Point<int>, int> layout) {
+  final List<Point<int>> cells = layout.keys.toList()
+    ..sort((Point<int> a, Point<int> b) => a.x != b.x ? a.x - b.x : a.y - b.y);
+  return cells.map((Point<int> c) => '${c.x},${c.y}:${layout[c]}').join(' ');
+}

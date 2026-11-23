@@ -14,6 +14,7 @@ import 'package:puzzle/ui/features/games/gear_rotation/gear_rotation_screen.dart
 import 'package:puzzle/ui/features/games/maze_nav_3d/maze_nav_3d_screen.dart';
 import 'package:puzzle/ui/features/games/mirror_image/mirror_image_engine.dart';
 import 'package:puzzle/ui/features/games/mirror_image/mirror_image_provider.dart';
+import 'package:puzzle/ui/features/games/mirror_maze/mirror_maze_engine.dart';
 import 'package:puzzle/ui/features/games/mirror_maze/mirror_maze_screen.dart';
 import 'package:puzzle/ui/features/games/negative_space_detection/negative_space_detection_engine.dart';
 import 'package:puzzle/ui/features/games/negative_space_detection/negative_space_detection_provider.dart';
@@ -152,10 +153,68 @@ void main() {
   });
 
   group('mirror_maze', () {
+    test(
+        'every dealt board takes two mirrors and never one, proven over forty seeds',
+        () {
+      for (int seed = 0; seed < 40; seed++) {
+        final MirrorMazeDeal deal =
+            MirrorMazeGenerator(random: Random(seed)).next();
+        final String why = 'seed $seed dealt ${deal.key}';
+        expect(deal.depth, 2, reason: '$why must be a two-mirror deal');
+        expect(deal.answer.length, 2, reason: '$why must deal two mirrors');
+        expect(mirrorMazeLayoutWins(deal, deal.answer), isTrue,
+            reason:
+                '$why: the deal must be won by the layout it was built from');
+        expect(mirrorMazeLayouts(deal, 0), isEmpty,
+            reason: '$why must not be a straight shot through the board');
+        expect(mirrorMazeLayouts(deal, 1), isEmpty,
+            reason: '$why must not be winnable with a single mirror, of '
+                'either kind, on any cell');
+        expect(mirrorMazeDepth(deal), 2, reason: '$why solves in two');
+        // The test's own reading of the rules, so the engine cannot agree with
+        // itself and be wrong.
+        expect(_mirrorMazeLayoutsWithin(deal, 1), isEmpty,
+            reason:
+                '$why: the test solver must also find no one-mirror answer');
+        expect(_mirrorMazeLayoutsWithin(deal, 2), isNotEmpty,
+            reason: '$why: the test solver must find a two-mirror answer');
+      }
+    });
+
+    test('the fallback deal is a two-mirror deal too', () {
+      final MirrorMazeDeal deal = MirrorMazeGenerator.fallback;
+      expect(mirrorMazeLayoutWins(deal, deal.answer), isTrue);
+      expect(mirrorMazeLayouts(deal, 0), isEmpty);
+      expect(mirrorMazeLayouts(deal, 1), isEmpty);
+      expect(mirrorMazeDepth(deal), 2);
+      expect(_mirrorMazeLayoutsWithin(deal, 1), isEmpty);
+      expect(_mirrorMazeLayoutsWithin(deal, 2), isNotEmpty);
+    });
+
+    test('a beam that loops never counts as leaving the board', () {
+      // Four mirrors in a 2x2 block turn the beam back into its own path, so it
+      // runs until the step limit. The last cell it reached is not an exit.
+      final MirrorMazeTrace trace = traceBeam(
+        mirrors: <Point<int>, int>{
+          const Point<int>(1, 1): Mirror.slash,
+          const Point<int>(1, 2): Mirror.backslash,
+          const Point<int>(2, 2): Mirror.slash,
+          const Point<int>(2, 1): Mirror.backslash,
+        },
+        start: const Point<int>(1, 1),
+        startDir: const Point<int>(0, -1),
+      );
+      expect(trace.exited, isFalse,
+          reason: 'a loop is not an exit, however far the beam got');
+      expect(trace.exitCell, isNull);
+    });
+
     testWidgets(
-      'an unreflected or misrouted beam stays unsolved; valid mirror angles solve the maze',
+      'an unreflected or misrouted beam stays unsolved; two mirrors solve the maze',
       (tester) async {
-        await _pump(tester, const MirrorMazeScreen());
+        // A fixed seed: the same board every run, so this test can fail for a
+        // reason and not for a coin toss.
+        await _pump(tester, const MirrorMazeScreen(seed: 20261122));
         expect(find.byType(GameCompletionDialog), findsNothing);
 
         // Locate the 16 cell GestureDetectors inside the 300x300 board Container.
@@ -216,12 +275,23 @@ void main() {
         final (Point<int> targetCell, Point<int> targetDir) =
             readEdgeIcon(Icons.gps_fixed_rounded, false);
 
-        final Map<Point<int>, int>? solution =
-            _solveMirrorMaze(startCell, startDir, targetCell, targetDir);
-        expect(solution, isNotNull,
-            reason: 'generated MirrorMaze board must be solvable');
-        expect(solution, isNotEmpty,
-            reason: 'generated MirrorMaze must require at least one mirror');
+        // The deal the widget is really showing, as the test solved it.
+        final MirrorMazeDeal deal = MirrorMazeDeal(
+          start: startCell,
+          startDir: startDir,
+          target: targetCell,
+          targetDir: targetDir,
+          answer: const <Point<int>, int>{},
+          depth: 2,
+        );
+
+        // The ground this test stands on: no single mirror can win this board,
+        // so a beam sent the wrong way cannot be knocked onto the receiver by
+        // one lucky tap.
+        expect(_mirrorMazeLayoutsWithin(deal, 1), isEmpty,
+            reason: 'a dealt board must not be winnable with one mirror');
+        expect(find.byType(GameCompletionDialog), findsNothing,
+            reason: 'an empty board is not a solved board');
 
         Future<void> setMirror(int r, int c, int type) async {
           for (int t = 0; t < type; t++) {
@@ -230,16 +300,23 @@ void main() {
           }
         }
 
-        // First set one required mirror to the opposite reflection -> must stay unsolved.
-        final MapEntry<Point<int>, int> firstMirror = solution!.entries.first;
-        final int wrongType = firstMirror.value == 1 ? 2 : 1;
-        await setMirror(firstMirror.key.x, firstMirror.key.y, wrongType);
+        // One mirror anywhere leaves the beam off-target.
+        await setMirror(0, 0, 1);
         await tester.pumpAndSettle();
-        expect(find.byType(GameCompletionDialog), findsNothing);
+        expect(find.byType(GameCompletionDialog), findsNothing,
+            reason: 'a misrouted beam must stay unsolved');
+        // Clear it rather than tapping through the other angle: one tap moves a
+        // cell to the next state, so a route is never reached by accident.
+        await setMirror(0, 0, 2);
 
-        // Reset that cell back to empty, then apply the exact mirror solution.
-        await setMirror(firstMirror.key.x, firstMirror.key.y, (3 - wrongType) % 3);
-        for (final MapEntry<Point<int>, int> entry in solution.entries) {
+        // A two-mirror route the deal allows solves the board.
+        final List<Map<Point<int>, int>> routes =
+            _mirrorMazeLayoutsWithin(deal, 2);
+        expect(routes, isNotEmpty,
+            reason: 'the board on screen must be solvable in two mirrors');
+        final Map<Point<int>, int> route = routes.first;
+        expect(route.length, 2);
+        for (final MapEntry<Point<int>, int> entry in route.entries) {
           await setMirror(entry.key.x, entry.key.y, entry.value);
         }
 
@@ -694,11 +771,15 @@ Future<void> _teardown(WidgetTester tester) async {
   await tester.pump();
 }
 
-Map<Point<int>, int>? _solveMirrorMaze(
-  Point<int> startCell,
-  Point<int> startDir,
-  Point<int> targetCell,
-  Point<int> targetDir,
+/// Every layout of at most [maxMirrors] mirrors that wins [deal], found by
+/// walking the beam and pinning every cell it visits — an empty cell included —
+/// so the beam can never come back to a cell and decide it a second time.
+///
+/// Written from the rules rather than from [MirrorMazeGenerator], so the two can
+/// disagree. A reading that can only say "yes" is worth nothing.
+List<Map<Point<int>, int>> _mirrorMazeLayoutsWithin(
+  MirrorMazeDeal deal,
+  int maxMirrors,
 ) {
   Point<int> reflect(Point<int> dir, int mirror) {
     if (mirror == 1) return Point<int>(-dir.y, -dir.x);
@@ -706,57 +787,59 @@ Map<Point<int>, int>? _solveMirrorMaze(
     return dir;
   }
 
-  Map<Point<int>, int>? dfs(
-    Point<int> cur,
-    Point<int> incomingDir,
-    Map<Point<int>, int> mirrors,
-    Set<(Point<int>, Point<int>)> visited,
-    int maxMirrors,
+  final List<Map<Point<int>, int>> found = <Map<Point<int>, int>>[];
+
+  void walk(
+    Point<int> cell,
+    Point<int> incoming,
+    Map<Point<int>, int> pinned,
+    Set<(Point<int>, Point<int>)> seen,
   ) {
-    if (!visited.add((cur, incomingDir))) return null;
+    if (!seen.add((cell, incoming))) return;
+    final int? pin = pinned[cell];
+    final int used = pinned.values.where((int v) => v != 0).length;
+    final List<int> choices = pin != null
+        ? <int>[pin]
+        : (used < maxMirrors ? const <int>[0, 1, 2] : const <int>[0]);
 
-    final int? fixed = mirrors[cur];
-    final List<int> choices = fixed != null
-        ? <int>[fixed]
-        : (mirrors.length < maxMirrors ? const <int>[0, 1, 2] : const <int>[0]);
-
-    for (final int m in choices) {
-      final Point<int> outDir = reflect(incomingDir, m);
-      final Point<int> next = Point<int>(cur.x + outDir.x, cur.y + outDir.y);
-      final Map<Point<int>, int> nextMirrors = m == 0 || fixed != null
-          ? mirrors
-          : (<Point<int>, int>{...mirrors, cur: m});
+    for (final int mirror in choices) {
+      final Point<int> out = reflect(incoming, mirror);
+      final Point<int> next = Point<int>(cell.x + out.x, cell.y + out.y);
+      final Map<Point<int>, int> nextPinned =
+          pin != null ? pinned : (<Point<int>, int>{...pinned, cell: mirror});
 
       if (next.x < 0 || next.x >= 4 || next.y < 0 || next.y >= 4) {
-        if (cur == targetCell && outDir == targetDir && nextMirrors.isNotEmpty) {
-          return nextMirrors;
+        if (cell == deal.target && out == deal.targetDir) {
+          final Map<Point<int>, int> layout = <Point<int>, int>{
+            for (final MapEntry<Point<int>, int> e in nextPinned.entries)
+              if (e.value != 0) e.key: e.value,
+          };
+          if (!found.any((Map<Point<int>, int> other) =>
+              other.length == layout.length &&
+              other.entries.every(
+                  (MapEntry<Point<int>, int> e) => layout[e.key] == e.value))) {
+            found.add(layout);
+          }
         }
         continue;
       }
-
-      final Map<Point<int>, int>? found = dfs(
+      if (seen.contains((next, out))) continue;
+      walk(
         next,
-        outDir,
-        nextMirrors,
-        Set<(Point<int>, Point<int>)>.from(visited),
-        maxMirrors,
+        out,
+        nextPinned,
+        Set<(Point<int>, Point<int>)>.from(seen),
       );
-      if (found != null) return found;
     }
-    return null;
   }
 
-  for (int maxM = 1; maxM <= 5; maxM++) {
-    final Map<Point<int>, int>? found = dfs(
-      startCell,
-      startDir,
-      const <Point<int>, int>{},
-      <(Point<int>, Point<int>)>{},
-      maxM,
-    );
-    if (found != null) return found;
-  }
-  return null;
+  walk(
+    deal.start,
+    deal.startDir,
+    <Point<int>, int>{},
+    <(Point<int>, Point<int>)>{},
+  );
+  return found;
 }
 
 List<Point<int>> _rotatePiece(List<Point<int>> cells, int rotations) {
@@ -766,7 +849,9 @@ List<Point<int>> _rotatePiece(List<Point<int>> cells, int rotations) {
   }
   final int minR = result.map((Point<int> p) => p.x).reduce(min);
   final int minC = result.map((Point<int> p) => p.y).reduce(min);
-  return result.map((Point<int> p) => Point<int>(p.x - minR, p.y - minC)).toList();
+  return result
+      .map((Point<int> p) => Point<int>(p.x - minR, p.y - minC))
+      .toList();
 }
 
 List<({int rot, int r, int c})>? _solveTangram(
