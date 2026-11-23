@@ -49,28 +49,86 @@ here — they need their own hosts.
 
 ## Play Console: Data Safety answers
 
-Verified against the source, not assumed:
+**Entering and submitting this form is a human step in the Play Console.** No
+file or command in this repo can tick a box there. The answers below are what
+to tick, checked line by line against `lib/core/posthog.dart`, the only code we
+wrote that talks to a server. Store billing is the platform's own network call,
+not ours.
 
-- **Does your app collect or share any of the required user data types?** No.
-- **Is all of the user data collected by your app encrypted in transit?** N/A —
-  no data is transmitted.
-- **Do you provide a way for users to request that their data is deleted?**
-  Uninstalling the app or clearing its storage deletes everything.
+The form describes the app, not one build. The `1.1.0+16` binary reports itself
+at `kLiveStoreVersion`, so it sends nothing at all; the first build above that
+floor sends by default. Declare the analytics now, because the form is held
+against what the app can do, not against one binary.
 
-Basis for those answers:
+| Play question | Answer to tick |
+| --- | --- |
+| Does your app collect or share any of the required user data types? | Yes |
+| Data types | App activity: App interactions (in-app actions). Device or other IDs: an app scoped anonymous install id |
+| Collected or shared | Collected. Not shared: PostHog, Inc. (USA) is our processor under the EU Standard Contractual Clauses. If the console treats a processor as a third party, mark it shared with PostHog and change nothing else |
+| Ephemeral | No. Events are kept in PostHog |
+| Required or optional | Optional. On by default, switched off in Settings > Privacy > Share anonymous usage data |
+| Purpose | Analytics |
+| Linked to your identity | No. No account, no device id, no advertising id |
+| Encrypted in transit | Yes. HTTPS to `https://us.i.posthog.com/batch/` |
+| Deletion | Uninstalling the app or clearing its storage deletes the install id and the switch. Events already sent are erased on request at the contact address in `PRIVACY.md`. There is no in app delete button and no web form |
 
-- All state is local, via Hive and SharedPreferences: nickname, XP, level,
-  solve times, totals, per-game streaks, Daily Five progress and streaks, daily
-  pick and hint counters, favourites, hidden puzzles, difficulty preferences,
-  theme settings, and the local Puzzlestack Plus entitlement row.
-- In-app purchase (`puzzlestack_plus`, one-time non-consumable) uses platform
+### What the analytics module sends
+
+One JSON POST to `https://us.i.posthog.com/batch/`, fired and forgotten, with a
+five second ceiling and no retry. No SDK, no session recording, no heatmap, no
+crash reporter. The body is:
+
+```json
+{"api_key": "phc_...", "batch": [{"event": "puzzle_completed",
+  "distinct_id": "<random uuid stored on the device>",
+  "timestamp": "<ISO 8601 UTC>",
+  "properties": {"app": "puzzlestack", "platform": "android",
+    "locale": "en", "app_version": "1.1.0+17",
+    "$process_person_profile": false, "game_id": "sudoku",
+    "difficulty": "medium", "duration_bucket": "30_to_60s",
+    "duration_ms": 41520, "hints": "1", "assisted": false}}]}
+```
+
+- **Identifier:** a random UUID v4, made on the device at first launch and kept
+  in SharedPreferences as `posthog.install_id`. Not an account, not a device id,
+  not an advertising id, not derived from anything about the player. It is sent
+  as `distinct_id` and is what makes two events look like one install.
+- **Events:** `app_opened`, `puzzle_started`, `puzzle_completed`,
+  `first_value`, `daily_completed`, `paywall_viewed`, `purchase_started`,
+  `purchase_completed`, `purchase_restored`, `purchase_failed`, and
+  `settings_analytics_opt_out`.
+- **Properties:** `game_id`, `difficulty`, a duration bucket, the exact duration
+  in milliseconds, a hint count, `assisted`, the Plus sheet reason, and the
+  purchase result. Every key is filtered: a key matching
+  `email|name|token|password|secret|message|text|query|prompt|content|transcript|note`
+  is dropped before the payload is built.
+- **Never sent:** a board, a seed, an answer, a nickname, an email, a streak, a
+  solve history, a screen recording, an IP address the app chose.
+- **The switch:** on by default, off in Settings > Privacy > Share anonymous
+  usage data. Off is stored as `posthog.consent=false`; the next launch reads it
+  and sends nothing. Turning it off first sends one event that records the
+  choice, then stops.
+- **Key on or off:** the key is present in the build (`postHogKey`), so the
+  capability ships. Sending is still gated three ways: a build at or below
+  `kLiveStoreVersion` stays silent, the browser build sends nothing, and a
+  player's switch off stays off. A release build therefore starts reporting at
+  the first version above `1.1.0+16`, not in this one.
+- **The IP the network sees:** the app does not send one. PostHog sees the
+  connection address as any server does. Whether the PostHog project stores it
+  is a project setting (GeoIP), not something the repo can prove, so turn that
+  setting off. The policy in `PRIVACY.md` claims neither way.
+
+Everything else the app stores is local, via Hive and SharedPreferences:
+nickname, XP, level, solve times, totals, per game streaks, Daily Five progress
+and streaks, daily pick and hint counters, favourites, hidden puzzles,
+difficulty preferences, theme settings, and the local Puzzlestack Plus row.
+
+- In-app purchase (`puzzlestack_plus`, one time non-consumable) uses platform
   billing (`in_app_purchase`: Google Play Billing on Android, StoreKit on iOS).
   Apple and Google process the payment directly; Puzzlestack operates no server
   and receives no personal or payment data.
 - There is no developer server, advertising SDK, attribution SDK, or
-  crash-reporting SDK in `pubspec.yaml`. Anonymous usage events (PostHog, plain
-  HTTPS, no SDK) come from `lib/core/posthog.dart` and can be switched off in
-  Settings > Privacy; they carry no personal data, no board and no seed.
+  crash-reporting SDK in `pubspec.yaml`.
 - `android.permission.INTERNET` and `com.android.vending.BILLING` are used only
   by the platform store billing client and that one analytics module
   (`Shorebird` stays off for `1.1.0`).
@@ -93,7 +151,8 @@ and the Data Safety form together.
 `shorebird.yaml` is committed and bundled as an asset, but the
 `shorebird_code_push` package is **not** a dependency, and CI builds with plain
 `flutter build`. So shipped builds contain no Shorebird updater and make no
-network calls.
+Shorebird network calls. The only call any build makes is the analytics POST in
+the Data Safety section above.
 
 Turning Shorebird on means building via the Shorebird CLI instead of
 `flutter build`. That adds a launch-time patch check to Shorebird's servers,
@@ -178,8 +237,9 @@ version, same copy.
   the "313" in both descriptions are asserted in `test/content/store_images_test.dart`, but
   nobody has looked at the pictures: glance at the eight before uploading, and recapture the
   App Store set on a simulator when one is at hand.
-- **Play Data Safety form.** The answers above are verified against the source and ready to
-  enter; the console step is the one thing that cannot be done from the repo.
+- **Play Data Safety form.** The answers above are checked against the source and ready to
+  enter. Entering and submitting them is a human step in the Play Console; the repo cannot do
+  it.
 - **Shorebird `app_id`.** Still the pre-rename id. Harmless while no shipped build bundles the
   updater; create a new one if OTA is wanted at launch.
 - **First Play release.** `applicationId` changed during the rebrand, so this is a new listing

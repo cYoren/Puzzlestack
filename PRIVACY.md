@@ -29,16 +29,22 @@ are counted anonymously; that is the next section.
 
 We use PostHog (PostHog, Inc., USA) to understand how Puzzlestack is used, for
 example which puzzles are opened and where people stop. PostHog receives
-anonymous usage events, never your name, email or anything you type, and IP
-addresses are not stored. Data is transferred to the USA under the EU Standard
-Contractual Clauses. You can turn this off in Settings.
+anonymous usage events, never your name, your email, anything you type or a
+board. The app does not send your IP address; PostHog sees the connection
+address as any server does, and we do not use it to identify anyone. Data is
+transferred to the USA under the EU Standard Contractual Clauses. You can turn
+this off in Settings, under Privacy, with "Share anonymous usage data".
 
 The events are a short list: the app was opened, a puzzle was opened, a puzzle
-was finished (with a rough duration bucket and how many hints it took), today's
-Daily Five was finished, the Plus sheet was shown, and what came of a purchase.
-They carry a random identifier made on this device, the app version, the
-platform and the language. Never a board, a seed, an answer, your nickname or a
-solve time in exact form.
+was finished, today's Daily Five was finished, the first puzzle you ever
+finished, the Plus sheet was shown, what came of a purchase, and the switch
+being turned off. They carry a random identifier made on this device, the app
+version, the platform and the language. A finished puzzle adds a rough duration
+bucket, its exact length in milliseconds, how many hints it took and whether it
+was helped. Never a board, a seed, an answer or your nickname.
+
+Outside the store's own billing, this is the only network call the app makes.
+The rest of Puzzlestack works with no connection at all.
 
 ## In-app purchase
 
@@ -64,6 +70,10 @@ app, or clearing its storage through your device's settings, permanently
 deletes everything listed above. No copy is retained anywhere else. The
 anonymous usage events carry only the random identifier stored on the device,
 so once that identifier is gone the events can no longer be tied to it.
+
+If you want the events already sent to be erased before you uninstall, write to
+the contact address below and they are deleted. There is no delete button in the
+app and no web form.
 
 ## Links to other sites
 

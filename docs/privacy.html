@@ -40,8 +40,9 @@
   <p>This data never leaves your device. It is not uploaded to us or to anyone else, because Puzzlestack has no server to upload it to. The games you open and finish are counted anonymously; that is the next section.</p>
 
   <h2>Usage analytics</h2>
-  <p>We use PostHog (PostHog, Inc., USA) to understand how Puzzlestack is used, for example which puzzles are opened and where people stop. PostHog receives anonymous usage events, never your name, email or anything you type, and IP addresses are not stored. Data is transferred to the USA under the EU Standard Contractual Clauses. You can turn this off in Settings.</p>
-  <p>The events are a short list: the app was opened, a puzzle was opened, a puzzle was finished (with a rough duration bucket and how many hints it took), today's Daily Five was finished, the Plus sheet was shown, and what came of a purchase. They carry a random identifier made on this device, the app version, the platform and the language. Never a board, a seed, an answer, your nickname or a solve time in exact form.</p>
+  <p>We use PostHog (PostHog, Inc., USA) to understand how Puzzlestack is used, for example which puzzles are opened and where people stop. PostHog receives anonymous usage events, never your name, your email, anything you type or a board. The app does not send your IP address; PostHog sees the connection address as any server does, and we do not use it to identify anyone. Data is transferred to the USA under the EU Standard Contractual Clauses. You can turn this off in Settings, under Privacy, with &quot;Share anonymous usage data&quot;.</p>
+  <p>The events are a short list: the app was opened, a puzzle was opened, a puzzle was finished, today's Daily Five was finished, the first puzzle you ever finished, the Plus sheet was shown, what came of a purchase, and the switch being turned off. They carry a random identifier made on this device, the app version, the platform and the language. A finished puzzle adds a rough duration bucket, its exact length in milliseconds, how many hints it took and whether it was helped. Never a board, a seed, an answer or your nickname.</p>
+  <p>Outside the store's own billing, this is the only network call the app makes. The rest of Puzzlestack works with no connection at all.</p>
 
   <h2>In-app purchase</h2>
   <p>Puzzlestack offers one optional, one-time purchase (<code>Puzzlestack Plus</code>). When you buy or restore Puzzlestack Plus, the payment and receipt check are processed directly by Apple (App Store) or Google (Google Play) under their respective privacy policies. Puzzlestack never receives your name, billing address or payment details, and records only a local unlock flag on your device.</p>
@@ -55,8 +56,9 @@
     <li>It does not require an account or an internet connection to play.</li>
   </ul>
 
-  <h2>Deleting your data</h2>
+  <h2 id="deleting-your-data">Deleting your data</h2>
   <p>All Puzzlestack data is held in the app's own private storage. Uninstalling the app, or clearing its storage through your device's settings, permanently deletes everything listed above. No copy is retained anywhere else. The anonymous usage events carry only the random identifier stored on the device, so once that identifier is gone the events can no longer be tied to it.</p>
+  <p>If you want the events already sent to be erased before you uninstall, write to <a href="mailto:gustavo.cesar.marcelino4@gmail.com">gustavo.cesar.marcelino4@gmail.com</a> and they are deleted. There is no delete button in the app and no web form.</p>
 
   <h2>Links to other sites</h2>
   <p>Some screens link out to external pages, such as the project's source repository on GitHub or its store listing. Opening one hands off to your browser or store app, and those services have their own privacy policies. This policy covers only Puzzlestack itself.</p>
