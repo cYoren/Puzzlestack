@@ -328,8 +328,8 @@ vector_grid_alignment
 Notes
 - **Machine pass done, play pass pending** (`docs/TRIAGE-SPATIAL.md`). Layout clean at 320dp in both
   themes for all 32. 31 generators are unproven (a deal can be unsolvable or ambiguous);
-  `mirror_maze` is proved finishable, not unique, and deals from a counted 96 boards so check 5 is
-  open for it. 9 games have no rule test, 8 shout.
+  `mirror_maze` is proved finishable, not unique, and deals from a counted 160 boards on a 5x5
+  grid, enough for check 5. 9 games have no rule test, 8 shout.
 - `laser_link` and `mirror_maze` may be one puzzle. Triage decides.
 - `mirror_tracing` and `trace_path` are motor tasks; Library unless play says otherwise.
 
