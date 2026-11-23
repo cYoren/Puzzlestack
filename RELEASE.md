@@ -73,10 +73,13 @@ against what the app can do, not against one binary.
 | Deletion | Uninstalling the app or clearing its storage deletes the install id and the switch, so nothing further is sent. Events already sent carry only that random id, which no screen in the app displays, so a request to the contact address in `PRIVACY.md` is answered as best it can be with nothing to look up. There is no in app delete button and no web form |
 
 The Shorebird update check, from the first `shorebird release` build onward, is
-a second network call: it sends the app id, the app version, the platform and the
-release the build came from. Our reading is that none of that is a user data
-type, so the answers above stand; confirm that with the form open on the day it
-is entered, and do not tick the form from this file alone.
+a second network call: the app id, the app version, the platform and
+architecture, the channel, the release the build came from, the patch number and
+a random per-install id kept in the app's own storage. That id is the same class
+of thing the analytics row above already declares under "Device or other IDs",
+so it is covered by the answer there, but re-read the Deletion and
+Linked-to-identity rows against the form with it open: the id lives until
+uninstall or clear-data. Do not tick the form from this file alone.
 
 ### What the analytics module sends
 
@@ -174,11 +177,15 @@ on the Mac (CLI at `~/.local/bin/shorebird`; it reads `SHOREBIRD_TOKEN` from the
 ops vault, so `bwenv .config/shorebird/env -- shorebird …`):
 
 ```bash
-shorebird release android --release-version 1.1.0+16
-shorebird release ios     --release-version 1.1.0+16
+shorebird release android
+shorebird release ios
 ```
 
-Once that build is live, a Dart-only or asset-only fix ships without a review:
+The release takes its version from `pubspec.yaml` (`--release-version` is only for aar and
+ios-framework releases), so bump the version before releasing, not on the command line.
+
+Once that build is live, a Dart-only fix ships without a review (an asset change needs `--allow-asset-diffs` and the
+warning that comes with it):
 
 ```bash
 shorebird patch android --release-version 1.1.0+16
