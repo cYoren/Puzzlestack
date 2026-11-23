@@ -65,12 +65,12 @@ against what the app can do, not against one binary.
 | Does your app collect or share any of the required user data types? | Yes |
 | Data types | App activity: App interactions (in-app actions). Device or other IDs: an app scoped anonymous install id |
 | Collected or shared | Collected. Not shared: PostHog, Inc. (USA) is our processor under the EU Standard Contractual Clauses. If the console treats a processor as a third party, mark it shared with PostHog and change nothing else |
-| Ephemeral | No. Events are kept in PostHog |
+| Ephemeral | No. Events are kept in PostHog. Retention is a PostHog project setting, not something the repo can prove |
 | Required or optional | Optional. On by default, switched off in Settings > Privacy > Share anonymous usage data |
 | Purpose | Analytics |
 | Linked to your identity | No. No account, no device id, no advertising id |
 | Encrypted in transit | Yes. HTTPS to `https://us.i.posthog.com/batch/` |
-| Deletion | Uninstalling the app or clearing its storage deletes the install id and the switch. Events already sent are erased on request at the contact address in `PRIVACY.md`. There is no in app delete button and no web form |
+| Deletion | Uninstalling the app or clearing its storage deletes the install id and the switch, so nothing further is sent. Events already sent carry only that random id, which no screen in the app displays, so a request to the contact address in `PRIVACY.md` is answered as best it can be with nothing to look up. There is no in app delete button and no web form |
 
 ### What the analytics module sends
 
@@ -109,10 +109,10 @@ crash reporter. The body is:
   and sends nothing. Turning it off first sends one event that records the
   choice, then stops.
 - **Key on or off:** the key is present in the build (`postHogKey`), so the
-  capability ships. Sending is still gated three ways: a build at or below
-  `kLiveStoreVersion` stays silent, the browser build sends nothing, and a
-  player's switch off stays off. A release build therefore starts reporting at
-  the first version above `1.1.0+16`, not in this one.
+  capability ships. Sending is still gated on four conditions: the key is
+  present, the build is not the web build, the installed version is above
+  `kLiveStoreVersion`, and the player's switch is on. A release build therefore
+  starts reporting at the first version above `1.1.0+16`, not in this one.
 - **The IP the network sees:** the app does not send one. PostHog sees the
   connection address as any server does. Whether the PostHog project stores it
   is a project setting (GeoIP), not something the repo can prove, so turn that
@@ -123,15 +123,20 @@ nickname, XP, level, solve times, totals, per game streaks, Daily Five progress
 and streaks, daily pick and hint counters, favourites, hidden puzzles,
 difficulty preferences, theme settings, and the local Puzzlestack Plus row.
 
+The website has its own analytics, under the same PostHog project and the name
+`puzzlestack-web` (`docs/js/analytics.js`). It is not part of this form, which
+covers the Android app; it is disclosed in `PRIVACY.md` and `docs/privacy.html`.
+
 - In-app purchase (`puzzlestack_plus`, one time non-consumable) uses platform
   billing (`in_app_purchase`: Google Play Billing on Android, StoreKit on iOS).
   Apple and Google process the payment directly; Puzzlestack operates no server
   and receives no personal or payment data.
 - There is no developer server, advertising SDK, attribution SDK, or
   crash-reporting SDK in `pubspec.yaml`.
-- `android.permission.INTERNET` and `com.android.vending.BILLING` are used only
-  by the platform store billing client and that one analytics module
-  (`Shorebird` stays off for `1.1.0`).
+- `android.permission.INTERNET` is used by the platform billing client, the
+  review prompt (`in_app_review`) and that one analytics module.
+  `com.android.vending.BILLING` is merged in from `in_app_purchase`, not declared
+  in `android/`. `Shorebird` stays off for `1.1.0`.
 
 If any of that changes, update this file, `PRIVACY.md`, `docs/privacy.html`,
 and the Data Safety form together.
@@ -234,9 +239,10 @@ version, same copy.
 - **Store screenshots, eyes needed.** Captured on 2026-11-13 with `tool/screenshots.sh` on an
   Android 15 emulator (`emulator-5554`, wm size 1080×1920) and composed into both canvases:
   eight Play shots at 1080×1920 and eight App Store shots at 1290×2796. Sizes, existence and
-  the "313" in both descriptions are asserted in `test/content/store_images_test.dart`, but
-  nobody has looked at the pictures: glance at the eight before uploading, and recapture the
-  App Store set on a simulator when one is at hand.
+  the game count in both descriptions are asserted in `test/content/store_images_test.dart`,
+  which finds the `N puzzles` number and requires it to equal the visible count, 184. Nobody
+  has looked at the pictures: glance at the eight before uploading, and recapture the App
+  Store set on a simulator when one is at hand.
 - **Play Data Safety form.** The answers above are checked against the source and ready to
   enter. Entering and submitting them is a human step in the Play Console; the repo cannot do
   it.

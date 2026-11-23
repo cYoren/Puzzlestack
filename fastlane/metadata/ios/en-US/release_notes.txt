@@ -4,4 +4,4 @@ Puzzlestack 1.1.0 is the first store release. The feed is now the front door: op
 - Daily Five: five puzzles for the day, the same for everyone, with a streak and a plain text result to share.
 - The Stack: pick a game, its board size and its difficulty, and the app remembers your choice.
 - Puzzlestack Plus: one optional purchase, paid once, for unlimited picks, hints and the Daily Five archive.
-- Every board reads and plays with a screen reader. No ads, no account, no sign in.
+- Screen reader support on the boards that have it. No ads, no account, no sign in.

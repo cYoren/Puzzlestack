@@ -5,8 +5,10 @@
 Published at <https://cyoren.github.io/Puzzlestack/privacy.html>. The published page is
 `docs/privacy.html`; change both together.
 
-Puzzlestack is a collection of offline brain puzzles. It does not collect,
-transmit, or sell your personal data. There are no accounts and no advertising.
+Puzzlestack is a collection of offline brain puzzles. It does not sell your
+data, does not ask who you are, and has no accounts and no advertising. The one
+thing it sends is the anonymous usage described below, and you can switch that
+off.
 
 ## What Puzzlestack stores
 
@@ -43,8 +45,20 @@ version, the platform and the language. A finished puzzle adds a rough duration
 bucket, its exact length in milliseconds, how many hints it took and whether it
 was helped. Never a board, a seed, an answer or your nickname.
 
-Outside the store's own billing, this is the only network call the app makes.
-The rest of Puzzlestack works with no connection at all.
+Outside the store's own billing and review prompt, this is the only network
+call the app makes. The rest of Puzzlestack plays with no connection at all.
+
+## The website
+
+The pages at <https://cyoren.github.io/Puzzlestack/> count pageviews
+anonymously with the same PostHog project, under the name `puzzlestack-web`, so
+we can see which puzzles people look up. That is separate from the app events
+and carries a different random identifier. It uses no cookie and stores nothing
+in your browser: the identifier lives in the open page and dies when you close
+the tab, and nothing you type is read. Only the page path is sent, plus the name
+of the game when someone opens the puzzles in the browser. Blocking the site's
+`js/analytics.js`, or using a private window, stops it. The app's switch does
+not affect the website, and the website's script does not affect the app.
 
 ## In-app purchase
 
@@ -65,27 +79,28 @@ payment details, and records only a local unlock flag on your device.
 
 ## Deleting your data
 
-All Puzzlestack data is held in the app's own private storage. Uninstalling the
+All your progress is held in the app's own private storage. Uninstalling the
 app, or clearing its storage through your device's settings, permanently
-deletes everything listed above. No copy is retained anywhere else. The
-anonymous usage events carry only the random identifier stored on the device,
-so once that identifier is gone the events can no longer be tied to it.
+deletes everything listed above. No copy of it is retained anywhere else.
 
-If you want the events already sent to be erased before you uninstall, write to
-the contact address below and they are deleted. There is no delete button in the
-app and no web form.
+The usage events are different. They carry only the random install id, never a
+name or an email, and no screen in the app shows that id, so a request cannot be
+matched to a stored event. If you ask us to erase them, we answer as best we
+can with nothing to look up. What does stop the events is in your hands:
+switching analytics off in Settings stops everything further, and uninstalling
+removes the id from the device.
 
 ## Links to other sites
 
 Some screens link out to external pages, such as the project's source
 repository on GitHub or its store listing. Opening one hands off to your
 browser or store app, and those services have their own privacy policies. This
-policy covers only Puzzlestack itself.
+policy covers the app and its own website, not the pages they link to.
 
 ## Children's privacy
 
-Puzzlestack is suitable for general audiences. Because it collects no personal
-information from anyone, it collects none from children either.
+Puzzlestack is suitable for general audiences. Nothing it collects identifies
+anyone, so it collects nothing identifying from children either.
 
 ## Changes to this policy
 

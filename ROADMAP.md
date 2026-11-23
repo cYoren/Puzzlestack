@@ -58,11 +58,11 @@ pending has landed; the table says where, so nobody starts it again.
 
 | Job | PR | What it covers | Gate row it closes |
 | --- | --- | --- | --- |
-| `lab-hide` | #75 | 102 lab tasks archived, visible count 234 to 184 | G1 |
+| `lab-hide` | #75 | 102 lab ids archived in all: 24 Deck and 26 Library ids left the visible set, which went 234 to 184, and the other 52 were already archived | G1 |
 | `rule-tests` (`untested-sweep`) | #77, #80 | a test against its own rule for every kept game, with the registry held to the list | G3 |
 | `uniqueness` | #80 | every kept generator proves its deal, or is recorded as winnable and not unique | G4 |
 | `feed-size` | #77, #81 | one feed size per game through one mechanism; Ghost Tap and Rhythm Master got pools | G5 (mechanism; the medians are still owed) |
-| `accessibility-boards` | #78 | every board has a text form, read from the same tap path a finger uses | G2 (it is what lets a machine play) |
+| `accessibility-boards` | #78 | the board contract gained a text form read from the same tap path a finger uses; 29 of the 324 game folders render through it today | G2, partly (the rest is Remaining (c)) |
 | `plain-names` | #82 | plain titles, subtitles and goal lines for all 184 kept games | G2 (check 9) |
 | `l10n-kept-games` | #82 | missing keys for kept games across 23 locales; guides translate objective and controls | G12 |
 | `crossword-supply` | #82 | enough hand-clued 5x5 minis to deal | G2 |
@@ -78,7 +78,7 @@ pending has landed; the table says where, so nobody starts it again.
 | `swipe-rules` | #81 | header and footer always deal, board drags stay on the board, one card back | G12 |
 | `hints-deck` | #81 | every Think card has a hint that marks one deducible step | G2 (check 8) |
 | `store-copy` | #62 | both listings, the web shell, the Pages site and the README lead with the feed and the visible count | G8 |
-| `store-shots` | #52 | eight composed shots per store, every board mid solve, held by `test/content/store_images_test.dart` | G8 |
+| `store-shots` | #52 | eight composed shots per store, each one a board mid solve, held by `test/content/store_images_test.dart` | G8 |
 | `readme-docs` | #83 | README, PUZZLE_STYLE, GAME_DEV_GUIDE and CONTENT-AUDIT brought in line with PRODUCT.md | none; docs |
 | `posthog` | #84 | anonymous usage events, gated on the installed version, off in Settings | none; the Data Safety answers are in RELEASE.md |
 
@@ -95,27 +95,32 @@ half is done in every room, including the checks a machine can decide. The check
 person (a decision, a five-second read, about a minute) are `needs-play` everywhere. A game is
 verified by playing it on a built app and writing the verdict into CATALOG.md in a PR.
 
-**(c) G5, the feed-size medians.** The mechanism and the size table are in code. No timing is
+**(c) G2 and G12, accessibility: most boards are not on the text contract.** 29 of the 324
+game folders render through `PuzzleBoardView` with semantics, and no game screen adds `Semantics`
+of its own. The rest need porting to the contract. Until they are, no store copy may claim that
+every board plays with a screen reader.
+
+**(d) G5, the feed-size medians.** The mechanism and the size table are in code. No timing is
 recorded anywhere, and the gate asks for a measured median of 30 to 120 s per Deck game. Take the
 timings from the play pass, write them into the PR, and do not make a number up.
 
-**(d) G6, the device pass.** A person plays fifty dealt cards on a cheap Android and on an iPhone,
+**(e) G6, the device pass.** A person plays fifty dealt cards on a cheap Android and on an iPhone,
 times the cold start to a playable card, and looks at the deal holding 60 fps. Every stumble
 becomes a fix before the build. Nothing in the repo can stand in for this.
 
-**(e) G9, the Plus sandbox.** Buy, restore, and refund then revoke, on both stores, with a real
+**(f) G9, the Plus sandbox.** Buy, restore, and refund then revoke, on both stores, with a real
 sandbox account. The code handles all of it and the purchase funnel has tests, but no purchase has
 been made in a store sandbox.
 
-**(f) G11, the signed builds.** Signed builds for Play and the App Store from one commit, built on
+**(g) G11, the signed builds.** Signed builds for Play and the App Store from one commit, built on
 the Mac, and the iOS build opened from TestFlight. See RELEASE.md for the signing inputs.
 
-**(g) `ship`.** Submit the Play Data Safety answers in the console (a human step, prepared in
+**(h) `ship`.** Submit the Play Data Safety answers in the console (a human step, prepared in
 RELEASE.md), and create `puzzlestack_plus` in Play after the first 1.1.0+16 AAB upload, because
 that upload is what adds `com.android.vending.BILLING` to the listing. Both `gplay` commands are in
 RELEASE.md.
 
-**(h) After 1.1.0 is live.** Set `PLAY_ANDROID` and `PLAY_IOS` in `tool/gen_site.py`, regenerate
+**(i) After 1.1.0 is live.** Set `PLAY_ANDROID` and `PLAY_IOS` in `tool/gen_site.py`, regenerate
 the site, and verify the Google Search Console property. The `gsc` token currently carries only
 the `webmasters` scope and lacks `siteVerification`, so verification needs one re-consent.
 
@@ -132,7 +137,7 @@ Not started until the release is out. In this order.
    (the game playable in the browser), a page per room, a hub, and the guides as the unique text
    on each page, generated from the repo's own data (`game_guides.dart`, 323 guides, the registry,
    `docs/CATALOG.md`) with sitemap, robots, canonical URLs, JSON-LD and internal links. What is
-   left after the release is (h) above: flip the store links and verify Search Console.
+   left after the release is (i) above: flip the store links and verify Search Console.
 
 Notes kept from the old roadmap for the three optional Tatham ports, all of which need
 `lib/core/deduction.dart`: Black Box needs half-cell ray entry and deflection or it collapses

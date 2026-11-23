@@ -4,4 +4,4 @@ Puzzlestack 1.1.0 is the first store release, and the feed is the front door: op
 - Daily Five: five puzzles a day, a streak, and a result to share.
 - The Stack picks a game, its size and its difficulty.
 - Puzzlestack Plus: one purchase, paid once.
-- Every board plays with a screen reader. No ads, no account.
+- Screen reader support on the boards that have it. No ads, no account.
