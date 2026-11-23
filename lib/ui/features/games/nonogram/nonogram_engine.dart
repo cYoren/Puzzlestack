@@ -33,7 +33,8 @@ class NonogramEngine {
   /// So the bar is the stronger one, and it is also the cheaper one to check:
   /// if the line solver alone fills every cell, every filled cell was forced by
   /// the clues, so the answer is unique and reachable without guessing. Boards
-  /// that fail it are redrawn, which costs about 3 deals in 1000.
+  /// that fail it are redrawn, which costs about 7 deals in 1000 (3 of 400
+  /// measured at 6x6), so one redraw in 130.
   ///
   /// [random] exists so a test can deal the same boards twice; the app leaves
   /// it out and gets its own.
