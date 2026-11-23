@@ -59,7 +59,7 @@ light and `AUDIT_DARK=1`:
 | `mental_mapping` | Mental Mapping | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mental_rotation` | Mental Rotation | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mirror_image` | Mirror Image | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `mirror_maze` | Mirror Maze | deck | pass-fair-not-unique | deal-space(96) | audit-clean | pass | pass | pass | pass |
+| `mirror_maze` | Mirror Maze | deck | pass-fair-not-unique | pass-deal-space(160) | audit-clean | pass | pass | pass | pass |
 | `mirror_tracing` | Mirror Tracing | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `negative_space_detection` | Negative Space | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `paper_folding` | Paper Folding | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -80,7 +80,10 @@ light and `AUDIT_DARK=1`:
 **Measured deal spaces.** Check 5 reads "a generator" as fresh. These generators were
 counted instead of assumed, by enumerating the whole space rather than sampling it:
 
-- `mirror_maze`: 96 distinct boards, from 4x4, every start cell and direction x every layout of 0 to 3 mirrors, traced: 232 reachable, 136 of them winnable with fewer than two mirrors. One a day for 30 days is 30 deals, so freshness cannot hold as written.
+- `mirror_maze`: 160 distinct boards, from 5x5, every start cell and direction x every layout of 0 to 3 mirrors, traced: 372 reachable, 212 of them winnable with fewer than two mirrors. That is enough for 30 days without a repeat..
+
+A generated game binds on "the same puzzle is never dealt twice within 30 days",
+not on the bar's 200-round figure, which is for a fixed pool.
 
 ## What needs a fix job
 
@@ -89,7 +92,6 @@ its own change with its own test. Grouped by the job that fixes it, because the 
 usually one mechanism and not N edits.
 
 - **`uniqueness` — the generator must prove its deal (check 2)** — 31: `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `interlock_puzzle`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_mapping`, `mental_rotation`, `mirror_image`, `mirror_tracing`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `shadow_pivot`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`, `trace_path`, `vector_grid_alignment`
-- **`feed-size` — too few distinct deals for check 5 (counted, not estimated)** — 1: `mirror_maze`
 - **`rule-tests` — a test that fails if the content breaks the game (check 10)** — 1: `vector_grid_alignment`
 
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a

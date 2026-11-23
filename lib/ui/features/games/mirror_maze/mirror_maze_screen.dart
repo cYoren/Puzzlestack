@@ -24,7 +24,7 @@ class MirrorMazeScreen extends ConsumerStatefulWidget {
 }
 
 class _MirrorMazeScreenState extends ConsumerState<MirrorMazeScreen> {
-  final int _size = 4; // 4x4 grid
+  final int _size = mirrorMazeSize;
 
   late final MirrorMazeGenerator _generator;
   late MirrorMazeDeal _deal;
