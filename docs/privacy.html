@@ -25,7 +25,7 @@
 <body>
 <main>
   <h1>Privacy policy for Puzzlestack</h1>
-  <p class="date">Last updated: 22 November 2026</p>
+  <p class="date">Last updated: 23 November 2026</p>
 
   <p class="lede">Puzzlestack is a collection of offline brain puzzles. It does not sell your data, does not ask who you are, and has no accounts and no advertising. The one thing it sends is the anonymous usage described below, and you can switch that off.</p>
 
@@ -42,13 +42,16 @@
   <h2>Usage analytics</h2>
   <p>We use PostHog (PostHog, Inc., USA) to understand how Puzzlestack is used, for example which puzzles are opened and where people stop. PostHog receives anonymous usage events, never your name, your email, anything you type or a board. The app does not send your IP address; PostHog sees the connection address as any server does, and we do not use it to identify anyone. Data is transferred to the USA under the EU Standard Contractual Clauses. You can turn this off in Settings, under Privacy, with &quot;Share anonymous usage data&quot;.</p>
   <p>The events are a short list: the app was opened, a puzzle was opened, a puzzle was finished, today's Daily Five was finished, the first puzzle you ever finished, the Plus sheet was shown, what came of a purchase, and the switch being turned off. They carry a random identifier made on this device, the app version, the platform and the language. A finished puzzle adds a rough duration bucket, its exact length in milliseconds, how many hints it took and whether it was helped. Never a board, a seed, an answer or your nickname.</p>
-  <p>Outside the store's own billing and review prompt, this is the only network call the app makes. The rest of Puzzlestack plays with no connection at all.</p>
+  <p>Outside the store's own billing, the review prompt and the update check described further down, this is the only network call the app makes. The rest of Puzzlestack plays with no connection at all.</p>
 
   <h2>The website</h2>
   <p>The pages at <a href="https://cyoren.github.io/Puzzlestack/">cyoren.github.io/Puzzlestack</a> count pageviews anonymously with the same PostHog project, under the name <code>puzzlestack-web</code>, so we can see which puzzles people look up. That is separate from the app events and carries a different random identifier. It uses no cookie and stores nothing in your browser: the identifier lives in the open page and dies when you close the tab, and nothing you type is read. Only the page path is sent, plus the name of the game when someone opens the puzzles in the browser. Blocking the site's <code>js/analytics.js</code>, or using a private window, stops it. The app's switch does not affect the website, and the website's script does not affect the app.</p>
 
   <h2>In-app purchase</h2>
   <p>Puzzlestack offers one optional, one-time purchase (<code>Puzzlestack Plus</code>). When you buy or restore Puzzlestack Plus, the payment and receipt check are processed directly by Apple (App Store) or Google (Google Play) under their respective privacy policies. Puzzlestack never receives your name, billing address or payment details, and records only a local unlock flag on your device.</p>
+
+  <h2>App updates</h2>
+  <p>From the release that ships with the update service, Puzzlestack asks Shorebird (Shorebird, Inc., USA) at launch whether a newer version of its own Dart code exists for the build you have installed. The request carries the app id, the app version, the platform and the release the build came from, plus the connection address as any server sees it. It carries no account, no nickname, no puzzle data and no identifier stored on your device. If a newer version exists it is downloaded and applied the next time you open the app. Playing offline is unaffected: the check fails quietly and the installed build keeps working. Builds older than that have no updater in them and make no such request.</p>
 
   <h2>What Puzzlestack does not do</h2>
   <ul>
