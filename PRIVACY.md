@@ -70,14 +70,18 @@ payment details, and records only a local unlock flag on your device.
 
 ## App updates
 
-From the release that ships with the update service, Puzzlestack asks Shorebird
-(Shorebird, Inc., USA) at launch whether a newer version of its own Dart code
-exists for the build you have installed. The request carries the app id, the app
-version, the platform and the release the build came from, plus the connection
-address as any server sees it. It carries no account, no nickname, no puzzle
-data and no identifier stored on your device. If a newer version exists it is
-downloaded and applied the next time you open the app. Playing offline is
-unaffected: the check fails quietly and the installed build keeps working.
+From the release that ships with the update service, Puzzlestack asks
+Shorebird (Shorebird, Inc., USA) at launch whether a newer version of its own
+Dart code exists for the build you have installed. The request carries the app
+id, the app version, the platform and architecture, the update channel, the
+release the build came from and the patch you are running, if any. It also
+carries an install id: a random value generated on this device and kept in the
+app's own storage, unique to this app, never linked to you and shown nowhere
+in the app, and deleted when you uninstall the app or clear its data.
+Shorebird sees the connection address as any server sees it. No account, no
+nickname, no puzzle data, nothing you type or play. If a newer version exists
+it is downloaded and applied the next time you open the app. Playing offline
+is unaffected: the check fails quietly and the installed build keeps working.
 Builds older than that have no updater in them and make no such request.
 
 ## What Puzzlestack does not do

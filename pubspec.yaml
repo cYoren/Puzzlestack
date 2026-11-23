@@ -39,7 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   # Over-the-air code push. A release build packages a Shorebird updater only
   # when the build is produced by the Shorebird CLI (`shorebird release`, see
-  # the OTA section in AGENTS.md); this package lets the app read patch state
+  # the OTA section in RELEASE.md); this package lets the app read patch state
   # and ask for an update on demand instead of waiting for the next launch.
   shorebird_code_push: ^2.0.7
   flutter_riverpod: ^2.5.1
