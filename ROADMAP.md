@@ -86,8 +86,11 @@ pending has landed; the table says where, so nobody starts it again.
 
 In order. Nothing here is a wave, and nothing here is a job for a Flash agent alone.
 
-**(a) CI red on the `mirror_maze` test.** CI fails on that one test today, and the fix is in a
-parallel PR. Until it merges the tree is not green, and no release build should be cut from it.
+**(a) CI is green again.** The `mirror_maze` failure is fixed in #86. A tap cycles a cell
+`empty`, `/`, `\`, so the test's "wrong mirror" tap installed the correct angle, the board solved
+and the screen froze it. The game now deals boards that cannot be won with fewer than two mirrors,
+and the test enumerates boards instead of trusting one random deal. Main is green at `c344ea6c`,
+so a release build may be cut from it.
 
 **(b) G2, the play pass: no game is verified.** None of the 184 games is marked verified in
 `docs/CATALOG.md`, and all six `docs/TRIAGE-*.md` say the play pass is still owed. The machine
@@ -103,6 +106,8 @@ every board plays with a screen reader.
 **(d) G5, the feed-size medians.** The mechanism and the size table are in code. No timing is
 recorded anywhere, and the gate asks for a measured median of 30 to 120 s per Deck game. Take the
 timings from the play pass, write them into the PR, and do not make a number up.
+`mirror_maze` is the one known thin pool: it deals from 96 distinct boards, counted by enumeration,
+so check 5 cannot hold as written. Widen the board rather than move the game down a tier.
 
 **(e) G6, the device pass.** A person plays fifty dealt cards on a cheap Android and on an iPhone,
 times the cold start to a playable card, and looks at the deal holding 60 fps. Every stumble
