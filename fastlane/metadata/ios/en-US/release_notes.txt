@@ -1,5 +1,7 @@
-Puzzlestack 1.1.0 brings the full feed and Daily Five release:
-- The Deal: swipe through 115 verified one-minute puzzle cards in a balanced rhythm.
-- Daily Five: five seeded puzzles each day, streak tracking, and plain-text result sharing.
-- Stack chooser: pick any of 184 brain puzzles across six rooms with saved board sizes and difficulty tiers.
-- Puzzlestack Plus: one optional, one-time unlock for unlimited daily picks, hints, and the Daily Five archive. No ads, no account.
+Puzzlestack 1.1.0 is the first store release. The feed is now the front door: open the app and a puzzle is already on screen. Swipe up and the next card is dealt.
+
+- 184 puzzles across six rooms, dealt one card at a time in a steady rhythm.
+- Daily Five: five puzzles for the day, the same for everyone, with a streak and a plain text result to share.
+- The Stack: pick a game, its board size and its difficulty, and the app remembers your choice.
+- Puzzlestack Plus: one optional purchase, paid once, for unlimited picks, hints and the Daily Five archive.
+- Screen reader support on the boards that have it. No ads, no account, no sign in.
