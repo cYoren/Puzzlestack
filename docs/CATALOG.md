@@ -124,8 +124,9 @@ Notes
   the first tap is mine-free, and the deal is accepted only if reading the numbers finishes it.
 - `nonogram` proves its deal before it is dealt (`nonogram-uniqueness`, #47): the generator
   retries up to 500 grids and throws rather than ship one with a second answer, and it also
-  refuses a grid its own line solver cannot finish (measured: 3 grids in 1000 at 6x6 are unique
-  but need a guess), so every deal falls to deduction at level 1.
+  refuses a grid its own line solver cannot finish. Measured at 6x6: 3 of 400 deals are unique
+  but need a guess, so about 1 deal in 130 has to be redrawn, and every deal that ships falls
+  to deduction at level 1.
 
 ## Math (63)
 
