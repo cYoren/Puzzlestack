@@ -105,10 +105,17 @@ See [RELEASE.md](RELEASE.md) for build and signing, the Play Data Safety
 answers, and the store listing assets. [PRIVACY.md](PRIVACY.md) is the privacy
 policy; [SCREENSHOTS.md](SCREENSHOTS.md) covers regenerating store screenshots.
 
-## License
+## License, name and paid builds
 
 GPL-3.0. See [LICENSE](LICENSE).
 
 Puzzlestack is a modified derivative of [Puzzle](https://github.com/sidhant947/Puzzle)
 by Sidhant Khatkar, also GPL-3.0. See [NOTICE](NOTICE) for the attribution and
 the list of modifications.
+
+The paid build on the stores is this same GPL code: anyone may rebuild it from this repository, and
+that is allowed. What the licence does not grant is the name, the logo, the icon or the store
+listing, so a fork ships under its own name and icon.
+
+Contributions come in under the terms in [CONTRIBUTING.md](CONTRIBUTING.md): a licence grant plus a
+sign-off, one set of terms for everything added from now on.
