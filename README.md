@@ -1,6 +1,6 @@
 # Puzzlestack
 
-A cross-platform suite of **184 playable brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
+A cross-platform deck of **playable brain puzzles**, built with Flutter. Logic, math, memory, spatial, attention and word games, all in one clean, authoritative app, on Android, iOS, web, Windows, macOS and Linux.
 
 Two ideas sit at the heart of Puzzlestack:
 
@@ -8,7 +8,7 @@ Two ideas sit at the heart of Puzzlestack:
    where it lands; swipe up and the next card is dealt. The deck deals verified one-minute
    puzzles in a balanced rhythm (`Think, Word, Think, Snap`), with a seeded **Daily Five**
    that is the same for everyone each day. Solving a card offers one thing: the next card.
-2. **The stack.** When you know what you want, the second room files all **184** playable
+2. **The stack.** When you know what you want, the second room files every playable
    puzzles across six rooms with Daily Five, quick play, search, and per-game size and
    difficulty choices. Three picks and three hints a day are free; **Puzzlestack Plus** is
    one optional, one-time unlock for unlimited picks, hints, and the Daily Five archive.
@@ -18,7 +18,7 @@ live colour (indigo) that only appears where something is active. See [DESIGN.md
 
 ---
 
-## The 184 games, by category
+## The games, by category
 
 - **Logic (62):** Sudoku, Slitherlink, Kakuro, Nonogram, Minesweeper, Akari, Hitori, Bridges, Water Sort, Lights Out, Pegs, Twiddle, Galaxies, Ripple Effect, Mathrax, Salad, Bricks, Rome, Crossing and more.
 - **Math (44):** 2048, KenKen, Magic Squares, Prime Hunter, Fraction Match, Quick Math, Sum Pyramid and more.
@@ -56,14 +56,14 @@ Cross-platform by design: a single Flutter/Dart codebase runs on Android, iOS, w
 ## Website
 
 `docs/` is the website, served by GitHub Pages at <https://cyoren.github.io/Puzzlestack/>:
-one page per puzzle (184), a page per room, an index and a hub, in the shape of a search-first
+one page per puzzle, a page per room, an index and a hub, in the shape of a search-first
 puzzle site. Every page carries the app's own guide text, the English title and one line, and
 metadata (`canonical`, Open Graph, `BreadcrumbList`, `SoftwareApplication`, `FAQPage`).
 
 It is generated, never hand-edited:
 
 ```bash
-dart run tool/site_export.dart   # tool/site/games.json: the 184 playable games, from the repo
+dart run tool/site_export.dart   # tool/site/games.json: the playable games, from the repo
 python3 tool/gen_site.py         # docs/: 238 pages, sitemap.xml, robots.txt, fonts
 flutter test test/content/site_test.dart   # every game has a page, every link resolves
 tool/deploy_pages.sh             # build the browser app, publish both to gh-pages
