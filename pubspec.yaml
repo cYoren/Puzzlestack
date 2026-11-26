@@ -137,9 +137,7 @@ flutter_launcher_icons:
   ios: true
   remove_alpha_ios: true
   web:
-    generate: true
-    background_color: "#0A0A0A"
-    theme_color: "#0A0A0A"
+    generate: false # tool/icon.py owns the favicon; keep the checked-in PWA assets.
   windows:
     generate: true
     icon_size: 256
