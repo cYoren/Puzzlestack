@@ -1,5 +1,23 @@
 # Puzzlestack roadmap
 
+## Current priority (2026-11-26)
+
+The product is ready for release work. Do not expand the catalogue or start another feature
+track. Close the proof gates for 1.1.0 in this order:
+
+1. G2: play and verify every Deck candidate, moving anything that fails to Library or archive.
+2. G5: record feed-size medians for every Deck game.
+3. G6: complete the cheap-Android and iPhone device pass.
+4. G9: complete Plus purchase, restore, refund, and entitlement revocation on both stores.
+5. G11: build signed Play and App Store binaries from one commit and open the iOS build from
+   TestFlight.
+6. Submit only after the Play data-safety form, store metadata, and final site links are
+   generated from the released registry.
+
+G1, G3, G4, G7, G8, G10, and G12 are implementation gates; keep them green while closing the
+   hardware and store gates. New puzzles, optional ports, and catalogue growth are parked until
+   after 1.1.0 and a real release review.
+
 The goal: **a feed of real puzzles, where every card dealt is good.** Why and for whom:
 [docs/PRODUCT.md](docs/PRODUCT.md). What "good" means: [docs/PUZZLE-BAR.md](docs/PUZZLE-BAR.md).
 
