@@ -46,6 +46,7 @@ Those are gone. A heading carries its own weight; a card carries its own label.
 `DeckMark`, at icon scale. Android's adaptive foreground is the mark inside the 66% safe zone on
 a paper field, so a circular mask never cuts a card. Regenerate with
 `uv run --with pillow python3 tool/icon.py` then `dart run flutter_launcher_icons`.
+The Python script also writes the rounded browser favicon. The launcher command leaves the web assets alone.
 
 ## The card
 

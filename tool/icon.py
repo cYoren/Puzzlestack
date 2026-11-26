@@ -7,7 +7,7 @@ indigo — because that is the whole palette of the app (see DESIGN.md).
 
     uv run --with pillow python3 tool/icon.py
 
-Writes assets/icon/puzzlestack_icon.png (1024) and assets/icon/mark_1024.png.
+Writes the master icon assets and the rounded browser favicon.
 The launcher icons themselves are generated from that file by
 `dart run flutter_launcher_icons`.
 """
@@ -19,6 +19,7 @@ PROJECT = Path(__file__).resolve().parent.parent
 OUT = PROJECT / "assets/icon/puzzlestack_icon.png"
 MARK = PROJECT / "assets/icon/mark_1024.png"
 FOREGROUND = PROJECT / "assets/icon/foreground_1024.png"
+FAVICON = PROJECT / "web/favicon.png"
 
 S = 1024
 PAPER = (235, 230, 216, 255)   # design_system paper
@@ -58,6 +59,12 @@ def main():
     # Light icon: paper field, ink cards behind, the live card in indigo.
     light = cards(S, PAPER, INK, SIGNAL)
     light.convert("RGB").save(OUT, optimize=True)
+
+    mask = Image.new("L", (S, S))
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, S - 1, S - 1), radius=round(S * 0.22), fill=255)
+    browser_icon = light.copy()
+    browser_icon.putalpha(mask)
+    browser_icon.resize((32, 32), Image.LANCZOS).save(FAVICON, optimize=True)
 
     # A transparent mark for docs and the wordmark, no field.
     mark = Image.new("RGBA", (S, S), (0, 0, 0, 0))
