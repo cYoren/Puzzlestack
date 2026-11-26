@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 
 import '../data/key_value_store.dart';
 import '../data/purchase/plus_controller.dart';
@@ -15,7 +16,12 @@ final Provider<KeyValueStore> plusStoreProvider = Provider<KeyValueStore>(
 ///
 /// A widget test never does, so no test ever touches a platform channel.
 final Provider<PlusGateway Function()> plusGatewayProvider =
-    Provider<PlusGateway Function()>((ref) => InAppPurchaseGateway.new);
+    Provider<PlusGateway Function()>((ref) {
+  final bool storeSupported = !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS);
+  return storeSupported ? InAppPurchaseGateway.new : UnavailablePlusGateway.new;
+});
 
 /// The app's only source of truth for "is Plus owned".
 ///

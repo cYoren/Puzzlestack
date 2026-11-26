@@ -112,6 +112,29 @@ abstract class PlusGateway {
   Future<void> dispose();
 }
 
+/// Desktop and web builds have no store plugin. Keeping that fact behind the
+/// same interface lets the app launch and lets a desktop test build render the
+/// Plus surfaces without touching an uninitialised platform channel.
+class UnavailablePlusGateway implements PlusGateway {
+  @override
+  Stream<PurchaseEvent> get events => const Stream<PurchaseEvent>.empty();
+
+  @override
+  Future<PurchaseAnswer> buy() async => PurchaseAnswer.storeUnavailable;
+
+  @override
+  Future<void> completePurchase(PurchaseEvent event) async {}
+
+  @override
+  Future<String?> price() async => null;
+
+  @override
+  Future<RestoreAnswer> restore() async => RestoreAnswer.noAnswer;
+
+  @override
+  Future<void> dispose() async {}
+}
+
 /// The real store: `in_app_purchase`, one non-consumable.
 ///
 /// The purchase stream is subscribed in the constructor and kept until
