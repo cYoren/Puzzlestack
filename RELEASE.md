@@ -55,7 +55,7 @@ to tick, checked line by line against `lib/core/posthog.dart`, the only code we
 wrote that talks to a server. Store billing is the platform's own network call,
 not ours.
 
-The form describes the app, not one build. The `1.1.0+16` binary reports itself
+The form describes the app, not one build. The `1.1.1+17` binary reports itself
 at `kLiveStoreVersion`, so it sends nothing at all; the first build above that
 floor sends by default. Declare the analytics now, because the form is held
 against what the app can do, not against one binary.
@@ -121,7 +121,7 @@ crash reporter. The body is:
   capability ships. Sending is still gated on four conditions: the key is
   present, the build is not the web build, the installed version is above
   `kLiveStoreVersion`, and the player's switch is on. A release build therefore
-  starts reporting at the first version above `1.1.0+16`, not in this one.
+  starts reporting at the first version above `1.1.1+17`, not in this one.
 - **The IP the network sees:** the app does not send one. PostHog sees the
   connection address as any server does. Whether the PostHog project stores it
   is a project setting (GeoIP), not something the repo can prove, so turn that
@@ -159,7 +159,7 @@ and the Data Safety form together.
 | Type | Non-consumable (one-time purchase) |
 | Base price | US$4.99 (175 App Store territories / 174 Google Play regions) |
 | App Store Connect | Created (`6836154241`, `READY_TO_SUBMIT`, review screenshot attached) |
-| Google Play | Create and activate immediately after uploading the first `1.1.0+16` AAB (which adds `com.android.vending.BILLING`): `gplay onetimeproducts create --package com.medhub.puzzlestack --product-id puzzlestack_plus --json @tool/play_puzzlestack_plus.json --regions-version "2026/01"` followed by `gplay purchase-options batch-update-states --package com.medhub.puzzlestack --product-id puzzlestack_plus --json '{"requests":[{"activatePurchaseOptionRequest":{"packageName":"com.medhub.puzzlestack","productId":"puzzlestack_plus","purchaseOptionId":"default"}}]}'` |
+| Google Play | Create and activate immediately after uploading the first `1.1.1+17` AAB (which adds `com.android.vending.BILLING`): `gplay onetimeproducts create --package com.medhub.puzzlestack --product-id puzzlestack_plus --json @tool/play_puzzlestack_plus.json --regions-version "2026/01"` followed by `gplay purchase-options batch-update-states --package com.medhub.puzzlestack --product-id puzzlestack_plus --json '{"requests":[{"activatePurchaseOptionRequest":{"packageName":"com.medhub.puzzlestack","productId":"puzzlestack_plus","purchaseOptionId":"default"}}]}'` |
 
 ## Shorebird (OTA updates)
 
@@ -188,8 +188,8 @@ Once that build is live, a Dart-only fix ships without a review (an asset change
 warning that comes with it):
 
 ```bash
-shorebird patch android --release-version 1.1.0+16
-shorebird patch ios     --release-version 1.1.0+16
+shorebird patch android --release-version 1.1.1+17
+shorebird patch ios     --release-version 1.1.1+17
 ```
 
 What a patch cannot do: change native code, the manifest or the plist, or the
