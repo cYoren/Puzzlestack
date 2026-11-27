@@ -55,7 +55,7 @@ const String postHogApp = 'puzzlestack';
 /// The version this source tree is. Only the test that keeps it equal to
 /// `pubspec.yaml` reads it: what an event reports is the *installed native*
 /// version ([PostHog.nativeVersion]), so a patch cannot claim a newer build.
-const String postHogBuildVersion = '1.1.0';
+const String postHogBuildVersion = '1.1.1';
 
 /// The release live on the stores when this file was written, **version and
 /// build number together**, because that pair is what identifies a binary.

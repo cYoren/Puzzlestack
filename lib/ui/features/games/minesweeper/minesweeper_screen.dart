@@ -52,13 +52,13 @@ class _MinesweeperScreenState extends ConsumerState<MinesweeperScreen> {
         builder: (context, constraints) {
           return Column(
             children: [
-              const SizedBox(height: DesignSystem.spaceSM),
+              const SizedBox(height: 4),
               _buildHeader(state),
-              const Spacer(),
-              _buildBoard(state, notifier, constraints.maxHeight * 0.55),
-              const Spacer(),
+              const SizedBox(height: 4),
+              _buildBoard(state, notifier, constraints.maxHeight * 0.45),
+              const SizedBox(height: 4),
               _buildControls(),
-              const SizedBox(height: DesignSystem.spaceLG),
+              const SizedBox(height: DesignSystem.spaceSM),
             ],
           );
         },
@@ -172,8 +172,10 @@ class _MinesweeperScreenState extends ConsumerState<MinesweeperScreen> {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: DesignSystem.spaceSM,
+        runSpacing: DesignSystem.spaceSM,
         children: [
           _buildModeButton(
             icon: Icons.ads_click_rounded,
@@ -184,7 +186,6 @@ class _MinesweeperScreenState extends ConsumerState<MinesweeperScreen> {
               setState(() => _isFlagMode = false);
             },
           ),
-          const SizedBox(width: DesignSystem.spaceMD),
           _buildModeButton(
             icon: Icons.flag_rounded,
             label: l10n.minesweeperFlag,

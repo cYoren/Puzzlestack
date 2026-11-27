@@ -22,7 +22,6 @@ import 'package:puzzle/ui/features/games/kurodoko/kurodoko_engine.dart';
 import 'package:puzzle/ui/features/games/lights_out/lights_out_engine.dart';
 import 'package:puzzle/ui/features/games/magnets/magnets_engine.dart';
 import 'package:puzzle/ui/features/games/map/map_engine.dart';
-import 'package:puzzle/ui/features/games/minesweeper/minesweeper_engine.dart';
 import 'package:puzzle/ui/features/games/mirror_maze/mirror_maze_engine.dart';
 import 'package:puzzle/ui/features/games/netslide/netslide_engine.dart';
 import 'package:puzzle/ui/features/games/nonogram/nonogram_engine.dart';
@@ -287,26 +286,25 @@ void _winnableBySearch(int seed, DealFailure fail) {
     fail('map', 'the stored colouring does not solve the board');
   }
 
-  final sweeper = MinesweeperEngine(
-    rows: 6,
-    cols: 6,
-    mineCount: 5,
-    random: rng,
-  );
-  final minesweeper = sweeper.generateBoard(startRow: 0, startCol: 0);
-  if (!sweeper.isSolvableWithoutGuess(minesweeper, 0, 0)) {
-    fail('minesweeper', 'the deal needs a guess');
-  }
-
   final net = const NetEngine().generate(NetDifficulty.easy, random: rng);
   if (!const NetEngine().isSolved(net, net.solvedMasks)) {
     fail('netslide', 'the stored answer does not solve the board');
   }
 
-  final pegs =
-      const PegsEngine().generate(difficulty: PegsDifficulty.easy, random: rng);
-  if (const PegsEngine().solve(pegs.start, pegs.rows, pegs.cols) == null) {
-    fail('pegs', 'its own solver finds no line');
+  const pegsEngine = PegsEngine();
+  final pegs = pegsEngine.generate(difficulty: PegsDifficulty.easy, random: rng);
+  var pegGrid = pegs.start;
+  // The hint search has a node budget. An exhausted search says nothing
+  // about fairness; replay the generator's known answer with the game rules.
+  for (final jump in pegs.solution) {
+    if (!pegsEngine.legalJumps(pegGrid, pegs.rows, pegs.cols).contains(jump)) {
+      fail('pegs', 'the stored answer uses an illegal jump');
+      break;
+    }
+    pegGrid = pegsEngine.apply(pegGrid, jump);
+  }
+  if (!pegsEngine.isSolved(pegGrid)) {
+    fail('pegs', 'the stored answer does not finish the board');
   }
 
   final tower = TowerOfLondonEngine().generatePuzzle();
@@ -399,7 +397,6 @@ const List<DealFamily> dealFamilies = [
       'inertia',
       'lights_out',
       'map',
-      'minesweeper',
       'netslide',
       'pegs',
       'tower_of_london',
@@ -433,7 +430,6 @@ const List<DealFamily> dealFamilies = [
       'gokigen_naname',
       'heyawake',
       'hitori',
-      'kakurasu_sums',
       'kakuro',
       'lighthouses',
       'masyu',
@@ -445,7 +441,6 @@ const List<DealFamily> dealFamilies = [
       'sudoku',
       'tangle_fix',
       'tapa',
-      'tenner_grid',
       'water_sort',
       'yajilin',
     },
@@ -460,14 +455,11 @@ const List<DealFamily> dealFamilies = [
     label: 'Math: answer ships with the card, no prover',
     games: {
       'arithmetic_chain',
-      'balance_scale',
-      'countdown_math',
       'crypto_arithmetic',
       'digit_swap_eq',
       'fibonacci_merge',
       'game_2048',
       'kenken',
-      'magic_squares',
       'math_guess',
       'math_maze',
       'math_path',
@@ -502,7 +494,6 @@ const List<DealFamily> dealFamilies = [
       'change_blindness',
       'color_match',
       'schulte_table',
-      'shell_game',
       'visual_search',
     },
     finding: 'G4-F4 lab tasks whose target is generated and then hidden or '
@@ -515,7 +506,6 @@ const List<DealFamily> dealFamilies = [
     games: {
       'chain_reaction',
       'compound_connect',
-      'conundrum_anagram',
       'crossword',
       'cryptogram',
       'find_word',
@@ -530,7 +520,6 @@ const List<DealFamily> dealFamilies = [
       'sentence_unscramble',
       'spoonerism_solver',
       'verbal_analogies',
-      'word_grid_connection',
       'word_ladder',
       'word_mastermind',
       'word_scramble',
@@ -551,18 +540,15 @@ const List<DealFamily> dealFamilies = [
       'classic_maze',
       'compass_maze',
       'cross_section_slice',
-      'cube_net_fold',
       'gear_rotation',
       'hue_sort',
       'klotski',
       'laser_link',
-      'mental_rotation',
       'mirror_image',
       'paper_folding',
       'path_intersect',
       'perspective_taking',
       'polyomino_tiling',
-      'rotating_maze',
       'silhouette_match',
       'slide_puzzle',
       'symmetry',

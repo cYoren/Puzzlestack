@@ -77,9 +77,7 @@ class _SumSnakeScreenState extends ConsumerState<SumSnakeScreen> {
               child: Column(
                 children: [
                   _buildHeader(state),
-                  const Spacer(),
-                  _buildGrid(state, notifier),
-                  const Spacer(),
+                  Expanded(child: Center(child: _buildGrid(state, notifier))),
                   _buildControls(notifier),
                   const SizedBox(height: DesignSystem.space2XL),
                 ],

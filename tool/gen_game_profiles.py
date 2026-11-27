@@ -34,6 +34,16 @@ ROOMS = {
 # to `lab`. CATALOG.md states these defaults; triage corrects individual rows with a note.
 LAB_ROOMS = {"MEMORY", "ATTENTION"}
 
+# These Math and Word games moved to Library for layout reasons. Their rules
+# did not change, so keep their puzzle origin and the fairness check it entails.
+LIBRARY_PUZZLES = {
+    "balance_scale",
+    "conundrum_anagram",
+    "countdown_math",
+    "magic_squares",
+    "word_grid_connection",
+}
+
 # Where the catalog overrides its own defaults: an archive entry with a reason other than
 # `no-game`. Keep this list short and say why, because each line is a claim about a game.
 ARCHIVE_REASONS = {
@@ -119,10 +129,12 @@ def parse_catalog(text: str) -> dict[str, dict[str, str]]:
     return games
 
 
-def origin_for(entry: dict[str, str]) -> str:
+def origin_for(game_id: str, entry: dict[str, str]) -> str:
     room, tier = entry["room"], entry["tier"]
     if room in LAB_ROOMS:
         return "lab"
+    if tier == "library" and game_id in LIBRARY_PUZZLES:
+        return "puzzle"
     if room == "MATH" and tier in {"library", "archive"}:
         return "worksheet"
     if room == "WORD" and tier == "library":
@@ -220,7 +232,7 @@ def main() -> int:
         parts = [
             f"tier: GameTier.{tier}",
             f"kind: CardKind.{kind_for(entry)}",
-            f"origin: GameOrigin.{origin_for(entry)}",
+            f"origin: GameOrigin.{origin_for(game_id, entry)}",
         ]
         if family:
             parts.append(f"family: '{family}'")

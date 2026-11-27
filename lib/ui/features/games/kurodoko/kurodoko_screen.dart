@@ -136,38 +136,41 @@ class _DifficultyRow extends StatelessWidget {
       KurodokoDifficulty.hard: l10n.difficultyHard,
     };
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (final difficulty in KurodokoDifficulty.values)
-          Padding(
-            // Four, not a design token: three buttons plus their padding have
-            // to fit a 320dp phone, and the tokens are too generous for that.
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: TangibleButton(
-              color: difficulty == selected
-                  ? DesignSystem.primary
-                  : Theme.of(context).colorScheme.surface,
-              shadowColor: Theme.of(context).colorScheme.outline,
-              onTap: () => onSelected(difficulty),
-              padding: const EdgeInsets.symmetric(
-                horizontal: DesignSystem.spaceMD,
-                vertical: DesignSystem.spaceXS,
-              ),
-              child: Text(
-                labels[difficulty]!,
-                style: TextStyle(
-                  fontSize: DesignSystem.fontSizeXS,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.6,
-                  color: difficulty == selected
-                      ? Colors.white
-                      : Theme.of(context).colorScheme.onSurface,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (final difficulty in KurodokoDifficulty.values)
+            Padding(
+              // Four, not a design token: three buttons plus their padding have
+              // to fit a 320dp phone, and the tokens are too generous for that.
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: TangibleButton(
+                color: difficulty == selected
+                    ? DesignSystem.primary
+                    : Theme.of(context).colorScheme.surface,
+                shadowColor: Theme.of(context).colorScheme.outline,
+                onTap: () => onSelected(difficulty),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: DesignSystem.spaceMD,
+                  vertical: DesignSystem.spaceXS,
+                ),
+                child: Text(
+                  labels[difficulty]!,
+                  style: TextStyle(
+                    fontSize: DesignSystem.fontSizeXS,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.6,
+                    color: difficulty == selected
+                        ? Colors.white
+                        : Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

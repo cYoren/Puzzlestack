@@ -14,7 +14,10 @@ minute*) are marked `needs-play` and are **not** guesses dressed as verdicts. No
 this file marks a game verified; that is the play pass.
 
 **Check 2, by genre.** `pass` and `pass-named-unique` mean the code has a solver, so the
-generator proves its own deal. `unproven` means the game generates content and nothing
+generator proves its own deal. `pass-fair-not-unique` means the code has a prover that
+enumerates the cheaper layouts and proves the deal cannot be won with fewer mirrors than
+it demands, while several answers of that size are legal and any of them wins: proved
+finishable, not unique. `unproven` means the game generates content and nothing
 proves the deal is winnable, or has one answer where the genre implies one:
 the `uniqueness` job. `pool-fairness` means a fixed content pool, where the proof is
 "every row is solvable", i.e. check 10. `fair-by-play` means a lab task, worksheet or

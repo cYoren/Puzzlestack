@@ -14,7 +14,10 @@ minute*) are marked `needs-play` and are **not** guesses dressed as verdicts. No
 this file marks a game verified; that is the play pass.
 
 **Check 2, by genre.** `pass` and `pass-named-unique` mean the code has a solver, so the
-generator proves its own deal. `unproven` means the game generates content and nothing
+generator proves its own deal. `pass-fair-not-unique` means the code has a prover that
+enumerates the cheaper layouts and proves the deal cannot be won with fewer mirrors than
+it demands, while several answers of that size are legal and any of them wins: proved
+finishable, not unique. `unproven` means the game generates content and nothing
 proves the deal is winnable, or has one answer where the genre implies one:
 the `uniqueness` job. `pool-fairness` means a fixed content pool, where the proof is
 "every row is solvable", i.e. check 10. `fair-by-play` means a lab task, worksheet or
@@ -23,7 +26,7 @@ by playing.
 
 | | Deck | Library | Archive |
 | --- | --- | --- | --- |
-| Games | 44 | 18 | 0 |
+| Games | 41 | 21 | 0 |
 
 **Origin tags** in this room, which is what the uniqueness column above turns on:
 
@@ -44,7 +47,7 @@ light and `AUDIT_DARK=1`:
 | `abcd` | Four Letters | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `akari` | Akari | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `ascent` | Number Path | library | pass | pass | audit-clean | pass | pass | pass | pass |
-| `binary_puzzle` | Binary Puzzle | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `binary_puzzle` | Binary Puzzle | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `block_escape` | Block Escape | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `boats` | Boats | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `bricks` | Bricks | library | pass | pass | audit-clean | pass | pass | pass | pass |
@@ -60,11 +63,11 @@ light and `AUDIT_DARK=1`:
 | `futoshiki` | Futoshiki | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `galaxies` | Galaxies | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `gokigen_naname` | Gokigen Naname | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `heyawake` | Heyawake | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `heyawake` | Heyawake | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `hitori` | Hitori | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `inertia` | Inertia | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `kakurasu_sums` | Kakurasu Sums | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `kakuro` | Kakuro | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `kakurasu_sums` | Kakurasu Sums | library | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
+| `kakuro` | Kakuro | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `kurodoko` | Kurodoko | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `lighthouses` | Lighthouses | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `lights_out` | Lights Out | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
@@ -75,7 +78,7 @@ light and `AUDIT_DARK=1`:
 | `masyu` | Masyu Loop | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mathrax` | Mathrax | library | pass | pass | audit-clean | pass | pass | pass | pass |
 | `matrix_reasoning` | Matrix Reasoning | library | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `minesweeper` | Minesweeper | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
+| `minesweeper` | Minesweeper | library | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `netslide` | Netslide | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `nonogram` | Nonogram | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `norinori` | Norinori | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
@@ -94,15 +97,15 @@ light and `AUDIT_DARK=1`:
 | `sudoku` | Sudoku | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `symbol_logic` | Symbol Logic | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `tangle_fix` | Tangle Fix | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `tapa` | Tapa | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `tenner_grid` | Tenner Grid | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `tapa` | Tapa | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
+| `tenner_grid` | Tenner Grid | library | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 | `tents_and_trees` | Tents & Trees | deck | pass | pass | audit-clean | pass | pass | pass | pass |
 | `tower_of_london` | Tower of London | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `triplets_logic` | Triplets Trio | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `twiddle` | Twiddle | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `water_sort` | Water Sort | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `wisconsin_card_sorting` | Rule Finder | library | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `yajilin` | Yajilin | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `yajilin` | Yajilin | deck | pass-named-unique | pass | audit-clean | pass | pass | pass | pass |
 
 ## What needs a fix job
 
@@ -110,12 +113,12 @@ PUZZLE-BAR.md's working procedure keeps fixes out of the triage PR: each of thes
 its own change with its own test. Grouped by the job that fixes it, because the fix is
 usually one mechanism and not N edits.
 
-- **`uniqueness` — the generator must prove its deal (check 2)** — 33: `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `lock_pattern`, `logical_syllogisms`, `map`, `masyu`, `matrix_reasoning`, `netslide`, `path_finder`, `pegs`, `pipes`, `same_game`, `shikaku`, `symbol_logic`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`, `yajilin`
+- **`uniqueness` — the generator must prove its deal (check 2)** — 26: `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `hitori`, `inertia`, `lock_pattern`, `logical_syllogisms`, `map`, `masyu`, `matrix_reasoning`, `netslide`, `path_finder`, `pegs`, `pipes`, `same_game`, `shikaku`, `symbol_logic`, `tangle_fix`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `wisconsin_card_sorting`
 
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (27): `binary_puzzle`, `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `heyawake`, `hitori`, `inertia`, `kakurasu_sums`, `kakuro`, `map`, `masyu`, `netslide`, `pegs`, `pipes`, `same_game`, `shikaku`, `tangle_fix`, `tapa`, `tenner_grid`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`, `yajilin`
+- winnable, not unique (20): `block_escape`, `color_flood`, `cube`, `dominosa`, `fillomino`, `gokigen_naname`, `hitori`, `inertia`, `map`, `masyu`, `netslide`, `pegs`, `pipes`, `same_game`, `shikaku`, `tangle_fix`, `tower_of_london`, `triplets_logic`, `twiddle`, `water_sort`
 
 - neither proven (6): `lock_pattern`, `logical_syllogisms`, `matrix_reasoning`, `path_finder`, `symbol_logic`, `wisconsin_card_sorting`
 

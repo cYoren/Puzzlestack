@@ -26,7 +26,7 @@ by playing.
 
 | | Deck | Library | Archive |
 | --- | --- | --- | --- |
-| Games | 22 | 9 | 1 |
+| Games | 19 | 12 | 1 |
 
 **Origin tags** in this room, which is what the uniqueness column above turns on:
 
@@ -49,7 +49,7 @@ light and `AUDIT_DARK=1`:
 | `classic_maze` | Classic Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `compass_maze` | Compass Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `cross_section_slice` | Cross-Section Slice | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `cube_net_fold` | Cube Net Fold | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `cube_net_fold` | Cube Net Fold | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `gear_rotation` | Gear Rotation | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `hue_sort` | Hue Sort | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `interlock_puzzle` | Interlock Puzzle | library | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -57,7 +57,7 @@ light and `AUDIT_DARK=1`:
 | `laser_link` | Laser Link | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `maze_nav_3d` | 3D Maze Nav | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mental_mapping` | Mental Mapping | library | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `mental_rotation` | Mental Rotation | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `mental_rotation` | Mental Rotation | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mirror_image` | Mirror Image | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `mirror_maze` | Mirror Maze | deck | pass-fair-not-unique | pass-deal-space(160) | audit-clean | pass | pass | pass | pass |
 | `mirror_tracing` | Mirror Tracing | library | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -67,7 +67,7 @@ light and `AUDIT_DARK=1`:
 | `perspective_shift_view` | Perspective Shift | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `perspective_taking` | Perspective Taking | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `polyomino_tiling` | Polyomino | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `rotating_maze` | Rotating Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `rotating_maze` | Rotating Maze | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `shadow_pivot` | Shadow Pivot | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `silhouette_match` | Silhouette Match | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `slide_puzzle` | Slide Puzzle | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -97,9 +97,9 @@ usually one mechanism and not N edits.
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (25): `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `cube_net_fold`, `gear_rotation`, `hue_sort`, `klotski`, `laser_link`, `maze_nav_3d`, `mental_rotation`, `mirror_image`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `rotating_maze`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`
+- winnable, not unique (22): `block_count_3d`, `block_stacking_physics`, `classic_maze`, `compass_maze`, `cross_section_slice`, `gear_rotation`, `hue_sort`, `klotski`, `laser_link`, `maze_nav_3d`, `mirror_image`, `negative_space_detection`, `paper_folding`, `path_intersect`, `perspective_shift_view`, `perspective_taking`, `polyomino_tiling`, `silhouette_match`, `slide_puzzle`, `symmetry`, `tangram`, `topology`
 
-- neither proven (6): `interlock_puzzle`, `mental_mapping`, `mirror_tracing`, `shadow_pivot`, `trace_path`, `vector_grid_alignment`
+- neither proven (9): `cube_net_fold`, `interlock_puzzle`, `mental_mapping`, `mental_rotation`, `mirror_tracing`, `rotating_maze`, `shadow_pivot`, `trace_path`, `vector_grid_alignment`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.

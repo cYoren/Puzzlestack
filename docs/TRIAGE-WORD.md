@@ -14,7 +14,10 @@ minute*) are marked `needs-play` and are **not** guesses dressed as verdicts. No
 this file marks a game verified; that is the play pass.
 
 **Check 2, by genre.** `pass` and `pass-named-unique` mean the code has a solver, so the
-generator proves its own deal. `unproven` means the game generates content and nothing
+generator proves its own deal. `pass-fair-not-unique` means the code has a prover that
+enumerates the cheaper layouts and proves the deal cannot be won with fewer mirrors than
+it demands, while several answers of that size are legal and any of them wins: proved
+finishable, not unique. `unproven` means the game generates content and nothing
 proves the deal is winnable, or has one answer where the genre implies one:
 the `uniqueness` job. `pool-fairness` means a fixed content pool, where the proof is
 "every row is solvable", i.e. check 10. `fair-by-play` means a lab task, worksheet or
@@ -23,7 +26,7 @@ by playing.
 
 | | Deck | Library | Archive |
 | --- | --- | --- | --- |
-| Games | 24 | 17 | 2 |
+| Games | 22 | 19 | 2 |
 
 **Origin tags** in this room, which is what the uniqueness column above turns on:
 
@@ -49,7 +52,7 @@ light and `AUDIT_DARK=1`:
 | `cognate_catch` | Cognate Catch | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `compound_connect` | Compound Connect | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `context_clues` | Context Clues | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
-| `conundrum_anagram` | Conundrum | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `conundrum_anagram` | Conundrum | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `crossword` | Crossword | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `cryptogram` | Cryptogram | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `definition_dash` | Definition Dash | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
@@ -77,7 +80,7 @@ light and `AUDIT_DARK=1`:
 | `typing_speed` | Typing Speed | archive | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `typoglycemia_decoder` | Typoglycemia Decoder | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `verbal_analogies` | Verbal Analogies | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `word_grid_connection` | Word Connections | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `word_grid_connection` | Word Connections | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `word_ladder` | Word Ladder | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `word_mastermind` | Word Mastermind | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `word_scramble` | Word Scramble | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -97,9 +100,9 @@ usually one mechanism and not N edits.
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (24): `chain_reaction`, `compound_connect`, `conundrum_anagram`, `crossword`, `cryptogram`, `find_word`, `homophone_hunt`, `letter_bridge`, `letter_grid_swapper`, `missing_vowels`, `one_letter_shift`, `pangram_sprint`, `portmanteau_split`, `rhyme_master`, `sentence_unscramble`, `spoonerism_solver`, `verbal_analogies`, `word_grid_connection`, `word_ladder`, `word_mastermind`, `word_scramble`, `word_search`, `word_snake_trail`, `word_wheel`
+- winnable, not unique (23): `chain_reaction`, `compound_connect`, `conundrum_anagram`, `crossword`, `cryptogram`, `find_word`, `homophone_hunt`, `letter_bridge`, `letter_grid_swapper`, `missing_vowels`, `one_letter_shift`, `pangram_sprint`, `portmanteau_split`, `rhyme_master`, `sentence_unscramble`, `spoonerism_solver`, `verbal_analogies`, `word_ladder`, `word_mastermind`, `word_scramble`, `word_search`, `word_snake_trail`, `word_wheel`
 
-- neither proven (2): `letter_frequency_scan`, `typing_speed`
+- neither proven (3): `letter_frequency_scan`, `typing_speed`, `word_grid_connection`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.

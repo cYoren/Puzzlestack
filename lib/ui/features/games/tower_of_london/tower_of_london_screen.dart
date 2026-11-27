@@ -14,7 +14,8 @@ class TowerOfLondonScreen extends ConsumerStatefulWidget {
   const TowerOfLondonScreen({super.key});
 
   @override
-  ConsumerState<TowerOfLondonScreen> createState() => _TowerOfLondonScreenState();
+  ConsumerState<TowerOfLondonScreen> createState() =>
+      _TowerOfLondonScreenState();
 }
 
 class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
@@ -33,9 +34,7 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: isVictory ? l10n.winPlanningMaster : l10n.loseOutOfMoves,
-        message: isVictory 
-            ? l10n.snackbarCorrect 
-            : l10n.loseOutOfMoves,
+        message: isVictory ? l10n.snackbarCorrect : l10n.loseOutOfMoves,
         isVictory: isVictory,
         onHome: () {
           Navigator.of(context).pop();
@@ -60,7 +59,9 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
         if (next.isVictory) {
           HapticFeedbackUtil.victory();
-          await ref.read(gameStreakNotifierProvider.notifier).completeGame('tower_of_london');
+          await ref
+              .read(gameStreakNotifierProvider.notifier)
+              .completeGame('tower_of_london');
         } else {
           HapticFeedbackUtil.vibrate();
         }
@@ -85,7 +86,11 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
           Padding(
             padding: const EdgeInsets.all(DesignSystem.spaceMD),
             child: Center(
-              child: _buildStat(l10n.statMoves, '${state.moves}/${state.maxMoves}', color: state.moves >= state.maxMoves - 2 ? DesignSystem.error : null),
+              child: _buildStat(
+                  l10n.statMoves, '${state.moves}/${state.maxMoves}',
+                  color: state.moves >= state.maxMoves - 2
+                      ? DesignSystem.error
+                      : null),
             ),
           ),
           Text(
@@ -105,7 +110,8 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
           const Divider(height: DesignSystem.spaceXL),
           Expanded(
             child: Center(
-              child: _buildPegs(state.currentConfig, onPegTap: notifier.selectPeg, selectedPeg: state.selectedPeg),
+              child: _buildPegs(state.currentConfig,
+                  onPegTap: notifier.selectPeg, selectedPeg: state.selectedPeg),
             ),
           ),
           const SizedBox(height: DesignSystem.spaceXL),
@@ -117,33 +123,50 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
   Widget _buildStat(String label, String value, {Color? color}) {
     return Column(
       children: [
-        Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
-        Text(value, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: color ?? Theme.of(context).colorScheme.onSurface)),
+        Text(label,
+            style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.7))),
+        Text(value,
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                color: color ?? Theme.of(context).colorScheme.onSurface)),
       ],
     );
   }
 
-  Widget _buildPegs(List<List<int>> config, {Function(int)? onPegTap, int? selectedPeg, bool isTarget = false}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: List.generate(3, (i) {
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onPegTap != null ? () => onPegTap(i) : null,
-          child: SizedBox(
-            width: isTarget ? 60 : 100, // Large hit area
-            child: _buildPeg(i, config[i], isSelected: selectedPeg == i, isTarget: isTarget),
-          ),
-        );
-      }),
+  Widget _buildPegs(List<List<int>> config,
+      {Function(int)? onPegTap, int? selectedPeg, bool isTarget = false}) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: List.generate(3, (i) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onPegTap != null ? () => onPegTap(i) : null,
+            child: SizedBox(
+              width: isTarget ? 60 : 100, // Large hit area
+              child: _buildPeg(i, config[i],
+                  isSelected: selectedPeg == i, isTarget: isTarget),
+            ),
+          );
+        }),
+      ),
     );
   }
 
-  Widget _buildPeg(int index, List<int> beads, {bool isSelected = false, bool isTarget = false}) {
+  Widget _buildPeg(int index, List<int> beads,
+      {bool isSelected = false, bool isTarget = false}) {
     double pegHeight = index == 0 ? 100 : (index == 1 ? 75 : 50);
     if (isTarget) pegHeight *= 0.8;
-    
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -154,7 +177,13 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
               width: isTarget ? 6 : 10,
               height: pegHeight,
               decoration: BoxDecoration(
-                color: isSelected ? DesignSystem.primary : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7).withValues(alpha: 0.2),
+                color: isSelected
+                    ? DesignSystem.primary
+                    : Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.7)
+                        .withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(5),
               ),
             ),
@@ -162,12 +191,19 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
               padding: EdgeInsets.only(bottom: isTarget ? 2 : 4),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: beads.asMap().entries.map((entry) {
-                  final i = entry.key;
-                  final b = entry.value;
-                  final isHighlighted = isSelected && i == beads.length - 1;
-                  return _buildBead(b, isTarget, isHighlighted: isHighlighted);
-                }).toList().reversed.toList(),
+                children: beads
+                    .asMap()
+                    .entries
+                    .map((entry) {
+                      final i = entry.key;
+                      final b = entry.value;
+                      final isHighlighted = isSelected && i == beads.length - 1;
+                      return _buildBead(b, isTarget,
+                          isHighlighted: isHighlighted);
+                    })
+                    .toList()
+                    .reversed
+                    .toList(),
               ),
             ),
           ],
@@ -177,7 +213,11 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
           width: isTarget ? 30 : 50,
           height: isTarget ? 4 : 8,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7).withValues(alpha: 0.3),
+            color: Theme.of(context)
+                .colorScheme
+                .onSurface
+                .withValues(alpha: 0.7)
+                .withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(4),
           ),
         ),
@@ -188,10 +228,17 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
   Widget _buildBead(int type, bool isTarget, {bool isHighlighted = false}) {
     Color color;
     switch (type) {
-      case 1: color = DesignSystem.error; break;
-      case 2: color = DesignSystem.success; break;
-      case 3: color = DesignSystem.primary; break;
-      default: color = Colors.grey;
+      case 1:
+        color = DesignSystem.error;
+        break;
+      case 2:
+        color = DesignSystem.success;
+        break;
+      case 3:
+        color = DesignSystem.primary;
+        break;
+      default:
+        color = Colors.grey;
     }
 
     return AnimatedContainer(
@@ -202,19 +249,22 @@ class _TowerOfLondonScreenState extends ConsumerState<TowerOfLondonScreen> {
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle,
-        border: isHighlighted 
-            ? Border.all(color: Colors.white, width: 3)
-            : null,
-        boxShadow: isTarget ? null : [
-          BoxShadow(
-            color: isHighlighted ? Colors.white.withValues(alpha: 0.6) : color.withValues(alpha: 0.4),
-            blurRadius: isHighlighted ? 12 : 4,
-            spreadRadius: isHighlighted ? 2 : 0,
-            offset: isHighlighted ? Offset.zero : const Offset(0, 2),
-          ),
-        ],
+        border:
+            isHighlighted ? Border.all(color: Colors.white, width: 3) : null,
+        boxShadow: isTarget
+            ? null
+            : [
+                BoxShadow(
+                  color: isHighlighted
+                      ? Colors.white.withValues(alpha: 0.6)
+                      : color.withValues(alpha: 0.4),
+                  blurRadius: isHighlighted ? 12 : 4,
+                  spreadRadius: isHighlighted ? 2 : 0,
+                  offset: isHighlighted ? Offset.zero : const Offset(0, 2),
+                ),
+              ],
       ),
-      child: isHighlighted 
+      child: isHighlighted
           ? Center(
               child: Container(
                 width: 8,

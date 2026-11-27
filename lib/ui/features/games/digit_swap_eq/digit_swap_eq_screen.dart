@@ -107,7 +107,7 @@ class _DigitSwapEqScreenState extends ConsumerState<DigitSwapEqScreen> {
       if (_selectedIdx1 != null && _selectedIdx2 != null) {
         int idx1 = _selectedIdx1!;
         int idx2 = _selectedIdx2!;
-        
+
         int temp = _digits1[idx1];
         _digits1[idx1] = _digits2[idx2];
         _digits2[idx2] = temp;
@@ -135,7 +135,9 @@ class _DigitSwapEqScreenState extends ConsumerState<DigitSwapEqScreen> {
 
   void _onGameComplete() async {
     HapticFeedbackUtil.victory();
-    await ref.read(gameStreakNotifierProvider.notifier).completeGame('digit_swap_eq');
+    await ref
+        .read(gameStreakNotifierProvider.notifier)
+        .completeGame('digit_swap_eq');
     if (!mounted) return;
     showDialog(
       context: context,
@@ -179,54 +181,62 @@ class _DigitSwapEqScreenState extends ConsumerState<DigitSwapEqScreen> {
           },
         ),
       ],
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(DesignSystem.spaceMD),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                  color: DesignSystem.primary.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(DesignSystem.radiusSM),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(DesignSystem.spaceMD),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: DesignSystem.primary.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(DesignSystem.radiusSM),
+                  ),
+                  child: Text(
+                    'Score: $_score / $_targetScore',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: DesignSystem.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
-                child: Text(
-                  'Score: $_score / $_targetScore',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: DesignSystem.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                const SizedBox(height: 40),
+                // Equation 1 Card
+                _buildEquationCard(1, _digits1, _selectedIdx1, isDark),
+                const SizedBox(height: 24),
+                // Swap Icon
+                Icon(
+                  Icons.swap_vert_rounded,
+                  size: 40,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-              ),
-              const SizedBox(height: 40),
-              // Equation 1 Card
-              _buildEquationCard(1, _digits1, _selectedIdx1, isDark),
-              const SizedBox(height: 24),
-              // Swap Icon
-              Icon(
-                Icons.swap_vert_rounded,
-                size: 40,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const SizedBox(height: 24),
-              // Equation 2 Card
-              _buildEquationCard(2, _digits2, _selectedIdx2, isDark),
-              const SizedBox(height: 40),
-              Text(
-                'Tap one digit from each equation to swap them.',
-                style: TextStyle(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.w500),
-              ),
-            ],
+                const SizedBox(height: 24),
+                // Equation 2 Card
+                _buildEquationCard(2, _digits2, _selectedIdx2, isDark),
+                const SizedBox(height: 40),
+                Text(
+                  'Tap one digit from each equation to swap them.',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildEquationCard(int eqNum, List<int> digits, int? selectedIdx, bool isDark) {
+  Widget _buildEquationCard(
+      int eqNum, List<int> digits, int? selectedIdx, bool isDark) {
     final cardBg = isDark ? DesignSystem.darkSurface : DesignSystem.surface;
-    final outlineColor = isDark ? DesignSystem.darkOutline : DesignSystem.outline;
+    final outlineColor =
+        isDark ? DesignSystem.darkOutline : DesignSystem.outline;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -245,14 +255,16 @@ class _DigitSwapEqScreenState extends ConsumerState<DigitSwapEqScreen> {
             _buildDigitButton(eqNum, 1, digits[1], selectedIdx == 1, isDark),
             const SizedBox(width: 12),
             // Plus Sign
-            const Text('+', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+            const Text('+',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
             const SizedBox(width: 12),
             // Second Number (Tens & Units)
             _buildDigitButton(eqNum, 2, digits[2], selectedIdx == 2, isDark),
             _buildDigitButton(eqNum, 3, digits[3], selectedIdx == 3, isDark),
             const SizedBox(width: 12),
             // Equals Sign
-            const Text('=', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+            const Text('=',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
             const SizedBox(width: 12),
             // Result Number (Tens & Units)
             _buildDigitButton(eqNum, 4, digits[4], selectedIdx == 4, isDark),
@@ -263,7 +275,8 @@ class _DigitSwapEqScreenState extends ConsumerState<DigitSwapEqScreen> {
     );
   }
 
-  Widget _buildDigitButton(int eqNum, int idx, int val, bool isSelected, bool isDark) {
+  Widget _buildDigitButton(
+      int eqNum, int idx, int val, bool isSelected, bool isDark) {
     return GestureDetector(
       onTap: () => _selectDigit(eqNum, idx),
       child: Container(
@@ -288,7 +301,9 @@ class _DigitSwapEqScreenState extends ConsumerState<DigitSwapEqScreen> {
           style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.bold,
-            color: isSelected ? Colors.white : (isDark ? Colors.white70 : Colors.black87),
+            color: isSelected
+                ? Colors.white
+                : (isDark ? Colors.white70 : Colors.black87),
           ),
         ),
       ),

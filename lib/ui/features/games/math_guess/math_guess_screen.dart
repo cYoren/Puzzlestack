@@ -18,6 +18,7 @@ class MathGuessScreen extends ConsumerStatefulWidget {
 }
 
 class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
+  static const _bodyPadding = EdgeInsets.fromLTRB(16, 4, 16, 12);
   @override
   void initState() {
     super.initState();
@@ -36,9 +37,7 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: won ? l10n.winBrainWizard : l10n.gameOver,
-        message: won
-            ? l10n.snackbarCorrect
-            : l10n.snackbarIncorrectTryNew,
+        message: won ? l10n.snackbarCorrect : l10n.snackbarIncorrectTryNew,
         onPlayAgain: () {
           ref.read(mathGuessNotifierProvider.notifier).initGame();
           Navigator.pop(context);
@@ -139,7 +138,7 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
           }
 
           return Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+            padding: _bodyPadding,
             child: Column(
               children: [
                 Expanded(
@@ -207,7 +206,8 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                _buildKeyboard(state, notifier, constraints),
+                _buildKeyboard(
+                    state, notifier, constraints.deflate(_bodyPadding)),
               ],
             ),
           );
@@ -354,7 +354,8 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
   Widget _buildKeyboard(MathGuessState state, MathGuessNotifier notifier,
       BoxConstraints constraints) {
     final l10n = AppLocalizations.of(context)!;
-    final double keyWidth = (constraints.maxWidth - 48) / 3;
+    const keyPadding = EdgeInsets.symmetric(horizontal: 4);
+    final double keyWidth = constraints.maxWidth / 3 - keyPadding.horizontal;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -369,7 +370,7 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: row
                   .map((n) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        padding: keyPadding,
                         child: _PadKey(
                           label: n,
                           onTap: () => notifier.onNumberPressed(n),
@@ -383,7 +384,7 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: keyPadding,
               child: _PadKey(
                 label: 'C',
                 onTap: notifier.clearInput,
@@ -392,7 +393,7 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: keyPadding,
               child: _PadKey(
                 label: '0',
                 onTap: () => notifier.onNumberPressed('0'),
@@ -400,7 +401,7 @@ class _MathGuessScreenState extends ConsumerState<MathGuessScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: keyPadding,
               child: _PadKey(
                 label: '⌫',
                 onTap: notifier.onBackspace,

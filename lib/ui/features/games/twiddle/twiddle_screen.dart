@@ -130,37 +130,40 @@ class _DifficultyRow extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: DesignSystem.spaceSM),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for (final difficulty in TwiddleDifficulty.values)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: TangibleButton(
-                color: difficulty == selected
-                    ? DesignSystem.primary
-                    : Theme.of(context).colorScheme.surface,
-                shadowColor: Theme.of(context).colorScheme.outline,
-                depth: difficulty == selected ? 2 : 3,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DesignSystem.spaceMD,
-                  vertical: DesignSystem.spaceXS,
-                ),
-                onTap: () => onSelected(difficulty),
-                child: Text(
-                  labels[difficulty]!,
-                  style: TextStyle(
-                    fontSize: DesignSystem.fontSizeXS,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.6,
-                    color: difficulty == selected
-                        ? Colors.white
-                        : Theme.of(context).colorScheme.onSurface,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (final difficulty in TwiddleDifficulty.values)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: TangibleButton(
+                  color: difficulty == selected
+                      ? DesignSystem.primary
+                      : Theme.of(context).colorScheme.surface,
+                  shadowColor: Theme.of(context).colorScheme.outline,
+                  depth: difficulty == selected ? 2 : 3,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: DesignSystem.spaceMD,
+                    vertical: DesignSystem.spaceXS,
+                  ),
+                  onTap: () => onSelected(difficulty),
+                  child: Text(
+                    labels[difficulty]!,
+                    style: TextStyle(
+                      fontSize: DesignSystem.fontSizeXS,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.6,
+                      color: difficulty == selected
+                          ? Colors.white
+                          : Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

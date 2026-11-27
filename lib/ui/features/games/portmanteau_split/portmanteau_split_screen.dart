@@ -55,6 +55,7 @@ class _PortmanteauSplitScreenState extends ConsumerState<PortmanteauSplitScreen>
     final colorScheme = Theme.of(context).colorScheme;
     final state = ref.watch(portmanteauSplitNotifierProvider);
     final notifier = ref.read(portmanteauSplitNotifierProvider.notifier);
+    final compact = MediaQuery.sizeOf(context).width <= 320;
 
     ref.listen(portmanteauSplitNotifierProvider, (previous, next) {
       if (next.isGameOver && !(previous?.isGameOver ?? false)) {
@@ -73,7 +74,7 @@ class _PortmanteauSplitScreenState extends ConsumerState<PortmanteauSplitScreen>
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(DesignSystem.spaceMD),
+            padding: EdgeInsets.all(compact ? 4 : DesignSystem.spaceMD),
               child: GameHud(children: [
                 TangibleContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

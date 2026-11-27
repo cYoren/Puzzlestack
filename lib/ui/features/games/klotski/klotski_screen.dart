@@ -127,13 +127,16 @@ class _KlotskiScreenState extends ConsumerState<KlotskiScreen> {
     final hero = _blocks.firstWhere((b) => b.id == 'hero');
     if (hero.x == 1 && hero.y == 3) {
       HapticFeedbackUtil.victory();
-      ref.read(gameStreakNotifierProvider.notifier).completeGame('klotski', xpAmount: 30);
+      ref
+          .read(gameStreakNotifierProvider.notifier)
+          .completeGame('klotski', xpAmount: 30);
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => GameCompletionDialog(
           title: L10nGameHelpers.getGameTitle(context, 'klotski'),
-          message: AppLocalizations.of(context)!.klotskiMessage((_moves).toString()),
+          message:
+              AppLocalizations.of(context)!.klotskiMessage((_moves).toString()),
           onHome: () {
             Navigator.pop(context);
             Navigator.pop(context);
@@ -156,211 +159,272 @@ class _KlotskiScreenState extends ConsumerState<KlotskiScreen> {
       title: L10nGameHelpers.getGameTitle(context, 'klotski'),
       subtitle: L10nGameHelpers.getGameTitle(context, 'klotski'),
       onReset: _resetGame,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final boardWidth = min(constraints.maxWidth, constraints.maxHeight * 0.8) * 0.9;
-          final boardHeight = boardWidth * 1.25;
-          final cellWidth = boardWidth / 4;
-          final cellHeight = boardHeight / 5;
-
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        borderRadius: BorderRadius.circular(DesignSystem.radiusSM),
-                        border: Border.all(color: colorScheme.outline),
-                      ),
-                      child: Text(
-                        "MOVES: $_moves",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900,
-                          color: colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
+      body: Center(
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(DesignSystem.radiusSM),
+                  border: Border.all(color: colorScheme.outline),
                 ),
-                const SizedBox(height: DesignSystem.spaceMD),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    TangibleContainer(
-                      color: colorScheme.outline.withValues(alpha: 0.3),
-                      radius: DesignSystem.radiusMD,
-                      depth: 10,
-                      child: SizedBox(
-                        width: boardWidth,
-                        height: boardHeight,
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: GridPaper(
-                                color: colorScheme.outline.withValues(alpha: 0.1),
-                                divisions: 1,
-                                subdivisions: 1,
-                                interval: cellWidth,
-                              ),
-                            ),
-                            ..._blocks.map((block) {
-                              final isSelected = _selectedBlock?.id == block.id;
-                              final canUp = _canMoveTo(block, block.x, block.y - 1);
-                              final canDown = _canMoveTo(block, block.x, block.y + 1);
-                              final canLeft = _canMoveTo(block, block.x - 1, block.y);
-                              final canRight = _canMoveTo(block, block.x + 1, block.y);
+                child: Text(
+                  "MOVES: $_moves",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: DesignSystem.spaceMD),
+          Flexible(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                const boardPadding = EdgeInsets.all(DesignSystem.spaceMD);
+                const borderWidth = 1.5; // TangibleContainer's border.
+                final inner = constraints.deflate(
+                  const EdgeInsets.all(DesignSystem.spaceMD + borderWidth),
+                );
+                final boardWidth =
+                    min(inner.maxWidth, inner.maxHeight * 0.8) * 0.9;
+                final boardHeight = boardWidth * 1.25;
+                final cellWidth = boardWidth / 4;
+                final cellHeight = boardHeight / 5;
 
-                              return AnimatedPositioned(
-                                duration: const Duration(milliseconds: 180),
-                                curve: Curves.easeOutCubic,
-                                left: block.x * cellWidth,
-                                top: block.y * cellHeight,
-                                width: block.width * cellWidth,
-                                height: block.height * cellHeight,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(DesignSystem.spaceXS),
-                                  child: GestureDetector(
-                                    onPanStart: (details) {
-                                      _panStartX = details.globalPosition.dx;
-                                      _panStartY = details.globalPosition.dy;
-                                      _panActive = true;
-                                    },
-                                    onPanUpdate: (details) {
-                                      if (!_panActive) return;
-                                      final dx = details.globalPosition.dx - _panStartX;
-                                      final dy = details.globalPosition.dy - _panStartY;
-                                      const threshold = 25.0;
-                                      if (dx.abs() > threshold || dy.abs() > threshold) {
-                                        _panActive = false;
-                                        if (dx.abs() > dy.abs()) {
-                                          _moveBlock(block, dx > 0 ? 1 : -1, 0);
-                                        } else {
-                                          _moveBlock(block, 0, dy > 0 ? 1 : -1);
+                return Center(
+                  heightFactor: 1,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      TangibleContainer(
+                        color: colorScheme.outline.withValues(alpha: 0.3),
+                        radius: DesignSystem.radiusMD,
+                        depth: 10,
+                        padding: boardPadding,
+                        child: SizedBox(
+                          width: boardWidth,
+                          height: boardHeight,
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child: GridPaper(
+                                  color: colorScheme.outline
+                                      .withValues(alpha: 0.1),
+                                  divisions: 1,
+                                  subdivisions: 1,
+                                  interval: cellWidth,
+                                ),
+                              ),
+                              ..._blocks.map((block) {
+                                final isSelected =
+                                    _selectedBlock?.id == block.id;
+                                final canUp =
+                                    _canMoveTo(block, block.x, block.y - 1);
+                                final canDown =
+                                    _canMoveTo(block, block.x, block.y + 1);
+                                final canLeft =
+                                    _canMoveTo(block, block.x - 1, block.y);
+                                final canRight =
+                                    _canMoveTo(block, block.x + 1, block.y);
+
+                                return AnimatedPositioned(
+                                  duration: const Duration(milliseconds: 180),
+                                  curve: Curves.easeOutCubic,
+                                  left: block.x * cellWidth,
+                                  top: block.y * cellHeight,
+                                  width: block.width * cellWidth,
+                                  height: block.height * cellHeight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(
+                                        DesignSystem.spaceXS),
+                                    child: GestureDetector(
+                                      onPanStart: (details) {
+                                        _panStartX = details.globalPosition.dx;
+                                        _panStartY = details.globalPosition.dy;
+                                        _panActive = true;
+                                      },
+                                      onPanUpdate: (details) {
+                                        if (!_panActive) return;
+                                        final dx = details.globalPosition.dx -
+                                            _panStartX;
+                                        final dy = details.globalPosition.dy -
+                                            _panStartY;
+                                        const threshold = 25.0;
+                                        if (dx.abs() > threshold ||
+                                            dy.abs() > threshold) {
+                                          _panActive = false;
+                                          if (dx.abs() > dy.abs()) {
+                                            _moveBlock(
+                                                block, dx > 0 ? 1 : -1, 0);
+                                          } else {
+                                            _moveBlock(
+                                                block, 0, dy > 0 ? 1 : -1);
+                                          }
                                         }
-                                      }
-                                    },
-                                    onPanEnd: (_) => _panActive = false,
-                                    onTap: () {
-                                      HapticFeedbackUtil.lightImpact();
-                                      setState(() {
-                                        _selectedBlock = isSelected ? null : block;
-                                      });
-                                    },
-                                    child: TangibleContainer(
-                                      color: isSelected
-                                          ? block.color
-                                          : block.color.withValues(alpha: 0.95),
-                                      shadowColor: block.color.withValues(alpha: 0.7),
-                                      depth: isSelected ? 3.0 : 6.0,
-                                      radius: DesignSystem.radiusSM,
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          if (isSelected)
-                                            Positioned.fill(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(DesignSystem.radiusSM - 2),
-                                                  border: Border.all(color: Colors.white, width: 2.5),
-                                                ),
-                                              ),
-                                            ),
-                                          if (block.id == 'hero')
-                                            const Icon(Icons.stars_rounded, color: Colors.white, size: 28),
-                                          if (isSelected) ...[
-                                            if (canUp)
-                                              Positioned(
-                                                top: 2,
-                                                child: GestureDetector(
-                                                  onTap: () => _moveBlock(block, 0, -1),
-                                                  child: const CircleAvatar(
-                                                    radius: 12,
-                                                    backgroundColor: Colors.white,
-                                                    child: Icon(Icons.arrow_upward_rounded, size: 14, color: Colors.black),
+                                      },
+                                      onPanEnd: (_) => _panActive = false,
+                                      onTap: () {
+                                        HapticFeedbackUtil.lightImpact();
+                                        setState(() {
+                                          _selectedBlock =
+                                              isSelected ? null : block;
+                                        });
+                                      },
+                                      child: TangibleContainer(
+                                        color: isSelected
+                                            ? block.color
+                                            : block.color
+                                                .withValues(alpha: 0.95),
+                                        shadowColor:
+                                            block.color.withValues(alpha: 0.7),
+                                        depth: isSelected ? 3.0 : 6.0,
+                                        radius: DesignSystem.radiusSM,
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            if (isSelected)
+                                              Positioned.fill(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            DesignSystem
+                                                                    .radiusSM -
+                                                                2),
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 2.5),
                                                   ),
                                                 ),
                                               ),
-                                            if (canDown)
-                                              Positioned(
-                                                bottom: 2,
-                                                child: GestureDetector(
-                                                  onTap: () => _moveBlock(block, 0, 1),
-                                                  child: const CircleAvatar(
-                                                    radius: 12,
-                                                    backgroundColor: Colors.white,
-                                                    child: Icon(Icons.arrow_downward_rounded, size: 14, color: Colors.black),
+                                            if (block.id == 'hero')
+                                              const Icon(Icons.stars_rounded,
+                                                  color: Colors.white,
+                                                  size: 28),
+                                            if (isSelected) ...[
+                                              if (canUp)
+                                                Positioned(
+                                                  top: 2,
+                                                  child: GestureDetector(
+                                                    onTap: () => _moveBlock(
+                                                        block, 0, -1),
+                                                    child: const CircleAvatar(
+                                                      radius: 12,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      child: Icon(
+                                                          Icons
+                                                              .arrow_upward_rounded,
+                                                          size: 14,
+                                                          color: Colors.black),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            if (canLeft)
-                                              Positioned(
-                                                left: 2,
-                                                child: GestureDetector(
-                                                  onTap: () => _moveBlock(block, -1, 0),
-                                                  child: const CircleAvatar(
-                                                    radius: 12,
-                                                    backgroundColor: Colors.white,
-                                                    child: Icon(Icons.arrow_back_rounded, size: 14, color: Colors.black),
+                                              if (canDown)
+                                                Positioned(
+                                                  bottom: 2,
+                                                  child: GestureDetector(
+                                                    onTap: () =>
+                                                        _moveBlock(block, 0, 1),
+                                                    child: const CircleAvatar(
+                                                      radius: 12,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      child: Icon(
+                                                          Icons
+                                                              .arrow_downward_rounded,
+                                                          size: 14,
+                                                          color: Colors.black),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            if (canRight)
-                                              Positioned(
-                                                right: 2,
-                                                child: GestureDetector(
-                                                  onTap: () => _moveBlock(block, 1, 0),
-                                                  child: const CircleAvatar(
-                                                    radius: 12,
-                                                    backgroundColor: Colors.white,
-                                                    child: Icon(Icons.arrow_forward_rounded, size: 14, color: Colors.black),
+                                              if (canLeft)
+                                                Positioned(
+                                                  left: 2,
+                                                  child: GestureDetector(
+                                                    onTap: () => _moveBlock(
+                                                        block, -1, 0),
+                                                    child: const CircleAvatar(
+                                                      radius: 12,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      child: Icon(
+                                                          Icons
+                                                              .arrow_back_rounded,
+                                                          size: 14,
+                                                          color: Colors.black),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              if (canRight)
+                                                Positioned(
+                                                  right: 2,
+                                                  child: GestureDetector(
+                                                    onTap: () =>
+                                                        _moveBlock(block, 1, 0),
+                                                    child: const CircleAvatar(
+                                                      radius: 12,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      child: Icon(
+                                                          Icons
+                                                              .arrow_forward_rounded,
+                                                          size: 14,
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
                                           ],
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            }),
-                          ],
+                                );
+                              }),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: -12,
-                      left: cellWidth * 1 + DesignSystem.spaceXS,
-                      right: cellWidth * 1 + DesignSystem.spaceXS,
-                      height: 8,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: DesignSystem.gameGreen,
-                          borderRadius: const BorderRadius.vertical(bottom: Radius.circular(4)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: DesignSystem.gameGreen.withValues(alpha: 0.5),
-                              blurRadius: 8,
-                              spreadRadius: 2,
-                            ),
-                          ],
+                      Positioned(
+                        bottom: -12,
+                        left: cellWidth * 1 + DesignSystem.spaceXS,
+                        right: cellWidth * 1 + DesignSystem.spaceXS,
+                        height: 8,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: DesignSystem.gameGreen,
+                            borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(4)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: DesignSystem.gameGreen
+                                    .withValues(alpha: 0.5),
+                                blurRadius: 8,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: DesignSystem.spaceLG),
-              ],
+                    ],
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
+          ),
+          const SizedBox(height: DesignSystem.spaceLG),
+        ],
+      )),
     );
   }
 }
