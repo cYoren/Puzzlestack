@@ -65,10 +65,10 @@ void main() {
     expect(offenders, isEmpty, reason: offenders.join('\n'));
   });
 
-  test('Wave 6 ship contract: version 1.1.0, privacy parity, and Plus notes',
+  test('Wave 6 ship contract: version 1.1.1, privacy parity, and Plus notes',
       () {
     final String pubspec = File('pubspec.yaml').readAsStringSync();
-    expect(pubspec, contains('version: 1.1.0+16'));
+    expect(pubspec, contains('version: 1.1.1+17'));
     expect(pubspec, contains('${visibleIds.length} minimalist brain puzzles'));
 
     final String privacyMd = File('PRIVACY.md').readAsStringSync();
