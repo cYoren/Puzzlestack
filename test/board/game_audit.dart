@@ -15,6 +15,9 @@
 ///
 ///     AUDIT_ONLY=collatz flutter test test/board/game_audit.dart
 ///
+/// Set AUDIT_FEED=1 to mount Deck games in the actual Deal instead of opening
+/// them standalone. Combine it with AUDIT_DARK=1 for the dark Deal.
+///
 /// Why one `testWidgets` per game rather than one loop: the binding keeps the
 /// *first* exception of a test and counts the rest, so a single loop reported
 /// "Multiple exceptions (N) were detected" for every game after the first leak
@@ -28,27 +31,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:puzzle/data/game_registry.dart';
+import 'package:puzzle/data/game_profiles.dart';
 import 'package:puzzle/data/models/user_data.dart';
 import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
+import 'package:puzzle/ui/features/feed/feed_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
 
 Widget _app(Widget child) => ProviderScope(
-      overrides: [userRepositoryProvider.overrideWithValue(_FakeRepository())],
-      child: MaterialApp(
-        theme: DesignSystem.lightTheme,
-        darkTheme: DesignSystem.darkTheme,
-        // AUDIT_DARK=1 runs the same sweep in the dark theme, which is where a
-        // hardcoded near-black used to disappear.
-        themeMode: Platform.environment['AUDIT_DARK'] == '1'
-            ? ThemeMode.dark
-            : ThemeMode.light,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: child,
-      ),
-    );
+  overrides: [userRepositoryProvider.overrideWithValue(_FakeRepository())],
+  child: MaterialApp(
+    theme: DesignSystem.lightTheme,
+    darkTheme: DesignSystem.darkTheme,
+    // AUDIT_DARK=1 runs the same sweep in the dark theme, which is where a
+    // hardcoded near-black used to disappear.
+    themeMode: Platform.environment['AUDIT_DARK'] == '1'
+        ? ThemeMode.dark
+        : ThemeMode.light,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: child,
+  ),
+);
 
 class _FakeRepository extends UserRepository {
   @override
@@ -62,8 +67,9 @@ class _FakeRepository extends UserRepository {
 /// the two facts needed to fix it.
 String _reason(String details) {
   final amount = RegExp(r'overflowed by [^\n]+').firstMatch(details)?.group(0);
-  final where =
-      RegExp(r'(lib/[^\s]+\.dart:\d+):\d+').firstMatch(details)?.group(1);
+  final where = RegExp(r'(lib/[^\s]+\.dart:\d+):\d+')
+      .firstMatch(details)
+      ?.group(1);
   return [amount ?? 'overflow', if (where != null) 'at $where'].join(' ');
 }
 
@@ -73,26 +79,30 @@ final _threw = <String, String>{};
 final _checked = <String>{};
 
 void main() {
+  final inFeed = Platform.environment['AUDIT_FEED'] == '1';
   final only = Platform.environment['AUDIT_ONLY']
       ?.split(',')
       .map((id) => id.trim())
       .where((id) => id.isNotEmpty)
       .toSet();
 
-  final games = only == null
-      ? allGamesMetadata
-      : allGamesMetadata.where((g) => only.contains(g.id)).toList();
+  final eligible = inFeed
+      ? allGamesMetadata.where((g) => deckIds.contains(g.id))
+      : allGamesMetadata;
+  final games = eligible.where((g) => only?.contains(g.id) ?? true).toList();
 
   // An id that names no card audits nothing and reports `checked=0 overflow=0`,
   // which reads exactly like a clean room. A typo must fail, not reassure.
   final unknown = only == null
       ? const <String>{}
-      : only.difference({for (final game in allGamesMetadata) game.id});
+      : only.difference({for (final game in eligible) game.id});
 
   tearDownAll(() {
     // ignore: avoid_print
-    print('AUDIT checked=${_checked.length} '
-        'overflow=${_overflowed.length} threw=${_threw.length}');
+    print(
+      'AUDIT checked=${_checked.length} '
+      'overflow=${_overflowed.length} threw=${_threw.length}',
+    );
     // One line per broken game, with the reason, so the list is a worklist
     // rather than a count. `flutter test ... | grep AUDIT` is the whole tool.
     _overflowed.forEach((id, why) => print('AUDIT overflow $id: $why'));
@@ -116,7 +126,13 @@ void main() {
       FlutterError.onError = captured.add;
 
       try {
-        await tester.pumpWidget(_app(Builder(builder: (c) => meta.builder(c))));
+        await tester.pumpWidget(
+          _app(
+            inFeed
+                ? FeedScreen(startGameId: meta.id)
+                : Builder(builder: (c) => meta.builder(c)),
+          ),
+        );
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
       } catch (e) {
@@ -152,10 +168,16 @@ void main() {
   // a test that runs before the sweep passes for the wrong reason, and that is
   // exactly how this assertion was first written.
   test('no card overflows and none throws', () {
-    expect(unknown, isEmpty,
-        reason: 'AUDIT_ONLY named ids that are not games: $unknown');
-    expect(_checked, hasLength(games.length),
-        reason: 'the sweep did not reach every card');
+    expect(
+      unknown,
+      isEmpty,
+      reason: 'AUDIT_ONLY named ids outside this sweep: $unknown',
+    );
+    expect(
+      _checked,
+      hasLength(games.length),
+      reason: 'the sweep did not reach every card',
+    );
     expect(_overflowed, isEmpty, reason: 'overflowing cards: $_overflowed');
     expect(_threw, isEmpty, reason: 'cards that threw: $_threw');
   });

@@ -77,7 +77,7 @@ puzzle (`lib/utils/deep_link.dart`).
 
 `test/content/site_test.dart` is the contract: a game without a page fails, an archived game
 with one fails, a broken internal link fails, a page without its playable link fails.
-`PLAY_ANDROID` / `PLAY_IOS` in `tool/gen_site.py` are empty until 1.1.0 is on the stores, so a page
+184 puzzles are visible across the six rooms. `PLAY_ANDROID` / `PLAY_IOS` in `tool/gen_site.py` are empty until 1.1.0 is on the stores, so a page
 offers the browser build and the source instead of a dead store link.
 
 ## Build & run

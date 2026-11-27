@@ -5,6 +5,7 @@ import 'package:puzzle/data/models/user_data.dart';
 import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
+import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
 import 'package:puzzle/ui/features/feed/feed_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
 
@@ -18,10 +19,13 @@ class _FakeRepository extends UserRepository {
   Future<void> saveUserData(UserData data) async {}
 }
 
-Widget _app(Widget child) => ProviderScope(
+Widget _app(Widget child, {ThemeMode themeMode = ThemeMode.light}) =>
+    ProviderScope(
       overrides: [userRepositoryProvider.overrideWithValue(_FakeRepository())],
       child: MaterialApp(
         theme: DesignSystem.lightTheme,
+        darkTheme: DesignSystem.darkTheme,
+        themeMode: themeMode,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: child,
@@ -47,6 +51,47 @@ void _sizeTo(WidgetTester tester) {
 }
 
 void main() {
+  testWidgets('both Minesweeper modes are reachable in the 320dp Deal',
+      (tester) async {
+    tester.view.physicalSize = const Size(320, 640);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(_app(const FeedScreen(startGameId: 'minesweeper')));
+    await tester.pump(const Duration(milliseconds: 300));
+
+    for (final icon in [Icons.ads_click_rounded, Icons.flag_rounded]) {
+      final control = find.byIcon(icon).hitTestable();
+      expect(control, findsOneWidget);
+      await tester.tap(control);
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+    }
+    await _teardown(tester);
+  });
+
+  for (final id in ['futoshiki', 'skyscrapers']) {
+    for (final themeMode in [ThemeMode.light, ThemeMode.dark]) {
+      testWidgets('$id fits the 320dp Deal in ${themeMode.name}',
+          (tester) async {
+        tester.view.physicalSize = const Size(320, 640);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+
+        await tester.pumpWidget(
+            _app(FeedScreen(startGameId: id), themeMode: themeMode));
+        await tester.pump(const Duration(milliseconds: 300));
+
+        final board =
+            find.byWidgetPredicate((widget) => widget is PuzzleBoardView);
+        expect(board, findsOneWidget);
+        expect(tester.getSize(board).shortestSide, greaterThan(0));
+        expect(tester.takeException(), isNull);
+        await _teardown(tester);
+      });
+    }
+  }
+
   testWidgets('the counter starts on 001', (tester) async {
     _sizeTo(tester);
     await tester.pumpWidget(_app(const FeedScreen(startGameId: 'pegs')));

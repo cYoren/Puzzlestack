@@ -1,5 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/key_value_store.dart';
 import '../data/purchase/plus_controller.dart';
@@ -12,16 +12,18 @@ final Provider<KeyValueStore> plusStoreProvider = Provider<KeyValueStore>(
   (ref) => MemoryKeyValueStore(),
 );
 
-/// The store SDK, created only when something asks it a question.
-///
-/// A widget test never does, so no test ever touches a platform channel.
+/// Selects the store SDK only on platforms where the plugin is registered.
 final Provider<PlusGateway Function()> plusGatewayProvider =
     Provider<PlusGateway Function()>((ref) {
-  final bool storeSupported = !kIsWeb &&
-      (defaultTargetPlatform == TargetPlatform.android ||
-          defaultTargetPlatform == TargetPlatform.iOS);
-  return storeSupported ? InAppPurchaseGateway.new : UnavailablePlusGateway.new;
-});
+      final bool storeSupported =
+          !kIsWeb &&
+          (defaultTargetPlatform == TargetPlatform.android ||
+              defaultTargetPlatform == TargetPlatform.iOS ||
+              defaultTargetPlatform == TargetPlatform.macOS);
+      return storeSupported
+          ? InAppPurchaseGateway.new
+          : UnavailablePlusGateway.new;
+    });
 
 /// The app's only source of truth for "is Plus owned".
 ///

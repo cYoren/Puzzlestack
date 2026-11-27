@@ -62,16 +62,14 @@ Tatham and Nikoli canon.
 
 ```deck
 akari binary_puzzle block_escape bridges color_flood crown cube dominosa fillomino futoshiki
-galaxies gokigen_naname heyawake hitori inertia kakurasu_sums kakuro kurodoko lighthouses
-lights_out magnets map masyu minesweeper netslide nonogram norinori nurikabe pegs pipes
-same_game shikaku signpost skyscrapers slitherlink sudoku tangle_fix tapa tenner_grid
+galaxies gokigen_naname heyawake hitori inertia kakuro kurodoko lighthouses
+lights_out magnets map masyu netslide nonogram norinori nurikabe pegs pipes
+same_game shikaku signpost skyscrapers slitherlink sudoku tangle_fix tapa
 tents_and_trees tower_of_london twiddle water_sort yajilin
 ```
 
 ```library
-abcd ascent boats bricks clusters crossing einstein_riddle lock_pattern logical_syllogisms
-matrix_reasoning mathrax path_finder rome salad seismic symbol_logic triplets_logic
-wisconsin_card_sorting
+abcd ascent boats bricks clusters crossing cube_net_fold einstein_riddle kakurasu_sums lock_pattern logical_syllogisms mathrax matrix_reasoning minesweeper path_finder rome salad seismic symbol_logic tenner_grid triplets_logic wisconsin_card_sorting
 ```
 
 ```merge
@@ -82,6 +80,7 @@ sudoku <- alphabet_sudoku
 ```
 
 Notes
+- `cube_net_fold`, `kakurasu_sums`, `minesweeper`, and `tenner_grid` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
 - **`crossing` (2026-11-16):** Library. Lay every number in the list into the skeleton once, across
   or down, and make the crossings agree. The skeleton is part of the puzzle and the source's walls
   are kept: on a bare grid any placement can slide into empty space, so no list would have exactly
@@ -134,17 +133,13 @@ Split between number puzzles (Deck) and school drills (Library or out). A drill 
 puzzle when the player chooses a route to the answer rather than recalling it.
 
 ```deck
-arithmetic_chain balance_scale countdown_math crypto_arithmetic digit_swap_eq fibonacci_merge
-game_2048 kenken magic_squares math_guess math_maze math_path missing_operator number_bonds
-quick_math sequence_sleuth sum_pyramid sum_snake target_10
+arithmetic_chain crypto_arithmetic digit_swap_eq fibonacci_merge
+game_2048 kenken math_maze math_path missing_operator number_bonds
+sequence_sleuth sum_pyramid target_10
 ```
 
 ```library
-algebraic_balance angle_finder area_perimeter_match base_shift binary_code calculation_sprint
-collatz common_denominator divisibility_dash exponent_tower factor_finder fraction_match
-fractional_pizza inequality_dash mental_abacus mental_calendar modulo_clock
-numerical_estimation percentage_peak prime_factor_trees prime_hunter roman_arithmetic
-set_theory_venn unit_converter_pro venn_numbers
+algebraic_balance angle_finder area_perimeter_match balance_scale base_shift binary_code calculation_sprint collatz common_denominator countdown_math divisibility_dash exponent_tower factor_finder fraction_match fractional_pizza inequality_dash magic_squares math_guess mental_abacus mental_calendar modulo_clock numerical_estimation percentage_peak prime_factor_trees prime_hunter quick_math roman_arithmetic set_theory_venn sum_snake unit_converter_pro venn_numbers
 ```
 
 ```merge
@@ -165,6 +160,7 @@ vektor_vector
 ```
 
 Notes
+- `balance_scale`, `countdown_math`, `magic_squares`, `math_guess`, `quick_math`, and `sum_snake` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
 - **Machine pass done, play pass pending** (`docs/TRIAGE-MATH.md`). Layout clean at 320dp in both
   themes for all 53. The machine found 19 Deck generators that do not prove their deal, 22 games
   with no rule test, 13 shouting titles. The other 34 are worksheets: the answer is the drill's
@@ -184,6 +180,7 @@ simon_sequence
 ```
 
 ```library
+shell_game
 ```
 
 ```merge
@@ -203,6 +200,7 @@ visual_statistical_learning word_association_recall word_pair_associate_memory
 ```
 
 Notes
+- `shell_game` moved to Library after the Deal-level 320dp audit found a card-chrome overflow.
 - **`lab-hide` (2026-11-16):** the whole room but `simon_sequence` is archived. A span, n-back,
   recall or recognition test is a lab task, not a game: no decision, nothing to win or lose, and
   nobody replays it for fun. Reason `no-game`. No merge survives, because every keeper that
@@ -219,10 +217,11 @@ Reaction and attention tasks. Good as Snap cards between puzzles, in small doses
 per idea rather than five.
 
 ```deck
-change_blindness color_match schulte_table shell_game visual_search
+change_blindness color_match schulte_table visual_search
 ```
 
 ```library
+
 ```
 
 ```merge
@@ -261,17 +260,15 @@ All content is English. A Word card is dealt only when the app language has cont
 Answer lists are curated common words; guess validators may be wide.
 
 ```deck
-chain_reaction compound_connect conundrum_anagram crossword cryptogram find_word
+affix_factory anagram_definition chain_reaction compound_connect crossword cryptogram find_word
 homophone_hunt letter_bridge letter_grid_swapper missing_vowels one_letter_shift
 pangram_sprint portmanteau_split rhyme_master sentence_unscramble spoonerism_solver
-verbal_analogies word_grid_connection word_ladder word_mastermind word_scramble word_search
+verbal_analogies word_ladder word_mastermind word_scramble word_search
 word_snake_trail word_wheel
 ```
 
 ```library
-affix_factory anagram_definition category_fluency cognate_catch context_clues definition_dash
-etymology_origin grammar_police oxymoron_hunt palindrome_builder phonetic_guess semantic_link
-silent_letter_search spelling_sprint syllable_stack typoglycemia_decoder word_surge
+category_fluency cognate_catch context_clues conundrum_anagram definition_dash etymology_origin grammar_police oxymoron_hunt palindrome_builder phonetic_guess semantic_link silent_letter_search spelling_sprint syllable_stack typoglycemia_decoder word_grid_connection word_surge
 ```
 
 ```merge
@@ -288,6 +285,7 @@ letter_frequency_scan typing_speed
 ```
 
 Notes
+- `conundrum_anagram` and `word_grid_connection` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
 - **Machine pass done, play pass pending** (`docs/TRIAGE-WORD.md`). Layout clean at 320dp in both
   themes for all 43. 26 puzzle generators do not prove their deal, 5 games have no rule test
   (`cognate_catch`, `conundrum_anagram`, `letter_grid_swapper`, `missing_vowels`, `word_wheel`),
@@ -304,15 +302,14 @@ A good room. Sliding, tiling and beam puzzles are Think cards; the rotation and 
 questions are runs.
 
 ```deck
-block_count_3d classic_maze compass_maze cross_section_slice cube_net_fold gear_rotation
-hue_sort klotski laser_link mental_rotation mirror_image mirror_maze paper_folding
-path_intersect perspective_taking polyomino_tiling rotating_maze silhouette_match slide_puzzle
+block_count_3d classic_maze compass_maze cross_section_slice gear_rotation
+hue_sort klotski laser_link mirror_image mirror_maze paper_folding
+path_intersect perspective_taking polyomino_tiling silhouette_match slide_puzzle
 symmetry tangram topology
 ```
 
 ```library
-block_stacking_physics interlock_puzzle maze_nav_3d mental_mapping mirror_tracing
-negative_space_detection perspective_shift_view shadow_pivot trace_path
+block_stacking_physics interlock_puzzle maze_nav_3d mental_mapping mental_rotation mirror_tracing negative_space_detection perspective_shift_view rotating_maze shadow_pivot trace_path
 ```
 
 ```merge
@@ -327,6 +324,7 @@ vector_grid_alignment
 ```
 
 Notes
+- `mental_rotation` and `rotating_maze` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
 - **Machine pass done, play pass pending** (`docs/TRIAGE-SPATIAL.md`). Layout clean at 320dp in both
   themes for all 32. 31 generators are unproven (a deal can be unsolvable or ambiguous);
   `mirror_maze` is proved finishable, not unique, and deals from a counted 160 boards on a 5x5

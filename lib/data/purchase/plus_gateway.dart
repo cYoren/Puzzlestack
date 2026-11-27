@@ -112,7 +112,7 @@ abstract class PlusGateway {
   Future<void> dispose();
 }
 
-/// Desktop and web builds have no store plugin. Keeping that fact behind the
+/// Some platforms have no store plugin. Keeping that fact behind the
 /// same interface lets the app launch and lets a desktop test build render the
 /// Plus surfaces without touching an uninitialised platform channel.
 class UnavailablePlusGateway implements PlusGateway {

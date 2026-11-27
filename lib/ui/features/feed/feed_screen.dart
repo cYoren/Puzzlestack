@@ -782,6 +782,7 @@ class _FeedCardState extends ConsumerState<_FeedCard>
     final Color accent = DesignSystem.accent(context);
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
     final GameAssistActions? assist = gameAssistFor(widget.game.id, ref);
+    final bool narrow = MediaQuery.sizeOf(context).width <= 320;
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -818,8 +819,8 @@ class _FeedCardState extends ConsumerState<_FeedCard>
                           child: AnimatedBuilder(
                             animation: _nudgeController,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: DesignSystem.spaceSM,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: narrow ? 0 : DesignSystem.spaceSM,
                               ),
                               child: GameScope(
                                 gameId: widget.game.id,
@@ -894,9 +895,15 @@ class _FeedCardState extends ConsumerState<_FeedCard>
     final int position = widget.deck.positionInDeck(widget.index);
     final String goal = _goalText(widget.game.subtitleGetter(context));
     final bool compact = MediaQuery.sizeOf(context).height < 700;
+    final bool narrow = MediaQuery.sizeOf(context).width <= 320;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(18, compact ? 9 : 11, 18, compact ? 8 : 10),
+      padding: EdgeInsets.fromLTRB(
+        narrow ? 10 : 18,
+        narrow ? 5 : (compact ? 9 : 11),
+        narrow ? 10 : 18,
+        narrow ? 4 : (compact ? 8 : 10),
+      ),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(color: DesignSystem.hairline(context), width: 1),
@@ -982,6 +989,7 @@ class _FeedCardState extends ConsumerState<_FeedCard>
     final l10n = AppLocalizations.of(context);
     final bool compact = MediaQuery.sizeOf(context).height < 760;
     final bool narrow = MediaQuery.sizeOf(context).width < 360;
+    final bool veryNarrow = MediaQuery.sizeOf(context).width <= 320;
 
     return Container(
       padding: EdgeInsets.fromLTRB(
@@ -1006,9 +1014,11 @@ class _FeedCardState extends ConsumerState<_FeedCard>
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontFamily: 'Bebas Neue',
-                fontSize: compact
-                    ? DesignSystem.fontSize2XL
-                    : DesignSystem.fontSize3XL,
+                fontSize: veryNarrow
+                    ? DesignSystem.fontSizeLG
+                    : compact
+                        ? DesignSystem.fontSize2XL
+                        : DesignSystem.fontSize3XL,
                 height: 0.95,
                 letterSpacing: 0.4,
                 color: colors.onSurface,
@@ -1088,8 +1098,8 @@ class _FeedCardState extends ConsumerState<_FeedCard>
         onTap: onTap,
         radius: 22,
         child: SizedBox(
-          width: narrow ? 32 : 36,
-          height: 44,
+          width: narrow ? 30 : 36,
+          height: narrow ? 32 : 44,
           child: Icon(icon, size: 20, color: tinted ? accent : muted),
         ),
       ),

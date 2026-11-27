@@ -72,45 +72,70 @@ class _TopologyScreenState extends ConsumerState<TopologyScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(AppLocalizations.of(context)!.topologyText((l10n.topologyScore).toString(), (state.score).toString()), style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+              AppLocalizations.of(context)!.topologyText(
+                  (l10n.topologyScore).toString(), (state.score).toString()),
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: DesignSystem.spaceXL),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _ShapeCard(char: level.char1),
-              const SizedBox(width: DesignSystem.spaceXL),
-              _ShapeCard(char: level.char2),
-            ],
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _ShapeCard(char: level.char1),
+                const SizedBox(width: DesignSystem.spaceXL),
+                _ShapeCard(char: level.char2),
+              ],
+            ),
           ),
           const SizedBox(height: DesignSystem.spaceXL * 2),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TangibleButton(
-                onTap: () {
-                  HapticFeedbackUtil.lightImpact();
-                  ref.read(topologyNotifierProvider.notifier).submitAnswer(true);
-                },
-                color: DesignSystem.accentEmerald,
-                child: Text(l10n.yes.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),
-              ),
-              const SizedBox(width: DesignSystem.spaceXL),
-              TangibleButton(
-                onTap: () {
-                  HapticFeedbackUtil.lightImpact();
-                  ref.read(topologyNotifierProvider.notifier).submitAnswer(false);
-                },
-                color: colorScheme.error,
-                child: Text(l10n.no.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24)),
-              ),
-            ],
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TangibleButton(
+                  onTap: () {
+                    HapticFeedbackUtil.lightImpact();
+                    ref
+                        .read(topologyNotifierProvider.notifier)
+                        .submitAnswer(true);
+                  },
+                  color: DesignSystem.accentEmerald,
+                  child: Text(l10n.yes.toUpperCase(),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24)),
+                ),
+                const SizedBox(width: DesignSystem.spaceXL),
+                TangibleButton(
+                  onTap: () {
+                    HapticFeedbackUtil.lightImpact();
+                    ref
+                        .read(topologyNotifierProvider.notifier)
+                        .submitAnswer(false);
+                  },
+                  color: colorScheme.error,
+                  child: Text(l10n.no.toUpperCase(),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24)),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: DesignSystem.spaceLG),
           if (state.message != null)
             Text(
-              state.message == 'correct' ? l10n.baseShiftCorrect : l10n.baseShiftIncorrect,
+              state.message == 'correct'
+                  ? l10n.baseShiftCorrect
+                  : l10n.baseShiftIncorrect,
               style: TextStyle(
-                color: state.message == 'correct' ? DesignSystem.accentEmerald : colorScheme.error,
+                color: state.message == 'correct'
+                    ? DesignSystem.accentEmerald
+                    : colorScheme.error,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -134,7 +159,11 @@ class _ShapeCard extends StatelessWidget {
       padding: const EdgeInsets.all(DesignSystem.spaceXL),
       child: Text(
         char,
-        style: TextStyle(fontSize: 80, fontWeight: FontWeight.w300, color: colorScheme.primary, fontFamily: 'monospace'),
+        style: TextStyle(
+            fontSize: 80,
+            fontWeight: FontWeight.w300,
+            color: colorScheme.primary,
+            fontFamily: 'monospace'),
       ),
     );
   }

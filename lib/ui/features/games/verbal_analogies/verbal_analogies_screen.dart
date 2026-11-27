@@ -14,7 +14,8 @@ class VerbalAnalogiesScreen extends ConsumerStatefulWidget {
   const VerbalAnalogiesScreen({super.key});
 
   @override
-  ConsumerState<VerbalAnalogiesScreen> createState() => _VerbalAnalogiesScreenState();
+  ConsumerState<VerbalAnalogiesScreen> createState() =>
+      _VerbalAnalogiesScreenState();
 }
 
 class _VerbalAnalogiesScreenState extends ConsumerState<VerbalAnalogiesScreen> {
@@ -57,7 +58,9 @@ class _VerbalAnalogiesScreenState extends ConsumerState<VerbalAnalogiesScreen> {
     ref.listen(verbalAnalogiesNotifierProvider, (previous, next) {
       if (next.isVictory && !(previous?.isVictory ?? false)) {
         HapticFeedbackUtil.victory();
-        ref.read(gameStreakNotifierProvider.notifier).completeGame('verbal_analogies');
+        ref
+            .read(gameStreakNotifierProvider.notifier)
+            .completeGame('verbal_analogies');
         _showCompletionDialog();
       }
     });
@@ -72,7 +75,7 @@ class _VerbalAnalogiesScreenState extends ConsumerState<VerbalAnalogiesScreen> {
     return GameScaffold(
       title: L10nGameHelpers.getGameTitle(context, 'verbal_analogies'),
       subtitle: l10n.verbalAnalogiesSubtitle,
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(DesignSystem.spaceLG),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -80,55 +83,70 @@ class _VerbalAnalogiesScreenState extends ConsumerState<VerbalAnalogiesScreen> {
             LinearProgressIndicator(
               value: state.score / state.targetScore,
               backgroundColor: colorScheme.outline.withValues(alpha: 0.5),
-              valueColor: const AlwaysStoppedAnimation<Color>(DesignSystem.success),
+              valueColor:
+                  const AlwaysStoppedAnimation<Color>(DesignSystem.success),
             ),
             SizedBox(height: DesignSystem.spaceXL),
             Text(
               state.currentAnalogy?.question ?? '',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 28),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(fontSize: 28),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: DesignSystem.spaceXL * 2),
             ...state.currentAnalogy?.options.map((option) {
-              final isSelected = state.selectedOption == option;
-              final isCorrect = state.currentAnalogy?.answer == option;
-              
-              Color buttonColor = colorScheme.surface;
-              if (isSelected) {
-                buttonColor = isCorrect ? DesignSystem.success : DesignSystem.error;
-              } else if (state.selectedOption != null && isCorrect) {
-                buttonColor = DesignSystem.success.withValues(alpha: 0.3);
-              }
+                  final isSelected = state.selectedOption == option;
+                  final isCorrect = state.currentAnalogy?.answer == option;
 
-              return Padding(
-                padding: const EdgeInsets.only(bottom: DesignSystem.spaceMD),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: state.selectedOption == null ? () => notifier.selectOption(option) : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonColor,
-                      foregroundColor: isSelected || (state.selectedOption != null && isCorrect) 
-                          ? Colors.white 
-                          : colorScheme.onSurface,
-                      side: BorderSide(
-                        color: isSelected ? Colors.transparent : colorScheme.outline.withValues(alpha: 0.5),
-                        width: 2,
+                  Color buttonColor = colorScheme.surface;
+                  if (isSelected) {
+                    buttonColor =
+                        isCorrect ? DesignSystem.success : DesignSystem.error;
+                  } else if (state.selectedOption != null && isCorrect) {
+                    buttonColor = DesignSystem.success.withValues(alpha: 0.3);
+                  }
+
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(bottom: DesignSystem.spaceMD),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: ElevatedButton(
+                        onPressed: state.selectedOption == null
+                            ? () => notifier.selectOption(option)
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: buttonColor,
+                          foregroundColor: isSelected ||
+                                  (state.selectedOption != null && isCorrect)
+                              ? Colors.white
+                              : colorScheme.onSurface,
+                          side: BorderSide(
+                            color: isSelected
+                                ? Colors.transparent
+                                : colorScheme.outline.withValues(alpha: 0.5),
+                            width: 2,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Text(
+                          option,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 0,
                     ),
-                    child: Text(
-                      option,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              );
-            }).toList() ?? [],
+                  );
+                }).toList() ??
+                [],
           ],
         ),
       ),

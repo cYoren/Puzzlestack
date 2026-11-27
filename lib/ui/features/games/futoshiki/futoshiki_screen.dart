@@ -112,22 +112,24 @@ class FutoshikiScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const Spacer(),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: DesignSystem.spaceLG),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
-              child: PuzzleBoardView<FutoshikiState>(
-                board: FutoshikiBoard(state: state),
-                onMove: (move) {
-                  notifier.select(move.source.a * state.n + move.source.b);
-                },
-                onSolved: () => _onSolved(context, ref, notifier),
+          Expanded(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: DesignSystem.spaceLG),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 420),
+                  child: PuzzleBoardView<FutoshikiState>(
+                    board: FutoshikiBoard(state: state),
+                    onMove: (move) {
+                      notifier.select(move.source.a * state.n + move.source.b);
+                    },
+                    onSolved: () => _onSolved(context, ref, notifier),
+                  ),
+                ),
               ),
             ),
           ),
-          const Spacer(),
           _ValuePad(
             n: state.n,
             onValue: (value) {
