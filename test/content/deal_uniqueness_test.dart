@@ -9,14 +9,14 @@
 //
 // FINDINGS (the families that are not proved, with the reason)
 //
-//   G4-F1  Logic, 24 ids: no uniqueness counter or solver is reachable from
+//   G4-F1  Logic: no uniqueness counter or solver is reachable from
 //          outside the engine; some guards are private to the generator.
-//   G4-F2  Math, 19 ids: the answer is computed at deal time and no prover is
+//   G4-F2  Math: the answer is computed at deal time and no prover is
 //          exported.
-//   G4-F3  Memory, 1 id: hidden-state sequence; fairness is judged by play.
-//   G4-F4  Attention, 5 ids: hidden/timed targets; fairness is judged by play.
-//   G4-F5  Word, 24 ids: fixed pools with no exported whole-pool accessor.
-//   G4-F6  Spatial, 21 ids: generators expose no finishability or uniqueness
+//   G4-F3  Memory: hidden-state sequence; fairness is judged by play.
+//   G4-F4  Attention: hidden/timed targets; fairness is judged by play.
+//   G4-F5  Word: fixed pools with no exported whole-pool accessor.
+//   G4-F6  Spatial: generators expose no finishability or uniqueness
 //          prover. (`mirror_maze` left this finding for `G4-beam`: its engine
 //          exports a prover, and what it proves is the mirror count, not one
 //          answer. Four two-mirror routes win a dealt board and any of them is

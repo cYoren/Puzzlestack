@@ -7,7 +7,10 @@ import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
 import 'package:puzzle/ui/core/board/puzzle_board_view.dart';
 import 'package:puzzle/ui/features/feed/feed_screen.dart';
+import 'package:puzzle/ui/features/games/sum_snake/sum_snake_provider.dart';
+import 'package:puzzle/ui/features/games/sum_snake/sum_snake_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
+import 'package:puzzle/widgets/tangible.dart';
 
 /// The deal is a state machine: pull the live card, commit it, step the deck.
 /// The animation is the pretty part; this pins the part that must not break.
@@ -51,6 +54,48 @@ void _sizeTo(WidgetTester tester) {
 }
 
 void main() {
+  for (final id in ['math_guess', 'quick_math']) {
+    testWidgets('$id accepts keypad input in the 320dp Deal', (tester) async {
+      tester.view.physicalSize = const Size(320, 640);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(_app(FeedScreen(startGameId: id)));
+      await tester.pump(const Duration(milliseconds: 300));
+
+      final key = find.text('7').hitTestable();
+      expect(key, findsOneWidget);
+      await tester.tap(key);
+      await tester.pump();
+      expect(find.text('7'), findsNWidgets(2));
+      expect(tester.takeException(), isNull);
+      await _teardown(tester);
+    });
+  }
+
+  testWidgets('all Sum Snake cells fit and are tappable in the 320dp Deal',
+      (tester) async {
+    tester.view.physicalSize = const Size(320, 640);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(_app(const FeedScreen(startGameId: 'sum_snake')));
+    await tester.pump(const Duration(milliseconds: 300));
+
+    final screen = find.byType(SumSnakeScreen);
+    final grid = find.descendant(of: screen, matching: find.byType(GridView));
+    final cells =
+        find.descendant(of: grid, matching: find.byType(TangibleButton));
+    expect(cells.hitTestable(), findsNWidgets(16));
+    await tester.tap(cells.first);
+    await tester.pump();
+
+    final container = ProviderScope.containerOf(tester.element(screen));
+    expect(container.read(sumSnakeNotifierProvider).currentPath, hasLength(1));
+    expect(tester.takeException(), isNull);
+    await _teardown(tester);
+  });
+
   testWidgets('both Minesweeper modes are reachable in the 320dp Deal',
       (tester) async {
     tester.view.physicalSize = const Size(320, 640);
@@ -67,6 +112,21 @@ void main() {
       await tester.pump();
       expect(tester.takeException(), isNull);
     }
+    await _teardown(tester);
+  });
+
+  testWidgets('Klotski fits above the 320dp Deal footer', (tester) async {
+    tester.view.physicalSize = const Size(320, 640);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(_app(const FeedScreen(startGameId: 'klotski')));
+    await tester.pump(const Duration(milliseconds: 300));
+
+    final board = find.byType(GridPaper);
+    expect(board, findsOneWidget);
+    expect(tester.getSize(board).shortestSide, greaterThan(0));
+    expect(tester.takeException(), isNull);
     await _teardown(tester);
   });
 

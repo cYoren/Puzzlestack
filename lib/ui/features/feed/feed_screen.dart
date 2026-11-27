@@ -1098,8 +1098,8 @@ class _FeedCardState extends ConsumerState<_FeedCard>
         onTap: onTap,
         radius: 22,
         child: SizedBox(
-          width: narrow ? 30 : 36,
-          height: narrow ? 32 : 44,
+          width: narrow ? 32 : 36,
+          height: 44,
           child: Icon(icon, size: 20, color: tinted ? accent : muted),
         ),
       ),

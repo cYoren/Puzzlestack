@@ -34,7 +34,8 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
         title: won ? l10n.winMathGenius : l10n.loseTimeUp,
-        message: AppLocalizations.of(context)!.quickMathMessage((score).toString()),
+        message:
+            AppLocalizations.of(context)!.quickMathMessage((score).toString()),
         onPlayAgain: () {
           ref.read(quickMathNotifierProvider.notifier).initGame();
           Navigator.pop(context);
@@ -67,6 +68,7 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
+          final compact = constraints.maxHeight < 520;
 
           return SafeArea(
             child: Padding(
@@ -82,53 +84,56 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
                           DesignSystem.accentEmerald),
                     ],
                   ),
-                  Spacer(),
-                  ConstrainedBox(
-                    constraints:
-                        BoxConstraints(maxHeight: constraints.maxHeight * 0.3),
-                    child: TangibleContainer(
-                      depth: 4.0,
-                      color: colorScheme.onSurface,
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: FittedBox(
-                              child: Text(
-                                state.currentProblem.equation,
-                                style: TextStyle(
-                                  fontSize: 48,
-                                  fontWeight: FontWeight.w900,
-                                  color: colorScheme.surface,
+                  Expanded(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            maxHeight: constraints.maxHeight * 0.3),
+                        child: TangibleContainer(
+                          depth: 4.0,
+                          color: colorScheme.onSurface,
+                          padding: EdgeInsets.all(compact ? 8 : 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: FittedBox(
+                                  child: Text(
+                                    state.currentProblem.equation,
+                                    style: TextStyle(
+                                      fontSize: 48,
+                                      fontWeight: FontWeight.w900,
+                                      color: colorScheme.surface,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TangibleContainer(
-                            depth: 2.0,
-                            color: colorScheme.surface,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 8),
-                            child: Text(
-                              state.currentInput.isEmpty
-                                  ? '?'
-                                  : state.currentInput,
-                              style: const TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                color: DesignSystem.primary,
+                              SizedBox(height: compact ? 4 : 16),
+                              TangibleContainer(
+                                depth: 2.0,
+                                color: colorScheme.surface,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 8),
+                                child: Text(
+                                  state.currentInput.isEmpty
+                                      ? '?'
+                                      : state.currentInput,
+                                  style: const TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    color: DesignSystem.primary,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                  const Spacer(),
-                  _buildNumberPad(notifier, constraints),
-                  const SizedBox(height: 20),
+                  _buildNumberPad(notifier, constraints,
+                      keyHeight: compact ? 44 : 60),
+                  SizedBox(height: compact ? 6 : 20),
                 ],
               ),
             ),
@@ -166,8 +171,8 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
     );
   }
 
-  Widget _buildNumberPad(
-      QuickMathNotifier notifier, BoxConstraints constraints) {
+  Widget _buildNumberPad(QuickMathNotifier notifier, BoxConstraints constraints,
+      {required double keyHeight}) {
     return Column(
       children: [
         for (var row in [
@@ -186,6 +191,7 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
                           label: n.toString(),
                           onTap: () => notifier.onNumberPressed(n.toString()),
                           width: (constraints.maxWidth - 64) / 3,
+                          height: keyHeight,
                         ),
                       ))
                   .toList(),
@@ -201,6 +207,7 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
                 onTap: notifier.clearInput,
                 color: DesignSystem.accentBerry,
                 width: (constraints.maxWidth - 64) / 3,
+                height: keyHeight,
               ),
             ),
             Padding(
@@ -209,6 +216,7 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
                 label: '0',
                 onTap: () => notifier.onNumberPressed('0'),
                 width: (constraints.maxWidth - 64) / 3,
+                height: keyHeight,
               ),
             ),
             Padding(
@@ -216,8 +224,12 @@ class _QuickMathScreenState extends ConsumerState<QuickMathScreen> {
               child: _PadKey(
                 label: '⌫',
                 onTap: notifier.onBackspace,
-                color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.5),
+                color: Theme.of(context)
+                    .colorScheme
+                    .outline
+                    .withValues(alpha: 0.5),
                 width: (constraints.maxWidth - 64) / 3,
+                height: keyHeight,
               ),
             ),
           ],
@@ -232,23 +244,25 @@ class _PadKey extends StatelessWidget {
   final VoidCallback onTap;
   final Color? color;
   final double width;
+  final double height;
 
   const _PadKey(
       {required this.label,
       required this.onTap,
       this.color,
-      required this.width});
+      required this.width,
+      required this.height});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width.clamp(0, 80),
-      height: 60,
+      height: height,
       child: TangibleButton(
         onTap: onTap,
         color: color ?? Theme.of(context).colorScheme.surface,
-        shadowColor:
-            color?.withValues(alpha: 0.2) ?? Theme.of(context).colorScheme.outline,
+        shadowColor: color?.withValues(alpha: 0.2) ??
+            Theme.of(context).colorScheme.outline,
         padding: EdgeInsets.zero,
         child: Center(
           child: FittedBox(
@@ -257,7 +271,8 @@ class _PadKey extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: color != null && color != Theme.of(context).colorScheme.surface
+                color: color != null &&
+                        color != Theme.of(context).colorScheme.surface
                     ? Colors.white
                     : Theme.of(context).colorScheme.onSurface,
               ),

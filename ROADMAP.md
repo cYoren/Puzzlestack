@@ -1,9 +1,9 @@
 # Puzzlestack roadmap
 
-## Current priority (2026-11-26)
+## Current priority (2026-11-27)
 
-The product is ready for release work. Do not expand the catalogue or start another feature
-track. Close the proof gates for 1.1.0 in this order:
+The release work starts from 1.1.1 build 17. Close the proof gates in this order. New puzzles
+and optional ports are parked until after the release review.
 
 1. G2: play and verify every Deck candidate, moving anything that fails to Library or archive.
 2. G5: record feed-size medians for every Deck game.
@@ -14,15 +14,10 @@ track. Close the proof gates for 1.1.0 in this order:
 6. Submit only after the Play data-safety form, store metadata, and final site links are
    generated from the released registry.
 
-G1, G3, G4, G7, G8, G10, and G12 are implementation gates; keep them green while closing the
-   hardware and store gates. New puzzles, optional ports, and catalogue growth are parked until
-   after 1.1.0 and a real release review.
-
 The goal: **a feed of real puzzles, where every card dealt is good.** Why and for whom:
 [docs/PRODUCT.md](docs/PRODUCT.md). What "good" means: [docs/PUZZLE-BAR.md](docs/PUZZLE-BAR.md).
 
-Everything below ships in one release, **1.1.0**, the first store release, on Play and the App
-Store on the same day. Nothing in it is optional and nothing outside it is in scope.
+Play and the App Store ship together after the gates pass.
 
 The earlier roadmap (Phases 0 to 6: the rename, the board contract, the upstream merge, the
 Tatham ports, the rebuilt classics) is finished work. It is in git at `36aebc2:ROADMAP.md`.
@@ -30,17 +25,17 @@ What those phases taught is in [papercuts.md](papercuts.md).
 
 ## The release gate
 
-1.1.0 ships when every line is true. Each is a number or a test, not a feeling.
+The release ships when every line is true. Each gate names the evidence it needs.
 
 | # | Gate | How it is checked |
 | --- | --- | --- |
-| G1 | The Deck holds at least 100 verified games, and no room is more than 40% of it | `test/content/game_profiles_test.dart` |
+| G1 | The Deck holds at least 100 verified games, and no room is more than 40% of it | `test/content/game_profiles_test.dart` checks the count and room share; G2 supplies verification |
 | G2 | Every Deck game passes the ten checks | its row in `docs/CATALOG.md` is marked verified, with a PR |
 | G3 | Every kept game has a test against its own rule (each room's `rule-tests` list in `docs/TRIAGE-*`) | `test/content/` plus a registry sweep that fails on an untested id |
 | G4 | No game can be dealt unwinnable, or with two answers where one is implied | generator and pool tests |
 | G5 | Every Deck game has a feed size with a measured median of 30 to 120 s | timings in the PR; size table in code |
 | G6 | Cold start to a playable card under 2 s; the deal holds 60 fps on a low-end Android | device pass, recorded in the release PR |
-| G7 | Every visible game lays out at 320dp in both themes with no overflow | the existing audit run (`AUDIT_DARK=1` too) |
+| G7 | Every visible game lays out at 320dp in both themes with no overflow | `test/board/game_audit.dart` standalone and with `AUDIT_FEED=1`, in each case in light and with `AUDIT_DARK=1` |
 | G8 | Store copy, screenshots and in-app counts all read the visible count from the registry | `registry_test` |
 | G9 | Plus can be bought, restored and refunded-then-revoked on both stores | sandbox purchase on each |
 | G10 | Zero open PRs older than the release branch | `gh pr list` |
@@ -78,7 +73,7 @@ pending has landed; the table says where, so nobody starts it again.
 | --- | --- | --- | --- |
 | `lab-hide` | #75 | 102 lab ids archived in all: 24 Deck and 26 Library ids left the visible set, which went 234 to 184, and the other 52 were already archived | G1 |
 | `rule-tests` (`untested-sweep`) | #77, #80 | a test against its own rule for every kept game, with the registry held to the list | G3 |
-| `uniqueness` | #80 | every kept generator proves its deal, or is recorded as winnable and not unique | G4 |
+| `uniqueness` | #80 | Deck family probes and an explicit list of the families still missing proof | G4, partly |
 | `feed-size` | #77, #81 | one feed size per game through one mechanism; Ghost Tap and Rhythm Master got pools | G5 (mechanism; the medians are still owed) |
 | `accessibility-boards` | #78 | the board contract gained a text form read from the same tap path a finger uses; 29 of the 324 game folders render through it today | G2, partly (the rest is Remaining (c)) |
 | `plain-names` | #82 | plain titles, subtitles and goal lines for all 184 kept games | G2 (check 9) |
@@ -100,15 +95,18 @@ pending has landed; the table says where, so nobody starts it again.
 | `readme-docs` | #83 | README, PUZZLE_STYLE, GAME_DEV_GUIDE and CONTENT-AUDIT brought in line with PRODUCT.md | none; docs |
 | `posthog` | #84 | anonymous usage events, gated on the installed version, off in Settings | none; the Data Safety answers are in RELEASE.md |
 
+**Release-proof evidence (#92):** At 320dp in light and dark, 103 Deck cards and 323 standalone
+games mounted without overflow or exceptions (G7). The largest room holds 41 of 103 Deck
+candidates, below 40%. G1 still depends on play verification in G2.
+
 ### Remaining
 
 In order. Nothing here is a wave, and nothing here is a job for a Flash agent alone.
 
-**(a) CI is green again.** The `mirror_maze` failure is fixed in #86. A tap cycles a cell
-`empty`, `/`, `\`, so the test's "wrong mirror" tap installed the correct angle, the board solved
-and the screen froze it. The game now deals boards that cannot be won with fewer than two mirrors,
-and the test enumerates boards instead of trusting one random deal. Main is green at `c344ea6c`,
-so a release build may be cut from it.
+**(a) G4, fairness evidence is incomplete.** `test/content/deal_uniqueness_test.dart`
+checks every Deck id is assigned to a family. Four families run probes; six document why proof
+is missing and are skipped. The [triage reports](docs/CATALOG.md) identify the individual games
+and distinguish missing proof from an observed unwinnable deal.
 
 **(b) G2, the play pass: no game is verified.** None of the 184 games is marked verified in
 `docs/CATALOG.md`, and all six `docs/TRIAGE-*.md` say the play pass is still owed. The machine
@@ -116,10 +114,10 @@ half is done in every room, including the checks a machine can decide. The check
 person (a decision, a five-second read, about a minute) are `needs-play` everywhere. A game is
 verified by playing it on a built app and writing the verdict into CATALOG.md in a PR.
 
-**(c) G2 and G12, accessibility: most boards are not on the text contract.** 29 of the 324
-game folders render through `PuzzleBoardView` with semantics, and no game screen adds `Semantics`
-of its own. The rest need porting to the contract. Until they are, no store copy may claim that
-every board plays with a screen reader.
+**(c) G2 and G12, accessibility: most boards are outside the shared text contract.** A source
+scan finds 29 game folders using `PuzzleBoardView`. Audit the remaining controls and boards for
+screen-reader play, port custom boards where needed and verify the focus order and actions.
+Full screen-reader coverage is still unverified.
 
 **(d) G5, the feed-size medians.** The mechanism and the size table are in code. No timing is
 recorded anywhere, and the gate asks for a measured median of 30 to 120 s per Deck game. Take the
@@ -141,16 +139,14 @@ been made in a store sandbox.
 **(g) G11, the signed builds.** Signed builds for Play and the App Store from one commit, built on
 the Mac, and the iOS build opened from TestFlight. See RELEASE.md for the signing inputs.
 
-**(h) `ship`.** Submit the Play Data Safety answers in the console (a human step, prepared in
-RELEASE.md), and create `puzzlestack_plus` in Play after the first 1.1.0+16 AAB upload, because
-that upload is what adds `com.android.vending.BILLING` to the listing. Both `gplay` commands are in
-RELEASE.md.
+**(h) `ship`.** Submit the Play Data Safety answers in the console (prepared in RELEASE.md),
+verify the `puzzlestack_plus` listing in Play, and confirm the final store metadata.
 
-**(i) After 1.1.0 is live.** Set `PLAY_ANDROID` and `PLAY_IOS` in `tool/gen_site.py`, regenerate
+**(i) After the release is live.** Set `PLAY_ANDROID` and `PLAY_IOS` in `tool/gen_site.py`, regenerate
 the site, and verify the Google Search Console property. The `gsc` token currently carries only
 the `webmasters` scope and lacks `siteVerification`, so verification needs one re-consent.
 
-## After 1.1.0
+## After the release
 
 Not started until the release is out. In this order.
 

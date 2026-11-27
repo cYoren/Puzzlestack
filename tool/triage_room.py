@@ -558,13 +558,14 @@ def run_audit(report: dict) -> dict:
         ("dark", {"AUDIT_DARK": "1"}),
     ):
         env = {**os.environ, "TMPDIR": str(Path.home() / ".cache" / "tmp"),
-               "AUDIT_ONLY": ids, **env_extra}
+               "AUDIT_ONLY": ids, "AUDIT_FEED": "0", **env_extra}
         try:
             done = subprocess.run(
                 ["flutter", "test", "test/board/game_audit.dart"],
                 cwd=REPO, env=env, capture_output=True, text=True, timeout=1200,
             )
         except (OSError, subprocess.SubprocessError) as error:
+            clean = False
             lines[mode] = f"audit did not run: {error}"
             continue
         found = re.search(r"^AUDIT checked=.*$", done.stdout, re.M)

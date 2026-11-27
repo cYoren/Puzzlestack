@@ -22,7 +22,6 @@ import 'package:puzzle/ui/features/games/kurodoko/kurodoko_engine.dart';
 import 'package:puzzle/ui/features/games/lights_out/lights_out_engine.dart';
 import 'package:puzzle/ui/features/games/magnets/magnets_engine.dart';
 import 'package:puzzle/ui/features/games/map/map_engine.dart';
-import 'package:puzzle/ui/features/games/minesweeper/minesweeper_engine.dart';
 import 'package:puzzle/ui/features/games/mirror_maze/mirror_maze_engine.dart';
 import 'package:puzzle/ui/features/games/netslide/netslide_engine.dart';
 import 'package:puzzle/ui/features/games/nonogram/nonogram_engine.dart';
@@ -287,26 +286,25 @@ void _winnableBySearch(int seed, DealFailure fail) {
     fail('map', 'the stored colouring does not solve the board');
   }
 
-  final sweeper = MinesweeperEngine(
-    rows: 6,
-    cols: 6,
-    mineCount: 5,
-    random: rng,
-  );
-  final minesweeper = sweeper.generateBoard(startRow: 0, startCol: 0);
-  if (!sweeper.isSolvableWithoutGuess(minesweeper, 0, 0)) {
-    fail('minesweeper', 'the deal needs a guess');
-  }
-
   final net = const NetEngine().generate(NetDifficulty.easy, random: rng);
   if (!const NetEngine().isSolved(net, net.solvedMasks)) {
     fail('netslide', 'the stored answer does not solve the board');
   }
 
-  final pegs =
-      const PegsEngine().generate(difficulty: PegsDifficulty.easy, random: rng);
-  if (const PegsEngine().solve(pegs.start, pegs.rows, pegs.cols) == null) {
-    fail('pegs', 'its own solver finds no line');
+  const pegsEngine = PegsEngine();
+  final pegs = pegsEngine.generate(difficulty: PegsDifficulty.easy, random: rng);
+  var pegGrid = pegs.start;
+  // The hint search has a node budget. An exhausted search says nothing
+  // about fairness; replay the generator's known answer with the game rules.
+  for (final jump in pegs.solution) {
+    if (!pegsEngine.legalJumps(pegGrid, pegs.rows, pegs.cols).contains(jump)) {
+      fail('pegs', 'the stored answer uses an illegal jump');
+      break;
+    }
+    pegGrid = pegsEngine.apply(pegGrid, jump);
+  }
+  if (!pegsEngine.isSolved(pegGrid)) {
+    fail('pegs', 'the stored answer does not finish the board');
   }
 
   final tower = TowerOfLondonEngine().generatePuzzle();
@@ -462,12 +460,15 @@ const List<DealFamily> dealFamilies = [
       'fibonacci_merge',
       'game_2048',
       'kenken',
+      'math_guess',
       'math_maze',
       'math_path',
       'missing_operator',
       'number_bonds',
+      'quick_math',
       'sequence_sleuth',
       'sum_pyramid',
+      'sum_snake',
       'target_10',
     },
     finding: 'G4-F2 the game computes its own answer at deal time and exposes '
@@ -503,8 +504,6 @@ const List<DealFamily> dealFamilies = [
     id: 'G4-F5',
     label: 'Word: fixed pools, whole-pool solvability unproved',
     games: {
-      'affix_factory',
-      'anagram_definition',
       'chain_reaction',
       'compound_connect',
       'crossword',

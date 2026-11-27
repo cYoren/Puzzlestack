@@ -14,7 +14,10 @@ minute*) are marked `needs-play` and are **not** guesses dressed as verdicts. No
 this file marks a game verified; that is the play pass.
 
 **Check 2, by genre.** `pass` and `pass-named-unique` mean the code has a solver, so the
-generator proves its own deal. `unproven` means the game generates content and nothing
+generator proves its own deal. `pass-fair-not-unique` means the code has a prover that
+enumerates the cheaper layouts and proves the deal cannot be won with fewer mirrors than
+it demands, while several answers of that size are legal and any of them wins: proved
+finishable, not unique. `unproven` means the game generates content and nothing
 proves the deal is winnable, or has one answer where the genre implies one:
 the `uniqueness` job. `pool-fairness` means a fixed content pool, where the proof is
 "every row is solvable", i.e. check 10. `fair-by-play` means a lab task, worksheet or
@@ -23,7 +26,7 @@ by playing.
 
 | | Deck | Library | Archive |
 | --- | --- | --- | --- |
-| Games | 19 | 25 | 9 |
+| Games | 16 | 28 | 9 |
 
 **Origin tags** in this room, which is what the uniqueness column above turns on:
 
@@ -46,7 +49,7 @@ light and `AUDIT_DARK=1`:
 | `angle_finder` | Angle Finder | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `area_perimeter_match` | Area & Perimeter | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `arithmetic_chain` | Chain Calc | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `balance_scale` | Balance Scale | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `balance_scale` | Balance Scale | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `base_shift` | Base Shift | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `binary_code` | Binary Speed | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `binary_matrix_rank` | Matrix Rank | archive | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
@@ -54,7 +57,7 @@ light and `AUDIT_DARK=1`:
 | `calculation_sprint` | Calculation Sprint | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `collatz` | Collatz Path | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `common_denominator` | Common Denominator | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
-| `countdown_math` | Countdown Math | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `countdown_math` | Countdown Math | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `crypto_arithmetic` | Crypto-Arithmetic | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `digit_swap_eq` | Digit Swap Equations | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `divisibility_dash` | Divisibility Dash | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
@@ -67,7 +70,7 @@ light and `AUDIT_DARK=1`:
 | `graph_coordinate_plot` | Graph Plotter | archive | fair-by-play | pass | audit-clean | pass | pass | pass | fail |
 | `inequality_dash` | Inequality Dash | library | fair-by-play | pass | audit-clean | pass | pass | pass | pass |
 | `kenken` | KenKen | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
-| `magic_squares` | Magic Square | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
+| `magic_squares` | Magic Square | library | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `math_guess` | Math Guess | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `math_maze` | Math Maze | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
 | `math_path` | Math Path | deck | unproven | pass | audit-clean | pass | pass | pass | pass |
@@ -108,9 +111,9 @@ usually one mechanism and not N edits.
 **The `uniqueness` job, in two passes.** A test that shows a generated deal has a
 solution does not show it is the only one, but it does mean the deal is not unwinnable:
 
-- winnable, not unique (19): `arithmetic_chain`, `balance_scale`, `countdown_math`, `crypto_arithmetic`, `digit_swap_eq`, `fibonacci_merge`, `game_2048`, `kenken`, `magic_squares`, `math_guess`, `math_maze`, `math_path`, `missing_operator`, `number_bonds`, `quick_math`, `sequence_sleuth`, `sum_pyramid`, `sum_snake`, `target_10`
+- winnable, not unique (17): `arithmetic_chain`, `countdown_math`, `crypto_arithmetic`, `digit_swap_eq`, `fibonacci_merge`, `game_2048`, `kenken`, `math_guess`, `math_maze`, `math_path`, `missing_operator`, `number_bonds`, `quick_math`, `sequence_sleuth`, `sum_pyramid`, `sum_snake`, `target_10`
 
-- neither proven (0): `none`
+- neither proven (2): `balance_scale`, `magic_squares`
 
 Every game here has a how-to-play guide (`lib/data/game_guides.dart`). The card's
 own goal line is still owed to `card-teaches` (check 3), for the room as a whole.

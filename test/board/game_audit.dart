@@ -4,8 +4,8 @@
 ///
 /// It pumps every game in the registry at 320dp and counts the ones that
 /// overflow or throw. The file is deliberately not named `_test.dart` so it
-/// stays out of the suite - it is a sweep, not a unit test, and 318 pumps is
-/// not something to pay for on every change. It still **fails** when a board
+/// stays out of the suite. Mounting the full registry is a separate check.
+/// It still **fails** when a board
 /// overflows or throws: the count is asserted at the end, because a check that
 /// only prints a number is a check nobody reads. Run it on a batch, and on a
 /// game you just touched (below).
@@ -36,6 +36,7 @@ import 'package:puzzle/data/models/user_data.dart';
 import 'package:puzzle/data/repositories/user_repository.dart';
 import 'package:puzzle/l10n/app_localizations.dart';
 import 'package:puzzle/providers/user_providers.dart';
+import 'package:puzzle/ui/core/juice/game_scope.dart';
 import 'package:puzzle/ui/features/feed/feed_screen.dart';
 import 'package:puzzle/utils/design_system.dart';
 
@@ -135,6 +136,15 @@ void main() {
         );
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
+        if (inFeed) {
+          expect(
+            find.byWidgetPredicate(
+              (widget) => widget is GameScope && widget.gameId == meta.id,
+            ),
+            findsOneWidget,
+            reason: 'the Deal did not mount ${meta.id}',
+          );
+        }
       } catch (e) {
         _threw[meta.id] = e.toString().split('\n').first;
         return;

@@ -35,8 +35,8 @@ to make), `broken-concept` (cannot work in this app, for example needs audio).
 A `lab`, `worksheet` or `quiz` game may be in the Deck only as a Snap or Word card that passes
 all ten checks. Most will not; that is what the tag is for.
 
-The verdict for each of the 313 is in [CATALOG.md](CATALOG.md). `lib/data/curation.dart` is
-the code copy of the Deck list and a test keeps the two honest.
+The tier for each game is in [CATALOG.md](CATALOG.md). `lib/data/game_profiles.dart` is
+generated from it, and `test/content/game_profiles_test.dart` checks that the tiers agree.
 
 ## The ten checks (Deck)
 

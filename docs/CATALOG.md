@@ -16,17 +16,19 @@ leaves Deck if it fails any of the ten checks.
 
 The 2026-11-16 pass is `lab-hide`: a `lab` game stays in the Deck only if it can be played as a
 game from the screen alone, can be won or lost, and is worth playing again. Six pass;
-every other `lab` game is archived, whichever tier it was in.
+every other `lab` game is archived, whichever tier it was in. The 320dp Deal audit on
+2026-11-27 moved twelve cards with remaining Deal layout failures to Library. The table
+reflects the current tiers.
 
 | | Deck | Library | Archive: twin | Archive: other | Total |
 | --- | --- | --- | --- | --- | --- |
-| Logic | 44 | 18 | 1 | 0 | 63 |
-| Math | 19 | 25 | 10 | 9 | 63 |
+| Logic | 41 | 21 | 1 | 0 | 63 |
+| Math | 16 | 28 | 10 | 9 | 63 |
 | Memory | 1 | 0 | 0 | 53 | 54 |
-| Attention | 5 | 0 | 2 | 47 | 54 |
-| Word | 24 | 17 | 8 | 2 | 51 |
-| Spatial | 22 | 9 | 6 | 1 | 38 |
-| **All** | **115** | **69** | **27** | **112** | **323** |
+| Attention | 4 | 1 | 2 | 47 | 54 |
+| Word | 22 | 19 | 8 | 2 | 51 |
+| Spatial | 19 | 12 | 6 | 1 | 38 |
+| **All** | **103** | **81** | **27** | **112** | **323** |
 
 Visible in the app after this pass: **184**. The other 139 are archived: hidden, tagged, still in
 the repo. The store copy takes its number from the visible registry, never from this file.
@@ -55,7 +57,7 @@ reason). Edit this document, run the script, commit both. `test/content/game_pro
 parses this file again and fails if the two disagree, so a verdict cannot live here and not in
 the app.
 
-## Logic (56)
+## Logic (63)
 
 The strongest room and the core of the Deck. Nearly all are unique-solution puzzles from the
 Tatham and Nikoli canon.
@@ -69,7 +71,9 @@ tents_and_trees tower_of_london twiddle water_sort yajilin
 ```
 
 ```library
-abcd ascent boats bricks clusters crossing cube_net_fold einstein_riddle kakurasu_sums lock_pattern logical_syllogisms mathrax matrix_reasoning minesweeper path_finder rome salad seismic symbol_logic tenner_grid triplets_logic wisconsin_card_sorting
+abcd ascent boats bricks clusters crossing einstein_riddle kakurasu_sums lock_pattern
+logical_syllogisms mathrax matrix_reasoning minesweeper path_finder rome salad seismic
+symbol_logic tenner_grid triplets_logic wisconsin_card_sorting
 ```
 
 ```merge
@@ -80,7 +84,8 @@ sudoku <- alphabet_sudoku
 ```
 
 Notes
-- `cube_net_fold`, `kakurasu_sums`, `minesweeper`, and `tenner_grid` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
+- `kakurasu_sums`, `minesweeper`, and `tenner_grid` moved to Library after the 320dp Deal audit
+  found overflows inside the card frame.
 - **`crossing` (2026-11-16):** Library. Lay every number in the list into the skeleton once, across
   or down, and make the crossings agree. The skeleton is part of the puzzle and the source's walls
   are kept: on a bare grid any placement can slide into empty space, so no list would have exactly
@@ -109,12 +114,8 @@ Notes
   four cells; generated and proved in Dart (`rate`, level 2), every clue read off the answer, so
   an untrue clue cannot ship. Rules and reference in
   `lib/ui/features/games/mathrax/mathrax_puzzle.dart`.
-- **Machine pass done, play pass pending** (`docs/TRIAGE-LOGIC.md`, 2026-11-14; regenerate with
-  `python3 tool/triage_room.py logic`). Layout at 320dp is clean in both themes for all 52.
-  What the machine found: 34 games generate without proving their deal (one answer, or always
-  winnable), 23 titles shout (ALL CAPS), 8 have no rule test. Every game has a guide; the card's
-  own goal line is still `card-teaches`, which is one job for every room at once. So three jobs
-  here, not fifty-two.
+- See [Logic triage](TRIAGE-LOGIC.md) for layout, fairness and rule-test evidence. The play pass
+  is pending.
 - `matrix_reasoning` and `einstein_riddle` are promotion candidates: both are real puzzles, the
   first needs a run of rounds, the second needs a 3-house feed size that reads without a wall
   of clues.
@@ -134,12 +135,16 @@ puzzle when the player chooses a route to the answer rather than recalling it.
 
 ```deck
 arithmetic_chain crypto_arithmetic digit_swap_eq fibonacci_merge
-game_2048 kenken math_maze math_path missing_operator number_bonds
-sequence_sleuth sum_pyramid target_10
+game_2048 kenken math_guess math_maze math_path missing_operator number_bonds
+quick_math sequence_sleuth sum_pyramid sum_snake target_10
 ```
 
 ```library
-algebraic_balance angle_finder area_perimeter_match balance_scale base_shift binary_code calculation_sprint collatz common_denominator countdown_math divisibility_dash exponent_tower factor_finder fraction_match fractional_pizza inequality_dash magic_squares math_guess mental_abacus mental_calendar modulo_clock numerical_estimation percentage_peak prime_factor_trees prime_hunter quick_math roman_arithmetic set_theory_venn sum_snake unit_converter_pro venn_numbers
+algebraic_balance angle_finder area_perimeter_match balance_scale base_shift binary_code
+calculation_sprint collatz common_denominator countdown_math divisibility_dash exponent_tower
+factor_finder fraction_match fractional_pizza inequality_dash magic_squares mental_abacus
+mental_calendar modulo_clock numerical_estimation percentage_peak prime_factor_trees prime_hunter
+roman_arithmetic set_theory_venn unit_converter_pro venn_numbers
 ```
 
 ```merge
@@ -160,13 +165,11 @@ vektor_vector
 ```
 
 Notes
-- `balance_scale`, `countdown_math`, `magic_squares`, `math_guess`, `quick_math`, and `sum_snake` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
-- **Machine pass done, play pass pending** (`docs/TRIAGE-MATH.md`). Layout clean at 320dp in both
-  themes for all 53. The machine found 19 Deck generators that do not prove their deal, 22 games
-  with no rule test, 13 shouting titles. The other 34 are worksheets: the answer is the drill's
-  own, so check 2 there is judged by playing, not by a uniqueness proof.
-- `quick_math` is the one arithmetic sprint in the Deck, as a Snap card. The other sprints are
-  Library.
+- `balance_scale`, `countdown_math`, and `magic_squares` moved to Library after the
+  320dp Deal audit found overflows inside the card frame. Their origin remains `puzzle`.
+- See [Math triage](TRIAGE-MATH.md) for layout, fairness and rule-test evidence. The play pass
+  is pending. Worksheet fairness is judged by playing.
+- `quick_math` is the arithmetic sprint in the Deck. The other sprints are in Library.
 - The Archive list is coursework (linear algebra, binomials, radicals). Nobody opens a puzzle
   feed to multiply matrices.
 
@@ -180,7 +183,6 @@ simon_sequence
 ```
 
 ```library
-shell_game
 ```
 
 ```merge
@@ -200,14 +202,12 @@ visual_statistical_learning word_association_recall word_pair_associate_memory
 ```
 
 Notes
-- `shell_game` moved to Library after the Deal-level 320dp audit found a card-chrome overflow.
 - **`lab-hide` (2026-11-16):** the whole room but `simon_sequence` is archived. A span, n-back,
   recall or recognition test is a lab task, not a game: no decision, nothing to win or lose, and
   nobody replays it for fun. Reason `no-game`. No merge survives, because every keeper that
   absorbed a twin is itself archived; the absorbed ids are now archived in their own right.
-- **Machine pass done, play pass pending** (`docs/TRIAGE-MEMORY.md`). Layout clean at 320dp in both
-  themes for all 38. 24 titles shout or use lab vocabulary, 16 games have no rule test. Every game
-  here is a lab task, so check 2 is fair-by-play: no generator owes a uniqueness proof.
+- See [Memory triage](TRIAGE-MEMORY.md) for layout and rule-test evidence. Fairness is judged in
+  the play pass, which is pending.
 - Every Memory card is a Snap card. Every kept game needs a plain name: "Digit Span",
   "Match After a Pause", "Span".
 
@@ -221,7 +221,7 @@ change_blindness color_match schulte_table visual_search
 ```
 
 ```library
-
+shell_game
 ```
 
 ```merge
@@ -240,14 +240,14 @@ symbolic_flanker temporal_order_judgment trail_making vigilance_task visual_crow
 ```
 
 Notes
+- `shell_game` moved to Library after the 320dp Deal audit found an overflow inside the card frame.
 - **`lab-hide` (2026-11-16):** only `change_blindness`, `color_match`, `schulte_table`,
-  `shell_game` and `visual_search` stay in the Deck. Stroop, flanker, cueing, vigilance,
+  `shell_game` and `visual_search` stayed in the Deck in that pass. Stroop, flanker, cueing, vigilance,
   tracking, reaction and "watch and report" tasks are archived `no-game`: a player cannot win or
   lose them and would not choose them again. The 13 Deck ids and all 9 Library ids moved, and the
   merges whose keeper was archived went with them. `visual_search` keeps its two absorbed twins.
-- **Machine pass done, play pass pending** (`docs/TRIAGE-ATTENTION.md`). Layout clean at 320dp in
-  both themes for all 38. 19 games have no rule test, 13 shout, and `ghost_tap` and `rhythm_master`
-  have no pool to stay fresh. All 38 are lab tasks: check 2 is fair-by-play.
+- See [Attention triage](TRIAGE-ATTENTION.md) for layout and rule-test evidence. Fairness is judged
+  in the play pass, which is pending.
 - `chalk_and_talk` was reframed because the app has no audio; a listening game without sound
   is not a game. Reason `broken-concept`; it returns if sound ships.
 - `vigilance_task` is boring by design. That is the task.
@@ -260,7 +260,7 @@ All content is English. A Word card is dealt only when the app language has cont
 Answer lists are curated common words; guess validators may be wide.
 
 ```deck
-affix_factory anagram_definition chain_reaction compound_connect crossword cryptogram find_word
+chain_reaction compound_connect crossword cryptogram find_word
 homophone_hunt letter_bridge letter_grid_swapper missing_vowels one_letter_shift
 pangram_sprint portmanteau_split rhyme_master sentence_unscramble spoonerism_solver
 verbal_analogies word_ladder word_mastermind word_scramble word_search
@@ -268,7 +268,10 @@ word_snake_trail word_wheel
 ```
 
 ```library
-category_fluency cognate_catch context_clues conundrum_anagram definition_dash etymology_origin grammar_police oxymoron_hunt palindrome_builder phonetic_guess semantic_link silent_letter_search spelling_sprint syllable_stack typoglycemia_decoder word_grid_connection word_surge
+affix_factory anagram_definition category_fluency cognate_catch context_clues conundrum_anagram
+definition_dash etymology_origin grammar_police oxymoron_hunt palindrome_builder phonetic_guess
+semantic_link silent_letter_search spelling_sprint syllable_stack typoglycemia_decoder
+word_grid_connection word_surge
 ```
 
 ```merge
@@ -285,11 +288,10 @@ letter_frequency_scan typing_speed
 ```
 
 Notes
-- `conundrum_anagram` and `word_grid_connection` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
-- **Machine pass done, play pass pending** (`docs/TRIAGE-WORD.md`). Layout clean at 320dp in both
-  themes for all 43. 26 puzzle generators do not prove their deal, 5 games have no rule test
-  (`cognate_catch`, `conundrum_anagram`, `letter_grid_swapper`, `missing_vowels`, `word_wheel`),
-  3 shout. The 17 quiz cards are fair-by-play, not uniqueness.
+- `conundrum_anagram` and `word_grid_connection` moved to Library after the 320dp Deal audit found
+  overflows inside the card frame. Their origin remains `puzzle`.
+- See [Word triage](TRIAGE-WORD.md) for layout, fairness and rule-test evidence. The play pass is
+  pending. Quiz fairness is judged by playing.
 - `find_word` and `word_mastermind` look like the same guess-the-word game. Triage decides
   whether one absorbs the other.
 - `crossword` is Deck only as a 5x5 mini with a clue set written for it (`crossword-supply`).
@@ -309,7 +311,8 @@ symmetry tangram topology
 ```
 
 ```library
-block_stacking_physics interlock_puzzle maze_nav_3d mental_mapping mental_rotation mirror_tracing negative_space_detection perspective_shift_view rotating_maze shadow_pivot trace_path
+block_stacking_physics cube_net_fold interlock_puzzle maze_nav_3d mental_mapping mental_rotation
+mirror_tracing negative_space_detection perspective_shift_view rotating_maze shadow_pivot trace_path
 ```
 
 ```merge
@@ -324,11 +327,11 @@ vector_grid_alignment
 ```
 
 Notes
-- `mental_rotation` and `rotating_maze` moved to Library after the Deal-level 320dp audit found card-chrome overflows.
-- **Machine pass done, play pass pending** (`docs/TRIAGE-SPATIAL.md`). Layout clean at 320dp in both
-  themes for all 32. 31 generators are unproven (a deal can be unsolvable or ambiguous);
-  `mirror_maze` is proved finishable, not unique, and deals from a counted 160 boards on a 5x5
-  grid, enough for check 5. 9 games have no rule test, 8 shout.
+- `cube_net_fold`, `mental_rotation`, and `rotating_maze` moved to Library after the 320dp Deal
+  audit found overflows inside the card frame.
+- See [Spatial triage](TRIAGE-SPATIAL.md) for layout, fairness and rule-test evidence. The play pass
+  is pending. `mirror_maze` is proved finishable, allows multiple solutions and has 160 distinct
+  deals on a 5x5 grid.
 - `laser_link` and `mirror_maze` may be one puzzle. Triage decides.
 - `mirror_tracing` and `trace_path` are motor tasks; Library unless play says otherwise.
 

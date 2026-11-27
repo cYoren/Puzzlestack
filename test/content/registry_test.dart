@@ -45,15 +45,14 @@ void main() {
 
   test('every store file says the number of games a player can open', () {
     // The registry is not the number the player sees: the archive is hidden, and the store
-    // page, the web shell, the Pages site and the README are about what a player can open.
+    // page, the web shell and the Pages site are about what a player can open.
     // This used to require the registry total, which is how the copy ended up advertising
     // 139 games the app no longer deals.
     final visible = visibleIds.length.toString();
     final total = '${allGamesMetadata.length}';
-    // Files that must carry the number, and the one that must not carry the archived total
-    // but has no room for a number (the App Store name is 30 characters).
+    // The README describes the catalog without a count. The store and web
+    // files that publish a count must use the visible total.
     const withCount = [
-      'README.md',
       'fastlane/metadata/android/en-US/title.txt',
       'fastlane/metadata/android/en-US/short_description.txt',
       'fastlane/metadata/android/en-US/full_description.txt',
@@ -64,7 +63,11 @@ void main() {
       'web/manifest.json',
       'web/index.html',
     ];
-    const noStaleCount = ['fastlane/metadata/ios/en-US/name.txt', ...withCount];
+    const noStaleCount = [
+      'README.md',
+      'fastlane/metadata/ios/en-US/name.txt',
+      ...withCount,
+    ];
     final missing = <String>[];
     final archived = <String>[];
     for (final path in withCount) {

@@ -21,8 +21,7 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => ref.read(affixFactoryNotifierProvider.notifier).initGame());
+    Future.microtask(() => ref.read(affixFactoryNotifierProvider.notifier).initGame());
   }
 
   void _showCompletionDialog() {
@@ -33,9 +32,7 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => GameCompletionDialog(
-        title: state.isGameWon
-            ? l10n.wellDone.toUpperCase()
-            : l10n.gameOver.toUpperCase(),
+        title: state.isGameWon ? l10n.wellDone.toUpperCase() : l10n.gameOver.toUpperCase(),
         message: state.description,
         onPlayAgain: () {
           ref.read(affixFactoryNotifierProvider.notifier).initGame();
@@ -70,40 +67,33 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
           shadowColor: colorScheme.outline,
           onTap: () => notifier.initGame(),
           padding: const EdgeInsets.all(12),
-          child: Icon(Icons.refresh_rounded,
-              size: 20, color: colorScheme.onSurface),
+          child: Icon(Icons.refresh_rounded, size: 20, color: colorScheme.onSurface),
         ),
       ],
       body: state.isLoading
-          ? const Center(
-              child: CircularProgressIndicator(color: DesignSystem.primary))
+          ? const Center(child: CircularProgressIndicator(color: DesignSystem.primary))
           : LayoutBuilder(
               builder: (context, constraints) {
-                final compact = MediaQuery.sizeOf(context).width <= 320;
                 return Padding(
-                  padding: EdgeInsets.all(compact ? 4 : DesignSystem.spaceLG),
+                  padding: const EdgeInsets.all(DesignSystem.spaceLG),
                   child: Column(
                     children: [
-                      const SizedBox(height: 4),
+                      const Spacer(),
                       TangibleContainer(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: compact ? 16 : 30,
-                          vertical: compact ? 8 : 20,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                         color: DesignSystem.gameAmber,
-                        shadowColor:
-                            DesignSystem.gameAmber.withValues(alpha: 0.7),
+                        shadowColor: DesignSystem.gameAmber.withValues(alpha: 0.7),
                         child: Text(
                           state.root,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
-                            fontSize: compact ? 24 : 32,
+                            fontSize: 32,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 2,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: DesignSystem.spaceXL),
                       Text(
                         'Select ${state.correctAffixes.length} affixes:',
                         style: TextStyle(
@@ -112,33 +102,25 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
                           color: colorScheme.onSurface,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: DesignSystem.spaceMD),
                       Wrap(
-                        spacing: compact ? 8 : 16,
-                        runSpacing: compact ? 8 : 16,
+                        spacing: 16,
+                        runSpacing: 16,
                         alignment: WrapAlignment.center,
                         children: state.options.map((option) {
-                          final isSelected =
-                              state.selectedAffixes.contains(option);
-                          final isCorrect =
-                              state.correctAffixes.contains(option);
-
-                          Color btnColor = isSelected
-                              ? DesignSystem.primary
-                              : colorScheme.surface;
-                          Color shadowColor = isSelected
-                              ? DesignSystem.primary.withValues(alpha: 0.7)
-                              : colorScheme.outline;
-
+                          final isSelected = state.selectedAffixes.contains(option);
+                          final isCorrect = state.correctAffixes.contains(option);
+                          
+                          Color btnColor = isSelected ? DesignSystem.primary : colorScheme.surface;
+                          Color shadowColor = isSelected ? DesignSystem.primary.withValues(alpha: 0.7) : colorScheme.outline;
+                          
                           if (state.isGameOver) {
                             if (isCorrect) {
                               btnColor = DesignSystem.gameGreen;
-                              shadowColor =
-                                  DesignSystem.gameGreen.withValues(alpha: 0.7);
+                              shadowColor = DesignSystem.gameGreen.withValues(alpha: 0.7);
                             } else if (isSelected) {
-                              btnColor = DesignSystem.error;
-                              shadowColor =
-                                  DesignSystem.error.withValues(alpha: 0.7);
+                               btnColor = DesignSystem.error;
+                               shadowColor = DesignSystem.error.withValues(alpha: 0.7);
                             }
                           }
 
@@ -149,18 +131,15 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
                               color: btnColor,
                               shadowColor: shadowColor,
                               depth: 4,
-                              padding: EdgeInsets.symmetric(
-                                vertical: compact ? 8 : 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Center(
                                 child: Text(
                                   option,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: compact ? 15 : 18,
-                                    color: (isSelected ||
-                                            (state.isGameOver && isCorrect))
-                                        ? Colors.white
+                                    fontSize: 18,
+                                    color: (isSelected || (state.isGameOver && isCorrect)) 
+                                        ? Colors.white 
                                         : colorScheme.onSurface,
                                   ),
                                 ),
@@ -171,16 +150,9 @@ class _AffixFactoryScreenState extends ConsumerState<AffixFactoryScreen> {
                       ),
                       const Spacer(),
                       TangibleButton(
-                        onTap: state.selectedAffixes.length ==
-                                state.correctAffixes.length
-                            ? notifier.submit
-                            : null,
-                        color: state.selectedAffixes.length ==
-                                state.correctAffixes.length
-                            ? DesignSystem.primary
-                            : colorScheme.surface.withValues(alpha: 0.5),
-                        shadowColor:
-                            DesignSystem.primary.withValues(alpha: 0.5),
+                        onTap: state.selectedAffixes.length == state.correctAffixes.length ? notifier.submit : null,
+                        color: state.selectedAffixes.length == state.correctAffixes.length ? DesignSystem.primary : colorScheme.surface.withValues(alpha: 0.5),
+                        shadowColor: DesignSystem.primary.withValues(alpha: 0.5),
                         depth: 4,
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: const Center(

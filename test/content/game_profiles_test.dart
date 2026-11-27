@@ -95,7 +95,7 @@ void main() {
       for (final game in deck) {
         perRoom[game.category] = (perRoom[game.category] ?? 0) + 1;
       }
-      final limit = (deck.length * 0.4).ceil();
+      final limit = deck.length * 40 ~/ 100;
       final over = perRoom.entries.where((e) => e.value > limit).toList();
       expect(over, isEmpty,
           reason: 'over $limit of ${deck.length} cards: '
